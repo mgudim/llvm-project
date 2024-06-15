@@ -223,6 +223,11 @@ bool MachineLoop::isLoopInvariant(MachineInstr &I,
   const TargetRegisterInfo *TRI = ST.getRegisterInfo();
   const TargetInstrInfo *TII = ST.getInstrInfo();
 
+  // TODO: If the address of a load is loop-invariant and doesn't alias any store in
+  // the loop then it is loop-invariant. For now only handle constant loads.
+  if (I.mayLoad() && !mayLoadFromGOTOrConstantPool(I))
+    return false;
+
   // The instruction is loop invariant if all of its operands are.
   for (const MachineOperand &MO : I.operands()) {
     if (!MO.isReg())

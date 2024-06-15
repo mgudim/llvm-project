@@ -1018,8 +1018,7 @@ bool MachineLICMBase::IsLICMCandidate(MachineInstr &I, MachineLoop *CurLoop) {
   // Loads from constant memory are safe to speculate, for example indexed load
   // from a jump table.
   // Stores and side effects are already checked by isSafeToMove.
-  if (I.mayLoad() && !mayLoadFromGOTOrConstantPool(I) &&
-      !IsGuaranteedToExecute(I.getParent(), CurLoop)) {
+  if (I.mayLoad() && !IsGuaranteedToExecute(I.getParent(), CurLoop)) {
     LLVM_DEBUG(dbgs() << "LICM: Load not guaranteed to execute.\n");
     return false;
   }
