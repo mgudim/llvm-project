@@ -275,6 +275,7 @@ add_llvm_component_library(LLVMCodeGen
   CGData
   CodeGenTypes
   Core
+  DebugInfoDWARF
   MC
   ObjCARC
   ProfileData

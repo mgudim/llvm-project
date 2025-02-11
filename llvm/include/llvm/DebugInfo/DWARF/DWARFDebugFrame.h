@@ -74,12 +74,8 @@ private:
   bool Dereference; /// If true, the resulting location must be dereferenced
                     /// after the location value is computed.
 
-  // Constructors are private to force people to use the create static
+  // Some constructors are private to force people to use the create static
   // functions.
-  UnwindLocation(Location K)
-      : Kind(K), RegNum(InvalidRegisterNumber), Offset(0),
-        AddrSpace(std::nullopt), Dereference(false) {}
-
   UnwindLocation(Location K, uint32_t Reg, int32_t Off,
                  std::optional<uint32_t> AS, bool Deref)
       : Kind(K), RegNum(Reg), Offset(Off), AddrSpace(AS), Dereference(Deref) {}
@@ -89,6 +85,10 @@ private:
         Dereference(Deref) {}
 
 public:
+  UnwindLocation(Location K)
+      : Kind(K), RegNum(InvalidRegisterNumber), Offset(0),
+        AddrSpace(std::nullopt), Dereference(false) {}
+
   /// Create a location whose rule is set to Unspecified. This means the
   /// register value might be in the same register but it wasn't specified in
   /// the unwind opcodes.
@@ -136,6 +136,7 @@ public:
     return *AddrSpace;
   }
   int32_t getConstant() const { return Offset; }
+  bool getDeref() const { return Dereference; }
   /// Some opcodes will modify the CFA location's register only, so we need
   /// to be able to modify the CFA register when evaluating DWARF Call Frame
   /// Information opcodes.
@@ -148,6 +149,12 @@ public:
   /// the constant value (DW_CFA_GNU_window_save which is also known as
   // DW_CFA_AARCH64_negate_ra_state).
   void setConstant(int32_t Value) { Offset = Value; }
+
+  void setDeref(bool NewDeref) { Dereference = NewDeref; }
+  void setKind(Location NewKind) { Kind = NewKind; }
+  bool isRegister() const {
+    return ((Kind == RegPlusOffset) && !Dereference && (Offset == 0));
+  }
 
   std::optional<DWARFExpression> getDWARFExpressionBytes() const {
     return Expr;
