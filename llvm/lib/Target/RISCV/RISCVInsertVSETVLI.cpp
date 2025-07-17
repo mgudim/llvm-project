@@ -26,6 +26,7 @@
 
 #include "RISCV.h"
 #include "RISCVSubtarget.h"
+#include "RISCVVConfigAnalysis.h"
 #include "llvm/ADT/PostOrderIterator.h"
 #include "llvm/ADT/Statistic.h"
 #include "llvm/CodeGen/LiveDebugVariables.h"
@@ -850,6 +851,7 @@ struct BlockData {
 };
 
 class RISCVInsertVSETVLI : public MachineFunctionPass {
+  RISCVVConfigInfo *VConfigInfo;
   const RISCVSubtarget *ST;
   const TargetInstrInfo *TII;
   MachineRegisterInfo *MRI;
@@ -873,6 +875,7 @@ public:
     AU.addPreserved<SlotIndexesWrapperPass>();
     AU.addPreserved<LiveDebugVariablesWrapperLegacy>();
     AU.addPreserved<LiveStacksWrapperLegacy>();
+    AU.addRequired<RISCVVConfigWrapperPass>();
 
     MachineFunctionPass::getAnalysisUsage(AU);
   }
@@ -911,7 +914,11 @@ private:
 char RISCVInsertVSETVLI::ID = 0;
 char &llvm::RISCVInsertVSETVLIID = RISCVInsertVSETVLI::ID;
 
-INITIALIZE_PASS(RISCVInsertVSETVLI, DEBUG_TYPE, RISCV_INSERT_VSETVLI_NAME,
+
+INITIALIZE_PASS_BEGIN(RISCVInsertVSETVLI, DEBUG_TYPE, RISCV_INSERT_VSETVLI_NAME,
+                false, false)
+INITIALIZE_PASS_DEPENDENCY(RISCVVConfigWrapperPass)
+INITIALIZE_PASS_END(RISCVInsertVSETVLI, DEBUG_TYPE, RISCV_INSERT_VSETVLI_NAME,
                 false, false)
 
 // If the AVL is defined by a vsetvli's output vl with the same VLMAX, we can
@@ -1796,6 +1803,7 @@ bool RISCVInsertVSETVLI::runOnMachineFunction(MachineFunction &MF) {
   MRI = &MF.getRegInfo();
   auto *LISWrapper = getAnalysisIfAvailable<LiveIntervalsWrapperPass>();
   LIS = LISWrapper ? &LISWrapper->getLIS() : nullptr;
+  VConfigInfo = &getAnalysis<RISCVVConfigWrapperPass>().getResult();
 
   assert(BlockInfo.empty() && "Expect empty block infos");
   BlockInfo.resize(MF.getNumBlockIDs());
