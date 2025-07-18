@@ -528,16 +528,68 @@ struct BlockData {
 };
 
 class RISCVVConfigInfo {
+  bool HaveVectorOp = false;
+  const RISCVSubtarget *ST;
+  // Possibly null!
+  LiveIntervals *LIS;
+  std::queue<const MachineBasicBlock *> WorkList;
+  std::vector<BlockData> BlockInfo;
 public:
-  RISCVVConfigInfo() {}
+/// Return true if this is an operation on mask registers.  Note that
+/// this includes both arithmetic/logical ops and load/store (vlm/vsm).
+  static bool hasUndefinedPassthru(const MachineInstr &MI);
+  static bool isMaskRegOp(const MachineInstr &MI);
+  /// Get the EEW for a load or store instruction.  Return std::nullopt if MI is
+  /// not a load or store which ignores SEW.
+  static std::optional<unsigned> getEEWForLoadStore(const MachineInstr &MI);
   static bool areCompatibleVTYPEs(uint64_t CurVType, uint64_t NewVType,
                                   const DemandedFields &Used);
+/// Return the fields and properties demanded by the provided instruction.
+  static DemandedFields getDemanded(const MachineInstr &MI, const RISCVSubtarget *ST);
+  RISCVVConfigInfo() {}
   bool haveVectorOp();
   void compute(const MachineFunction &MF);
   void clear();
+  // Given an incoming state reaching MI, minimally modifies that state so that it
+  // is compatible with MI. The resulting state is guaranteed to be semantically
+  // legal for MI, but may not be the state requested by MI.
+  void transferBefore(VSETVLIInfo &Info,
+                                          const MachineInstr &MI) const;
+  // Given a state with which we evaluated MI (see transferBefore above for why
+  // this might be different that the state MI requested), modify the state to
+  // reflect the changes MI might make.
+void transferAfter(VSETVLIInfo &Info,
+                                       const MachineInstr &MI) const;
 
 private:
-  bool HaveVectorOp;
+void computeIncomingVLVTYPE(const MachineBasicBlock &MBB);
+  static unsigned computeVLMAX(unsigned VLEN, unsigned SEW,
+                             RISCVVType::VLMUL VLMul);
+  // If we don't use LMUL or the SEW/LMUL ratio, then adjust LMUL so that we
+  // maintain the SEW/LMUL ratio. This allows us to eliminate VL toggles in more
+  // places.
+  static VSETVLIInfo adjustIncoming(const VSETVLIInfo &PrevInfo,
+                                    const VSETVLIInfo &NewInfo,
+                                    DemandedFields &Demanded);
+  /// Return true if a VSETVLI is required to transition from CurInfo to Require
+  /// given a set of DemandedFields \p Used.
+  bool needVSETVLI(const DemandedFields &Used, const VSETVLIInfo &Require,
+                   const VSETVLIInfo &CurInfo) const;
+  // Return a VSETVLIInfo representing the changes made by this VSETVLI or
+  // VSETIVLI instruction.
+  VSETVLIInfo getInfoForVSETVLI(const MachineInstr &MI) const;
+  VSETVLIInfo computeInfoForInstr(const MachineInstr &MI) const;
+  bool computeVLVTYPEChanges(const MachineBasicBlock &MBB,
+                             VSETVLIInfo &Info) const;
+  // If the AVL is defined by a vsetvli's output vl with the same VLMAX, we can
+  // replace the AVL operand with the AVL of the defining vsetvli. E.g.
+  //
+  // %vl = PseudoVSETVLI %avl:gpr, SEW=32, LMUL=M1
+  // $x0 = PseudoVSETVLI %vl:gpr, SEW=32, LMUL=M1
+  // ->
+  // %vl = PseudoVSETVLI %avl:gpr, SEW=32, LMUL=M1
+  // $x0 = PseudoVSETVLI %avl:gpr, SEW=32, LMUL=M1
+  void forwardVSETVLIAVL(VSETVLIInfo &Info) const;
 };
 
 class RISCVVConfigAnalysis
