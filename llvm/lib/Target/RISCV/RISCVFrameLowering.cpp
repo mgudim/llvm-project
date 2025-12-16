@@ -1624,10 +1624,7 @@ void RISCVFrameLowering::determineUncondPrologCalleeSaves(
     if (!Reg)
       Reg = MatchRegisterAltName(Name);
     if (!Reg) {
-      std::string msg;
-      raw_string_ostream Msg(msg);
-      Msg << "Couldn't parse register: " << Name << "\n";
-      reportFatalUsageError(Twine(msg));
+      reportFatalUsageError(Twine("Couldn't parse register: ") + Name + "\n");
     }
     UncondPrologCSRs.set(Reg.id());
   }
