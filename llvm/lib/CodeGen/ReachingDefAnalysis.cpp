@@ -14,6 +14,9 @@
 #include "llvm/CodeGen/TargetInstrInfo.h"
 #include "llvm/CodeGen/TargetRegisterInfo.h"
 #include "llvm/CodeGen/TargetSubtargetInfo.h"
+#include "llvm/IR/Function.h"
+#include "llvm/IR/Module.h"
+#include "llvm/IR/ModuleSlotTracker.h"
 #include "llvm/Support/Debug.h"
 
 using namespace llvm;
@@ -101,14 +104,54 @@ static bool isValidRegDefOf(const MachineOperand &MO, Register Reg,
   return TRI->regsOverlap(MO.getReg(), Reg);
 }
 
-static bool isFIDef(const MachineInstr &MI, int FrameIndex,
-                    const TargetInstrInfo *TII) {
+static std::optional<int> getFIDefinedByMO(const MachineOperand &MO,
+                                           const TargetInstrInfo &TII) {
   int DefFrameIndex = 0;
   int SrcFrameIndex = 0;
-  if (TII->isStoreToStackSlot(MI, DefFrameIndex) ||
-      TII->isStackSlotCopy(MI, DefFrameIndex, SrcFrameIndex))
-    return DefFrameIndex == FrameIndex;
+  const MachineInstr &MI = *MO.getParent();
+  if (TII.isStoreToStackSlot(MI, DefFrameIndex) ||
+      TII.isStackSlotCopy(MI, DefFrameIndex, SrcFrameIndex))
+    return DefFrameIndex;
+  return std::nullopt;
+}
+
+static std::optional<int> getFIDefinedByMMO(const MachineMemOperand &MMO) {
+  if (!MMO.isStore())
+    return std::nullopt;
+  if (const PseudoSourceValue *PSV = MMO.getPseudoValue()) {
+    if (auto *FSV = dyn_cast<FixedStackPseudoSourceValue>(PSV))
+      return FSV->getFrameIndex();
+  }
+  return std::nullopt;
+}
+
+static bool isFIDef(const MachineInstr &MI, int FrameIndex,
+                    const TargetInstrInfo &TII) {
+  for (const MachineOperand &MO : MI.operands()) {
+    std::optional<int> FIDef = getFIDefinedByMO(MO, TII);
+    if (FIDef.has_value() && FIDef.value() == FrameIndex)
+      return true;
+  }
+  for (const MachineMemOperand *MMO : MI.memoperands()) {
+    std::optional<int> FIDef = getFIDefinedByMMO(*MMO);
+    if (FIDef.has_value() && FIDef.value() == FrameIndex)
+      return true;
+  }
   return false;
+}
+
+static void getAllFIDefs(const MachineInstr &MI, const TargetInstrInfo &TII,
+                         SmallSet<int, 4> &AllFIDefs) {
+  for (const MachineOperand &MO : MI.operands()) {
+    std::optional<int> FIDef = getFIDefinedByMO(MO, TII);
+    if (FIDef.has_value())
+      AllFIDefs.insert(FIDef.value());
+  }
+  for (const MachineMemOperand *MMO : MI.memoperands()) {
+    std::optional<int> FIDef = getFIDefinedByMMO(*MMO);
+    if (FIDef.has_value())
+      AllFIDefs.insert(FIDef.value());
+  }
 }
 
 void ReachingDefInfo::enterBasicBlock(MachineBasicBlock *MBB) {
@@ -189,13 +232,12 @@ void ReachingDefInfo::processDefs(MachineInstr *MI) {
   assert(MBBNumber < MBBReachingDefs.numBlockIDs() &&
          "Unexpected basic block number.");
 
+  SmallSet<int, 4> AllFIDefs;
+  getAllFIDefs(*MI, *TII, AllFIDefs);
+  for (int FIDef : AllFIDefs)
+    MBBFrameObjsReachingDefs[{MBBNumber, FIDef}].push_back(CurInstr);
+
   for (auto &MO : MI->operands()) {
-    if (MO.isFI()) {
-      int FrameIndex = MO.getIndex();
-      if (!isFIDef(*MI, FrameIndex, TII))
-        continue;
-      MBBFrameObjsReachingDefs[{MBBNumber, FrameIndex}].push_back(CurInstr);
-    }
     if (!isValidRegDef(MO))
       continue;
     for (MCRegUnit Unit : TRI->regunits(MO.getReg().asMCReg())) {
@@ -303,6 +345,13 @@ void ReachingDefInfo::print(raw_ostream &OS) {
     }
   }
 
+  const MachineFrameInfo *MFI = &MF->getFrameInfo();
+  const Function &F = MF->getFunction();
+  const Module *M = F.getParent();
+  ModuleSlotTracker MST(M);
+  MST.incorporateFunction(F);
+  const LLVMContext &Context = F.getContext();
+  SmallVector<StringRef, 0> SSNs;
   SmallPtrSet<MachineInstr *, 2> Defs;
   for (MachineBasicBlock &MBB : *MF) {
     OS << printMBBReference(MBB) << ":\n";
@@ -331,6 +380,25 @@ void ReachingDefInfo::print(raw_ostream &OS) {
         for (int Num : Nums)
           OS << Num << " ";
         OS << "}\n";
+      }
+      for (MachineMemOperand *MMO : MI.memoperands()) {
+        if (const PseudoSourceValue *PSV = MMO->getPseudoValue()) {
+          if (auto *FSV = dyn_cast<FixedStackPseudoSourceValue>(PSV)) {
+            int FrameIndex = FSV->getFrameIndex();
+            Register Reg = Register::index2StackSlot(FrameIndex);
+            Defs.clear();
+            getGlobalReachingDefs(&MI, Reg, Defs);
+            MMO->print(OS, MST, SSNs, Context, MFI, TII);
+            SmallVector<int, 0> Nums;
+            for (MachineInstr *Def : Defs)
+              Nums.push_back(InstToNumMap[Def]);
+            llvm::sort(Nums);
+            OS << ":{ ";
+            for (int Num : Nums)
+              OS << Num << " ";
+            OS << "}\n";
+          }
+        }
       }
       OS << InstToNumMap[&MI] << ": " << MI << "\n";
     }
@@ -672,7 +740,7 @@ MachineInstr *ReachingDefInfo::getLocalLiveOutMIDef(MachineBasicBlock *MBB,
   // Check if Last is the definition
   if (Reg.isStack()) {
     int FrameIndex = Reg.stackSlotIndex();
-    if (isFIDef(*Last, FrameIndex, TII))
+    if (isFIDef(*Last, FrameIndex, *TII))
       return &*Last;
   } else {
     for (auto &MO : Last->operands())
