@@ -726,11 +726,12 @@ bool ReachingDefInfo::isReachingDefLiveOut(MachineInstr *MI,
   return true;
 }
 
-MachineInstr *ReachingDefInfo::getLocalLiveOutMIDef(MachineBasicBlock *MBB,
-                                                    Register Reg) const {
+MachineInstr *
+ReachingDefInfo::getLocalLiveOutMIDef(MachineBasicBlock *MBB, Register Reg,
+                                      bool IgnoreNonLiveOut) const {
   LiveRegUnits LiveRegs(*TRI);
   LiveRegs.addLiveOuts(*MBB);
-  if (Reg.isPhysical() && LiveRegs.available(Reg))
+  if (IgnoreNonLiveOut && Reg.isPhysical() && LiveRegs.available(Reg))
     return nullptr;
 
   auto Last = MBB->getLastNonDebugInstr();

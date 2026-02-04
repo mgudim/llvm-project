@@ -234,6 +234,46 @@ Register RISCVInstrInfo::isStoreToStackSlot(const MachineInstr &MI,
   return 0;
 }
 
+Register RISCVInstrInfo::isLoadFromStackSlotPostFE(const MachineInstr &MI,
+                                                   int &FrameIndex) const {
+  // First try the regular check
+  if (Register Reg = isLoadFromStackSlot(MI, FrameIndex))
+    return Reg;
+
+  // Check memory operands for post-frame-index-elimination case
+  SmallVector<const MachineMemOperand *, 1> Accesses;
+  if (hasLoadFromStackSlot(MI, Accesses)) {
+    if (Accesses.size() > 1)
+      return Register();
+
+    FrameIndex =
+        cast<FixedStackPseudoSourceValue>(Accesses.front()->getPseudoValue())
+            ->getFrameIndex();
+    return MI.getOperand(0).getReg();
+  }
+  return Register();
+}
+
+Register RISCVInstrInfo::isStoreToStackSlotPostFE(const MachineInstr &MI,
+                                                  int &FrameIndex) const {
+  // First try the regular check
+  if (Register Reg = isStoreToStackSlot(MI, FrameIndex))
+    return Reg;
+
+  // Check memory operands for post-frame-index-elimination case
+  SmallVector<const MachineMemOperand *, 1> Accesses;
+  if (hasStoreToStackSlot(MI, Accesses)) {
+    if (Accesses.size() > 1)
+      return Register();
+
+    FrameIndex =
+        cast<FixedStackPseudoSourceValue>(Accesses.front()->getPseudoValue())
+            ->getFrameIndex();
+    return MI.getOperand(0).getReg();
+  }
+  return Register();
+}
+
 bool RISCVInstrInfo::isReMaterializableImpl(
     const MachineInstr &MI) const {
   switch (RISCV::getRVVMCOpcode(MI.getOpcode())) {
