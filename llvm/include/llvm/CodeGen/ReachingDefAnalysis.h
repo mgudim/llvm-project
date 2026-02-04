@@ -184,6 +184,11 @@ public:
   /// Note that Reg may represent a stack slot.
   int getReachingDef(MachineInstr *MI, Register Reg) const;
 
+  /// Provides the instruction of the closest reaching def instruction of
+  /// Reg that reaches MI, relative to the begining of MI's basic block.
+  /// Note that Reg may represent a stack slot.
+  MachineInstr *getReachingLocalMIDef(MachineInstr *MI, Register Reg) const;
+
   /// Return whether A and B use the same def of Reg.
   bool hasSameReachingDef(MachineInstr *A, MachineInstr *B, Register Reg) const;
 
@@ -193,8 +198,8 @@ public:
 
   /// Return the local MI that produces the live out value for Reg, or
   /// nullptr for a non-live out or non-local def.
-  MachineInstr *getLocalLiveOutMIDef(MachineBasicBlock *MBB,
-                                     Register Reg) const;
+  MachineInstr *getLocalLiveOutMIDef(MachineBasicBlock *MBB, Register Reg,
+                                     bool IgnoreNonLiveOut = true) const;
 
   /// If a single MachineInstr creates the reaching definition, then return it.
   /// Otherwise return null.
@@ -308,10 +313,6 @@ private:
   /// nullptr if the id does not refer to the block.
   MachineInstr *getInstFromId(MachineBasicBlock *MBB, int InstId) const;
 
-  /// Provides the instruction of the closest reaching def instruction of
-  /// Reg that reaches MI, relative to the begining of MI's basic block.
-  /// Note that Reg may represent a stack slot.
-  MachineInstr *getReachingLocalMIDef(MachineInstr *MI, Register Reg) const;
 };
 
 class ReachingDefAnalysis : public AnalysisInfoMixin<ReachingDefAnalysis> {
