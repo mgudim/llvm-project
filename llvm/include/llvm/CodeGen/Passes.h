@@ -565,6 +565,9 @@ LLVM_ABI FunctionPass *createIndirectBrExpandPass();
 /// Creates CFI Fixup pass. \see CFIFixup.cpp
 LLVM_ABI FunctionPass *createCFIFixup();
 
+/// Creates Compute and Insert CFIs pass. \see ComputeAndInsertCFIs.cpp
+LLVM_ABI FunctionPass *createComputeAndInsertCFIs();
+
 /// Creates CFI Instruction Inserter pass. \see CFIInstrInserter.cpp
 LLVM_ABI FunctionPass *createCFIInstrInserter();
 

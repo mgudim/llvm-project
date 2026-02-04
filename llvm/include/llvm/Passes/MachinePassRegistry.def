@@ -106,6 +106,7 @@ MACHINE_FUNCTION_ANALYSIS("virtregmap", VirtRegMapAnalysis())
 #endif
 MACHINE_FUNCTION_PASS("block-placement-stats", MachineBlockPlacementStatsPass())
 MACHINE_FUNCTION_PASS("branch-relaxation", BranchRelaxationPass())
+MACHINE_FUNCTION_PASS("compute-and-insert-cfis", ComputeAndInsertCFIPass())
 MACHINE_FUNCTION_PASS("dead-mi-elimination", DeadMachineInstructionElimPass())
 MACHINE_FUNCTION_PASS("detect-dead-lanes", DetectDeadLanesPass())
 MACHINE_FUNCTION_PASS("early-ifcvt", EarlyIfConverterPass())
