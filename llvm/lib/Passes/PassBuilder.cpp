@@ -85,6 +85,7 @@
 #include "llvm/CodeGen/BranchRelaxation.h"
 #include "llvm/CodeGen/CodeGenPrepare.h"
 #include "llvm/CodeGen/ComplexDeinterleavingPass.h"
+#include "llvm/CodeGen/ComputeAndInsertCFIsPass.h"
 #include "llvm/CodeGen/DeadMachineInstructionElim.h"
 #include "llvm/CodeGen/DetectDeadLanes.h"
 #include "llvm/CodeGen/DwarfEHPrepare.h"
