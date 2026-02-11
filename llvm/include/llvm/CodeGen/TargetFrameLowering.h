@@ -487,6 +487,14 @@ public:
   /// the function (before any stack operations).
   virtual Register getInitialCFARegister(const MachineFunction &MF) const;
 
+  /// Return final CFA offset value i.e. the one valid at the end of the
+  /// function (before the return instruction).
+  virtual int getFinalCFAOffset(const MachineFunction &MF) const;
+
+  /// Return final CFA register value i.e. the one valid at the end of
+  /// the function (before the return instruction).
+  virtual Register getFinalCFARegister(const MachineFunction &MF) const;
+
   /// Return the frame base information to be encoded in the DWARF subprogram
   /// debug info.
   virtual DwarfFrameBase getDwarfFrameBase(const MachineFunction &MF) const;

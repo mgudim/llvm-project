@@ -178,6 +178,15 @@ TargetFrameLowering::getInitialCFARegister(const MachineFunction &MF) const {
   llvm_unreachable("getInitialCFARegister() not implemented!");
 }
 
+int TargetFrameLowering::getFinalCFAOffset(const MachineFunction &MF) const {
+  llvm_unreachable("getFinalCFAOffset() not implemented!");
+}
+
+Register
+TargetFrameLowering::getFinalCFARegister(const MachineFunction &MF) const {
+  llvm_unreachable("getFinalCFARegister() not implemented!");
+}
+
 TargetFrameLowering::DwarfFrameBase
 TargetFrameLowering::getDwarfFrameBase(const MachineFunction &MF) const {
   const TargetRegisterInfo *RI = MF.getSubtarget().getRegisterInfo();

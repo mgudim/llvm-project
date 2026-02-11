@@ -111,7 +111,7 @@ static cl::opt<bool> EnableCFIInstrInserter(
 
 cl::opt<bool> RISCVEmitCFIAfterFE(
     "riscv-emit-cfi-after-fe",
-    cl::desc("Emit CFI instructions after front-end passes for RISC-V"),
+    cl::desc("Emit CFI instructions after frame elimination."),
     cl::init(false), cl::Hidden);
 
 static cl::opt<bool>
