@@ -24,6 +24,9 @@ using namespace llvm;
 
 #define DEBUG_TYPE "riscv-subtarget"
 
+// External declaration for command-line option from RISCVTargetMachine.cpp
+extern cl::opt<bool> RISCVEmitCFIAfterFE;
+
 #define GET_SUBTARGETINFO_TARGET_DESC
 #define GET_SUBTARGETINFO_CTOR
 #include "RISCVGenSubtargetInfo.inc"
@@ -275,4 +278,11 @@ bool RISCVSubtarget::useMIPSLoadStorePairs() const {
 
 bool RISCVSubtarget::useMIPSCCMovInsn() const {
   return UseMIPSCCMovInsn && HasVendorXMIPSCMov;
+}
+
+bool RISCVSubtarget::emitCFIAfterFE() const {
+  // Assert that the target does not have vector extension
+  assert(!hasVInstructions() &&
+         "emitCFIAfterFE should not be used with vector extension");
+  return RISCVEmitCFIAfterFE;
 }

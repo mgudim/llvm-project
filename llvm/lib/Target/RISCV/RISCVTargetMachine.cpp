@@ -109,6 +109,11 @@ static cl::opt<bool> EnableCFIInstrInserter(
     cl::desc("Enable CFI Instruction Inserter for RISC-V"), cl::init(false),
     cl::Hidden);
 
+cl::opt<bool> RISCVEmitCFIAfterFE(
+    "riscv-emit-cfi-after-fe",
+    cl::desc("Emit CFI instructions after front-end passes for RISC-V"),
+    cl::init(false), cl::Hidden);
+
 static cl::opt<bool>
     EnableSelectOpt("riscv-select-opt", cl::Hidden,
                     cl::desc("Enable select to branch optimizations"),
@@ -191,7 +196,9 @@ RISCVTargetMachine::RISCVTargetMachine(const Target &T, const Triple &TT,
   if (TT.isOSFuchsia() && !TT.isArch64Bit())
     report_fatal_error("Fuchsia is only supported for 64-bit");
 
-  setCFIFixup(!EnableCFIInstrInserter);
+  // Disable CFIFixup if CFIInstrInserter is enabled or if emitCFIAfterFE might be used
+  // Note: RISCVEmitCFIAfterFE is checked at runtime in the pass
+  setCFIFixup(!EnableCFIInstrInserter && !RISCVEmitCFIAfterFE);
 }
 
 const RISCVSubtarget *
@@ -413,6 +420,7 @@ public:
   void addPreEmitPass() override;
   void addPreEmitPass2() override;
   void addPreSched2() override;
+  void addPostBBSections() override;
   void addMachineSSAOptimization() override;
   FunctionPass *createRVVRegAllocPass(bool Optimized);
   bool addRegAssignAndRewriteFast() override;
@@ -604,8 +612,14 @@ void RISCVPassConfig::addPreEmitPass2() {
     return MF.getFunction().getParent()->getModuleFlag("kcfi");
   }));
 
-  if (EnableCFIInstrInserter)
+  // Disable CFIInstrInserter if emitCFIAfterFE is enabled
+  if (EnableCFIInstrInserter && !RISCVEmitCFIAfterFE)
     addPass(createCFIInstrInserter());
+}
+
+void RISCVPassConfig::addPostBBSections() {
+  // Add ComputeAndInsertCFI pass - it will check emitCFIAfterFE() at runtime
+  addPass(createComputeAndInsertCFIs());
 }
 
 void RISCVPassConfig::addMachineSSAOptimization() {

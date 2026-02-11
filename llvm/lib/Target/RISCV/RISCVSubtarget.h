@@ -310,6 +310,10 @@ public:
     return hasVInstructions() ? MaxInterleaveFactor : 1;
   }
 
+  // Returns true if CFI instructions should be emitted after front-end passes.
+  // Asserts that the target does not have vector extension.
+  bool emitCFIAfterFE() const override;
+
   bool hasOptimizedSegmentLoadStore(unsigned NF) const {
     switch (NF) {
     case 2:

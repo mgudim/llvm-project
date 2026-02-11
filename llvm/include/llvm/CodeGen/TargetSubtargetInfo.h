@@ -364,6 +364,10 @@ public:
   }
 
   virtual bool isRegisterReservedByUser(Register R) const { return false; }
+
+  /// Returns true if CFI instructions should be computed and inserted after
+  /// front-end passes (after basic block layout is finalized).
+  virtual bool emitCFIAfterFE() const { return false; }
 };
 } // end namespace llvm
 
