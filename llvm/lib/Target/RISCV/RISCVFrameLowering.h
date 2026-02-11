@@ -25,6 +25,8 @@ public:
 
   int getInitialCFAOffset(const MachineFunction &MF) const override;
   Register getInitialCFARegister(const MachineFunction &MF) const override;
+  int getFinalCFAOffset(const MachineFunction &MF) const override;
+  Register getFinalCFARegister(const MachineFunction &MF) const override;
 
   void emitPrologue(MachineFunction &MF, MachineBasicBlock &MBB) const override;
   void emitEpilogue(MachineFunction &MF, MachineBasicBlock &MBB) const override;

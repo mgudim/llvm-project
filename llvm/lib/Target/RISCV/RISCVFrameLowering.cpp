@@ -2510,3 +2510,12 @@ Register
 RISCVFrameLowering::getInitialCFARegister(const MachineFunction &MF) const {
   return RISCV::X2;
 }
+
+int RISCVFrameLowering::getFinalCFAOffset(const MachineFunction &MF) const {
+  return 0;
+}
+
+Register
+RISCVFrameLowering::getFinalCFARegister(const MachineFunction &MF) const {
+  return RISCV::X2;
+}
