@@ -27,6 +27,7 @@
 #include "llvm/Pass.h"
 #include "llvm/Support/Debug.h"
 #include "llvm/Support/raw_ostream.h"
+#include "llvm/TargetParser/Triple.h"
 
 using namespace llvm;
 
@@ -238,6 +239,11 @@ bool ComputeAndInsertCFIsLegacyPass::runOnMachineFunction(MachineFunction &MF) {
 
 bool ComputeAndInsertCFIs::runOnMachineFunction(MachineFunction &MF) {
   LLVM_DEBUG(dbgs() << "ComputeAndInsertCFIs running on " << MF.getName() << "\n");
+
+  // Check if the target wants to emit CFI after front-end
+  if (!MF.getSubtarget().emitCFIAfterFE())
+    return false;
+
   init();
   trackCFIStateBottomUp();
 
