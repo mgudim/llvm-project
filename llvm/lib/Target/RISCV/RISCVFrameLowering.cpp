@@ -96,8 +96,8 @@ static const std::pair<MCPhysReg, int8_t> FixedCSRFIQCIInterruptMap[] = {
 };
 
 /// Returns true if DWARF CFI instructions ("frame moves") should be emitted.
-static bool needsDwarfCFI(const MachineFunction &MF) {
-  return MF.needsFrameMoves();
+static bool needsDwarfCfiInPEI(const MachineFunction &MF) {
+  return MF.needsFrameMoves() && !MF.getSubtarget()->emitCFIAfterFE();
 }
 
 // For now we use x3, a.k.a gp, as pointer to shadow call stack.
@@ -157,7 +157,7 @@ static void emitSCSPrologue(MachineFunction &MF, MachineBasicBlock &MBB,
       .addImm(-SlotSize)
       .setMIFlag(MachineInstr::FrameSetup);
 
-  if (!needsDwarfCFI(MF))
+  if (!needsDwarfCfiInPEI(MF))
     return;
 
   // Emit a CFI instruction that causes SlotSize to be subtracted from the value
@@ -218,7 +218,7 @@ static void emitSCSEpilogue(MachineFunction &MF, MachineBasicBlock &MBB,
       .addReg(SCSPReg)
       .addImm(-SlotSize)
       .setMIFlag(MachineInstr::FrameDestroy);
-  if (needsDwarfCFI(MF)) {
+  if (needsDwarfCfiInPEI(MF)) {
     // Restore the SCS pointer
     CFIInstBuilder(MBB, MI, MachineInstr::FrameDestroy).buildRestore(SCSPReg);
   }
@@ -953,7 +953,7 @@ void RISCVFrameLowering::emitPrologue(MachineFunction &MF,
   MBBI = std::prev(MBBI, getRVVCalleeSavedInfo(MF, CSI).size() +
                              getUnmanagedCSI(MF, CSI).size());
   CFIInstBuilder CFIBuilder(MBB, MBBI, MachineInstr::FrameSetup);
-  bool NeedsDwarfCFI = needsDwarfCFI(MF);
+  bool NeedsDwarfCFI = needsDwarfCfiInPEI(MF);
 
   // If libcalls are used to spill and restore callee-saved registers, the frame
   // has two sections; the opaque section managed by the libcalls, and the
@@ -1203,7 +1203,7 @@ void RISCVFrameLowering::deallocateStack(MachineFunction &MF,
                 MachineInstr::FrameDestroy, getStackAlign());
   StackSize = 0;
 
-  if (needsDwarfCFI(MF))
+  if (needsDwarfCfiInPEI(MF))
     CFIInstBuilder(MBB, MBBI, MachineInstr::FrameDestroy)
         .buildDefCFAOffset(CFAOffset);
 }
@@ -1245,7 +1245,7 @@ void RISCVFrameLowering::emitEpilogue(MachineFunction &MF,
       std::next(MBBI, getRVVCalleeSavedInfo(MF, CSI).size());
   CFIInstBuilder CFIBuilder(MBB, FirstScalarCSRRestoreInsn,
                             MachineInstr::FrameDestroy);
-  bool NeedsDwarfCFI = needsDwarfCFI(MF);
+  bool NeedsDwarfCFI = needsDwarfCfiInPEI(MF);
 
   uint64_t FirstSPAdjustAmount = getFirstSPAdjustAmount(MF);
   uint64_t RealStackSize = FirstSPAdjustAmount ? FirstSPAdjustAmount
@@ -1895,7 +1895,7 @@ MachineBasicBlock::iterator RISCVFrameLowering::eliminateCallFramePseudoInstr(
         bool DynAllocation =
             MF.getInfo<RISCVMachineFunctionInfo>()->hasDynamicAllocation();
         allocateStack(MBB, MI, MF, -Amount, -Amount,
-                      needsDwarfCFI(MF) && !hasFP(MF),
+                      needsDwarfCfiInPEI(MF) && !hasFP(MF),
                       /*NeedProbe=*/true, ProbeSize, DynAllocation,
                       MachineInstr::NoFlags);
       } else {

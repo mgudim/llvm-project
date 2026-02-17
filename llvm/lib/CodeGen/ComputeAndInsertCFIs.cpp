@@ -94,7 +94,7 @@ private:
       // CFA offset
       int64_t Offset;
     };
-    int64_t AddedImm = 0;
+    int64_t ImmToAdd = 0;
 
   public:
     PreservedValueInfo() {}
@@ -125,13 +125,13 @@ private:
       return Offset;
     }
 
-    int64_t getAddedImm() const { return AddedImm; }
-    void setAddedImm(int64_t NewAddedImm) { AddedImm = NewAddedImm; }
+    int64_t getImmToAdd() const { return ImmToAdd; }
+    void setImmToAdd(int64_t NewImmToAdd) { ImmToAdd = NewImmToAdd; }
 
     bool operator==(const PreservedValueInfo &RHS) const {
       if (K != RHS.K)
         return false;
-      if (getAddedImm() != RHS.getAddedImm())
+      if (getImmToAdd() != RHS.getImmToAdd())
         return false;
       switch (K) {
       case Kind::Invalid:
@@ -158,10 +158,12 @@ private:
         OS << "At CFA offset: " << Offset;
         break;
       }
-      if (getAddedImm() != 0)
-        OS << ", AddedImm = " << getAddedImm();
+      if (getImmToAdd() != 0)
+        OS << ", ImmToAdd = " << getImmToAdd();
     }
   };
+
+  static constexpr int CFADwarfNum = std::numeric_limits<int>::min();
 
   class CFIState {
   public:
@@ -172,13 +174,10 @@ private:
     void setCFAOffset(int64_t CFAOffset_);
     int getCFARegister() const;
     void setCFARegister(int CFARegister_);
-    PreservedValueInfo &getPVInfoForDwarfReg(int DwarfReg, CSROrdering &CSRs);
-    void setPVInfoForDwarfReg(unsigned DwarfReg, PreservedValueInfo &NewPVInfo,
-                              CSROrdering &CSRs);
+    PreservedValueInfo &getPVInfoForDwarfReg(int DwarfNum, CSROrdering &CSRs);
 
   private:
-    int64_t CFAOffset = -1;
-    int CFARegister = -1;
+    PreservedValueInfo CFAPVInfo;
     SmallVector<PreservedValueInfo> CSRPVInfos;
   };
 
@@ -205,59 +204,35 @@ private:
 
   class CFIGenerator {
   public:
-    virtual ~CFIGenerator() {}
-    virtual unsigned generateCFI(
-      const PreservedValueInfo &PrevPVInfo,
-      const PreservedValueInfo &NewPVInfo
-    );
-  };
-
-  class CFACFIGenerator : public CFIGenerator {
-  public:
-    CFACFIGenerator(MachineFunction &MF_) : MF(MF_) {}
     unsigned generateCFI(
       const PreservedValueInfo &PrevPVInfo,
       const PreservedValueInfo &NewPVInfo
-    ) override;
-  private:
-    MachineFunction &MF;
-  };
+    ) const;
 
-  class CSRCFIGenerator : public CFIGenerator {
-  public:
-    CSRCFIGenerator(MachineFunction &MF_, unsigned CSRDwarfNum_) : MF(MF_), CSRDwarfNum(CSRDwarfNum_) {}
-    unsigned generateCFI(
-      const PreservedValueInfo &PrevPVInfo,
-      const PreservedValueInfo &NewPVInfo
-    ) override;
+    CFIGenerator(MachineFunction &MF_, int DwarfNum_)
+        : MF(MF_), DwarfNum(DwarfNum_) {}
+
   private:
     MachineFunction &MF;
-    unsigned CSRDwarfNum;
+    int DwarfNum;
   };
 
   // For debug only.
   SmallSet<int, 16> InterestingRegs;
 
   void init();
-  void trackPVBottomUpAndRecordCFIs(
-    const PreservedValueInfo &ValueToTrack,
-    const MachineBasicBlock &MBB, 
-    const CFIGenerator &CFIGen
-  );
   void trackCFIStateBottomUp();
-  void trackCSRBottomUp(unsigned CSRDwarfNum, Register RegToTrack,
-                        MachineBasicBlock &MBB,
-                        SmallSet<MachineBasicBlock *, 16> &Visited);
-  void trackCFABottomUp(
-    Register RegToTrack, 
-    MachineBasicBlock &MBB,
+  bool trackPVBottomUpAndGenCFIs(
+    int DwarfNum,
+    Register RegToTrack,
+    MachineBasicBlock &MBB, 
+    const CFIGenerator &CFIGen,
     SmallSet<MachineBasicBlock *, 16> &Visited
   );
 
   bool adjustCFIsToMBBLayout();
-  unsigned addCFIFrameInstrForCSR(unsigned DwarfReg,
-                                  const PreservedValueInfo &PVInfo);
   void insertCFIInstruction(const CFIBuildInfo &Info);
+  void printCFIStatesForReg(int CSRDwarfNum);
 };
 
 } // namespace
@@ -290,7 +265,7 @@ bool ComputeAndInsertCFIsLegacyPass::runOnMachineFunction(MachineFunction &MF) {
 
 bool ComputeAndInsertCFIs::runOnMachineFunction(MachineFunction &MF) {
   LLVM_DEBUG(dbgs() << "ComputeAndInsertCFIs running on " << MF.getName() << "\n");
-  if (!MF.getSubtarget().emitCFIAfterFE())
+  if (!MF.getSubtarget().emitCFIAfterFE() || !MF.needsFrameMoves())
     return false;
 
   init();
@@ -318,153 +293,81 @@ void ComputeAndInsertCFIs::trackCFIStateBottomUp() {
           Reg.has_value() &&
           "Dwarf register does not have a corresponding LLVM register value!");
       SmallSet<MachineBasicBlock *, 16> Visited;
-      trackCSRBottomUp(CSRDwarfNum, Register(Reg.value()), *RetMBB, Visited);
+      CFIGenerator CFIGen(MF, CSRDwarfNum);
+      if (trackPVBottomUpAndGenCFIs(CSRDwarfNum, Register(Reg.value()), *RetMBB, CFIGen, Visited))
+        InterestingRegs.insert(CSRDwarfNum);
     }
+    // Now track CFA
+    CFIGenerator CFIGen(MF, CFADwarfNum);
     SmallSet<MachineBasicBlock *, 16> Visited;
-    trackCFABottomUp(TFI.getFinalCFARegister(MF), *RetMBB, Visited);
+    LLVM_DEBUG(
+      dbgs() << "Tracking CFA from the return MBB " << printMBBReference(*RetMBB) << "\n";
+    );
+    if (trackPVBottomUpAndGenCFIs(ComputeAndInsertCFIs::CFADwarfNum, TFI.getFinalCFARegister(MF), *RetMBB, CFIGen, Visited))
+      InterestingRegs.insert(CFADwarfNum);
   }
   
   LLVM_DEBUG(dbgs() << "Computed CFI states for each basic block:\n";
              for (int CSRDwarfNum : CSRs.getOrderedCSRs()) {
-              if (!InterestingRegs.contains(CSRDwarfNum))
-                 continue;
-               dbgs() << "CSR Dwarf#" << CSRDwarfNum << ":\n";
-               for (const MachineBasicBlock &MBB : MF) {
-                 dbgs() << "Block: " << printMBBReference(MBB) << "\n";
-                 dbgs() << "Entry: ";
-                AllCFIs.getCFIStateAtMBBEntry(MBB)
-                    .getPVInfoForDwarfReg(CSRDwarfNum, CSRs)
-                    .dump(dbgs());
-                 dbgs() << "\n";
-                 dbgs() << "Exit: ";
-                AllCFIs.getCFIStateAtMBBExit(MBB)
-                    .getPVInfoForDwarfReg(CSRDwarfNum, CSRs)
-                    .dump(dbgs());
-                 dbgs() << "\n";
-               }
-             });
+              if (InterestingRegs.contains(CSRDwarfNum))
+               printCFIStatesForReg(CSRDwarfNum);
+             }
+            if (InterestingRegs.contains(CFADwarfNum))
+             printCFIStatesForReg(CFADwarfNum);
+             );
 }
 
-void ComputeAndInsertCFIs::trackCSRBottomUp(
-    unsigned CSRDwarfNum, Register RegToTrack, MachineBasicBlock &MBB,
-    SmallSet<MachineBasicBlock *, 16> &Visited) {
+bool ComputeAndInsertCFIs::trackPVBottomUpAndGenCFIs(
+  int DwarfNum,
+  Register RegToTrack,
+  MachineBasicBlock &MBB, 
+  const CFIGenerator &CFIGen,
+  SmallSet<MachineBasicBlock *, 16> &Visited
+) {
   Visited.insert(&MBB);
-  PreservedValueInfo &PVInfo =
-      AllCFIs.getCFIStateAtMBBEntry(MBB).getPVInfoForDwarfReg(CSRDwarfNum, CSRs);
-  PVInfo =
-      AllCFIs.getCFIStateAtMBBExit(MBB).getPVInfoForDwarfReg(CSRDwarfNum, CSRs);
-
+  PreservedValueInfo CurrentPVInfo = AllCFIs.getCFIStateAtMBBExit(MBB).getPVInfoForDwarfReg(DwarfNum, CSRs);
+  PreservedValueInfo PVInfoBeforeInstr = CurrentPVInfo;
   LLVM_DEBUG(dbgs() << "Tracking register: " << printReg(RegToTrack, &TRI)
                     << " in " << printMBBReference(MBB) << "\n");
 
   MachineInstr *LocalReachingDef =
       RDI.getLocalLiveOutMIDef(&MBB, RegToTrack,
                                /*IgnoreNonLiveOut=*/false);
-  if (LocalReachingDef)
-    InterestingRegs.insert(CSRDwarfNum);
+  bool InsertedCFIs = LocalReachingDef;
 
   while (LocalReachingDef) {
-    LLVM_DEBUG(dbgs() << "Move of CSR value: " << *LocalReachingDef << "in "
+    LLVM_DEBUG(dbgs() << "Move of value: " << *LocalReachingDef << "in "
                       << printMBBReference(MBB) << "\n");
     const DebugLoc &DL = LocalReachingDef->getDebugLoc();
-    Register FrameReg = MCRegister::NoRegister;
     int FrameIndex = std::numeric_limits<int>::min();
-    PreservedValueInfo NewPVInfo;
 
     if (Register StoredReg =
             TII.isStoreToStackSlotPostFE(*LocalReachingDef, FrameIndex)) {
       assert(FrameIndex == RegToTrack.stackSlotIndex());
-      StackOffset Offset = TFI.getFrameIndexReference(MF, FrameIndex, FrameReg);
+      StackOffset Offset = TFI.getFrameIndexReferenceFromSP(MF, FrameIndex);
       assert(Offset.getScalable() == 0 &&
              "Scalable offsets are not supported yet!");
-      assert(PVInfo.K == PreservedValueInfo::CFAOffset &&
-             PVInfo.getOffset() == Offset.getFixed() && "Wrong CFIState!");
 
       RegToTrack = StoredReg;
-      NewPVInfo = PreservedValueInfo::createRegister(
+      PVInfoBeforeInstr = PreservedValueInfo::createRegister(
           TRI.getDwarfRegNum(RegToTrack, true));
     } else if (Register LoadedReg = TII.isLoadFromStackSlotPostFE(
                    *LocalReachingDef, FrameIndex)) {
       assert(LoadedReg == RegToTrack);
-      assert(PVInfo.K == PreservedValueInfo::Register &&
-             PVInfo.getRegister() == TRI.getDwarfRegNum(RegToTrack, true) &&
-             "Wrong CFIState!");
-
-      StackOffset Offset = TFI.getFrameIndexReference(MF, FrameIndex, FrameReg);
+      StackOffset Offset = TFI.getFrameIndexReferenceFromSP(MF, FrameIndex);
       assert(Offset.getScalable() == 0 &&
              "Scalable offsets are not supported yet!");
 
       RegToTrack = Register::index2StackSlot(FrameIndex);
-      NewPVInfo = PreservedValueInfo::createCFAOffset(Offset.getFixed());
-
+      PVInfoBeforeInstr = PreservedValueInfo::createCFAOffset(Offset.getFixed());
     } else if (auto DstSrc = TII.isCopyInstr(*LocalReachingDef)) {
       Register DstReg = DstSrc->Destination->getReg();
       Register SrcReg = DstSrc->Source->getReg();
       assert(DstReg == RegToTrack);
-      assert(PVInfo.K == PreservedValueInfo::Register &&
-             PVInfo.getRegister() == TRI.getDwarfRegNum(RegToTrack, true) &&
-             "Wrong CFIState!");
 
       RegToTrack = SrcReg;
-      NewPVInfo = PreservedValueInfo::createRegister(
+      PVInfoBeforeInstr = PreservedValueInfo::createRegister(
           TRI.getDwarfRegNum(RegToTrack, true));
-    } else
-      llvm_unreachable("Unexpected instruction");
-
-    unsigned CFIIndex = addCFIFrameInstrForCSR(CSRDwarfNum, PVInfo);
-    CFIBuildInfos.push_back({&MBB, LocalReachingDef, DL, CFIIndex});
-
-    PVInfo = NewPVInfo;
-    LocalReachingDef = RDI.getReachingLocalMIDef(LocalReachingDef, RegToTrack);
-    LLVM_DEBUG(dbgs() << "Tracking register: " << printReg(RegToTrack, &TRI)
-                      << "\n");
-  }
-
-  for (MachineBasicBlock *PredMBB : MBB.predecessors()) {
-    if (Visited.contains(PredMBB))
-      continue;
-    AllCFIs.getCFIStateAtMBBExit(*PredMBB).getPVInfoForDwarfReg(CSRDwarfNum,
-                                                                CSRs) = PVInfo;
-    trackCSRBottomUp(CSRDwarfNum, RegToTrack, *PredMBB, Visited);
-  }
-}
-
-void ComputeAndInsertCFIs::trackCFABottomUp(
-  Register RegToTrack, 
-  MachineBasicBlock &MBB,
-  SmallSet<MachineBasicBlock *, 16> &Visited
-) {
-  Visited.insert(&MBB);
-  CFIState &ExitState = AllCFIs.getCFIStateAtMBBExit(MBB);
-  int CFARegDwarfNum = ExitState.getCFARegister();
-  int64_t CFAOffset = ExitState.getCFAOffset();
-  
-  LLVM_DEBUG(dbgs() << "Tracking CFA register: " << printReg(RegToTrack, &TRI)
-                    << " with offset " << CFAOffset
-                    << " in " << printMBBReference(MBB) << "\n");
-  
-  MachineInstr *LocalReachingDef =
-      RDI.getLocalLiveOutMIDef(&MBB, RegToTrack,
-                               /*IgnoreNonLiveOut=*/false);
-  
-  while (LocalReachingDef) {
-    LLVM_DEBUG(dbgs() << "CFA definition: " << *LocalReachingDef << " in "
-                      << printMBBReference(MBB) << "\n");
-    const DebugLoc &DL = LocalReachingDef->getDebugLoc();
-    unsigned CFIIndex = std::numeric_limits<unsigned>::max();
-    // TODO:
-    // Handle saving CFA register to stack?
-    if (auto DstSrc = TII.isCopyInstr(*LocalReachingDef)) {
-      Register DstReg = DstSrc->Destination->getReg();
-      Register SrcReg = DstSrc->Source->getReg();
-      assert(DstReg == RegToTrack && "Unexpected destination register");
-
-      CFARegDwarfNum = TRI.getDwarfRegNum(DstReg, true);
-
-      CFIIndex = MF.addFrameInst(
-          MCCFIInstruction::createDefCfaRegister(nullptr, CFARegDwarfNum));
-
-      RegToTrack = SrcReg;
     } else if (auto RegImm = TII.isAddImmediate(*LocalReachingDef, RegToTrack)) {
       // At any point we must have that:
       //
@@ -495,46 +398,33 @@ void ComputeAndInsertCFIs::trackCFABottomUp(
       // Putting (3) and (4) together we get our desired update rule:
       //
       //  `offset_before = imm + offset_after`
-      int64_t Imm = RegImm->Imm;
-
-      if (Register SrcReg = RegImm->Reg; SrcReg != RegToTrack) {
-        CFARegDwarfNum = TRI.getDwarfRegNum(RegToTrack, true);
-
-        CFIIndex = MF.addFrameInst(MCCFIInstruction::cfiDefCfa(
-          nullptr, CFARegDwarfNum, CFAOffset));
-
-        RegToTrack = SrcReg;
-      } else {
-
-        // we're adjusting by `offset_after - offset_before = -imm`.
-        CFIIndex = MF.addFrameInst(
-          MCCFIInstruction::createAdjustCfaOffset(nullptr, -Imm));
-      }
-
-      CFAOffset += Imm;
-    } else
-      llvm_unreachable("Invalid CFA definition!");
-
+      RegToTrack = RegImm->Reg;
+      PVInfoBeforeInstr = PreservedValueInfo::createRegister(TRI.getDwarfRegNum(RegToTrack, true));
+      PVInfoBeforeInstr.setImmToAdd(CurrentPVInfo.getImmToAdd() + RegImm->Imm);
+    }
+    LLVM_DEBUG(dbgs() << "Generating CFI:\n";
+    dbgs() << "State before instruction:\n";
+    PVInfoBeforeInstr.dump(dbgs());
+    dbgs() << "\nState after instruction:\n";
+    CurrentPVInfo.dump(dbgs());
+    dbgs() << "\n";
+    );
+    unsigned CFIIndex = CFIGen.generateCFI(PVInfoBeforeInstr, CurrentPVInfo);
     CFIBuildInfos.push_back({&MBB, LocalReachingDef, DL, CFIIndex});
-    
     LocalReachingDef = RDI.getReachingLocalMIDef(LocalReachingDef, RegToTrack);
-    LLVM_DEBUG(dbgs() << "Tracking CFA register: " << printReg(RegToTrack, &TRI)
-                      << " with offset " << CFAOffset << "\n");
+    CurrentPVInfo = PVInfoBeforeInstr;
   }
 
-  CFIState EntryState = AllCFIs.getCFIStateAtMBBEntry(MBB);
-  EntryState.setCFARegister(CFARegDwarfNum);
-  EntryState.setCFAOffset(CFAOffset);
-  
-  // Propagate to predecessor blocks
+  AllCFIs.getCFIStateAtMBBEntry(MBB).getPVInfoForDwarfReg(DwarfNum,
+                                                              CSRs) = CurrentPVInfo;
   for (MachineBasicBlock *PredMBB : MBB.predecessors()) {
     if (Visited.contains(PredMBB))
       continue;
-    CFIState &PredExitState = AllCFIs.getCFIStateAtMBBExit(*PredMBB);
-    PredExitState.setCFARegister(EntryState.getCFARegister());
-    PredExitState.setCFAOffset(EntryState.getCFAOffset());
-    trackCFABottomUp(RegToTrack, *PredMBB, Visited);
+    AllCFIs.getCFIStateAtMBBExit(*PredMBB).getPVInfoForDwarfReg(DwarfNum,
+                                                                CSRs) = CurrentPVInfo;
+    InsertedCFIs |= trackPVBottomUpAndGenCFIs(DwarfNum, RegToTrack, *PredMBB, CFIGen, Visited);
   }
+  return InsertedCFIs;
 }
 
 void ComputeAndInsertCFIs::insertCFIInstruction(const CFIBuildInfo &Info) {
@@ -549,50 +439,46 @@ void ComputeAndInsertCFIs::insertCFIInstruction(const CFIBuildInfo &Info) {
   }
 }
 
-unsigned ComputeAndInsertCFIs::CFACFIGenerator::generateCFI(
-  const PreservedValueInfo &PrevPVInfo,
-  const PreservedValueInfo &NewPVInfo
-) {
-  switch (NewPVInfo.K) {
+unsigned ComputeAndInsertCFIs::CFIGenerator::generateCFI(
+    const PreservedValueInfo &PrevPVInfo, const PreservedValueInfo &NewPVInfo) const {
+  assert(PrevPVInfo != NewPVInfo && "No CFI change");
+
+  if (DwarfNum == ComputeAndInsertCFIs::CFADwarfNum) {
+    switch (NewPVInfo.K) {
     case PreservedValueInfo::Register: {
       unsigned NewCFAReg = NewPVInfo.getRegister();
-      if (
-        (PrevPVInfo.K != PreservedValueInfo::Register) ||
-        (PrevPVInfo.getRegister() != NewPVInfo.getRegister())
-      ) {
-        if (NewPVInfo.getAddedImm() == 0)
+      if ((PrevPVInfo.K != PreservedValueInfo::Register) ||
+          (PrevPVInfo.getRegister() != NewPVInfo.getRegister())) {
+        if (NewPVInfo.getImmToAdd() == 0)
           return MF.addFrameInst(
               MCCFIInstruction::createDefCfaRegister(nullptr, NewCFAReg));
-        return MF.addFrameInst(MCCFIInstruction::cfiDefCfa(
-          nullptr, NewCFAReg, NewPVInfo.getAddedImm()));
+        return MF.addFrameInst(
+            MCCFIInstruction::cfiDefCfa(nullptr, NewCFAReg,
+                                       NewPVInfo.getImmToAdd()));
       }
+      return MF.addFrameInst(MCCFIInstruction::createAdjustCfaOffset(
+          nullptr, NewPVInfo.getImmToAdd() - PrevPVInfo.getImmToAdd()));
     }
     default:
       // TODO: handle CFA saved to stack.
       llvm_unreachable("Do not know how to generate CFI for new CFA");
+    }
   }
-}
 
-unsigned ComputeAndInsertCFIs::CSRCFIGenerator::generateCFI(
-  const PreservedValueInfo &PrevPVInfo,
-  const PreservedValueInfo &NewPVInfo
-) {
-}
-
-unsigned
-ComputeAndInsertCFIs::addCFIFrameInstrForCSR(unsigned DwarfReg,
-                                             const PreservedValueInfo &PVInfo) {
-  switch (PVInfo.K) {
-  case PreservedValueInfo::CFAOffset: {
+  assert(NewPVInfo.getImmToAdd() == 0 && "Non zero immediate added to CSR value");
+  const unsigned CSRDwarfNum = static_cast<unsigned>(DwarfNum);
+  switch (NewPVInfo.K) {
+  case PreservedValueInfo::CFAOffset:
     return MF.addFrameInst(MCCFIInstruction::createOffset(
-        nullptr, DwarfReg, PVInfo.getOffset()));
-  }
-  case PreservedValueInfo::Register: {
+        nullptr, CSRDwarfNum, NewPVInfo.getOffset()));
+  case PreservedValueInfo::Register:
+    if (NewPVInfo.getRegister() == CSRDwarfNum)
+      return MF.addFrameInst(
+          MCCFIInstruction::createRestore(nullptr, CSRDwarfNum));
     return MF.addFrameInst(MCCFIInstruction::createRegister(
-        nullptr, DwarfReg, PVInfo.getRegister()));
-  }
+        nullptr, CSRDwarfNum, NewPVInfo.getRegister()));
   default:
-    llvm_unreachable("Invalid PreservedValueInfo!");
+    llvm_unreachable("Do not know how to generate CFI for new CSR PVInfo");
   }
 }
 
@@ -626,32 +512,14 @@ ComputeAndInsertCFIs::CSROrdering::getOrderIdxFromDwarfReg(int DwarfReg) {
   return Lookup->second;
 }
 
-int64_t ComputeAndInsertCFIs::CFIState::getCFAOffset() const {
-  return CFAOffset;
-}
-
-void ComputeAndInsertCFIs::CFIState::setCFAOffset(int64_t CFAOffset_) {
-  CFAOffset = CFAOffset_;
-}
-
-int ComputeAndInsertCFIs::CFIState::getCFARegister() const {
-  return CFARegister;
-}
-
-void ComputeAndInsertCFIs::CFIState::setCFARegister(int CFARegister_) {
-  CFARegister = CFARegister_;
-}
-
 ComputeAndInsertCFIs::PreservedValueInfo &
-ComputeAndInsertCFIs::CFIState::getPVInfoForDwarfReg(int DwarfReg,
+ComputeAndInsertCFIs::CFIState::getPVInfoForDwarfReg(int DwarfNum,
                                                      CSROrdering &CSRs) {
-  assert(DwarfReg >= 0 && "Negative Dwarf register!");
-  return CSRPVInfos[CSRs.getOrderIdxFromDwarfReg(DwarfReg)];
-}
+  if (DwarfNum == CFADwarfNum)
+    return CFAPVInfo;
 
-void ComputeAndInsertCFIs::CFIState::setPVInfoForDwarfReg(
-    unsigned DwarfReg, PreservedValueInfo &NewPVInfo, CSROrdering &CSRs) {
-  CSRPVInfos[CSRs.getOrderIdxFromDwarfReg(DwarfReg)] = NewPVInfo;
+  assert(DwarfNum>= 0 && "Negative Dwarf register!");
+  return CSRPVInfos[CSRs.getOrderIdxFromDwarfReg(DwarfNum)];
 }
 
 ComputeAndInsertCFIs::CFIState &
@@ -686,8 +554,10 @@ void ComputeAndInsertCFIs::init() {
 
   int InitialCFARegDwarfNum = TRI.getDwarfRegNum(TFI.getInitialCFARegister(MF), true);
   assert(InitialCFARegDwarfNum >= 0 && "Negative Dwarf register!");
-  EntryState.setCFARegister(InitialCFARegDwarfNum);
-  EntryState.setCFAOffset(TFI.getInitialCFAOffset(MF));
+  PreservedValueInfo &CFAPVInfo = EntryState.getPVInfoForDwarfReg(ComputeAndInsertCFIs::CFADwarfNum, CSRs);
+
+  CFAPVInfo = PreservedValueInfo::createRegister(InitialCFARegDwarfNum);
+  CFAPVInfo.setImmToAdd(TFI.getInitialCFAOffset(MF));
 
   for (int CSRDwarfNum : CSRs.getOrderedCSRs()) {
     assert(CSRDwarfNum >= 0 && "Negative Dwarf register!");
@@ -705,49 +575,64 @@ void ComputeAndInsertCFIs::init() {
     ReturnMBBs.push_back(const_cast<MachineBasicBlock *>(&MBB));
     CFIState &RetCFIState = AllCFIs.getCFIStateAtMBBExit(MBB);
     RetCFIState = EntryState;
-    RetCFIState.setCFARegister(FinalCFARegDwarfNum);
-    RetCFIState.setCFAOffset(FinalCFAOffset);
+    PreservedValueInfo &RetCFAPVInfo = RetCFIState.getPVInfoForDwarfReg(ComputeAndInsertCFIs::CFADwarfNum, CSRs);
+    RetCFAPVInfo = PreservedValueInfo::createRegister(FinalCFARegDwarfNum);
+    RetCFAPVInfo.setImmToAdd(FinalCFAOffset);
   }
 }
 
 bool ComputeAndInsertCFIs::adjustCFIsToMBBLayout() {
+  LLVM_DEBUG(dbgs() << "Inserting more CFIs to adjust to block layout\n";);
+
   CFIState PrevCFIState = AllCFIs.getCFIStateAtMBBExit(MF.front());
   bool InsertedCFIInstr = false;
+  SmallVector<int> AllDwarfNums = CSRs.getOrderedCSRs();
+  AllDwarfNums.push_back(CFADwarfNum);
   for (MachineBasicBlock &MBB : MF) {
     if (&MBB == &MF.front())
       continue;
 
     CFIState EntryState = AllCFIs.getCFIStateAtMBBEntry(MBB);
-    for (int CSRDwarfNum : CSRs.getOrderedCSRs()) {
+    for (int DwarfNum : AllDwarfNums) {
       PreservedValueInfo &PrevPVInfo =
-          PrevCFIState.getPVInfoForDwarfReg(CSRDwarfNum, CSRs);
+          PrevCFIState.getPVInfoForDwarfReg(DwarfNum, CSRs);
       PreservedValueInfo HasToBePVInfo =
           AllCFIs.getCFIStateAtMBBEntry(MBB).getPVInfoForDwarfReg(
-              CSRDwarfNum, CSRs);
+              DwarfNum, CSRs);
+
       if (PrevPVInfo == HasToBePVInfo)
         continue;
 
-      unsigned CFIIndex = std::numeric_limits<unsigned>::max();
-      switch (HasToBePVInfo.K) {
-      case PreservedValueInfo::CFAOffset: {
-        CFIIndex = MF.addFrameInst(MCCFIInstruction::createOffset(
-            nullptr, CSRDwarfNum, HasToBePVInfo.getOffset()));
-        break;
-      }
-      case PreservedValueInfo::Register: {
-        CFIIndex = MF.addFrameInst(MCCFIInstruction::createRegister(
-            nullptr, CSRDwarfNum, HasToBePVInfo.getRegister()));
-        break;
-      }
-      default:
-        llvm_unreachable("Invalid PreservedValueInfo!");
-      }
+      CFIGenerator CFIGen(MF, DwarfNum);
+      unsigned CFIIndex = CFIGen.generateCFI(PrevPVInfo, HasToBePVInfo);
       auto MBBI = MBB.begin();
       DebugLoc DL = MBB.findDebugLoc(MBBI);
       BuildMI(MBB, MBBI, DL, TII.get(TargetOpcode::CFI_INSTRUCTION))
           .addCFIIndex(CFIIndex);
       InsertedCFIInstr = true;
     }
+    PrevCFIState = AllCFIs.getCFIStateAtMBBExit(MBB);
   }
   return InsertedCFIInstr;
+}
+
+void ComputeAndInsertCFIs::printCFIStatesForReg(int CSRDwarfNum) {
+  if (CSRDwarfNum == CFADwarfNum) {
+    dbgs() << "CFA:\n";
+  } else {
+    dbgs() << "CSR Dwarf#" << CSRDwarfNum << ":\n";
+  }
+  for (const MachineBasicBlock &MBB : MF) {
+    dbgs() << "Block: " << printMBBReference(MBB) << "\n";
+    dbgs() << "Entry: ";
+   AllCFIs.getCFIStateAtMBBEntry(MBB)
+       .getPVInfoForDwarfReg(CSRDwarfNum, CSRs)
+       .dump(dbgs());
+    dbgs() << "\n";
+    dbgs() << "Exit: ";
+   AllCFIs.getCFIStateAtMBBExit(MBB)
+       .getPVInfoForDwarfReg(CSRDwarfNum, CSRs)
+       .dump(dbgs());
+    dbgs() << "\n";
+  }
 }
