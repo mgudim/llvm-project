@@ -1,0 +1,141 @@
+# RUN: llc %s -mtriple=riscv64 -run-pass=compute-and-insert-cfis \
+# RUN:   -riscv-emit-cfi-after-fe=true -o - | FileCheck %s
+
+---
+name:            track_cfa_add_same_reg
+tracksRegLiveness: true
+body:             |
+  bb.0.entry:
+    $x2 =  ADDI $x2, -16
+    $x2 =  ADDI $x2, 16
+    PseudoRET
+...
+
+---
+name:            track_cfa_copy
+tracksRegLiveness: true
+body:             |
+  bb.0.entry:
+    $x10 =  ADDI $x2, 0
+    $x2 =  ADDI $x10, 0
+    PseudoRET
+
+...
+
+---
+name:            track_cfa_add_different_reg
+tracksRegLiveness: true
+body:             |
+  bb.0.entry:
+    $x3 =  ADDI $x2, -16
+    $x2 =  ADDI $x3, 16
+    PseudoRET
+
+...
+
+---
+name:            track_cfa_multiple_addi_same_reg
+tracksRegLiveness: true
+body:             |
+  bb.0.entry:
+    $x2 =  ADDI $x2, -16
+    $x2 =  ADDI $x2, 8
+    $x2 =  ADDI $x2, -32
+    $x2 =  ADDI $x2, 40
+    PseudoRET
+
+...
+
+---
+name:            track_cfa_multiple_copies
+tracksRegLiveness: true
+body:             |
+  bb.0.entry:
+    $x3 =  ADDI $x2, 0
+    $x4 =  ADDI $x3, 0
+    $x5 =  ADDI $x4, 0
+    $x2 =  ADDI $x5, 0
+    PseudoRET
+
+...
+
+---
+name:            track_cfa_multiple_addi_different_reg
+tracksRegLiveness: true
+body:             |
+  bb.0.entry:
+    $x3 =  ADDI $x2, 8
+    $x4 =  ADDI $x3, -16
+    $x5 =  ADDI $x4, 24
+    $x2 =  ADDI $x5, -16
+    PseudoRET
+
+...
+
+---
+name:            track_cfa_diamond_cfg
+tracksRegLiveness: true
+body:             |
+  bb.0.entry:
+    liveins: $x10
+    BEQ $x10, $x0, %bb.2
+  
+  bb.1:
+    $x2 = ADDI $x2, -16
+    PseudoBR %bb.3
+  
+  bb.2:
+    $x2 = ADDI $x2, -16
+    PseudoBR %bb.3
+  
+  bb.3:
+    $x2 = ADDI $x2, 16
+    PseudoRET
+
+...
+
+---
+name:            track_cfa_diamond_cfg_2
+tracksRegLiveness: true
+body:             |
+  bb.0.entry:
+    liveins: $x10
+    BEQ $x10, $x0, %bb.3
+  
+  bb.1:
+    $x2 = ADDI $x2, -16
+    PseudoBR %bb.2
+  
+  bb.2:
+    $x2 = ADDI $x2, 16
+    PseudoRET
+
+  bb.3:
+    $x2 = ADDI $x2, -16
+    PseudoBR %bb.2
+
+...
+
+---
+name:            track_cfa_diamond_cfg_3
+tracksRegLiveness: true
+body:             |
+  bb.0.entry:
+    liveins: $x10
+    BEQ $x10, $x0, %bb.2
+    PseudoBR %bb.3
+  
+  bb.1:
+    $x2 = ADDI $x2, 16
+    PseudoRET
+
+  bb.2:
+    $x2 = ADDI $x2, -16
+    PseudoBR %bb.1
+  
+
+  bb.3:
+    $x2 = ADDI $x2, -16
+    PseudoBR %bb.1
+
+...
