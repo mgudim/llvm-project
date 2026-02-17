@@ -1,0 +1,156 @@
+# RUN: llc %s -mtriple=riscv64 -run-pass=compute-and-insert-cfis \
+# RUN:   -riscv-emit-cfi-after-fe=true -o - | FileCheck %s
+
+---
+name:            track_csr_store_load
+tracksRegLiveness: true
+stack:
+  - { id: 0, offset: 0, size: 8, alignment: 8 }
+body:             |
+  bb.0.entry:
+    liveins: $x8
+    $x2 = ADDI $x2, -8
+    SD $x8, $x2, 0 :: (store (s64) into %stack.0)
+    $x8 = LD $x2, 0 :: (load (s64) from %stack.0)
+    $x2 = ADDI $x2, 8
+    PseudoRET
+
+...
+
+---
+name:            track_csr_store_load_two_regs
+tracksRegLiveness: true
+stack:
+  - { id: 0, offset: 0, size: 8, alignment: 8 }
+  - { id: 1, offset: 8, size: 8, alignment: 8 }
+body:             |
+  bb.0.entry:
+    liveins: $x8, $x9
+    $x2 = ADDI $x2, -16
+    SD $x8, $x2, 0 :: (store (s64) into %stack.0)
+    $x8 = LD $x2, 0 :: (load (s64) from %stack.0)
+    SD $x9, $x2, 8 :: (store (s64) into %stack.1)
+    $x9 = LD $x2, 8 :: (load (s64) from %stack.1)
+    $x2 = ADDI $x2, 16
+    PseudoRET
+
+...
+
+---
+name:            track_csr_copy
+tracksRegLiveness: true
+body:             |
+  bb.0.entry:
+    liveins: $x8
+    $x10 = ADDI $x8, 0
+    $x8= ADDI $x10, 0
+    PseudoRET
+
+...
+
+---
+name:            track_csr_copy_store_load
+tracksRegLiveness: true
+stack:
+  - { id: 0, offset: 0, size: 8, alignment: 8 }
+body:             |
+  bb.0.entry:
+    liveins: $x8
+    $x2 = ADDI $x2, -8
+    $x10 = ADDI $x8, 0
+    SD $x10, $x2, 0 :: (store (s64) into %stack.0)
+    $x10 = LD $x2, 0 :: (load (s64) from %stack.0)
+    $x8 = ADDI $x10, 0
+    $x2 = ADDI $x2, 8
+    PseudoRET
+
+...
+
+---
+name:            track_csr_diamond_cfg
+tracksRegLiveness: true
+stack:
+  - { id: 0, offset: 0, size: 8, alignment: 8 }
+body:             |
+  bb.0.entry:
+    liveins: $x10, $x8
+    BEQ $x10, $x0, %bb.2
+  
+  bb.1:
+    liveins: $x10, $x8
+    $x2 = ADDI $x2, -8
+    SD $x8, $x2, 0 :: (store (s64) into %stack.0)
+    $x8 = LD $x2, 0 :: (load (s64) from %stack.0)
+    $x2 = ADDI $x2, 8
+    PseudoBR %bb.3
+  
+  bb.2:
+    liveins: $x10, $x8
+    $x10 = ADDI $x8, 0
+    $x8 = ADDI $x10, 0
+    PseudoBR %bb.3
+  
+  bb.3:
+    PseudoRET
+
+...
+
+---
+name:            track_csr_need_adjust_cfis_to_layout
+tracksRegLiveness: true
+stack:
+  - { id: 0, offset: 0, size: 8, alignment: 8 }
+body:             |
+  bb.0.entry:
+    liveins: $x10, $x8
+    $x2 = ADDI $x2, -8
+    SD $x8, $x2, 0 :: (store (s64) into %stack.0)
+    PseudoBR %bb.3
+  
+  bb.2:
+    PseudoRET
+  
+  bb.3:
+    $x8 = LD $x2, 0 :: (load (s64) from %stack.0)
+    $x2 = ADDI $x2, 8
+    PseudoBR %bb.2
+
+...
+
+---
+name:            track_csr_multiple_options
+tracksRegLiveness: true
+stack:
+  - { id: 0, offset: 0, size: 8, alignment: 8 }
+body:             |
+  bb.0:
+    liveins: $x10, $x8, $x11
+    BEQ $x10, $x0, %bb.4
+  
+  bb.1:
+    liveins: $x10, $x8, $x11
+    $x2 = ADDI $x2, -8
+    SD $x8, $x2, 0 :: (store (s64) into %stack.0)
+    $x10 = ADDI $x8, 0
+    BEQ $x11, $x0, %bb.3
+  
+  bb.2:
+    liveins: $x10, $x8
+    $x8= ADDI $x10, 0
+    PseudoBR %bb.5
+
+  bb.3:
+    $x8 = LD $x2, 0 :: (load (s64) from %stack.0)
+    PseudoBR %bb.5
+
+  bb.4:
+    liveins: $x10, $x8
+    SD $x8, $x2, 0 :: (store (s64) into %stack.0)
+    $x10 = ADDI $x10, 1
+    PseudoBR %bb.3
+
+  bb.5:
+    $x2 = ADDI $x2, 8
+    PseudoRET
+
+...
