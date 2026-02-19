@@ -444,6 +444,8 @@ public:
 
   void overridePostRASchedPolicy(MachineSchedPolicy &Policy,
                                  const SchedRegion &Region) const override;
+
+  bool savesCSRsEarly() const override;
 };
 } // namespace llvm
 
