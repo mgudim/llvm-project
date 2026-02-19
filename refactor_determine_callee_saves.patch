@@ -1,0 +1,570 @@
+diff --git a/llvm/include/llvm/CodeGen/TargetFrameLowering.h b/llvm/include/llvm/CodeGen/TargetFrameLowering.h
+index 99034754e466..b04d9a10e3ca 100644
+--- a/llvm/include/llvm/CodeGen/TargetFrameLowering.h
++++ b/llvm/include/llvm/CodeGen/TargetFrameLowering.h
+@@ -373,7 +373,7 @@ public:
+                                   BitVector &SavedRegs) const;
+ 
+   /// This method determines which of the registers reported by
+-  /// TargetRegisterInfo::getCalleeSavedRegs() should actually get saved.
++  /// getMustPreserveRegisters() should actually get saved.
+   /// The default implementation checks populates the \p SavedRegs bitset with
+   /// all registers which are modified in the function, targets may override
+   /// this function to save additional registers.
+@@ -382,9 +382,38 @@ public:
+   /// This method should not be called by any passes outside of PEI, because
+   /// it may change state passed in by \p MF and \p RS. The preferred
+   /// interface outside PEI is getCalleeSaves.
++  // LLVM_DEPRECATED("Use determinePrologCalleeSaves instead",
++  //                 "determinePrologCalleeSaves")
+   virtual void determineCalleeSaves(MachineFunction &MF, BitVector &SavedRegs,
+                                     RegScavenger *RS = nullptr) const;
+ 
++  /// Return the list of registers which must be preserved by the function: the
++  /// value on exit must be the same as the value on entry. A register from this
++  /// list does not need to be saved / reloaded if the function did not use it.
++  const MCPhysReg *getMustPreserveRegisters(const MachineFunction &MF) const;
++
++  /// This method determines which of the registers reported by
++  /// getMustPreserveRegisters() must be saved in prolog and reloaded in epilog
++  /// regardless of whether or not they were modified by the function.
++  virtual void
++  determineUncondPrologCalleeSaves(MachineFunction &MF, const MCPhysReg *CSRegs,
++                                   BitVector &UncondPrologCSRs) const;
++
++  /// If the target has to do all saves / restores of "must preserve" registers
++  /// in prolog / epilog, this method returns empty set. Otherwise, this method
++  /// returns the difference between getMustPreserveRegisters and
++  /// determineUncondPrologCalleeSaves. These registers will be preserved by the
++  /// code optimizer and do not need to be saved / restored in prolog / epilog.
++  virtual void determineEarlyCalleeSaves(MachineFunction &MF,
++                                         BitVector &EarlyCSRs) const;
++
++  /// This method returns those registers in the difference of
++  /// getMustPreserveRegisters and determineEarlyCalleeSaves that were modified
++  /// by the function and need to be saved / restored in prolog / epilog.
++  virtual void determinePrologCalleeSaves(MachineFunction &MF,
++                                          BitVector &PrologCSRs,
++                                          RegScavenger *RS) const;
++
+   /// processFunctionBeforeFrameFinalized - This method is called immediately
+   /// before the specified function's frame layout (MF.getFrameInfo()) is
+   /// finalized.  Once the frame is finalized, MO_FrameIndex operands are
+diff --git a/llvm/include/llvm/CodeGen/TargetSubtargetInfo.h b/llvm/include/llvm/CodeGen/TargetSubtargetInfo.h
+index 6f95f0fea644..bc3682fcb1be 100644
+--- a/llvm/include/llvm/CodeGen/TargetSubtargetInfo.h
++++ b/llvm/include/llvm/CodeGen/TargetSubtargetInfo.h
+@@ -364,6 +364,12 @@ public:
+   }
+ 
+   virtual bool isRegisterReservedByUser(Register R) const { return false; }
++
++  /// Returns `true` is the target must ensure that the registers returned by
++  /// TargetFrameLowering::determineEarlyCalleeSaves are preserved before
++  /// `PrologEpilogInserter`. Also see comments for
++  /// `TargetFrameLowering::determinePrologCalleeSaves`.
++  virtual bool savesCSRsEarly() const { return false; }
+ };
+ } // end namespace llvm
+ 
+diff --git a/llvm/lib/CodeGen/TargetFrameLoweringImpl.cpp b/llvm/lib/CodeGen/TargetFrameLoweringImpl.cpp
+index ebf6d1a52448..2cde68c0d3a9 100644
+--- a/llvm/lib/CodeGen/TargetFrameLoweringImpl.cpp
++++ b/llvm/lib/CodeGen/TargetFrameLoweringImpl.cpp
+@@ -93,36 +93,20 @@ void TargetFrameLowering::getCalleeSaves(const MachineFunction &MF,
+     CalleeSaves.set(Info.getReg());
+ }
+ 
++// LLVM_DEPRECATED("Use determinePrologCalleeSaves instead",
++//                 "determinePrologCalleeSaves")
+ void TargetFrameLowering::determineCalleeSaves(MachineFunction &MF,
+                                                BitVector &SavedRegs,
+                                                RegScavenger *RS) const {
+-  const TargetRegisterInfo &TRI = *MF.getSubtarget().getRegisterInfo();
+-
+-  // Resize before the early returns. Some backends expect that
+-  // SavedRegs.size() == TRI.getNumRegs() after this call even if there are no
+-  // saved registers.
+-  SavedRegs.resize(TRI.getNumRegs());
+-
+-  // Get the callee saved register list...
+-  const MCPhysReg *CSRegs = nullptr;
+-
+-  // When interprocedural register allocation is enabled, callee saved register
+-  // list should be empty, since caller saved registers are preferred over
+-  // callee saved registers. Unless it has some risked CSR to be optimized out.
+-  if (MF.getTarget().Options.EnableIPRA &&
+-      isSafeForNoCSROpt(MF.getFunction()) &&
+-      isProfitableForNoCSROpt(MF.getFunction()))
+-    CSRegs = TRI.getIPRACSRegs(&MF);
+-  else
+-    CSRegs = MF.getRegInfo().getCalleeSavedRegs();
+-
+-  // Early exit if there are no callee saved registers.
+-  if (!CSRegs || CSRegs[0] == 0)
+-    return;
++  determinePrologCalleeSaves(MF, SavedRegs, RS);
++}
+ 
++const MCPhysReg *
++TargetFrameLowering::getMustPreserveRegisters(const MachineFunction &MF) const {
++  const TargetRegisterInfo &TRI = *MF.getSubtarget().getRegisterInfo();
+   // In Naked functions we aren't going to save any registers.
+   if (MF.getFunction().hasFnAttribute(Attribute::Naked))
+-    return;
++    return nullptr;
+ 
+   // Noreturn+nounwind functions never restore CSR, so no saves are needed.
+   // Purely noreturn functions may still return through throws, so those must
+@@ -135,15 +119,81 @@ void TargetFrameLowering::determineCalleeSaves(MachineFunction &MF,
+         MF.getFunction().hasFnAttribute(Attribute::NoUnwind) &&
+         !MF.getFunction().hasFnAttribute(Attribute::UWTable) &&
+         enableCalleeSaveSkip(MF))
+-    return;
++    return nullptr;
++
++  // When interprocedural register allocation is enabled, callee saved register
++  // list should be empty, since caller saved registers are preferred over
++  // callee saved registers. Unless it has some risked CSR to be optimized out.
++  if (MF.getTarget().Options.EnableIPRA &&
++      isSafeForNoCSROpt(MF.getFunction()) &&
++      isProfitableForNoCSROpt(MF.getFunction()))
++    return TRI.getIPRACSRegs(&MF);
++  return MF.getRegInfo().getCalleeSavedRegs();
++}
+ 
++void TargetFrameLowering::determineUncondPrologCalleeSaves(
++    MachineFunction &MF, const MCPhysReg *CSRegs,
++    BitVector &UncondPrologCSRs) const {
+   // Functions which call __builtin_unwind_init get all their registers saved.
+-  bool CallsUnwindInit = MF.callsUnwindInit();
++  if (MF.callsUnwindInit()) {
++    for (unsigned i = 0; CSRegs[i]; ++i) {
++      MCRegister Reg = CSRegs[i];
++      UncondPrologCSRs.set(Reg);
++    }
++  }
++  return;
++}
++
++void TargetFrameLowering::determineEarlyCalleeSaves(
++    MachineFunction &MF, BitVector &EarlyCSRs) const {
++  const TargetSubtargetInfo &ST = MF.getSubtarget();
++  if (!ST.savesCSRsEarly())
++    return;
++
++  const TargetRegisterInfo &TRI = *ST.getRegisterInfo();
++  // Get the callee saved register list...
++  const MCPhysReg *CSRegs = getMustPreserveRegisters(MF);
++  // Early exit if there are no callee saved registers.
++  if (!CSRegs || CSRegs[0] == 0)
++    return;
++
++  BitVector UncondPrologCSRs(TRI.getNumRegs(), false);
++  determineUncondPrologCalleeSaves(MF, CSRegs, UncondPrologCSRs);
++
++  EarlyCSRs.resize(TRI.getNumRegs());
++  for (unsigned i = 0; CSRegs[i]; ++i) {
++    MCRegister Reg = CSRegs[i];
++    if (!UncondPrologCSRs[Reg])
++      EarlyCSRs.set(Reg);
++  }
++}
++
++void TargetFrameLowering::determinePrologCalleeSaves(MachineFunction &MF,
++                                                     BitVector &PrologCSRs,
++                                                     RegScavenger *RS) const {
++  const TargetRegisterInfo &TRI = *MF.getSubtarget().getRegisterInfo();
++
++  // Resize before the early returns. Some backends expect that
++  // SavedRegs.size() == TRI.getNumRegs() after this call even if there are no
++  // saved registers.
++  PrologCSRs.resize(TRI.getNumRegs());
++
++  // Get the callee saved register list...
++  const MCPhysReg *CSRegs = getMustPreserveRegisters(MF);
++  // Early exit if there are no callee saved registers.
++  if (!CSRegs || CSRegs[0] == 0)
++    return;
++
++  determineUncondPrologCalleeSaves(MF, CSRegs, PrologCSRs);
++
++  BitVector EarlyCSRs(TRI.getNumRegs(), false);
++  determineEarlyCalleeSaves(MF, EarlyCSRs);
++
+   const MachineRegisterInfo &MRI = MF.getRegInfo();
+   for (unsigned i = 0; CSRegs[i]; ++i) {
+     unsigned Reg = CSRegs[i];
+-    if (CallsUnwindInit || MRI.isPhysRegModified(Reg))
+-      SavedRegs.set(Reg);
++    if (MRI.isPhysRegModified(Reg) && !EarlyCSRs[Reg])
++      PrologCSRs.set(Reg);
+   }
+ }
+ 
+diff --git a/llvm/lib/Target/RISCV/RISCVFrameLowering.cpp b/llvm/lib/Target/RISCV/RISCVFrameLowering.cpp
+index 92fd7283dc2c..39b8c784de52 100644
+--- a/llvm/lib/Target/RISCV/RISCVFrameLowering.cpp
++++ b/llvm/lib/Target/RISCV/RISCVFrameLowering.cpp
+@@ -1580,6 +1580,35 @@ static MCRegister getRVVBaseRegister(const RISCVRegisterInfo &TRI,
+   return BaseReg;
+ }
+ 
++#define GET_REGISTER_MATCHER
++#include "RISCVGenAsmMatcher.inc"
++
++void RISCVFrameLowering::determineUncondPrologCalleeSaves(
++    MachineFunction &MF, const MCPhysReg *CSRegs,
++    BitVector &UncondPrologCSRs) const {
++
++  const Function &F = MF.getFunction();
++  if (!F.hasFnAttribute("riscv-user-defined-uncond-prolog-csrs"))
++    return;
++  const AttributeList &Attrs = F.getAttributes();
++  StringRef RegString = Attrs.getFnAttr("riscv-user-defined-uncond-prolog-csrs")
++                            .getValueAsString();
++  SmallVector<llvm::StringRef, 4> RegNames;
++  llvm::SplitString(RegString, RegNames, ",");
++  for (auto &Name : RegNames) {
++    Register Reg = MatchRegisterName(Name);
++    if (!Reg)
++      Reg = MatchRegisterAltName(Name);
++    if (!Reg) {
++      reportFatalUsageError(Twine("Couldn't parse register: ") + Name + "\n");
++    }
++    UncondPrologCSRs.set(Reg.id());
++  }
++
++  TargetFrameLowering::determineUncondPrologCalleeSaves(MF, CSRegs,
++                                                        UncondPrologCSRs);
++}
++
+ void RISCVFrameLowering::determineCalleeSaves(MachineFunction &MF,
+                                               BitVector &SavedRegs,
+                                               RegScavenger *RS) const {
+diff --git a/llvm/lib/Target/RISCV/RISCVFrameLowering.h b/llvm/lib/Target/RISCV/RISCVFrameLowering.h
+index 84e48dbc05d6..5c6b110d690f 100644
+--- a/llvm/lib/Target/RISCV/RISCVFrameLowering.h
++++ b/llvm/lib/Target/RISCV/RISCVFrameLowering.h
+@@ -34,6 +34,10 @@ public:
+   StackOffset getFrameIndexReference(const MachineFunction &MF, int FI,
+                                      Register &FrameReg) const override;
+ 
++  void
++  determineUncondPrologCalleeSaves(MachineFunction &MF, const MCPhysReg *CSRegs,
++                                   BitVector &UncondPrologCSRs) const override;
++
+   void determineCalleeSaves(MachineFunction &MF, BitVector &SavedRegs,
+                             RegScavenger *RS) const override;
+ 
+diff --git a/llvm/lib/Target/RISCV/RISCVSubtarget.cpp b/llvm/lib/Target/RISCV/RISCVSubtarget.cpp
+index bfc8a86cbfe3..802a0da6f897 100644
+--- a/llvm/lib/Target/RISCV/RISCVSubtarget.cpp
++++ b/llvm/lib/Target/RISCV/RISCVSubtarget.cpp
+@@ -76,6 +76,10 @@ static cl::opt<bool> EnablePExtSIMDCodeGen(
+              "where only partial codegen is currently supported)"),
+     cl::init(false), cl::Hidden);
+ 
++static cl::opt<bool> SaveCSREarly("riscv-save-csrs-early",
++                                  cl::desc("Save CSRs early"), cl::init(false),
++                                  cl::Hidden);
++
+ void RISCVSubtarget::anchor() {}
+ 
+ RISCVSubtarget &
+@@ -296,3 +300,5 @@ bool RISCVSubtarget::useMIPSLoadStorePairs() const {
+ bool RISCVSubtarget::useMIPSCCMovInsn() const {
+   return UseMIPSCCMovInsn && HasVendorXMIPSCMov;
+ }
++
++bool RISCVSubtarget::savesCSRsEarly() const { return SaveCSREarly; }
+diff --git a/llvm/lib/Target/RISCV/RISCVSubtarget.h b/llvm/lib/Target/RISCV/RISCVSubtarget.h
+index fea9aae716fb..56647c8485ce 100644
+--- a/llvm/lib/Target/RISCV/RISCVSubtarget.h
++++ b/llvm/lib/Target/RISCV/RISCVSubtarget.h
+@@ -442,6 +442,8 @@ public:
+ 
+   void overridePostRASchedPolicy(MachineSchedPolicy &Policy,
+                                  const SchedRegion &Region) const override;
++
++  bool savesCSRsEarly() const override;
+ };
+ } // namespace llvm
+ 
+diff --git a/llvm/test/CodeGen/RISCV/determine-callee-saves-uncond.mir b/llvm/test/CodeGen/RISCV/determine-callee-saves-uncond.mir
+new file mode 100644
+index 000000000000..a1ab469ddc4c
+--- /dev/null
++++ b/llvm/test/CodeGen/RISCV/determine-callee-saves-uncond.mir
+@@ -0,0 +1,152 @@
++# NOTE: Assertions have been autogenerated by utils/update_mir_test_checks.py UTC_ARGS: --version 6
++
++# RUN: llc %s -mtriple=riscv64 -run-pass=prologepilog \
++# RUN: --riscv-save-csrs-early=false \
++# RUN: -o - | FileCheck %s  -check-prefixes=NOEARLYCSR_UNCONDX19
++
++# RUN: llc %s -mtriple=riscv64 -run-pass=prologepilog \
++# RUN: --riscv-save-csrs-early=true \
++# RUN: -o - | FileCheck %s -check-prefixes=EARLYCSR_UNCONDX19-
++
++--- |
++  define void @use_callee_saved() #0 {
++  entry:
++    ret void
++  }
++
++  define void @make_a_call() #0 {
++  entry:
++    tail call void @bar()
++    ret void
++  }
++
++  define void @make_a_call_and_use_callee_saved() #0 {
++  entry:
++    tail call void @bar()
++    ret void
++  }
++
++  attributes #0 = {"riscv-user-defined-uncond-prolog-csrs"="x19"}
++  declare void @bar(...)
++...
++---
++name: use_callee_saved
++tracksRegLiveness: true
++stack:
++  - { id: 0, name: '', type: default, offset: 0, size: 8, alignment: 8,
++      stack-id: default, callee-saved-register: '', callee-saved-restored: true,
++      debug-info-variable: '', debug-info-expression: '', debug-info-location: '' }
++body:             |
++  bb.0.entry:
++    liveins: $x10
++    ; NOEARLYCSR_UNCONDX19-LABEL: name: use_callee_saved
++    ; NOEARLYCSR_UNCONDX19: liveins: $x10, $x18, $x19
++    ; NOEARLYCSR_UNCONDX19-NEXT: {{  $}}
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x2 = frame-setup ADDI $x2, -32
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup CFI_INSTRUCTION def_cfa_offset 32
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup SD killed $x18, $x2, 24 :: (store (s64) into %stack.1)
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup SD killed $x19, $x2, 16 :: (store (s64) into %stack.2)
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup CFI_INSTRUCTION offset $x18, -8
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup CFI_INSTRUCTION offset $x19, -16
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x18 = LD $x2, 8 :: (load (s64))
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x18 = frame-destroy LD $x2, 24 :: (load (s64) from %stack.1)
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x19 = frame-destroy LD $x2, 16 :: (load (s64) from %stack.2)
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-destroy CFI_INSTRUCTION restore $x18
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-destroy CFI_INSTRUCTION restore $x19
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x2 = frame-destroy ADDI $x2, 32
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-destroy CFI_INSTRUCTION def_cfa_offset 0
++    ; NOEARLYCSR_UNCONDX19-NEXT: PseudoRET
++    ;
++    ; EARLYCSR_UNCONDX19--LABEL: name: use_callee_saved
++    ; EARLYCSR_UNCONDX19-: liveins: $x10, $x19
++    ; EARLYCSR_UNCONDX19--NEXT: {{  $}}
++    ; EARLYCSR_UNCONDX19--NEXT: $x2 = frame-setup ADDI $x2, -16
++    ; EARLYCSR_UNCONDX19--NEXT: frame-setup CFI_INSTRUCTION def_cfa_offset 16
++    ; EARLYCSR_UNCONDX19--NEXT: frame-setup SD killed $x19, $x2, 8 :: (store (s64) into %stack.1)
++    ; EARLYCSR_UNCONDX19--NEXT: frame-setup CFI_INSTRUCTION offset $x19, -8
++    ; EARLYCSR_UNCONDX19--NEXT: $x18 = LD $x2, 0 :: (load (s64))
++    ; EARLYCSR_UNCONDX19--NEXT: $x19 = frame-destroy LD $x2, 8 :: (load (s64) from %stack.1)
++    ; EARLYCSR_UNCONDX19--NEXT: frame-destroy CFI_INSTRUCTION restore $x19
++    ; EARLYCSR_UNCONDX19--NEXT: $x2 = frame-destroy ADDI $x2, 16
++    ; EARLYCSR_UNCONDX19--NEXT: frame-destroy CFI_INSTRUCTION def_cfa_offset 0
++    ; EARLYCSR_UNCONDX19--NEXT: PseudoRET
++    $x18 = LD %stack.0, 0 :: (load (s64))
++    PseudoRET
++
++...
++---
++name: make_a_call
++tracksRegLiveness: true
++body:             |
++  bb.0.entry:
++    ; NOEARLYCSR_UNCONDX19-LABEL: name: make_a_call
++    ; NOEARLYCSR_UNCONDX19: liveins: $x19
++    ; NOEARLYCSR_UNCONDX19-NEXT: {{  $}}
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x2 = frame-setup ADDI $x2, -16
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup CFI_INSTRUCTION def_cfa_offset 16
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup SD killed $x19, $x2, 8 :: (store (s64) into %stack.0)
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup CFI_INSTRUCTION offset $x19, -8
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x19 = frame-destroy LD $x2, 8 :: (load (s64) from %stack.0)
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-destroy CFI_INSTRUCTION restore $x19
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x2 = frame-destroy ADDI $x2, 16
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-destroy CFI_INSTRUCTION def_cfa_offset 0
++    ; NOEARLYCSR_UNCONDX19-NEXT: PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++    ;
++    ; EARLYCSR_UNCONDX19--LABEL: name: make_a_call
++    ; EARLYCSR_UNCONDX19-: liveins: $x19
++    ; EARLYCSR_UNCONDX19--NEXT: {{  $}}
++    ; EARLYCSR_UNCONDX19--NEXT: $x2 = frame-setup ADDI $x2, -16
++    ; EARLYCSR_UNCONDX19--NEXT: frame-setup CFI_INSTRUCTION def_cfa_offset 16
++    ; EARLYCSR_UNCONDX19--NEXT: frame-setup SD killed $x19, $x2, 8 :: (store (s64) into %stack.0)
++    ; EARLYCSR_UNCONDX19--NEXT: frame-setup CFI_INSTRUCTION offset $x19, -8
++    ; EARLYCSR_UNCONDX19--NEXT: $x19 = frame-destroy LD $x2, 8 :: (load (s64) from %stack.0)
++    ; EARLYCSR_UNCONDX19--NEXT: frame-destroy CFI_INSTRUCTION restore $x19
++    ; EARLYCSR_UNCONDX19--NEXT: $x2 = frame-destroy ADDI $x2, 16
++    ; EARLYCSR_UNCONDX19--NEXT: frame-destroy CFI_INSTRUCTION def_cfa_offset 0
++    ; EARLYCSR_UNCONDX19--NEXT: PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++    PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++
++...
++---
++name: make_a_call_and_use_callee_saved
++tracksRegLiveness: true
++stack:
++  - { id: 0, name: '', type: default, offset: 0, size: 8, alignment: 8,
++      stack-id: default, callee-saved-register: '', callee-saved-restored: true,
++      debug-info-variable: '', debug-info-expression: '', debug-info-location: '' }
++body:             |
++  bb.0.entry:
++    ; NOEARLYCSR_UNCONDX19-LABEL: name: make_a_call_and_use_callee_saved
++    ; NOEARLYCSR_UNCONDX19: liveins: $x18, $x19
++    ; NOEARLYCSR_UNCONDX19-NEXT: {{  $}}
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x2 = frame-setup ADDI $x2, -32
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup CFI_INSTRUCTION def_cfa_offset 32
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup SD killed $x18, $x2, 24 :: (store (s64) into %stack.1)
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup SD killed $x19, $x2, 16 :: (store (s64) into %stack.2)
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup CFI_INSTRUCTION offset $x18, -8
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-setup CFI_INSTRUCTION offset $x19, -16
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x18 = LD $x2, 8 :: (load (s64))
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x18 = frame-destroy LD $x2, 24 :: (load (s64) from %stack.1)
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x19 = frame-destroy LD $x2, 16 :: (load (s64) from %stack.2)
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-destroy CFI_INSTRUCTION restore $x18
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-destroy CFI_INSTRUCTION restore $x19
++    ; NOEARLYCSR_UNCONDX19-NEXT: $x2 = frame-destroy ADDI $x2, 32
++    ; NOEARLYCSR_UNCONDX19-NEXT: frame-destroy CFI_INSTRUCTION def_cfa_offset 0
++    ; NOEARLYCSR_UNCONDX19-NEXT: PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++    ;
++    ; EARLYCSR_UNCONDX19--LABEL: name: make_a_call_and_use_callee_saved
++    ; EARLYCSR_UNCONDX19-: liveins: $x19
++    ; EARLYCSR_UNCONDX19--NEXT: {{  $}}
++    ; EARLYCSR_UNCONDX19--NEXT: $x2 = frame-setup ADDI $x2, -16
++    ; EARLYCSR_UNCONDX19--NEXT: frame-setup CFI_INSTRUCTION def_cfa_offset 16
++    ; EARLYCSR_UNCONDX19--NEXT: frame-setup SD killed $x19, $x2, 8 :: (store (s64) into %stack.1)
++    ; EARLYCSR_UNCONDX19--NEXT: frame-setup CFI_INSTRUCTION offset $x19, -8
++    ; EARLYCSR_UNCONDX19--NEXT: $x18 = LD $x2, 0 :: (load (s64))
++    ; EARLYCSR_UNCONDX19--NEXT: $x19 = frame-destroy LD $x2, 8 :: (load (s64) from %stack.1)
++    ; EARLYCSR_UNCONDX19--NEXT: frame-destroy CFI_INSTRUCTION restore $x19
++    ; EARLYCSR_UNCONDX19--NEXT: $x2 = frame-destroy ADDI $x2, 16
++    ; EARLYCSR_UNCONDX19--NEXT: frame-destroy CFI_INSTRUCTION def_cfa_offset 0
++    ; EARLYCSR_UNCONDX19--NEXT: PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++    $x18 = LD %stack.0, 0 :: (load (s64))
++    PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++...
+diff --git a/llvm/test/CodeGen/RISCV/determine-callee-saves.mir b/llvm/test/CodeGen/RISCV/determine-callee-saves.mir
+new file mode 100644
+index 000000000000..68372d7342ad
+--- /dev/null
++++ b/llvm/test/CodeGen/RISCV/determine-callee-saves.mir
+@@ -0,0 +1,113 @@
++# NOTE: Assertions have been autogenerated by utils/update_mir_test_checks.py UTC_ARGS: --version 6
++
++# RUN: llc %s -mtriple=riscv64 -run-pass=prologepilog \
++# RUN: --riscv-save-csrs-early=false \
++# RUN: -o - | FileCheck %s  -check-prefixes=NOEARLYCSR
++
++# RUN: llc %s -mtriple=riscv64 -run-pass=prologepilog \
++# RUN: --riscv-save-csrs-early=true \
++# RUN: -o - | FileCheck %s -check-prefixes=EARLYCSR
++
++--- |
++  define void @use_callee_saved() {
++  entry:
++    ret void
++  }
++
++  define void @make_a_call() {
++  entry:
++    tail call void @bar()
++    ret void
++  }
++
++  define void @make_a_call_and_use_callee_saved() {
++  entry:
++    tail call void @bar()
++    ret void
++  }
++
++  declare void @bar(...)
++...
++---
++name: use_callee_saved
++tracksRegLiveness: true
++stack:
++  - { id: 0, name: '', type: default, offset: 0, size: 8, alignment: 8,
++      stack-id: default, callee-saved-register: '', callee-saved-restored: true,
++      debug-info-variable: '', debug-info-expression: '', debug-info-location: '' }
++body:             |
++  bb.0.entry:
++    liveins: $x10
++    ; NOEARLYCSR-LABEL: name: use_callee_saved
++    ; NOEARLYCSR: liveins: $x10, $x18
++    ; NOEARLYCSR-NEXT: {{  $}}
++    ; NOEARLYCSR-NEXT: $x2 = frame-setup ADDI $x2, -16
++    ; NOEARLYCSR-NEXT: frame-setup CFI_INSTRUCTION def_cfa_offset 16
++    ; NOEARLYCSR-NEXT: frame-setup SD killed $x18, $x2, 8 :: (store (s64) into %stack.1)
++    ; NOEARLYCSR-NEXT: frame-setup CFI_INSTRUCTION offset $x18, -8
++    ; NOEARLYCSR-NEXT: $x18 = LD $x2, 0 :: (load (s64))
++    ; NOEARLYCSR-NEXT: $x18 = frame-destroy LD $x2, 8 :: (load (s64) from %stack.1)
++    ; NOEARLYCSR-NEXT: frame-destroy CFI_INSTRUCTION restore $x18
++    ; NOEARLYCSR-NEXT: $x2 = frame-destroy ADDI $x2, 16
++    ; NOEARLYCSR-NEXT: frame-destroy CFI_INSTRUCTION def_cfa_offset 0
++    ; NOEARLYCSR-NEXT: PseudoRET
++    ;
++    ; EARLYCSR-LABEL: name: use_callee_saved
++    ; EARLYCSR: liveins: $x10
++    ; EARLYCSR-NEXT: {{  $}}
++    ; EARLYCSR-NEXT: $x2 = frame-setup ADDI $x2, -16
++    ; EARLYCSR-NEXT: frame-setup CFI_INSTRUCTION def_cfa_offset 16
++    ; EARLYCSR-NEXT: $x18 = LD $x2, 8 :: (load (s64))
++    ; EARLYCSR-NEXT: $x2 = frame-destroy ADDI $x2, 16
++    ; EARLYCSR-NEXT: frame-destroy CFI_INSTRUCTION def_cfa_offset 0
++    ; EARLYCSR-NEXT: PseudoRET
++    $x18 = LD %stack.0, 0 :: (load (s64))
++    PseudoRET
++
++...
++---
++name: make_a_call
++tracksRegLiveness: true
++body:             |
++  bb.0.entry:
++    ; NOEARLYCSR-LABEL: name: make_a_call
++    ; NOEARLYCSR: PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++    ;
++    ; EARLYCSR-LABEL: name: make_a_call
++    ; EARLYCSR: PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++    PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++
++...
++---
++name: make_a_call_and_use_callee_saved
++tracksRegLiveness: true
++stack:
++  - { id: 0, name: '', type: default, offset: 0, size: 8, alignment: 8,
++      stack-id: default, callee-saved-register: '', callee-saved-restored: true,
++      debug-info-variable: '', debug-info-expression: '', debug-info-location: '' }
++body:             |
++  bb.0.entry:
++    ; NOEARLYCSR-LABEL: name: make_a_call_and_use_callee_saved
++    ; NOEARLYCSR: liveins: $x18
++    ; NOEARLYCSR-NEXT: {{  $}}
++    ; NOEARLYCSR-NEXT: $x2 = frame-setup ADDI $x2, -16
++    ; NOEARLYCSR-NEXT: frame-setup CFI_INSTRUCTION def_cfa_offset 16
++    ; NOEARLYCSR-NEXT: frame-setup SD killed $x18, $x2, 8 :: (store (s64) into %stack.1)
++    ; NOEARLYCSR-NEXT: frame-setup CFI_INSTRUCTION offset $x18, -8
++    ; NOEARLYCSR-NEXT: $x18 = LD $x2, 0 :: (load (s64))
++    ; NOEARLYCSR-NEXT: $x18 = frame-destroy LD $x2, 8 :: (load (s64) from %stack.1)
++    ; NOEARLYCSR-NEXT: frame-destroy CFI_INSTRUCTION restore $x18
++    ; NOEARLYCSR-NEXT: $x2 = frame-destroy ADDI $x2, 16
++    ; NOEARLYCSR-NEXT: frame-destroy CFI_INSTRUCTION def_cfa_offset 0
++    ; NOEARLYCSR-NEXT: PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++    ;
++    ; EARLYCSR-LABEL: name: make_a_call_and_use_callee_saved
++    ; EARLYCSR: $x2 = frame-setup ADDI $x2, -16
++    ; EARLYCSR-NEXT: frame-setup CFI_INSTRUCTION def_cfa_offset 16
++    ; EARLYCSR-NEXT: $x18 = LD $x2, 8 :: (load (s64))
++    ; EARLYCSR-NEXT: $x2 = frame-destroy ADDI $x2, 16
++    ; EARLYCSR-NEXT: frame-destroy CFI_INSTRUCTION def_cfa_offset 0
++    ; EARLYCSR-NEXT: PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++    $x18 = LD %stack.0, 0 :: (load (s64))
++    PseudoTAIL target-flags(riscv-call) @bar, csr_ilp32d_lp64d, implicit $x2
++...
