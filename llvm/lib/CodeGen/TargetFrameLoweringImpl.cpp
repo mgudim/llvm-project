@@ -157,6 +157,10 @@ void TargetFrameLowering::determineEarlyCalleeSaves(
   if (!CSRegs || CSRegs[0] == 0)
     return;
 
+  // TODO: remove this when we can handle CFI emission for "early csrs".
+  if (MF.needsFrameMoves())
+    return;
+
   BitVector UncondPrologCSRs(TRI.getNumRegs(), false);
   determineUncondPrologCalleeSaves(MF, CSRegs, UncondPrologCSRs);
 
