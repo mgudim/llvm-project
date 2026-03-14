@@ -26180,7 +26180,7 @@ bool RISCVTargetLowering::isIntDivCheap(EVT VT, AttributeList Attr) const {
 }
 
 void RISCVTargetLowering::finalizeLowering(MachineFunction &MF) const {
-  if (Subtarget.savesCSRsEarly() && !MF.needsFrameMoves())
+  if (Subtarget.savesCSRsEarly() /*&& !MF.needsFrameMoves()*/)
     createLiveRangesForCSRs(MF);
   MF.getFrameInfo().computeMaxCallFrameSize(MF);
   TargetLoweringBase::finalizeLowering(MF);

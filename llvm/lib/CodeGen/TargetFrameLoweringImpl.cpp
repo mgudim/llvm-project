@@ -158,8 +158,8 @@ void TargetFrameLowering::determineEarlyCalleeSaves(
     return;
 
   // TODO: make save-csr-ealy path  work when CFIs are needed.
-  if (MF.needsFrameMoves())
-    return;
+  //if (MF.needsFrameMoves())
+  //  return;
 
   BitVector UncondPrologCSRs(TRI.getNumRegs(), false);
   determineUncondPrologCalleeSaves(MF, CSRegs, UncondPrologCSRs);
