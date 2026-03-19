@@ -411,5 +411,19 @@ void LiveRangeEdit::calculateRegClassAndHint(MachineFunction &MF,
                << TRI->getRegClassName(MRI.getRegClass(LI.reg())) << '\n';
       });
     VRAI.calculateSpillWeightAndHint(LI);
+    // If the (re)computed hint is a physreg whose live range overlaps this
+    // live interval, the hint can never be satisfied. Clear it to avoid
+    // spurious priority boosts and futile eviction cascades.
+    Register HintReg = MRI.getSimpleHint(LI.reg());
+    if (HintReg.isPhysical()) {
+      const TargetRegisterInfo *TRI = MF.getSubtarget().getRegisterInfo();
+      for (MCRegUnit Unit : TRI->regunits(HintReg.asMCReg())) {
+        const LiveRange *PhysLR = LIS.getCachedRegUnit(Unit);
+        if (PhysLR && PhysLR->overlaps(LI)) {
+          MRI.clearSimpleHint(LI.reg());
+          break;
+        }
+      }
+    }
   }
 }

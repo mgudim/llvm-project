@@ -362,6 +362,7 @@ private:
                                    SmallVectorImpl<Register> &NewVRegs);
   BlockFrequency calcSpillCost(const LiveInterval &LI);
   void initializeCSRCost();
+  void removeUnsatisfiableHints();
   MCRegister tryBlockSplit(const LiveInterval &, AllocationOrder &,
                            SmallVectorImpl<Register> &);
   MCRegister tryInstructionSplit(const LiveInterval &, AllocationOrder &,

@@ -63,6 +63,18 @@ RISCVRegisterInfo::getIPRACSRegs(const MachineFunction *MF) const {
   return CSR_IPRA_SaveList;
 }
 
+unsigned RISCVRegisterInfo::getCSRCost(const MachineFunction *MF) const {
+  // When saving CSRs early (savesCSRsEarly), the save/restore is already
+  // committed unconditionally by createLiveRangesForCSRs, so there is no
+  // additional first-use cost to model.
+  if (MF && MF->getSubtarget<RISCVSubtarget>().savesCSRsEarly())
+    return 0;
+  // The cost will be compared against BlockFrequency where entry has the
+  // value of 1 << 14. A value of 5 will choose to spill or split cold
+  // path instead of using a callee-saved register.
+  return 5;
+}
+
 const MCPhysReg *
 RISCVRegisterInfo::getCalleeSavedRegs(const MachineFunction *MF) const {
   auto &Subtarget = MF->getSubtarget<RISCVSubtarget>();

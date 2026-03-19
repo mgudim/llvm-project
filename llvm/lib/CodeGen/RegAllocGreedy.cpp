@@ -504,6 +504,7 @@ unsigned DefaultPriorityAdvisor::getPriority(const LiveInterval &LI) const {
     Prio |= (1u << 31);
 
     // Boost ranges that have a physical register hint.
+    // Unsatisfiable hints have already been cleared by removeUnsatisfiableHints().
     if (VRM->hasKnownPreference(Reg))
       Prio |= (1u << 30);
   }
@@ -2414,16 +2415,40 @@ void RAGreedy::aboutToRemoveInterval(const LiveInterval &LI) {
   SetOfBrokenHints.remove(&LI);
 }
 
+/// For each virtual register whose simple hint is a physical register,
+/// check whether that physreg's live range overlaps the vreg's live range.
+/// If it does the hint can never be satisfied; clear it so the vreg does not
+/// receive a spurious priority boost and does not trigger futile eviction
+/// cascades trying to reach an unachievable register.
+void RAGreedy::removeUnsatisfiableHints() {
+  for (unsigned Idx = 0, End = MRI->getNumVirtRegs(); Idx < End; ++Idx) {
+    Register Reg = Register::index2VirtReg(Idx);
+    if (MRI->reg_nodbg_empty(Reg))
+      continue;
+    Register HintReg = MRI->getSimpleHint(Reg);
+    if (!HintReg.isPhysical())
+      continue;
+    const LiveInterval &LI = LIS->getInterval(Reg);
+    for (MCRegUnit Unit : TRI->regunits(HintReg.asMCReg())) {
+      const LiveRange *PhysLR = LIS->getCachedRegUnit(Unit);
+      if (PhysLR && PhysLR->overlaps(LI)) {
+        MRI->clearSimpleHint(Reg);
+        break;
+      }
+    }
+  }
+}
+
 void RAGreedy::initializeCSRCost() {
   if (!CSRCostScale.getNumOccurrences() &&
-      (CSRFirstTimeCost.getNumOccurrences() || TRI->getCSRCost())) {
+      (CSRFirstTimeCost.getNumOccurrences() || TRI->getCSRCost(MF))) {
     // We should deprecate the usage of CSRFirstTimeCost!
     // We use the command-line option if it is explicitly set, otherwise use the
     // larger one out of the command-line option and the value reported by TRI.
     CSRCost = BlockFrequency(
         CSRFirstTimeCost.getNumOccurrences()
             ? CSRFirstTimeCost
-            : std::max((unsigned)CSRFirstTimeCost, TRI->getCSRCost()));
+            : std::max((unsigned)CSRFirstTimeCost, TRI->getCSRCost(MF)));
     if (!CSRCost.getFrequency())
       return;
 
@@ -2971,6 +2996,7 @@ bool RAGreedy::run(MachineFunction &mf) {
                                             *VRM, *VRAI, Matrix));
 
   VRAI->calculateSpillWeightsAndHints();
+  removeUnsatisfiableHints();
 
   LLVM_DEBUG(LIS->dump());
 
