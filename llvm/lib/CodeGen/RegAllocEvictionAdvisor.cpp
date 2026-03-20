@@ -220,13 +220,13 @@ bool DefaultEvictionAdvisor::shouldEvict(const LiveInterval &A, bool IsHint,
 
   float AWeight = A.weight();
   float BWeight = B.weight();
-  if (AWeight > BWeight) {
-    float WeightRatio = BWeight == 0.0 ? std::numeric_limits<float>::infinity()
-                                       : AWeight / BWeight;
-    if (CanSplit && !IsHint && BreaksHint &&
-        (WeightRatio < MinWeightRatioNeededToEvictHint)) {
-      return false;
-    }
+  if (AWeight > 1.1 * BWeight) {
+    //float WeightRatio = BWeight == 0.0 ? std::numeric_limits<float>::infinity()
+    //                                   : AWeight / BWeight;
+    //if (CanSplit && !IsHint && BreaksHint &&
+    //    (WeightRatio < MinWeightRatioNeededToEvictHint)) {
+    //  return false;
+    //}
     LLVM_DEBUG(dbgs() << "should evict: " << B << " w= " << BWeight << '\n');
     return true;
   }

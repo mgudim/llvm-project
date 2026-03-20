@@ -82,6 +82,11 @@ STATISTIC(NumGlobalSplits, "Number of split global live ranges");
 STATISTIC(NumLocalSplits,  "Number of split local live ranges");
 STATISTIC(NumEvicted,      "Number of interferences evicted");
 
+static cl::opt<unsigned>
+EvictInterferenceCutoff("evict-interference-cutoff", cl::Hidden,
+                             cl::desc(""),
+                             cl::init(5));
+
 static cl::opt<SplitEditor::ComplementSpillMode> SplitSpillMode(
     "split-spill-mode", cl::Hidden,
     cl::desc("Spill mode for splitting live ranges"),
@@ -724,8 +729,59 @@ MCRegister RAGreedy::tryEvict(const LiveInterval &VirtReg,
 
   MCRegister BestPhys = EvictAdvisor->tryFindEvictionCandidate(
       VirtReg, Order, CostPerUseLimit, FixedRegisters);
-  if (BestPhys.isValid())
-    evictInterference(VirtReg, BestPhys, NewVRegs);
+  if (!BestPhys.isValid())
+    return MCRegister();
+
+  // Estimate whether eviction is worth doing by comparing the total split cost
+  // of the evictees (the registers that would be displaced into NewVRegs) plus
+  // the cost of any hints they would break, against the split cost of VirtReg
+  // itself.  Both costs are approximated with calcBlockSplitCost(), which
+  // counts block-boundary copy insertions and is safe to call speculatively
+  // because SA->analyze() + calcBlockSplitCost() are purely read-only.
+  //
+  // If the evictees are collectively more expensive to re-allocate than simply
+  // splitting VirtReg, skip the eviction and let the caller fall through to
+  // trySplit().calcBlockSplitCost
+  SA->analyze(&VirtReg);
+  BlockFrequency VirtRegSplitCost = calcBlockSplitCost();
+
+  BlockFrequency EvicteeCost = BlockFrequency(0);
+  SmallPtrSet<const LiveInterval *, 8> Seen;
+  for (MCRegUnit Unit : TRI->regunits(BestPhys)) {
+    LiveIntervalUnion::Query &Q = Matrix->query(VirtReg, Unit);
+    const auto &Intfs = Q.interferingVRegs(EvictInterferenceCutoff);
+    if (Intfs.size() >= EvictInterferenceCutoff) {
+      // Too many interferences to analyse cheaply; don't block eviction.
+      EvicteeCost = BlockFrequency(0);
+      break;
+    }
+    for (const LiveInterval *Intf : Intfs) {
+      if (!Seen.insert(Intf).second)
+        continue;
+      SA->analyze(Intf);
+      EvicteeCost += calcBlockSplitCost();
+      // Add the cost of breaking a satisfied hint on the evictee.
+      if (VRM->hasPreferredPhys(Intf->reg()))
+        EvicteeCost += BlockFrequency(
+            MRI->getRegClass(Intf->reg())->getCopyCost());
+    }
+  }
+  // Restore SA to VirtReg so subsequent callers (e.g. trySplit) see the right
+  // analysis state.
+  SA->analyze(&VirtReg);
+
+  LLVM_DEBUG({
+    if (EvicteeCost >= VirtRegSplitCost)
+      dbgs() << "Eviction of " << printReg(BestPhys, TRI)
+             << " not worth it: evictee cost "
+             << printBlockFreq(*MBFI, EvicteeCost) << " >= VirtReg split cost "
+             << printBlockFreq(*MBFI, VirtRegSplitCost) << "\n";
+  });
+
+  if (EvicteeCost >= VirtRegSplitCost)
+    return MCRegister();
+
+  evictInterference(VirtReg, BestPhys, NewVRegs);
   return BestPhys;
 }
 
