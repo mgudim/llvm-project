@@ -566,8 +566,45 @@ MCRegister RAGreedy::tryAssign(const LiveInterval &VirtReg,
 
       if (EvictAdvisor->canEvictHintInterference(VirtReg, PhysHint,
                                                  FixedRegisters)) {
-        evictInterference(VirtReg, PhysHint, NewVRegs);
-        return PhysHint;
+        // Apply the same split-cost guard used by tryEvict: only proceed if
+        // the cost of re-allocating the evictee(s) is less than the cost of
+        // splitting VirtReg itself.  Without this check a lighter interval
+        // can evict a heavier one purely to satisfy a hint, triggering a
+        // cascade of further evictions of sibling live ranges.
+        SA->analyze(&VirtReg);
+        BlockFrequency VirtRegSplitCost = calcBlockSplitCost();
+        BlockFrequency EvicteeCost = BlockFrequency(0);
+        SmallPtrSet<const LiveInterval *, 8> Seen;
+        for (MCRegUnit Unit : TRI->regunits(PhysHint)) {
+          LiveIntervalUnion::Query &Q = Matrix->query(VirtReg, Unit);
+          const auto &Intfs = Q.interferingVRegs(EvictInterferenceCutoff);
+          if (Intfs.size() >= EvictInterferenceCutoff) {
+            EvicteeCost = BlockFrequency(0);
+            break;
+          }
+          for (const LiveInterval *Intf : Intfs) {
+            if (!Seen.insert(Intf).second)
+              continue;
+            SA->analyze(Intf);
+            EvicteeCost += calcBlockSplitCost();
+            if (VRM->hasPreferredPhys(Intf->reg()))
+              EvicteeCost +=
+                  BlockFrequency(MRI->getRegClass(Intf->reg())->getCopyCost());
+          }
+        }
+        SA->analyze(&VirtReg);
+        LLVM_DEBUG({
+          if (EvicteeCost >= VirtRegSplitCost)
+            dbgs() << "Hint eviction of " << printReg(PhysHint, TRI)
+                   << " not worth it: evictee cost "
+                   << printBlockFreq(*MBFI, EvicteeCost)
+                   << " >= VirtReg split cost "
+                   << printBlockFreq(*MBFI, VirtRegSplitCost) << "\n";
+        });
+        if (EvicteeCost < VirtRegSplitCost) {
+          evictInterference(VirtReg, PhysHint, NewVRegs);
+          return PhysHint;
+        }
       }
 
       // We can also split the virtual register in cold blocks.
@@ -652,6 +689,18 @@ void RAGreedy::evictInterference(const LiveInterval &VirtReg,
     if (!VRM->hasPhys(Intf->reg()))
       continue;
 
+    // If Intf was assigned to its hint register (PhysReg), that hint is now
+    // unsatisfiable because VirtReg is taking the register. Clear it before
+    // unassigning so Intf does not waste eviction attempts trying to reclaim
+    // a register it can no longer have, which would otherwise trigger a
+    // cascade of evictions of sibling live ranges.
+    // Note: must check before unassign() since that clears the VRM mapping.
+    if (VRM->hasPreferredPhys(Intf->reg())) {
+      Register Hint = MRI->getSimpleHint(Intf->reg());
+      MCRegister HintPhys = Hint.isVirtual() ? VRM->getPhys(Hint) : Hint.asMCReg();
+      if (HintPhys == PhysReg)
+        MRI->clearSimpleHint(Intf->reg());
+    }
     Matrix->unassign(*Intf);
     assert((ExtraInfo->getCascade(Intf->reg()) < Cascade ||
             VirtReg.isSpillable() < Intf->isSpillable()) &&
