@@ -647,6 +647,14 @@ void RAGreedy::evictInterference(const LiveInterval &VirtReg,
     if (!VRM->hasPhys(Intf->reg()))
       continue;
 
+    // If Intf was assigned to its hint register (PhysReg), that hint is now
+    // unsatisfiable because VirtReg is taking the register. Clear it before
+    if (VRM->hasPreferredPhys(Intf->reg())) {
+      Register Hint = MRI->getSimpleHint(Intf->reg());
+      MCRegister HintPhys = Hint.isVirtual() ? VRM->getPhys(Hint) : Hint.asMCReg();
+      if (HintPhys == PhysReg)
+        MRI->clearSimpleHint(Intf->reg());
+    }
     Matrix->unassign(*Intf);
     assert((ExtraInfo->getCascade(Intf->reg()) < Cascade ||
             VirtReg.isSpillable() < Intf->isSpillable()) &&
