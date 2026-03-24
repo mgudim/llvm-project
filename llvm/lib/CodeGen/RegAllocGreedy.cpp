@@ -1201,6 +1201,23 @@ void RAGreedy::splitAroundRegion(LiveRangeEdit &LREdit,
     // for blocks with multiple uses, and anything created by DCE.
   }
 
+  // Set the allocation hint for each new global interval to the physical
+  // register the split was designed for.  calculateRegClassAndHint (called
+  // from SE->finish via LiveRangeEdit::calculateRegClassAndHint) derives hints
+  // purely from COPY instructions in the MIR.
+  for (unsigned I = 0, E = LREdit.size(); I != E; ++I) {
+    // IntvMap[I] == 0 -> remainder/complement piece, no physreg target.
+    if (IntvMap[I] == 0)
+      continue;
+    // Find the candidate whose IntvIdx matches this interval.
+    for (unsigned C : UsedCands) {
+      if (GlobalCand[C].PhysReg && GlobalCand[C].IntvIdx == IntvMap[I]) {
+        MRI->setSimpleHint(LREdit.get(I), GlobalCand[C].PhysReg);
+        break;
+      }
+    }
+  }
+
   if (VerifyEnabled)
     MF->verify(LIS, Indexes, "After splitting live range around region",
                &errs());
