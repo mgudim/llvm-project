@@ -26222,8 +26222,10 @@ void RISCVTargetLowering::createLiveRangesForCSRs(MachineFunction &MF) const {
   }
 
   for (MachineInstr *RestorePoint : RestorePoints) {
-    auto VRegI = VRegs.begin();
-    for (unsigned Reg = 0; Reg < EarlyCSRs.size(); ++Reg) {
+    // do it backwards so that all live ranges have the same size.
+    auto VRegI = VRegs.end();
+    VRegI--;
+    for (int Reg = EarlyCSRs.size() - 1; Reg > -1; --Reg) {
       if (!EarlyCSRs[Reg])
         continue;
       Register VReg = *VRegI;
@@ -26234,7 +26236,7 @@ void RISCVTargetLowering::createLiveRangesForCSRs(MachineFunction &MF) const {
                                MachineOperand::CreateReg(Reg,
                                                          /*isDef=*/false,
                                                          /*isImplicit=*/true));
-      VRegI++;
+      VRegI--;
     }
   }
 }
