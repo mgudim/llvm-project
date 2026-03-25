@@ -382,8 +382,7 @@ public:
   /// This method should not be called by any passes outside of PEI, because
   /// it may change state passed in by \p MF and \p RS. The preferred
   /// interface outside PEI is getCalleeSaves.
-  // LLVM_DEPRECATED("Use determinePrologCalleeSaves instead",
-  //                 "determinePrologCalleeSaves")
+  // TODO: this should be deprecated.
   virtual void determineCalleeSaves(MachineFunction &MF, BitVector &SavedRegs,
                                     RegScavenger *RS = nullptr) const;
 
@@ -400,10 +399,11 @@ public:
                                    BitVector &UncondPrologCSRs) const;
 
   /// If the target has to do all saves / restores of "must preserve" registers
-  /// in prolog / epilog, this method returns empty set. Otherwise, this method
-  /// returns the difference between getMustPreserveRegisters and
-  /// determineUncondPrologCalleeSaves. These registers will be preserved by the
-  /// code optimizer and do not need to be saved / restored in prolog / epilog.
+  /// in prolog / epilog, this method does not modify EarclyCSRs Otherwise, this
+  /// method sets those bits corresponding to registers in the set difference
+  /// between getMustPreserveRegisters and determineUncondPrologCalleeSaves.
+  /// These registers will be preserved by the code optimizer and do not need to
+  /// be saved / restored in prolog / epilog.
   virtual void determineEarlyCalleeSaves(MachineFunction &MF,
                                          BitVector &EarlyCSRs) const;
 

@@ -1609,7 +1609,6 @@ static MCRegister getRVVBaseRegister(const RISCVRegisterInfo &TRI,
 void RISCVFrameLowering::determineUncondPrologCalleeSaves(
     MachineFunction &MF, const MCPhysReg *CSRegs,
     BitVector &UncondPrologCSRs) const {
-
   const Function &F = MF.getFunction();
   if (!F.hasFnAttribute("riscv-user-defined-uncond-prolog-csrs"))
     return;
@@ -1645,6 +1644,8 @@ void RISCVFrameLowering::determineCalleeSaves(MachineFunction &MF,
   // Original behavior: If v24 is marked, v24m2, v24m4, v24m8 are also marked.
   // Correct behavior: v24m2 is marked only if v24 and v25 are marked.
   MachineRegisterInfo &MRI = MF.getRegInfo();
+  // TODO: use getMustPreserveRegisters instead? This makes a difference when
+  // function is naked or IPRA is enabled for example.
   const MCPhysReg *CSRegs = MRI.getCalleeSavedRegs();
   const RISCVRegisterInfo &TRI = *STI.getRegisterInfo();
   for (unsigned i = 0; CSRegs[i]; ++i) {

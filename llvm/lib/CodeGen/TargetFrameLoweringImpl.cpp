@@ -93,8 +93,7 @@ void TargetFrameLowering::getCalleeSaves(const MachineFunction &MF,
     CalleeSaves.set(Info.getReg());
 }
 
-// LLVM_DEPRECATED("Use determinePrologCalleeSaves instead",
-//                 "determinePrologCalleeSaves")
+// TODO: this should be deprecated.
 void TargetFrameLowering::determineCalleeSaves(MachineFunction &MF,
                                                BitVector &SavedRegs,
                                                RegScavenger *RS) const {
@@ -141,7 +140,6 @@ void TargetFrameLowering::determineUncondPrologCalleeSaves(
       UncondPrologCSRs.set(Reg);
     }
   }
-  return;
 }
 
 void TargetFrameLowering::determineEarlyCalleeSaves(

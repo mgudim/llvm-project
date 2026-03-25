@@ -365,7 +365,7 @@ public:
 
   virtual bool isRegisterReservedByUser(Register R) const { return false; }
 
-  /// Returns `true` is the target must ensure that the registers returned by
+  /// Returns `true` if the target must ensure that the registers returned by
   /// TargetFrameLowering::determineEarlyCalleeSaves are preserved before
   /// `PrologEpilogInserter`. Also see comments for
   /// `TargetFrameLowering::determinePrologCalleeSaves`.
