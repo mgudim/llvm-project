@@ -144,6 +144,12 @@ static cl::opt<unsigned> SplitThresholdForRegWithHint(
              "percentage"),
     cl::init(75), cl::Hidden);
 
+static cl::opt<unsigned> CopyRelativeCost(
+    "regalloc-copy-cost-scale",
+    cl::desc("Cost of a copy relative to a load/store when adjusting region "
+             "split cost, in percentage"),
+    cl::init(10), cl::Hidden);
+
 static RegisterRegAlloc greedyRegAlloc("greedy", "greedy register allocator",
                                        createGreedyRegisterAllocator);
 
@@ -1318,6 +1324,57 @@ unsigned RAGreedy::calculateRegionSplitCostAroundReg(MCRegister PhysReg,
   }
 
   Cost += calcGlobalSplitCost(Cand, Order);
+
+  // Adjust cost based on copy instructions involving the virtual register
+  // being split. If assigning PhysReg makes a copy into an identity copy,
+  // subtract its block frequency (the copy becomes free). If it creates a
+  // non-identity copy where there was none, add the block frequency.
+  const LiveInterval &VirtReg = SA->getParent();
+  Register Reg = VirtReg.reg();
+  for (const MachineOperand &Opnd : MRI->reg_nodbg_operands(Reg)) {
+    const MachineInstr &Instr = *Opnd.getParent();
+    if (!Instr.isCopy() || Opnd.isImplicit())
+      continue;
+
+    // Look for the other end of the copy.
+    const MachineOperand &OtherOpnd = Instr.getOperand(Opnd.isDef());
+    Register OtherReg = OtherOpnd.getReg();
+    if (OtherReg == Reg)
+      continue;
+
+    unsigned SubReg = Opnd.getSubReg();
+    unsigned OtherSubReg = OtherOpnd.getSubReg();
+    if (SubReg && OtherSubReg && SubReg != OtherSubReg)
+      continue;
+
+    // Determine the physical register the other end is assigned to.
+    MCRegister OtherPhysReg =
+        OtherReg.isPhysical() ? OtherReg.asMCReg() : VRM->getPhys(OtherReg);
+    if (!OtherPhysReg)
+      continue;
+
+    // Compute the physical register that PhysReg maps to for this copy,
+    // accounting for any subregister index on our operand.
+    MCRegister ThisPhysReg = SubReg ? TRI->getSubReg(PhysReg, SubReg) : PhysReg;
+    if (!ThisPhysReg)
+      continue;
+
+    // Scale the copy frequency by CopyRelativeCost to reflect that copies
+    // are cheaper than loads/stores.
+    BlockFrequency InstrFreq = MBFI->getBlockFreq(Instr.getParent());
+    InstrFreq *= BranchProbability(CopyRelativeCost, 100);
+    if (OtherPhysReg == ThisPhysReg) {
+      // Assigning PhysReg makes this copy an identity copy; subtract its cost.
+      if (Cost > InstrFreq)
+        Cost -= InstrFreq;
+      else
+        Cost = BlockFrequency(0);
+    } else {
+      // Assigning PhysReg creates a non-identity copy; add its cost.
+      Cost += InstrFreq;
+    }
+  }
+
   LLVM_DEBUG({
     dbgs() << ", total = " << printBlockFreq(*MBFI, Cost) << " with bundles";
     for (int I : Cand.LiveBundles.set_bits())
@@ -2182,7 +2239,46 @@ MCRegister RAGreedy::tryLastChanceRecoloring(
   FixedRegisters.insert(VirtReg.reg());
   SmallVector<Register, 4> CurrentNewVRegs;
 
-  for (MCRegister PhysReg : Order) {
+  // Collect physical registers that would turn a copy instruction involving
+  // VirtReg into an identity copy. Try these first so that last-chance
+  // recoloring preferentially eliminates copies.
+  SmallSetVector<MCRegister, 4> CopyElimRegs;
+  Register VReg = VirtReg.reg();
+  const TargetRegisterClass *RC = MRI->getRegClass(VReg);
+  for (const MachineOperand &Opnd : MRI->reg_nodbg_operands(VReg)) {
+    const MachineInstr &MI = *Opnd.getParent();
+    if (!MI.isCopy() || Opnd.isImplicit())
+      continue;
+    const MachineOperand &OtherOpnd = MI.getOperand(Opnd.isDef());
+    Register OtherReg = OtherOpnd.getReg();
+    if (OtherReg == VReg)
+      continue;
+    unsigned SubReg = Opnd.getSubReg();
+    unsigned OtherSubReg = OtherOpnd.getSubReg();
+    if (SubReg && OtherSubReg && SubReg != OtherSubReg)
+      continue;
+    MCRegister OtherPhysReg =
+        OtherReg.isPhysical() ? OtherReg.asMCReg() : VRM->getPhys(OtherReg);
+    if (!OtherPhysReg)
+      continue;
+    // Determine the full register that VirtReg would need to be assigned to
+    // in order to make this copy an identity copy.
+    MCRegister CopyElimPhys =
+        SubReg ? TRI->getMatchingSuperReg(OtherPhysReg, SubReg, RC)
+               : OtherPhysReg;
+    if (CopyElimPhys && Order.isHint(CopyElimPhys))
+      CopyElimRegs.insert(CopyElimPhys);
+  }
+
+  // Build the iteration order: copy-eliminating candidates first, then the
+  // rest of the allocation order (skipping already-listed registers).
+  SmallVector<MCRegister, 32> OrderedRegs(CopyElimRegs.begin(),
+                                          CopyElimRegs.end());
+  for (MCRegister PhysReg : Order)
+    if (!CopyElimRegs.count(PhysReg))
+      OrderedRegs.push_back(PhysReg);
+
+  for (MCRegister PhysReg : OrderedRegs) {
     assert(PhysReg.isValid());
     LLVM_DEBUG(dbgs() << "Try to assign: " << VirtReg << " to "
                       << printReg(PhysReg, TRI) << '\n');
@@ -2504,143 +2600,41 @@ void RAGreedy::initializeCSRCost() {
   }
 }
 
-/// Collect the hint info for \p Reg.
-/// The results are stored into \p Out.
-/// \p Out is not cleared before being populated.
-void RAGreedy::collectHintInfo(Register Reg, HintsInfo &Out) {
-  const TargetRegisterClass *RC = MRI->getRegClass(Reg);
 
-  for (const MachineOperand &Opnd : MRI->reg_nodbg_operands(Reg)) {
-    const MachineInstr &Instr = *Opnd.getParent();
-    if (!Instr.isCopy() || Opnd.isImplicit())
-      continue;
 
-    // Look for the other end of the copy.
-    const MachineOperand &OtherOpnd = Instr.getOperand(Opnd.isDef());
-    Register OtherReg = OtherOpnd.getReg();
-    if (OtherReg == Reg)
-      continue;
-    unsigned OtherSubReg = OtherOpnd.getSubReg();
-    unsigned SubReg = Opnd.getSubReg();
-
-    // Get the current assignment.
-    MCRegister OtherPhysReg;
-    if (OtherReg.isPhysical()) {
-      if (OtherSubReg)
-        OtherPhysReg = TRI->getMatchingSuperReg(OtherReg, OtherSubReg, RC);
-      else if (SubReg)
-        OtherPhysReg = TRI->getMatchingSuperReg(OtherReg, SubReg, RC);
-      else
-        OtherPhysReg = OtherReg;
-    } else {
-      OtherPhysReg = VRM->getPhys(OtherReg);
-      // TODO: Should find matching superregister, but applying this in the
-      // non-hint case currently causes regressions
-
-      if (SubReg && OtherSubReg && SubReg != OtherSubReg)
-        continue;
-    }
-
-    // Push the collected information.
-    if (OtherPhysReg) {
-      Out.push_back(HintInfo(MBFI->getBlockFreq(Instr.getParent()), OtherReg,
-                             OtherPhysReg));
-    }
-  }
-}
-
-/// Using the given \p List, compute the cost of the broken hints if
-/// \p PhysReg was used.
-/// \return The cost of \p List for \p PhysReg.
-BlockFrequency RAGreedy::getBrokenHintFreq(const HintsInfo &List,
-                                           MCRegister PhysReg) {
-  BlockFrequency Cost = BlockFrequency(0);
-  for (const HintInfo &Info : List) {
-    if (Info.PhysReg != PhysReg)
-      Cost += Info.Freq;
-  }
-  return Cost;
-}
-
-/// Using the register assigned to \p VirtReg, try to recolor
-/// all the live ranges that are copy-related with \p VirtReg.
-/// The recoloring is then propagated to all the live-ranges that have
-/// been recolored and so on, until no more copies can be coalesced or
-/// it is not profitable.
-/// For a given live range, profitability is determined by the sum of the
-/// frequencies of the non-identity copies it would introduce with the old
-/// and new register.
+/// Using the register assigned to \p VirtReg, try to recolor it to
+/// satisfy its allocation hint if the hint register is now available.
 void RAGreedy::tryHintRecoloring(const LiveInterval &VirtReg) {
-  // We have a broken hint, check if it is possible to fix it by
-  // reusing PhysReg for the copy-related live-ranges. Indeed, we evicted
-  // some register and PhysReg may be available for the other live-ranges.
-  HintsInfo Info;
   Register Reg = VirtReg.reg();
-  MCRegister PhysReg = VRM->getPhys(Reg);
-  // Start the recoloring algorithm from the input live-interval, then
-  // it will propagate to the ones that are copy-related with it.
-  SmallSet<Register, 4> Visited = {Reg};
-  SmallVector<Register, 2> RecoloringCandidates = {Reg};
+  MCRegister CurrPhys = VRM->getPhys(Reg);
 
-  LLVM_DEBUG(dbgs() << "Trying to reconcile hints for: " << printReg(Reg, TRI)
-                    << '(' << printReg(PhysReg, TRI) << ")\n");
+  // This may be a skipped register.
+  if (!CurrPhys) {
+    assert(!shouldAllocateRegister(Reg) &&
+           "We have an unallocated variable which should have been handled");
+    return;
+  }
 
-  do {
-    Reg = RecoloringCandidates.pop_back_val();
+  Register HintReg = MRI->getSimpleHint(Reg);
+  if (!HintReg || !HintReg.isPhysical())
+    return;
+  MCRegister PhysHint = HintReg.asMCReg();
 
-    MCRegister CurrPhys = VRM->getPhys(Reg);
+  LLVM_DEBUG(dbgs() << "Trying to reconcile hint for: " << printReg(Reg, TRI)
+                    << '(' << printReg(CurrPhys, TRI) << ") hint "
+                    << printReg(PhysHint, TRI) << '\n');
 
-    // This may be a skipped register.
-    if (!CurrPhys) {
-      assert(!shouldAllocateRegister(Reg) &&
-             "We have an unallocated variable which should have been handled");
-      continue;
-    }
+  if (CurrPhys == PhysHint)
+    return;
 
-    // Get the live interval mapped with this virtual register to be able
-    // to check for the interference with the new color.
-    LiveInterval &LI = LIS->getInterval(Reg);
-    // Check that the new color matches the register class constraints and
-    // that it is free for this live range.
-    if (CurrPhys != PhysReg && (!MRI->getRegClass(Reg)->contains(PhysReg) ||
-                                Matrix->checkInterference(LI, PhysReg)))
-      continue;
+  LiveInterval &LI = LIS->getInterval(Reg);
+  if (!MRI->getRegClass(Reg)->contains(PhysHint) ||
+      Matrix->checkInterference(LI, PhysHint))
+    return;
 
-    LLVM_DEBUG(dbgs() << printReg(Reg, TRI) << '(' << printReg(CurrPhys, TRI)
-                      << ") is recolorable.\n");
-
-    // Gather the hint info.
-    Info.clear();
-    collectHintInfo(Reg, Info);
-    // Check if recoloring the live-range will increase the cost of the
-    // non-identity copies.
-    if (CurrPhys != PhysReg) {
-      LLVM_DEBUG(dbgs() << "Checking profitability:\n");
-      BlockFrequency OldCopiesCost = getBrokenHintFreq(Info, CurrPhys);
-      BlockFrequency NewCopiesCost = getBrokenHintFreq(Info, PhysReg);
-      LLVM_DEBUG(dbgs() << "Old Cost: " << printBlockFreq(*MBFI, OldCopiesCost)
-                        << "\nNew Cost: "
-                        << printBlockFreq(*MBFI, NewCopiesCost) << '\n');
-      if (OldCopiesCost < NewCopiesCost) {
-        LLVM_DEBUG(dbgs() << "=> Not profitable.\n");
-        continue;
-      }
-      // At this point, the cost is either cheaper or equal. If it is
-      // equal, we consider this is profitable because it may expose
-      // more recoloring opportunities.
-      LLVM_DEBUG(dbgs() << "=> Profitable.\n");
-      // Recolor the live-range.
-      Matrix->unassign(LI);
-      Matrix->assign(LI, PhysReg);
-    }
-    // Push all copy-related live-ranges to keep reconciling the broken
-    // hints.
-    for (const HintInfo &HI : Info) {
-      // We cannot recolor physical register.
-      if (HI.Reg.isVirtual() && Visited.insert(HI.Reg).second)
-        RecoloringCandidates.push_back(HI.Reg);
-    }
-  } while (!RecoloringCandidates.empty());
+  LLVM_DEBUG(dbgs() << "=> Recoloring to hint register.\n");
+  Matrix->unassign(LI);
+  Matrix->assign(LI, PhysHint);
 }
 
 /// Try to recolor broken hints.

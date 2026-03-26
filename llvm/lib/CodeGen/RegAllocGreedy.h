@@ -380,24 +380,6 @@ private:
   void tryHintRecoloring(const LiveInterval &);
   void tryHintsRecoloring();
 
-  /// Model the information carried by one end of a copy.
-  struct HintInfo {
-    /// The frequency of the copy.
-    BlockFrequency Freq;
-    /// The virtual register or physical register.
-    Register Reg;
-    /// Its currently assigned register.
-    /// In case of a physical register Reg == PhysReg.
-    MCRegister PhysReg;
-
-    HintInfo(BlockFrequency Freq, Register Reg, MCRegister PhysReg)
-        : Freq(Freq), Reg(Reg), PhysReg(PhysReg) {}
-  };
-  using HintsInfo = SmallVector<HintInfo, 4>;
-
-  BlockFrequency getBrokenHintFreq(const HintsInfo &, MCRegister);
-  void collectHintInfo(Register, HintsInfo &);
-
   /// Greedy RA statistic to remark.
   struct RAGreedyStats {
     unsigned Reloads = 0;
