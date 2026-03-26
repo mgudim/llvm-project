@@ -543,9 +543,46 @@ MCRegister RAGreedy::tryAssign(const LiveInterval &VirtReg,
                                AllocationOrder &Order,
                                SmallVectorImpl<Register> &NewVRegs,
                                const SmallVirtRegSet &FixedRegisters) {
+  // Collect physical registers that would make at least one copy involving
+  // VirtReg into an identity copy, and try those first. This replaces the
+  // copy-based hint derivation that was previously done in
+  // CalcSpillWeights and stored in MRI.
+  Register Reg = VirtReg.reg();
+  const TargetRegisterClass *RC = MRI->getRegClass(Reg);
+  SmallSetVector<MCRegister, 4> CopyElimRegs;
+  for (const MachineOperand &Opnd : MRI->reg_nodbg_operands(Reg)) {
+    const MachineInstr &MI = *Opnd.getParent();
+    if (!MI.isCopy() || Opnd.isImplicit())
+      continue;
+    const MachineOperand &OtherOpnd = MI.getOperand(Opnd.isDef());
+    Register OtherReg = OtherOpnd.getReg();
+    if (OtherReg == Reg)
+      continue;
+    unsigned SubReg = Opnd.getSubReg();
+    unsigned OtherSubReg = OtherOpnd.getSubReg();
+    if (SubReg && OtherSubReg && SubReg != OtherSubReg)
+      continue;
+    MCRegister OtherPhysReg =
+        OtherReg.isPhysical() ? OtherReg.asMCReg() : VRM->getPhys(OtherReg);
+    if (!OtherPhysReg)
+      continue;
+    MCRegister CopyElimPhys =
+        SubReg ? TRI->getMatchingSuperReg(OtherPhysReg, SubReg, RC)
+               : OtherPhysReg;
+    if (CopyElimPhys && Order.isHint(CopyElimPhys))
+      CopyElimRegs.insert(CopyElimPhys);
+  }
+
+  // Try copy-eliminating registers first: if one is free, take it.
+  for (MCRegister CEReg : CopyElimRegs)
+    if (!Matrix->checkInterference(VirtReg, CEReg))
+      return CEReg;
+
   MCRegister PhysReg;
   for (auto I = Order.begin(), E = Order.end(); I != E && !PhysReg; ++I) {
     assert(*I);
+    if (CopyElimRegs.count(*I))
+      continue; // already tried above
     if (!Matrix->checkInterference(VirtReg, *I)) {
       if (I.isHint())
         return *I;
