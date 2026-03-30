@@ -3667,7 +3667,8 @@ public:
   /// Execute target specific actions to finalize target lowering.
   /// This is used to set extra flags in MachineFrameInformation and freezing
   /// the set of reserved registers.
-  /// The default implementation just freezes the set of reserved registers.
+  /// The default implementation creates live ranges for CSRs that are saved early
+  /// (when savesCSRsEarly() is true), and freezes the set of reserved registers.
   virtual void finalizeLowering(MachineFunction &MF) const;
 
   /// Returns true if it's profitable to allow merging store of loads when there
@@ -3886,6 +3887,11 @@ protected:
   /// \pre \p I is a sign, zero, or fp extension and
   ///      is[Z|FP]ExtFree of the related types is not true.
   virtual bool isExtFreeImpl(const Instruction *I) const { return false; }
+
+  /// Create live ranges for callee-saved registers that are saved early (before
+  /// the prolog). This is called from finalizeLowering when
+  /// TargetSubtargetInfo::savesCSRsEarly() returns true.
+  void createLiveRangesForCSRs(MachineFunction &MF) const;
 
   /// Depth that GatherAllAliases should continue looking for chain
   /// dependencies when trying to find a more preferable chain. As an

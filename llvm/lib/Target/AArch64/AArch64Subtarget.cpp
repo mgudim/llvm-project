@@ -101,6 +101,10 @@ static cl::opt<bool>
     UseScalarIncVL("sve-use-scalar-inc-vl", cl::init(false), cl::Hidden,
                    cl::desc("Prefer add+cnt over addvl/inc/dec"));
 
+static cl::opt<bool> SaveCSREarly("aarch64-save-csrs-early",
+                                  cl::desc("Save CSRs early"), cl::init(false),
+                                  cl::Hidden);
+
 unsigned AArch64Subtarget::getVectorInsertExtractBaseCost() const {
   if (OverrideVectorInsertExtractBaseCost.getNumOccurrences() > 0)
     return OverrideVectorInsertExtractBaseCost;
@@ -656,3 +660,5 @@ bool AArch64Subtarget::isX16X17Safer() const {
 bool AArch64Subtarget::enableMachinePipeliner() const {
   return getSchedModel().hasInstrSchedModel();
 }
+
+bool AArch64Subtarget::savesCSRsEarly() const { return SaveCSREarly; }

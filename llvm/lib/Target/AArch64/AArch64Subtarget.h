@@ -161,6 +161,9 @@ public:
   bool enableSubRegLiveness() const override { return EnableSubregLiveness; }
 
   bool enableMachinePipeliner() const override;
+
+  bool savesCSRsEarly() const override;
+
   bool useDFAforSMS() const override { return false; }
 
   /// Returns ARM processor family.

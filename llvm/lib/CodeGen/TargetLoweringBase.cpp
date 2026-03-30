@@ -31,9 +31,12 @@
 #include "llvm/CodeGen/MachineRegisterInfo.h"
 #include "llvm/CodeGen/RuntimeLibcallUtil.h"
 #include "llvm/CodeGen/StackMaps.h"
+#include "llvm/CodeGen/TargetFrameLowering.h"
+#include "llvm/CodeGen/TargetInstrInfo.h"
 #include "llvm/CodeGen/TargetLowering.h"
 #include "llvm/CodeGen/TargetOpcodes.h"
 #include "llvm/CodeGen/TargetRegisterInfo.h"
+#include "llvm/CodeGen/TargetSubtargetInfo.h"
 #include "llvm/CodeGen/ValueTypes.h"
 #include "llvm/CodeGenTypes/MachineValueType.h"
 #include "llvm/IR/Attributes.h"
@@ -2709,7 +2712,65 @@ bool TargetLoweringBase::isLoadBitCastBeneficial(
 }
 
 void TargetLoweringBase::finalizeLowering(MachineFunction &MF) const {
+  if (MF.getSubtarget().savesCSRsEarly() && !MF.needsFrameMoves())
+    createLiveRangesForCSRs(MF);
   MF.getRegInfo().freezeReservedRegs();
+}
+
+void TargetLoweringBase::createLiveRangesForCSRs(MachineFunction &MF) const {
+  MachineRegisterInfo &MRI = MF.getRegInfo();
+  const TargetInstrInfo &TII = *MF.getSubtarget().getInstrInfo();
+  const TargetRegisterInfo &TRI = *MF.getSubtarget().getRegisterInfo();
+  const TargetFrameLowering &TFI = *MF.getSubtarget().getFrameLowering();
+
+  SmallVector<MachineInstr *, 4> RestorePoints;
+  SmallVector<MachineBasicBlock *, 4> SaveMBBs;
+  SaveMBBs.push_back(&MF.front());
+  for (MachineBasicBlock &MBB : MF) {
+    if (MBB.isReturnBlock())
+      RestorePoints.push_back(&MBB.back());
+  }
+
+  BitVector EarlyCSRs;
+  TFI.determineEarlyCalleeSaves(MF, EarlyCSRs);
+
+  SmallVector<Register, 4> VRegs;
+  for (MachineBasicBlock *SaveMBB : SaveMBBs) {
+    for (unsigned Reg = 0; Reg < EarlyCSRs.size(); ++Reg) {
+      if (!EarlyCSRs[Reg])
+        continue;
+      SaveMBB->addLiveIn(Reg);
+      const TargetRegisterClass *RC = TRI.getPhysRegBaseClass(Reg);
+      if (!RC)
+        continue;
+      Register VReg = MRI.createVirtualRegister(RC);
+      VRegs.push_back(VReg);
+      BuildMI(*SaveMBB, SaveMBB->begin(),
+              SaveMBB->findDebugLoc(SaveMBB->begin()),
+              TII.get(TargetOpcode::COPY), VReg)
+          .addReg(Reg);
+      MRI.setSimpleHint(VReg, Reg);
+    }
+  }
+
+  for (MachineInstr *RestorePoint : RestorePoints) {
+    auto VRegI = VRegs.begin();
+    for (unsigned Reg = 0; Reg < EarlyCSRs.size(); ++Reg) {
+      if (!EarlyCSRs[Reg])
+        continue;
+      if (!TRI.getPhysRegBaseClass(Reg))
+        continue;
+      Register VReg = *VRegI;
+      BuildMI(*RestorePoint->getParent(), RestorePoint->getIterator(),
+              RestorePoint->getDebugLoc(), TII.get(TargetOpcode::COPY), Reg)
+          .addReg(VReg);
+      RestorePoint->addOperand(MF,
+                               MachineOperand::CreateReg(Reg,
+                                                         /*isDef=*/false,
+                                                         /*isImplicit=*/true));
+      VRegI++;
+    }
+  }
 }
 
 MachineMemOperand::Flags TargetLoweringBase::getLoadMemOperandFlags(
