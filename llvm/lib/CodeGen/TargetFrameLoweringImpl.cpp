@@ -116,9 +116,9 @@ TargetFrameLowering::getMustPreserveRegisters(const MachineFunction &MF) const {
   // execution we do not need the CSR spills either: setjmp stores all CSRs
   // it was called with into the jmp_buf, which longjmp then restores.
   if (MF.getFunction().hasFnAttribute(Attribute::NoReturn) &&
-        MF.getFunction().hasFnAttribute(Attribute::NoUnwind) &&
-        !MF.getFunction().hasFnAttribute(Attribute::UWTable) &&
-        enableCalleeSaveSkip(MF))
+      MF.getFunction().hasFnAttribute(Attribute::NoUnwind) &&
+      !MF.getFunction().hasFnAttribute(Attribute::UWTable) &&
+      enableCalleeSaveSkip(MF))
     return nullptr;
 
   // When interprocedural register allocation is enabled, callee saved register

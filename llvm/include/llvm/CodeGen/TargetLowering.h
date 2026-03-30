@@ -3667,8 +3667,9 @@ public:
   /// Execute target specific actions to finalize target lowering.
   /// This is used to set extra flags in MachineFrameInformation and freezing
   /// the set of reserved registers.
-  /// The default implementation creates live ranges for CSRs that are saved early
-  /// (when savesCSRsEarly() is true), and freezes the set of reserved registers.
+  /// The default implementation creates live ranges for CSRs that are saved
+  /// early (when savesCSRsEarly() is true), and freezes the set of reserved
+  /// registers.
   virtual void finalizeLowering(MachineFunction &MF) const;
 
   /// Returns true if it's profitable to allow merging store of loads when there
