@@ -2468,14 +2468,10 @@ void RAGreedy::removeUnsatisfiableHints() {
     Register HintReg = MRI->getSimpleHint(VReg);
     if (!HintReg.isPhysical())
       continue;
-    const LiveInterval &LI = LIS->getInterval(VReg);
-    for (MCRegUnit Unit : TRI->regunits(HintReg.asMCReg())) {
-      const LiveRange &PhysLR = LIS->getRegUnit(Unit);
-      if (!PhysLR.empty() && PhysLR.overlaps(LI)) {
-        MRI->clearSimpleHint(VReg);
-        ++NumUnsatisfiableHintsRemoved;
-        break;
-      }
+    MCRegister PhysRegHint = HintReg.asMCReg();
+    if (VirtRegAuxInfo::isUnsatisfiableHint(VReg, PhysRegHint, *LIS, *TRI)) {
+      MRI->removeRegAllocationHint(VReg, PhysRegHint, *VRM);
+      ++NumUnsatisfiableHintsRemoved;
     }
   }
 }

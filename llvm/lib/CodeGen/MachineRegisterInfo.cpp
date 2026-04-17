@@ -20,6 +20,7 @@
 #include "llvm/CodeGen/TargetInstrInfo.h"
 #include "llvm/CodeGen/TargetRegisterInfo.h"
 #include "llvm/CodeGen/TargetSubtargetInfo.h"
+#include "llvm/CodeGen/VirtRegMap.h"
 #include "llvm/Config/llvm-config.h"
 #include "llvm/IR/Attributes.h"
 #include "llvm/IR/DebugLoc.h"
@@ -673,4 +674,20 @@ bool MachineRegisterInfo::isReservedRegUnit(MCRegUnit Unit) const {
       return true;
   }
   return false;
+}
+
+void MachineRegisterInfo::removeRegAllocationHint(Register VReg,
+                                                  MCRegister PhysReg,
+                                                  const VirtRegMap &VRM) {
+  assert(VReg.isVirtual());
+  if (!RegAllocHints.inBounds(VReg))
+    return;
+  auto Hints = RegAllocHints[VReg].second;
+  llvm::erase_if(Hints, [&](Register H) {
+    if (H.isPhysical())
+      return H == PhysReg;
+    if (VRM.hasPhys(H))
+      return VRM.getPhys(H) == PhysReg;
+    return false;
+  });
 }

@@ -35,10 +35,15 @@ void VirtRegAuxInfo::calculateSpillWeightsAndHints() {
                     << "********** Function: " << MF.getName() << '\n');
 
   MachineRegisterInfo &MRI = MF.getRegInfo();
+  const TargetRegisterInfo &TRI = *MF.getSubtarget().getRegisterInfo();
   for (unsigned I = 0, E = MRI.getNumVirtRegs(); I != E; ++I) {
     Register Reg = Register::index2VirtReg(I);
     if (MRI.reg_nodbg_empty(Reg))
       continue;
+    Register HintReg = MRI.getSimpleHint(Reg);
+    if (HintReg.isPhysical() &&
+        isUnsatisfiableHint(Reg, HintReg.asMCReg(), LIS, TRI))
+      MRI.removeRegAllocationHint(Reg, HintReg.asMCReg(), VRM);
     calculateSpillWeightAndHint(LIS.getInterval(Reg));
   }
 }
@@ -75,6 +80,17 @@ Register VirtRegAuxInfo::copyHint(const MachineInstr *MI, Register Reg,
     return TRI.getMatchingSuperReg(CopiedPReg, Sub, RC);
 
   return Register();
+}
+
+// Return true if PhysHint's live range already overlaps VReg's live range,
+// meaning the hint can never be satisfied.
+bool VirtRegAuxInfo::isUnsatisfiableHint(Register VReg, MCRegister PhysHint,
+                                         const LiveIntervals &LIS,
+                                         const TargetRegisterInfo &TRI) {
+  const LiveInterval &VRegLI = LIS.getInterval(VReg);
+  return llvm::any_of(TRI.regunits(PhysHint), [&](const MCRegUnit Unit) {
+    return LIS.getRegUnit(Unit).overlaps(VRegLI);
+  });
 }
 
 // Check if all values in LI are rematerializable

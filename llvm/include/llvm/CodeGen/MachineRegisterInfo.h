@@ -42,6 +42,7 @@
 namespace llvm {
 
 class PSetIterator;
+class VirtRegMap;
 
 /// Convenient type to represent either a register class or a register bank.
 using RegClassOrRegBank =
@@ -830,6 +831,13 @@ public:
     if (RegAllocHints.inBounds(VReg))
       RegAllocHints[VReg].second.clear();
   }
+
+  /// removeRegAllocationHint - Remove a physical register from the hint
+  /// vector of a virtual register. Any virtual register hints that resolve
+  /// to \p PhysReg via \p VRM are also removed. If \p VRM is null, only
+  /// direct physical register matches are removed.
+  LLVM_ABI void removeRegAllocationHint(Register VReg, MCRegister PhysReg,
+                                        const VirtRegMap &VRM);
 
   /// getRegAllocationHint - Return the register allocation hint for the
   /// specified virtual register. If there are many hints, this returns the
