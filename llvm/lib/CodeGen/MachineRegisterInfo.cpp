@@ -680,8 +680,6 @@ void MachineRegisterInfo::removeRegAllocationHint(Register VReg,
                                                   MCRegister PhysReg,
                                                   const VirtRegMap &VRM) {
   assert(VReg.isVirtual());
-  if (!RegAllocHints.inBounds(VReg))
-    return;
   auto Hints = RegAllocHints[VReg].second;
   llvm::erase_if(Hints, [&](Register H) {
     if (H.isPhysical())

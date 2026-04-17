@@ -834,8 +834,7 @@ public:
 
   /// removeRegAllocationHint - Remove a physical register from the hint
   /// vector of a virtual register. Any virtual register hints that resolve
-  /// to \p PhysReg via \p VRM are also removed. If \p VRM is null, only
-  /// direct physical register matches are removed.
+  /// to \p PhysReg via \p VRM are also removed.
   LLVM_ABI void removeRegAllocationHint(Register VReg, MCRegister PhysReg,
                                         const VirtRegMap &VRM);
 

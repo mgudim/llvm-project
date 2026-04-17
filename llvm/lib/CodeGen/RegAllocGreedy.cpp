@@ -2458,8 +2458,7 @@ void RAGreedy::initializeCSRCost() {
 
 /// For each virtual register whose simple hint is a physical register,
 /// check whether that physreg's live range overlaps the vreg's live range.
-/// If it does the hint can never be satisfied; clear it so the vreg does not
-/// receive a spurious priority boost and does not trigger futile evictions.
+/// If it does, the hint can never be satisfied, so remove it.
 void RAGreedy::removeUnsatisfiableHints() {
   for (unsigned Idx = 0, End = MRI->getNumVirtRegs(); Idx < End; ++Idx) {
     Register VReg = Register::index2VirtReg(Idx);
