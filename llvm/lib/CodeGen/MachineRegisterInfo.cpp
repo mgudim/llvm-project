@@ -20,7 +20,6 @@
 #include "llvm/CodeGen/TargetInstrInfo.h"
 #include "llvm/CodeGen/TargetRegisterInfo.h"
 #include "llvm/CodeGen/TargetSubtargetInfo.h"
-#include "llvm/CodeGen/VirtRegMap.h"
 #include "llvm/Config/llvm-config.h"
 #include "llvm/IR/Attributes.h"
 #include "llvm/IR/DebugLoc.h"
@@ -675,4 +674,3 @@ bool MachineRegisterInfo::isReservedRegUnit(MCRegUnit Unit) const {
   }
   return false;
 }
-

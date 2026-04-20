@@ -42,7 +42,6 @@
 namespace llvm {
 
 class PSetIterator;
-class VirtRegMap;
 
 /// Convenient type to represent either a register class or a register bank.
 using RegClassOrRegBank =
