@@ -676,16 +676,3 @@ bool MachineRegisterInfo::isReservedRegUnit(MCRegUnit Unit) const {
   return false;
 }
 
-void MachineRegisterInfo::removeRegAllocationHint(Register VReg,
-                                                  MCRegister PhysReg,
-                                                  const VirtRegMap &VRM) {
-  assert(VReg.isVirtual());
-  auto Hints = RegAllocHints[VReg].second;
-  llvm::erase_if(Hints, [&](Register H) {
-    if (H.isPhysical())
-      return H == PhysReg;
-    if (VRM.hasPhys(H))
-      return VRM.getPhys(H) == PhysReg;
-    return false;
-  });
-}
