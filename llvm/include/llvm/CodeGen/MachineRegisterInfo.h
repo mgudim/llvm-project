@@ -832,7 +832,7 @@ public:
       RegAllocHints[VReg].second.clear();
   }
 
-  /// removeRegAllocationHint - Remove a physical register from the hint
+  /// Remove a physical register from the hint
   /// vector of a virtual register. Any virtual register hints that resolve
   /// to \p PhysReg via \p VRM are also removed.
   LLVM_ABI void removeRegAllocationHint(Register VReg, MCRegister PhysReg,

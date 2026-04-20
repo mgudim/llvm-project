@@ -8,6 +8,7 @@
 
 #include "llvm/CodeGen/CalcSpillWeights.h"
 #include "llvm/ADT/SmallPtrSet.h"
+#include "llvm/ADT/Statistic.h"
 #include "llvm/CodeGen/LiveInterval.h"
 #include "llvm/CodeGen/LiveIntervals.h"
 #include "llvm/CodeGen/MachineFunction.h"
@@ -30,20 +31,18 @@ using namespace llvm;
 
 #define DEBUG_TYPE "calcspillweights"
 
+STATISTIC(NumUnsatisfiableHintsRemoved,
+          "Number of unsatisfiable hints removed");
+
 void VirtRegAuxInfo::calculateSpillWeightsAndHints() {
   LLVM_DEBUG(dbgs() << "********** Compute Spill Weights **********\n"
                     << "********** Function: " << MF.getName() << '\n');
 
   MachineRegisterInfo &MRI = MF.getRegInfo();
-  const TargetRegisterInfo &TRI = *MF.getSubtarget().getRegisterInfo();
   for (unsigned I = 0, E = MRI.getNumVirtRegs(); I != E; ++I) {
     Register Reg = Register::index2VirtReg(I);
     if (MRI.reg_nodbg_empty(Reg))
       continue;
-    Register HintReg = MRI.getSimpleHint(Reg);
-    if (HintReg.isPhysical() &&
-        isUnsatisfiableHint(Reg, HintReg.asMCReg(), LIS, TRI))
-      MRI.removeRegAllocationHint(Reg, HintReg.asMCReg(), VRM);
     calculateSpillWeightAndHint(LIS.getInterval(Reg));
   }
 }
@@ -256,6 +255,14 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI) {
 
   std::pair<unsigned, Register> TargetHint = MRI.getRegAllocationHint(LI.reg());
 
+  // Remove the pre-existing simple hint if it is unsatisfiable.
+  if (TargetHint.first == 0 && TargetHint.second.isPhysical() &&
+      isUnsatisfiableHint(LI.reg(), TargetHint.second.asMCReg(), LIS, TRI)) {
+    MRI.clearSimpleHint(LI.reg());
+    ++NumUnsatisfiableHintsRemoved;
+    TargetHint.second = Register();
+  }
+
   if (LI.isSpillable()) {
     Register Reg = LI.reg();
     Register Original = VRM.getOriginal(Reg);
@@ -347,8 +354,14 @@ float VirtRegAuxInfo::weightCalcHelper(LiveInterval &LI) {
     if (!TII.isCopyInstr(*MI))
       continue;
     Register HintReg = copyHint(MI, LI.reg(), TRI, MRI);
-    if (HintReg && (HintReg.isVirtual() || MRI.isAllocatable(HintReg)))
-      Hint[HintReg] += Weight;
+    if (HintReg && (HintReg.isVirtual() || MRI.isAllocatable(HintReg))) {
+      if (HintReg.isPhysical() &&
+          isUnsatisfiableHint(LI.reg(), HintReg.asMCReg(), LIS, TRI)) {
+        ++NumUnsatisfiableHintsRemoved;
+      } else {
+        Hint[HintReg] += Weight;
+      }
+    }
   }
 
   // Pass all the sorted copy hints to mri.

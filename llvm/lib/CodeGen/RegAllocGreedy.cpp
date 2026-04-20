@@ -81,8 +81,6 @@ using namespace llvm;
 STATISTIC(NumGlobalSplits, "Number of split global live ranges");
 STATISTIC(NumLocalSplits,  "Number of split local live ranges");
 STATISTIC(NumEvicted,      "Number of interferences evicted");
-STATISTIC(NumUnsatisfiableHintsRemoved,
-          "Number of unsatisfiable hints removed");
 
 static cl::opt<SplitEditor::ComplementSpillMode> SplitSpillMode(
     "split-spill-mode", cl::Hidden,
@@ -2456,25 +2454,6 @@ void RAGreedy::initializeCSRCost() {
   }
 }
 
-/// For each virtual register whose simple hint is a physical register,
-/// check whether that physreg's live range overlaps the vreg's live range.
-/// If it does, the hint can never be satisfied, so remove it.
-void RAGreedy::removeUnsatisfiableHints() {
-  for (unsigned Idx = 0, End = MRI->getNumVirtRegs(); Idx < End; ++Idx) {
-    Register VReg = Register::index2VirtReg(Idx);
-    if (MRI->reg_nodbg_empty(VReg))
-      continue;
-    Register HintReg = MRI->getSimpleHint(VReg);
-    if (!HintReg.isPhysical())
-      continue;
-    MCRegister PhysRegHint = HintReg.asMCReg();
-    if (VirtRegAuxInfo::isUnsatisfiableHint(VReg, PhysRegHint, *LIS, *TRI)) {
-      MRI->removeRegAllocationHint(VReg, PhysRegHint, *VRM);
-      ++NumUnsatisfiableHintsRemoved;
-    }
-  }
-}
-
 /// Collect the hint info for \p Reg.
 /// The results are stored into \p Out.
 /// \p Out is not cleared before being populated.
@@ -2992,7 +2971,6 @@ bool RAGreedy::run(MachineFunction &mf) {
                                             *VRM, *VRAI, Matrix));
 
   VRAI->calculateSpillWeightsAndHints();
-  removeUnsatisfiableHints();
 
   LLVM_DEBUG(LIS->dump());
 
