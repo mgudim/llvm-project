@@ -81,7 +81,7 @@ class VirtRegMap;
     /// unsatisfiable because the physreg live range already overlaps the
     /// vreg live range, meaning the hint can never be fulfilled.
     static bool isUnsatisfiableHint(Register VReg, MCRegister PhysHint,
-                                    const LiveIntervals &LIS,
+                                    LiveIntervals &LIS,
                                     const TargetRegisterInfo &TRI);
 
     /// Determine if all values in LI are rematerializable.

@@ -84,11 +84,12 @@ Register VirtRegAuxInfo::copyHint(const MachineInstr *MI, Register Reg,
 // Return true if PhysHint's live range already overlaps VReg's live range,
 // meaning the hint can never be satisfied.
 bool VirtRegAuxInfo::isUnsatisfiableHint(Register VReg, MCRegister PhysHint,
-                                         const LiveIntervals &LIS,
+                                         LiveIntervals &LIS,
                                          const TargetRegisterInfo &TRI) {
   const LiveInterval &VRegLI = LIS.getInterval(VReg);
   return llvm::any_of(TRI.regunits(PhysHint), [&](const MCRegUnit Unit) {
-    return LIS.getRegUnit(Unit).overlaps(VRegLI);
+    const LiveRange &PhysLR = LIS.getRegUnit(Unit);
+    return !PhysLR.empty() && PhysLR.overlaps(VRegLI);
   });
 }
 
