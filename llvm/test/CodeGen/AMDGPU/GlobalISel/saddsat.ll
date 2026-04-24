@@ -4447,16 +4447,16 @@ define amdgpu_ps <2 x float> @saddsat_i48_vs(i48 %lhs, i48 inreg %rhs) {
 ; GFX6-NEXT:    v_add_i32_e32 v2, vcc, s0, v0
 ; GFX6-NEXT:    s_bfe_i64 s[0:1], s[0:1], 0x300000
 ; GFX6-NEXT:    v_addc_u32_e32 v4, vcc, v1, v3, vcc
-; GFX6-NEXT:    v_cmp_lt_i64_e64 s[2:3], s[0:1], 0
+; GFX6-NEXT:    v_cmp_lt_i64_e64 s[0:1], s[0:1], 0
 ; GFX6-NEXT:    v_bfe_i32 v3, v4, 0, 16
 ; GFX6-NEXT:    v_bfe_i32 v1, v1, 0, 16
-; GFX6-NEXT:    v_cmp_lt_i64_e64 s[0:1], v[2:3], v[0:1]
-; GFX6-NEXT:    s_or_b64 s[2:3], s[2:3], s[2:3]
+; GFX6-NEXT:    v_cmp_lt_i64_e64 s[2:3], v[2:3], v[0:1]
+; GFX6-NEXT:    s_or_b64 s[0:1], s[0:1], s[0:1]
 ; GFX6-NEXT:    v_ashrrev_i32_e32 v0, 31, v3
-; GFX6-NEXT:    s_cselect_b64 s[2:3], exec, 0
+; GFX6-NEXT:    s_cselect_b64 s[0:1], exec, 0
 ; GFX6-NEXT:    v_ashrrev_i32_e32 v1, 15, v3
 ; GFX6-NEXT:    v_add_i32_e32 v3, vcc, 0xffff8000, v0
-; GFX6-NEXT:    s_xor_b64 vcc, s[2:3], s[0:1]
+; GFX6-NEXT:    s_xor_b64 vcc, s[0:1], s[2:3]
 ; GFX6-NEXT:    v_cndmask_b32_e32 v0, v2, v1, vcc
 ; GFX6-NEXT:    v_cndmask_b32_e32 v1, v4, v3, vcc
 ; GFX6-NEXT:    v_and_b32_e32 v1, 0xffff, v1
@@ -4468,16 +4468,16 @@ define amdgpu_ps <2 x float> @saddsat_i48_vs(i48 %lhs, i48 inreg %rhs) {
 ; GFX8-NEXT:    v_add_u32_e32 v2, vcc, s0, v0
 ; GFX8-NEXT:    s_bfe_i64 s[0:1], s[0:1], 0x300000
 ; GFX8-NEXT:    v_addc_u32_e32 v4, vcc, v1, v3, vcc
-; GFX8-NEXT:    v_cmp_lt_i64_e64 s[2:3], s[0:1], 0
+; GFX8-NEXT:    v_cmp_lt_i64_e64 s[0:1], s[0:1], 0
 ; GFX8-NEXT:    v_bfe_i32 v3, v4, 0, 16
 ; GFX8-NEXT:    v_bfe_i32 v1, v1, 0, 16
-; GFX8-NEXT:    v_cmp_lt_i64_e64 s[0:1], v[2:3], v[0:1]
-; GFX8-NEXT:    s_cmp_lg_u64 s[2:3], 0
+; GFX8-NEXT:    v_cmp_lt_i64_e64 s[2:3], v[2:3], v[0:1]
+; GFX8-NEXT:    s_cmp_lg_u64 s[0:1], 0
 ; GFX8-NEXT:    v_ashrrev_i32_e32 v0, 31, v3
-; GFX8-NEXT:    s_cselect_b64 s[2:3], exec, 0
+; GFX8-NEXT:    s_cselect_b64 s[0:1], exec, 0
 ; GFX8-NEXT:    v_ashrrev_i32_e32 v1, 15, v3
 ; GFX8-NEXT:    v_add_u32_e32 v3, vcc, 0xffff8000, v0
-; GFX8-NEXT:    s_xor_b64 vcc, s[2:3], s[0:1]
+; GFX8-NEXT:    s_xor_b64 vcc, s[0:1], s[2:3]
 ; GFX8-NEXT:    v_cndmask_b32_e32 v0, v2, v1, vcc
 ; GFX8-NEXT:    v_cndmask_b32_e32 v1, v4, v3, vcc
 ; GFX8-NEXT:    v_and_b32_e32 v1, 0xffff, v1
@@ -4773,14 +4773,14 @@ define amdgpu_ps <2 x float> @saddsat_i64_vs(i64 %lhs, i64 inreg %rhs) {
 ; GFX6:       ; %bb.0:
 ; GFX6-NEXT:    v_mov_b32_e32 v3, s1
 ; GFX6-NEXT:    v_add_i32_e32 v2, vcc, s0, v0
-; GFX6-NEXT:    v_cmp_lt_i64_e64 s[2:3], s[0:1], 0
+; GFX6-NEXT:    v_cmp_lt_i64_e64 s[0:1], s[0:1], 0
 ; GFX6-NEXT:    v_addc_u32_e32 v3, vcc, v1, v3, vcc
-; GFX6-NEXT:    v_cmp_lt_i64_e64 s[0:1], v[2:3], v[0:1]
-; GFX6-NEXT:    s_or_b64 s[2:3], s[2:3], s[2:3]
+; GFX6-NEXT:    v_cmp_lt_i64_e64 s[2:3], v[2:3], v[0:1]
+; GFX6-NEXT:    s_or_b64 s[0:1], s[0:1], s[0:1]
 ; GFX6-NEXT:    v_ashrrev_i32_e32 v0, 31, v3
-; GFX6-NEXT:    s_cselect_b64 s[2:3], exec, 0
+; GFX6-NEXT:    s_cselect_b64 s[0:1], exec, 0
 ; GFX6-NEXT:    v_add_i32_e32 v1, vcc, 0x80000000, v0
-; GFX6-NEXT:    s_xor_b64 vcc, s[2:3], s[0:1]
+; GFX6-NEXT:    s_xor_b64 vcc, s[0:1], s[2:3]
 ; GFX6-NEXT:    v_cndmask_b32_e32 v0, v2, v0, vcc
 ; GFX6-NEXT:    v_cndmask_b32_e32 v1, v3, v1, vcc
 ; GFX6-NEXT:    ; return to shader part epilog
@@ -4789,14 +4789,14 @@ define amdgpu_ps <2 x float> @saddsat_i64_vs(i64 %lhs, i64 inreg %rhs) {
 ; GFX8:       ; %bb.0:
 ; GFX8-NEXT:    v_mov_b32_e32 v3, s1
 ; GFX8-NEXT:    v_add_u32_e32 v2, vcc, s0, v0
-; GFX8-NEXT:    v_cmp_lt_i64_e64 s[2:3], s[0:1], 0
+; GFX8-NEXT:    v_cmp_lt_i64_e64 s[0:1], s[0:1], 0
 ; GFX8-NEXT:    v_addc_u32_e32 v3, vcc, v1, v3, vcc
-; GFX8-NEXT:    v_cmp_lt_i64_e64 s[0:1], v[2:3], v[0:1]
-; GFX8-NEXT:    s_cmp_lg_u64 s[2:3], 0
+; GFX8-NEXT:    v_cmp_lt_i64_e64 s[2:3], v[2:3], v[0:1]
+; GFX8-NEXT:    s_cmp_lg_u64 s[0:1], 0
 ; GFX8-NEXT:    v_ashrrev_i32_e32 v0, 31, v3
-; GFX8-NEXT:    s_cselect_b64 s[2:3], exec, 0
+; GFX8-NEXT:    s_cselect_b64 s[0:1], exec, 0
 ; GFX8-NEXT:    v_add_u32_e32 v1, vcc, 0x80000000, v0
-; GFX8-NEXT:    s_xor_b64 vcc, s[2:3], s[0:1]
+; GFX8-NEXT:    s_xor_b64 vcc, s[0:1], s[2:3]
 ; GFX8-NEXT:    v_cndmask_b32_e32 v0, v2, v0, vcc
 ; GFX8-NEXT:    v_cndmask_b32_e32 v1, v3, v1, vcc
 ; GFX8-NEXT:    ; return to shader part epilog

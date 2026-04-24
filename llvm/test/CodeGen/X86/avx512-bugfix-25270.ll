@@ -9,10 +9,11 @@ define void @bar__512(ptr %var) #0 {
 ; CHECK-NEXT:    pushq %rbx
 ; CHECK-NEXT:    subq $64, %rsp
 ; CHECK-NEXT:    movq %rdi, %rbx
-; CHECK-NEXT:    vmovups (%rdi), %zmm0
-; CHECK-NEXT:    vmovups %zmm0, (%rsp) ## 64-byte Spill
-; CHECK-NEXT:    vbroadcastss {{.*#+}} zmm1 = [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
-; CHECK-NEXT:    vmovaps %zmm1, (%rdi)
+; CHECK-NEXT:    vmovups (%rdi), %zmm1
+; CHECK-NEXT:    vmovups %zmm1, (%rsp) ## 64-byte Spill
+; CHECK-NEXT:    vbroadcastss {{.*#+}} zmm0 = [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+; CHECK-NEXT:    vmovaps %zmm0, (%rdi)
+; CHECK-NEXT:    vmovaps %zmm1, %zmm0
 ; CHECK-NEXT:    callq _Print__512
 ; CHECK-NEXT:    vmovups (%rsp), %zmm0 ## 64-byte Reload
 ; CHECK-NEXT:    callq _Print__512

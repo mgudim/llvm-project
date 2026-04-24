@@ -343,8 +343,13 @@ bb:
 define amdgpu_ps void @test_wmma_f32_16x16x16_f16_negA_constantC(<4 x half> %A, <4 x half> %B, <4 x float> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_f32_16x16x16_f16_negA_constantC:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_f32_16x16x16_f16 v[6:9], v[0:1], v[2:3], 1.0 neg_lo:[1,0,0] neg_hi:[1,0,0]
-; GCN-NEXT:    global_store_b128 v[4:5], v[6:9], off
+; GCN-NEXT:    v_mov_b32_e32 v7, v3
+; GCN-NEXT:    v_mov_b32_e32 v6, v2
+; GCN-NEXT:    v_mov_b32_e32 v9, v1
+; GCN-NEXT:    v_mov_b32_e32 v8, v0
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_1)
+; GCN-NEXT:    v_wmma_f32_16x16x16_f16 v[0:3], v[8:9], v[6:7], 1.0 neg_lo:[1,0,0] neg_hi:[1,0,0]
+; GCN-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %fneg.A = fneg <4 x half> %A
@@ -371,48 +376,64 @@ bb:
 define amdgpu_ps void @test_wmma_f16_16x16x16_f16_negC_pack(<4 x half> %A, <4 x half> %B, ptr %Caddr, ptr addrspace(1) %out) {
 ; GFX1170-TRUE16-LABEL: test_wmma_f16_16x16x16_f16_negC_pack:
 ; GFX1170-TRUE16:       ; %bb.0: ; %bb
-; GFX1170-TRUE16-NEXT:    flat_load_b128 v[8:11], v[4:5]
+; GFX1170-TRUE16-NEXT:    v_mov_b32_e32 v9, v3
+; GFX1170-TRUE16-NEXT:    v_mov_b32_e32 v8, v2
+; GFX1170-TRUE16-NEXT:    v_mov_b32_e32 v11, v1
+; GFX1170-TRUE16-NEXT:    v_mov_b32_e32 v10, v0
+; GFX1170-TRUE16-NEXT:    flat_load_b128 v[0:3], v[4:5]
 ; GFX1170-TRUE16-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX1170-TRUE16-NEXT:    v_mov_b16_e32 v10.h, v11.l
-; GFX1170-TRUE16-NEXT:    v_mov_b16_e32 v8.h, v9.l
+; GFX1170-TRUE16-NEXT:    v_mov_b16_e32 v2.h, v3.l
+; GFX1170-TRUE16-NEXT:    v_mov_b16_e32 v0.h, v1.l
 ; GFX1170-TRUE16-NEXT:    s_delay_alu instid0(VALU_DEP_2) | instskip(NEXT) | instid1(VALU_DEP_1)
-; GFX1170-TRUE16-NEXT:    v_mov_b32_e32 v9, v10
-; GFX1170-TRUE16-NEXT:    v_wmma_f16_16x16x16_f16 v[8:9], v[0:1], v[2:3], v[8:9] neg_lo:[0,0,1]
-; GFX1170-TRUE16-NEXT:    global_store_b64 v[6:7], v[8:9], off
+; GFX1170-TRUE16-NEXT:    v_mov_b32_e32 v1, v2
+; GFX1170-TRUE16-NEXT:    v_wmma_f16_16x16x16_f16 v[0:1], v[10:11], v[8:9], v[0:1] neg_lo:[0,0,1]
+; GFX1170-TRUE16-NEXT:    global_store_b64 v[6:7], v[0:1], off
 ; GFX1170-TRUE16-NEXT:    s_endpgm
 ;
 ; GFX1170-FAKE16-LABEL: test_wmma_f16_16x16x16_f16_negC_pack:
 ; GFX1170-FAKE16:       ; %bb.0: ; %bb
-; GFX1170-FAKE16-NEXT:    flat_load_b128 v[8:11], v[4:5]
+; GFX1170-FAKE16-NEXT:    v_mov_b32_e32 v9, v3
+; GFX1170-FAKE16-NEXT:    v_mov_b32_e32 v8, v2
+; GFX1170-FAKE16-NEXT:    v_mov_b32_e32 v11, v1
+; GFX1170-FAKE16-NEXT:    v_mov_b32_e32 v10, v0
+; GFX1170-FAKE16-NEXT:    flat_load_b128 v[0:3], v[4:5]
 ; GFX1170-FAKE16-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX1170-FAKE16-NEXT:    v_perm_b32 v5, v11, v10, 0x5040100
-; GFX1170-FAKE16-NEXT:    v_perm_b32 v4, v9, v8, 0x5040100
+; GFX1170-FAKE16-NEXT:    v_perm_b32 v2, v3, v2, 0x5040100
+; GFX1170-FAKE16-NEXT:    v_perm_b32 v1, v1, v0, 0x5040100
 ; GFX1170-FAKE16-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1170-FAKE16-NEXT:    v_wmma_f16_16x16x16_f16 v[4:5], v[0:1], v[2:3], v[4:5] neg_lo:[0,0,1]
-; GFX1170-FAKE16-NEXT:    global_store_b64 v[6:7], v[4:5], off
+; GFX1170-FAKE16-NEXT:    v_wmma_f16_16x16x16_f16 v[1:2], v[10:11], v[8:9], v[1:2] neg_lo:[0,0,1]
+; GFX1170-FAKE16-NEXT:    global_store_b64 v[6:7], v[1:2], off
 ; GFX1170-FAKE16-NEXT:    s_endpgm
 ;
 ; GFX12-TRUE16-LABEL: test_wmma_f16_16x16x16_f16_negC_pack:
 ; GFX12-TRUE16:       ; %bb.0: ; %bb
-; GFX12-TRUE16-NEXT:    flat_load_b128 v[8:11], v[4:5]
+; GFX12-TRUE16-NEXT:    v_mov_b32_e32 v9, v3
+; GFX12-TRUE16-NEXT:    v_mov_b32_e32 v8, v2
+; GFX12-TRUE16-NEXT:    v_mov_b32_e32 v11, v1
+; GFX12-TRUE16-NEXT:    v_mov_b32_e32 v10, v0
+; GFX12-TRUE16-NEXT:    flat_load_b128 v[0:3], v[4:5]
 ; GFX12-TRUE16-NEXT:    s_wait_loadcnt_dscnt 0x0
-; GFX12-TRUE16-NEXT:    v_mov_b16_e32 v10.h, v11.l
-; GFX12-TRUE16-NEXT:    v_mov_b16_e32 v8.h, v9.l
+; GFX12-TRUE16-NEXT:    v_mov_b16_e32 v2.h, v3.l
+; GFX12-TRUE16-NEXT:    v_mov_b16_e32 v0.h, v1.l
 ; GFX12-TRUE16-NEXT:    s_delay_alu instid0(VALU_DEP_2) | instskip(NEXT) | instid1(VALU_DEP_1)
-; GFX12-TRUE16-NEXT:    v_mov_b32_e32 v9, v10
-; GFX12-TRUE16-NEXT:    v_wmma_f16_16x16x16_f16 v[8:9], v[0:1], v[2:3], v[8:9] neg_lo:[0,0,1]
-; GFX12-TRUE16-NEXT:    global_store_b64 v[6:7], v[8:9], off
+; GFX12-TRUE16-NEXT:    v_mov_b32_e32 v1, v2
+; GFX12-TRUE16-NEXT:    v_wmma_f16_16x16x16_f16 v[0:1], v[10:11], v[8:9], v[0:1] neg_lo:[0,0,1]
+; GFX12-TRUE16-NEXT:    global_store_b64 v[6:7], v[0:1], off
 ; GFX12-TRUE16-NEXT:    s_endpgm
 ;
 ; GFX12-FAKE16-LABEL: test_wmma_f16_16x16x16_f16_negC_pack:
 ; GFX12-FAKE16:       ; %bb.0: ; %bb
-; GFX12-FAKE16-NEXT:    flat_load_b128 v[8:11], v[4:5]
+; GFX12-FAKE16-NEXT:    v_mov_b32_e32 v9, v3
+; GFX12-FAKE16-NEXT:    v_mov_b32_e32 v8, v2
+; GFX12-FAKE16-NEXT:    v_mov_b32_e32 v11, v1
+; GFX12-FAKE16-NEXT:    v_mov_b32_e32 v10, v0
+; GFX12-FAKE16-NEXT:    flat_load_b128 v[0:3], v[4:5]
 ; GFX12-FAKE16-NEXT:    s_wait_loadcnt_dscnt 0x0
-; GFX12-FAKE16-NEXT:    v_perm_b32 v5, v11, v10, 0x5040100
-; GFX12-FAKE16-NEXT:    v_perm_b32 v4, v9, v8, 0x5040100
+; GFX12-FAKE16-NEXT:    v_perm_b32 v2, v3, v2, 0x5040100
+; GFX12-FAKE16-NEXT:    v_perm_b32 v1, v1, v0, 0x5040100
 ; GFX12-FAKE16-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX12-FAKE16-NEXT:    v_wmma_f16_16x16x16_f16 v[4:5], v[0:1], v[2:3], v[4:5] neg_lo:[0,0,1]
-; GFX12-FAKE16-NEXT:    global_store_b64 v[6:7], v[4:5], off
+; GFX12-FAKE16-NEXT:    v_wmma_f16_16x16x16_f16 v[1:2], v[10:11], v[8:9], v[1:2] neg_lo:[0,0,1]
+; GFX12-FAKE16-NEXT:    global_store_b64 v[6:7], v[1:2], off
 ; GFX12-FAKE16-NEXT:    s_endpgm
 bb:
   %C = load <8 x half>, ptr %Caddr

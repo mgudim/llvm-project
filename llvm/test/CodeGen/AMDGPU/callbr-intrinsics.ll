@@ -6,9 +6,13 @@ define void @test_kill(ptr %src, ptr %dst, i1 %c) {
 ; CHECK-LABEL: test_kill:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    flat_load_dword v0, v[0:1]
-; CHECK-NEXT:    v_and_b32_e32 v1, 1, v4
-; CHECK-NEXT:    v_cmp_eq_u32_e32 vcc, 1, v1
+; CHECK-NEXT:    v_mov_b32_e32 v7, v1
+; CHECK-NEXT:    v_mov_b32_e32 v6, v0
+; CHECK-NEXT:    v_mov_b32_e32 v0, v2
+; CHECK-NEXT:    flat_load_dword v2, v[6:7]
+; CHECK-NEXT:    v_mov_b32_e32 v1, v3
+; CHECK-NEXT:    v_and_b32_e32 v3, 1, v4
+; CHECK-NEXT:    v_cmp_eq_u32_e32 vcc, 1, v3
 ; CHECK-NEXT:    s_mov_b64 s[4:5], exec
 ; CHECK-NEXT:    s_andn2_b64 s[6:7], exec, vcc
 ; CHECK-NEXT:    s_andn2_b64 s[4:5], s[4:5], s[6:7]
@@ -16,7 +20,7 @@ define void @test_kill(ptr %src, ptr %dst, i1 %c) {
 ; CHECK-NEXT:  ; %bb.1:
 ; CHECK-NEXT:    s_and_b64 exec, exec, s[4:5]
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    flat_store_dword v[2:3], v0
+; CHECK-NEXT:    flat_store_dword v[0:1], v2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
 ; CHECK-NEXT:  .LBB0_2:
@@ -26,9 +30,13 @@ define void @test_kill(ptr %src, ptr %dst, i1 %c) {
 ; GISEL-LABEL: test_kill:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    flat_load_dword v0, v[0:1]
-; GISEL-NEXT:    v_and_b32_e32 v1, 1, v4
-; GISEL-NEXT:    v_cmp_ne_u32_e32 vcc, 0, v1
+; GISEL-NEXT:    v_mov_b32_e32 v6, v0
+; GISEL-NEXT:    v_mov_b32_e32 v7, v1
+; GISEL-NEXT:    v_mov_b32_e32 v0, v2
+; GISEL-NEXT:    flat_load_dword v2, v[6:7]
+; GISEL-NEXT:    v_mov_b32_e32 v1, v3
+; GISEL-NEXT:    v_and_b32_e32 v3, 1, v4
+; GISEL-NEXT:    v_cmp_ne_u32_e32 vcc, 0, v3
 ; GISEL-NEXT:    s_mov_b64 s[4:5], exec
 ; GISEL-NEXT:    s_andn2_b64 s[6:7], exec, vcc
 ; GISEL-NEXT:    s_andn2_b64 s[4:5], s[4:5], s[6:7]
@@ -37,7 +45,7 @@ define void @test_kill(ptr %src, ptr %dst, i1 %c) {
 ; GISEL-NEXT:    s_and_b64 exec, exec, s[4:5]
 ; GISEL-NEXT:  ; %bb.2: ; %cont
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    flat_store_dword v[2:3], v0
+; GISEL-NEXT:    flat_store_dword v[0:1], v2
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
 ; GISEL-NEXT:  .LBB0_3: ; Inline asm indirect target
@@ -62,9 +70,13 @@ define void @test_kill_block_order(ptr %src, ptr %dst, i1 %c) {
 ; CHECK-LABEL: test_kill_block_order:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    flat_load_dword v0, v[0:1]
-; CHECK-NEXT:    v_and_b32_e32 v1, 1, v4
-; CHECK-NEXT:    v_cmp_eq_u32_e32 vcc, 1, v1
+; CHECK-NEXT:    v_mov_b32_e32 v7, v1
+; CHECK-NEXT:    v_mov_b32_e32 v6, v0
+; CHECK-NEXT:    v_mov_b32_e32 v0, v2
+; CHECK-NEXT:    flat_load_dword v2, v[6:7]
+; CHECK-NEXT:    v_mov_b32_e32 v1, v3
+; CHECK-NEXT:    v_and_b32_e32 v3, 1, v4
+; CHECK-NEXT:    v_cmp_eq_u32_e32 vcc, 1, v3
 ; CHECK-NEXT:    s_mov_b64 s[4:5], exec
 ; CHECK-NEXT:    s_andn2_b64 s[6:7], exec, vcc
 ; CHECK-NEXT:    s_andn2_b64 s[4:5], s[4:5], s[6:7]
@@ -72,7 +84,7 @@ define void @test_kill_block_order(ptr %src, ptr %dst, i1 %c) {
 ; CHECK-NEXT:  ; %bb.1:
 ; CHECK-NEXT:    s_and_b64 exec, exec, s[4:5]
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    flat_store_dword v[2:3], v0
+; CHECK-NEXT:    flat_store_dword v[0:1], v2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
 ; CHECK-NEXT:  .LBB1_2:
@@ -82,9 +94,13 @@ define void @test_kill_block_order(ptr %src, ptr %dst, i1 %c) {
 ; GISEL-LABEL: test_kill_block_order:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    flat_load_dword v0, v[0:1]
-; GISEL-NEXT:    v_and_b32_e32 v1, 1, v4
-; GISEL-NEXT:    v_cmp_ne_u32_e32 vcc, 0, v1
+; GISEL-NEXT:    v_mov_b32_e32 v6, v0
+; GISEL-NEXT:    v_mov_b32_e32 v7, v1
+; GISEL-NEXT:    v_mov_b32_e32 v0, v2
+; GISEL-NEXT:    flat_load_dword v2, v[6:7]
+; GISEL-NEXT:    v_mov_b32_e32 v1, v3
+; GISEL-NEXT:    v_and_b32_e32 v3, 1, v4
+; GISEL-NEXT:    v_cmp_ne_u32_e32 vcc, 0, v3
 ; GISEL-NEXT:    s_mov_b64 s[4:5], exec
 ; GISEL-NEXT:    s_andn2_b64 s[6:7], exec, vcc
 ; GISEL-NEXT:    s_andn2_b64 s[4:5], s[4:5], s[6:7]
@@ -93,7 +109,7 @@ define void @test_kill_block_order(ptr %src, ptr %dst, i1 %c) {
 ; GISEL-NEXT:    s_and_b64 exec, exec, s[4:5]
 ; GISEL-NEXT:  ; %bb.2: ; %cont
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    flat_store_dword v[2:3], v0
+; GISEL-NEXT:    flat_store_dword v[0:1], v2
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
 ; GISEL-NEXT:  .LBB1_3: ; Inline asm indirect target

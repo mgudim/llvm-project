@@ -25,12 +25,13 @@ define void @inline_asm_i16_in_v_use(i16 %val) {
 ; CHECK-LABEL: inline_asm_i16_in_v_use:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    v_and_b32_e32 v8, 0xffff, v0
+; CHECK-NEXT:    v_and_b32_e32 v0, 0xffff, v0
+; CHECK-NEXT:    v_mov_b32_e32 v8, v0
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; use v8
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; use v8
+; CHECK-NEXT:    ; use v0
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
   call void asm sideeffect "; use $0", "{v8}"(i16 %val)

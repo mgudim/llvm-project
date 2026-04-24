@@ -573,41 +573,41 @@ define { <3 x float>, <3 x float> } @test_sincos_v3f32(<3 x float> %a) #0 {
 ; SPARC32-NEXT:    ld [%fp+-12], %f0
 ; SPARC32-NEXT:    ld [%fp+-8], %f1
 ; SPARC32-NEXT:    ld [%fp+-4], %f2
-; SPARC32-NEXT:    ld [%fp+64], %i3
+; SPARC32-NEXT:    ld [%fp+64], %i0
 ; SPARC32-NEXT:    st %f0, [%fp+-24]
 ; SPARC32-NEXT:    st %f1, [%fp+-20]
 ; SPARC32-NEXT:    st %f2, [%fp+-16]
-; SPARC32-NEXT:    ld [%fp+-24], %i0
-; SPARC32-NEXT:    call sinf
-; SPARC32-NEXT:    mov %i0, %o0
-; SPARC32-NEXT:    st %f0, [%fp+-28] ! 4-byte Folded Spill
-; SPARC32-NEXT:    ld [%fp+-20], %i1
+; SPARC32-NEXT:    ld [%fp+-24], %i1
 ; SPARC32-NEXT:    call sinf
 ; SPARC32-NEXT:    mov %i1, %o0
-; SPARC32-NEXT:    st %f0, [%fp+-32] ! 4-byte Folded Spill
-; SPARC32-NEXT:    ld [%fp+-16], %i2
+; SPARC32-NEXT:    st %f0, [%fp+-28] ! 4-byte Folded Spill
+; SPARC32-NEXT:    ld [%fp+-20], %i2
 ; SPARC32-NEXT:    call sinf
 ; SPARC32-NEXT:    mov %i2, %o0
+; SPARC32-NEXT:    st %f0, [%fp+-32] ! 4-byte Folded Spill
+; SPARC32-NEXT:    ld [%fp+-16], %i3
+; SPARC32-NEXT:    call sinf
+; SPARC32-NEXT:    mov %i3, %o0
 ; SPARC32-NEXT:    st %f0, [%fp+-36] ! 4-byte Folded Spill
 ; SPARC32-NEXT:    call cosf
-; SPARC32-NEXT:    mov %i0, %o0
+; SPARC32-NEXT:    mov %i1, %o0
 ; SPARC32-NEXT:    st %f0, [%fp+-40] ! 4-byte Folded Spill
 ; SPARC32-NEXT:    call cosf
-; SPARC32-NEXT:    mov %i1, %o0
+; SPARC32-NEXT:    mov %i2, %o0
 ; SPARC32-NEXT:    st %f0, [%fp+-44] ! 4-byte Folded Spill
 ; SPARC32-NEXT:    call cosf
-; SPARC32-NEXT:    mov %i2, %o0
-; SPARC32-NEXT:    st %f0, [%i3+24]
+; SPARC32-NEXT:    mov %i3, %o0
+; SPARC32-NEXT:    st %f0, [%i0+24]
 ; SPARC32-NEXT:    ld [%fp+-44], %f0 ! 4-byte Folded Reload
-; SPARC32-NEXT:    st %f0, [%i3+20]
+; SPARC32-NEXT:    st %f0, [%i0+20]
 ; SPARC32-NEXT:    ld [%fp+-40], %f0 ! 4-byte Folded Reload
-; SPARC32-NEXT:    st %f0, [%i3+16]
+; SPARC32-NEXT:    st %f0, [%i0+16]
 ; SPARC32-NEXT:    ld [%fp+-36], %f0 ! 4-byte Folded Reload
-; SPARC32-NEXT:    st %f0, [%i3+8]
+; SPARC32-NEXT:    st %f0, [%i0+8]
 ; SPARC32-NEXT:    ld [%fp+-32], %f0 ! 4-byte Folded Reload
-; SPARC32-NEXT:    st %f0, [%i3+4]
+; SPARC32-NEXT:    st %f0, [%i0+4]
 ; SPARC32-NEXT:    ld [%fp+-28], %f0 ! 4-byte Folded Reload
-; SPARC32-NEXT:    st %f0, [%i3]
+; SPARC32-NEXT:    st %f0, [%i0]
 ; SPARC32-NEXT:    ret
 ; SPARC32-NEXT:    restore
 ;
@@ -777,10 +777,12 @@ define { double, double } @test_sincos_f64(double %a) #0 {
 ; GNU32-NEXT:    std %i0, [%fp+-8]
 ; GNU32-NEXT:    ldd [%fp+-8], %f0
 ; GNU32-NEXT:    std %f0, [%fp+-32]
-; GNU32-NEXT:    ldd [%fp+-32], %o0
+; GNU32-NEXT:    ldd [%fp+-32], %i0
 ; GNU32-NEXT:    add %fp, -16, %o2
-; GNU32-NEXT:    call sincos
 ; GNU32-NEXT:    add %fp, -24, %o3
+; GNU32-NEXT:    mov %i0, %o0
+; GNU32-NEXT:    call sincos
+; GNU32-NEXT:    mov %i1, %o1
 ; GNU32-NEXT:    ldd [%fp+-16], %f0
 ; GNU32-NEXT:    ldd [%fp+-24], %f2
 ; GNU32-NEXT:    ret
@@ -812,33 +814,33 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) #0 {
 ; SPARC32-NEXT:    std %i0, [%fp+-8]
 ; SPARC32-NEXT:    ldd [%fp+-8], %f0
 ; SPARC32-NEXT:    ldd [%fp+-16], %f2
-; SPARC32-NEXT:    ld [%fp+64], %i4
+; SPARC32-NEXT:    ld [%fp+64], %i0
 ; SPARC32-NEXT:    std %f0, [%fp+-32]
 ; SPARC32-NEXT:    std %f2, [%fp+-24]
-; SPARC32-NEXT:    ldd [%fp+-32], %i0
-; SPARC32-NEXT:    mov %i0, %o0
+; SPARC32-NEXT:    ldd [%fp+-32], %i2
+; SPARC32-NEXT:    mov %i2, %o0
 ; SPARC32-NEXT:    call sin
-; SPARC32-NEXT:    mov %i1, %o1
+; SPARC32-NEXT:    mov %i3, %o1
 ; SPARC32-NEXT:    std %f0, [%fp+-40] ! 8-byte Folded Spill
-; SPARC32-NEXT:    ldd [%fp+-24], %i2
-; SPARC32-NEXT:    mov %i2, %o0
+; SPARC32-NEXT:    ldd [%fp+-24], %i4
+; SPARC32-NEXT:    mov %i4, %o0
 ; SPARC32-NEXT:    call sin
-; SPARC32-NEXT:    mov %i3, %o1
+; SPARC32-NEXT:    mov %i5, %o1
 ; SPARC32-NEXT:    std %f0, [%fp+-48] ! 8-byte Folded Spill
-; SPARC32-NEXT:    mov %i0, %o0
-; SPARC32-NEXT:    call cos
-; SPARC32-NEXT:    mov %i1, %o1
-; SPARC32-NEXT:    std %f0, [%fp+-56] ! 8-byte Folded Spill
 ; SPARC32-NEXT:    mov %i2, %o0
 ; SPARC32-NEXT:    call cos
 ; SPARC32-NEXT:    mov %i3, %o1
-; SPARC32-NEXT:    std %f0, [%i4+24]
+; SPARC32-NEXT:    std %f0, [%fp+-56] ! 8-byte Folded Spill
+; SPARC32-NEXT:    mov %i4, %o0
+; SPARC32-NEXT:    call cos
+; SPARC32-NEXT:    mov %i5, %o1
+; SPARC32-NEXT:    std %f0, [%i0+24]
 ; SPARC32-NEXT:    ldd [%fp+-56], %f0 ! 8-byte Folded Reload
-; SPARC32-NEXT:    std %f0, [%i4+16]
+; SPARC32-NEXT:    std %f0, [%i0+16]
 ; SPARC32-NEXT:    ldd [%fp+-48], %f0 ! 8-byte Folded Reload
-; SPARC32-NEXT:    std %f0, [%i4+8]
+; SPARC32-NEXT:    std %f0, [%i0+8]
 ; SPARC32-NEXT:    ldd [%fp+-40], %f0 ! 8-byte Folded Reload
-; SPARC32-NEXT:    std %f0, [%i4]
+; SPARC32-NEXT:    std %f0, [%i0]
 ; SPARC32-NEXT:    ret
 ; SPARC32-NEXT:    restore
 ;
@@ -878,14 +880,18 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) #0 {
 ; GNU32-NEXT:    ldd [%fp+-8], %f2
 ; GNU32-NEXT:    std %f2, [%fp+-40] ! 8-byte Folded Spill
 ; GNU32-NEXT:    std %f0, [%fp+-32]
-; GNU32-NEXT:    ldd [%fp+-32], %o0
+; GNU32-NEXT:    ldd [%fp+-32], %i2
 ; GNU32-NEXT:    add %i0, 8, %o2
-; GNU32-NEXT:    call sincos
 ; GNU32-NEXT:    add %i0, 24, %o3
+; GNU32-NEXT:    mov %i2, %o0
+; GNU32-NEXT:    call sincos
+; GNU32-NEXT:    mov %i3, %o1
 ; GNU32-NEXT:    ldd [%fp+-40], %f0 ! 8-byte Folded Reload
 ; GNU32-NEXT:    std %f0, [%fp+-24]
-; GNU32-NEXT:    ldd [%fp+-24], %o0
+; GNU32-NEXT:    ldd [%fp+-24], %i2
 ; GNU32-NEXT:    add %i0, 16, %o3
+; GNU32-NEXT:    mov %i2, %o0
+; GNU32-NEXT:    mov %i3, %o1
 ; GNU32-NEXT:    call sincos
 ; GNU32-NEXT:    mov %i0, %o2
 ; GNU32-NEXT:    ret

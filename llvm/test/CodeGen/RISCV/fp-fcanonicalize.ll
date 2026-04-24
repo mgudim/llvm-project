@@ -181,20 +181,20 @@ define <2 x half> @fcanonicalize_v2f16(<2 x half> %x) {
 ; CHECK-SOFT-RV64-NEXT:    .cfi_offset s2, -32
 ; CHECK-SOFT-RV64-NEXT:    mv s0, a1
 ; CHECK-SOFT-RV64-NEXT:    lui a1, 16
-; CHECK-SOFT-RV64-NEXT:    addi s2, a1, -1
-; CHECK-SOFT-RV64-NEXT:    and a0, a0, s2
+; CHECK-SOFT-RV64-NEXT:    addi s1, a1, -1
+; CHECK-SOFT-RV64-NEXT:    and a0, a0, s1
 ; CHECK-SOFT-RV64-NEXT:    call __extendhfsf2
 ; CHECK-SOFT-RV64-NEXT:    lui a1, 260096
 ; CHECK-SOFT-RV64-NEXT:    call __mulsf3
 ; CHECK-SOFT-RV64-NEXT:    call __truncsfhf2
-; CHECK-SOFT-RV64-NEXT:    mv s1, a0
-; CHECK-SOFT-RV64-NEXT:    and a0, s0, s2
+; CHECK-SOFT-RV64-NEXT:    mv s2, a0
+; CHECK-SOFT-RV64-NEXT:    and a0, s0, s1
 ; CHECK-SOFT-RV64-NEXT:    call __extendhfsf2
 ; CHECK-SOFT-RV64-NEXT:    lui a1, 260096
 ; CHECK-SOFT-RV64-NEXT:    call __mulsf3
 ; CHECK-SOFT-RV64-NEXT:    call __truncsfhf2
 ; CHECK-SOFT-RV64-NEXT:    mv a1, a0
-; CHECK-SOFT-RV64-NEXT:    mv a0, s1
+; CHECK-SOFT-RV64-NEXT:    mv a0, s2
 ; CHECK-SOFT-RV64-NEXT:    ld ra, 24(sp) # 8-byte Folded Reload
 ; CHECK-SOFT-RV64-NEXT:    ld s0, 16(sp) # 8-byte Folded Reload
 ; CHECK-SOFT-RV64-NEXT:    ld s1, 8(sp) # 8-byte Folded Reload
@@ -259,20 +259,20 @@ define <2 x half> @fcanonicalize_v2f16(<2 x half> %x) {
 ; CHECK-SOFT-RV32-NEXT:    .cfi_offset s2, -16
 ; CHECK-SOFT-RV32-NEXT:    mv s0, a1
 ; CHECK-SOFT-RV32-NEXT:    lui a1, 16
-; CHECK-SOFT-RV32-NEXT:    addi s2, a1, -1
-; CHECK-SOFT-RV32-NEXT:    and a0, a0, s2
+; CHECK-SOFT-RV32-NEXT:    addi s1, a1, -1
+; CHECK-SOFT-RV32-NEXT:    and a0, a0, s1
 ; CHECK-SOFT-RV32-NEXT:    call __extendhfsf2
 ; CHECK-SOFT-RV32-NEXT:    lui a1, 260096
 ; CHECK-SOFT-RV32-NEXT:    call __mulsf3
 ; CHECK-SOFT-RV32-NEXT:    call __truncsfhf2
-; CHECK-SOFT-RV32-NEXT:    mv s1, a0
-; CHECK-SOFT-RV32-NEXT:    and a0, s0, s2
+; CHECK-SOFT-RV32-NEXT:    mv s2, a0
+; CHECK-SOFT-RV32-NEXT:    and a0, s0, s1
 ; CHECK-SOFT-RV32-NEXT:    call __extendhfsf2
 ; CHECK-SOFT-RV32-NEXT:    lui a1, 260096
 ; CHECK-SOFT-RV32-NEXT:    call __mulsf3
 ; CHECK-SOFT-RV32-NEXT:    call __truncsfhf2
 ; CHECK-SOFT-RV32-NEXT:    mv a1, a0
-; CHECK-SOFT-RV32-NEXT:    mv a0, s1
+; CHECK-SOFT-RV32-NEXT:    mv a0, s2
 ; CHECK-SOFT-RV32-NEXT:    lw ra, 12(sp) # 4-byte Folded Reload
 ; CHECK-SOFT-RV32-NEXT:    lw s0, 8(sp) # 4-byte Folded Reload
 ; CHECK-SOFT-RV32-NEXT:    lw s1, 4(sp) # 4-byte Folded Reload
@@ -449,20 +449,20 @@ define <2 x half> @fcanonicalize_v2f16_nnan(<2 x half> %x) {
 ; CHECK-SOFT-RV64-NEXT:    .cfi_offset s2, -32
 ; CHECK-SOFT-RV64-NEXT:    mv s0, a1
 ; CHECK-SOFT-RV64-NEXT:    lui a1, 16
-; CHECK-SOFT-RV64-NEXT:    addi s2, a1, -1
-; CHECK-SOFT-RV64-NEXT:    and a0, a0, s2
+; CHECK-SOFT-RV64-NEXT:    addi s1, a1, -1
+; CHECK-SOFT-RV64-NEXT:    and a0, a0, s1
 ; CHECK-SOFT-RV64-NEXT:    call __extendhfsf2
 ; CHECK-SOFT-RV64-NEXT:    lui a1, 260096
 ; CHECK-SOFT-RV64-NEXT:    call __mulsf3
 ; CHECK-SOFT-RV64-NEXT:    call __truncsfhf2
-; CHECK-SOFT-RV64-NEXT:    mv s1, a0
-; CHECK-SOFT-RV64-NEXT:    and a0, s0, s2
+; CHECK-SOFT-RV64-NEXT:    mv s2, a0
+; CHECK-SOFT-RV64-NEXT:    and a0, s0, s1
 ; CHECK-SOFT-RV64-NEXT:    call __extendhfsf2
 ; CHECK-SOFT-RV64-NEXT:    lui a1, 260096
 ; CHECK-SOFT-RV64-NEXT:    call __mulsf3
 ; CHECK-SOFT-RV64-NEXT:    call __truncsfhf2
 ; CHECK-SOFT-RV64-NEXT:    mv a1, a0
-; CHECK-SOFT-RV64-NEXT:    mv a0, s1
+; CHECK-SOFT-RV64-NEXT:    mv a0, s2
 ; CHECK-SOFT-RV64-NEXT:    ld ra, 24(sp) # 8-byte Folded Reload
 ; CHECK-SOFT-RV64-NEXT:    ld s0, 16(sp) # 8-byte Folded Reload
 ; CHECK-SOFT-RV64-NEXT:    ld s1, 8(sp) # 8-byte Folded Reload
@@ -527,20 +527,20 @@ define <2 x half> @fcanonicalize_v2f16_nnan(<2 x half> %x) {
 ; CHECK-SOFT-RV32-NEXT:    .cfi_offset s2, -16
 ; CHECK-SOFT-RV32-NEXT:    mv s0, a1
 ; CHECK-SOFT-RV32-NEXT:    lui a1, 16
-; CHECK-SOFT-RV32-NEXT:    addi s2, a1, -1
-; CHECK-SOFT-RV32-NEXT:    and a0, a0, s2
+; CHECK-SOFT-RV32-NEXT:    addi s1, a1, -1
+; CHECK-SOFT-RV32-NEXT:    and a0, a0, s1
 ; CHECK-SOFT-RV32-NEXT:    call __extendhfsf2
 ; CHECK-SOFT-RV32-NEXT:    lui a1, 260096
 ; CHECK-SOFT-RV32-NEXT:    call __mulsf3
 ; CHECK-SOFT-RV32-NEXT:    call __truncsfhf2
-; CHECK-SOFT-RV32-NEXT:    mv s1, a0
-; CHECK-SOFT-RV32-NEXT:    and a0, s0, s2
+; CHECK-SOFT-RV32-NEXT:    mv s2, a0
+; CHECK-SOFT-RV32-NEXT:    and a0, s0, s1
 ; CHECK-SOFT-RV32-NEXT:    call __extendhfsf2
 ; CHECK-SOFT-RV32-NEXT:    lui a1, 260096
 ; CHECK-SOFT-RV32-NEXT:    call __mulsf3
 ; CHECK-SOFT-RV32-NEXT:    call __truncsfhf2
 ; CHECK-SOFT-RV32-NEXT:    mv a1, a0
-; CHECK-SOFT-RV32-NEXT:    mv a0, s1
+; CHECK-SOFT-RV32-NEXT:    mv a0, s2
 ; CHECK-SOFT-RV32-NEXT:    lw ra, 12(sp) # 4-byte Folded Reload
 ; CHECK-SOFT-RV32-NEXT:    lw s0, 8(sp) # 4-byte Folded Reload
 ; CHECK-SOFT-RV32-NEXT:    lw s1, 4(sp) # 4-byte Folded Reload
@@ -4331,8 +4331,8 @@ define <2 x double> @fcanonicalize_v2f64(<2 x double> %x) {
 ; CHECK-SOFT-RV64-NEXT:    .cfi_offset s1, -24
 ; CHECK-SOFT-RV64-NEXT:    .cfi_offset s2, -32
 ; CHECK-SOFT-RV64-NEXT:    mv s0, a1
-; CHECK-SOFT-RV64-NEXT:    li s1, 1023
-; CHECK-SOFT-RV64-NEXT:    slli s1, s1, 52
+; CHECK-SOFT-RV64-NEXT:    li a1, 1023
+; CHECK-SOFT-RV64-NEXT:    slli s1, a1, 52
 ; CHECK-SOFT-RV64-NEXT:    mv a1, s1
 ; CHECK-SOFT-RV64-NEXT:    call __muldf3
 ; CHECK-SOFT-RV64-NEXT:    mv s2, a0
@@ -4381,14 +4381,14 @@ define <2 x double> @fcanonicalize_v2f64(<2 x double> %x) {
 ; CHECK-SOFT-RV32-NEXT:    .cfi_offset s2, -16
 ; CHECK-SOFT-RV32-NEXT:    .cfi_offset s3, -20
 ; CHECK-SOFT-RV32-NEXT:    .cfi_offset s4, -24
-; CHECK-SOFT-RV32-NEXT:    lw a2, 0(a1)
-; CHECK-SOFT-RV32-NEXT:    lw a4, 4(a1)
+; CHECK-SOFT-RV32-NEXT:    lw a4, 0(a1)
+; CHECK-SOFT-RV32-NEXT:    lw a2, 4(a1)
 ; CHECK-SOFT-RV32-NEXT:    lw s0, 8(a1)
 ; CHECK-SOFT-RV32-NEXT:    lw s1, 12(a1)
 ; CHECK-SOFT-RV32-NEXT:    mv s2, a0
 ; CHECK-SOFT-RV32-NEXT:    lui a3, 261888
-; CHECK-SOFT-RV32-NEXT:    mv a0, a2
-; CHECK-SOFT-RV32-NEXT:    mv a1, a4
+; CHECK-SOFT-RV32-NEXT:    mv a0, a4
+; CHECK-SOFT-RV32-NEXT:    mv a1, a2
 ; CHECK-SOFT-RV32-NEXT:    li a2, 0
 ; CHECK-SOFT-RV32-NEXT:    call __muldf3
 ; CHECK-SOFT-RV32-NEXT:    mv s3, a0
@@ -4446,14 +4446,14 @@ define <2 x double> @fcanonicalize_v2f64(<2 x double> %x) {
 ; RV32ZFINX-NEXT:    .cfi_offset s2, -16
 ; RV32ZFINX-NEXT:    .cfi_offset s3, -20
 ; RV32ZFINX-NEXT:    .cfi_offset s4, -24
-; RV32ZFINX-NEXT:    lw a2, 0(a1)
-; RV32ZFINX-NEXT:    lw a4, 4(a1)
+; RV32ZFINX-NEXT:    lw a4, 0(a1)
+; RV32ZFINX-NEXT:    lw a2, 4(a1)
 ; RV32ZFINX-NEXT:    lw s0, 8(a1)
 ; RV32ZFINX-NEXT:    lw s1, 12(a1)
 ; RV32ZFINX-NEXT:    mv s2, a0
 ; RV32ZFINX-NEXT:    lui a3, 261888
-; RV32ZFINX-NEXT:    mv a0, a2
-; RV32ZFINX-NEXT:    mv a1, a4
+; RV32ZFINX-NEXT:    mv a0, a4
+; RV32ZFINX-NEXT:    mv a1, a2
 ; RV32ZFINX-NEXT:    li a2, 0
 ; RV32ZFINX-NEXT:    call __muldf3
 ; RV32ZFINX-NEXT:    mv s3, a0
@@ -4496,8 +4496,8 @@ define <2 x double> @fcanonicalize_v2f64(<2 x double> %x) {
 ; RV64ZFINX-NEXT:    .cfi_offset s1, -24
 ; RV64ZFINX-NEXT:    .cfi_offset s2, -32
 ; RV64ZFINX-NEXT:    mv s0, a1
-; RV64ZFINX-NEXT:    li s1, 1023
-; RV64ZFINX-NEXT:    slli s1, s1, 52
+; RV64ZFINX-NEXT:    li a1, 1023
+; RV64ZFINX-NEXT:    slli s1, a1, 52
 ; RV64ZFINX-NEXT:    mv a1, s1
 ; RV64ZFINX-NEXT:    call __muldf3
 ; RV64ZFINX-NEXT:    mv s2, a0
@@ -4540,14 +4540,14 @@ define <2 x double> @fcanonicalize_v2f64(<2 x double> %x) {
 ; RV32ZHINX-NEXT:    .cfi_offset s2, -16
 ; RV32ZHINX-NEXT:    .cfi_offset s3, -20
 ; RV32ZHINX-NEXT:    .cfi_offset s4, -24
-; RV32ZHINX-NEXT:    lw a2, 0(a1)
-; RV32ZHINX-NEXT:    lw a4, 4(a1)
+; RV32ZHINX-NEXT:    lw a4, 0(a1)
+; RV32ZHINX-NEXT:    lw a2, 4(a1)
 ; RV32ZHINX-NEXT:    lw s0, 8(a1)
 ; RV32ZHINX-NEXT:    lw s1, 12(a1)
 ; RV32ZHINX-NEXT:    mv s2, a0
 ; RV32ZHINX-NEXT:    lui a3, 261888
-; RV32ZHINX-NEXT:    mv a0, a2
-; RV32ZHINX-NEXT:    mv a1, a4
+; RV32ZHINX-NEXT:    mv a0, a4
+; RV32ZHINX-NEXT:    mv a1, a2
 ; RV32ZHINX-NEXT:    li a2, 0
 ; RV32ZHINX-NEXT:    call __muldf3
 ; RV32ZHINX-NEXT:    mv s3, a0
@@ -4590,8 +4590,8 @@ define <2 x double> @fcanonicalize_v2f64(<2 x double> %x) {
 ; RV64ZHINX-NEXT:    .cfi_offset s1, -24
 ; RV64ZHINX-NEXT:    .cfi_offset s2, -32
 ; RV64ZHINX-NEXT:    mv s0, a1
-; RV64ZHINX-NEXT:    li s1, 1023
-; RV64ZHINX-NEXT:    slli s1, s1, 52
+; RV64ZHINX-NEXT:    li a1, 1023
+; RV64ZHINX-NEXT:    slli s1, a1, 52
 ; RV64ZHINX-NEXT:    mv a1, s1
 ; RV64ZHINX-NEXT:    call __muldf3
 ; RV64ZHINX-NEXT:    mv s2, a0
@@ -4629,8 +4629,8 @@ define <2 x double> @fcanonicalize_v2f64_nnan(<2 x double> %x) {
 ; CHECK-SOFT-RV64-NEXT:    .cfi_offset s1, -24
 ; CHECK-SOFT-RV64-NEXT:    .cfi_offset s2, -32
 ; CHECK-SOFT-RV64-NEXT:    mv s0, a1
-; CHECK-SOFT-RV64-NEXT:    li s1, 1023
-; CHECK-SOFT-RV64-NEXT:    slli s1, s1, 52
+; CHECK-SOFT-RV64-NEXT:    li a1, 1023
+; CHECK-SOFT-RV64-NEXT:    slli s1, a1, 52
 ; CHECK-SOFT-RV64-NEXT:    mv a1, s1
 ; CHECK-SOFT-RV64-NEXT:    call __muldf3
 ; CHECK-SOFT-RV64-NEXT:    mv s2, a0
@@ -4679,14 +4679,14 @@ define <2 x double> @fcanonicalize_v2f64_nnan(<2 x double> %x) {
 ; CHECK-SOFT-RV32-NEXT:    .cfi_offset s2, -16
 ; CHECK-SOFT-RV32-NEXT:    .cfi_offset s3, -20
 ; CHECK-SOFT-RV32-NEXT:    .cfi_offset s4, -24
-; CHECK-SOFT-RV32-NEXT:    lw a2, 0(a1)
-; CHECK-SOFT-RV32-NEXT:    lw a4, 4(a1)
+; CHECK-SOFT-RV32-NEXT:    lw a4, 0(a1)
+; CHECK-SOFT-RV32-NEXT:    lw a2, 4(a1)
 ; CHECK-SOFT-RV32-NEXT:    lw s0, 8(a1)
 ; CHECK-SOFT-RV32-NEXT:    lw s1, 12(a1)
 ; CHECK-SOFT-RV32-NEXT:    mv s2, a0
 ; CHECK-SOFT-RV32-NEXT:    lui a3, 261888
-; CHECK-SOFT-RV32-NEXT:    mv a0, a2
-; CHECK-SOFT-RV32-NEXT:    mv a1, a4
+; CHECK-SOFT-RV32-NEXT:    mv a0, a4
+; CHECK-SOFT-RV32-NEXT:    mv a1, a2
 ; CHECK-SOFT-RV32-NEXT:    li a2, 0
 ; CHECK-SOFT-RV32-NEXT:    call __muldf3
 ; CHECK-SOFT-RV32-NEXT:    mv s3, a0
@@ -4744,14 +4744,14 @@ define <2 x double> @fcanonicalize_v2f64_nnan(<2 x double> %x) {
 ; RV32ZFINX-NEXT:    .cfi_offset s2, -16
 ; RV32ZFINX-NEXT:    .cfi_offset s3, -20
 ; RV32ZFINX-NEXT:    .cfi_offset s4, -24
-; RV32ZFINX-NEXT:    lw a2, 0(a1)
-; RV32ZFINX-NEXT:    lw a4, 4(a1)
+; RV32ZFINX-NEXT:    lw a4, 0(a1)
+; RV32ZFINX-NEXT:    lw a2, 4(a1)
 ; RV32ZFINX-NEXT:    lw s0, 8(a1)
 ; RV32ZFINX-NEXT:    lw s1, 12(a1)
 ; RV32ZFINX-NEXT:    mv s2, a0
 ; RV32ZFINX-NEXT:    lui a3, 261888
-; RV32ZFINX-NEXT:    mv a0, a2
-; RV32ZFINX-NEXT:    mv a1, a4
+; RV32ZFINX-NEXT:    mv a0, a4
+; RV32ZFINX-NEXT:    mv a1, a2
 ; RV32ZFINX-NEXT:    li a2, 0
 ; RV32ZFINX-NEXT:    call __muldf3
 ; RV32ZFINX-NEXT:    mv s3, a0
@@ -4794,8 +4794,8 @@ define <2 x double> @fcanonicalize_v2f64_nnan(<2 x double> %x) {
 ; RV64ZFINX-NEXT:    .cfi_offset s1, -24
 ; RV64ZFINX-NEXT:    .cfi_offset s2, -32
 ; RV64ZFINX-NEXT:    mv s0, a1
-; RV64ZFINX-NEXT:    li s1, 1023
-; RV64ZFINX-NEXT:    slli s1, s1, 52
+; RV64ZFINX-NEXT:    li a1, 1023
+; RV64ZFINX-NEXT:    slli s1, a1, 52
 ; RV64ZFINX-NEXT:    mv a1, s1
 ; RV64ZFINX-NEXT:    call __muldf3
 ; RV64ZFINX-NEXT:    mv s2, a0
@@ -4838,14 +4838,14 @@ define <2 x double> @fcanonicalize_v2f64_nnan(<2 x double> %x) {
 ; RV32ZHINX-NEXT:    .cfi_offset s2, -16
 ; RV32ZHINX-NEXT:    .cfi_offset s3, -20
 ; RV32ZHINX-NEXT:    .cfi_offset s4, -24
-; RV32ZHINX-NEXT:    lw a2, 0(a1)
-; RV32ZHINX-NEXT:    lw a4, 4(a1)
+; RV32ZHINX-NEXT:    lw a4, 0(a1)
+; RV32ZHINX-NEXT:    lw a2, 4(a1)
 ; RV32ZHINX-NEXT:    lw s0, 8(a1)
 ; RV32ZHINX-NEXT:    lw s1, 12(a1)
 ; RV32ZHINX-NEXT:    mv s2, a0
 ; RV32ZHINX-NEXT:    lui a3, 261888
-; RV32ZHINX-NEXT:    mv a0, a2
-; RV32ZHINX-NEXT:    mv a1, a4
+; RV32ZHINX-NEXT:    mv a0, a4
+; RV32ZHINX-NEXT:    mv a1, a2
 ; RV32ZHINX-NEXT:    li a2, 0
 ; RV32ZHINX-NEXT:    call __muldf3
 ; RV32ZHINX-NEXT:    mv s3, a0
@@ -4888,8 +4888,8 @@ define <2 x double> @fcanonicalize_v2f64_nnan(<2 x double> %x) {
 ; RV64ZHINX-NEXT:    .cfi_offset s1, -24
 ; RV64ZHINX-NEXT:    .cfi_offset s2, -32
 ; RV64ZHINX-NEXT:    mv s0, a1
-; RV64ZHINX-NEXT:    li s1, 1023
-; RV64ZHINX-NEXT:    slli s1, s1, 52
+; RV64ZHINX-NEXT:    li a1, 1023
+; RV64ZHINX-NEXT:    slli s1, a1, 52
 ; RV64ZHINX-NEXT:    mv a1, s1
 ; RV64ZHINX-NEXT:    call __muldf3
 ; RV64ZHINX-NEXT:    mv s2, a0

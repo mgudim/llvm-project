@@ -584,25 +584,24 @@ define <16 x i8> @shuffled_tbl2_to_tbl4_nonconst_first_mask2(<16 x i8> %a, <16 x
 define <16 x i8> @shuffled_tbl2_to_tbl4_nonconst_second_mask(<16 x i8> %a, <16 x i8> %b, <16 x i8> %c, <16 x i8> %d, i8 %v) {
 ; CHECK-SD-LABEL: shuffled_tbl2_to_tbl4_nonconst_second_mask:
 ; CHECK-SD:       // %bb.0:
-; CHECK-SD-NEXT:    movi.2d v4, #0xffffffffffffffff
+; CHECK-SD-NEXT:    mov.16b v5, v1
+; CHECK-SD-NEXT:    movi.2d v1, #0xffffffffffffffff
 ; CHECK-SD-NEXT:    adrp x8, .LCPI12_0
+; CHECK-SD-NEXT:    mov.16b v4, v0
+; CHECK-SD-NEXT:    ldr q0, [x8, :lo12:.LCPI12_0]
 ; CHECK-SD-NEXT:    // kill: def $q3 killed $q3 killed $q2_q3 def $q2_q3
-; CHECK-SD-NEXT:    // kill: def $q1 killed $q1 killed $q0_q1 def $q0_q1
-; CHECK-SD-NEXT:    ldr q5, [x8, :lo12:.LCPI12_0]
 ; CHECK-SD-NEXT:    // kill: def $q2 killed $q2 killed $q2_q3 def $q2_q3
-; CHECK-SD-NEXT:    // kill: def $q0 killed $q0 killed $q0_q1 def $q0_q1
-; CHECK-SD-NEXT:    tbl.16b v2, { v2, v3 }, v5
-; CHECK-SD-NEXT:    mov.b v4[0], w0
-; CHECK-SD-NEXT:    mov.b v4[1], w0
-; CHECK-SD-NEXT:    mov.b v4[2], w0
-; CHECK-SD-NEXT:    mov.b v4[3], w0
-; CHECK-SD-NEXT:    mov.b v4[4], w0
-; CHECK-SD-NEXT:    mov.b v4[5], w0
-; CHECK-SD-NEXT:    mov.b v4[6], w0
-; CHECK-SD-NEXT:    mov.b v4[7], w0
-; CHECK-SD-NEXT:    tbl.16b v0, { v0, v1 }, v4
-; CHECK-SD-NEXT:    mov.d v2[1], v0[0]
-; CHECK-SD-NEXT:    mov.16b v0, v2
+; CHECK-SD-NEXT:    tbl.16b v0, { v2, v3 }, v0
+; CHECK-SD-NEXT:    mov.b v1[0], w0
+; CHECK-SD-NEXT:    mov.b v1[1], w0
+; CHECK-SD-NEXT:    mov.b v1[2], w0
+; CHECK-SD-NEXT:    mov.b v1[3], w0
+; CHECK-SD-NEXT:    mov.b v1[4], w0
+; CHECK-SD-NEXT:    mov.b v1[5], w0
+; CHECK-SD-NEXT:    mov.b v1[6], w0
+; CHECK-SD-NEXT:    mov.b v1[7], w0
+; CHECK-SD-NEXT:    tbl.16b v1, { v4, v5 }, v1
+; CHECK-SD-NEXT:    mov.d v0[1], v1[0]
 ; CHECK-SD-NEXT:    ret
 ;
 ; CHECK-GI-LABEL: shuffled_tbl2_to_tbl4_nonconst_second_mask:
@@ -1259,14 +1258,13 @@ define <16 x i8> @pr135950(<16 x i8> %A, <16 x i8> %B, <16 x i8> %M) {
 ;
 ; CHECK-GI-LABEL: pr135950:
 ; CHECK-GI:       // %bb.0:
-; CHECK-GI-NEXT:    // kill: def $q0 killed $q0 killed $q0_q1_q2 def $q0_q1_q2
-; CHECK-GI-NEXT:    mov.16b v3, v2
-; CHECK-GI-NEXT:    movi.2d v4, #0000000000000000
-; CHECK-GI-NEXT:    // kill: def $q1 killed $q1 killed $q0_q1_q2 def $q0_q1_q2
-; CHECK-GI-NEXT:    tbl.16b v3, { v0, v1 }, v3
-; CHECK-GI-NEXT:    mov.16b v2, v0
-; CHECK-GI-NEXT:    tbl.16b v0, { v1, v2 }, v4
-; CHECK-GI-NEXT:    zip1.16b v0, v3, v0
+; CHECK-GI-NEXT:    mov.16b v4, v0
+; CHECK-GI-NEXT:    movi.2d v3, #0000000000000000
+; CHECK-GI-NEXT:    mov.16b v5, v1
+; CHECK-GI-NEXT:    tbl.16b v0, { v4, v5 }, v2
+; CHECK-GI-NEXT:    mov.16b v6, v4
+; CHECK-GI-NEXT:    tbl.16b v1, { v5, v6 }, v3
+; CHECK-GI-NEXT:    zip1.16b v0, v0, v1
 ; CHECK-GI-NEXT:    ret
   %t1 = call <16 x i8> @llvm.aarch64.neon.tbl2.v16i8(<16 x i8> %A, <16 x i8> %B, <16 x i8> %M)
   %t2 = call <16 x i8> @llvm.aarch64.neon.tbl2.v16i8(<16 x i8> %B, <16 x i8> %A, <16 x i8> zeroinitializer)

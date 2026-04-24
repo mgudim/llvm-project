@@ -33,9 +33,9 @@ define void @caller(ptr %X, ptr %Y, <2 x double> %C, <2 x double> %S) "target-fe
 ; CHECK-NEXT:    fneg.2d v0, v1
 ; CHECK-NEXT:    str q0, [sp] ; 16-byte Spill
 ; CHECK-NEXT:    smstart sm
-; CHECK-NEXT:    ldp q2, q0, [sp, #16] ; 32-byte Folded Reload
+; CHECK-NEXT:    ldp q2, q3, [sp, #16] ; 32-byte Folded Reload
+; CHECK-NEXT:    mov z0.d, z3.d
 ; CHECK-NEXT:    ldr q1, [sp] ; 16-byte Reload
-; CHECK-NEXT:    mov z3.d, z0.d
 ; CHECK-NEXT:    bl _streaming_callee
 ; CHECK-NEXT:    smstop sm
 ; CHECK-NEXT:    ldp x29, x30, [sp, #112] ; 16-byte Folded Reload
@@ -88,9 +88,9 @@ define void @fpr64_copy(i64 %n, i64 %m, double %c, double %s) "target-features"=
 ; CHECK-NEXT:    fneg d0, d1
 ; CHECK-NEXT:    str d0, [sp, #8] ; 8-byte Spill
 ; CHECK-NEXT:    smstart sm
-; CHECK-NEXT:    ldp d2, d0, [sp, #16] ; 16-byte Folded Reload
+; CHECK-NEXT:    ldp d2, d3, [sp, #16] ; 16-byte Folded Reload
+; CHECK-NEXT:    fmov d0, d3
 ; CHECK-NEXT:    ldr d1, [sp, #8] ; 8-byte Reload
-; CHECK-NEXT:    fmov d3, d0
 ; CHECK-NEXT:    bl _streaming_callee_d
 ; CHECK-NEXT:    smstop sm
 ; CHECK-NEXT:    ldp x29, x30, [sp, #96] ; 16-byte Folded Reload
@@ -143,9 +143,9 @@ define void @fpr32_copy(i64 %n, i64 %m, float %c, float %s) "target-features"="+
 ; CHECK-NEXT:    fneg s0, s1
 ; CHECK-NEXT:    str s0, [sp, #4] ; 4-byte Spill
 ; CHECK-NEXT:    smstart sm
-; CHECK-NEXT:    ldp s2, s0, [sp, #8] ; 8-byte Folded Reload
+; CHECK-NEXT:    ldp s2, s3, [sp, #8] ; 8-byte Folded Reload
+; CHECK-NEXT:    fmov s0, s3
 ; CHECK-NEXT:    ldr s1, [sp, #4] ; 4-byte Reload
-; CHECK-NEXT:    fmov s3, s0
 ; CHECK-NEXT:    bl _streaming_callee_f
 ; CHECK-NEXT:    smstop sm
 ; CHECK-NEXT:    ldp x29, x30, [sp, #80] ; 16-byte Folded Reload
@@ -199,10 +199,10 @@ define void @fpr16_copy(i64 %n, i64 %m, half %c, half %s) "target-features"="+sm
 ; CHECK-NEXT:    fneg h0, h1
 ; CHECK-NEXT:    str h0, [sp, #10] ; 2-byte Spill
 ; CHECK-NEXT:    smstart sm
-; CHECK-NEXT:    ldr h0, [sp, #14] ; 2-byte Reload
+; CHECK-NEXT:    ldr h3, [sp, #14] ; 2-byte Reload
+; CHECK-NEXT:    fmov s0, s3
 ; CHECK-NEXT:    ldr h1, [sp, #10] ; 2-byte Reload
 ; CHECK-NEXT:    ldr h2, [sp, #12] ; 2-byte Reload
-; CHECK-NEXT:    fmov s3, s0
 ; CHECK-NEXT:    bl _streaming_callee_h
 ; CHECK-NEXT:    smstop sm
 ; CHECK-NEXT:    ldp x29, x30, [sp, #80] ; 16-byte Folded Reload
@@ -268,16 +268,16 @@ define void @mixed_calls(ptr %X, ptr %Y, <2 x double> %C, <2 x double> %S) "targ
 ; CHECK-NEXT:    smstart sm
 ; CHECK-NEXT:    mov x0, x20
 ; CHECK-NEXT:    mov x1, x19
-; CHECK-NEXT:    ldp q1, q0, [sp] ; 32-byte Folded Reload
+; CHECK-NEXT:    ldp q1, q3, [sp] ; 32-byte Folded Reload
+; CHECK-NEXT:    mov z0.d, z3.d
 ; CHECK-NEXT:    ldr q2, [sp, #32] ; 16-byte Reload
-; CHECK-NEXT:    mov z3.d, z0.d
 ; CHECK-NEXT:    bl _streaming_callee
 ; CHECK-NEXT:    smstop sm
 ; CHECK-NEXT:    mov x0, x20
 ; CHECK-NEXT:    mov x1, x19
-; CHECK-NEXT:    ldp q0, q1, [sp, #48] ; 32-byte Folded Reload
+; CHECK-NEXT:    ldp q3, q1, [sp, #48] ; 32-byte Folded Reload
+; CHECK-NEXT:    mov.16b v0, v3
 ; CHECK-NEXT:    ldr q2, [sp, #80] ; 16-byte Reload
-; CHECK-NEXT:    mov.16b v3, v0
 ; CHECK-NEXT:    bl _normal_callee
 ; CHECK-NEXT:    ldp x29, x30, [sp, #176] ; 16-byte Folded Reload
 ; CHECK-NEXT:    ldp x20, x19, [sp, #160] ; 16-byte Folded Reload

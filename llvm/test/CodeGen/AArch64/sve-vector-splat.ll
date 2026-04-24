@@ -204,9 +204,9 @@ entry:
 define <vscale x 12 x i32> @sve_splat_12xi32(i32 %val) {
 ; CHECK-LABEL: sve_splat_12xi32:
 ; CHECK:       // %bb.0:
-; CHECK-NEXT:    mov z0.s, w0
-; CHECK-NEXT:    mov z1.d, z0.d
-; CHECK-NEXT:    mov z2.d, z0.d
+; CHECK-NEXT:    mov z2.s, w0
+; CHECK-NEXT:    mov z0.d, z2.d
+; CHECK-NEXT:    mov z1.d, z2.d
 ; CHECK-NEXT:    ret
   %ins = insertelement <vscale x 12 x i32> poison, i32 %val, i32 0
   %splat = shufflevector <vscale x 12 x i32> %ins, <vscale x 12 x i32> poison, <vscale x 12 x i32> zeroinitializer

@@ -267,25 +267,57 @@ main_body:
 }
 
 define amdgpu_ps <4 x float> @sample_nortn_mix_2(<8 x i32> inreg %rsrc, <4 x i32> inreg %samp, float %s) {
-; GFX10PLUS-LABEL: sample_nortn_mix_2:
-; GFX10PLUS:       ; %bb.0: ; %main_body
-; GFX10PLUS-NEXT:    s_mov_b32 s12, exec_lo
-; GFX10PLUS-NEXT:    s_wqm_b32 exec_lo, exec_lo
-; GFX10PLUS-NEXT:    v_mov_b32_e32 v4, v0
-; GFX10PLUS-NEXT:    s_and_b32 exec_lo, exec_lo, s12
-; GFX10PLUS-NEXT:    image_sample v[0:3], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX10PLUS-NEXT:    image_sample off, v4, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX10PLUS-NEXT:    s_waitcnt vmcnt(0)
-; GFX10PLUS-NEXT:    ; return to shader part epilog
+; GFX10-GISEL-LABEL: sample_nortn_mix_2:
+; GFX10-GISEL:       ; %bb.0: ; %main_body
+; GFX10-GISEL-NEXT:    s_mov_b32 s12, exec_lo
+; GFX10-GISEL-NEXT:    s_wqm_b32 exec_lo, exec_lo
+; GFX10-GISEL-NEXT:    s_and_b32 exec_lo, exec_lo, s12
+; GFX10-GISEL-NEXT:    image_sample v[1:4], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX10-GISEL-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX10-GISEL-NEXT:    s_waitcnt vmcnt(1)
+; GFX10-GISEL-NEXT:    v_mov_b32_e32 v0, v1
+; GFX10-GISEL-NEXT:    v_mov_b32_e32 v1, v2
+; GFX10-GISEL-NEXT:    v_mov_b32_e32 v2, v3
+; GFX10-GISEL-NEXT:    v_mov_b32_e32 v3, v4
+; GFX10-GISEL-NEXT:    s_waitcnt vmcnt(0)
+; GFX10-GISEL-NEXT:    ; return to shader part epilog
+;
+; GFX11-GISEL-TRUE16-LABEL: sample_nortn_mix_2:
+; GFX11-GISEL-TRUE16:       ; %bb.0: ; %main_body
+; GFX11-GISEL-TRUE16-NEXT:    s_mov_b32 s12, exec_lo
+; GFX11-GISEL-TRUE16-NEXT:    s_wqm_b32 exec_lo, exec_lo
+; GFX11-GISEL-TRUE16-NEXT:    s_and_b32 exec_lo, exec_lo, s12
+; GFX11-GISEL-TRUE16-NEXT:    image_sample v[1:4], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-TRUE16-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-TRUE16-NEXT:    s_waitcnt vmcnt(1)
+; GFX11-GISEL-TRUE16-NEXT:    v_dual_mov_b32 v0, v1 :: v_dual_mov_b32 v1, v2
+; GFX11-GISEL-TRUE16-NEXT:    v_dual_mov_b32 v2, v3 :: v_dual_mov_b32 v3, v4
+; GFX11-GISEL-TRUE16-NEXT:    s_waitcnt vmcnt(0)
+; GFX11-GISEL-TRUE16-NEXT:    ; return to shader part epilog
+;
+; GFX11-GISEL-FAKE16-LABEL: sample_nortn_mix_2:
+; GFX11-GISEL-FAKE16:       ; %bb.0: ; %main_body
+; GFX11-GISEL-FAKE16-NEXT:    s_mov_b32 s12, exec_lo
+; GFX11-GISEL-FAKE16-NEXT:    s_wqm_b32 exec_lo, exec_lo
+; GFX11-GISEL-FAKE16-NEXT:    s_and_b32 exec_lo, exec_lo, s12
+; GFX11-GISEL-FAKE16-NEXT:    image_sample v[1:4], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-FAKE16-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-FAKE16-NEXT:    s_waitcnt vmcnt(1)
+; GFX11-GISEL-FAKE16-NEXT:    v_dual_mov_b32 v0, v1 :: v_dual_mov_b32 v1, v2
+; GFX11-GISEL-FAKE16-NEXT:    v_dual_mov_b32 v2, v3 :: v_dual_mov_b32 v3, v4
+; GFX11-GISEL-FAKE16-NEXT:    s_waitcnt vmcnt(0)
+; GFX11-GISEL-FAKE16-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: sample_nortn_mix_2:
 ; GFX12:       ; %bb.0: ; %main_body
 ; GFX12-NEXT:    s_mov_b32 s12, exec_lo
 ; GFX12-NEXT:    s_wqm_b32 exec_lo, exec_lo
-; GFX12-NEXT:    v_mov_b32_e32 v4, v0
 ; GFX12-NEXT:    s_and_b32 exec_lo, exec_lo, s12
-; GFX12-NEXT:    image_sample v[0:3], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX12-NEXT:    image_sample off, v4, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX12-NEXT:    image_sample v[1:4], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX12-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX12-NEXT:    s_wait_samplecnt 0x1
+; GFX12-NEXT:    v_dual_mov_b32 v0, v1 :: v_dual_mov_b32 v1, v2
+; GFX12-NEXT:    v_dual_mov_b32 v2, v3 :: v_dual_mov_b32 v3, v4
 ; GFX12-NEXT:    s_wait_samplecnt 0x0
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
@@ -368,22 +400,64 @@ define amdgpu_ps <4 x float> @sample_nortn_mix_4(<8 x i32> inreg %rsrc, <4 x i32
 ; GFX10PLUS-SDAG-NEXT:    s_waitcnt vmcnt(0)
 ; GFX10PLUS-SDAG-NEXT:    ; return to shader part epilog
 ;
-; GFX10PLUS-GISEL-LABEL: sample_nortn_mix_4:
-; GFX10PLUS-GISEL:       ; %bb.0: ; %main_body
-; GFX10PLUS-GISEL-NEXT:    s_mov_b32 s12, exec_lo
-; GFX10PLUS-GISEL-NEXT:    s_wqm_b32 exec_lo, exec_lo
-; GFX10PLUS-GISEL-NEXT:    image_sample v[4:7], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX10PLUS-GISEL-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX10PLUS-GISEL-NEXT:    s_waitcnt vmcnt(1)
-; GFX10PLUS-GISEL-NEXT:    image_sample off, v4, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX10PLUS-GISEL-NEXT:    image_sample v[0:3], v4, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX10PLUS-GISEL-NEXT:    s_and_b32 exec_lo, exec_lo, s12
-; GFX10PLUS-GISEL-NEXT:    image_sample off, v4, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX10PLUS-GISEL-NEXT:    image_sample off, v4, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX10PLUS-GISEL-NEXT:    s_waitcnt vmcnt(2)
-; GFX10PLUS-GISEL-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX10PLUS-GISEL-NEXT:    s_waitcnt vmcnt(0)
-; GFX10PLUS-GISEL-NEXT:    ; return to shader part epilog
+; GFX10-GISEL-LABEL: sample_nortn_mix_4:
+; GFX10-GISEL:       ; %bb.0: ; %main_body
+; GFX10-GISEL-NEXT:    s_mov_b32 s12, exec_lo
+; GFX10-GISEL-NEXT:    s_wqm_b32 exec_lo, exec_lo
+; GFX10-GISEL-NEXT:    image_sample v[1:4], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX10-GISEL-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX10-GISEL-NEXT:    s_waitcnt vmcnt(1)
+; GFX10-GISEL-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX10-GISEL-NEXT:    image_sample v[2:5], v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX10-GISEL-NEXT:    s_and_b32 exec_lo, exec_lo, s12
+; GFX10-GISEL-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX10-GISEL-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX10-GISEL-NEXT:    s_waitcnt vmcnt(2)
+; GFX10-GISEL-NEXT:    image_sample off, v2, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX10-GISEL-NEXT:    v_mov_b32_e32 v0, v2
+; GFX10-GISEL-NEXT:    v_mov_b32_e32 v1, v3
+; GFX10-GISEL-NEXT:    v_mov_b32_e32 v2, v4
+; GFX10-GISEL-NEXT:    v_mov_b32_e32 v3, v5
+; GFX10-GISEL-NEXT:    s_waitcnt vmcnt(0)
+; GFX10-GISEL-NEXT:    ; return to shader part epilog
+;
+; GFX11-GISEL-TRUE16-LABEL: sample_nortn_mix_4:
+; GFX11-GISEL-TRUE16:       ; %bb.0: ; %main_body
+; GFX11-GISEL-TRUE16-NEXT:    s_mov_b32 s12, exec_lo
+; GFX11-GISEL-TRUE16-NEXT:    s_wqm_b32 exec_lo, exec_lo
+; GFX11-GISEL-TRUE16-NEXT:    image_sample v[1:4], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-TRUE16-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-TRUE16-NEXT:    s_waitcnt vmcnt(1)
+; GFX11-GISEL-TRUE16-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-TRUE16-NEXT:    image_sample v[2:5], v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-TRUE16-NEXT:    s_and_b32 exec_lo, exec_lo, s12
+; GFX11-GISEL-TRUE16-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-TRUE16-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-TRUE16-NEXT:    s_waitcnt vmcnt(2)
+; GFX11-GISEL-TRUE16-NEXT:    image_sample off, v2, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-TRUE16-NEXT:    v_dual_mov_b32 v0, v2 :: v_dual_mov_b32 v1, v3
+; GFX11-GISEL-TRUE16-NEXT:    v_dual_mov_b32 v2, v4 :: v_dual_mov_b32 v3, v5
+; GFX11-GISEL-TRUE16-NEXT:    s_waitcnt vmcnt(0)
+; GFX11-GISEL-TRUE16-NEXT:    ; return to shader part epilog
+;
+; GFX11-GISEL-FAKE16-LABEL: sample_nortn_mix_4:
+; GFX11-GISEL-FAKE16:       ; %bb.0: ; %main_body
+; GFX11-GISEL-FAKE16-NEXT:    s_mov_b32 s12, exec_lo
+; GFX11-GISEL-FAKE16-NEXT:    s_wqm_b32 exec_lo, exec_lo
+; GFX11-GISEL-FAKE16-NEXT:    image_sample v[1:4], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-FAKE16-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-FAKE16-NEXT:    s_waitcnt vmcnt(1)
+; GFX11-GISEL-FAKE16-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-FAKE16-NEXT:    image_sample v[2:5], v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-FAKE16-NEXT:    s_and_b32 exec_lo, exec_lo, s12
+; GFX11-GISEL-FAKE16-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-FAKE16-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-FAKE16-NEXT:    s_waitcnt vmcnt(2)
+; GFX11-GISEL-FAKE16-NEXT:    image_sample off, v2, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX11-GISEL-FAKE16-NEXT:    v_dual_mov_b32 v0, v2 :: v_dual_mov_b32 v1, v3
+; GFX11-GISEL-FAKE16-NEXT:    v_dual_mov_b32 v2, v4 :: v_dual_mov_b32 v3, v5
+; GFX11-GISEL-FAKE16-NEXT:    s_waitcnt vmcnt(0)
+; GFX11-GISEL-FAKE16-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-SDAG-LABEL: sample_nortn_mix_4:
 ; GFX12-SDAG:       ; %bb.0: ; %main_body
@@ -406,16 +480,18 @@ define amdgpu_ps <4 x float> @sample_nortn_mix_4(<8 x i32> inreg %rsrc, <4 x i32
 ; GFX12-GISEL:       ; %bb.0: ; %main_body
 ; GFX12-GISEL-NEXT:    s_mov_b32 s12, exec_lo
 ; GFX12-GISEL-NEXT:    s_wqm_b32 exec_lo, exec_lo
-; GFX12-GISEL-NEXT:    image_sample v[4:7], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX12-GISEL-NEXT:    image_sample v[1:4], v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
 ; GFX12-GISEL-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
 ; GFX12-GISEL-NEXT:    s_wait_samplecnt 0x1
-; GFX12-GISEL-NEXT:    image_sample off, v4, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX12-GISEL-NEXT:    image_sample v[0:3], v4, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX12-GISEL-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX12-GISEL-NEXT:    image_sample v[2:5], v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
 ; GFX12-GISEL-NEXT:    s_and_b32 exec_lo, exec_lo, s12
-; GFX12-GISEL-NEXT:    image_sample off, v4, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
-; GFX12-GISEL-NEXT:    image_sample off, v4, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX12-GISEL-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX12-GISEL-NEXT:    image_sample off, v1, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
 ; GFX12-GISEL-NEXT:    s_wait_samplecnt 0x2
-; GFX12-GISEL-NEXT:    image_sample off, v0, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX12-GISEL-NEXT:    image_sample off, v2, s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_1D
+; GFX12-GISEL-NEXT:    v_dual_mov_b32 v0, v2 :: v_dual_mov_b32 v1, v3
+; GFX12-GISEL-NEXT:    v_dual_mov_b32 v2, v4 :: v_dual_mov_b32 v3, v5
 ; GFX12-GISEL-NEXT:    s_wait_samplecnt 0x0
 ; GFX12-GISEL-NEXT:    ; return to shader part epilog
 main_body:

@@ -11,8 +11,8 @@ define i32 @func(i32 %x, i32 %y) nounwind {
 ; ARM-NEXT:    .save {r7, lr}
 ; ARM-NEXT:    push {r7, lr}
 ; ARM-NEXT:    mov r2, r1
-; ARM-NEXT:    movs r1, #0
-; ARM-NEXT:    mov r3, r1
+; ARM-NEXT:    movs r3, #0
+; ARM-NEXT:    mov r1, r3
 ; ARM-NEXT:    bl __aeabi_lmul
 ; ARM-NEXT:    lsrs r0, r0, #2
 ; ARM-NEXT:    lsls r1, r1, #30
@@ -89,8 +89,8 @@ define i4 @func3(i4 %x, i4 %y) nounwind {
 ; ARM-NEXT:    movs r2, #15
 ; ARM-NEXT:    ands r0, r2
 ; ARM-NEXT:    ands r2, r1
-; ARM-NEXT:    movs r1, #0
-; ARM-NEXT:    mov r3, r1
+; ARM-NEXT:    movs r3, #0
+; ARM-NEXT:    mov r1, r3
 ; ARM-NEXT:    bl __aeabi_lmul
 ; ARM-NEXT:    lsrs r0, r0, #2
 ; ARM-NEXT:    lsls r1, r1, #30
@@ -162,21 +162,21 @@ define i64 @func7(i64 %x, i64 %y) nounwind {
 ; ARM-NEXT:    adcs r4, r6
 ; ARM-NEXT:    mov r0, r7
 ; ARM-NEXT:    mov r1, r6
-; ARM-NEXT:    ldr r7, [sp, #8] @ 4-byte Reload
-; ARM-NEXT:    mov r2, r7
+; ARM-NEXT:    ldr r5, [sp, #8] @ 4-byte Reload
+; ARM-NEXT:    mov r2, r5
 ; ARM-NEXT:    mov r3, r6
 ; ARM-NEXT:    bl __aeabi_lmul
-; ARM-NEXT:    mov r5, r1
+; ARM-NEXT:    mov r7, r1
 ; ARM-NEXT:    ldr r1, [sp] @ 4-byte Reload
 ; ARM-NEXT:    adds r0, r0, r1
 ; ARM-NEXT:    str r0, [sp] @ 4-byte Spill
-; ARM-NEXT:    adcs r5, r4
+; ARM-NEXT:    adcs r7, r4
 ; ARM-NEXT:    ldr r0, [sp, #4] @ 4-byte Reload
 ; ARM-NEXT:    mov r1, r6
-; ARM-NEXT:    mov r2, r7
+; ARM-NEXT:    mov r2, r5
 ; ARM-NEXT:    mov r3, r6
 ; ARM-NEXT:    bl __aeabi_lmul
-; ARM-NEXT:    adds r1, r0, r5
+; ARM-NEXT:    adds r1, r0, r7
 ; ARM-NEXT:    ldr r0, [sp] @ 4-byte Reload
 ; ARM-NEXT:    add sp, #12
 ; ARM-NEXT:    pop {r4, r5, r6, r7, pc}
@@ -208,29 +208,27 @@ define i64 @func8(i64 %x, i64 %y) nounwind {
 ; ARM-NEXT:    bl __aeabi_lmul
 ; ARM-NEXT:    mov r4, r1
 ; ARM-NEXT:    ldr r1, [sp] @ 4-byte Reload
-; ARM-NEXT:    adds r0, r0, r1
-; ARM-NEXT:    str r0, [sp] @ 4-byte Spill
+; ARM-NEXT:    adds r5, r0, r1
 ; ARM-NEXT:    adcs r4, r6
 ; ARM-NEXT:    mov r0, r7
 ; ARM-NEXT:    mov r1, r6
-; ARM-NEXT:    ldr r5, [sp, #8] @ 4-byte Reload
-; ARM-NEXT:    mov r2, r5
+; ARM-NEXT:    ldr r7, [sp, #8] @ 4-byte Reload
+; ARM-NEXT:    mov r2, r7
 ; ARM-NEXT:    mov r3, r6
 ; ARM-NEXT:    bl __aeabi_lmul
-; ARM-NEXT:    ldr r2, [sp] @ 4-byte Reload
-; ARM-NEXT:    adds r0, r0, r2
+; ARM-NEXT:    adds r0, r0, r5
 ; ARM-NEXT:    str r0, [sp] @ 4-byte Spill
 ; ARM-NEXT:    adcs r1, r6
 ; ARM-NEXT:    adds r4, r4, r1
-; ARM-NEXT:    mov r7, r6
-; ARM-NEXT:    adcs r7, r6
+; ARM-NEXT:    mov r5, r6
+; ARM-NEXT:    adcs r5, r6
 ; ARM-NEXT:    ldr r0, [sp, #4] @ 4-byte Reload
 ; ARM-NEXT:    mov r1, r6
-; ARM-NEXT:    mov r2, r5
+; ARM-NEXT:    mov r2, r7
 ; ARM-NEXT:    mov r3, r6
 ; ARM-NEXT:    bl __aeabi_lmul
 ; ARM-NEXT:    adds r0, r0, r4
-; ARM-NEXT:    adcs r1, r7
+; ARM-NEXT:    adcs r1, r5
 ; ARM-NEXT:    lsls r1, r1, #1
 ; ARM-NEXT:    lsrs r2, r0, #31
 ; ARM-NEXT:    adds r1, r1, r2

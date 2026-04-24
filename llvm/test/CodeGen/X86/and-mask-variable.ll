@@ -24,10 +24,9 @@ define i32 @mask_pair(i32 %x, i32 %y) nounwind {
 ;
 ; X64-NOBMI-LABEL: mask_pair:
 ; X64-NOBMI:       # %bb.0:
-; X64-NOBMI-NEXT:    movl %esi, %ecx
 ; X64-NOBMI-NEXT:    movl %edi, %eax
+; X64-NOBMI-NEXT:    movl %esi, %ecx
 ; X64-NOBMI-NEXT:    shrl %cl, %eax
-; X64-NOBMI-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI-NEXT:    shll %cl, %eax
 ; X64-NOBMI-NEXT:    retq
 ;
@@ -75,10 +74,9 @@ define i64 @mask_pair_64(i64 %x, i64 %y) nounwind {
 ;
 ; X64-NOBMI-LABEL: mask_pair_64:
 ; X64-NOBMI:       # %bb.0:
-; X64-NOBMI-NEXT:    movq %rsi, %rcx
 ; X64-NOBMI-NEXT:    movq %rdi, %rax
+; X64-NOBMI-NEXT:    movl %esi, %ecx
 ; X64-NOBMI-NEXT:    shrq %cl, %rax
-; X64-NOBMI-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; X64-NOBMI-NEXT:    shlq %cl, %rax
 ; X64-NOBMI-NEXT:    retq
 ;
@@ -182,16 +180,17 @@ define i128 @mask_pair_128(i128 %x, i128 %y) nounwind {
 ;
 ; X64-NOBMI-LABEL: mask_pair_128:
 ; X64-NOBMI:       # %bb.0:
-; X64-NOBMI-NEXT:    movq %rdx, %rcx
-; X64-NOBMI-NEXT:    movq $-1, %rdx
 ; X64-NOBMI-NEXT:    movq $-1, %r8
-; X64-NOBMI-NEXT:    shlq %cl, %r8
+; X64-NOBMI-NEXT:    movq $-1, %r9
+; X64-NOBMI-NEXT:    movl %edx, %ecx
+; X64-NOBMI-NEXT:    shlq %cl, %r9
 ; X64-NOBMI-NEXT:    xorl %eax, %eax
-; X64-NOBMI-NEXT:    testb $64, %cl
-; X64-NOBMI-NEXT:    cmovneq %r8, %rdx
-; X64-NOBMI-NEXT:    cmoveq %r8, %rax
+; X64-NOBMI-NEXT:    testb $64, %dl
+; X64-NOBMI-NEXT:    cmovneq %r9, %r8
+; X64-NOBMI-NEXT:    cmoveq %r9, %rax
 ; X64-NOBMI-NEXT:    andq %rdi, %rax
-; X64-NOBMI-NEXT:    andq %rsi, %rdx
+; X64-NOBMI-NEXT:    andq %rsi, %r8
+; X64-NOBMI-NEXT:    movq %r8, %rdx
 ; X64-NOBMI-NEXT:    retq
 ;
 ; X64-BMI2-LABEL: mask_pair_128:

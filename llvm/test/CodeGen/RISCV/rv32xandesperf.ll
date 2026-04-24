@@ -412,8 +412,8 @@ define i32 @sexti16_i32_2(i16 %a) {
 define i64 @sexti1_i64(i64 %a) {
 ; CHECK-LABEL: sexti1_i64:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    nds.bfos a0, a0, 0, 0
-; CHECK-NEXT:    mv a1, a0
+; CHECK-NEXT:    nds.bfos a1, a0, 0, 0
+; CHECK-NEXT:    mv a0, a1
 ; CHECK-NEXT:    ret
   %shl = shl i64 %a, 63
   %shr = ashr exact i64 %shl, 63
@@ -423,8 +423,8 @@ define i64 @sexti1_i64(i64 %a) {
 define i64 @sexti1_i64_2(i1 %a) {
 ; CHECK-LABEL: sexti1_i64_2:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    nds.bfos a0, a0, 0, 0
-; CHECK-NEXT:    mv a1, a0
+; CHECK-NEXT:    nds.bfos a1, a0, 0, 0
+; CHECK-NEXT:    mv a0, a1
 ; CHECK-NEXT:    ret
   %1 = sext i1 %a to i64
   ret i64 %1

@@ -63,26 +63,26 @@ define signext i32 @test_loop() nounwind {
 ; RV64I-NEXT:    sd s0, 16(sp) # 8-byte Folded Spill
 ; RV64I-NEXT:    sd s1, 8(sp) # 8-byte Folded Spill
 ; RV64I-NEXT:    sd s2, 0(sp) # 8-byte Folded Spill
-; RV64I-NEXT:    li s1, -16
-; RV64I-NEXT:    lui s2, %hi(PL_reg_match_utf8)
+; RV64I-NEXT:    li s0, -16
+; RV64I-NEXT:    lui s1, %hi(PL_reg_match_utf8)
 ; RV64I-NEXT:    j .LBB1_2
 ; RV64I-NEXT:  .LBB1_1: # in Loop: Header=BB1_2 Depth=1
-; RV64I-NEXT:    mv a0, s0
+; RV64I-NEXT:    mv a0, s2
 ; RV64I-NEXT:    call test2
-; RV64I-NEXT:    addiw s1, s1, 1
-; RV64I-NEXT:    beqz s1, .LBB1_4
+; RV64I-NEXT:    addiw s0, s0, 1
+; RV64I-NEXT:    beqz s0, .LBB1_4
 ; RV64I-NEXT:  .LBB1_2: # =>This Inner Loop Header: Depth=1
-; RV64I-NEXT:    lb s0, %lo(PL_reg_match_utf8)(s2)
-; RV64I-NEXT:    beqz s0, .LBB1_1
+; RV64I-NEXT:    lb s2, %lo(PL_reg_match_utf8)(s1)
+; RV64I-NEXT:    beqz s2, .LBB1_1
 ; RV64I-NEXT:  # %bb.3: # in Loop: Header=BB1_2 Depth=1
-; RV64I-NEXT:    mv a0, s0
+; RV64I-NEXT:    mv a0, s2
 ; RV64I-NEXT:    call test1
-; RV64I-NEXT:    mv a0, s0
+; RV64I-NEXT:    mv a0, s2
 ; RV64I-NEXT:    call test2
-; RV64I-NEXT:    mv a0, s0
+; RV64I-NEXT:    mv a0, s2
 ; RV64I-NEXT:    call test3
-; RV64I-NEXT:    addiw s1, s1, 1
-; RV64I-NEXT:    bnez s1, .LBB1_2
+; RV64I-NEXT:    addiw s0, s0, 1
+; RV64I-NEXT:    bnez s0, .LBB1_2
 ; RV64I-NEXT:  .LBB1_4:
 ; RV64I-NEXT:    li a0, 0
 ; RV64I-NEXT:    ld ra, 24(sp) # 8-byte Folded Reload

@@ -105,14 +105,15 @@ define i64 @bts63() nounwind {
 ; X86-NEXT:    pushl %esi
 ; X86-NEXT:    movl $-2147483648, %esi # imm = 0x80000000
 ; X86-NEXT:    movl v64+4, %edx
-; X86-NEXT:    movl v64, %eax
+; X86-NEXT:    movl v64, %ebx
 ; X86-NEXT:    .p2align 4
 ; X86-NEXT:  .LBB4_1: # %atomicrmw.start
 ; X86-NEXT:    # =>This Inner Loop Header: Depth=1
 ; X86-NEXT:    movl %edx, %ecx
 ; X86-NEXT:    orl %esi, %ecx
-; X86-NEXT:    movl %eax, %ebx
+; X86-NEXT:    movl %ebx, %eax
 ; X86-NEXT:    lock cmpxchg8b v64
+; X86-NEXT:    movl %eax, %ebx
 ; X86-NEXT:    jne .LBB4_1
 ; X86-NEXT:  # %bb.2: # %atomicrmw.end
 ; X86-NEXT:    andl %esi, %edx
@@ -229,14 +230,15 @@ define i64 @btc63() nounwind {
 ; X86-NEXT:    pushl %esi
 ; X86-NEXT:    movl $-2147483648, %esi # imm = 0x80000000
 ; X86-NEXT:    movl v64+4, %edx
-; X86-NEXT:    movl v64, %eax
+; X86-NEXT:    movl v64, %ebx
 ; X86-NEXT:    .p2align 4
 ; X86-NEXT:  .LBB9_1: # %atomicrmw.start
 ; X86-NEXT:    # =>This Inner Loop Header: Depth=1
 ; X86-NEXT:    movl %edx, %ecx
 ; X86-NEXT:    xorl %esi, %ecx
-; X86-NEXT:    movl %eax, %ebx
+; X86-NEXT:    movl %ebx, %eax
 ; X86-NEXT:    lock cmpxchg8b v64
+; X86-NEXT:    movl %eax, %ebx
 ; X86-NEXT:    jne .LBB9_1
 ; X86-NEXT:  # %bb.2: # %atomicrmw.end
 ; X86-NEXT:    andl %esi, %edx

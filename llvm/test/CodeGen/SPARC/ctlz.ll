@@ -267,17 +267,16 @@ define i64 @i64_poison(i64 %x) nounwind {
 ; SPARC-LABEL: i64_poison:
 ; SPARC:       ! %bb.0:
 ; SPARC-NEXT:    save %sp, -96, %sp
-; SPARC-NEXT:    mov %i1, %o0
-; SPARC-NEXT:    call __clzsi2
-; SPARC-NEXT:    mov %i0, %i1
-; SPARC-NEXT:    mov %o0, %i0
 ; SPARC-NEXT:    call __clzsi2
 ; SPARC-NEXT:    mov %i1, %o0
-; SPARC-NEXT:    cmp %i1, 0
+; SPARC-NEXT:    mov %o0, %i1
+; SPARC-NEXT:    call __clzsi2
+; SPARC-NEXT:    mov %i0, %o0
+; SPARC-NEXT:    cmp %i0, 0
 ; SPARC-NEXT:    bne .LBB3_2
 ; SPARC-NEXT:    nop
 ; SPARC-NEXT:  ! %bb.1:
-; SPARC-NEXT:    add %i0, 32, %o0
+; SPARC-NEXT:    add %i1, 32, %o0
 ; SPARC-NEXT:  .LBB3_2:
 ; SPARC-NEXT:    mov %g0, %i0
 ; SPARC-NEXT:    ret
@@ -286,17 +285,16 @@ define i64 @i64_poison(i64 %x) nounwind {
 ; SPARC-POPC-LABEL: i64_poison:
 ; SPARC-POPC:       ! %bb.0:
 ; SPARC-POPC-NEXT:    save %sp, -96, %sp
-; SPARC-POPC-NEXT:    mov %i1, %o0
-; SPARC-POPC-NEXT:    call __clzsi2
-; SPARC-POPC-NEXT:    mov %i0, %i1
-; SPARC-POPC-NEXT:    mov %o0, %i0
 ; SPARC-POPC-NEXT:    call __clzsi2
 ; SPARC-POPC-NEXT:    mov %i1, %o0
-; SPARC-POPC-NEXT:    cmp %i1, 0
+; SPARC-POPC-NEXT:    mov %o0, %i1
+; SPARC-POPC-NEXT:    call __clzsi2
+; SPARC-POPC-NEXT:    mov %i0, %o0
+; SPARC-POPC-NEXT:    cmp %i0, 0
 ; SPARC-POPC-NEXT:    bne .LBB3_2
 ; SPARC-POPC-NEXT:    nop
 ; SPARC-POPC-NEXT:  ! %bb.1:
-; SPARC-POPC-NEXT:    add %i0, 32, %o0
+; SPARC-POPC-NEXT:    add %i1, 32, %o0
 ; SPARC-POPC-NEXT:  .LBB3_2:
 ; SPARC-POPC-NEXT:    mov %g0, %i0
 ; SPARC-POPC-NEXT:    ret

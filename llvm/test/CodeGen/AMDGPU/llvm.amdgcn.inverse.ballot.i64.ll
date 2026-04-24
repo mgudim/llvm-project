@@ -160,9 +160,10 @@ define amdgpu_cs void @vgpr_inverse_ballot(i64 %input, ptr addrspace(1) %out) {
 ; GISEL_W32-LABEL: vgpr_inverse_ballot:
 ; GISEL_W32:       ; %bb.0: ; %entry
 ; GISEL_W32-NEXT:    v_readfirstlane_b32 s0, v0
-; GISEL_W32-NEXT:    v_mov_b32_e32 v1, 0
-; GISEL_W32-NEXT:    v_cndmask_b32_e64 v0, 0, 1, s0
-; GISEL_W32-NEXT:    global_store_b64 v[2:3], v[0:1], off
+; GISEL_W32-NEXT:    v_dual_mov_b32 v1, v2 :: v_dual_mov_b32 v2, v3
+; GISEL_W32-NEXT:    v_mov_b32_e32 v4, 0
+; GISEL_W32-NEXT:    v_cndmask_b32_e64 v3, 0, 1, s0
+; GISEL_W32-NEXT:    global_store_b64 v[1:2], v[3:4], off
 ; GISEL_W32-NEXT:    s_endpgm
 ;
 ; SDAG_W32-LABEL: vgpr_inverse_ballot:

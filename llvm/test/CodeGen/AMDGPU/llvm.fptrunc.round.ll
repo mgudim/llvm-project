@@ -181,16 +181,17 @@ define amdgpu_gs void @v_fptrunc_round_f32_to_f16_downward_multiple_calls(float 
 ;
 ; GFX11-SDAG-LABEL: v_fptrunc_round_f32_to_f16_downward_multiple_calls:
 ; GFX11-SDAG:       ; %bb.0:
+; GFX11-SDAG-NEXT:    v_dual_mov_b32 v4, v3 :: v_dual_mov_b32 v3, v2
 ; GFX11-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_MODE, 2, 1), 1
-; GFX11-SDAG-NEXT:    v_cvt_f16_f32_e64 v4.l, v0
+; GFX11-SDAG-NEXT:    v_cvt_f16_f32_e64 v2.l, v0
 ; GFX11-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_MODE, 2, 2), 2
 ; GFX11-SDAG-NEXT:    v_cvt_f16_f32_e64 v0.l, v0
 ; GFX11-SDAG-NEXT:    v_cvt_f16_f32_e64 v0.h, v1
 ; GFX11-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_MODE, 3, 1), 0
 ; GFX11-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_2) | instskip(NEXT) | instid1(VALU_DEP_1)
-; GFX11-SDAG-NEXT:    v_add_f16_e32 v0.l, v4.l, v0.l
+; GFX11-SDAG-NEXT:    v_add_f16_e32 v0.l, v2.l, v0.l
 ; GFX11-SDAG-NEXT:    v_add_f16_e32 v0.l, v0.h, v0.l
-; GFX11-SDAG-NEXT:    global_store_b16 v[2:3], v0, off
+; GFX11-SDAG-NEXT:    global_store_b16 v[3:4], v0, off
 ; GFX11-SDAG-NEXT:    s_endpgm
   %res1 = call half @llvm.fptrunc.round.f16.f32(float %a, metadata !"round.upward")
   %res2 = call half @llvm.fptrunc.round.f16.f32(float %a, metadata !"round.downward")
@@ -301,16 +302,17 @@ define amdgpu_gs void @s_fptrunc_round_f32_to_f16_upward_multiple_calls(float in
 ;
 ; GFX11-SDAG-LABEL: s_fptrunc_round_f32_to_f16_upward_multiple_calls:
 ; GFX11-SDAG:       ; %bb.0:
+; GFX11-SDAG-NEXT:    v_dual_mov_b32 v3, v1 :: v_dual_mov_b32 v2, v0
 ; GFX11-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_MODE, 2, 1), 1
-; GFX11-SDAG-NEXT:    v_cvt_f16_f32_e64 v2.l, s0
-; GFX11-SDAG-NEXT:    v_cvt_f16_f32_e64 v2.h, s1
+; GFX11-SDAG-NEXT:    v_cvt_f16_f32_e64 v0.l, s0
+; GFX11-SDAG-NEXT:    v_cvt_f16_f32_e64 v0.h, s1
 ; GFX11-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_MODE, 2, 2), 2
-; GFX11-SDAG-NEXT:    v_cvt_f16_f32_e64 v3.l, s1
+; GFX11-SDAG-NEXT:    v_cvt_f16_f32_e64 v1.l, s1
 ; GFX11-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_MODE, 3, 1), 0
 ; GFX11-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_2) | instskip(NEXT) | instid1(VALU_DEP_1)
-; GFX11-SDAG-NEXT:    v_add_f16_e32 v2.l, v2.l, v2.h
-; GFX11-SDAG-NEXT:    v_add_f16_e32 v2.l, v3.l, v2.l
-; GFX11-SDAG-NEXT:    global_store_b16 v[0:1], v2, off
+; GFX11-SDAG-NEXT:    v_add_f16_e32 v0.l, v0.l, v0.h
+; GFX11-SDAG-NEXT:    v_add_f16_e32 v0.l, v1.l, v0.l
+; GFX11-SDAG-NEXT:    global_store_b16 v[2:3], v0, off
 ; GFX11-SDAG-NEXT:    s_endpgm
   %res1 = call half @llvm.fptrunc.round.f16.f32(float %a, metadata !"round.upward")
   %res2 = call half @llvm.fptrunc.round.f16.f32(float %b, metadata !"round.upward")

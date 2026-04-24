@@ -95,8 +95,8 @@ define amdgpu_cs i32 @test_ashr_i32(i32 inreg %arg1) {
 define amdgpu_cs i64 @test_ashr_i64(i64 inreg %arg1) {
 ; CHECK-LABEL: test_ashr_i64:
 ; CHECK:       ; %bb.0: ; %.entry
-; CHECK-NEXT:    s_ashr_i32 s0, s1, 31
-; CHECK-NEXT:    s_mov_b32 s1, s0
+; CHECK-NEXT:    s_ashr_i32 s1, s1, 31
+; CHECK-NEXT:    s_mov_b32 s0, s1
 ; CHECK-NEXT:    ; return to shader part epilog
 .entry:
   %z1 = ashr i64 %arg1, 10

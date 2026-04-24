@@ -212,6 +212,8 @@ define amdgpu_ps void @test_buffer_load_i8_waterfall_soffset(<4 x i32> inreg %rs
 define amdgpu_ps void @test_buffer_load_u16_waterfall_both(<4 x i32> %rsrc, i32 %voffset, i32 %soffset, ptr addrspace(1) inreg %out) {
 ; GFX12-LABEL: test_buffer_load_u16_waterfall_both:
 ; GFX12:       ; %bb.0:
+; GFX12-NEXT:    s_mov_b32 s2, s0
+; GFX12-NEXT:    s_mov_b32 s3, s1
 ; GFX12-NEXT:    s_mov_b32 s8, exec_lo
 ; GFX12-NEXT:  .LBB10_1: ; =>This Inner Loop Header: Depth=1
 ; GFX12-NEXT:    v_readfirstlane_b32 s4, v0
@@ -223,24 +225,24 @@ define amdgpu_ps void @test_buffer_load_u16_waterfall_both(<4 x i32> %rsrc, i32 
 ; GFX12-NEXT:    s_wait_alu depctr_va_sdst(0)
 ; GFX12-NEXT:    v_cmp_eq_u64_e32 vcc_lo, s[4:5], v[0:1]
 ; GFX12-NEXT:    s_delay_alu instid0(VALU_DEP_3) | instskip(NEXT) | instid1(VALU_DEP_3)
-; GFX12-NEXT:    v_cmp_eq_u64_e64 s2, s[6:7], v[2:3]
-; GFX12-NEXT:    v_cmp_eq_u32_e64 s3, s9, v5
-; GFX12-NEXT:    s_and_b32 s2, vcc_lo, s2
+; GFX12-NEXT:    v_cmp_eq_u64_e64 s0, s[6:7], v[2:3]
+; GFX12-NEXT:    v_cmp_eq_u32_e64 s1, s9, v5
+; GFX12-NEXT:    s_and_b32 s0, vcc_lo, s0
 ; GFX12-NEXT:    s_delay_alu instid0(SALU_CYCLE_1) | instskip(NEXT) | instid1(SALU_CYCLE_1)
-; GFX12-NEXT:    s_and_b32 s2, s2, s3
-; GFX12-NEXT:    s_and_saveexec_b32 s2, s2
+; GFX12-NEXT:    s_and_b32 s0, s0, s1
+; GFX12-NEXT:    s_and_saveexec_b32 s0, s0
 ; GFX12-NEXT:    buffer_load_u16 v1, v4, s[4:7], s9 offen
 ; GFX12-NEXT:    ; implicit-def: $vgpr0
 ; GFX12-NEXT:    ; implicit-def: $vgpr5
 ; GFX12-NEXT:    ; implicit-def: $vgpr4
 ; GFX12-NEXT:    ; implicit-def: $vgpr2_vgpr3
-; GFX12-NEXT:    s_xor_b32 exec_lo, exec_lo, s2
+; GFX12-NEXT:    s_xor_b32 exec_lo, exec_lo, s0
 ; GFX12-NEXT:    s_cbranch_execnz .LBB10_1
 ; GFX12-NEXT:  ; %bb.2:
 ; GFX12-NEXT:    s_mov_b32 exec_lo, s8
 ; GFX12-NEXT:    v_mov_b32_e32 v0, 0
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b32 v0, v1, s[0:1]
+; GFX12-NEXT:    global_store_b32 v0, v1, s[2:3]
 ; GFX12-NEXT:    s_endpgm
   %val = call i16 @llvm.amdgcn.raw.buffer.load.i16(<4 x i32> %rsrc, i32 %voffset, i32 %soffset, i32 0)
   %zext = zext i16 %val to i32

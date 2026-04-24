@@ -599,30 +599,30 @@ define void @Transform(ptr%arr, ptr%arr2, i32 %a, i32 %b, i32 %c, i32 %n) #0 {
 ; CHECK-NEXT:    testb %al, %al
 ; CHECK-NEXT:    jne .LBB6_5
 ; CHECK-NEXT:  # %bb.1: # %while.body.preheader
-; CHECK-NEXT:    movl %edx, %ecx
-; CHECK-NEXT:    xorl %esi, %esi
+; CHECK-NEXT:    movl %edx, %esi
+; CHECK-NEXT:    xorl %r8d, %r8d
 ; CHECK-NEXT:  .LBB6_2: # %while.body
 ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
-; CHECK-NEXT:    movslq %esi, %rsi
-; CHECK-NEXT:    movl (%rdi,%rsi,4), %eax
+; CHECK-NEXT:    movslq %r8d, %r8
+; CHECK-NEXT:    movl (%rdi,%r8,4), %eax
 ; CHECK-NEXT:    xorl %edx, %edx
-; CHECK-NEXT:    divl %ecx
-; CHECK-NEXT:    movl %eax, %edx
+; CHECK-NEXT:    divl %esi
+; CHECK-NEXT:    movl %eax, %ecx
 ; CHECK-NEXT:    movl $11, %eax
-; CHECK-NEXT:    movl %ecx, %r8d
-; CHECK-NEXT:    cmpl %ecx, %edx
+; CHECK-NEXT:    movl %esi, %r10d
+; CHECK-NEXT:    cmpl %esi, %ecx
 ; CHECK-NEXT:    ja .LBB6_4
 ; CHECK-NEXT:  # %bb.3: # %while.body
 ; CHECK-NEXT:    # in Loop: Header=BB6_2 Depth=1
 ; CHECK-NEXT:    movl $22, %eax
-; CHECK-NEXT:    movl $22, %r8d
+; CHECK-NEXT:    movl $22, %r10d
 ; CHECK-NEXT:  .LBB6_4: # %while.body
 ; CHECK-NEXT:    # in Loop: Header=BB6_2 Depth=1
 ; CHECK-NEXT:    xorl %edx, %edx
-; CHECK-NEXT:    divl %r8d
-; CHECK-NEXT:    movl %edx, (%rdi,%rsi,4)
-; CHECK-NEXT:    addl $1, %esi
-; CHECK-NEXT:    cmpl %r9d, %esi
+; CHECK-NEXT:    divl %r10d
+; CHECK-NEXT:    movl %edx, (%rdi,%r8,4)
+; CHECK-NEXT:    addl $1, %r8d
+; CHECK-NEXT:    cmpl %r9d, %r8d
 ; CHECK-NEXT:    ja .LBB6_2
 ; CHECK-NEXT:  .LBB6_5: # %while.end
 ; CHECK-NEXT:    retq
@@ -633,30 +633,30 @@ define void @Transform(ptr%arr, ptr%arr2, i32 %a, i32 %b, i32 %c, i32 %n) #0 {
 ; CHECK-FORCEALL-NEXT:    testb %al, %al
 ; CHECK-FORCEALL-NEXT:    jne .LBB6_5
 ; CHECK-FORCEALL-NEXT:  # %bb.1: # %while.body.preheader
-; CHECK-FORCEALL-NEXT:    movl %edx, %ecx
-; CHECK-FORCEALL-NEXT:    xorl %esi, %esi
+; CHECK-FORCEALL-NEXT:    movl %edx, %esi
+; CHECK-FORCEALL-NEXT:    xorl %r8d, %r8d
 ; CHECK-FORCEALL-NEXT:  .LBB6_2: # %while.body
 ; CHECK-FORCEALL-NEXT:    # =>This Inner Loop Header: Depth=1
-; CHECK-FORCEALL-NEXT:    movslq %esi, %rsi
-; CHECK-FORCEALL-NEXT:    movl (%rdi,%rsi,4), %eax
+; CHECK-FORCEALL-NEXT:    movslq %r8d, %r8
+; CHECK-FORCEALL-NEXT:    movl (%rdi,%r8,4), %eax
 ; CHECK-FORCEALL-NEXT:    xorl %edx, %edx
-; CHECK-FORCEALL-NEXT:    divl %ecx
-; CHECK-FORCEALL-NEXT:    movl %eax, %edx
+; CHECK-FORCEALL-NEXT:    divl %esi
+; CHECK-FORCEALL-NEXT:    movl %eax, %ecx
 ; CHECK-FORCEALL-NEXT:    movl $11, %eax
-; CHECK-FORCEALL-NEXT:    movl %ecx, %r8d
-; CHECK-FORCEALL-NEXT:    cmpl %ecx, %edx
+; CHECK-FORCEALL-NEXT:    movl %esi, %r10d
+; CHECK-FORCEALL-NEXT:    cmpl %esi, %ecx
 ; CHECK-FORCEALL-NEXT:    ja .LBB6_4
 ; CHECK-FORCEALL-NEXT:  # %bb.3: # %while.body
 ; CHECK-FORCEALL-NEXT:    # in Loop: Header=BB6_2 Depth=1
 ; CHECK-FORCEALL-NEXT:    movl $22, %eax
-; CHECK-FORCEALL-NEXT:    movl $22, %r8d
+; CHECK-FORCEALL-NEXT:    movl $22, %r10d
 ; CHECK-FORCEALL-NEXT:  .LBB6_4: # %while.body
 ; CHECK-FORCEALL-NEXT:    # in Loop: Header=BB6_2 Depth=1
 ; CHECK-FORCEALL-NEXT:    xorl %edx, %edx
-; CHECK-FORCEALL-NEXT:    divl %r8d
-; CHECK-FORCEALL-NEXT:    movl %edx, (%rdi,%rsi,4)
-; CHECK-FORCEALL-NEXT:    addl $1, %esi
-; CHECK-FORCEALL-NEXT:    cmpl %r9d, %esi
+; CHECK-FORCEALL-NEXT:    divl %r10d
+; CHECK-FORCEALL-NEXT:    movl %edx, (%rdi,%r8,4)
+; CHECK-FORCEALL-NEXT:    addl $1, %r8d
+; CHECK-FORCEALL-NEXT:    cmpl %r9d, %r8d
 ; CHECK-FORCEALL-NEXT:    ja .LBB6_2
 ; CHECK-FORCEALL-NEXT:  .LBB6_5: # %while.end
 ; CHECK-FORCEALL-NEXT:    retq

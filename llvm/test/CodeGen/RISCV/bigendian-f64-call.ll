@@ -53,10 +53,10 @@ define double @test_f64_call_with_fadd(double %a, double %b) {
 ; RV32LE-NEXT:    fld fa4, 0(sp)
 ; RV32LE-NEXT:    fadd.d fa5, fa4, fa5
 ; RV32LE-NEXT:    fsd fa5, 0(sp)
-; RV32LE-NEXT:    lw a0, 0(sp)
-; RV32LE-NEXT:    lw a1, 4(sp)
-; RV32LE-NEXT:    mv a2, a0
-; RV32LE-NEXT:    mv a3, a1
+; RV32LE-NEXT:    lw a2, 0(sp)
+; RV32LE-NEXT:    lw a3, 4(sp)
+; RV32LE-NEXT:    mv a0, a2
+; RV32LE-NEXT:    mv a1, a3
 ; RV32LE-NEXT:    call external_func
 ; RV32LE-NEXT:    lw ra, 12(sp) # 4-byte Folded Reload
 ; RV32LE-NEXT:    .cfi_restore ra
@@ -78,10 +78,10 @@ define double @test_f64_call_with_fadd(double %a, double %b) {
 ; RV32BE-NEXT:    fld fa4, 0(sp)
 ; RV32BE-NEXT:    fadd.d fa5, fa4, fa5
 ; RV32BE-NEXT:    fsd fa5, 0(sp)
-; RV32BE-NEXT:    lw a0, 0(sp)
-; RV32BE-NEXT:    lw a1, 4(sp)
-; RV32BE-NEXT:    mv a2, a0
-; RV32BE-NEXT:    mv a3, a1
+; RV32BE-NEXT:    lw a2, 0(sp)
+; RV32BE-NEXT:    lw a3, 4(sp)
+; RV32BE-NEXT:    mv a0, a2
+; RV32BE-NEXT:    mv a1, a3
 ; RV32BE-NEXT:    call external_func
 ; RV32BE-NEXT:    lw ra, 12(sp) # 4-byte Folded Reload
 ; RV32BE-NEXT:    .cfi_restore ra

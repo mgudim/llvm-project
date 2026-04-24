@@ -1198,24 +1198,25 @@ define i32 @callVariadicFunc(i32 %cond, i32 %N) "frame-pointer"="all" {
 ; ARM-ENABLE-LABEL: callVariadicFunc:
 ; ARM-ENABLE:       Lfunc_begin7:
 ; ARM-ENABLE-NEXT:  @ %bb.0: @ %entry
+; ARM-ENABLE-NEXT:    mov r3, r1
 ; ARM-ENABLE-NEXT:    cmp r0, #0
 ; ARM-ENABLE-NEXT:    beq LBB7_2
 ; ARM-ENABLE-NEXT:  @ %bb.1: @ %if.then
 ; ARM-ENABLE-NEXT:    push {r7, lr}
 ; ARM-ENABLE-NEXT:    mov r7, sp
 ; ARM-ENABLE-NEXT:    sub sp, sp, #12
-; ARM-ENABLE-NEXT:    mov r0, r1
-; ARM-ENABLE-NEXT:    mov r2, r1
-; ARM-ENABLE-NEXT:    mov r3, r1
-; ARM-ENABLE-NEXT:    str r1, [sp]
-; ARM-ENABLE-NEXT:    str r1, [sp, #4]
-; ARM-ENABLE-NEXT:    str r1, [sp, #8]
+; ARM-ENABLE-NEXT:    mov r0, r3
+; ARM-ENABLE-NEXT:    mov r1, r3
+; ARM-ENABLE-NEXT:    mov r2, r3
+; ARM-ENABLE-NEXT:    str r3, [sp]
+; ARM-ENABLE-NEXT:    str r3, [sp, #4]
+; ARM-ENABLE-NEXT:    str r3, [sp, #8]
 ; ARM-ENABLE-NEXT:    bl _someVariadicFunc
 ; ARM-ENABLE-NEXT:    lsl r0, r0, #3
 ; ARM-ENABLE-NEXT:    mov sp, r7
 ; ARM-ENABLE-NEXT:    pop {r7, pc}
 ; ARM-ENABLE-NEXT:  LBB7_2: @ %if.else
-; ARM-ENABLE-NEXT:    lsl r0, r1, #1
+; ARM-ENABLE-NEXT:    lsl r0, r3, #1
 ; ARM-ENABLE-NEXT:    bx lr
 ; ARM-ENABLE-NEXT:  Lfunc_end7:
 ;
@@ -1225,21 +1226,22 @@ define i32 @callVariadicFunc(i32 %cond, i32 %N) "frame-pointer"="all" {
 ; ARM-DISABLE-NEXT:    push {r7, lr}
 ; ARM-DISABLE-NEXT:    mov r7, sp
 ; ARM-DISABLE-NEXT:    sub sp, sp, #12
+; ARM-DISABLE-NEXT:    mov r3, r1
 ; ARM-DISABLE-NEXT:    cmp r0, #0
 ; ARM-DISABLE-NEXT:    beq LBB7_2
 ; ARM-DISABLE-NEXT:  @ %bb.1: @ %if.then
-; ARM-DISABLE-NEXT:    mov r0, r1
-; ARM-DISABLE-NEXT:    mov r2, r1
-; ARM-DISABLE-NEXT:    mov r3, r1
-; ARM-DISABLE-NEXT:    str r1, [sp]
-; ARM-DISABLE-NEXT:    str r1, [sp, #4]
-; ARM-DISABLE-NEXT:    str r1, [sp, #8]
+; ARM-DISABLE-NEXT:    mov r0, r3
+; ARM-DISABLE-NEXT:    mov r1, r3
+; ARM-DISABLE-NEXT:    mov r2, r3
+; ARM-DISABLE-NEXT:    str r3, [sp]
+; ARM-DISABLE-NEXT:    str r3, [sp, #4]
+; ARM-DISABLE-NEXT:    str r3, [sp, #8]
 ; ARM-DISABLE-NEXT:    bl _someVariadicFunc
 ; ARM-DISABLE-NEXT:    lsl r0, r0, #3
 ; ARM-DISABLE-NEXT:    mov sp, r7
 ; ARM-DISABLE-NEXT:    pop {r7, pc}
 ; ARM-DISABLE-NEXT:  LBB7_2: @ %if.else
-; ARM-DISABLE-NEXT:    lsl r0, r1, #1
+; ARM-DISABLE-NEXT:    lsl r0, r3, #1
 ; ARM-DISABLE-NEXT:    mov sp, r7
 ; ARM-DISABLE-NEXT:    pop {r7, pc}
 ; ARM-DISABLE-NEXT:  Lfunc_end7:
@@ -1247,22 +1249,23 @@ define i32 @callVariadicFunc(i32 %cond, i32 %N) "frame-pointer"="all" {
 ; THUMB-ENABLE-LABEL: callVariadicFunc:
 ; THUMB-ENABLE:       Lfunc_begin7:
 ; THUMB-ENABLE-NEXT:  @ %bb.0: @ %entry
+; THUMB-ENABLE-NEXT:    mov r3, r1
 ; THUMB-ENABLE-NEXT:    cbz r0, LBB7_2
 ; THUMB-ENABLE-NEXT:  @ %bb.1: @ %if.then
 ; THUMB-ENABLE-NEXT:    push {r7, lr}
 ; THUMB-ENABLE-NEXT:    mov r7, sp
 ; THUMB-ENABLE-NEXT:    sub sp, #12
-; THUMB-ENABLE-NEXT:    mov r0, r1
-; THUMB-ENABLE-NEXT:    mov r2, r1
-; THUMB-ENABLE-NEXT:    mov r3, r1
-; THUMB-ENABLE-NEXT:    strd r1, r1, [sp]
-; THUMB-ENABLE-NEXT:    str r1, [sp, #8]
+; THUMB-ENABLE-NEXT:    mov r0, r3
+; THUMB-ENABLE-NEXT:    mov r1, r3
+; THUMB-ENABLE-NEXT:    mov r2, r3
+; THUMB-ENABLE-NEXT:    strd r3, r3, [sp]
+; THUMB-ENABLE-NEXT:    str r3, [sp, #8]
 ; THUMB-ENABLE-NEXT:    bl _someVariadicFunc
 ; THUMB-ENABLE-NEXT:    lsls r0, r0, #3
 ; THUMB-ENABLE-NEXT:    add sp, #12
 ; THUMB-ENABLE-NEXT:    pop {r7, pc}
 ; THUMB-ENABLE-NEXT:  LBB7_2: @ %if.else
-; THUMB-ENABLE-NEXT:    lsls r0, r1, #1
+; THUMB-ENABLE-NEXT:    lsls r0, r3, #1
 ; THUMB-ENABLE-NEXT:    bx lr
 ; THUMB-ENABLE-NEXT:  Lfunc_end7:
 ;
@@ -1272,19 +1275,20 @@ define i32 @callVariadicFunc(i32 %cond, i32 %N) "frame-pointer"="all" {
 ; THUMB-DISABLE-NEXT:    push {r7, lr}
 ; THUMB-DISABLE-NEXT:    mov r7, sp
 ; THUMB-DISABLE-NEXT:    sub sp, #12
+; THUMB-DISABLE-NEXT:    mov r3, r1
 ; THUMB-DISABLE-NEXT:    cbz r0, LBB7_2
 ; THUMB-DISABLE-NEXT:  @ %bb.1: @ %if.then
-; THUMB-DISABLE-NEXT:    mov r0, r1
-; THUMB-DISABLE-NEXT:    mov r2, r1
-; THUMB-DISABLE-NEXT:    mov r3, r1
-; THUMB-DISABLE-NEXT:    strd r1, r1, [sp]
-; THUMB-DISABLE-NEXT:    str r1, [sp, #8]
+; THUMB-DISABLE-NEXT:    mov r0, r3
+; THUMB-DISABLE-NEXT:    mov r1, r3
+; THUMB-DISABLE-NEXT:    mov r2, r3
+; THUMB-DISABLE-NEXT:    strd r3, r3, [sp]
+; THUMB-DISABLE-NEXT:    str r3, [sp, #8]
 ; THUMB-DISABLE-NEXT:    bl _someVariadicFunc
 ; THUMB-DISABLE-NEXT:    lsls r0, r0, #3
 ; THUMB-DISABLE-NEXT:    add sp, #12
 ; THUMB-DISABLE-NEXT:    pop {r7, pc}
 ; THUMB-DISABLE-NEXT:  LBB7_2: @ %if.else
-; THUMB-DISABLE-NEXT:    lsls r0, r1, #1
+; THUMB-DISABLE-NEXT:    lsls r0, r3, #1
 ; THUMB-DISABLE-NEXT:    add sp, #12
 ; THUMB-DISABLE-NEXT:    pop {r7, pc}
 ; THUMB-DISABLE-NEXT:  Lfunc_end7:

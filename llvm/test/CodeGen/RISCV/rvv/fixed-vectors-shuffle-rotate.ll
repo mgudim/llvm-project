@@ -895,8 +895,9 @@ define <8 x float> @shuffle_v8f32_as_i64_exact(<8 x float> %v) vscale_range(2,2)
 ; ZVKB-ZVE32X-LABEL: shuffle_v8f32_as_i64_exact:
 ; ZVKB-ZVE32X:       # %bb.0:
 ; ZVKB-ZVE32X-NEXT:    vsetivli zero, 4, e32, m1, ta, mu
-; ZVKB-ZVE32X-NEXT:    vmv.v.i v0, 10
+; ZVKB-ZVE32X-NEXT:    vmv.v.i v12, 10
 ; ZVKB-ZVE32X-NEXT:    vslidedown.vi v11, v9, 1
+; ZVKB-ZVE32X-NEXT:    vmv.v.v v0, v12
 ; ZVKB-ZVE32X-NEXT:    vslideup.vi v11, v9, 1, v0.t
 ; ZVKB-ZVE32X-NEXT:    vslidedown.vi v10, v8, 1
 ; ZVKB-ZVE32X-NEXT:    vslideup.vi v10, v8, 1, v0.t

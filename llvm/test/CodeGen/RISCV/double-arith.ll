@@ -267,12 +267,12 @@ define i32 @fneg_d(double %a, double %b) nounwind {
 ; RV32I:       # %bb.0:
 ; RV32I-NEXT:    addi sp, sp, -16
 ; RV32I-NEXT:    sw ra, 12(sp) # 4-byte Folded Spill
-; RV32I-NEXT:    mv a2, a0
 ; RV32I-NEXT:    mv a3, a1
+; RV32I-NEXT:    mv a2, a0
 ; RV32I-NEXT:    call __adddf3
+; RV32I-NEXT:    mv a2, a0
 ; RV32I-NEXT:    lui a3, 524288
 ; RV32I-NEXT:    xor a3, a1, a3
-; RV32I-NEXT:    mv a2, a0
 ; RV32I-NEXT:    call __eqdf2
 ; RV32I-NEXT:    seqz a0, a0
 ; RV32I-NEXT:    lw ra, 12(sp) # 4-byte Folded Reload
@@ -369,10 +369,10 @@ define double @fabs_d(double %a, double %b) nounwind {
 ; RV32I-NEXT:    addi sp, sp, -16
 ; RV32I-NEXT:    sw ra, 12(sp) # 4-byte Folded Spill
 ; RV32I-NEXT:    call __adddf3
+; RV32I-NEXT:    mv a2, a0
 ; RV32I-NEXT:    mv a3, a1
 ; RV32I-NEXT:    slli a1, a1, 1
 ; RV32I-NEXT:    srli a1, a1, 1
-; RV32I-NEXT:    mv a2, a0
 ; RV32I-NEXT:    call __adddf3
 ; RV32I-NEXT:    lw ra, 12(sp) # 4-byte Folded Reload
 ; RV32I-NEXT:    addi sp, sp, 16
@@ -973,13 +973,13 @@ define double @fnmadd_d_fmul_fneg(double %a, double %b, double %c, double %d) no
 ; RV32I-NEXT:    mv s1, a6
 ; RV32I-NEXT:    mv s2, a5
 ; RV32I-NEXT:    mv s3, a4
-; RV32I-NEXT:    mv a5, a3
 ; RV32I-NEXT:    mv a4, a0
-; RV32I-NEXT:    lui a3, 524288
-; RV32I-NEXT:    xor a3, a1, a3
+; RV32I-NEXT:    lui a5, 524288
+; RV32I-NEXT:    xor a5, a1, a5
 ; RV32I-NEXT:    mv a0, a2
-; RV32I-NEXT:    mv a1, a5
+; RV32I-NEXT:    mv a1, a3
 ; RV32I-NEXT:    mv a2, a4
+; RV32I-NEXT:    mv a3, a5
 ; RV32I-NEXT:    call __muldf3
 ; RV32I-NEXT:    mv a4, a0
 ; RV32I-NEXT:    mv a5, a1
@@ -1004,11 +1004,11 @@ define double @fnmadd_d_fmul_fneg(double %a, double %b, double %c, double %d) no
 ; RV64I-NEXT:    sd s1, 8(sp) # 8-byte Folded Spill
 ; RV64I-NEXT:    mv s0, a3
 ; RV64I-NEXT:    mv s1, a2
-; RV64I-NEXT:    mv a2, a1
-; RV64I-NEXT:    li a1, -1
-; RV64I-NEXT:    slli a1, a1, 63
-; RV64I-NEXT:    xor a1, a0, a1
-; RV64I-NEXT:    mv a0, a2
+; RV64I-NEXT:    li a2, -1
+; RV64I-NEXT:    slli a2, a2, 63
+; RV64I-NEXT:    xor a2, a0, a2
+; RV64I-NEXT:    mv a0, a1
+; RV64I-NEXT:    mv a1, a2
 ; RV64I-NEXT:    call __muldf3
 ; RV64I-NEXT:    mv a2, a0
 ; RV64I-NEXT:    mv a0, s1

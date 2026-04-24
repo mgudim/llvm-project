@@ -71,30 +71,30 @@ define void @call_test_byval_2Byte() {
   ; 32BIT-LABEL: name: call_test_byval_2Byte
   ; 32BIT: bb.0.entry:
   ; 32BIT-NEXT:   renamable $r3 = LWZtoc @f, $r2 :: (load (s32) from got)
-  ; 32BIT-NEXT:   renamable $f1 = LFS 0, killed renamable $r3 :: (dereferenceable load (s32) from @f)
+  ; 32BIT-NEXT:   renamable $f2 = LFS 0, killed renamable $r3 :: (dereferenceable load (s32) from @f)
   ; 32BIT-NEXT:   ADJCALLSTACKDOWN 56, 0, implicit-def dead $r1, implicit $r1
   ; 32BIT-NEXT:   renamable $r3 = LWZtoc @gS2, $r2 :: (load (s32) from got)
   ; 32BIT-NEXT:   renamable $r3 = LHZ 0, killed renamable $r3 :: (load (s16))
   ; 32BIT-NEXT:   renamable $r5 = RLWINM killed renamable $r3, 16, 0, 15
   ; 32BIT-NEXT:   $r3 = LI 42
-  ; 32BIT-NEXT:   $f2 = COPY renamable $f1
+  ; 32BIT-NEXT:   $f1 = COPY renamable $f2
   ; 32BIT-NEXT:   $r7 = LI 43
-  ; 32BIT-NEXT:   BL_NOP <mcsymbol .test_byval_2Byte>, csr_aix32, implicit-def dead $lr, implicit $rm, implicit $r3, implicit $f1, implicit $r5, implicit killed $f2, implicit killed $r7, implicit $r2, implicit-def $r1, implicit-def dead $r3
+  ; 32BIT-NEXT:   BL_NOP <mcsymbol .test_byval_2Byte>, csr_aix32, implicit-def dead $lr, implicit $rm, implicit $r3, implicit $f1, implicit $r5, implicit $f2, implicit killed $r7, implicit $r2, implicit-def $r1, implicit-def dead $r3
   ; 32BIT-NEXT:   ADJCALLSTACKUP 56, 0, implicit-def dead $r1, implicit $r1
   ; 32BIT-NEXT:   BLR implicit $lr, implicit $rm
   ;
   ; 64BIT-LABEL: name: call_test_byval_2Byte
   ; 64BIT: bb.0.entry:
   ; 64BIT-NEXT:   renamable $x3 = LDtoc @f, $x2 :: (load (s64) from got)
-  ; 64BIT-NEXT:   renamable $f1 = LFS 0, killed renamable $x3 :: (dereferenceable load (s32) from @f)
+  ; 64BIT-NEXT:   renamable $f2 = LFS 0, killed renamable $x3 :: (dereferenceable load (s32) from @f)
   ; 64BIT-NEXT:   ADJCALLSTACKDOWN 112, 0, implicit-def dead $r1, implicit $r1
   ; 64BIT-NEXT:   renamable $x3 = LDtoc @gS2, $x2 :: (load (s64) from got)
   ; 64BIT-NEXT:   renamable $x3 = LHZ8 0, killed renamable $x3 :: (load (s16))
   ; 64BIT-NEXT:   renamable $x5 = RLDICR killed renamable $x3, 48, 15
   ; 64BIT-NEXT:   $x3 = LI8 42
-  ; 64BIT-NEXT:   $f2 = COPY renamable $f1
+  ; 64BIT-NEXT:   $f1 = COPY renamable $f2
   ; 64BIT-NEXT:   $x7 = LI8 43
-  ; 64BIT-NEXT:   BL8_NOP <mcsymbol .test_byval_2Byte>, csr_ppc64, implicit-def dead $lr8, implicit $rm, implicit $x3, implicit $f1, implicit $x5, implicit killed $f2, implicit killed $x7, implicit $x2, implicit-def $r1, implicit-def dead $x3
+  ; 64BIT-NEXT:   BL8_NOP <mcsymbol .test_byval_2Byte>, csr_ppc64, implicit-def dead $lr8, implicit $rm, implicit $x3, implicit $f1, implicit $x5, implicit $f2, implicit killed $x7, implicit $x2, implicit-def $r1, implicit-def dead $x3
   ; 64BIT-NEXT:   ADJCALLSTACKUP 112, 0, implicit-def dead $r1, implicit $r1
   ; 64BIT-NEXT:   BLR8 implicit $lr8, implicit $rm
 entry:

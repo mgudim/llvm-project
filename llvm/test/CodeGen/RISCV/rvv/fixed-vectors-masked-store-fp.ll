@@ -277,6 +277,7 @@ define void @masked_store_v64f16(<64 x half> %val, ptr %a, <64 x i1> %mask) {
 define void @masked_store_v64f32(<64 x float> %val, ptr %a, <64 x i1> %mask) {
 ; CHECK-LABEL: masked_store_v64f32:
 ; CHECK:       # %bb.0:
+; CHECK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; CHECK-NEXT:    li a1, 32
 ; CHECK-NEXT:    vsetvli zero, a1, e32, m8, ta, ma
 ; CHECK-NEXT:    vse32.v v8, (a0), v0.t
@@ -293,6 +294,7 @@ define void @masked_store_v64f32(<64 x float> %val, ptr %a, <64 x i1> %mask) {
 define void @masked_store_v128bf16(<128 x bfloat> %val, ptr %a, <128 x i1> %mask) {
 ; CHECK-LABEL: masked_store_v128bf16:
 ; CHECK:       # %bb.0:
+; CHECK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; CHECK-NEXT:    li a1, 64
 ; CHECK-NEXT:    vsetvli zero, a1, e16, m8, ta, ma
 ; CHECK-NEXT:    vse16.v v8, (a0), v0.t
@@ -309,6 +311,7 @@ define void @masked_store_v128bf16(<128 x bfloat> %val, ptr %a, <128 x i1> %mask
 define void @masked_store_v128f16(<128 x half> %val, ptr %a, <128 x i1> %mask) {
 ; CHECK-LABEL: masked_store_v128f16:
 ; CHECK:       # %bb.0:
+; CHECK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; CHECK-NEXT:    li a1, 64
 ; CHECK-NEXT:    vsetvli zero, a1, e16, m8, ta, ma
 ; CHECK-NEXT:    vse16.v v8, (a0), v0.t

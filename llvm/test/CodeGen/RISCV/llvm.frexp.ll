@@ -641,10 +641,10 @@ define { <4 x float>, <4 x i32> } @test_frexp_v4f32_v4i32(<4 x float> %a) nounwi
 ; RV32IZFINXZDINX-NEXT:    mv s0, a4
 ; RV32IZFINXZDINX-NEXT:    mv s1, a3
 ; RV32IZFINXZDINX-NEXT:    mv s2, a2
-; RV32IZFINXZDINX-NEXT:    mv a2, a1
 ; RV32IZFINXZDINX-NEXT:    mv s3, a0
-; RV32IZFINXZDINX-NEXT:    addi a1, a0, 16
-; RV32IZFINXZDINX-NEXT:    mv a0, a2
+; RV32IZFINXZDINX-NEXT:    addi a2, a0, 16
+; RV32IZFINXZDINX-NEXT:    mv a0, a1
+; RV32IZFINXZDINX-NEXT:    mv a1, a2
 ; RV32IZFINXZDINX-NEXT:    call frexpf
 ; RV32IZFINXZDINX-NEXT:    mv s4, a0
 ; RV32IZFINXZDINX-NEXT:    addi a1, s3, 20

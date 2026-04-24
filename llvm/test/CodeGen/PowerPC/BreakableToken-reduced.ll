@@ -203,13 +203,12 @@ define void @_ZN5clang6format22BreakableStringLiteral11insertBreakEjjSt4pairImjE
 ; CHECK:       # %bb.0: # %entry
 ; CHECK-NEXT:    ld 10, 56(3)
 ; CHECK-NEXT:    lwz 4, 40(3)
-; CHECK-NEXT:    mr 12, 8
 ; CHECK-NEXT:    cmpldi 10, 0
 ; CHECK-NEXT:    beq 0, .LBB0_2
 ; CHECK-NEXT:  # %bb.1: # %if.end.i.i
 ; CHECK-NEXT:    ld 9, 48(3)
-; CHECK-NEXT:    lbz 8, 0(9)
-; CHECK-NEXT:    cmpwi 8, 64
+; CHECK-NEXT:    lbz 11, 0(9)
+; CHECK-NEXT:    cmpwi 11, 64
 ; CHECK-NEXT:    b .LBB0_3
 ; CHECK-NEXT:  .LBB0_2: # %entry._ZNK4llvm9StringRef10startswithES0_.exit_crit_edge
 ; CHECK-NEXT:    ld 9, 48(3)
@@ -221,28 +220,29 @@ define void @_ZN5clang6format22BreakableStringLiteral11insertBreakEjjSt4pairImjE
 ; CHECK-NEXT:    .cfi_offset r30, -16
 ; CHECK-NEXT:    std 30, -16(1) # 8-byte Folded Spill
 ; CHECK-NEXT:    stdu 1, -144(1)
-; CHECK-NEXT:    li 8, 0
-; CHECK-NEXT:    li 11, 1
+; CHECK-NEXT:    li 11, 0
+; CHECK-NEXT:    li 12, 1
 ; CHECK-NEXT:    std 0, 160(1)
 ; CHECK-NEXT:    add 5, 6, 5
 ; CHECK-NEXT:    lbz 30, 20(3)
 ; CHECK-NEXT:    clrldi 6, 7, 32
-; CHECK-NEXT:    iseleq 8, 11, 8
-; CHECK-NEXT:    ld 11, 64(3)
+; CHECK-NEXT:    iseleq 11, 12, 11
+; CHECK-NEXT:    ld 12, 72(3)
 ; CHECK-NEXT:    add 5, 5, 10
 ; CHECK-NEXT:    clrldi 5, 5, 32
-; CHECK-NEXT:    mr 7, 11
-; CHECK-NEXT:    sub 0, 4, 8
+; CHECK-NEXT:    sub 0, 4, 11
 ; CHECK-NEXT:    ld 4, 8(3)
-; CHECK-NEXT:    ld 8, 72(3)
+; CHECK-NEXT:    ld 11, 64(3)
 ; CHECK-NEXT:    lwz 3, 16(3)
 ; CHECK-NEXT:    std 30, 96(1)
 ; CHECK-NEXT:    extsw 0, 0
 ; CHECK-NEXT:    std 3, 112(1)
 ; CHECK-NEXT:    li 3, 1
+; CHECK-NEXT:    mr 7, 11
 ; CHECK-NEXT:    std 0, 120(1)
 ; CHECK-NEXT:    std 3, 104(1)
-; CHECK-NEXT:    mr 3, 12
+; CHECK-NEXT:    mr 3, 8
+; CHECK-NEXT:    mr 8, 12
 ; CHECK-NEXT:    bl _ZN5clang6format17WhitespaceManager24replaceWhitespaceInTokenERKNS0_11FormatTokenEjjN4llvm9StringRefES6_bjji
 ; CHECK-NEXT:    nop
 ; CHECK-NEXT:    addi 1, 1, 144

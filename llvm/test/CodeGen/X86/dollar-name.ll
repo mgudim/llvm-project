@@ -26,15 +26,15 @@ define i32 @"$foo"() nounwind {
 ; PIC-NEXT:    pushq %rbp
 ; PIC-NEXT:    pushq %r14
 ; PIC-NEXT:    pushq %rbx
-; PIC-NEXT:    movq ($arr@GOTPCREL)(%rip), %r14
-; PIC-NEXT:    movl (%r14), %ebx
-; PIC-NEXT:    movl ($arr_h)(%rip), %ebp
+; PIC-NEXT:    movq ($arr@GOTPCREL)(%rip), %rbx
+; PIC-NEXT:    movl (%rbx), %ebp
+; PIC-NEXT:    movl ($arr_h)(%rip), %r14d
 ; PIC-NEXT:    leaq ($tls@TLSLD)(%rip), %rdi
 ; PIC-NEXT:    callq __tls_get_addr@PLT
-; PIC-NEXT:    addl 4(%r14), %ebx
-; PIC-NEXT:    addl ($tls@DTPOFF)(%rax), %ebx
-; PIC-NEXT:    movl %ebx, %edi
-; PIC-NEXT:    movl %ebp, %esi
+; PIC-NEXT:    addl 4(%rbx), %ebp
+; PIC-NEXT:    addl ($tls@DTPOFF)(%rax), %ebp
+; PIC-NEXT:    movl %ebp, %edi
+; PIC-NEXT:    movl %r14d, %esi
 ; PIC-NEXT:    callq ($hen@PLT)
 ; PIC-NEXT:    popq %rbx
 ; PIC-NEXT:    popq %r14
@@ -46,15 +46,15 @@ define i32 @"$foo"() nounwind {
 ; INTEL-PIC-NEXT:    push rbp
 ; INTEL-PIC-NEXT:    push r14
 ; INTEL-PIC-NEXT:    push rbx
-; INTEL-PIC-NEXT:    mov r14, qword ptr [rip + $arr@GOTPCREL]
-; INTEL-PIC-NEXT:    mov ebx, dword ptr [r14]
-; INTEL-PIC-NEXT:    mov ebp, dword ptr [rip + $arr_h]
+; INTEL-PIC-NEXT:    mov rbx, qword ptr [rip + $arr@GOTPCREL]
+; INTEL-PIC-NEXT:    mov ebp, dword ptr [rbx]
+; INTEL-PIC-NEXT:    mov r14d, dword ptr [rip + $arr_h]
 ; INTEL-PIC-NEXT:    lea rdi, [rip + $tls@TLSLD]
 ; INTEL-PIC-NEXT:    call __tls_get_addr@PLT
-; INTEL-PIC-NEXT:    add ebx, dword ptr [r14 + 4]
-; INTEL-PIC-NEXT:    add ebx, dword ptr [rax + $tls@DTPOFF]
-; INTEL-PIC-NEXT:    mov edi, ebx
-; INTEL-PIC-NEXT:    mov esi, ebp
+; INTEL-PIC-NEXT:    add ebp, dword ptr [rbx + 4]
+; INTEL-PIC-NEXT:    add ebp, dword ptr [rax + $tls@DTPOFF]
+; INTEL-PIC-NEXT:    mov edi, ebp
+; INTEL-PIC-NEXT:    mov esi, r14d
 ; INTEL-PIC-NEXT:    call $hen@PLT
 ; INTEL-PIC-NEXT:    pop rbx
 ; INTEL-PIC-NEXT:    pop r14

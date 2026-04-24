@@ -109,11 +109,9 @@ define dso_local i128 @lqx_unordered(ptr %src, i64 %idx) {
 ; LE-PWR8-LABEL: lqx_unordered:
 ; LE-PWR8:       # %bb.0: # %entry
 ; LE-PWR8-NEXT:    sldi r4, r4, 4
-; LE-PWR8-NEXT:    std r2, -8(r1) # 8-byte Folded Spill
-; LE-PWR8-NEXT:    add r4, r3, r4
-; LE-PWR8-NEXT:    lq r2, 0(r4)
-; LE-PWR8-NEXT:    mr r4, r2
-; LE-PWR8-NEXT:    ld r2, -8(r1) # 8-byte Folded Reload
+; LE-PWR8-NEXT:    add r3, r3, r4
+; LE-PWR8-NEXT:    lq r4, 0(r3)
+; LE-PWR8-NEXT:    mr r3, r5
 ; LE-PWR8-NEXT:    blr
 ;
 ; AIX64-PWR8-LABEL: lqx_unordered:
@@ -181,11 +179,9 @@ define dso_local i128 @lq_big_offset_unordered(ptr %src) {
 ; LE-PWR8-LABEL: lq_big_offset_unordered:
 ; LE-PWR8:       # %bb.0: # %entry
 ; LE-PWR8-NEXT:    lis r4, 32
-; LE-PWR8-NEXT:    std r2, -8(r1) # 8-byte Folded Spill
-; LE-PWR8-NEXT:    add r4, r3, r4
-; LE-PWR8-NEXT:    lq r2, 0(r4)
-; LE-PWR8-NEXT:    mr r4, r2
-; LE-PWR8-NEXT:    ld r2, -8(r1) # 8-byte Folded Reload
+; LE-PWR8-NEXT:    add r3, r3, r4
+; LE-PWR8-NEXT:    lq r4, 0(r3)
+; LE-PWR8-NEXT:    mr r3, r5
 ; LE-PWR8-NEXT:    blr
 ;
 ; AIX64-PWR8-LABEL: lq_big_offset_unordered:

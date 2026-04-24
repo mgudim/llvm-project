@@ -1549,9 +1549,11 @@ declare void @llvm.arm.neon.vst4lane.p0.v4f16(ptr, <4 x half>, <4 x half>, <4 x 
 define { <8 x half>, <8 x half> } @test_vld2q_lane_f16(ptr, <8 x half>, <8 x half>) {
 ; CHECK-LABEL: test_vld2q_lane_f16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $q1 killed $q1 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $q0 killed $q0 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    vld2.16 {d1[3], d3[3]}, [r0]
+; CHECK-NEXT:    vorr q9, q1, q1
+; CHECK-NEXT:    vorr q8, q0, q0
+; CHECK-NEXT:    vld2.16 {d17[3], d19[3]}, [r0]
+; CHECK-NEXT:    vorr q0, q8, q8
+; CHECK-NEXT:    vorr q1, q9, q9
 ; CHECK-NEXT:    bx lr
 entry:
   %3 = tail call { <8 x half>, <8 x half> } @llvm.arm.neon.vld2lane.v8f16.p0(ptr %0, <8 x half> %1, <8 x half> %2, i32 7, i32 2)
@@ -1561,9 +1563,11 @@ entry:
 define { <4 x half>, <4 x half> } @test_vld2_lane_f16(ptr, <4 x half>, <4 x half>) {
 ; CHECK-LABEL: test_vld2_lane_f16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0 def $q0
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0 def $q0
-; CHECK-NEXT:    vld2.16 {d0[3], d1[3]}, [r0]
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vld2.16 {d16[3], d17[3]}, [r0]
+; CHECK-NEXT:    vorr d0, d16, d16
+; CHECK-NEXT:    vorr d1, d17, d17
 ; CHECK-NEXT:    bx lr
 entry:
   %3 = tail call { <4 x half>, <4 x half> } @llvm.arm.neon.vld2lane.v4f16.p0(ptr %0, <4 x half> %1, <4 x half> %2, i32 3, i32 2)
@@ -1573,10 +1577,13 @@ entry:
 define { <8 x half>, <8 x half>, <8 x half> } @test_vld3q_lane_f16(ptr, <8 x half>, <8 x half>, <8 x half>) {
 ; CHECK-LABEL: test_vld3q_lane_f16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $q2 killed $q2 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    @ kill: def $q1 killed $q1 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    @ kill: def $q0 killed $q0 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    vld3.16 {d1[3], d3[3], d5[3]}, [r0]
+; CHECK-NEXT:    vorr q10, q2, q2
+; CHECK-NEXT:    vorr q9, q1, q1
+; CHECK-NEXT:    vorr q8, q0, q0
+; CHECK-NEXT:    vld3.16 {d17[3], d19[3], d21[3]}, [r0]
+; CHECK-NEXT:    vorr q0, q8, q8
+; CHECK-NEXT:    vorr q1, q9, q9
+; CHECK-NEXT:    vorr q2, q10, q10
 ; CHECK-NEXT:    bx lr
 entry:
   %4 = tail call { <8 x half>, <8 x half>, <8 x half> } @llvm.arm.neon.vld3lane.v8f16.p0(ptr %0, <8 x half> %1, <8 x half> %2, <8 x half> %3, i32 7, i32 2)
@@ -1586,10 +1593,13 @@ entry:
 define { <4 x half>, <4 x half>, <4 x half> } @test_vld3_lane_f16(ptr, <4 x half>, <4 x half>, <4 x half>) {
 ; CHECK-LABEL: test_vld3_lane_f16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $d2 killed $d2 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    vld3.16 {d0[3], d1[3], d2[3]}, [r0]
+; CHECK-NEXT:    vmov.f64 d18, d2
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vld3.16 {d16[3], d17[3], d18[3]}, [r0]
+; CHECK-NEXT:    vorr d0, d16, d16
+; CHECK-NEXT:    vorr d1, d17, d17
+; CHECK-NEXT:    vorr d2, d18, d18
 ; CHECK-NEXT:    bx lr
 entry:
   %4 = tail call { <4 x half>, <4 x half>, <4 x half> } @llvm.arm.neon.vld3lane.v4f16.p0(ptr %0, <4 x half> %1, <4 x half> %2, <4 x half> %3, i32 3, i32 2)
@@ -1598,11 +1608,15 @@ entry:
 define { <8 x half>, <8 x half>, <8 x half>, <8 x half> } @test_vld4lane_v8f16_p0i8(ptr, <8 x half>, <8 x half>, <8 x half>, <8 x half>) {
 ; CHECK-LABEL: test_vld4lane_v8f16_p0i8:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $q3 killed $q3 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    @ kill: def $q2 killed $q2 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    @ kill: def $q1 killed $q1 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    @ kill: def $q0 killed $q0 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    vld4.16 {d1[3], d3[3], d5[3], d7[3]}, [r0]
+; CHECK-NEXT:    vorr q11, q3, q3
+; CHECK-NEXT:    vorr q10, q2, q2
+; CHECK-NEXT:    vorr q9, q1, q1
+; CHECK-NEXT:    vorr q8, q0, q0
+; CHECK-NEXT:    vld4.16 {d17[3], d19[3], d21[3], d23[3]}, [r0]
+; CHECK-NEXT:    vorr q0, q8, q8
+; CHECK-NEXT:    vorr q1, q9, q9
+; CHECK-NEXT:    vorr q2, q10, q10
+; CHECK-NEXT:    vorr q3, q11, q11
 ; CHECK-NEXT:    bx lr
 entry:
   %5 = tail call { <8 x half>, <8 x half>, <8 x half>, <8 x half> } @llvm.arm.neon.vld4lane.v8f16.p0(ptr %0, <8 x half> %1, <8 x half> %2, <8 x half> %3, <8 x half> %4, i32 7, i32 2)
@@ -1611,11 +1625,15 @@ entry:
 define { <4 x half>, <4 x half>, <4 x half>, <4 x half> } @test_vld4lane_v4f16_p0i8(ptr, <4 x half>, <4 x half>, <4 x half>, <4 x half>) {
 ; CHECK-LABEL: test_vld4lane_v4f16_p0i8:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $d3 killed $d3 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $d2 killed $d2 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    vld4.16 {d0[3], d1[3], d2[3], d3[3]}, [r0]
+; CHECK-NEXT:    vmov.f64 d19, d3
+; CHECK-NEXT:    vmov.f64 d18, d2
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vld4.16 {d16[3], d17[3], d18[3], d19[3]}, [r0]
+; CHECK-NEXT:    vorr d0, d16, d16
+; CHECK-NEXT:    vorr d1, d17, d17
+; CHECK-NEXT:    vorr d2, d18, d18
+; CHECK-NEXT:    vorr d3, d19, d19
 ; CHECK-NEXT:    bx lr
 entry:
  %5 = tail call { <4 x half>, <4 x half>, <4 x half>, <4 x half> } @llvm.arm.neon.vld4lane.v4f16.p0(ptr %0, <4 x half> %1, <4 x half> %2, <4 x half> %3, <4 x half> %4, i32 3, i32 2)
@@ -1624,9 +1642,9 @@ entry:
 define void @test_vst2lane_p0i8_v8f16(ptr, <8 x half>, <8 x half>) {
 ; CHECK-LABEL: test_vst2lane_p0i8_v8f16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $q1 killed $q1 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $q0 killed $q0 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    vst2.16 {d0[0], d2[0]}, [r0]
+; CHECK-NEXT:    vorr q9, q1, q1
+; CHECK-NEXT:    vorr q8, q0, q0
+; CHECK-NEXT:    vst2.16 {d16[0], d18[0]}, [r0]
 ; CHECK-NEXT:    bx lr
 entry:
   tail call void @llvm.arm.neon.vst2lane.p0.v8f16(ptr %0, <8 x half> %1, <8 x half> %2, i32 0, i32 1)
@@ -1635,9 +1653,9 @@ entry:
 define void @test_vst2lane_p0i8_v4f16(ptr, <4 x half>, <4 x half>) {
 ; CHECK-LABEL: test_vst2lane_p0i8_v4f16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0 def $q0
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0 def $q0
-; CHECK-NEXT:    vst2.16 {d0[0], d1[0]}, [r0:32]
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vst2.16 {d16[0], d17[0]}, [r0:32]
 ; CHECK-NEXT:    bx lr
 entry:
   tail call void @llvm.arm.neon.vst2lane.p0.v4f16(ptr %0, <4 x half> %1, <4 x half> %2, i32 0, i32 0)
@@ -1646,10 +1664,10 @@ entry:
 define void @test_vst3lane_p0i8_v8f16(ptr, <8 x half>, <8 x half>, <8 x half>) {
 ; CHECK-LABEL: test_vst3lane_p0i8_v8f16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $q2 killed $q2 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    @ kill: def $q1 killed $q1 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    @ kill: def $q0 killed $q0 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    vst3.16 {d0[0], d2[0], d4[0]}, [r0]
+; CHECK-NEXT:    vorr q10, q2, q2
+; CHECK-NEXT:    vorr q9, q1, q1
+; CHECK-NEXT:    vorr q8, q0, q0
+; CHECK-NEXT:    vst3.16 {d16[0], d18[0], d20[0]}, [r0]
 ; CHECK-NEXT:    bx lr
 entry:
   tail call void @llvm.arm.neon.vst3lane.p0.v8f16(ptr %0, <8 x half> %1, <8 x half> %2, <8 x half> %3, i32 0, i32 0)
@@ -1658,10 +1676,10 @@ entry:
 define void @test_vst3lane_p0i8_v4f16(ptr, <4 x half>, <4 x half>, <4 x half>) {
 ; CHECK-LABEL: test_vst3lane_p0i8_v4f16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $d2 killed $d2 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    vst3.16 {d0[0], d1[0], d2[0]}, [r0]
+; CHECK-NEXT:    vmov.f64 d18, d2
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vst3.16 {d16[0], d17[0], d18[0]}, [r0]
 ; CHECK-NEXT:    bx lr
 entry:
   tail call void @llvm.arm.neon.vst3lane.p0.v4f16(ptr %0, <4 x half> %1, <4 x half> %2, <4 x half> %3, i32 0, i32 0)
@@ -1670,11 +1688,11 @@ entry:
 define void @test_vst4lane_p0i8_v8f16(ptr, <8 x half>, <8 x half>, <8 x half>, <8 x half>) {
 ; CHECK-LABEL: test_vst4lane_p0i8_v8f16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $q3 killed $q3 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    @ kill: def $q2 killed $q2 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    @ kill: def $q1 killed $q1 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    @ kill: def $q0 killed $q0 killed $q0_q1_q2_q3 def $q0_q1_q2_q3
-; CHECK-NEXT:    vst4.16 {d0[0], d2[0], d4[0], d6[0]}, [r0:64]
+; CHECK-NEXT:    vorr q11, q3, q3
+; CHECK-NEXT:    vorr q10, q2, q2
+; CHECK-NEXT:    vorr q9, q1, q1
+; CHECK-NEXT:    vorr q8, q0, q0
+; CHECK-NEXT:    vst4.16 {d16[0], d18[0], d20[0], d22[0]}, [r0:64]
 ; CHECK-NEXT:    bx lr
 entry:
   tail call void @llvm.arm.neon.vst4lane.p0.v8f16(ptr %0, <8 x half> %1, <8 x half> %2, <8 x half> %3, <8 x half> %4, i32 0, i32 0)
@@ -1683,11 +1701,11 @@ entry:
 define void @test_vst4lane_p0i8_v4f16(ptr, <4 x half>, <4 x half>, <4 x half>, <4 x half>) {
 ; CHECK-LABEL: test_vst4lane_p0i8_v4f16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $d3 killed $d3 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $d2 killed $d2 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    vst4.16 {d0[0], d1[0], d2[0], d3[0]}, [r0:64]
+; CHECK-NEXT:    vmov.f64 d19, d3
+; CHECK-NEXT:    vmov.f64 d18, d2
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vst4.16 {d16[0], d17[0], d18[0], d19[0]}, [r0:64]
 ; CHECK-NEXT:    bx lr
 entry:
   tail call void @llvm.arm.neon.vst4lane.p0.v4f16(ptr %0, <4 x half> %1, <4 x half> %2, <4 x half> %3, <4 x half> %4, i32 0, i32 0)

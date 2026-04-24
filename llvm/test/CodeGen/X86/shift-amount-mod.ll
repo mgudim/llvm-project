@@ -760,23 +760,26 @@ define i32 @reg32_lshr_by_sub_from_negated(i32 %val, i32 %a, i32 %b) nounwind {
 define i64 @reg64_lshr_by_sub_from_negated(i64 %val, i64 %a, i64 %b) nounwind {
 ; X86-LABEL: reg64_lshr_by_sub_from_negated:
 ; X86:       # %bb.0:
+; X86-NEXT:    pushl %ebx
 ; X86-NEXT:    pushl %esi
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %eax
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %edx
-; X86-NEXT:    addl {{[0-9]+}}(%esp), %edx
-; X86-NEXT:    movb $64, %cl
-; X86-NEXT:    subb %dl, %cl
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
+; X86-NEXT:    addl {{[0-9]+}}(%esp), %ecx
+; X86-NEXT:    movb $64, %bl
+; X86-NEXT:    subb %cl, %bl
 ; X86-NEXT:    movl %esi, %edx
+; X86-NEXT:    movl %ebx, %ecx
 ; X86-NEXT:    shrl %cl, %edx
 ; X86-NEXT:    shrdl %cl, %esi, %eax
-; X86-NEXT:    testb $32, %cl
+; X86-NEXT:    testb $32, %bl
 ; X86-NEXT:    je .LBB25_2
 ; X86-NEXT:  # %bb.1:
 ; X86-NEXT:    movl %edx, %eax
 ; X86-NEXT:    xorl %edx, %edx
 ; X86-NEXT:  .LBB25_2:
 ; X86-NEXT:    popl %esi
+; X86-NEXT:    popl %ebx
 ; X86-NEXT:    retl
 ;
 ; X64-LABEL: reg64_lshr_by_sub_from_negated:
@@ -1011,23 +1014,26 @@ define i32 @reg32_lshr_by_add_of_negated_amts(i32 %val, i32 %a, i32 %b) nounwind
 define i64 @reg64_lshr_by_add_of_negated_amts(i64 %val, i64 %a, i64 %b) nounwind {
 ; X86-LABEL: reg64_lshr_by_add_of_negated_amts:
 ; X86:       # %bb.0:
+; X86-NEXT:    pushl %ebx
 ; X86-NEXT:    pushl %esi
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %eax
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %edx
-; X86-NEXT:    addl {{[0-9]+}}(%esp), %edx
-; X86-NEXT:    movb $-128, %cl
-; X86-NEXT:    subb %dl, %cl
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
+; X86-NEXT:    addl {{[0-9]+}}(%esp), %ecx
+; X86-NEXT:    movb $-128, %bl
+; X86-NEXT:    subb %cl, %bl
 ; X86-NEXT:    movl %esi, %edx
+; X86-NEXT:    movl %ebx, %ecx
 ; X86-NEXT:    shrl %cl, %edx
 ; X86-NEXT:    shrdl %cl, %esi, %eax
-; X86-NEXT:    testb $32, %cl
+; X86-NEXT:    testb $32, %bl
 ; X86-NEXT:    je .LBB33_2
 ; X86-NEXT:  # %bb.1:
 ; X86-NEXT:    movl %edx, %eax
 ; X86-NEXT:    xorl %edx, %edx
 ; X86-NEXT:  .LBB33_2:
 ; X86-NEXT:    popl %esi
+; X86-NEXT:    popl %ebx
 ; X86-NEXT:    retl
 ;
 ; X64-LABEL: reg64_lshr_by_add_of_negated_amts:
@@ -1135,23 +1141,26 @@ define i32 @reg32_lshr_by_negated_unfolded_sub_b(i32 %val, i32 %a, i32 %b) nounw
 define i64 @reg64_lshr_by_negated_unfolded_sub_b(i64 %val, i64 %a, i64 %b) nounwind {
 ; X86-LABEL: reg64_lshr_by_negated_unfolded_sub_b:
 ; X86:       # %bb.0:
+; X86-NEXT:    pushl %ebx
 ; X86-NEXT:    pushl %esi
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %eax
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %edx
-; X86-NEXT:    addl {{[0-9]+}}(%esp), %edx
-; X86-NEXT:    movb $64, %cl
-; X86-NEXT:    subb %dl, %cl
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
+; X86-NEXT:    addl {{[0-9]+}}(%esp), %ecx
+; X86-NEXT:    movb $64, %bl
+; X86-NEXT:    subb %cl, %bl
 ; X86-NEXT:    movl %esi, %edx
+; X86-NEXT:    movl %ebx, %ecx
 ; X86-NEXT:    shrl %cl, %edx
 ; X86-NEXT:    shrdl %cl, %esi, %eax
-; X86-NEXT:    testb $32, %cl
+; X86-NEXT:    testb $32, %bl
 ; X86-NEXT:    je .LBB37_2
 ; X86-NEXT:  # %bb.1:
 ; X86-NEXT:    movl %edx, %eax
 ; X86-NEXT:    xorl %edx, %edx
 ; X86-NEXT:  .LBB37_2:
 ; X86-NEXT:    popl %esi
+; X86-NEXT:    popl %ebx
 ; X86-NEXT:    retl
 ;
 ; X64-LABEL: reg64_lshr_by_negated_unfolded_sub_b:

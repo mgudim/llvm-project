@@ -345,12 +345,12 @@ define void @atomic_store_seq_cst(ptr %p, i128 %in) {
 ; CHECK-NOAVX-NEXT:    .cfi_def_cfa_offset 16
 ; CHECK-NOAVX-NEXT:    .cfi_offset %rbx, -16
 ; CHECK-NOAVX-NEXT:    movq %rdx, %rcx
-; CHECK-NOAVX-NEXT:    movq %rsi, %rbx
 ; CHECK-NOAVX-NEXT:    movq (%rdi), %rax
 ; CHECK-NOAVX-NEXT:    movq 8(%rdi), %rdx
 ; CHECK-NOAVX-NEXT:    .p2align 4
 ; CHECK-NOAVX-NEXT:  LBB12_1: ## %atomicrmw.start
 ; CHECK-NOAVX-NEXT:    ## =>This Inner Loop Header: Depth=1
+; CHECK-NOAVX-NEXT:    movq %rsi, %rbx
 ; CHECK-NOAVX-NEXT:    lock cmpxchg16b (%rdi)
 ; CHECK-NOAVX-NEXT:    jne LBB12_1
 ; CHECK-NOAVX-NEXT:  ## %bb.2: ## %atomicrmw.end
@@ -376,12 +376,12 @@ define void @atomic_store_release(ptr %p, i128 %in) {
 ; CHECK-NOAVX-NEXT:    .cfi_def_cfa_offset 16
 ; CHECK-NOAVX-NEXT:    .cfi_offset %rbx, -16
 ; CHECK-NOAVX-NEXT:    movq %rdx, %rcx
-; CHECK-NOAVX-NEXT:    movq %rsi, %rbx
 ; CHECK-NOAVX-NEXT:    movq (%rdi), %rax
 ; CHECK-NOAVX-NEXT:    movq 8(%rdi), %rdx
 ; CHECK-NOAVX-NEXT:    .p2align 4
 ; CHECK-NOAVX-NEXT:  LBB13_1: ## %atomicrmw.start
 ; CHECK-NOAVX-NEXT:    ## =>This Inner Loop Header: Depth=1
+; CHECK-NOAVX-NEXT:    movq %rsi, %rbx
 ; CHECK-NOAVX-NEXT:    lock cmpxchg16b (%rdi)
 ; CHECK-NOAVX-NEXT:    jne LBB13_1
 ; CHECK-NOAVX-NEXT:  ## %bb.2: ## %atomicrmw.end
@@ -406,12 +406,12 @@ define void @atomic_store_relaxed(ptr %p, i128 %in) {
 ; CHECK-NOAVX-NEXT:    .cfi_def_cfa_offset 16
 ; CHECK-NOAVX-NEXT:    .cfi_offset %rbx, -16
 ; CHECK-NOAVX-NEXT:    movq %rdx, %rcx
-; CHECK-NOAVX-NEXT:    movq %rsi, %rbx
 ; CHECK-NOAVX-NEXT:    movq (%rdi), %rax
 ; CHECK-NOAVX-NEXT:    movq 8(%rdi), %rdx
 ; CHECK-NOAVX-NEXT:    .p2align 4
 ; CHECK-NOAVX-NEXT:  LBB14_1: ## %atomicrmw.start
 ; CHECK-NOAVX-NEXT:    ## =>This Inner Loop Header: Depth=1
+; CHECK-NOAVX-NEXT:    movq %rsi, %rbx
 ; CHECK-NOAVX-NEXT:    lock cmpxchg16b (%rdi)
 ; CHECK-NOAVX-NEXT:    jne LBB14_1
 ; CHECK-NOAVX-NEXT:  ## %bb.2: ## %atomicrmw.end

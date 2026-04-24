@@ -206,7 +206,7 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; BASE-LABEL: test_sincos_v2f16:
 ; BASE:       // %bb.0:
 ; BASE-NEXT:    {
-; BASE-NEXT:     r17:16 = combine(r3,r0)
+; BASE-NEXT:     r17:16 = combine(r0,r3)
 ; BASE-NEXT:     r0 = r2
 ; BASE-NEXT:     memd(r29+#-16) = r17:16
 ; BASE-NEXT:     allocframe(#24)
@@ -226,11 +226,11 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call __extendhfsf2
 ; BASE-NEXT:     r19 = r0
-; BASE-NEXT:     r0 = r17
+; BASE-NEXT:     r0 = r16
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call sinf
-; BASE-NEXT:     r17 = r0
+; BASE-NEXT:     r16 = r0
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call __truncsfhf2
@@ -246,18 +246,18 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call cosf
 ; BASE-NEXT:     r18 = r0
-; BASE-NEXT:     r0 = r17
+; BASE-NEXT:     r0 = r16
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call __truncsfhf2
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
-; BASE-NEXT:     memh(r16+#6) = r0
-; BASE-NEXT:     memh(r16+#4) = r18
+; BASE-NEXT:     memh(r17+#6) = r0
+; BASE-NEXT:     memh(r17+#4) = r18
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
-; BASE-NEXT:     memh(r16+#2) = r20
-; BASE-NEXT:     memh(r16+#0) = r19
+; BASE-NEXT:     memh(r17+#2) = r20
+; BASE-NEXT:     memh(r17+#0) = r19
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     r17:16 = memd(r29+#16)
@@ -271,7 +271,7 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; GNU-LABEL: test_sincos_v2f16:
 ; GNU:       // %bb.0:
 ; GNU-NEXT:    {
-; GNU-NEXT:     r17:16 = combine(r3,r0)
+; GNU-NEXT:     r17:16 = combine(r0,r3)
 ; GNU-NEXT:     r0 = r2
 ; GNU-NEXT:     memd(r29+#-16) = r17:16
 ; GNU-NEXT:     allocframe(#32)
@@ -287,7 +287,7 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
 ; GNU-NEXT:     call __extendhfsf2
-; GNU-NEXT:     r0 = r17
+; GNU-NEXT:     r0 = r16
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
 ; GNU-NEXT:     call sincosf
@@ -300,7 +300,7 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
 ; GNU-NEXT:     call __truncsfhf2
-; GNU-NEXT:     r17 = r0
+; GNU-NEXT:     r16 = r0
 ; GNU-NEXT:     r0 = memw(r29+#0)
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
@@ -314,12 +314,12 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; GNU-NEXT:     r0 = memw(r29+#4)
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
-; GNU-NEXT:     memh(r16+#6) = r0
-; GNU-NEXT:     memh(r16+#4) = r19
+; GNU-NEXT:     memh(r17+#6) = r0
+; GNU-NEXT:     memh(r17+#4) = r19
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
-; GNU-NEXT:     memh(r16+#2) = r18
-; GNU-NEXT:     memh(r16+#0) = r17
+; GNU-NEXT:     memh(r17+#2) = r18
+; GNU-NEXT:     memh(r17+#0) = r16
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
 ; GNU-NEXT:     r17:16 = memd(r29+#24)
@@ -332,7 +332,7 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; MUSL-LABEL: test_sincos_v2f16:
 ; MUSL:       // %bb.0:
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     r17:16 = combine(r3,r0)
+; MUSL-NEXT:     r17:16 = combine(r0,r3)
 ; MUSL-NEXT:     r0 = r2
 ; MUSL-NEXT:     memd(r29+#-16) = r17:16
 ; MUSL-NEXT:     allocframe(#24)
@@ -352,11 +352,11 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call __extendhfsf2
 ; MUSL-NEXT:     r19 = r0
-; MUSL-NEXT:     r0 = r17
+; MUSL-NEXT:     r0 = r16
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call sinf
-; MUSL-NEXT:     r17 = r0
+; MUSL-NEXT:     r16 = r0
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call __truncsfhf2
@@ -372,18 +372,18 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call cosf
 ; MUSL-NEXT:     r18 = r0
-; MUSL-NEXT:     r0 = r17
+; MUSL-NEXT:     r0 = r16
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call __truncsfhf2
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     memh(r16+#6) = r0
-; MUSL-NEXT:     memh(r16+#4) = r18
+; MUSL-NEXT:     memh(r17+#6) = r0
+; MUSL-NEXT:     memh(r17+#4) = r18
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     memh(r16+#2) = r20
-; MUSL-NEXT:     memh(r16+#0) = r19
+; MUSL-NEXT:     memh(r17+#2) = r20
+; MUSL-NEXT:     memh(r17+#0) = r19
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     r17:16 = memd(r29+#16)
@@ -496,21 +496,23 @@ define { <2 x float>, <2 x float> } @test_sincos_v2f32(<2 x float> %a) #0 {
 ; BASE-LABEL: test_sincos_v2f32:
 ; BASE:       // %bb.0:
 ; BASE-NEXT:    {
-; BASE-NEXT:     r17:16 = combine(r0,r2)
-; BASE-NEXT:     r0 = r2
+; BASE-NEXT:     r17:16 = combine(r3,r2)
 ; BASE-NEXT:     memd(r29+#-16) = r17:16
 ; BASE-NEXT:     allocframe(#24)
 ; BASE-NEXT:    } // 8-byte Folded Spill
 ; BASE-NEXT:    {
-; BASE-NEXT:     call sinf
-; BASE-NEXT:     r18 = r3
+; BASE-NEXT:     r18 = r0
+; BASE-NEXT:     r0 = r2
 ; BASE-NEXT:     memd(r29+#8) = r19:18
 ; BASE-NEXT:     memd(r29+#0) = r21:20
 ; BASE-NEXT:    } // 8-byte Folded Spill
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call sinf
+; BASE-NEXT:    }
+; BASE-NEXT:    {
+; BASE-NEXT:     call sinf
 ; BASE-NEXT:     r19 = r0
-; BASE-NEXT:     r0 = r18
+; BASE-NEXT:     r0 = r17
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call cosf
@@ -520,15 +522,15 @@ define { <2 x float>, <2 x float> } @test_sincos_v2f32(<2 x float> %a) #0 {
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call cosf
 ; BASE-NEXT:     r16 = r0
-; BASE-NEXT:     r0 = r18
+; BASE-NEXT:     r0 = r17
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     r1:0 = combine(r0,r16)
 ; BASE-NEXT:     r3:2 = combine(r20,r19)
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
-; BASE-NEXT:     memd(r17+#8) = r1:0
-; BASE-NEXT:     memd(r17+#0) = r3:2
+; BASE-NEXT:     memd(r18+#8) = r1:0
+; BASE-NEXT:     memd(r18+#0) = r3:2
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     r17:16 = memd(r29+#16)
@@ -565,21 +567,23 @@ define { <2 x float>, <2 x float> } @test_sincos_v2f32(<2 x float> %a) #0 {
 ; MUSL-LABEL: test_sincos_v2f32:
 ; MUSL:       // %bb.0:
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     r17:16 = combine(r0,r2)
-; MUSL-NEXT:     r0 = r2
+; MUSL-NEXT:     r17:16 = combine(r3,r2)
 ; MUSL-NEXT:     memd(r29+#-16) = r17:16
 ; MUSL-NEXT:     allocframe(#24)
 ; MUSL-NEXT:    } // 8-byte Folded Spill
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     call sinf
-; MUSL-NEXT:     r18 = r3
+; MUSL-NEXT:     r18 = r0
+; MUSL-NEXT:     r0 = r2
 ; MUSL-NEXT:     memd(r29+#8) = r19:18
 ; MUSL-NEXT:     memd(r29+#0) = r21:20
 ; MUSL-NEXT:    } // 8-byte Folded Spill
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call sinf
+; MUSL-NEXT:    }
+; MUSL-NEXT:    {
+; MUSL-NEXT:     call sinf
 ; MUSL-NEXT:     r19 = r0
-; MUSL-NEXT:     r0 = r18
+; MUSL-NEXT:     r0 = r17
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call cosf
@@ -589,15 +593,15 @@ define { <2 x float>, <2 x float> } @test_sincos_v2f32(<2 x float> %a) #0 {
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call cosf
 ; MUSL-NEXT:     r16 = r0
-; MUSL-NEXT:     r0 = r18
+; MUSL-NEXT:     r0 = r17
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     r1:0 = combine(r0,r16)
 ; MUSL-NEXT:     r3:2 = combine(r20,r19)
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     memd(r17+#8) = r1:0
-; MUSL-NEXT:     memd(r17+#0) = r3:2
+; MUSL-NEXT:     memd(r18+#8) = r1:0
+; MUSL-NEXT:     memd(r18+#0) = r3:2
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     r17:16 = memd(r29+#16)
@@ -659,52 +663,52 @@ define { <3 x float>, <3 x float> } @test_sincos_v3f32(<3 x float> %a) #0 {
 ; BASE-LABEL: test_sincos_v3f32:
 ; BASE:       // %bb.0:
 ; BASE-NEXT:    {
+; BASE-NEXT:     r17:16 = combine(r4,r2)
 ; BASE-NEXT:     memd(r29+#-16) = r17:16
 ; BASE-NEXT:     allocframe(#32)
 ; BASE-NEXT:    } // 8-byte Folded Spill
 ; BASE-NEXT:    {
-; BASE-NEXT:     r19:18 = combine(r0,r2)
+; BASE-NEXT:     r19:18 = combine(r0,r3)
 ; BASE-NEXT:     r0 = r2
 ; BASE-NEXT:     memd(r29+#16) = r19:18
 ; BASE-NEXT:     memd(r29+#8) = r21:20
 ; BASE-NEXT:    } // 8-byte Folded Spill
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call sinf
-; BASE-NEXT:     r21:20 = combine(r3,r4)
 ; BASE-NEXT:     memd(r29+#0) = r23:22
 ; BASE-NEXT:    } // 8-byte Folded Spill
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call sinf
-; BASE-NEXT:     r16 = r0
-; BASE-NEXT:     r0 = r21
-; BASE-NEXT:    }
-; BASE-NEXT:    {
-; BASE-NEXT:     call cosf
-; BASE-NEXT:     r17 = r0
+; BASE-NEXT:     r20 = r0
 ; BASE-NEXT:     r0 = r18
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call cosf
+; BASE-NEXT:     r21 = r0
+; BASE-NEXT:     r0 = r16
+; BASE-NEXT:    }
+; BASE-NEXT:    {
+; BASE-NEXT:     call cosf
 ; BASE-NEXT:     r22 = r0
-; BASE-NEXT:     r0 = r21
+; BASE-NEXT:     r0 = r18
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call sinf
 ; BASE-NEXT:     r23 = r0
-; BASE-NEXT:     r0 = r20
+; BASE-NEXT:     r0 = r17
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call cosf
-; BASE-NEXT:     r18 = r0
-; BASE-NEXT:     r0 = r20
+; BASE-NEXT:     r16 = r0
+; BASE-NEXT:     r0 = r17
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     memw(r19+#24) = r0
 ; BASE-NEXT:     memd(r19+#16) = r23:22
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
-; BASE-NEXT:     memw(r19+#8) = r18
-; BASE-NEXT:     memd(r19+#0) = r17:16
+; BASE-NEXT:     memw(r19+#8) = r16
+; BASE-NEXT:     memd(r19+#0) = r21:20
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     r17:16 = memd(r29+#24)
@@ -721,31 +725,31 @@ define { <3 x float>, <3 x float> } @test_sincos_v3f32(<3 x float> %a) #0 {
 ; GNU-LABEL: test_sincos_v3f32:
 ; GNU:       // %bb.0:
 ; GNU-NEXT:    {
-; GNU-NEXT:     r17:16 = combine(r4,r0)
-; GNU-NEXT:     r0 = r2
+; GNU-NEXT:     r17:16 = combine(r3,r4)
 ; GNU-NEXT:     memd(r29+#-16) = r17:16
 ; GNU-NEXT:     allocframe(#32)
 ; GNU-NEXT:    } // 8-byte Folded Spill
 ; GNU-NEXT:    {
-; GNU-NEXT:     r2 = add(r29,#12)
-; GNU-NEXT:     r18 = r3
+; GNU-NEXT:     r0 = r2
 ; GNU-NEXT:     r1 = add(r29,#8)
+; GNU-NEXT:     r18 = r0
 ; GNU-NEXT:     memd(r29+#16) = r19:18
 ; GNU-NEXT:    } // 8-byte Folded Spill
 ; GNU-NEXT:    {
 ; GNU-NEXT:     call sincosf
+; GNU-NEXT:     r2 = add(r29,#12)
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
 ; GNU-NEXT:     call sincosf
 ; GNU-NEXT:     r1 = add(r29,#0)
 ; GNU-NEXT:     r2 = add(r29,#4)
-; GNU-NEXT:     r0 = r18
+; GNU-NEXT:     r0 = r17
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
 ; GNU-NEXT:     call sincosf
-; GNU-NEXT:     r1 = add(r16,#8)
-; GNU-NEXT:     r2 = add(r16,#24)
-; GNU-NEXT:     r0 = r17
+; GNU-NEXT:     r1 = add(r18,#8)
+; GNU-NEXT:     r2 = add(r18,#24)
+; GNU-NEXT:     r0 = r16
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
 ; GNU-NEXT:     r0 = memw(r29+#8)
@@ -756,8 +760,8 @@ define { <3 x float>, <3 x float> } @test_sincos_v3f32(<3 x float> %a) #0 {
 ; GNU-NEXT:     r3 = memw(r29+#4)
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
-; GNU-NEXT:     memd(r16+#16) = r3:2
-; GNU-NEXT:     memd(r16+#0) = r1:0
+; GNU-NEXT:     memd(r18+#16) = r3:2
+; GNU-NEXT:     memd(r18+#0) = r1:0
 ; GNU-NEXT:    }
 ; GNU-NEXT:    {
 ; GNU-NEXT:     r17:16 = memd(r29+#24)
@@ -770,52 +774,52 @@ define { <3 x float>, <3 x float> } @test_sincos_v3f32(<3 x float> %a) #0 {
 ; MUSL-LABEL: test_sincos_v3f32:
 ; MUSL:       // %bb.0:
 ; MUSL-NEXT:    {
+; MUSL-NEXT:     r17:16 = combine(r4,r2)
 ; MUSL-NEXT:     memd(r29+#-16) = r17:16
 ; MUSL-NEXT:     allocframe(#32)
 ; MUSL-NEXT:    } // 8-byte Folded Spill
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     r19:18 = combine(r0,r2)
+; MUSL-NEXT:     r19:18 = combine(r0,r3)
 ; MUSL-NEXT:     r0 = r2
 ; MUSL-NEXT:     memd(r29+#16) = r19:18
 ; MUSL-NEXT:     memd(r29+#8) = r21:20
 ; MUSL-NEXT:    } // 8-byte Folded Spill
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call sinf
-; MUSL-NEXT:     r21:20 = combine(r3,r4)
 ; MUSL-NEXT:     memd(r29+#0) = r23:22
 ; MUSL-NEXT:    } // 8-byte Folded Spill
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call sinf
-; MUSL-NEXT:     r16 = r0
-; MUSL-NEXT:     r0 = r21
-; MUSL-NEXT:    }
-; MUSL-NEXT:    {
-; MUSL-NEXT:     call cosf
-; MUSL-NEXT:     r17 = r0
+; MUSL-NEXT:     r20 = r0
 ; MUSL-NEXT:     r0 = r18
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call cosf
+; MUSL-NEXT:     r21 = r0
+; MUSL-NEXT:     r0 = r16
+; MUSL-NEXT:    }
+; MUSL-NEXT:    {
+; MUSL-NEXT:     call cosf
 ; MUSL-NEXT:     r22 = r0
-; MUSL-NEXT:     r0 = r21
+; MUSL-NEXT:     r0 = r18
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call sinf
 ; MUSL-NEXT:     r23 = r0
-; MUSL-NEXT:     r0 = r20
+; MUSL-NEXT:     r0 = r17
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call cosf
-; MUSL-NEXT:     r18 = r0
-; MUSL-NEXT:     r0 = r20
+; MUSL-NEXT:     r16 = r0
+; MUSL-NEXT:     r0 = r17
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     memw(r19+#24) = r0
 ; MUSL-NEXT:     memd(r19+#16) = r23:22
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     memw(r19+#8) = r18
-; MUSL-NEXT:     memd(r19+#0) = r17:16
+; MUSL-NEXT:     memw(r19+#8) = r16
+; MUSL-NEXT:     memd(r19+#0) = r21:20
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     r17:16 = memd(r29+#24)
@@ -957,21 +961,21 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) #0 {
 ; BASE-NEXT:     allocframe(#40)
 ; BASE-NEXT:    } // 8-byte Folded Spill
 ; BASE-NEXT:    {
-; BASE-NEXT:     r18 = r0
+; BASE-NEXT:     r20 = r0
 ; BASE-NEXT:     r1:0 = combine(r3,r2)
-; BASE-NEXT:     memd(r29+#24) = r19:18
 ; BASE-NEXT:     memd(r29+#16) = r21:20
+; BASE-NEXT:     memd(r29+#24) = r19:18
 ; BASE-NEXT:    } // 8-byte Folded Spill
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call sin
-; BASE-NEXT:     r21:20 = combine(r5,r4)
+; BASE-NEXT:     r19:18 = combine(r5,r4)
 ; BASE-NEXT:     memd(r29+#8) = r23:22
 ; BASE-NEXT:     memd(r29+#0) = r25:24
 ; BASE-NEXT:    } // 8-byte Folded Spill
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call sin
 ; BASE-NEXT:     r23:22 = combine(r1,r0)
-; BASE-NEXT:     r1:0 = combine(r21,r20)
+; BASE-NEXT:     r1:0 = combine(r19,r18)
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call cos
@@ -981,15 +985,15 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) #0 {
 ; BASE-NEXT:    {
 ; BASE-NEXT:     call cos
 ; BASE-NEXT:     r17:16 = combine(r1,r0)
-; BASE-NEXT:     r1:0 = combine(r21,r20)
+; BASE-NEXT:     r1:0 = combine(r19,r18)
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
-; BASE-NEXT:     memd(r18+#16) = r17:16
-; BASE-NEXT:     memd(r18+#24) = r1:0
+; BASE-NEXT:     memd(r20+#16) = r17:16
+; BASE-NEXT:     memd(r20+#24) = r1:0
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
-; BASE-NEXT:     memd(r18+#8) = r25:24
-; BASE-NEXT:     memd(r18+#0) = r23:22
+; BASE-NEXT:     memd(r20+#8) = r25:24
+; BASE-NEXT:     memd(r20+#0) = r23:22
 ; BASE-NEXT:    }
 ; BASE-NEXT:    {
 ; BASE-NEXT:     r17:16 = memd(r29+#32)
@@ -1043,21 +1047,21 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) #0 {
 ; MUSL-NEXT:     allocframe(#40)
 ; MUSL-NEXT:    } // 8-byte Folded Spill
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     r18 = r0
+; MUSL-NEXT:     r20 = r0
 ; MUSL-NEXT:     r1:0 = combine(r3,r2)
-; MUSL-NEXT:     memd(r29+#24) = r19:18
 ; MUSL-NEXT:     memd(r29+#16) = r21:20
+; MUSL-NEXT:     memd(r29+#24) = r19:18
 ; MUSL-NEXT:    } // 8-byte Folded Spill
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call sin
-; MUSL-NEXT:     r21:20 = combine(r5,r4)
+; MUSL-NEXT:     r19:18 = combine(r5,r4)
 ; MUSL-NEXT:     memd(r29+#8) = r23:22
 ; MUSL-NEXT:     memd(r29+#0) = r25:24
 ; MUSL-NEXT:    } // 8-byte Folded Spill
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call sin
 ; MUSL-NEXT:     r23:22 = combine(r1,r0)
-; MUSL-NEXT:     r1:0 = combine(r21,r20)
+; MUSL-NEXT:     r1:0 = combine(r19,r18)
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call cos
@@ -1067,15 +1071,15 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) #0 {
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     call cos
 ; MUSL-NEXT:     r17:16 = combine(r1,r0)
-; MUSL-NEXT:     r1:0 = combine(r21,r20)
+; MUSL-NEXT:     r1:0 = combine(r19,r18)
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     memd(r18+#16) = r17:16
-; MUSL-NEXT:     memd(r18+#24) = r1:0
+; MUSL-NEXT:     memd(r20+#16) = r17:16
+; MUSL-NEXT:     memd(r20+#24) = r1:0
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
-; MUSL-NEXT:     memd(r18+#8) = r25:24
-; MUSL-NEXT:     memd(r18+#0) = r23:22
+; MUSL-NEXT:     memd(r20+#8) = r25:24
+; MUSL-NEXT:     memd(r20+#0) = r23:22
 ; MUSL-NEXT:    }
 ; MUSL-NEXT:    {
 ; MUSL-NEXT:     r17:16 = memd(r29+#32)

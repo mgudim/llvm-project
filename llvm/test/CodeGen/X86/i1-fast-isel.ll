@@ -51,25 +51,25 @@ entry:
 define i8 @test_indirect_all2(ptr %fptr, ptr %f, i1 %cond) nounwind {
 ; CHECK-LABEL: test_indirect_all2:
 ; CHECK:       # %bb.0: # %entry
-; CHECK-NEXT:    pushq %rbp
+; CHECK-NEXT:    pushq %r14
 ; CHECK-NEXT:    pushq %rbx
 ; CHECK-NEXT:    pushq %rax
-; CHECK-NEXT:    movl %edx, %ebp
-; CHECK-NEXT:    movq %rdi, %rbx
+; CHECK-NEXT:    movl %edx, %ebx
+; CHECK-NEXT:    movq %rdi, %r14
 ; CHECK-NEXT:    movq %rsi, %rdi
 ; CHECK-NEXT:    callq foo@PLT
-; CHECK-NEXT:    testb $1, %bpl
+; CHECK-NEXT:    testb $1, %bl
 ; CHECK-NEXT:    je .LBB3_2
 ; CHECK-NEXT:  # %bb.1: # %exit
 ; CHECK-NEXT:    movzbl %al, %edi
-; CHECK-NEXT:    callq *%rbx
+; CHECK-NEXT:    callq *%r14
 ; CHECK-NEXT:    jmp .LBB3_3
 ; CHECK-NEXT:  .LBB3_2: # %exit2
 ; CHECK-NEXT:    movb $3, %al
 ; CHECK-NEXT:  .LBB3_3: # %exit2
 ; CHECK-NEXT:    addq $8, %rsp
 ; CHECK-NEXT:    popq %rbx
-; CHECK-NEXT:    popq %rbp
+; CHECK-NEXT:    popq %r14
 ; CHECK-NEXT:    retq
 entry:
   %call = call i1 @foo(ptr %f)

@@ -120,10 +120,10 @@ define i64 @select_i64_neg1_or_0(i1 %a) {
 ;
 ; X32-LABEL: select_i64_neg1_or_0:
 ; X32:       # %bb.0:
-; X32-NEXT:    movzbl {{[0-9]+}}(%esp), %eax
-; X32-NEXT:    andl $1, %eax
-; X32-NEXT:    negl %eax
-; X32-NEXT:    movl %eax, %edx
+; X32-NEXT:    movzbl {{[0-9]+}}(%esp), %edx
+; X32-NEXT:    andl $1, %edx
+; X32-NEXT:    negl %edx
+; X32-NEXT:    movl %edx, %eax
 ; X32-NEXT:    retl
   %b = sext i1 %a to i64
   ret i64 %b
@@ -138,9 +138,9 @@ define i64 @select_i64_neg1_or_0_zeroext(i1 zeroext %a) {
 ;
 ; X32-LABEL: select_i64_neg1_or_0_zeroext:
 ; X32:       # %bb.0:
-; X32-NEXT:    movzbl {{[0-9]+}}(%esp), %eax
-; X32-NEXT:    negl %eax
-; X32-NEXT:    movl %eax, %edx
+; X32-NEXT:    movzbl {{[0-9]+}}(%esp), %edx
+; X32-NEXT:    negl %edx
+; X32-NEXT:    movl %edx, %eax
 ; X32-NEXT:    retl
   %b = sext i1 %a to i64
   ret i64 %b

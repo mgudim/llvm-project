@@ -43,16 +43,16 @@ define void @test_fadd(ptr %p, ptr %q) #0 {
 ; CHECK-NOVFP-LABEL: test_fadd:
 ; CHECK-NOVFP:         .save {r4, r5, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r5, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r5, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r5
+; CHECK-NOVFP-NEXT:    mov r1, r4
 ; CHECK-NOVFP-NEXT:    bl __aeabi_fadd
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
-; CHECK-NOVFP-NEXT:    strh r0, [r4]
+; CHECK-NOVFP-NEXT:    strh r0, [r5]
 ; CHECK-NOVFP-NEXT:    pop {r4, r5, r11, pc}
   %a = load half, ptr %p, align 2
   %b = load half, ptr %q, align 2
@@ -98,16 +98,16 @@ define void @test_fsub(ptr %p, ptr %q) #0 {
 ; CHECK-NOVFP-LABEL: test_fsub:
 ; CHECK-NOVFP:         .save {r4, r5, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r5, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r5, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r5
+; CHECK-NOVFP-NEXT:    mov r1, r4
 ; CHECK-NOVFP-NEXT:    bl __aeabi_fsub
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
-; CHECK-NOVFP-NEXT:    strh r0, [r4]
+; CHECK-NOVFP-NEXT:    strh r0, [r5]
 ; CHECK-NOVFP-NEXT:    pop {r4, r5, r11, pc}
   %a = load half, ptr %p, align 2
   %b = load half, ptr %q, align 2
@@ -153,16 +153,16 @@ define void @test_fmul(ptr %p, ptr %q) #0 {
 ; CHECK-NOVFP-LABEL: test_fmul:
 ; CHECK-NOVFP:         .save {r4, r5, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r5, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r5, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r5
+; CHECK-NOVFP-NEXT:    mov r1, r4
 ; CHECK-NOVFP-NEXT:    bl __aeabi_fmul
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
-; CHECK-NOVFP-NEXT:    strh r0, [r4]
+; CHECK-NOVFP-NEXT:    strh r0, [r5]
 ; CHECK-NOVFP-NEXT:    pop {r4, r5, r11, pc}
   %a = load half, ptr %p, align 2
   %b = load half, ptr %q, align 2
@@ -208,16 +208,16 @@ define void @test_fdiv(ptr %p, ptr %q) #0 {
 ; CHECK-NOVFP-LABEL: test_fdiv:
 ; CHECK-NOVFP:         .save {r4, r5, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r5, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r5, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r5
+; CHECK-NOVFP-NEXT:    mov r1, r4
 ; CHECK-NOVFP-NEXT:    bl __aeabi_fdiv
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
-; CHECK-NOVFP-NEXT:    strh r0, [r4]
+; CHECK-NOVFP-NEXT:    strh r0, [r5]
 ; CHECK-NOVFP-NEXT:    pop {r4, r5, r11, pc}
   %a = load half, ptr %p, align 2
   %b = load half, ptr %q, align 2
@@ -263,16 +263,16 @@ define void @test_frem(ptr %p, ptr %q) #0 {
 ; CHECK-NOVFP-LABEL: test_frem:
 ; CHECK-NOVFP:         .save {r4, r5, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r5, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r5, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r5
+; CHECK-NOVFP-NEXT:    mov r1, r4
 ; CHECK-NOVFP-NEXT:    bl fmodf
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
-; CHECK-NOVFP-NEXT:    strh r0, [r4]
+; CHECK-NOVFP-NEXT:    strh r0, [r5]
 ; CHECK-NOVFP-NEXT:    pop {r4, r5, r11, pc}
   %a = load half, ptr %p, align 2
   %b = load half, ptr %q, align 2
@@ -399,13 +399,13 @@ define i1 @test_fcmp_une(ptr %p, ptr %q) #0 {
 ; CHECK-NOVFP-LABEL: test_fcmp_une:
 ; CHECK-NOVFP:         .save {r4, r5, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r5, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r5, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r5
+; CHECK-NOVFP-NEXT:    mov r1, r4
 ; CHECK-NOVFP-NEXT:    bl __aeabi_fcmpeq
 ; CHECK-NOVFP-NEXT:    clz r0, r0
 ; CHECK-NOVFP-NEXT:    lsr r0, r0, #5
@@ -518,15 +518,15 @@ define void @test_br_cc(ptr %p, ptr %q, ptr %p1, ptr %p2) #0 {
 ; CHECK-NOVFP-LABEL: test_br_cc:
 ; CHECK-NOVFP:         .save {r4, r5, r6, r7, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r6, r7, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r6, r0
+; CHECK-NOVFP-NEXT:    mov r7, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
 ; CHECK-NOVFP-NEXT:    mov r4, r3
 ; CHECK-NOVFP-NEXT:    mov r5, r2
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r7, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r6]
+; CHECK-NOVFP-NEXT:    mov r6, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r7]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r7
+; CHECK-NOVFP-NEXT:    mov r1, r6
 ; CHECK-NOVFP-NEXT:    bl __aeabi_fcmplt
 ; CHECK-NOVFP-NEXT:    cmp r0, #0
 ; CHECK-NOVFP-NEXT:    mov r0, #0
@@ -1216,16 +1216,16 @@ define void @test_pow(ptr %p, ptr %q) #0 {
 ; CHECK-NOVFP-LABEL: test_pow:
 ; CHECK-NOVFP:         .save {r4, r5, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r5, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r5, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r5
+; CHECK-NOVFP-NEXT:    mov r1, r4
 ; CHECK-NOVFP-NEXT:    bl powf
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
-; CHECK-NOVFP-NEXT:    strh r0, [r4]
+; CHECK-NOVFP-NEXT:    strh r0, [r5]
 ; CHECK-NOVFP-NEXT:    pop {r4, r5, r11, pc}
   %a = load half, ptr %p, align 2
   %b = load half, ptr %q, align 2
@@ -1530,18 +1530,18 @@ define void @test_fma(ptr %p, ptr %q, ptr %r) #0 {
 ; CHECK-LIBCALL-VFP-NEXT:    push {r4, r5, r6, lr}
 ; CHECK-LIBCALL-VFP-NEXT:    .vsave {d8, d9}
 ; CHECK-LIBCALL-VFP-NEXT:    vpush {d8, d9}
-; CHECK-LIBCALL-VFP-NEXT:    mov r4, r0
+; CHECK-LIBCALL-VFP-NEXT:    mov r6, r0
 ; CHECK-LIBCALL-VFP-NEXT:    ldrh r0, [r0]
-; CHECK-LIBCALL-VFP-NEXT:    mov r5, r2
-; CHECK-LIBCALL-VFP-NEXT:    mov r6, r1
+; CHECK-LIBCALL-VFP-NEXT:    mov r4, r2
+; CHECK-LIBCALL-VFP-NEXT:    mov r5, r1
 ; CHECK-LIBCALL-VFP-NEXT:    bl __aeabi_h2f
-; CHECK-LIBCALL-VFP-NEXT:    ldrh r1, [r6]
+; CHECK-LIBCALL-VFP-NEXT:    ldrh r1, [r5]
 ; CHECK-LIBCALL-VFP-NEXT:    vmov s16, r0
-; CHECK-LIBCALL-VFP-NEXT:    ldrh r5, [r5]
+; CHECK-LIBCALL-VFP-NEXT:    ldrh r4, [r4]
 ; CHECK-LIBCALL-VFP-NEXT:    mov r0, r1
 ; CHECK-LIBCALL-VFP-NEXT:    bl __aeabi_h2f
 ; CHECK-LIBCALL-VFP-NEXT:    vmov s18, r0
-; CHECK-LIBCALL-VFP-NEXT:    mov r0, r5
+; CHECK-LIBCALL-VFP-NEXT:    mov r0, r4
 ; CHECK-LIBCALL-VFP-NEXT:    bl __aeabi_h2f
 ; CHECK-LIBCALL-VFP-NEXT:    vmov s0, r0
 ; CHECK-LIBCALL-VFP-NEXT:    vcvt.f64.f32 d16, s18
@@ -1550,38 +1550,38 @@ define void @test_fma(ptr %p, ptr %q, ptr %r) #0 {
 ; CHECK-LIBCALL-VFP-NEXT:    vmla.f64 d18, d17, d16
 ; CHECK-LIBCALL-VFP-NEXT:    vmov r0, r1, d18
 ; CHECK-LIBCALL-VFP-NEXT:    bl __aeabi_d2h
-; CHECK-LIBCALL-VFP-NEXT:    strh r0, [r4]
+; CHECK-LIBCALL-VFP-NEXT:    strh r0, [r6]
 ; CHECK-LIBCALL-VFP-NEXT:    vpop {d8, d9}
 ; CHECK-LIBCALL-VFP-NEXT:    pop {r4, r5, r6, pc}
 ;
 ; CHECK-NOVFP-LABEL: test_fma:
 ; CHECK-NOVFP:         .save {r4, r5, r6, r7, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r6, r7, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r6, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
-; CHECK-NOVFP-NEXT:    mov r5, r2
+; CHECK-NOVFP-NEXT:    mov r7, r2
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2d
-; CHECK-NOVFP-NEXT:    mov r6, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
-; CHECK-NOVFP-NEXT:    mov r7, r1
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r6]
+; CHECK-NOVFP-NEXT:    mov r5, r1
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2d
-; CHECK-NOVFP-NEXT:    mov r2, r6
-; CHECK-NOVFP-NEXT:    mov r3, r7
+; CHECK-NOVFP-NEXT:    mov r2, r4
+; CHECK-NOVFP-NEXT:    mov r3, r5
 ; CHECK-NOVFP-NEXT:    bl __aeabi_dmul
-; CHECK-NOVFP-NEXT:    mov r6, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
-; CHECK-NOVFP-NEXT:    mov r7, r1
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r7]
+; CHECK-NOVFP-NEXT:    mov r5, r1
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2d
 ; CHECK-NOVFP-NEXT:    mov r2, r0
 ; CHECK-NOVFP-NEXT:    mov r3, r1
-; CHECK-NOVFP-NEXT:    mov r0, r6
-; CHECK-NOVFP-NEXT:    mov r1, r7
+; CHECK-NOVFP-NEXT:    mov r0, r4
+; CHECK-NOVFP-NEXT:    mov r1, r5
 ; CHECK-NOVFP-NEXT:    bl __aeabi_dadd
 ; CHECK-NOVFP-NEXT:    bl __aeabi_d2h
-; CHECK-NOVFP-NEXT:    strh r0, [r4]
+; CHECK-NOVFP-NEXT:    strh r0, [r6]
 ; CHECK-NOVFP-NEXT:    pop {r4, r5, r6, r7, r11, pc}
   %a = load half, ptr %p, align 2
   %b = load half, ptr %q, align 2
@@ -1640,16 +1640,16 @@ define void @test_minnum(ptr %p, ptr %q) #0 {
 ; CHECK-NOVFP-LABEL: test_minnum:
 ; CHECK-NOVFP:         .save {r4, r5, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r5, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r5, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r5
+; CHECK-NOVFP-NEXT:    mov r1, r4
 ; CHECK-NOVFP-NEXT:    bl fminf
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
-; CHECK-NOVFP-NEXT:    strh r0, [r4]
+; CHECK-NOVFP-NEXT:    strh r0, [r5]
 ; CHECK-NOVFP-NEXT:    pop {r4, r5, r11, pc}
   %a = load half, ptr %p, align 2
   %b = load half, ptr %q, align 2
@@ -1695,16 +1695,16 @@ define void @test_maxnum(ptr %p, ptr %q) #0 {
 ; CHECK-NOVFP-LABEL: test_maxnum:
 ; CHECK-NOVFP:         .save {r4, r5, r11, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r11, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r5, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r5, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r5
+; CHECK-NOVFP-NEXT:    mov r1, r4
 ; CHECK-NOVFP-NEXT:    bl fmaxf
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
-; CHECK-NOVFP-NEXT:    strh r0, [r4]
+; CHECK-NOVFP-NEXT:    strh r0, [r5]
 ; CHECK-NOVFP-NEXT:    pop {r4, r5, r11, pc}
   %a = load half, ptr %p, align 2
   %b = load half, ptr %q, align 2
@@ -2149,11 +2149,11 @@ define void @test_fmuladd(ptr %p, ptr %q, ptr %r) #0 {
 ; CHECK-LIBCALL-VFP-NEXT:    push {r4, r5, r6, lr}
 ; CHECK-LIBCALL-VFP-NEXT:    .vsave {d8}
 ; CHECK-LIBCALL-VFP-NEXT:    vpush {d8}
-; CHECK-LIBCALL-VFP-NEXT:    mov r4, r0
+; CHECK-LIBCALL-VFP-NEXT:    mov r5, r0
 ; CHECK-LIBCALL-VFP-NEXT:    ldrh r0, [r1]
-; CHECK-LIBCALL-VFP-NEXT:    mov r5, r2
+; CHECK-LIBCALL-VFP-NEXT:    mov r4, r2
 ; CHECK-LIBCALL-VFP-NEXT:    bl __aeabi_h2f
-; CHECK-LIBCALL-VFP-NEXT:    ldrh r1, [r4]
+; CHECK-LIBCALL-VFP-NEXT:    ldrh r1, [r5]
 ; CHECK-LIBCALL-VFP-NEXT:    vmov s16, r0
 ; CHECK-LIBCALL-VFP-NEXT:    mov r0, r1
 ; CHECK-LIBCALL-VFP-NEXT:    bl __aeabi_h2f
@@ -2163,40 +2163,40 @@ define void @test_fmuladd(ptr %p, ptr %q, ptr %r) #0 {
 ; CHECK-LIBCALL-VFP-NEXT:    bl __aeabi_f2h
 ; CHECK-LIBCALL-VFP-NEXT:    bl __aeabi_h2f
 ; CHECK-LIBCALL-VFP-NEXT:    mov r6, r0
-; CHECK-LIBCALL-VFP-NEXT:    ldrh r0, [r5]
+; CHECK-LIBCALL-VFP-NEXT:    ldrh r0, [r4]
 ; CHECK-LIBCALL-VFP-NEXT:    bl __aeabi_h2f
 ; CHECK-LIBCALL-VFP-NEXT:    vmov s0, r0
 ; CHECK-LIBCALL-VFP-NEXT:    vmov s2, r6
 ; CHECK-LIBCALL-VFP-NEXT:    vadd.f32 s0, s2, s0
 ; CHECK-LIBCALL-VFP-NEXT:    vmov r0, s0
 ; CHECK-LIBCALL-VFP-NEXT:    bl __aeabi_f2h
-; CHECK-LIBCALL-VFP-NEXT:    strh r0, [r4]
+; CHECK-LIBCALL-VFP-NEXT:    strh r0, [r5]
 ; CHECK-LIBCALL-VFP-NEXT:    vpop {d8}
 ; CHECK-LIBCALL-VFP-NEXT:    pop {r4, r5, r6, pc}
 ;
 ; CHECK-NOVFP-LABEL: test_fmuladd:
 ; CHECK-NOVFP:         .save {r4, r5, r6, lr}
 ; CHECK-NOVFP-NEXT:    push {r4, r5, r6, lr}
-; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    mov r6, r0
 ; CHECK-NOVFP-NEXT:    ldrh r0, [r1]
-; CHECK-NOVFP-NEXT:    mov r5, r2
-; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r6, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
-; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
-; CHECK-NOVFP-NEXT:    mov r1, r6
-; CHECK-NOVFP-NEXT:    bl __aeabi_fmul
-; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
-; CHECK-NOVFP-NEXT:    mov r6, r0
-; CHECK-NOVFP-NEXT:    ldrh r0, [r5]
+; CHECK-NOVFP-NEXT:    mov r4, r2
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
 ; CHECK-NOVFP-NEXT:    mov r5, r0
-; CHECK-NOVFP-NEXT:    uxth r0, r6
+; CHECK-NOVFP-NEXT:    ldrh r0, [r6]
 ; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
 ; CHECK-NOVFP-NEXT:    mov r1, r5
+; CHECK-NOVFP-NEXT:    bl __aeabi_fmul
+; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
+; CHECK-NOVFP-NEXT:    mov r5, r0
+; CHECK-NOVFP-NEXT:    ldrh r0, [r4]
+; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
+; CHECK-NOVFP-NEXT:    mov r4, r0
+; CHECK-NOVFP-NEXT:    uxth r0, r5
+; CHECK-NOVFP-NEXT:    bl __aeabi_h2f
+; CHECK-NOVFP-NEXT:    mov r1, r4
 ; CHECK-NOVFP-NEXT:    bl __aeabi_fadd
 ; CHECK-NOVFP-NEXT:    bl __aeabi_f2h
-; CHECK-NOVFP-NEXT:    strh r0, [r4]
+; CHECK-NOVFP-NEXT:    strh r0, [r6]
 ; CHECK-NOVFP-NEXT:    pop {r4, r5, r6, pc}
   %a = load half, ptr %p, align 2
   %b = load half, ptr %q, align 2

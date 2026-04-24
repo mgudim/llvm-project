@@ -1105,32 +1105,32 @@ define i64 @test_reduce_v8i64(<8 x i64> %a0) {
 ;
 ; X86-SSE42-LABEL: test_reduce_v8i64:
 ; X86-SSE42:       ## %bb.0:
-; X86-SSE42-NEXT:    movdqa %xmm0, %xmm4
-; X86-SSE42-NEXT:    movdqa {{.*#+}} xmm5 = [0,2147483648,0,2147483648]
+; X86-SSE42-NEXT:    movdqa %xmm0, %xmm5
+; X86-SSE42-NEXT:    movdqa {{.*#+}} xmm4 = [0,2147483648,0,2147483648]
 ; X86-SSE42-NEXT:    movdqa %xmm1, %xmm6
-; X86-SSE42-NEXT:    pxor %xmm5, %xmm6
+; X86-SSE42-NEXT:    pxor %xmm4, %xmm6
 ; X86-SSE42-NEXT:    movdqa %xmm3, %xmm0
-; X86-SSE42-NEXT:    pxor %xmm5, %xmm0
+; X86-SSE42-NEXT:    pxor %xmm4, %xmm0
 ; X86-SSE42-NEXT:    pcmpgtq %xmm6, %xmm0
 ; X86-SSE42-NEXT:    blendvpd %xmm0, %xmm1, %xmm3
-; X86-SSE42-NEXT:    movdqa %xmm4, %xmm1
-; X86-SSE42-NEXT:    pxor %xmm5, %xmm1
+; X86-SSE42-NEXT:    movdqa %xmm5, %xmm1
+; X86-SSE42-NEXT:    pxor %xmm4, %xmm1
 ; X86-SSE42-NEXT:    movdqa %xmm2, %xmm0
-; X86-SSE42-NEXT:    pxor %xmm5, %xmm0
+; X86-SSE42-NEXT:    pxor %xmm4, %xmm0
 ; X86-SSE42-NEXT:    pcmpgtq %xmm1, %xmm0
-; X86-SSE42-NEXT:    blendvpd %xmm0, %xmm4, %xmm2
+; X86-SSE42-NEXT:    blendvpd %xmm0, %xmm5, %xmm2
 ; X86-SSE42-NEXT:    movapd %xmm2, %xmm1
-; X86-SSE42-NEXT:    xorpd %xmm5, %xmm1
+; X86-SSE42-NEXT:    xorpd %xmm4, %xmm1
 ; X86-SSE42-NEXT:    movapd %xmm3, %xmm0
-; X86-SSE42-NEXT:    xorpd %xmm5, %xmm0
+; X86-SSE42-NEXT:    xorpd %xmm4, %xmm0
 ; X86-SSE42-NEXT:    pcmpgtq %xmm1, %xmm0
 ; X86-SSE42-NEXT:    blendvpd %xmm0, %xmm2, %xmm3
 ; X86-SSE42-NEXT:    pshufd {{.*#+}} xmm1 = xmm3[2,3,2,3]
 ; X86-SSE42-NEXT:    movdqa %xmm3, %xmm0
-; X86-SSE42-NEXT:    pxor %xmm5, %xmm0
-; X86-SSE42-NEXT:    pxor %xmm1, %xmm5
-; X86-SSE42-NEXT:    pcmpgtq %xmm0, %xmm5
-; X86-SSE42-NEXT:    movdqa %xmm5, %xmm0
+; X86-SSE42-NEXT:    pxor %xmm4, %xmm0
+; X86-SSE42-NEXT:    pxor %xmm1, %xmm4
+; X86-SSE42-NEXT:    pcmpgtq %xmm0, %xmm4
+; X86-SSE42-NEXT:    movdqa %xmm4, %xmm0
 ; X86-SSE42-NEXT:    blendvpd %xmm0, %xmm3, %xmm1
 ; X86-SSE42-NEXT:    movd %xmm1, %eax
 ; X86-SSE42-NEXT:    pextrd $1, %xmm1, %edx

@@ -58,7 +58,6 @@ define { i128, i8 } @muloti_test(i128 %l, i128 %r) unnamed_addr #0 {
 ; PPC32-NEXT:    mulhwu 5, 4, 10
 ; PPC32-NEXT:    addc 5, 5, 27
 ; PPC32-NEXT:    addze 27, 7
-; PPC32-NEXT:    cmpwi 2, 27, 0
 ; PPC32-NEXT:    mullw 25, 12, 8
 ; PPC32-NEXT:    add 26, 24, 25
 ; PPC32-NEXT:    addc 0, 0, 26
@@ -94,24 +93,25 @@ define { i128, i8 } @muloti_test(i128 %l, i128 %r) unnamed_addr #0 {
 ; PPC32-NEXT:    crnor 20, 2, 30
 ; PPC32-NEXT:    cmpwi 3, 0
 ; PPC32-NEXT:    cmpwi 7, 9, 0
-; PPC32-NEXT:    crnor 24, 30, 2
+; PPC32-NEXT:    crnor 21, 30, 2
 ; PPC32-NEXT:    mulhwu. 12, 3, 10
 ; PPC32-NEXT:    crorc 20, 20, 26
 ; PPC32-NEXT:    mcrf 7, 0
 ; PPC32-NEXT:    crorc 20, 20, 22
 ; PPC32-NEXT:    cmpwi 26, 0
-; PPC32-NEXT:    crorc 28, 20, 2
+; PPC32-NEXT:    crorc 20, 20, 2
 ; PPC32-NEXT:    mulhwu. 9, 9, 4
-; PPC32-NEXT:    mcrf 5, 0
-; PPC32-NEXT:    crorc 20, 24, 30
+; PPC32-NEXT:    mcrf 2, 0
+; PPC32-NEXT:    crorc 21, 21, 30
 ; PPC32-NEXT:    or. 3, 4, 3
-; PPC32-NEXT:    mcrf 6, 0
-; PPC32-NEXT:    crorc 20, 20, 22
+; PPC32-NEXT:    cmpwi 6, 27, 0
+; PPC32-NEXT:    mcrf 7, 0
+; PPC32-NEXT:    crorc 21, 21, 10
 ; PPC32-NEXT:    or. 3, 8, 11
-; PPC32-NEXT:    crorc 20, 20, 10
-; PPC32-NEXT:    crnor 21, 2, 26
+; PPC32-NEXT:    crorc 21, 21, 26
+; PPC32-NEXT:    crnor 22, 2, 30
+; PPC32-NEXT:    cror 21, 22, 21
 ; PPC32-NEXT:    cror 20, 21, 20
-; PPC32-NEXT:    cror 20, 20, 28
 ; PPC32-NEXT:    crandc 20, 6, 20
 ; PPC32-NEXT:    mullw 6, 6, 10
 ; PPC32-NEXT:    bc 12, 20, .LBB0_2

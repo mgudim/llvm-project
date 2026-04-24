@@ -2390,20 +2390,20 @@ define i1 @not_is_plus_normal_f16(half %x) {
 ; GFX7GLISEL-NEXT:    v_and_b32_e32 v2, 0xffff, v0
 ; GFX7GLISEL-NEXT:    v_and_b32_e32 v3, 0xffff, v1
 ; GFX7GLISEL-NEXT:    v_and_b32_e32 v0, 0x7c00, v0
-; GFX7GLISEL-NEXT:    v_cmp_ne_u32_e64 s[4:5], v2, v3
+; GFX7GLISEL-NEXT:    v_cmp_ne_u32_e64 s[6:7], v2, v3
 ; GFX7GLISEL-NEXT:    v_mov_b32_e32 v2, 0x7c00
 ; GFX7GLISEL-NEXT:    v_and_b32_e32 v0, 0xffff, v0
 ; GFX7GLISEL-NEXT:    v_cmp_eq_u32_e32 vcc, 0, v0
-; GFX7GLISEL-NEXT:    v_cmp_eq_u32_e64 s[6:7], v3, v2
-; GFX7GLISEL-NEXT:    s_or_b64 s[6:7], vcc, s[6:7]
+; GFX7GLISEL-NEXT:    v_cmp_eq_u32_e64 s[4:5], v3, v2
+; GFX7GLISEL-NEXT:    s_or_b64 s[4:5], vcc, s[4:5]
 ; GFX7GLISEL-NEXT:    v_cmp_gt_u32_e32 vcc, v3, v2
-; GFX7GLISEL-NEXT:    s_or_b64 s[6:7], s[6:7], vcc
+; GFX7GLISEL-NEXT:    s_or_b64 s[4:5], s[4:5], vcc
 ; GFX7GLISEL-NEXT:    v_add_i32_e32 v0, vcc, 0xfffffc00, v1
 ; GFX7GLISEL-NEXT:    v_and_b32_e32 v0, 0xffff, v0
 ; GFX7GLISEL-NEXT:    v_mov_b32_e32 v1, 0x7800
 ; GFX7GLISEL-NEXT:    v_cmp_lt_u32_e32 vcc, v0, v1
-; GFX7GLISEL-NEXT:    s_and_b64 s[4:5], vcc, s[4:5]
-; GFX7GLISEL-NEXT:    s_or_b64 s[4:5], s[6:7], s[4:5]
+; GFX7GLISEL-NEXT:    s_and_b64 s[6:7], vcc, s[6:7]
+; GFX7GLISEL-NEXT:    s_or_b64 s[4:5], s[4:5], s[6:7]
 ; GFX7GLISEL-NEXT:    v_cndmask_b32_e64 v0, 0, 1, s[4:5]
 ; GFX7GLISEL-NEXT:    s_setpc_b64 s[30:31]
 ;
@@ -2485,20 +2485,20 @@ define i1 @not_is_neg_normal_f16(half %x) {
 ; GFX7GLISEL-NEXT:    v_and_b32_e32 v2, 0xffff, v0
 ; GFX7GLISEL-NEXT:    v_and_b32_e32 v3, 0xffff, v1
 ; GFX7GLISEL-NEXT:    v_and_b32_e32 v0, 0x7c00, v0
-; GFX7GLISEL-NEXT:    v_cmp_eq_u32_e64 s[4:5], v2, v3
+; GFX7GLISEL-NEXT:    v_cmp_eq_u32_e64 s[6:7], v2, v3
 ; GFX7GLISEL-NEXT:    v_mov_b32_e32 v2, 0x7c00
 ; GFX7GLISEL-NEXT:    v_and_b32_e32 v0, 0xffff, v0
 ; GFX7GLISEL-NEXT:    v_cmp_eq_u32_e32 vcc, 0, v0
-; GFX7GLISEL-NEXT:    v_cmp_eq_u32_e64 s[6:7], v3, v2
-; GFX7GLISEL-NEXT:    s_or_b64 s[6:7], vcc, s[6:7]
+; GFX7GLISEL-NEXT:    v_cmp_eq_u32_e64 s[4:5], v3, v2
+; GFX7GLISEL-NEXT:    s_or_b64 s[4:5], vcc, s[4:5]
 ; GFX7GLISEL-NEXT:    v_cmp_gt_u32_e32 vcc, v3, v2
-; GFX7GLISEL-NEXT:    s_or_b64 s[6:7], s[6:7], vcc
+; GFX7GLISEL-NEXT:    s_or_b64 s[4:5], s[4:5], vcc
 ; GFX7GLISEL-NEXT:    v_add_i32_e32 v0, vcc, 0xfffffc00, v1
 ; GFX7GLISEL-NEXT:    v_and_b32_e32 v0, 0xffff, v0
 ; GFX7GLISEL-NEXT:    v_mov_b32_e32 v1, 0x7800
 ; GFX7GLISEL-NEXT:    v_cmp_lt_u32_e32 vcc, v0, v1
-; GFX7GLISEL-NEXT:    s_and_b64 s[4:5], vcc, s[4:5]
-; GFX7GLISEL-NEXT:    s_or_b64 s[4:5], s[6:7], s[4:5]
+; GFX7GLISEL-NEXT:    s_and_b64 s[6:7], vcc, s[6:7]
+; GFX7GLISEL-NEXT:    s_or_b64 s[4:5], s[4:5], s[6:7]
 ; GFX7GLISEL-NEXT:    v_cndmask_b32_e64 v0, 0, 1, s[4:5]
 ; GFX7GLISEL-NEXT:    s_setpc_b64 s[30:31]
 ;

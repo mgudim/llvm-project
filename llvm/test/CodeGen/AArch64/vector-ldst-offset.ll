@@ -39,9 +39,10 @@ define [2 x ptr] @v8i8_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v8i8_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #8
-; CHECK-BE-NEXT:    add x1, x1, #8
+; CHECK-BE-NEXT:    add x8, x1, #8
 ; CHECK-BE-NEXT:    ld1 { v0.8b }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.8b }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.8b }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 8
@@ -88,9 +89,10 @@ define [2 x ptr] @v8i8_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v8i8_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.8b }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.8b }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.8b }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -143,9 +145,10 @@ define [2 x ptr] @v8i8_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v8i8_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.8b }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.8b }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.8b }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -189,9 +192,10 @@ define [2 x ptr] @v4i16_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v4i16_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #8
-; CHECK-BE-NEXT:    add x1, x1, #8
+; CHECK-BE-NEXT:    add x8, x1, #8
 ; CHECK-BE-NEXT:    ld1 { v0.4h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 8
@@ -238,9 +242,10 @@ define [2 x ptr] @v4i16_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v4i16_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.4h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -293,9 +298,10 @@ define [2 x ptr] @v4i16_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v4i16_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.4h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -339,9 +345,10 @@ define [2 x ptr] @v2i32_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v2i32_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #8
-; CHECK-BE-NEXT:    add x1, x1, #8
+; CHECK-BE-NEXT:    add x8, x1, #8
 ; CHECK-BE-NEXT:    ld1 { v0.2s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 8
@@ -388,9 +395,10 @@ define [2 x ptr] @v2i32_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v2i32_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.2s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -443,9 +451,10 @@ define [2 x ptr] @v2i32_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v2i32_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.2s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -639,9 +648,10 @@ define [2 x ptr] @v4f16_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v4f16_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #8
-; CHECK-BE-NEXT:    add x1, x1, #8
+; CHECK-BE-NEXT:    add x8, x1, #8
 ; CHECK-BE-NEXT:    ld1 { v0.4h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 8
@@ -688,9 +698,10 @@ define [2 x ptr] @v4f16_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v4f16_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.4h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -743,9 +754,10 @@ define [2 x ptr] @v4f16_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v4f16_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.4h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -789,9 +801,10 @@ define [2 x ptr] @v2f32_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v2f32_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #8
-; CHECK-BE-NEXT:    add x1, x1, #8
+; CHECK-BE-NEXT:    add x8, x1, #8
 ; CHECK-BE-NEXT:    ld1 { v0.2s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 8
@@ -838,9 +851,10 @@ define [2 x ptr] @v2f32_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v2f32_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.2s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -893,9 +907,10 @@ define [2 x ptr] @v2f32_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v2f32_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.2s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -1089,9 +1104,10 @@ define [2 x ptr] @v16i8_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v16i8_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.16b }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.16b }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.16b }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -1138,9 +1154,10 @@ define [2 x ptr] @v16i8_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v16i8_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #32
-; CHECK-BE-NEXT:    add x1, x1, #32
+; CHECK-BE-NEXT:    add x8, x1, #32
 ; CHECK-BE-NEXT:    ld1 { v0.16b }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.16b }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.16b }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 32
@@ -1193,9 +1210,10 @@ define [2 x ptr] @v16i8_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v16i8_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.16b }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.16b }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.16b }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -1239,9 +1257,10 @@ define [2 x ptr] @v8i16_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v8i16_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.8h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.8h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.8h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -1288,9 +1307,10 @@ define [2 x ptr] @v8i16_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v8i16_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #32
-; CHECK-BE-NEXT:    add x1, x1, #32
+; CHECK-BE-NEXT:    add x8, x1, #32
 ; CHECK-BE-NEXT:    ld1 { v0.8h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.8h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.8h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 32
@@ -1343,9 +1363,10 @@ define [2 x ptr] @v8i16_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v8i16_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.8h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.8h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.8h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -1389,9 +1410,10 @@ define [2 x ptr] @v4i32_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v4i32_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.4s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -1438,9 +1460,10 @@ define [2 x ptr] @v4i32_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v4i32_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #32
-; CHECK-BE-NEXT:    add x1, x1, #32
+; CHECK-BE-NEXT:    add x8, x1, #32
 ; CHECK-BE-NEXT:    ld1 { v0.4s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 32
@@ -1493,9 +1516,10 @@ define [2 x ptr] @v4i32_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v4i32_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.4s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -1539,9 +1563,10 @@ define [2 x ptr] @v2i64_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v2i64_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.2d }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2d }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2d }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -1588,9 +1613,10 @@ define [2 x ptr] @v2i64_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v2i64_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #32
-; CHECK-BE-NEXT:    add x1, x1, #32
+; CHECK-BE-NEXT:    add x8, x1, #32
 ; CHECK-BE-NEXT:    ld1 { v0.2d }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2d }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2d }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 32
@@ -1643,9 +1669,10 @@ define [2 x ptr] @v2i64_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v2i64_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.2d }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2d }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2d }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -1689,9 +1716,10 @@ define [2 x ptr] @v8f16_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v8f16_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.8h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.8h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.8h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -1738,9 +1766,10 @@ define [2 x ptr] @v8f16_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v8f16_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #32
-; CHECK-BE-NEXT:    add x1, x1, #32
+; CHECK-BE-NEXT:    add x8, x1, #32
 ; CHECK-BE-NEXT:    ld1 { v0.8h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.8h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.8h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 32
@@ -1793,9 +1822,10 @@ define [2 x ptr] @v8f16_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v8f16_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.8h }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.8h }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.8h }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -1839,9 +1869,10 @@ define [2 x ptr] @v4f32_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v4f32_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.4s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -1888,9 +1919,10 @@ define [2 x ptr] @v4f32_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v4f32_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #32
-; CHECK-BE-NEXT:    add x1, x1, #32
+; CHECK-BE-NEXT:    add x8, x1, #32
 ; CHECK-BE-NEXT:    ld1 { v0.4s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 32
@@ -1943,9 +1975,10 @@ define [2 x ptr] @v4f32_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v4f32_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.4s }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.4s }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.4s }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off
@@ -1989,9 +2022,10 @@ define [2 x ptr] @v2f64_preidx_same_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v2f64_preidx_same_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #16
-; CHECK-BE-NEXT:    add x1, x1, #16
+; CHECK-BE-NEXT:    add x8, x1, #16
 ; CHECK-BE-NEXT:    ld1 { v0.2d }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2d }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2d }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 16
@@ -2038,9 +2072,10 @@ define [2 x ptr] @v2f64_preidx_different_size(ptr %ldptr, ptr %stptr) {
 ; CHECK-BE-LABEL: v2f64_preidx_different_size:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, #32
-; CHECK-BE-NEXT:    add x1, x1, #32
+; CHECK-BE-NEXT:    add x8, x1, #32
 ; CHECK-BE-NEXT:    ld1 { v0.2d }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2d }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2d }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 32
@@ -2093,9 +2128,10 @@ define [2 x ptr] @v2f64_preidx_reg(ptr %ldptr, ptr %stptr, i64 %off) {
 ; CHECK-BE-LABEL: v2f64_preidx_reg:
 ; CHECK-BE:       // %bb.0: // %entry
 ; CHECK-BE-NEXT:    add x0, x0, x2
-; CHECK-BE-NEXT:    add x1, x1, x2
+; CHECK-BE-NEXT:    add x8, x1, x2
 ; CHECK-BE-NEXT:    ld1 { v0.2d }, [x0]
-; CHECK-BE-NEXT:    st1 { v0.2d }, [x1]
+; CHECK-BE-NEXT:    mov x1, x8
+; CHECK-BE-NEXT:    st1 { v0.2d }, [x8]
 ; CHECK-BE-NEXT:    ret
 entry:
   %add.ldptr = getelementptr inbounds nuw i8, ptr %ldptr, i64 %off

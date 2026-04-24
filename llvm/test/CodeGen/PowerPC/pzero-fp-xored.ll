@@ -98,8 +98,8 @@ define <2 x double> @t4() local_unnamed_addr #0 {
 ; CHECK-NVSXALT-LABEL: t4:
 ; CHECK-NVSXALT:       # %bb.0:
 ; CHECK-NVSXALT-NEXT:    addis 3, 2, .LCPI3_0@toc@ha
-; CHECK-NVSXALT-NEXT:    lfs 1, .LCPI3_0@toc@l(3)
-; CHECK-NVSXALT-NEXT:    fmr 2, 1
+; CHECK-NVSXALT-NEXT:    lfs 2, .LCPI3_0@toc@l(3)
+; CHECK-NVSXALT-NEXT:    fmr 1, 2
 ; CHECK-NVSXALT-NEXT:    blr
   ret <2 x double> zeroinitializer
 }

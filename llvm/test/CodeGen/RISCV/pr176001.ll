@@ -13,8 +13,8 @@ define <32 x i64> @main(i1 %tobool93.not, <32 x i64> %0, <32 x i64> %1) #0 {
   ; CHECK-NEXT:   PseudoBR %bb.1
   ; CHECK-NEXT: {{  $}}
   ; CHECK-NEXT: bb.1.BS_LABEL_5:
-  ; CHECK-NEXT:   renamable $v8m8 = PseudoVMV_V_I_M8 undef renamable $v8m8, 0, 16 /* vl */, 6 /* e64 */, 0 /* tu, mu */
-  ; CHECK-NEXT:   $v16m8 = COPY renamable $v8m8
+  ; CHECK-NEXT:   renamable $v16m8 = PseudoVMV_V_I_M8 undef renamable $v16m8, 0, 16 /* vl */, 6 /* e64 */, 0 /* tu, mu */
+  ; CHECK-NEXT:   $v8m8 = COPY renamable $v16m8
   ; CHECK-NEXT:   PseudoRET implicit $v8m8, implicit $v16m8
   ; CHECK-NEXT: {{  $}}
   ; CHECK-NEXT: bb.2.BS_LABEL_8:

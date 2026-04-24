@@ -253,22 +253,22 @@ define <2 x i64> @no_extract_udiv(<2 x i64> %i) nounwind {
 ; X64-LABEL: no_extract_udiv:
 ; X64:       # %bb.0:
 ; X64-NEXT:    vpextrq $1, %xmm0, %rcx
-; X64-NEXT:    movabsq $-6148914691236517205, %rdi # imm = 0xAAAAAAAAAAAAAAAB
+; X64-NEXT:    movabsq $-6148914691236517205, %rsi # imm = 0xAAAAAAAAAAAAAAAB
 ; X64-NEXT:    movq %rcx, %rax
-; X64-NEXT:    mulq %rdi
+; X64-NEXT:    mulq %rsi
 ; X64-NEXT:    vmovq %rdx, %xmm1
-; X64-NEXT:    vmovq %xmm0, %rsi
-; X64-NEXT:    movq %rsi, %rax
-; X64-NEXT:    mulq %rdi
+; X64-NEXT:    vmovq %xmm0, %rdi
+; X64-NEXT:    movq %rdi, %rax
+; X64-NEXT:    mulq %rsi
 ; X64-NEXT:    vmovq %rdx, %xmm0
 ; X64-NEXT:    vpunpcklqdq {{.*#+}} xmm0 = xmm0[0],xmm1[0]
 ; X64-NEXT:    vpsrlq $1, %xmm0, %xmm0
-; X64-NEXT:    movabsq $-6180857105216966645, %rdi # imm = 0xAA392F35DC17F00B
+; X64-NEXT:    movabsq $-6180857105216966645, %rsi # imm = 0xAA392F35DC17F00B
 ; X64-NEXT:    movq %rcx, %rax
-; X64-NEXT:    mulq %rdi
+; X64-NEXT:    mulq %rsi
 ; X64-NEXT:    vmovq %rdx, %xmm1
-; X64-NEXT:    movq %rsi, %rax
-; X64-NEXT:    mulq %rdi
+; X64-NEXT:    movq %rdi, %rax
+; X64-NEXT:    mulq %rsi
 ; X64-NEXT:    vmovq %rdx, %xmm2
 ; X64-NEXT:    vpunpcklqdq {{.*#+}} xmm1 = xmm2[0],xmm1[0]
 ; X64-NEXT:    vpsrlq $9, %xmm1, %xmm1

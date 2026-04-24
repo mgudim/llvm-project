@@ -12,8 +12,8 @@ define <vscale x 1 x i8> @vp_abs_nxv1i8(<vscale x 1 x i8> %va, <vscale x 1 x i1>
 ; CHECK-LABEL: vp_abs_nxv1i8:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e8, mf8, ta, ma
-; CHECK-NEXT:    vrsub.vi v9, v8, 0, v0.t
-; CHECK-NEXT:    vmax.vv v8, v8, v9, v0.t
+; CHECK-NEXT:    vrsub.vi v10, v8, 0, v0.t
+; CHECK-NEXT:    vmax.vv v8, v8, v10, v0.t
 ; CHECK-NEXT:    ret
 ;
 ; ZVABD-LABEL: vp_abs_nxv1i8:
@@ -46,8 +46,8 @@ define <vscale x 2 x i8> @vp_abs_nxv2i8(<vscale x 2 x i8> %va, <vscale x 2 x i1>
 ; CHECK-LABEL: vp_abs_nxv2i8:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e8, mf4, ta, ma
-; CHECK-NEXT:    vrsub.vi v9, v8, 0, v0.t
-; CHECK-NEXT:    vmax.vv v8, v8, v9, v0.t
+; CHECK-NEXT:    vrsub.vi v10, v8, 0, v0.t
+; CHECK-NEXT:    vmax.vv v8, v8, v10, v0.t
 ; CHECK-NEXT:    ret
 ;
 ; ZVABD-LABEL: vp_abs_nxv2i8:
@@ -80,8 +80,8 @@ define <vscale x 4 x i8> @vp_abs_nxv4i8(<vscale x 4 x i8> %va, <vscale x 4 x i1>
 ; CHECK-LABEL: vp_abs_nxv4i8:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e8, mf2, ta, ma
-; CHECK-NEXT:    vrsub.vi v9, v8, 0, v0.t
-; CHECK-NEXT:    vmax.vv v8, v8, v9, v0.t
+; CHECK-NEXT:    vrsub.vi v10, v8, 0, v0.t
+; CHECK-NEXT:    vmax.vv v8, v8, v10, v0.t
 ; CHECK-NEXT:    ret
 ;
 ; ZVABD-LABEL: vp_abs_nxv4i8:
@@ -114,8 +114,8 @@ define <vscale x 8 x i8> @vp_abs_nxv8i8(<vscale x 8 x i8> %va, <vscale x 8 x i1>
 ; CHECK-LABEL: vp_abs_nxv8i8:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
-; CHECK-NEXT:    vrsub.vi v9, v8, 0, v0.t
-; CHECK-NEXT:    vmax.vv v8, v8, v9, v0.t
+; CHECK-NEXT:    vrsub.vi v10, v8, 0, v0.t
+; CHECK-NEXT:    vmax.vv v8, v8, v10, v0.t
 ; CHECK-NEXT:    ret
 ;
 ; ZVABD-LABEL: vp_abs_nxv8i8:
@@ -250,8 +250,8 @@ define <vscale x 1 x i16> @vp_abs_nxv1i16(<vscale x 1 x i16> %va, <vscale x 1 x 
 ; CHECK-LABEL: vp_abs_nxv1i16:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, mf4, ta, ma
-; CHECK-NEXT:    vrsub.vi v9, v8, 0, v0.t
-; CHECK-NEXT:    vmax.vv v8, v8, v9, v0.t
+; CHECK-NEXT:    vrsub.vi v10, v8, 0, v0.t
+; CHECK-NEXT:    vmax.vv v8, v8, v10, v0.t
 ; CHECK-NEXT:    ret
 ;
 ; ZVABD-LABEL: vp_abs_nxv1i16:
@@ -284,8 +284,8 @@ define <vscale x 2 x i16> @vp_abs_nxv2i16(<vscale x 2 x i16> %va, <vscale x 2 x 
 ; CHECK-LABEL: vp_abs_nxv2i16:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
-; CHECK-NEXT:    vrsub.vi v9, v8, 0, v0.t
-; CHECK-NEXT:    vmax.vv v8, v8, v9, v0.t
+; CHECK-NEXT:    vrsub.vi v10, v8, 0, v0.t
+; CHECK-NEXT:    vmax.vv v8, v8, v10, v0.t
 ; CHECK-NEXT:    ret
 ;
 ; ZVABD-LABEL: vp_abs_nxv2i16:
@@ -318,8 +318,8 @@ define <vscale x 4 x i16> @vp_abs_nxv4i16(<vscale x 4 x i16> %va, <vscale x 4 x 
 ; CHECK-LABEL: vp_abs_nxv4i16:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
-; CHECK-NEXT:    vrsub.vi v9, v8, 0, v0.t
-; CHECK-NEXT:    vmax.vv v8, v8, v9, v0.t
+; CHECK-NEXT:    vrsub.vi v10, v8, 0, v0.t
+; CHECK-NEXT:    vmax.vv v8, v8, v10, v0.t
 ; CHECK-NEXT:    ret
 ;
 ; ZVABD-LABEL: vp_abs_nxv4i16:
@@ -454,8 +454,8 @@ define <vscale x 1 x i32> @vp_abs_nxv1i32(<vscale x 1 x i32> %va, <vscale x 1 x 
 ; CHECK-LABEL: vp_abs_nxv1i32:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e32, mf2, ta, ma
-; CHECK-NEXT:    vrsub.vi v9, v8, 0, v0.t
-; CHECK-NEXT:    vmax.vv v8, v8, v9, v0.t
+; CHECK-NEXT:    vrsub.vi v10, v8, 0, v0.t
+; CHECK-NEXT:    vmax.vv v8, v8, v10, v0.t
 ; CHECK-NEXT:    ret
 ;
 ; ZVABD-LABEL: vp_abs_nxv1i32:
@@ -488,8 +488,8 @@ define <vscale x 2 x i32> @vp_abs_nxv2i32(<vscale x 2 x i32> %va, <vscale x 2 x 
 ; CHECK-LABEL: vp_abs_nxv2i32:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m1, ta, ma
-; CHECK-NEXT:    vrsub.vi v9, v8, 0, v0.t
-; CHECK-NEXT:    vmax.vv v8, v8, v9, v0.t
+; CHECK-NEXT:    vrsub.vi v10, v8, 0, v0.t
+; CHECK-NEXT:    vmax.vv v8, v8, v10, v0.t
 ; CHECK-NEXT:    ret
 ;
 ; ZVABD-LABEL: vp_abs_nxv2i32:
@@ -624,8 +624,8 @@ define <vscale x 1 x i64> @vp_abs_nxv1i64(<vscale x 1 x i64> %va, <vscale x 1 x 
 ; CHECK-LABEL: vp_abs_nxv1i64:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e64, m1, ta, ma
-; CHECK-NEXT:    vrsub.vi v9, v8, 0, v0.t
-; CHECK-NEXT:    vmax.vv v8, v8, v9, v0.t
+; CHECK-NEXT:    vrsub.vi v10, v8, 0, v0.t
+; CHECK-NEXT:    vmax.vv v8, v8, v10, v0.t
 ; CHECK-NEXT:    ret
 ;
 ; ZVABD-LABEL: vp_abs_nxv1i64:
@@ -798,10 +798,11 @@ define <vscale x 16 x i64> @vp_abs_nxv16i64(<vscale x 16 x i64> %va, <vscale x 1
 ; CHECK-NEXT:    csrr a1, vlenb
 ; CHECK-NEXT:    srli a2, a1, 3
 ; CHECK-NEXT:    sub a3, a0, a1
-; CHECK-NEXT:    vslidedown.vx v0, v0, a2
+; CHECK-NEXT:    vslidedown.vx v6, v0, a2
 ; CHECK-NEXT:    sltu a2, a0, a3
 ; CHECK-NEXT:    addi a2, a2, -1
 ; CHECK-NEXT:    and a2, a2, a3
+; CHECK-NEXT:    vmv1r.v v0, v6
 ; CHECK-NEXT:    vsetvli zero, a2, e64, m8, ta, ma
 ; CHECK-NEXT:    vrsub.vi v24, v16, 0, v0.t
 ; CHECK-NEXT:    vmax.vv v16, v16, v24, v0.t

@@ -205,7 +205,7 @@ define dso_local void @PR37100(i8 %arg1, i16 %arg2, i64 %arg3, i8 %arg4, ptr %pt
 ; X32-NEXT:    pushl %ebx
 ; X32-NEXT:    pushl %edi
 ; X32-NEXT:    pushl %esi
-; X32-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X32-NEXT:    movl {{[0-9]+}}(%esp), %edi
 ; X32-NEXT:    movl {{[0-9]+}}(%esp), %ebx
 ; X32-NEXT:    movl {{[0-9]+}}(%esp), %ebp
 ; X32-NEXT:    movb {{[0-9]+}}(%esp), %ch
@@ -214,9 +214,9 @@ define dso_local void @PR37100(i8 %arg1, i16 %arg2, i64 %arg3, i8 %arg4, ptr %pt
 ; X32-NEXT:    .p2align 4
 ; X32-NEXT:  .LBB3_5: # %bb1
 ; X32-NEXT:    # in Loop: Header=BB3_1 Depth=1
-; X32-NEXT:    movl %esi, %eax
+; X32-NEXT:    movl %edi, %eax
 ; X32-NEXT:    cltd
-; X32-NEXT:    idivl %edi
+; X32-NEXT:    idivl %esi
 ; X32-NEXT:  .LBB3_1: # %bb1
 ; X32-NEXT:    # =>This Inner Loop Header: Depth=1
 ; X32-NEXT:    movsbl %cl, %eax
@@ -227,8 +227,8 @@ define dso_local void @PR37100(i8 %arg1, i16 %arg2, i64 %arg3, i8 %arg4, ptr %pt
 ; X32-NEXT:    sbbl %edx, %eax
 ; X32-NEXT:    setl %al
 ; X32-NEXT:    setl %dl
-; X32-NEXT:    movzbl %dl, %edi
-; X32-NEXT:    negl %edi
+; X32-NEXT:    movzbl %dl, %esi
+; X32-NEXT:    negl %esi
 ; X32-NEXT:    testb %al, %al
 ; X32-NEXT:    jne .LBB3_3
 ; X32-NEXT:  # %bb.2: # %bb1
@@ -242,28 +242,28 @@ define dso_local void @PR37100(i8 %arg1, i16 %arg2, i64 %arg3, i8 %arg4, ptr %pt
 ; X32-NEXT:    jne .LBB3_5
 ; X32-NEXT:  # %bb.4: # %bb1
 ; X32-NEXT:    # in Loop: Header=BB3_1 Depth=1
-; X32-NEXT:    movl %edx, %edi
+; X32-NEXT:    movl %edx, %esi
 ; X32-NEXT:    jmp .LBB3_5
 ;
 ; X64-LABEL: PR37100:
 ; X64:       # %bb.0: # %bb
-; X64-NEXT:    movq %rdx, %r10
-; X64-NEXT:    movl {{[0-9]+}}(%rsp), %esi
+; X64-NEXT:    movq %rdx, %rsi
+; X64-NEXT:    movl {{[0-9]+}}(%rsp), %r10d
 ; X64-NEXT:    movzbl %cl, %ecx
 ; X64-NEXT:    .p2align 4
 ; X64-NEXT:  .LBB3_1: # %bb1
 ; X64-NEXT:    # =>This Inner Loop Header: Depth=1
 ; X64-NEXT:    movsbq %dil, %rax
 ; X64-NEXT:    xorl %r11d, %r11d
-; X64-NEXT:    cmpq %rax, %r10
+; X64-NEXT:    cmpq %rax, %rsi
 ; X64-NEXT:    setl %r11b
 ; X64-NEXT:    negl %r11d
-; X64-NEXT:    cmpq %rax, %r10
+; X64-NEXT:    cmpq %rax, %rsi
 ; X64-NEXT:    movzbl %al, %edi
 ; X64-NEXT:    cmovgel %ecx, %edi
 ; X64-NEXT:    movb %dil, (%r8)
 ; X64-NEXT:    cmovgel (%r9), %r11d
-; X64-NEXT:    movl %esi, %eax
+; X64-NEXT:    movl %r10d, %eax
 ; X64-NEXT:    cltd
 ; X64-NEXT:    idivl %r11d
 ; X64-NEXT:    jmp .LBB3_1

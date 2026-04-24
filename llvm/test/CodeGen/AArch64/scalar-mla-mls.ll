@@ -4,13 +4,13 @@
 define ptr @test_scalar_msub(ptr %a, ptr %b) {
 ; CHECK-LABEL: test_scalar_msub:
 ; CHECK:       // %bb.0: // %entry
-; CHECK-NEXT:    ldp w8, w11, [x1]
-; CHECK-NEXT:    ldp w9, w10, [x0]
-; CHECK-NEXT:    mul w12, w8, w9
-; CHECK-NEXT:    mul w8, w10, w8
-; CHECK-NEXT:    madd w8, w11, w9, w8
-; CHECK-NEXT:    msub w9, w11, w10, w12
-; CHECK-NEXT:    stp w9, w8, [x0]
+; CHECK-NEXT:    ldp w9, w12, [x1]
+; CHECK-NEXT:    ldp w10, w11, [x0]
+; CHECK-NEXT:    mul w13, w9, w10
+; CHECK-NEXT:    mul w9, w11, w9
+; CHECK-NEXT:    madd w9, w12, w10, w9
+; CHECK-NEXT:    msub w10, w12, w11, w13
+; CHECK-NEXT:    stp w10, w9, [x0]
 ; CHECK-NEXT:    ret
 entry:
   %0 = load i32, ptr %a, align 4
@@ -33,16 +33,16 @@ entry:
 define ptr @test_scalar_msub_i64(ptr %a, ptr %b) {
 ; CHECK-LABEL: test_scalar_msub_i64:
 ; CHECK:       // %bb.0: // %entry
-; CHECK-NEXT:    ldr x8, [x1]
-; CHECK-NEXT:    ldur x9, [x0, #4]
-; CHECK-NEXT:    ldr x10, [x0]
-; CHECK-NEXT:    ldur x12, [x1, #4]
-; CHECK-NEXT:    mul x11, x9, x8
-; CHECK-NEXT:    mul x8, x8, x10
-; CHECK-NEXT:    madd x10, x12, x10, x11
-; CHECK-NEXT:    msub x8, x12, x9, x8
-; CHECK-NEXT:    stur x10, [x0, #4]
-; CHECK-NEXT:    str x8, [x0]
+; CHECK-NEXT:    ldr x9, [x1]
+; CHECK-NEXT:    ldur x10, [x0, #4]
+; CHECK-NEXT:    ldr x11, [x0]
+; CHECK-NEXT:    ldur x13, [x1, #4]
+; CHECK-NEXT:    mul x12, x10, x9
+; CHECK-NEXT:    mul x9, x9, x11
+; CHECK-NEXT:    madd x11, x13, x11, x12
+; CHECK-NEXT:    msub x9, x13, x10, x9
+; CHECK-NEXT:    stur x11, [x0, #4]
+; CHECK-NEXT:    str x9, [x0]
 ; CHECK-NEXT:    ret
 entry:
   %0 = load i64, ptr %a, align 8

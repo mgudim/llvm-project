@@ -268,11 +268,11 @@ define fastcc <32 x i32> @pass_vector_arg_indirect_stack(<32 x i32> %x, <32 x i3
 ; CHECK-NEXT:    li a7, 7
 ; CHECK-NEXT:    mv t3, sp
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m8, ta, ma
-; CHECK-NEXT:    vmv.v.i v8, 0
-; CHECK-NEXT:    li t4, 8
-; CHECK-NEXT:    vse32.v v8, (t0)
-; CHECK-NEXT:    li a0, 0
 ; CHECK-NEXT:    vmv.v.i v16, 0
+; CHECK-NEXT:    li t4, 8
+; CHECK-NEXT:    vse32.v v16, (t0)
+; CHECK-NEXT:    li a0, 0
+; CHECK-NEXT:    vmv.v.i v8, 0
 ; CHECK-NEXT:    call vector_arg_indirect_stack
 ; CHECK-NEXT:    addi sp, s0, -256
 ; CHECK-NEXT:    .cfi_def_cfa sp, 256
@@ -327,8 +327,8 @@ define fastcc <32 x i32> @pass_vector_arg_direct_stack(<32 x i32> %x, <32 x i32>
 ; CHECK-NEXT:    li a7, 7
 ; CHECK-NEXT:    li t3, 8
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m8, ta, ma
-; CHECK-NEXT:    vmv.v.i v8, 0
-; CHECK-NEXT:    vse32.v v8, (t0)
+; CHECK-NEXT:    vmv.v.i v16, 0
+; CHECK-NEXT:    vse32.v v16, (t0)
 ; CHECK-NEXT:    li t4, 9
 ; CHECK-NEXT:    li t5, 10
 ; CHECK-NEXT:    sd t1, 144(sp)
@@ -336,7 +336,7 @@ define fastcc <32 x i32> @pass_vector_arg_direct_stack(<32 x i32> %x, <32 x i32>
 ; CHECK-NEXT:    sd s0, 0(sp)
 ; CHECK-NEXT:    sd t2, 8(sp)
 ; CHECK-NEXT:    li a0, 0
-; CHECK-NEXT:    vmv.v.i v16, 0
+; CHECK-NEXT:    vmv.v.i v8, 0
 ; CHECK-NEXT:    call vector_arg_direct_stack
 ; CHECK-NEXT:    ld ra, 168(sp) # 8-byte Folded Reload
 ; CHECK-NEXT:    ld s0, 160(sp) # 8-byte Folded Reload

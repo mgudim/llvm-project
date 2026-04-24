@@ -92,12 +92,14 @@ define <3 x i64> @shl_v3_metadata(<3 x i64> %arg0, ptr %arg1.ptr) {
 ; CHECK-LABEL: shl_v3_metadata:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    flat_load_dword v1, v[6:7] offset:16
-; CHECK-NEXT:    flat_load_dwordx4 v[8:11], v[6:7]
+; CHECK-NEXT:    v_mov_b32_e32 v11, v7
+; CHECK-NEXT:    v_mov_b32_e32 v10, v6
+; CHECK-NEXT:    flat_load_dword v1, v[10:11] offset:16
+; CHECK-NEXT:    flat_load_dwordx4 v[6:9], v[10:11]
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
 ; CHECK-NEXT:    v_lshlrev_b32_e32 v5, v1, v4
-; CHECK-NEXT:    v_lshlrev_b32_e32 v1, v8, v0
-; CHECK-NEXT:    v_lshlrev_b32_e32 v3, v10, v2
+; CHECK-NEXT:    v_lshlrev_b32_e32 v1, v6, v0
+; CHECK-NEXT:    v_lshlrev_b32_e32 v3, v8, v2
 ; CHECK-NEXT:    v_mov_b32_e32 v0, 0
 ; CHECK-NEXT:    v_mov_b32_e32 v2, 0
 ; CHECK-NEXT:    v_mov_b32_e32 v4, 0
@@ -111,15 +113,17 @@ define <4 x i64> @shl_v4_metadata(<4 x i64> %arg0, ptr %arg1.ptr) {
 ; CHECK-LABEL: shl_v4_metadata:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    flat_load_dwordx4 v[10:13], v[8:9]
+; CHECK-NEXT:    v_mov_b32_e32 v15, v9
+; CHECK-NEXT:    v_mov_b32_e32 v14, v8
+; CHECK-NEXT:    flat_load_dwordx4 v[7:10], v[14:15]
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    flat_load_dwordx4 v[13:16], v[8:9] offset:16
-; CHECK-NEXT:    ; kill: killed $vgpr8 killed $vgpr9
-; CHECK-NEXT:    v_lshlrev_b32_e32 v1, v10, v0
-; CHECK-NEXT:    v_lshlrev_b32_e32 v3, v12, v2
+; CHECK-NEXT:    flat_load_dwordx4 v[10:13], v[14:15] offset:16
+; CHECK-NEXT:    ; kill: killed $vgpr14 killed $vgpr15
+; CHECK-NEXT:    v_lshlrev_b32_e32 v1, v7, v0
+; CHECK-NEXT:    v_lshlrev_b32_e32 v3, v9, v2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    v_lshlrev_b32_e32 v5, v13, v4
-; CHECK-NEXT:    v_lshlrev_b32_e32 v7, v15, v6
+; CHECK-NEXT:    v_lshlrev_b32_e32 v5, v10, v4
+; CHECK-NEXT:    v_lshlrev_b32_e32 v7, v12, v6
 ; CHECK-NEXT:    v_mov_b32_e32 v0, 0
 ; CHECK-NEXT:    v_mov_b32_e32 v2, 0
 ; CHECK-NEXT:    v_mov_b32_e32 v4, 0
@@ -207,8 +211,10 @@ define i64 @shl_or16_sgpr(i64 inreg %arg0, i64 inreg %shift_amt) {
 ; CHECK-LABEL: shl_or16_sgpr:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    s_or_b32 s4, s18, 16
-; CHECK-NEXT:    s_lshl_b64 s[4:5], s[16:17], s4
+; CHECK-NEXT:    s_mov_b32 s5, s17
+; CHECK-NEXT:    s_mov_b32 s4, s16
+; CHECK-NEXT:    s_or_b32 s6, s18, 16
+; CHECK-NEXT:    s_lshl_b64 s[4:5], s[4:5], s6
 ; CHECK-NEXT:    v_mov_b32_e32 v0, s4
 ; CHECK-NEXT:    v_mov_b32_e32 v1, s5
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
@@ -221,14 +227,18 @@ define <2 x i64> @shl_v2_or16_sgpr(<2 x i64> inreg %arg0, <2 x i64> inreg %shift
 ; CHECK-LABEL: shl_v2_or16_sgpr:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    s_or_b32 s6, s22, 16
-; CHECK-NEXT:    s_or_b32 s4, s20, 16
-; CHECK-NEXT:    s_lshl_b64 s[4:5], s[16:17], s4
-; CHECK-NEXT:    s_lshl_b64 s[6:7], s[18:19], s6
-; CHECK-NEXT:    v_mov_b32_e32 v0, s4
-; CHECK-NEXT:    v_mov_b32_e32 v1, s5
-; CHECK-NEXT:    v_mov_b32_e32 v2, s6
-; CHECK-NEXT:    v_mov_b32_e32 v3, s7
+; CHECK-NEXT:    s_mov_b32 s5, s19
+; CHECK-NEXT:    s_mov_b32 s4, s18
+; CHECK-NEXT:    s_mov_b32 s7, s17
+; CHECK-NEXT:    s_mov_b32 s6, s16
+; CHECK-NEXT:    s_or_b32 s8, s22, 16
+; CHECK-NEXT:    s_or_b32 s9, s20, 16
+; CHECK-NEXT:    s_lshl_b64 s[6:7], s[6:7], s9
+; CHECK-NEXT:    s_lshl_b64 s[4:5], s[4:5], s8
+; CHECK-NEXT:    v_mov_b32_e32 v0, s6
+; CHECK-NEXT:    v_mov_b32_e32 v1, s7
+; CHECK-NEXT:    v_mov_b32_e32 v2, s4
+; CHECK-NEXT:    v_mov_b32_e32 v3, s5
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
   %or = or <2 x i64> %shift_amt, splat (i64 16)
   %shl = shl <2 x i64> %arg0, %or
@@ -239,18 +249,24 @@ define <3 x i64> @shl_v3_or16_sgpr(<3 x i64> inreg %arg0, <3 x i64> inreg %shift
 ; CHECK-LABEL: shl_v3_or16_sgpr:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    s_or_b32 s8, s26, 16
-; CHECK-NEXT:    s_or_b32 s6, s24, 16
-; CHECK-NEXT:    s_or_b32 s4, s22, 16
-; CHECK-NEXT:    s_lshl_b64 s[4:5], s[16:17], s4
-; CHECK-NEXT:    s_lshl_b64 s[6:7], s[18:19], s6
-; CHECK-NEXT:    s_lshl_b64 s[8:9], s[20:21], s8
-; CHECK-NEXT:    v_mov_b32_e32 v0, s4
-; CHECK-NEXT:    v_mov_b32_e32 v1, s5
+; CHECK-NEXT:    s_mov_b32 s5, s21
+; CHECK-NEXT:    s_mov_b32 s4, s20
+; CHECK-NEXT:    s_mov_b32 s7, s19
+; CHECK-NEXT:    s_mov_b32 s6, s18
+; CHECK-NEXT:    s_mov_b32 s9, s17
+; CHECK-NEXT:    s_mov_b32 s8, s16
+; CHECK-NEXT:    s_or_b32 s10, s26, 16
+; CHECK-NEXT:    s_or_b32 s11, s24, 16
+; CHECK-NEXT:    s_or_b32 s12, s22, 16
+; CHECK-NEXT:    s_lshl_b64 s[8:9], s[8:9], s12
+; CHECK-NEXT:    s_lshl_b64 s[6:7], s[6:7], s11
+; CHECK-NEXT:    s_lshl_b64 s[4:5], s[4:5], s10
+; CHECK-NEXT:    v_mov_b32_e32 v0, s8
+; CHECK-NEXT:    v_mov_b32_e32 v1, s9
 ; CHECK-NEXT:    v_mov_b32_e32 v2, s6
 ; CHECK-NEXT:    v_mov_b32_e32 v3, s7
-; CHECK-NEXT:    v_mov_b32_e32 v4, s8
-; CHECK-NEXT:    v_mov_b32_e32 v5, s9
+; CHECK-NEXT:    v_mov_b32_e32 v4, s4
+; CHECK-NEXT:    v_mov_b32_e32 v5, s5
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
   %or = or <3 x i64> %shift_amt, splat (i64 16)
   %shl = shl <3 x i64> %arg0, %or
@@ -261,23 +277,31 @@ define <4 x i64> @shl_v4_or16_sgpr(<4 x i64> inreg %arg0, <4 x i64> inreg %shift
 ; CHECK-LABEL: shl_v4_or16_sgpr:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    v_readfirstlane_b32 s4, v0
-; CHECK-NEXT:    s_or_b32 s10, s4, 16
-; CHECK-NEXT:    s_or_b32 s8, s28, 16
-; CHECK-NEXT:    s_or_b32 s6, s26, 16
-; CHECK-NEXT:    s_or_b32 s4, s24, 16
-; CHECK-NEXT:    s_lshl_b64 s[4:5], s[16:17], s4
-; CHECK-NEXT:    s_lshl_b64 s[6:7], s[18:19], s6
-; CHECK-NEXT:    s_lshl_b64 s[8:9], s[20:21], s8
-; CHECK-NEXT:    s_lshl_b64 s[10:11], s[22:23], s10
-; CHECK-NEXT:    v_mov_b32_e32 v0, s4
-; CHECK-NEXT:    v_mov_b32_e32 v1, s5
-; CHECK-NEXT:    v_mov_b32_e32 v2, s6
-; CHECK-NEXT:    v_mov_b32_e32 v3, s7
-; CHECK-NEXT:    v_mov_b32_e32 v4, s8
-; CHECK-NEXT:    v_mov_b32_e32 v5, s9
-; CHECK-NEXT:    v_mov_b32_e32 v6, s10
-; CHECK-NEXT:    v_mov_b32_e32 v7, s11
+; CHECK-NEXT:    v_readfirstlane_b32 s12, v0
+; CHECK-NEXT:    s_mov_b32 s5, s23
+; CHECK-NEXT:    s_mov_b32 s4, s22
+; CHECK-NEXT:    s_mov_b32 s7, s21
+; CHECK-NEXT:    s_mov_b32 s6, s20
+; CHECK-NEXT:    s_mov_b32 s9, s19
+; CHECK-NEXT:    s_mov_b32 s8, s18
+; CHECK-NEXT:    s_mov_b32 s11, s17
+; CHECK-NEXT:    s_mov_b32 s10, s16
+; CHECK-NEXT:    s_or_b32 s12, s12, 16
+; CHECK-NEXT:    s_or_b32 s13, s28, 16
+; CHECK-NEXT:    s_or_b32 s14, s26, 16
+; CHECK-NEXT:    s_or_b32 s15, s24, 16
+; CHECK-NEXT:    s_lshl_b64 s[10:11], s[10:11], s15
+; CHECK-NEXT:    s_lshl_b64 s[8:9], s[8:9], s14
+; CHECK-NEXT:    s_lshl_b64 s[6:7], s[6:7], s13
+; CHECK-NEXT:    s_lshl_b64 s[4:5], s[4:5], s12
+; CHECK-NEXT:    v_mov_b32_e32 v0, s10
+; CHECK-NEXT:    v_mov_b32_e32 v1, s11
+; CHECK-NEXT:    v_mov_b32_e32 v2, s8
+; CHECK-NEXT:    v_mov_b32_e32 v3, s9
+; CHECK-NEXT:    v_mov_b32_e32 v4, s6
+; CHECK-NEXT:    v_mov_b32_e32 v5, s7
+; CHECK-NEXT:    v_mov_b32_e32 v6, s4
+; CHECK-NEXT:    v_mov_b32_e32 v7, s5
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
   %or = or <4 x i64> %shift_amt, splat (i64 16)
   %shl = shl <4 x i64> %arg0, %or

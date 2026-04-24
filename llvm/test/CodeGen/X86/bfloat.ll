@@ -1186,13 +1186,13 @@ define <32 x bfloat> @pr63017_2() nounwind {
 ;
 ; AVXNC-LABEL: pr63017_2:
 ; AVXNC:       # %bb.0:
-; AVXNC-NEXT:    vbroadcastss {{.*#+}} ymm0 = [49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024]
+; AVXNC-NEXT:    vbroadcastss {{.*#+}} ymm1 = [49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024,49024]
 ; AVXNC-NEXT:    testb %al, %al
 ; AVXNC-NEXT:    jne .LBB16_2
 ; AVXNC-NEXT:  # %bb.1: # %cond.load
-; AVXNC-NEXT:    vmovups (%rax), %ymm0
+; AVXNC-NEXT:    vmovups (%rax), %ymm1
 ; AVXNC-NEXT:  .LBB16_2:
-; AVXNC-NEXT:    vmovaps %ymm0, %ymm1
+; AVXNC-NEXT:    vmovaps %ymm1, %ymm0
 ; AVXNC-NEXT:    retq
   %1 = call <32 x bfloat> @llvm.masked.load.v32bf16.p0(ptr poison, i32 2, <32 x i1> poison, <32 x bfloat> <bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80, bfloat 0xRBF80>)
   ret <32 x bfloat> %1
@@ -1994,10 +1994,10 @@ define <32 x bfloat> @test_v8bf16_v32bf16(ptr %0) {
 ;
 ; SSE2-LABEL: test_v8bf16_v32bf16:
 ; SSE2:       # %bb.0:
-; SSE2-NEXT:    movaps (%rdi), %xmm0
-; SSE2-NEXT:    movaps %xmm0, %xmm1
-; SSE2-NEXT:    movaps %xmm0, %xmm2
-; SSE2-NEXT:    movaps %xmm0, %xmm3
+; SSE2-NEXT:    movaps (%rdi), %xmm3
+; SSE2-NEXT:    movaps %xmm3, %xmm0
+; SSE2-NEXT:    movaps %xmm3, %xmm1
+; SSE2-NEXT:    movaps %xmm3, %xmm2
 ; SSE2-NEXT:    retq
 ;
 ; AVX512-LABEL: test_v8bf16_v32bf16:
@@ -2007,8 +2007,8 @@ define <32 x bfloat> @test_v8bf16_v32bf16(ptr %0) {
 ;
 ; AVXNC-LABEL: test_v8bf16_v32bf16:
 ; AVXNC:       # %bb.0:
-; AVXNC-NEXT:    vbroadcastf128 {{.*#+}} ymm0 = mem[0,1,0,1]
-; AVXNC-NEXT:    vmovaps %ymm0, %ymm1
+; AVXNC-NEXT:    vbroadcastf128 {{.*#+}} ymm1 = mem[0,1,0,1]
+; AVXNC-NEXT:    vmovaps %ymm1, %ymm0
 ; AVXNC-NEXT:    retq
   %2 = load <8 x bfloat>, ptr %0, align 16
   %3 = shufflevector <8 x bfloat> %2, <8 x bfloat> %2, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>

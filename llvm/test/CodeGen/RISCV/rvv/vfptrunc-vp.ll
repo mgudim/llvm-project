@@ -30,9 +30,9 @@ define <vscale x 2 x half> @vfptrunc_nxv2f16_nxv2f64(<vscale x 2 x double> %a, <
 ; CHECK-LABEL: vfptrunc_nxv2f16_nxv2f64:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m1, ta, ma
-; CHECK-NEXT:    vfncvt.rod.f.f.w v10, v8, v0.t
+; CHECK-NEXT:    vfncvt.rod.f.f.w v11, v8, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e16, mf2, ta, ma
-; CHECK-NEXT:    vfncvt.f.f.w v8, v10, v0.t
+; CHECK-NEXT:    vfncvt.f.f.w v8, v11, v0.t
 ; CHECK-NEXT:    ret
   %v = call <vscale x 2 x half> @llvm.vp.fptrunc.nxv2f16.nxv2f64(<vscale x 2 x double> %a, <vscale x 2 x i1> %m, i32 %vl)
   ret <vscale x 2 x half> %v
@@ -223,9 +223,9 @@ define <vscale x 2 x bfloat> @vfptrunc_nxv2bf16_nxv2f64(<vscale x 2 x double> %a
 ; CHECK-LABEL: vfptrunc_nxv2bf16_nxv2f64:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m1, ta, ma
-; CHECK-NEXT:    vfncvt.rod.f.f.w v10, v8, v0.t
+; CHECK-NEXT:    vfncvt.rod.f.f.w v11, v8, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e16, mf2, ta, ma
-; CHECK-NEXT:    vfncvtbf16.f.f.w v8, v10, v0.t
+; CHECK-NEXT:    vfncvtbf16.f.f.w v8, v11, v0.t
 ; CHECK-NEXT:    ret
   %v = call <vscale x 2 x bfloat> @llvm.vp.fptrunc.nxv2bf16.nxv2f64(<vscale x 2 x double> %a, <vscale x 2 x i1> %m, i32 %vl)
   ret <vscale x 2 x bfloat> %v

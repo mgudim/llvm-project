@@ -138,42 +138,42 @@ define void @f4(ptr %a, i64 %n) nounwind "target-features"="+alu-lsl-fast" {
 ; CHECK-NEXT:  // %bb.1: // %LI.preheader
 ; CHECK-NEXT:    stp x30, x23, [sp, #-48]! // 16-byte Folded Spill
 ; CHECK-NEXT:    stp x22, x21, [sp, #16] // 16-byte Folded Spill
-; CHECK-NEXT:    mov x22, xzr
+; CHECK-NEXT:    mov x21, xzr
 ; CHECK-NEXT:    stp x20, x19, [sp, #32] // 16-byte Folded Spill
 ; CHECK-NEXT:    mov x19, x1
 ; CHECK-NEXT:    mov x20, x0
 ; CHECK-NEXT:    b .LBB4_3
 ; CHECK-NEXT:  .LBB4_2: // %LI.latch
 ; CHECK-NEXT:    // in Loop: Header=BB4_3 Depth=1
-; CHECK-NEXT:    cmp x22, x19
-; CHECK-NEXT:    mov x22, x23
+; CHECK-NEXT:    cmp x21, x19
+; CHECK-NEXT:    mov x21, x22
 ; CHECK-NEXT:    b.ge .LBB4_8
 ; CHECK-NEXT:  .LBB4_3: // %LI
 ; CHECK-NEXT:    // =>This Loop Header: Depth=1
 ; CHECK-NEXT:    // Child Loop BB4_6 Depth 2
-; CHECK-NEXT:    mov x21, xzr
-; CHECK-NEXT:    add x23, x22, #1
+; CHECK-NEXT:    mov x23, xzr
+; CHECK-NEXT:    add x22, x21, #1
 ; CHECK-NEXT:    b .LBB4_6
 ; CHECK-NEXT:  .LBB4_4: // %if.else
 ; CHECK-NEXT:    // in Loop: Header=BB4_6 Depth=2
-; CHECK-NEXT:    ldr w0, [x20, x22, lsl #2]
+; CHECK-NEXT:    ldr w0, [x20, x21, lsl #2]
 ; CHECK-NEXT:  .LBB4_5: // %LJ.latch
 ; CHECK-NEXT:    // in Loop: Header=BB4_6 Depth=2
-; CHECK-NEXT:    add x8, x21, #1
-; CHECK-NEXT:    str w0, [x20, x21, lsl #2]
+; CHECK-NEXT:    add x8, x23, #1
+; CHECK-NEXT:    str w0, [x20, x23, lsl #2]
 ; CHECK-NEXT:    sub x9, x8, #1
-; CHECK-NEXT:    mov x21, x8
+; CHECK-NEXT:    mov x23, x8
 ; CHECK-NEXT:    cmp x9, x19
 ; CHECK-NEXT:    b.ge .LBB4_2
 ; CHECK-NEXT:  .LBB4_6: // %LJ
 ; CHECK-NEXT:    // Parent Loop BB4_3 Depth=1
 ; CHECK-NEXT:    // => This Inner Loop Header: Depth=2
-; CHECK-NEXT:    ldr w8, [x20, x21, lsl #2]
+; CHECK-NEXT:    ldr w8, [x20, x23, lsl #2]
 ; CHECK-NEXT:    tbz w8, #31, .LBB4_4
 ; CHECK-NEXT:  // %bb.7: // %if.then
 ; CHECK-NEXT:    // in Loop: Header=BB4_6 Depth=2
-; CHECK-NEXT:    add x0, x20, x22, lsl #2
-; CHECK-NEXT:    mov x1, x21
+; CHECK-NEXT:    add x0, x20, x21, lsl #2
+; CHECK-NEXT:    mov x1, x23
 ; CHECK-NEXT:    bl use
 ; CHECK-NEXT:    b .LBB4_5
 ; CHECK-NEXT:  .LBB4_8:

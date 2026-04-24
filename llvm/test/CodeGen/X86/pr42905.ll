@@ -6,8 +6,8 @@ define <4 x double> @autogen_SD30452(i1 %L230) {
 ; CHECK:       # %bb.0: # %BB
 ; CHECK-NEXT:    movdqa {{.*#+}} xmm0 = [151829,151829]
 ; CHECK-NEXT:    pshufd {{.*#+}} xmm0 = xmm0[0,2,2,3]
-; CHECK-NEXT:    cvtdq2pd %xmm0, %xmm0
-; CHECK-NEXT:    movaps %xmm0, %xmm1
+; CHECK-NEXT:    cvtdq2pd %xmm0, %xmm1
+; CHECK-NEXT:    movaps %xmm1, %xmm0
 ; CHECK-NEXT:    retq
 BB:
   %I = insertelement <4 x i64> zeroinitializer, i64 151829, i32 3

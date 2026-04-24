@@ -96,11 +96,11 @@ define i32 @test_invalid_rotl_var_and(i32 %x, i32 %y) {
 ;
 ; X64-LABEL: test_invalid_rotl_var_and:
 ; X64:       # %bb.0:
-; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    movl %edi, %eax
+; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    shll %cl, %eax
-; X64-NEXT:    negb %cl
-; X64-NEXT:    # kill: def $cl killed $cl killed $ecx
+; X64-NEXT:    negb %sil
+; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    shrl %cl, %edi
 ; X64-NEXT:    addl %edi, %eax
 ; X64-NEXT:    retq
@@ -126,11 +126,11 @@ define i32 @test_invalid_rotr_var_and(i32 %x, i32 %y) {
 ;
 ; X64-LABEL: test_invalid_rotr_var_and:
 ; X64:       # %bb.0:
-; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    movl %edi, %eax
+; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    shrl %cl, %eax
-; X64-NEXT:    negb %cl
-; X64-NEXT:    # kill: def $cl killed $cl killed $ecx
+; X64-NEXT:    negb %sil
+; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    shll %cl, %edi
 ; X64-NEXT:    addl %edi, %eax
 ; X64-NEXT:    retq
@@ -202,24 +202,24 @@ define i64 @test_rotl_udiv_special_case(i64 %i) {
 ; X86-NEXT:    .cfi_offset %esi, -16
 ; X86-NEXT:    .cfi_offset %edi, -12
 ; X86-NEXT:    .cfi_offset %ebx, -8
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %edi
-; X86-NEXT:    movl %ecx, %esi
-; X86-NEXT:    addl %edi, %esi
-; X86-NEXT:    adcl $0, %esi
+; X86-NEXT:    movl %esi, %edi
+; X86-NEXT:    addl %ecx, %edi
+; X86-NEXT:    adcl $0, %edi
 ; X86-NEXT:    movl $-1431655765, %ebx # imm = 0xAAAAAAAB
-; X86-NEXT:    movl %esi, %eax
+; X86-NEXT:    movl %edi, %eax
 ; X86-NEXT:    mull %ebx
 ; X86-NEXT:    shrl %edx
 ; X86-NEXT:    leal (%edx,%edx,2), %eax
-; X86-NEXT:    subl %eax, %esi
-; X86-NEXT:    subl %esi, %ecx
-; X86-NEXT:    sbbl $0, %edi
-; X86-NEXT:    movl %ecx, %eax
+; X86-NEXT:    subl %eax, %edi
+; X86-NEXT:    subl %edi, %esi
+; X86-NEXT:    sbbl $0, %ecx
+; X86-NEXT:    movl %esi, %eax
 ; X86-NEXT:    mull %ebx
-; X86-NEXT:    imull $-1431655766, %ecx, %ecx # imm = 0xAAAAAAAA
-; X86-NEXT:    addl %ecx, %edx
-; X86-NEXT:    imull $-1431655765, %edi, %ecx # imm = 0xAAAAAAAB
+; X86-NEXT:    imull $-1431655766, %esi, %esi # imm = 0xAAAAAAAA
+; X86-NEXT:    addl %esi, %edx
+; X86-NEXT:    imull $-1431655765, %ecx, %ecx # imm = 0xAAAAAAAB
 ; X86-NEXT:    addl %ecx, %edx
 ; X86-NEXT:    movl %edx, %ecx
 ; X86-NEXT:    shldl $28, %eax, %ecx

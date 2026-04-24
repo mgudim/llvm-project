@@ -231,22 +231,22 @@ define <4 x float> @nearbyint_v4f32(<4 x float> %vf1, <4 x float> %vf2) strictfp
 ; P8-NEXT:    nop
 ; P8-NEXT:    xxmrghd vs0, vs1, v30
 ; P8-NEXT:    xscvspdpn f1, v31
-; P8-NEXT:    xvcvdpsp v29, vs0
+; P8-NEXT:    xvcvdpsp v30, vs0
 ; P8-NEXT:    bl nearbyintf
 ; P8-NEXT:    nop
 ; P8-NEXT:    xxswapd vs0, v31
-; P8-NEXT:    xxlor v30, f1, f1
+; P8-NEXT:    xxlor v29, f1, f1
 ; P8-NEXT:    xscvspdpn f1, vs0
 ; P8-NEXT:    bl nearbyintf
 ; P8-NEXT:    nop
-; P8-NEXT:    xxmrghd vs0, v30, vs1
+; P8-NEXT:    xxmrghd vs0, v29, vs1
 ; P8-NEXT:    li r3, 160
 ; P8-NEXT:    xvcvdpsp v2, vs0
 ; P8-NEXT:    lxvd2x v31, r1, r3 # 16-byte Folded Reload
 ; P8-NEXT:    li r3, 144
+; P8-NEXT:    vmrgew v2, v2, v30
 ; P8-NEXT:    lxvd2x v30, r1, r3 # 16-byte Folded Reload
 ; P8-NEXT:    li r3, 128
-; P8-NEXT:    vmrgew v2, v2, v29
 ; P8-NEXT:    lxvd2x v29, r1, r3 # 16-byte Folded Reload
 ; P8-NEXT:    addi r1, r1, 176
 ; P8-NEXT:    ld r0, 16(r1)
@@ -278,20 +278,20 @@ define <4 x float> @nearbyint_v4f32(<4 x float> %vf1, <4 x float> %vf2) strictfp
 ; P9-NEXT:    nop
 ; P9-NEXT:    xxmrghd vs0, vs1, v30
 ; P9-NEXT:    xscvspdpn f1, v31
-; P9-NEXT:    xvcvdpsp v29, vs0
+; P9-NEXT:    xvcvdpsp v30, vs0
 ; P9-NEXT:    bl nearbyintf
 ; P9-NEXT:    nop
 ; P9-NEXT:    xxswapd vs0, v31
-; P9-NEXT:    xscpsgndp v30, f1, f1
+; P9-NEXT:    xscpsgndp v29, f1, f1
 ; P9-NEXT:    xscvspdpn f1, vs0
 ; P9-NEXT:    bl nearbyintf
 ; P9-NEXT:    nop
-; P9-NEXT:    xxmrghd vs0, v30, vs1
+; P9-NEXT:    xxmrghd vs0, v29, vs1
 ; P9-NEXT:    lxv v31, 64(r1) # 16-byte Folded Reload
-; P9-NEXT:    lxv v30, 48(r1) # 16-byte Folded Reload
-; P9-NEXT:    xvcvdpsp v2, vs0
-; P9-NEXT:    vmrgew v2, v2, v29
 ; P9-NEXT:    lxv v29, 32(r1) # 16-byte Folded Reload
+; P9-NEXT:    xvcvdpsp v2, vs0
+; P9-NEXT:    vmrgew v2, v2, v30
+; P9-NEXT:    lxv v30, 48(r1) # 16-byte Folded Reload
 ; P9-NEXT:    addi r1, r1, 80
 ; P9-NEXT:    ld r0, 16(r1)
 ; P9-NEXT:    mtlr r0

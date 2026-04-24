@@ -740,11 +740,11 @@ define i16 @implicit_trunc_of_imm(ptr %p, i16 %a, i16 %b) {
 ; CHECK-LABEL: implicit_trunc_of_imm:
 ; CHECK:       // %bb.0: // %entry
 ; CHECK-NEXT:    and w8, w1, #0xffffe000
-; CHECK-NEXT:    mov x9, x0
-; CHECK-NEXT:    mov w10, w8
+; CHECK-NEXT:    mov x10, x0
+; CHECK-NEXT:    mov w9, w8
 ; CHECK-NEXT:    mov w0, w8
-; CHECK-NEXT:    bfxil w10, w2, #0, #1
-; CHECK-NEXT:    strh w10, [x9]
+; CHECK-NEXT:    bfxil w9, w2, #0, #1
+; CHECK-NEXT:    strh w9, [x10]
 ; CHECK-NEXT:    ret
 entry:
   %and1 = and i16 %a, -8192

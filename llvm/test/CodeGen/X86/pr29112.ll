@@ -10,46 +10,46 @@ define <4 x float> @bar(ptr %a1p, ptr %a2p, <4 x float> %a3, <4 x float> %a4, <1
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    subq $136, %rsp
 ; CHECK-NEXT:    .cfi_def_cfa_offset 144
-; CHECK-NEXT:    vmovaps %xmm1, %xmm13
+; CHECK-NEXT:    vmovaps %zmm3, %zmm0
+; CHECK-NEXT:    vmovaps %xmm1, %xmm3
 ; CHECK-NEXT:    vpmovsxbd {{.*#+}} xmm5 = [3,20,1,17]
-; CHECK-NEXT:    vpermi2ps %zmm3, %zmm2, %zmm5
-; CHECK-NEXT:    vunpcklps {{.*#+}} ymm0 = ymm2[0],ymm3[0],ymm2[1],ymm3[1],ymm2[4],ymm3[4],ymm2[5],ymm3[5]
-; CHECK-NEXT:    vpermpd {{.*#+}} ymm1 = ymm0[2,1,2,3]
-; CHECK-NEXT:    vpmovsxbd {{.*#+}} ymm0 = [4,21,1,17,4,21,5,21]
-; CHECK-NEXT:    vpermi2ps %zmm3, %zmm2, %zmm0
-; CHECK-NEXT:    vmovaps %zmm0, %zmm6
-; CHECK-NEXT:    vmovups %zmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 64-byte Spill
+; CHECK-NEXT:    vpermi2ps %zmm0, %zmm2, %zmm5
+; CHECK-NEXT:    vunpcklps {{.*#+}} ymm1 = ymm2[0],ymm0[0],ymm2[1],ymm0[1],ymm2[4],ymm0[4],ymm2[5],ymm0[5]
+; CHECK-NEXT:    vpermpd {{.*#+}} ymm12 = ymm1[2,1,2,3]
+; CHECK-NEXT:    vpmovsxbd {{.*#+}} ymm1 = [4,21,1,17,4,21,5,21]
+; CHECK-NEXT:    vpermi2ps %zmm0, %zmm2, %zmm1
+; CHECK-NEXT:    vmovaps %zmm1, %zmm13
+; CHECK-NEXT:    vmovups %zmm1, {{[-0-9]+}}(%r{{[sb]}}p) # 64-byte Spill
 ; CHECK-NEXT:    vpmovsxbd {{.*#+}} xmm4 = [4,20,1,27]
-; CHECK-NEXT:    vpermi2ps %zmm3, %zmm2, %zmm4
+; CHECK-NEXT:    vpermi2ps %zmm0, %zmm2, %zmm4
 ; CHECK-NEXT:    vpmovsxbd {{.*#+}} ymm7 = [5,20,1,19,5,20,5,23]
-; CHECK-NEXT:    vpermi2ps %zmm3, %zmm2, %zmm7
-; CHECK-NEXT:    vpmovsxbd {{.*#+}} ymm0 = [4,20,1,19,4,20,5,23]
-; CHECK-NEXT:    vpermi2ps %zmm3, %zmm2, %zmm0
-; CHECK-NEXT:    vpmovsxbd {{.*#+}} xmm12 = [4,28,1,17]
-; CHECK-NEXT:    vpermi2ps %zmm3, %zmm2, %zmm12
+; CHECK-NEXT:    vpermi2ps %zmm0, %zmm2, %zmm7
+; CHECK-NEXT:    vpmovsxbd {{.*#+}} ymm1 = [4,20,1,19,4,20,5,23]
+; CHECK-NEXT:    vpermi2ps %zmm0, %zmm2, %zmm1
+; CHECK-NEXT:    vpmovsxbd {{.*#+}} xmm6 = [4,28,1,17]
+; CHECK-NEXT:    vpermi2ps %zmm0, %zmm2, %zmm6
 ; CHECK-NEXT:    vpmovsxbd {{.*#+}} ymm8 = [5,20,1,17,5,20,5,21]
-; CHECK-NEXT:    vpermi2ps %zmm3, %zmm2, %zmm8
+; CHECK-NEXT:    vpermi2ps %zmm0, %zmm2, %zmm8
 ; CHECK-NEXT:    vpmovsxbd {{.*#+}} xmm9 = [4,30,1,22]
-; CHECK-NEXT:    vpermi2ps %zmm3, %zmm2, %zmm9
+; CHECK-NEXT:    vpermi2ps %zmm0, %zmm2, %zmm9
 ; CHECK-NEXT:    vpmovsxbd {{.*#+}} ymm10 = [4,22,1,17,4,22,5,21]
-; CHECK-NEXT:    vpermi2ps %zmm3, %zmm2, %zmm10
+; CHECK-NEXT:    vpermi2ps %zmm0, %zmm2, %zmm10
 ; CHECK-NEXT:    vpmovsxbd {{.*#+}} ymm11 = [4,20,3,18,4,20,7,22]
-; CHECK-NEXT:    vpermi2ps %zmm3, %zmm2, %zmm11
+; CHECK-NEXT:    vpermi2ps %zmm0, %zmm2, %zmm11
 ; CHECK-NEXT:    vaddps %xmm10, %xmm11, %xmm2
-; CHECK-NEXT:    vmovups %ymm1, {{[-0-9]+}}(%r{{[sb]}}p) # 32-byte Spill
-; CHECK-NEXT:    vaddps %xmm1, %xmm9, %xmm3
-; CHECK-NEXT:    vaddps %xmm12, %xmm8, %xmm9
-; CHECK-NEXT:    vaddps %xmm1, %xmm1, %xmm8
-; CHECK-NEXT:    vaddps %xmm0, %xmm10, %xmm0
-; CHECK-NEXT:    vaddps %xmm0, %xmm9, %xmm0
+; CHECK-NEXT:    vmovups %ymm12, {{[-0-9]+}}(%r{{[sb]}}p) # 32-byte Spill
+; CHECK-NEXT:    vaddps %xmm9, %xmm12, %xmm9
+; CHECK-NEXT:    vaddps %xmm6, %xmm8, %xmm0
+; CHECK-NEXT:    vaddps %xmm12, %xmm12, %xmm6
+; CHECK-NEXT:    vaddps %xmm1, %xmm10, %xmm1
 ; CHECK-NEXT:    vaddps %xmm0, %xmm1, %xmm0
-; CHECK-NEXT:    vmovaps %xmm8, {{[0-9]+}}(%rsp)
-; CHECK-NEXT:    vmovaps %xmm3, (%rsp)
-; CHECK-NEXT:    # kill: def $xmm1 killed $xmm1 killed $ymm1
-; CHECK-NEXT:    vmovaps %xmm13, %xmm3
+; CHECK-NEXT:    vaddps %xmm0, %xmm12, %xmm0
+; CHECK-NEXT:    vmovaps %xmm6, {{[0-9]+}}(%rsp)
+; CHECK-NEXT:    vmovaps %xmm9, (%rsp)
+; CHECK-NEXT:    vmovaps %xmm12, %xmm1
 ; CHECK-NEXT:    # kill: def $xmm4 killed $xmm4 killed $zmm4
 ; CHECK-NEXT:    # kill: def $xmm5 killed $xmm5 killed $zmm5
-; CHECK-NEXT:    # kill: def $xmm6 killed $xmm6 killed $zmm6
+; CHECK-NEXT:    vmovaps %xmm13, %xmm6
 ; CHECK-NEXT:    # kill: def $xmm7 killed $xmm7 killed $zmm7
 ; CHECK-NEXT:    vzeroupper
 ; CHECK-NEXT:    callq foo@PLT

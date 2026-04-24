@@ -344,6 +344,7 @@ define <vscale x 32 x i32> @select_nxv32i32(<vscale x 32 x i1> %a, <vscale x 32 
 define <vscale x 32 x i32> @select_evl_nxv32i32(<vscale x 32 x i1> %a, <vscale x 32 x i32> %b, <vscale x 32 x i32> %c) {
 ; RV32-LABEL: select_evl_nxv32i32:
 ; RV32:       # %bb.0:
+; RV32-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; RV32-NEXT:    csrr a1, vlenb
 ; RV32-NEXT:    slli a2, a1, 3
 ; RV32-NEXT:    vsetvli zero, a1, e32, m8, ta, ma

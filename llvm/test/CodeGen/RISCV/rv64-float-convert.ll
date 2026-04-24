@@ -158,25 +158,25 @@ define i128 @fptosi_sat_f32_to_i128(float %a) nounwind {
 ; RV64IZFINX-NEXT:    sd ra, 24(sp) # 8-byte Folded Spill
 ; RV64IZFINX-NEXT:    sd s0, 16(sp) # 8-byte Folded Spill
 ; RV64IZFINX-NEXT:    sd s1, 8(sp) # 8-byte Folded Spill
-; RV64IZFINX-NEXT:    mv s0, a0
+; RV64IZFINX-NEXT:    mv s1, a0
 ; RV64IZFINX-NEXT:    lui a0, 1044480
-; RV64IZFINX-NEXT:    fle.s s1, a0, s0
-; RV64IZFINX-NEXT:    mv a0, s0
+; RV64IZFINX-NEXT:    fle.s s0, a0, s1
+; RV64IZFINX-NEXT:    mv a0, s1
 ; RV64IZFINX-NEXT:    call __fixsfti
 ; RV64IZFINX-NEXT:    li a2, -1
-; RV64IZFINX-NEXT:    bnez s1, .LBB4_2
+; RV64IZFINX-NEXT:    bnez s0, .LBB4_2
 ; RV64IZFINX-NEXT:  # %bb.1:
 ; RV64IZFINX-NEXT:    slli a1, a2, 63
 ; RV64IZFINX-NEXT:  .LBB4_2:
 ; RV64IZFINX-NEXT:    lui a3, 520192
 ; RV64IZFINX-NEXT:    addi a3, a3, -1
-; RV64IZFINX-NEXT:    flt.s a3, a3, s0
+; RV64IZFINX-NEXT:    flt.s a3, a3, s1
 ; RV64IZFINX-NEXT:    beqz a3, .LBB4_4
 ; RV64IZFINX-NEXT:  # %bb.3:
 ; RV64IZFINX-NEXT:    srli a1, a2, 1
 ; RV64IZFINX-NEXT:  .LBB4_4:
-; RV64IZFINX-NEXT:    feq.s a2, s0, s0
-; RV64IZFINX-NEXT:    neg a4, s1
+; RV64IZFINX-NEXT:    feq.s a2, s1, s1
+; RV64IZFINX-NEXT:    neg a4, s0
 ; RV64IZFINX-NEXT:    neg a3, a3
 ; RV64IZFINX-NEXT:    neg a2, a2
 ; RV64IZFINX-NEXT:    and a0, a4, a0

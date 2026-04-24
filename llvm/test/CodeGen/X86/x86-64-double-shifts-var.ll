@@ -32,12 +32,12 @@
 define i64 @lshift(i64 %a, i64 %b, i32 %c) nounwind readnone {
 ; X64-LABEL: lshift:
 ; X64:       # %bb.0: # %entry
-; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    movq %rsi, %rax
+; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    shlq %cl, %rdi
 ; X64-NEXT:    shrq %rax
-; X64-NEXT:    notb %cl
-; X64-NEXT:    # kill: def $cl killed $cl killed $ecx
+; X64-NEXT:    notb %dl
+; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    shrq %cl, %rax
 ; X64-NEXT:    orq %rdi, %rax
 ; X64-NEXT:    retq
@@ -46,10 +46,10 @@ define i64 @lshift(i64 %a, i64 %b, i32 %c) nounwind readnone {
 ; BMI:       # %bb.0: # %entry
 ; BMI-NEXT:    movq %rsi, %rax
 ; BMI-NEXT:    movl %edx, %ecx
-; BMI-NEXT:    shrq %rax
+; BMI-NEXT:    notb %dl
 ; BMI-NEXT:    shlq %cl, %rdi
-; BMI-NEXT:    notb %cl
-; BMI-NEXT:    # kill: def $cl killed $cl killed $ecx
+; BMI-NEXT:    shrq %rax
+; BMI-NEXT:    movl %edx, %ecx
 ; BMI-NEXT:    shrq %cl, %rax
 ; BMI-NEXT:    orq %rdi, %rax
 ; BMI-NEXT:    retq
@@ -92,8 +92,8 @@ define i64 @rshift(i64 %a, i64 %b, i32 %c) nounwind readnone {
 ; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    shrq %cl, %rdi
 ; X64-NEXT:    leaq (%rsi,%rsi), %rax
-; X64-NEXT:    notb %cl
-; X64-NEXT:    # kill: def $cl killed $cl killed $ecx
+; X64-NEXT:    notb %dl
+; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    shlq %cl, %rax
 ; X64-NEXT:    orq %rdi, %rax
 ; X64-NEXT:    retq
@@ -101,10 +101,10 @@ define i64 @rshift(i64 %a, i64 %b, i32 %c) nounwind readnone {
 ; BMI-LABEL: rshift:
 ; BMI:       # %bb.0: # %entry
 ; BMI-NEXT:    movl %edx, %ecx
+; BMI-NEXT:    notb %dl
 ; BMI-NEXT:    leaq (%rsi,%rsi), %rax
 ; BMI-NEXT:    shrq %cl, %rdi
-; BMI-NEXT:    notb %cl
-; BMI-NEXT:    # kill: def $cl killed $cl killed $ecx
+; BMI-NEXT:    movl %edx, %ecx
 ; BMI-NEXT:    shlq %cl, %rax
 ; BMI-NEXT:    orq %rdi, %rax
 ; BMI-NEXT:    retq

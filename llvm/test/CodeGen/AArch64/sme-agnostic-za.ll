@@ -200,39 +200,39 @@ define i64 @streaming_compatible_agnostic_caller_nonstreaming_private_za_callee(
 ; CHECK-SDAG-NEXT:    stp x29, x30, [sp, #64] // 16-byte Folded Spill
 ; CHECK-SDAG-NEXT:    add x29, sp, #64
 ; CHECK-SDAG-NEXT:    stp x20, x19, [sp, #80] // 16-byte Folded Spill
-; CHECK-SDAG-NEXT:    mrs x20, SVCR
+; CHECK-SDAG-NEXT:    mrs x19, SVCR
 ; CHECK-SDAG-NEXT:    bl __arm_sme_state_size
 ; CHECK-SDAG-NEXT:    sub sp, sp, x0
-; CHECK-SDAG-NEXT:    mov x19, sp
-; CHECK-SDAG-NEXT:    mov x0, x19
+; CHECK-SDAG-NEXT:    mov x20, sp
+; CHECK-SDAG-NEXT:    mov x0, x20
 ; CHECK-SDAG-NEXT:    bl __arm_sme_save
-; CHECK-SDAG-NEXT:    tbz w20, #0, .LBB5_2
+; CHECK-SDAG-NEXT:    tbz w19, #0, .LBB5_2
 ; CHECK-SDAG-NEXT:  // %bb.1:
 ; CHECK-SDAG-NEXT:    smstop sm
 ; CHECK-SDAG-NEXT:  .LBB5_2:
 ; CHECK-SDAG-NEXT:    mov x0, x8
 ; CHECK-SDAG-NEXT:    bl private_za_decl
 ; CHECK-SDAG-NEXT:    mov x1, x0
-; CHECK-SDAG-NEXT:    tbz w20, #0, .LBB5_4
+; CHECK-SDAG-NEXT:    tbz w19, #0, .LBB5_4
 ; CHECK-SDAG-NEXT:  // %bb.3:
 ; CHECK-SDAG-NEXT:    smstart sm
 ; CHECK-SDAG-NEXT:  .LBB5_4:
-; CHECK-SDAG-NEXT:    mov x0, x19
+; CHECK-SDAG-NEXT:    mov x0, x20
 ; CHECK-SDAG-NEXT:    bl __arm_sme_restore
-; CHECK-SDAG-NEXT:    mov x0, x19
+; CHECK-SDAG-NEXT:    mov x0, x20
 ; CHECK-SDAG-NEXT:    bl __arm_sme_save
-; CHECK-SDAG-NEXT:    tbz w20, #0, .LBB5_6
+; CHECK-SDAG-NEXT:    tbz w19, #0, .LBB5_6
 ; CHECK-SDAG-NEXT:  // %bb.5:
 ; CHECK-SDAG-NEXT:    smstop sm
 ; CHECK-SDAG-NEXT:  .LBB5_6:
 ; CHECK-SDAG-NEXT:    mov x0, x1
 ; CHECK-SDAG-NEXT:    bl private_za_decl
 ; CHECK-SDAG-NEXT:    mov x1, x0
-; CHECK-SDAG-NEXT:    tbz w20, #0, .LBB5_8
+; CHECK-SDAG-NEXT:    tbz w19, #0, .LBB5_8
 ; CHECK-SDAG-NEXT:  // %bb.7:
 ; CHECK-SDAG-NEXT:    smstart sm
 ; CHECK-SDAG-NEXT:  .LBB5_8:
-; CHECK-SDAG-NEXT:    mov x0, x19
+; CHECK-SDAG-NEXT:    mov x0, x20
 ; CHECK-SDAG-NEXT:    bl __arm_sme_restore
 ; CHECK-SDAG-NEXT:    mov x0, x1
 ; CHECK-SDAG-NEXT:    sub sp, x29, #64

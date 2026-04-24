@@ -10,22 +10,28 @@ define amdgpu_ps void @global_store_saddr_i8_zext_vgpr(ptr addrspace(1) inreg %s
 ; GCN-LABEL: global_store_saddr_i8_zext_vgpr:
 ; GCN:       ; %bb.0:
 ; GCN-NEXT:    global_load_dword v0, v[0:1], off
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
-; GCN-NEXT:    global_store_byte v0, v2, s[2:3]
+; GCN-NEXT:    global_store_byte v0, v2, s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i8_zext_vgpr:
 ; GFX11:       ; %bb.0:
 ; GFX11-NEXT:    global_load_b32 v0, v[0:1], off
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b8 v0, v2, s[2:3]
+; GFX11-NEXT:    global_store_b8 v0, v2, s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i8_zext_vgpr:
 ; GFX12:       ; %bb.0:
 ; GFX12-NEXT:    global_load_b32 v0, v[0:1], off
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b8 v0, v2, s[2:3]
+; GFX12-NEXT:    global_store_b8 v0, v2, s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %voffset = load i32, ptr addrspace(1) %voffset.ptr
   %zext.offset = zext i32 %voffset to i64
@@ -39,22 +45,28 @@ define amdgpu_ps void @global_store_saddr_i8_zext_vgpr_offset_2047(ptr addrspace
 ; GCN-LABEL: global_store_saddr_i8_zext_vgpr_offset_2047:
 ; GCN:       ; %bb.0:
 ; GCN-NEXT:    global_load_dword v0, v[0:1], off
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
-; GCN-NEXT:    global_store_byte v0, v2, s[2:3] offset:2047
+; GCN-NEXT:    global_store_byte v0, v2, s[0:1] offset:2047
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i8_zext_vgpr_offset_2047:
 ; GFX11:       ; %bb.0:
 ; GFX11-NEXT:    global_load_b32 v0, v[0:1], off
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b8 v0, v2, s[2:3] offset:2047
+; GFX11-NEXT:    global_store_b8 v0, v2, s[0:1] offset:2047
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i8_zext_vgpr_offset_2047:
 ; GFX12:       ; %bb.0:
 ; GFX12-NEXT:    global_load_b32 v0, v[0:1], off
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b8 v0, v2, s[2:3] offset:2047
+; GFX12-NEXT:    global_store_b8 v0, v2, s[0:1] offset:2047
 ; GFX12-NEXT:    s_endpgm
   %voffset = load i32, ptr addrspace(1) %voffset.ptr
   %zext.offset = zext i32 %voffset to i64
@@ -69,22 +81,28 @@ define amdgpu_ps void @global_store_saddr_i8_zext_vgpr_offset_neg2048(ptr addrsp
 ; GCN-LABEL: global_store_saddr_i8_zext_vgpr_offset_neg2048:
 ; GCN:       ; %bb.0:
 ; GCN-NEXT:    global_load_dword v0, v[0:1], off
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
-; GCN-NEXT:    global_store_byte v0, v2, s[2:3] offset:-2048
+; GCN-NEXT:    global_store_byte v0, v2, s[0:1] offset:-2048
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i8_zext_vgpr_offset_neg2048:
 ; GFX11:       ; %bb.0:
 ; GFX11-NEXT:    global_load_b32 v0, v[0:1], off
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b8 v0, v2, s[2:3] offset:-2048
+; GFX11-NEXT:    global_store_b8 v0, v2, s[0:1] offset:-2048
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i8_zext_vgpr_offset_neg2048:
 ; GFX12:       ; %bb.0:
 ; GFX12-NEXT:    global_load_b32 v0, v[0:1], off
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b8 v0, v2, s[2:3] offset:-2048
+; GFX12-NEXT:    global_store_b8 v0, v2, s[0:1] offset:-2048
 ; GFX12-NEXT:    s_endpgm
   %voffset = load i32, ptr addrspace(1) %voffset.ptr
   %zext.offset = zext i32 %voffset to i64
@@ -206,17 +224,23 @@ define amdgpu_ps void @global_store_saddr_uniform_ptr_in_vgprs_immoffset(i32 %vo
 define amdgpu_ps void @global_store_saddr_i16_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, i16 %data) {
 ; GCN-LABEL: global_store_saddr_i16_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_short v0, v1, s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_short v0, v1, s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i16_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b16 v0, v1, s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b16 v0, v1, s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i16_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b16 v0, v1, s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b16 v0, v1, s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -227,17 +251,23 @@ define amdgpu_ps void @global_store_saddr_i16_zext_vgpr(ptr addrspace(1) inreg %
 define amdgpu_ps void @global_store_saddr_i16_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, i16 %data) {
 ; GCN-LABEL: global_store_saddr_i16_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_short v0, v1, s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_short v0, v1, s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i16_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b16 v0, v1, s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b16 v0, v1, s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i16_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b16 v0, v1, s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b16 v0, v1, s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -249,17 +279,23 @@ define amdgpu_ps void @global_store_saddr_i16_zext_vgpr_offset_neg128(ptr addrsp
 define amdgpu_ps void @global_store_saddr_f16_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, half %data) {
 ; GCN-LABEL: global_store_saddr_f16_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_short v0, v1, s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_short v0, v1, s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_f16_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b16 v0, v1, s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b16 v0, v1, s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_f16_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b16 v0, v1, s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b16 v0, v1, s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -270,17 +306,23 @@ define amdgpu_ps void @global_store_saddr_f16_zext_vgpr(ptr addrspace(1) inreg %
 define amdgpu_ps void @global_store_saddr_f16_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, half %data) {
 ; GCN-LABEL: global_store_saddr_f16_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_short v0, v1, s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_short v0, v1, s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_f16_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b16 v0, v1, s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b16 v0, v1, s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_f16_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b16 v0, v1, s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b16 v0, v1, s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -292,17 +334,23 @@ define amdgpu_ps void @global_store_saddr_f16_zext_vgpr_offset_neg128(ptr addrsp
 define amdgpu_ps void @global_store_saddr_i32_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, i32 %data) {
 ; GCN-LABEL: global_store_saddr_i32_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dword v0, v1, s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dword v0, v1, s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i32_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b32 v0, v1, s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b32 v0, v1, s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i32_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b32 v0, v1, s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b32 v0, v1, s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -313,17 +361,23 @@ define amdgpu_ps void @global_store_saddr_i32_zext_vgpr(ptr addrspace(1) inreg %
 define amdgpu_ps void @global_store_saddr_i32_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, i32 %data) {
 ; GCN-LABEL: global_store_saddr_i32_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dword v0, v1, s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dword v0, v1, s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i32_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b32 v0, v1, s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b32 v0, v1, s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i32_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b32 v0, v1, s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b32 v0, v1, s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -335,17 +389,23 @@ define amdgpu_ps void @global_store_saddr_i32_zext_vgpr_offset_neg128(ptr addrsp
 define amdgpu_ps void @global_store_saddr_f32_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, float %data) {
 ; GCN-LABEL: global_store_saddr_f32_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dword v0, v1, s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dword v0, v1, s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_f32_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b32 v0, v1, s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b32 v0, v1, s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_f32_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b32 v0, v1, s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b32 v0, v1, s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -356,17 +416,23 @@ define amdgpu_ps void @global_store_saddr_f32_zext_vgpr(ptr addrspace(1) inreg %
 define amdgpu_ps void @global_store_saddr_f32_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, float %data) {
 ; GCN-LABEL: global_store_saddr_f32_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dword v0, v1, s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dword v0, v1, s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_f32_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b32 v0, v1, s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b32 v0, v1, s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_f32_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b32 v0, v1, s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b32 v0, v1, s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -378,17 +444,23 @@ define amdgpu_ps void @global_store_saddr_f32_zext_vgpr_offset_neg128(ptr addrsp
 define amdgpu_ps void @global_store_saddr_p3_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, ptr addrspace(3) %data) {
 ; GCN-LABEL: global_store_saddr_p3_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dword v0, v1, s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dword v0, v1, s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_p3_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b32 v0, v1, s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b32 v0, v1, s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_p3_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b32 v0, v1, s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b32 v0, v1, s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -399,17 +471,23 @@ define amdgpu_ps void @global_store_saddr_p3_zext_vgpr(ptr addrspace(1) inreg %s
 define amdgpu_ps void @global_store_saddr_p3_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, ptr addrspace(3) %data) {
 ; GCN-LABEL: global_store_saddr_p3_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dword v0, v1, s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dword v0, v1, s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_p3_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b32 v0, v1, s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b32 v0, v1, s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_p3_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b32 v0, v1, s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b32 v0, v1, s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -421,17 +499,23 @@ define amdgpu_ps void @global_store_saddr_p3_zext_vgpr_offset_neg128(ptr addrspa
 define amdgpu_ps void @global_store_saddr_i64_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, i64 %data) {
 ; GCN-LABEL: global_store_saddr_i64_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i64_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i64_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -442,17 +526,23 @@ define amdgpu_ps void @global_store_saddr_i64_zext_vgpr(ptr addrspace(1) inreg %
 define amdgpu_ps void @global_store_saddr_i64_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, i64 %data) {
 ; GCN-LABEL: global_store_saddr_i64_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i64_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i64_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -464,17 +554,23 @@ define amdgpu_ps void @global_store_saddr_i64_zext_vgpr_offset_neg128(ptr addrsp
 define amdgpu_ps void @global_store_saddr_f64_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, double %data) {
 ; GCN-LABEL: global_store_saddr_f64_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_f64_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_f64_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -485,17 +581,23 @@ define amdgpu_ps void @global_store_saddr_f64_zext_vgpr(ptr addrspace(1) inreg %
 define amdgpu_ps void @global_store_saddr_f64_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, double %data) {
 ; GCN-LABEL: global_store_saddr_f64_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_f64_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_f64_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -507,17 +609,23 @@ define amdgpu_ps void @global_store_saddr_f64_zext_vgpr_offset_neg128(ptr addrsp
 define amdgpu_ps void @global_store_saddr_v2i32_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x i32> %data) {
 ; GCN-LABEL: global_store_saddr_v2i32_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v2i32_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v2i32_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -528,17 +636,23 @@ define amdgpu_ps void @global_store_saddr_v2i32_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v2i32_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x i32> %data) {
 ; GCN-LABEL: global_store_saddr_v2i32_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v2i32_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v2i32_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -550,17 +664,23 @@ define amdgpu_ps void @global_store_saddr_v2i32_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v2f32_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x float> %data) {
 ; GCN-LABEL: global_store_saddr_v2f32_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v2f32_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v2f32_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -571,17 +691,23 @@ define amdgpu_ps void @global_store_saddr_v2f32_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v2f32_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x float> %data) {
 ; GCN-LABEL: global_store_saddr_v2f32_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v2f32_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v2f32_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -593,17 +719,23 @@ define amdgpu_ps void @global_store_saddr_v2f32_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v4i16_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <4 x i16> %data) {
 ; GCN-LABEL: global_store_saddr_v4i16_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v4i16_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v4i16_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -614,17 +746,23 @@ define amdgpu_ps void @global_store_saddr_v4i16_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v4i16_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <4 x i16> %data) {
 ; GCN-LABEL: global_store_saddr_v4i16_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v4i16_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v4i16_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -636,17 +774,23 @@ define amdgpu_ps void @global_store_saddr_v4i16_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v4f16_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <4 x half> %data) {
 ; GCN-LABEL: global_store_saddr_v4f16_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v4f16_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v4f16_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -657,17 +801,23 @@ define amdgpu_ps void @global_store_saddr_v4f16_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v4f16_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <4 x half> %data) {
 ; GCN-LABEL: global_store_saddr_v4f16_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v4f16_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v4f16_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -679,17 +829,23 @@ define amdgpu_ps void @global_store_saddr_v4f16_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_p1_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, ptr addrspace(1) %data) {
 ; GCN-LABEL: global_store_saddr_p1_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_p1_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_p1_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -700,17 +856,23 @@ define amdgpu_ps void @global_store_saddr_p1_zext_vgpr(ptr addrspace(1) inreg %s
 define amdgpu_ps void @global_store_saddr_p1_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, ptr addrspace(1) %data) {
 ; GCN-LABEL: global_store_saddr_p1_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_p1_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_p1_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -722,17 +884,23 @@ define amdgpu_ps void @global_store_saddr_p1_zext_vgpr_offset_neg128(ptr addrspa
 define amdgpu_ps void @global_store_saddr_v3i32_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <3 x i32> %data) {
 ; GCN-LABEL: global_store_saddr_v3i32_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v3i32_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v3i32_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -743,17 +911,23 @@ define amdgpu_ps void @global_store_saddr_v3i32_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v3i32_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <3 x i32> %data) {
 ; GCN-LABEL: global_store_saddr_v3i32_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v3i32_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v3i32_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -765,17 +939,23 @@ define amdgpu_ps void @global_store_saddr_v3i32_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v3f32_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <3 x float> %data) {
 ; GCN-LABEL: global_store_saddr_v3f32_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v3f32_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v3f32_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -786,17 +966,23 @@ define amdgpu_ps void @global_store_saddr_v3f32_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v3f32_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <3 x float> %data) {
 ; GCN-LABEL: global_store_saddr_v3f32_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v3f32_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v3f32_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -808,17 +994,23 @@ define amdgpu_ps void @global_store_saddr_v3f32_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v6i16_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <6 x i16> %data) {
 ; GCN-LABEL: global_store_saddr_v6i16_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v6i16_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v6i16_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -829,17 +1021,23 @@ define amdgpu_ps void @global_store_saddr_v6i16_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v6i16_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <6 x i16> %data) {
 ; GCN-LABEL: global_store_saddr_v6i16_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v6i16_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v6i16_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -851,17 +1049,23 @@ define amdgpu_ps void @global_store_saddr_v6i16_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v6f16_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <6 x half> %data) {
 ; GCN-LABEL: global_store_saddr_v6f16_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v6f16_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v6f16_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -872,17 +1076,23 @@ define amdgpu_ps void @global_store_saddr_v6f16_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v6f16_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <6 x half> %data) {
 ; GCN-LABEL: global_store_saddr_v6f16_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx3 v0, v[1:3], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v6f16_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b96 v0, v[1:3], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v6f16_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b96 v0, v[1:3], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -894,17 +1104,23 @@ define amdgpu_ps void @global_store_saddr_v6f16_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v4i32_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <4 x i32> %data) {
 ; GCN-LABEL: global_store_saddr_v4i32_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v4i32_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v4i32_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -915,17 +1131,23 @@ define amdgpu_ps void @global_store_saddr_v4i32_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v4i32_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <4 x i32> %data) {
 ; GCN-LABEL: global_store_saddr_v4i32_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v4i32_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v4i32_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -937,17 +1159,23 @@ define amdgpu_ps void @global_store_saddr_v4i32_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v4f32_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <4 x float> %data) {
 ; GCN-LABEL: global_store_saddr_v4f32_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v4f32_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v4f32_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -958,17 +1186,23 @@ define amdgpu_ps void @global_store_saddr_v4f32_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v4f32_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <4 x float> %data) {
 ; GCN-LABEL: global_store_saddr_v4f32_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v4f32_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v4f32_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -980,17 +1214,23 @@ define amdgpu_ps void @global_store_saddr_v4f32_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v2i64_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x i64> %data) {
 ; GCN-LABEL: global_store_saddr_v2i64_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v2i64_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v2i64_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1001,17 +1241,23 @@ define amdgpu_ps void @global_store_saddr_v2i64_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v2i64_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x i64> %data) {
 ; GCN-LABEL: global_store_saddr_v2i64_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v2i64_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v2i64_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1023,17 +1269,23 @@ define amdgpu_ps void @global_store_saddr_v2i64_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v2f64_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x double> %data) {
 ; GCN-LABEL: global_store_saddr_v2f64_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v2f64_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v2f64_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1044,17 +1296,23 @@ define amdgpu_ps void @global_store_saddr_v2f64_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v2f64_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x double> %data) {
 ; GCN-LABEL: global_store_saddr_v2f64_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v2f64_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v2f64_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1066,17 +1324,23 @@ define amdgpu_ps void @global_store_saddr_v2f64_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v8i16_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <8 x i16> %data) {
 ; GCN-LABEL: global_store_saddr_v8i16_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v8i16_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v8i16_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1087,17 +1351,23 @@ define amdgpu_ps void @global_store_saddr_v8i16_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v8i16_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <8 x i16> %data) {
 ; GCN-LABEL: global_store_saddr_v8i16_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v8i16_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v8i16_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1109,17 +1379,23 @@ define amdgpu_ps void @global_store_saddr_v8i16_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v8f16_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <8 x half> %data) {
 ; GCN-LABEL: global_store_saddr_v8f16_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v8f16_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v8f16_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1130,17 +1406,23 @@ define amdgpu_ps void @global_store_saddr_v8f16_zext_vgpr(ptr addrspace(1) inreg
 define amdgpu_ps void @global_store_saddr_v8f16_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <8 x half> %data) {
 ; GCN-LABEL: global_store_saddr_v8f16_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v8f16_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v8f16_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1152,17 +1434,23 @@ define amdgpu_ps void @global_store_saddr_v8f16_zext_vgpr_offset_neg128(ptr addr
 define amdgpu_ps void @global_store_saddr_v2p1_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x ptr addrspace(1)> %data) {
 ; GCN-LABEL: global_store_saddr_v2p1_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v2p1_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v2p1_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1173,17 +1461,23 @@ define amdgpu_ps void @global_store_saddr_v2p1_zext_vgpr(ptr addrspace(1) inreg 
 define amdgpu_ps void @global_store_saddr_v2p1_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x ptr addrspace(1)> %data) {
 ; GCN-LABEL: global_store_saddr_v2p1_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v2p1_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v2p1_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1195,17 +1489,23 @@ define amdgpu_ps void @global_store_saddr_v2p1_zext_vgpr_offset_neg128(ptr addrs
 define amdgpu_ps void @global_store_saddr_v4p3_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <4 x ptr addrspace(3)> %data) {
 ; GCN-LABEL: global_store_saddr_v4p3_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v4p3_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v4p3_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1216,17 +1516,23 @@ define amdgpu_ps void @global_store_saddr_v4p3_zext_vgpr(ptr addrspace(1) inreg 
 define amdgpu_ps void @global_store_saddr_v4p3_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <4 x ptr addrspace(3)> %data) {
 ; GCN-LABEL: global_store_saddr_v4p3_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx4 v0, v[1:4], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_v4p3_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_v4p3_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_b128 v0, v[1:4], s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1242,19 +1548,25 @@ define amdgpu_ps void @global_store_saddr_v4p3_zext_vgpr_offset_neg128(ptr addrs
 define amdgpu_ps void @atomic_global_store_saddr_i32_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, i32 %data) {
 ; GCN-LABEL: atomic_global_store_saddr_i32_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dword v0, v1, s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dword v0, v1, s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: atomic_global_store_saddr_i32_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b32 v0, v1, s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b32 v0, v1, s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: atomic_global_store_saddr_i32_zext_vgpr:
 ; GFX12:       ; %bb.0:
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
 ; GFX12-NEXT:    global_wb scope:SCOPE_SYS
 ; GFX12-NEXT:    s_wait_storecnt 0x0
-; GFX12-NEXT:    global_store_b32 v0, v1, s[2:3] scope:SCOPE_SYS
+; GFX12-NEXT:    global_store_b32 v0, v1, s[0:1] scope:SCOPE_SYS
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1265,19 +1577,25 @@ define amdgpu_ps void @atomic_global_store_saddr_i32_zext_vgpr(ptr addrspace(1) 
 define amdgpu_ps void @atomic_global_store_saddr_i32_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, i32 %data) {
 ; GCN-LABEL: atomic_global_store_saddr_i32_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dword v0, v1, s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dword v0, v1, s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: atomic_global_store_saddr_i32_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b32 v0, v1, s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b32 v0, v1, s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: atomic_global_store_saddr_i32_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
 ; GFX12-NEXT:    global_wb scope:SCOPE_SYS
 ; GFX12-NEXT:    s_wait_storecnt 0x0
-; GFX12-NEXT:    global_store_b32 v0, v1, s[2:3] offset:-128 scope:SCOPE_SYS
+; GFX12-NEXT:    global_store_b32 v0, v1, s[0:1] offset:-128 scope:SCOPE_SYS
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1289,19 +1607,25 @@ define amdgpu_ps void @atomic_global_store_saddr_i32_zext_vgpr_offset_neg128(ptr
 define amdgpu_ps void @atomic_global_store_saddr_i64_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, i64 %data) {
 ; GCN-LABEL: atomic_global_store_saddr_i64_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: atomic_global_store_saddr_i64_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: atomic_global_store_saddr_i64_zext_vgpr:
 ; GFX12:       ; %bb.0:
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
 ; GFX12-NEXT:    global_wb scope:SCOPE_SYS
 ; GFX12-NEXT:    s_wait_storecnt 0x0
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3] scope:SCOPE_SYS
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1] scope:SCOPE_SYS
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1312,19 +1636,25 @@ define amdgpu_ps void @atomic_global_store_saddr_i64_zext_vgpr(ptr addrspace(1) 
 define amdgpu_ps void @atomic_global_store_saddr_i64_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, i64 %data) {
 ; GCN-LABEL: atomic_global_store_saddr_i64_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_dwordx2 v0, v[1:2], s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: atomic_global_store_saddr_i64_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: atomic_global_store_saddr_i64_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
 ; GFX12-NEXT:    global_wb scope:SCOPE_SYS
 ; GFX12-NEXT:    s_wait_storecnt 0x0
-; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[2:3] offset:-128 scope:SCOPE_SYS
+; GFX12-NEXT:    global_store_b64 v0, v[1:2], s[0:1] offset:-128 scope:SCOPE_SYS
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1340,17 +1670,23 @@ define amdgpu_ps void @atomic_global_store_saddr_i64_zext_vgpr_offset_neg128(ptr
 define amdgpu_ps void @global_store_saddr_i16_d16hi_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x i16> %data) {
 ; GCN-LABEL: global_store_saddr_i16_d16hi_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_short_d16_hi v0, v1, s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_short_d16_hi v0, v1, s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i16_d16hi_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_d16_hi_b16 v0, v1, s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_d16_hi_b16 v0, v1, s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i16_d16hi_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_d16_hi_b16 v0, v1, s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_d16_hi_b16 v0, v1, s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1362,17 +1698,23 @@ define amdgpu_ps void @global_store_saddr_i16_d16hi_zext_vgpr(ptr addrspace(1) i
 define amdgpu_ps void @global_store_saddr_i16_d16hi_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x i16> %data) {
 ; GCN-LABEL: global_store_saddr_i16_d16hi_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_short_d16_hi v0, v1, s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_short_d16_hi v0, v1, s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i16_d16hi_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_d16_hi_b16 v0, v1, s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_d16_hi_b16 v0, v1, s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i16_d16hi_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_d16_hi_b16 v0, v1, s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_d16_hi_b16 v0, v1, s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1385,17 +1727,23 @@ define amdgpu_ps void @global_store_saddr_i16_d16hi_zext_vgpr_offset_neg128(ptr 
 define amdgpu_ps void @global_store_saddr_i16_d16hi_trunci8_zext_vgpr(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x i16> %data) {
 ; GCN-LABEL: global_store_saddr_i16_d16hi_trunci8_zext_vgpr:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_byte_d16_hi v0, v1, s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_byte_d16_hi v0, v1, s[0:1]
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i16_d16hi_trunci8_zext_vgpr:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_d16_hi_b8 v0, v1, s[2:3]
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_d16_hi_b8 v0, v1, s[0:1]
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i16_d16hi_trunci8_zext_vgpr:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_d16_hi_b8 v0, v1, s[2:3]
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_d16_hi_b8 v0, v1, s[0:1]
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset
@@ -1408,17 +1756,23 @@ define amdgpu_ps void @global_store_saddr_i16_d16hi_trunci8_zext_vgpr(ptr addrsp
 define amdgpu_ps void @global_store_saddr_i16_d16hi_trunci8_zext_vgpr_offset_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x i16> %data) {
 ; GCN-LABEL: global_store_saddr_i16_d16hi_trunci8_zext_vgpr_offset_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_store_byte_d16_hi v0, v1, s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_store_byte_d16_hi v0, v1, s[0:1] offset:-128
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: global_store_saddr_i16_d16hi_trunci8_zext_vgpr_offset_neg128:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    global_store_d16_hi_b8 v0, v1, s[2:3] offset:-128
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    global_store_d16_hi_b8 v0, v1, s[0:1] offset:-128
 ; GFX11-NEXT:    s_endpgm
 ;
 ; GFX12-LABEL: global_store_saddr_i16_d16hi_trunci8_zext_vgpr_offset_neg128:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_store_d16_hi_b8 v0, v1, s[2:3] offset:-128
+; GFX12-NEXT:    s_mov_b32 s1, s3
+; GFX12-NEXT:    s_mov_b32 s0, s2
+; GFX12-NEXT:    global_store_d16_hi_b8 v0, v1, s[0:1] offset:-128
 ; GFX12-NEXT:    s_endpgm
   %zext.offset = zext i32 %voffset to i64
   %gep0 = getelementptr inbounds i8, ptr addrspace(1) %sbase, i64 %zext.offset

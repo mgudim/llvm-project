@@ -418,9 +418,10 @@ define <4 x float> @fmul_splat_splat_v4f32(<4 x float> %vx, <4 x float> %vy) {
 define <8 x float> @fdiv_splat_splat_v8f32(<8 x float> %vx, <8 x float> %vy) {
 ; SSE-LABEL: fdiv_splat_splat_v8f32:
 ; SSE:       # %bb.0:
-; SSE-NEXT:    divss %xmm2, %xmm0
-; SSE-NEXT:    shufps {{.*#+}} xmm0 = xmm0[0,0,0,0]
 ; SSE-NEXT:    movaps %xmm0, %xmm1
+; SSE-NEXT:    divss %xmm2, %xmm1
+; SSE-NEXT:    shufps {{.*#+}} xmm1 = xmm1[0,0,0,0]
+; SSE-NEXT:    movaps %xmm1, %xmm0
 ; SSE-NEXT:    retq
 ;
 ; AVX1-LABEL: fdiv_splat_splat_v8f32:
@@ -632,10 +633,11 @@ define <8 x float> @fdiv_splat_const_op0_v8f32(<8 x float> %vy) {
 define <8 x float> @fdiv_const_op1_splat_v8f32(<8 x float> %vx) {
 ; SSE-LABEL: fdiv_const_op1_splat_v8f32:
 ; SSE:       # %bb.0:
-; SSE-NEXT:    xorps %xmm1, %xmm1
-; SSE-NEXT:    divss %xmm1, %xmm0
-; SSE-NEXT:    shufps {{.*#+}} xmm0 = xmm0[0,0,0,0]
 ; SSE-NEXT:    movaps %xmm0, %xmm1
+; SSE-NEXT:    xorps %xmm0, %xmm0
+; SSE-NEXT:    divss %xmm0, %xmm1
+; SSE-NEXT:    shufps {{.*#+}} xmm1 = xmm1[0,0,0,0]
+; SSE-NEXT:    movaps %xmm1, %xmm0
 ; SSE-NEXT:    retq
 ;
 ; AVX1-LABEL: fdiv_const_op1_splat_v8f32:
@@ -728,9 +730,10 @@ define <4 x float> @splat0_fmul_v4f32(<4 x float> %vx, <4 x float> %vy) {
 define <8 x float> @splat0_fdiv_v8f32(<8 x float> %vx, <8 x float> %vy) {
 ; SSE-LABEL: splat0_fdiv_v8f32:
 ; SSE:       # %bb.0:
-; SSE-NEXT:    divss %xmm2, %xmm0
-; SSE-NEXT:    shufps {{.*#+}} xmm0 = xmm0[0,0,0,0]
 ; SSE-NEXT:    movaps %xmm0, %xmm1
+; SSE-NEXT:    divss %xmm2, %xmm1
+; SSE-NEXT:    shufps {{.*#+}} xmm1 = xmm1[0,0,0,0]
+; SSE-NEXT:    movaps %xmm1, %xmm0
 ; SSE-NEXT:    retq
 ;
 ; AVX1-LABEL: splat0_fdiv_v8f32:
@@ -822,8 +825,9 @@ define <4 x float> @splat0_fmul_const_op1_v4f32(<4 x float> %vx) {
 define <8 x float> @splat0_fdiv_const_op1_v8f32(<8 x float> %vx) {
 ; SSE-LABEL: splat0_fdiv_const_op1_v8f32:
 ; SSE:       # %bb.0:
-; SSE-NEXT:    shufps {{.*#+}} xmm0 = xmm0[0,0,0,0]
 ; SSE-NEXT:    movaps %xmm0, %xmm1
+; SSE-NEXT:    shufps {{.*#+}} xmm1 = xmm1[0,0],xmm0[0,0]
+; SSE-NEXT:    movaps %xmm1, %xmm0
 ; SSE-NEXT:    retq
 ;
 ; AVX1-LABEL: splat0_fdiv_const_op1_v8f32:

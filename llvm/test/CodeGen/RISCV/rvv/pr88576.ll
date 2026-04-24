@@ -54,8 +54,9 @@ define i8 @bar(<vscale x 128 x i1> %x, i64 %y) {
 ; CHECK-LABEL: bar:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetivli zero, 1, e8, m2, ta, ma
-; CHECK-NEXT:    vmv1r.v v1, v8
-; CHECK-NEXT:    vslidedown.vx v8, v0, a0
+; CHECK-NEXT:    vmv1r.v v9, v8
+; CHECK-NEXT:    vmv1r.v v8, v0
+; CHECK-NEXT:    vslidedown.vx v8, v8, a0
 ; CHECK-NEXT:    vmv.x.s a0, v8
 ; CHECK-NEXT:    ret
   %a = bitcast <vscale x 128 x i1> %x to <vscale x 16 x i8>

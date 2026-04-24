@@ -62,20 +62,19 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
 ; CHECK-NEXT:    testb %al, %al
 ; CHECK-NEXT:    je LBB0_54
 ; CHECK-NEXT:  ## %bb.6: ## %SyTime.exit2720
+; CHECK-NEXT:    movq %rdx, %rbx
 ; CHECK-NEXT:    leaq {{[0-9]+}}(%rsp), %rax
 ; CHECK-NEXT:    leaq {{[0-9]+}}(%rsp), %rcx
 ; CHECK-NEXT:    cmpq %rax, %rcx
 ; CHECK-NEXT:    jae LBB0_8
 ; CHECK-NEXT:  ## %bb.7: ## %for.body.lr.ph
-; CHECK-NEXT:    movq %rdx, %rbx
 ; CHECK-NEXT:    movl $512, %edx ## imm = 0x200
 ; CHECK-NEXT:    movl $32, %esi
 ; CHECK-NEXT:    movq %rdi, %r14
 ; CHECK-NEXT:    callq _memset
 ; CHECK-NEXT:    movq %r14, %rdi
-; CHECK-NEXT:    movq %rbx, %rdx
 ; CHECK-NEXT:  LBB0_8: ## %while.body.preheader
-; CHECK-NEXT:    imulq $1040, %rdx, %rax ## imm = 0x410
+; CHECK-NEXT:    imulq $1040, %rbx, %rax ## imm = 0x410
 ; CHECK-NEXT:    movq _syBuf@GOTPCREL(%rip), %rcx
 ; CHECK-NEXT:    leaq 8(%rcx,%rax), %rdx
 ; CHECK-NEXT:    movq _syCTRO@GOTPCREL(%rip), %rax

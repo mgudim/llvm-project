@@ -1845,7 +1845,7 @@ define i64 @mulhsu_i64(i64 %a, i64 %b) nounwind {
 ; RV32I-NEXT:    call __muldi3
 ; RV32I-NEXT:    add s5, a0, s5
 ; RV32I-NEXT:    sltu a0, s5, a0
-; RV32I-NEXT:    add s6, a1, a0
+; RV32I-NEXT:    add s1, a1, a0
 ; RV32I-NEXT:    mv a0, s3
 ; RV32I-NEXT:    li a1, 0
 ; RV32I-NEXT:    mv a2, s0
@@ -1854,14 +1854,14 @@ define i64 @mulhsu_i64(i64 %a, i64 %b) nounwind {
 ; RV32I-NEXT:    add s5, a0, s5
 ; RV32I-NEXT:    sltu a0, s5, a0
 ; RV32I-NEXT:    add a0, a1, a0
-; RV32I-NEXT:    add s5, s6, a0
+; RV32I-NEXT:    add s5, s1, a0
 ; RV32I-NEXT:    mv a0, s2
 ; RV32I-NEXT:    li a1, 0
 ; RV32I-NEXT:    mv a2, s0
 ; RV32I-NEXT:    li a3, 0
 ; RV32I-NEXT:    call __muldi3
 ; RV32I-NEXT:    mv s0, a0
-; RV32I-NEXT:    mv s1, a1
+; RV32I-NEXT:    mv s6, a1
 ; RV32I-NEXT:    add s7, a0, s5
 ; RV32I-NEXT:    mv a0, s4
 ; RV32I-NEXT:    mv a1, s4
@@ -1870,9 +1870,9 @@ define i64 @mulhsu_i64(i64 %a, i64 %b) nounwind {
 ; RV32I-NEXT:    call __muldi3
 ; RV32I-NEXT:    add a0, s7, a0
 ; RV32I-NEXT:    sltu a2, s7, s0
-; RV32I-NEXT:    sltu a3, s5, s6
+; RV32I-NEXT:    sltu a3, s5, s1
 ; RV32I-NEXT:    sltu a4, a0, s7
-; RV32I-NEXT:    add a3, s1, a3
+; RV32I-NEXT:    add a3, s6, a3
 ; RV32I-NEXT:    add a2, a3, a2
 ; RV32I-NEXT:    add a1, a2, a1
 ; RV32I-NEXT:    add a1, a1, a4

@@ -144,9 +144,11 @@ define i32 @select.bad.sgpr.ule(i64 inreg %mask, i32 inreg %a, i32 inreg %b) {
 ; CHECK-LABEL: select.bad.sgpr.ule:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    s_mov_b32 s5, s17
+; CHECK-NEXT:    s_mov_b32 s4, s16
 ; CHECK-NEXT:    v_mov_b32_e32 v0, 1
 ; CHECK-NEXT:    v_mov_b32_e32 v1, 0xaaaaaaaa
-; CHECK-NEXT:    v_cmp_lt_u64_e32 vcc, s[16:17], v[0:1]
+; CHECK-NEXT:    v_cmp_lt_u64_e32 vcc, s[4:5], v[0:1]
 ; CHECK-NEXT:    s_and_b64 s[4:5], vcc, exec
 ; CHECK-NEXT:    s_cselect_b32 s4, s18, s19
 ; CHECK-NEXT:    v_mov_b32_e32 v0, s4
@@ -160,9 +162,11 @@ define i32 @select.bad.sgpr.ult(i64 inreg %mask, i32 inreg %a, i32 inreg %b) {
 ; CHECK-LABEL: select.bad.sgpr.ult:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    s_mov_b32 s5, s17
+; CHECK-NEXT:    s_mov_b32 s4, s16
 ; CHECK-NEXT:    v_mov_b32_e32 v0, -1
 ; CHECK-NEXT:    v_mov_b32_e32 v1, 0xaaaaaaaa
-; CHECK-NEXT:    v_cmp_lt_u64_e32 vcc, s[16:17], v[0:1]
+; CHECK-NEXT:    v_cmp_lt_u64_e32 vcc, s[4:5], v[0:1]
 ; CHECK-NEXT:    s_and_b64 s[4:5], vcc, exec
 ; CHECK-NEXT:    s_cselect_b32 s4, s18, s19
 ; CHECK-NEXT:    v_mov_b32_e32 v0, s4

@@ -318,9 +318,9 @@ define <3 x ptr> @vector_gep_v3i64_c10(ptr %b) {
 ; CHECK-SD-LABEL: vector_gep_v3i64_c10:
 ; CHECK-SD:       // %bb.0: // %entry
 ; CHECK-SD-NEXT:    add x8, x0, #10
-; CHECK-SD-NEXT:    fmov d0, x8
-; CHECK-SD-NEXT:    fmov d1, d0
-; CHECK-SD-NEXT:    fmov d2, d0
+; CHECK-SD-NEXT:    fmov d2, x8
+; CHECK-SD-NEXT:    fmov d0, d2
+; CHECK-SD-NEXT:    fmov d1, d2
 ; CHECK-SD-NEXT:    ret
 ;
 ; CHECK-GI-LABEL: vector_gep_v3i64_c10:
@@ -342,8 +342,8 @@ define <4 x ptr> @vector_gep_v4i64_c10(ptr %b) {
 ; CHECK-SD-LABEL: vector_gep_v4i64_c10:
 ; CHECK-SD:       // %bb.0: // %entry
 ; CHECK-SD-NEXT:    add x8, x0, #10
-; CHECK-SD-NEXT:    dup v0.2d, x8
-; CHECK-SD-NEXT:    mov v1.16b, v0.16b
+; CHECK-SD-NEXT:    dup v1.2d, x8
+; CHECK-SD-NEXT:    mov v0.16b, v1.16b
 ; CHECK-SD-NEXT:    ret
 ;
 ; CHECK-GI-LABEL: vector_gep_v4i64_c10:
@@ -351,8 +351,8 @@ define <4 x ptr> @vector_gep_v4i64_c10(ptr %b) {
 ; CHECK-GI-NEXT:    adrp x8, .LCPI20_0
 ; CHECK-GI-NEXT:    dup v0.2d, x0
 ; CHECK-GI-NEXT:    ldr q1, [x8, :lo12:.LCPI20_0]
-; CHECK-GI-NEXT:    add v0.2d, v0.2d, v1.2d
-; CHECK-GI-NEXT:    mov v1.16b, v0.16b
+; CHECK-GI-NEXT:    add v1.2d, v0.2d, v1.2d
+; CHECK-GI-NEXT:    mov v0.16b, v1.16b
 ; CHECK-GI-NEXT:    ret
 entry:
   %g = getelementptr i8, ptr %b, <4 x i64> <i64 10, i64 10, i64 10, i64 10>
@@ -393,9 +393,9 @@ define <3 x ptr> @vector_gep_v3i64_cm10(ptr %b) {
 ; CHECK-SD-LABEL: vector_gep_v3i64_cm10:
 ; CHECK-SD:       // %bb.0: // %entry
 ; CHECK-SD-NEXT:    sub x8, x0, #10
-; CHECK-SD-NEXT:    fmov d0, x8
-; CHECK-SD-NEXT:    fmov d1, d0
-; CHECK-SD-NEXT:    fmov d2, d0
+; CHECK-SD-NEXT:    fmov d2, x8
+; CHECK-SD-NEXT:    fmov d0, d2
+; CHECK-SD-NEXT:    fmov d1, d2
 ; CHECK-SD-NEXT:    ret
 ;
 ; CHECK-GI-LABEL: vector_gep_v3i64_cm10:
@@ -417,8 +417,8 @@ define <4 x ptr> @vector_gep_v4i64_cm10(ptr %b) {
 ; CHECK-SD-LABEL: vector_gep_v4i64_cm10:
 ; CHECK-SD:       // %bb.0: // %entry
 ; CHECK-SD-NEXT:    sub x8, x0, #10
-; CHECK-SD-NEXT:    dup v0.2d, x8
-; CHECK-SD-NEXT:    mov v1.16b, v0.16b
+; CHECK-SD-NEXT:    dup v1.2d, x8
+; CHECK-SD-NEXT:    mov v0.16b, v1.16b
 ; CHECK-SD-NEXT:    ret
 ;
 ; CHECK-GI-LABEL: vector_gep_v4i64_cm10:
@@ -426,8 +426,8 @@ define <4 x ptr> @vector_gep_v4i64_cm10(ptr %b) {
 ; CHECK-GI-NEXT:    adrp x8, .LCPI24_0
 ; CHECK-GI-NEXT:    dup v0.2d, x0
 ; CHECK-GI-NEXT:    ldr q1, [x8, :lo12:.LCPI24_0]
-; CHECK-GI-NEXT:    add v0.2d, v0.2d, v1.2d
-; CHECK-GI-NEXT:    mov v1.16b, v0.16b
+; CHECK-GI-NEXT:    add v1.2d, v0.2d, v1.2d
+; CHECK-GI-NEXT:    mov v0.16b, v1.16b
 ; CHECK-GI-NEXT:    ret
 entry:
   %g = getelementptr i8, ptr %b, <4 x i64> <i64 -10, i64 -10, i64 -10, i64 -10>

@@ -1615,8 +1615,9 @@ define void @test_med3_f16(ptr addrspace(1) %arg, half %x, half %y, half %z) #0 
 ; SDAG-GFX11-TRUE16-LABEL: test_med3_f16:
 ; SDAG-GFX11-TRUE16:       ; %bb.0:
 ; SDAG-GFX11-TRUE16-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-GFX11-TRUE16-NEXT:    v_med3_f16 v2.l, v2.l, v3.l, v4.l
-; SDAG-GFX11-TRUE16-NEXT:    global_store_b16 v[0:1], v2, off
+; SDAG-GFX11-TRUE16-NEXT:    v_dual_mov_b32 v6, v1 :: v_dual_mov_b32 v5, v0
+; SDAG-GFX11-TRUE16-NEXT:    v_med3_f16 v0.l, v2.l, v3.l, v4.l
+; SDAG-GFX11-TRUE16-NEXT:    global_store_b16 v[5:6], v0, off
 ; SDAG-GFX11-TRUE16-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; SDAG-GFX11-FAKE16-LABEL: test_med3_f16:
@@ -1629,8 +1630,9 @@ define void @test_med3_f16(ptr addrspace(1) %arg, half %x, half %y, half %z) #0 
 ; GISEL-GFX11-TRUE16-LABEL: test_med3_f16:
 ; GISEL-GFX11-TRUE16:       ; %bb.0:
 ; GISEL-GFX11-TRUE16-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-GFX11-TRUE16-NEXT:    v_med3_f16 v2.l, v2.l, v3.l, v4.l
-; GISEL-GFX11-TRUE16-NEXT:    global_store_b16 v[0:1], v2, off
+; GISEL-GFX11-TRUE16-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v6, v1
+; GISEL-GFX11-TRUE16-NEXT:    v_med3_f16 v0.l, v2.l, v3.l, v4.l
+; GISEL-GFX11-TRUE16-NEXT:    global_store_b16 v[5:6], v0, off
 ; GISEL-GFX11-TRUE16-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-GFX11-FAKE16-LABEL: test_med3_f16:
@@ -1643,8 +1645,9 @@ define void @test_med3_f16(ptr addrspace(1) %arg, half %x, half %y, half %z) #0 
 ; SDAG-GFX1170-TRUE16-LABEL: test_med3_f16:
 ; SDAG-GFX1170-TRUE16:       ; %bb.0:
 ; SDAG-GFX1170-TRUE16-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-GFX1170-TRUE16-NEXT:    v_med3_num_f16 v2.l, v2.l, v3.l, v4.l
-; SDAG-GFX1170-TRUE16-NEXT:    global_store_b16 v[0:1], v2, off
+; SDAG-GFX1170-TRUE16-NEXT:    v_dual_mov_b32 v6, v1 :: v_dual_mov_b32 v5, v0
+; SDAG-GFX1170-TRUE16-NEXT:    v_med3_num_f16 v0.l, v2.l, v3.l, v4.l
+; SDAG-GFX1170-TRUE16-NEXT:    global_store_b16 v[5:6], v0, off
 ; SDAG-GFX1170-TRUE16-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; SDAG-GFX1170-FAKE16-LABEL: test_med3_f16:
@@ -1657,8 +1660,9 @@ define void @test_med3_f16(ptr addrspace(1) %arg, half %x, half %y, half %z) #0 
 ; GISEL-GFX1170-TRUE16-LABEL: test_med3_f16:
 ; GISEL-GFX1170-TRUE16:       ; %bb.0:
 ; GISEL-GFX1170-TRUE16-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-GFX1170-TRUE16-NEXT:    v_med3_num_f16 v2.l, v2.l, v3.l, v4.l
-; GISEL-GFX1170-TRUE16-NEXT:    global_store_b16 v[0:1], v2, off
+; GISEL-GFX1170-TRUE16-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v6, v1
+; GISEL-GFX1170-TRUE16-NEXT:    v_med3_num_f16 v0.l, v2.l, v3.l, v4.l
+; GISEL-GFX1170-TRUE16-NEXT:    global_store_b16 v[5:6], v0, off
 ; GISEL-GFX1170-TRUE16-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-GFX1170-FAKE16-LABEL: test_med3_f16:
@@ -1675,8 +1679,9 @@ define void @test_med3_f16(ptr addrspace(1) %arg, half %x, half %y, half %z) #0 
 ; SDAG-GFX12-TRUE16-NEXT:    s_wait_samplecnt 0x0
 ; SDAG-GFX12-TRUE16-NEXT:    s_wait_bvhcnt 0x0
 ; SDAG-GFX12-TRUE16-NEXT:    s_wait_kmcnt 0x0
-; SDAG-GFX12-TRUE16-NEXT:    v_med3_num_f16 v2.l, v2.l, v3.l, v4.l
-; SDAG-GFX12-TRUE16-NEXT:    global_store_b16 v[0:1], v2, off
+; SDAG-GFX12-TRUE16-NEXT:    v_dual_mov_b32 v6, v1 :: v_dual_mov_b32 v5, v0
+; SDAG-GFX12-TRUE16-NEXT:    v_med3_num_f16 v0.l, v2.l, v3.l, v4.l
+; SDAG-GFX12-TRUE16-NEXT:    global_store_b16 v[5:6], v0, off
 ; SDAG-GFX12-TRUE16-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; SDAG-GFX12-FAKE16-LABEL: test_med3_f16:
@@ -1697,8 +1702,9 @@ define void @test_med3_f16(ptr addrspace(1) %arg, half %x, half %y, half %z) #0 
 ; GISEL-GFX12-TRUE16-NEXT:    s_wait_samplecnt 0x0
 ; GISEL-GFX12-TRUE16-NEXT:    s_wait_bvhcnt 0x0
 ; GISEL-GFX12-TRUE16-NEXT:    s_wait_kmcnt 0x0
-; GISEL-GFX12-TRUE16-NEXT:    v_med3_num_f16 v2.l, v2.l, v3.l, v4.l
-; GISEL-GFX12-TRUE16-NEXT:    global_store_b16 v[0:1], v2, off
+; GISEL-GFX12-TRUE16-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v6, v1
+; GISEL-GFX12-TRUE16-NEXT:    v_med3_num_f16 v0.l, v2.l, v3.l, v4.l
+; GISEL-GFX12-TRUE16-NEXT:    global_store_b16 v[5:6], v0, off
 ; GISEL-GFX12-TRUE16-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-GFX12-FAKE16-LABEL: test_med3_f16:
@@ -1716,8 +1722,9 @@ define void @test_med3_f16(ptr addrspace(1) %arg, half %x, half %y, half %z) #0 
 ; SDAG-GFX1250-TRUE16:       ; %bb.0:
 ; SDAG-GFX1250-TRUE16-NEXT:    s_wait_loadcnt_dscnt 0x0
 ; SDAG-GFX1250-TRUE16-NEXT:    s_wait_kmcnt 0x0
-; SDAG-GFX1250-TRUE16-NEXT:    v_med3_num_f16 v2.l, v2.l, v3.l, v4.l
-; SDAG-GFX1250-TRUE16-NEXT:    global_store_b16 v[0:1], v2, off
+; SDAG-GFX1250-TRUE16-NEXT:    v_dual_mov_b32 v7, v1 :: v_dual_mov_b32 v6, v0
+; SDAG-GFX1250-TRUE16-NEXT:    v_med3_num_f16 v0.l, v2.l, v3.l, v4.l
+; SDAG-GFX1250-TRUE16-NEXT:    global_store_b16 v[6:7], v0, off
 ; SDAG-GFX1250-TRUE16-NEXT:    s_set_pc_i64 s[30:31]
 ;
 ; SDAG-GFX1250-FAKE16-LABEL: test_med3_f16:
@@ -1732,8 +1739,9 @@ define void @test_med3_f16(ptr addrspace(1) %arg, half %x, half %y, half %z) #0 
 ; GISEL-GFX1250-TRUE16:       ; %bb.0:
 ; GISEL-GFX1250-TRUE16-NEXT:    s_wait_loadcnt_dscnt 0x0
 ; GISEL-GFX1250-TRUE16-NEXT:    s_wait_kmcnt 0x0
-; GISEL-GFX1250-TRUE16-NEXT:    v_med3_num_f16 v2.l, v2.l, v3.l, v4.l
-; GISEL-GFX1250-TRUE16-NEXT:    global_store_b16 v[0:1], v2, off
+; GISEL-GFX1250-TRUE16-NEXT:    v_dual_mov_b32 v6, v0 :: v_dual_mov_b32 v7, v1
+; GISEL-GFX1250-TRUE16-NEXT:    v_med3_num_f16 v0.l, v2.l, v3.l, v4.l
+; GISEL-GFX1250-TRUE16-NEXT:    global_store_b16 v[6:7], v0, off
 ; GISEL-GFX1250-TRUE16-NEXT:    s_set_pc_i64 s[30:31]
 ;
 ; GISEL-GFX1250-FAKE16-LABEL: test_med3_f16:

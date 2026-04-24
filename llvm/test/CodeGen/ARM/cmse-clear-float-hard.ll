@@ -753,33 +753,34 @@ define void @fidififid(ptr %fu, float %a, i32 %b, double %c, i32 %d, float %e, i
 ; CHECK-8M-LABEL: fidififid:
 ; CHECK-8M:       @ %bb.0: @ %entry
 ; CHECK-8M-NEXT:    push {r7, lr}
-; CHECK-8M-NEXT:    mov lr, r3
-; CHECK-8M-NEXT:    mov r12, r0
+; CHECK-8M-NEXT:    ldr.w r12, [sp, #8]
+; CHECK-8M-NEXT:    mov lr, r0
 ; CHECK-8M-NEXT:    mov r0, r1
 ; CHECK-8M-NEXT:    mov r1, r2
-; CHECK-8M-NEXT:    ldr r3, [sp, #8]
-; CHECK-8M-NEXT:    mov r2, lr
+; CHECK-8M-NEXT:    mov r2, r3
+; CHECK-8M-NEXT:    mov r3, r12
 ; CHECK-8M-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
-; CHECK-8M-NEXT:    bic r12, r12, #1
+; CHECK-8M-NEXT:    bic lr, lr, #1
 ; CHECK-8M-NEXT:    sub sp, #136
-; CHECK-8M-NEXT:    vmov r11, s0
-; CHECK-8M-NEXT:    vmov r9, r10, d1
-; CHECK-8M-NEXT:    vmov r8, s1
-; CHECK-8M-NEXT:    vmov r7, s4
-; CHECK-8M-NEXT:    vmov r5, r6, d3
+; CHECK-8M-NEXT:    vmov r12, s0
+; CHECK-8M-NEXT:    mov r5, lr
+; CHECK-8M-NEXT:    vmov r10, r11, d1
+; CHECK-8M-NEXT:    vmov r9, s1
+; CHECK-8M-NEXT:    vmov r8, s4
+; CHECK-8M-NEXT:    vmov r6, r7, d3
 ; CHECK-8M-NEXT:    vlstm sp, {d0 - d15}
-; CHECK-8M-NEXT:    vmov s0, r11
-; CHECK-8M-NEXT:    vmov d1, r9, r10
-; CHECK-8M-NEXT:    vmov s1, r8
-; CHECK-8M-NEXT:    vmov s4, r7
-; CHECK-8M-NEXT:    vmov d3, r5, r6
+; CHECK-8M-NEXT:    vmov s0, r12
+; CHECK-8M-NEXT:    vmov d1, r10, r11
+; CHECK-8M-NEXT:    vmov s1, r9
+; CHECK-8M-NEXT:    vmov s4, r8
+; CHECK-8M-NEXT:    vmov d3, r6, r7
 ; CHECK-8M-NEXT:    ldr r4, [sp, #64]
 ; CHECK-8M-NEXT:    bic r4, r4, #159
 ; CHECK-8M-NEXT:    bic r4, r4, #4026531840
 ; CHECK-8M-NEXT:    vmsr fpscr, r4
-; CHECK-8M-NEXT:    mov r4, r12
-; CHECK-8M-NEXT:    msr apsr_nzcvqg, r12
-; CHECK-8M-NEXT:    blxns r12
+; CHECK-8M-NEXT:    mov r4, lr
+; CHECK-8M-NEXT:    msr apsr_nzcvqg, lr
+; CHECK-8M-NEXT:    blxns lr
 ; CHECK-8M-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-8M-NEXT:    add sp, #136
 ; CHECK-8M-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
@@ -788,20 +789,20 @@ define void @fidififid(ptr %fu, float %a, i32 %b, double %c, i32 %d, float %e, i
 ; CHECK-81M-LABEL: fidififid:
 ; CHECK-81M:       @ %bb.0: @ %entry
 ; CHECK-81M-NEXT:    push {r7, lr}
-; CHECK-81M-NEXT:    mov lr, r3
-; CHECK-81M-NEXT:    mov r12, r0
+; CHECK-81M-NEXT:    ldr.w r12, [sp, #8]
+; CHECK-81M-NEXT:    mov lr, r0
 ; CHECK-81M-NEXT:    mov r0, r1
 ; CHECK-81M-NEXT:    mov r1, r2
-; CHECK-81M-NEXT:    ldr r3, [sp, #8]
-; CHECK-81M-NEXT:    mov r2, lr
+; CHECK-81M-NEXT:    mov r2, r3
+; CHECK-81M-NEXT:    mov r3, r12
 ; CHECK-81M-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
-; CHECK-81M-NEXT:    bic r12, r12, #1
+; CHECK-81M-NEXT:    bic lr, lr, #1
 ; CHECK-81M-NEXT:    vpush {s16, s17, s18, s19, s20, s21, s22, s23, s24, s25, s26, s27, s28, s29, s30, s31}
 ; CHECK-81M-NEXT:    vscclrm {s5, vpr}
 ; CHECK-81M-NEXT:    vscclrm {s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19, s20, s21, s22, s23, s24, s25, s26, s27, s28, s29, s30, s31, vpr}
 ; CHECK-81M-NEXT:    vstr fpcxts, [sp, #-8]!
-; CHECK-81M-NEXT:    clrm {r4, r5, r6, r7, r8, r9, r10, r11, apsr}
-; CHECK-81M-NEXT:    blxns r12
+; CHECK-81M-NEXT:    clrm {r4, r5, r6, r7, r8, r9, r10, r11, r12, apsr}
+; CHECK-81M-NEXT:    blxns lr
 ; CHECK-81M-NEXT:    vldr fpcxts, [sp], #8
 ; CHECK-81M-NEXT:    vpop {s16, s17, s18, s19, s20, s21, s22, s23, s24, s25, s26, s27, s28, s29, s30, s31}
 ; CHECK-81M-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}

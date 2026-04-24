@@ -55,22 +55,26 @@ define amdgpu_ps void @back_to_back_uniform_in_vgpr(float inreg %a, float inreg 
 define amdgpu_cs void @buffer_load_uniform(<4 x i32> inreg %rsrc, i32 inreg %voffset, ptr addrspace(1) %ptr) {
 ; OLD_RBS-LABEL: buffer_load_uniform:
 ; OLD_RBS:       ; %bb.0: ; %.entry
-; OLD_RBS-NEXT:    v_mov_b32_e32 v2, s4
-; OLD_RBS-NEXT:    buffer_load_dwordx4 v[2:5], v2, s[0:3], 0 offen
+; OLD_RBS-NEXT:    v_mov_b32_e32 v4, v0
+; OLD_RBS-NEXT:    v_mov_b32_e32 v0, s4
+; OLD_RBS-NEXT:    v_mov_b32_e32 v5, v1
+; OLD_RBS-NEXT:    buffer_load_dwordx4 v[0:3], v0, s[0:3], 0 offen
 ; OLD_RBS-NEXT:    s_waitcnt vmcnt(0)
-; OLD_RBS-NEXT:    v_add_nc_u32_e32 v2, 1, v3
-; OLD_RBS-NEXT:    global_store_dword v[0:1], v2, off
+; OLD_RBS-NEXT:    v_add_nc_u32_e32 v0, 1, v1
+; OLD_RBS-NEXT:    global_store_dword v[4:5], v0, off
 ; OLD_RBS-NEXT:    s_endpgm
 ;
 ; NEW_RBS-LABEL: buffer_load_uniform:
 ; NEW_RBS:       ; %bb.0: ; %.entry
-; NEW_RBS-NEXT:    v_mov_b32_e32 v2, s4
-; NEW_RBS-NEXT:    buffer_load_dwordx4 v[2:5], v2, s[0:3], 0 offen
+; NEW_RBS-NEXT:    v_mov_b32_e32 v4, v0
+; NEW_RBS-NEXT:    v_mov_b32_e32 v0, s4
+; NEW_RBS-NEXT:    v_mov_b32_e32 v5, v1
+; NEW_RBS-NEXT:    buffer_load_dwordx4 v[0:3], v0, s[0:3], 0 offen
 ; NEW_RBS-NEXT:    s_waitcnt vmcnt(0)
-; NEW_RBS-NEXT:    v_readfirstlane_b32 s0, v3
+; NEW_RBS-NEXT:    v_readfirstlane_b32 s0, v1
 ; NEW_RBS-NEXT:    s_add_i32 s0, s0, 1
-; NEW_RBS-NEXT:    v_mov_b32_e32 v2, s0
-; NEW_RBS-NEXT:    global_store_dword v[0:1], v2, off
+; NEW_RBS-NEXT:    v_mov_b32_e32 v0, s0
+; NEW_RBS-NEXT:    global_store_dword v[4:5], v0, off
 ; NEW_RBS-NEXT:    s_endpgm
 .entry:
   %vec = call <4 x i32> @llvm.amdgcn.raw.buffer.load.v4f32(<4 x i32> %rsrc, i32 %voffset, i32 0, i32 0)
@@ -83,18 +87,22 @@ define amdgpu_cs void @buffer_load_uniform(<4 x i32> inreg %rsrc, i32 inreg %vof
 define amdgpu_cs void @buffer_load_divergent(<4 x i32> inreg %rsrc, i32 %voffset, ptr addrspace(1) %ptr) {
 ; OLD_RBS-LABEL: buffer_load_divergent:
 ; OLD_RBS:       ; %bb.0: ; %.entry
-; OLD_RBS-NEXT:    buffer_load_dwordx4 v[3:6], v0, s[0:3], 0 offen
+; OLD_RBS-NEXT:    v_mov_b32_e32 v4, v1
+; OLD_RBS-NEXT:    v_mov_b32_e32 v5, v2
+; OLD_RBS-NEXT:    buffer_load_dwordx4 v[0:3], v0, s[0:3], 0 offen
 ; OLD_RBS-NEXT:    s_waitcnt vmcnt(0)
-; OLD_RBS-NEXT:    v_add_nc_u32_e32 v0, 1, v4
-; OLD_RBS-NEXT:    global_store_dword v[1:2], v0, off
+; OLD_RBS-NEXT:    v_add_nc_u32_e32 v0, 1, v1
+; OLD_RBS-NEXT:    global_store_dword v[4:5], v0, off
 ; OLD_RBS-NEXT:    s_endpgm
 ;
 ; NEW_RBS-LABEL: buffer_load_divergent:
 ; NEW_RBS:       ; %bb.0: ; %.entry
-; NEW_RBS-NEXT:    buffer_load_dwordx4 v[3:6], v0, s[0:3], 0 offen
+; NEW_RBS-NEXT:    v_mov_b32_e32 v4, v1
+; NEW_RBS-NEXT:    v_mov_b32_e32 v5, v2
+; NEW_RBS-NEXT:    buffer_load_dwordx4 v[0:3], v0, s[0:3], 0 offen
 ; NEW_RBS-NEXT:    s_waitcnt vmcnt(0)
-; NEW_RBS-NEXT:    v_add_nc_u32_e32 v0, 1, v4
-; NEW_RBS-NEXT:    global_store_dword v[1:2], v0, off
+; NEW_RBS-NEXT:    v_add_nc_u32_e32 v0, 1, v1
+; NEW_RBS-NEXT:    global_store_dword v[4:5], v0, off
 ; NEW_RBS-NEXT:    s_endpgm
 .entry:
   %vec = call <4 x i32> @llvm.amdgcn.raw.buffer.load.v4f32(<4 x i32> %rsrc, i32 %voffset, i32 0, i32 0)

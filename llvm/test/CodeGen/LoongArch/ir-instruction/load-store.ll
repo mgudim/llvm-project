@@ -1352,74 +1352,74 @@ define i16 @load_sext_zext_anyext_i1_i16(ptr %a) nounwind {
 define i64 @ld_sd_constant(i64 %a) nounwind {
 ; LA32RNOPIC-LABEL: ld_sd_constant:
 ; LA32RNOPIC:       # %bb.0:
-; LA32RNOPIC-NEXT:    lu12i.w $a3, -136485
-; LA32RNOPIC-NEXT:    ori $a4, $a3, 3823
-; LA32RNOPIC-NEXT:    ld.w $a2, $a4, 0
-; LA32RNOPIC-NEXT:    ori $a5, $a3, 3827
-; LA32RNOPIC-NEXT:    ld.w $a3, $a5, 0
-; LA32RNOPIC-NEXT:    st.w $a0, $a4, 0
-; LA32RNOPIC-NEXT:    st.w $a1, $a5, 0
-; LA32RNOPIC-NEXT:    move $a0, $a2
-; LA32RNOPIC-NEXT:    move $a1, $a3
+; LA32RNOPIC-NEXT:    lu12i.w $a2, -136485
+; LA32RNOPIC-NEXT:    ori $a3, $a2, 3823
+; LA32RNOPIC-NEXT:    ld.w $a4, $a3, 0
+; LA32RNOPIC-NEXT:    ori $a2, $a2, 3827
+; LA32RNOPIC-NEXT:    ld.w $a5, $a2, 0
+; LA32RNOPIC-NEXT:    st.w $a0, $a3, 0
+; LA32RNOPIC-NEXT:    st.w $a1, $a2, 0
+; LA32RNOPIC-NEXT:    move $a0, $a4
+; LA32RNOPIC-NEXT:    move $a1, $a5
 ; LA32RNOPIC-NEXT:    ret
 ;
 ; LA32SNOPIC-LABEL: ld_sd_constant:
 ; LA32SNOPIC:       # %bb.0:
-; LA32SNOPIC-NEXT:    lu12i.w $a3, -136485
-; LA32SNOPIC-NEXT:    ori $a4, $a3, 3823
-; LA32SNOPIC-NEXT:    ld.w $a2, $a4, 0
-; LA32SNOPIC-NEXT:    ori $a5, $a3, 3827
-; LA32SNOPIC-NEXT:    ld.w $a3, $a5, 0
-; LA32SNOPIC-NEXT:    st.w $a0, $a4, 0
-; LA32SNOPIC-NEXT:    st.w $a1, $a5, 0
-; LA32SNOPIC-NEXT:    move $a0, $a2
-; LA32SNOPIC-NEXT:    move $a1, $a3
+; LA32SNOPIC-NEXT:    lu12i.w $a2, -136485
+; LA32SNOPIC-NEXT:    ori $a3, $a2, 3823
+; LA32SNOPIC-NEXT:    ld.w $a4, $a3, 0
+; LA32SNOPIC-NEXT:    ori $a2, $a2, 3827
+; LA32SNOPIC-NEXT:    ld.w $a5, $a2, 0
+; LA32SNOPIC-NEXT:    st.w $a0, $a3, 0
+; LA32SNOPIC-NEXT:    st.w $a1, $a2, 0
+; LA32SNOPIC-NEXT:    move $a0, $a4
+; LA32SNOPIC-NEXT:    move $a1, $a5
 ; LA32SNOPIC-NEXT:    ret
 ;
 ; LA32RPIC-LABEL: ld_sd_constant:
 ; LA32RPIC:       # %bb.0:
-; LA32RPIC-NEXT:    lu12i.w $a3, -136485
-; LA32RPIC-NEXT:    ori $a4, $a3, 3823
-; LA32RPIC-NEXT:    ld.w $a2, $a4, 0
-; LA32RPIC-NEXT:    ori $a5, $a3, 3827
-; LA32RPIC-NEXT:    ld.w $a3, $a5, 0
-; LA32RPIC-NEXT:    st.w $a0, $a4, 0
-; LA32RPIC-NEXT:    st.w $a1, $a5, 0
-; LA32RPIC-NEXT:    move $a0, $a2
-; LA32RPIC-NEXT:    move $a1, $a3
+; LA32RPIC-NEXT:    lu12i.w $a2, -136485
+; LA32RPIC-NEXT:    ori $a3, $a2, 3823
+; LA32RPIC-NEXT:    ld.w $a4, $a3, 0
+; LA32RPIC-NEXT:    ori $a2, $a2, 3827
+; LA32RPIC-NEXT:    ld.w $a5, $a2, 0
+; LA32RPIC-NEXT:    st.w $a0, $a3, 0
+; LA32RPIC-NEXT:    st.w $a1, $a2, 0
+; LA32RPIC-NEXT:    move $a0, $a4
+; LA32RPIC-NEXT:    move $a1, $a5
 ; LA32RPIC-NEXT:    ret
 ;
 ; LA32SPIC-LABEL: ld_sd_constant:
 ; LA32SPIC:       # %bb.0:
-; LA32SPIC-NEXT:    lu12i.w $a3, -136485
-; LA32SPIC-NEXT:    ori $a4, $a3, 3823
-; LA32SPIC-NEXT:    ld.w $a2, $a4, 0
-; LA32SPIC-NEXT:    ori $a5, $a3, 3827
-; LA32SPIC-NEXT:    ld.w $a3, $a5, 0
-; LA32SPIC-NEXT:    st.w $a0, $a4, 0
-; LA32SPIC-NEXT:    st.w $a1, $a5, 0
-; LA32SPIC-NEXT:    move $a0, $a2
-; LA32SPIC-NEXT:    move $a1, $a3
+; LA32SPIC-NEXT:    lu12i.w $a2, -136485
+; LA32SPIC-NEXT:    ori $a3, $a2, 3823
+; LA32SPIC-NEXT:    ld.w $a4, $a3, 0
+; LA32SPIC-NEXT:    ori $a2, $a2, 3827
+; LA32SPIC-NEXT:    ld.w $a5, $a2, 0
+; LA32SPIC-NEXT:    st.w $a0, $a3, 0
+; LA32SPIC-NEXT:    st.w $a1, $a2, 0
+; LA32SPIC-NEXT:    move $a0, $a4
+; LA32SPIC-NEXT:    move $a1, $a5
 ; LA32SPIC-NEXT:    ret
 ;
 ; LA64NOPIC-LABEL: ld_sd_constant:
 ; LA64NOPIC:       # %bb.0:
 ; LA64NOPIC-NEXT:    lu12i.w $a1, -136485
-; LA64NOPIC-NEXT:    ori $a2, $a1, 3823
-; LA64NOPIC-NEXT:    bstrins.d $a2, $a2, 61, 32
-; LA64NOPIC-NEXT:    ld.d $a1, $a2, 0
-; LA64NOPIC-NEXT:    st.d $a0, $a2, 0
-; LA64NOPIC-NEXT:    move $a0, $a1
+; LA64NOPIC-NEXT:    ori $a1, $a1, 3823
+; LA64NOPIC-NEXT:    bstrins.d $a1, $a1, 61, 32
+; LA64NOPIC-NEXT:    ld.d $a2, $a1, 0
+; LA64NOPIC-NEXT:    st.d $a0, $a1, 0
+; LA64NOPIC-NEXT:    move $a0, $a2
 ; LA64NOPIC-NEXT:    ret
 ;
 ; LA64PIC-LABEL: ld_sd_constant:
 ; LA64PIC:       # %bb.0:
 ; LA64PIC-NEXT:    lu12i.w $a1, -136485
-; LA64PIC-NEXT:    ori $a2, $a1, 3823
-; LA64PIC-NEXT:    bstrins.d $a2, $a2, 61, 32
-; LA64PIC-NEXT:    ld.d $a1, $a2, 0
-; LA64PIC-NEXT:    st.d $a0, $a2, 0
-; LA64PIC-NEXT:    move $a0, $a1
+; LA64PIC-NEXT:    ori $a1, $a1, 3823
+; LA64PIC-NEXT:    bstrins.d $a1, $a1, 61, 32
+; LA64PIC-NEXT:    ld.d $a2, $a1, 0
+; LA64PIC-NEXT:    st.d $a0, $a1, 0
+; LA64PIC-NEXT:    move $a0, $a2
 ; LA64PIC-NEXT:    ret
   %1 = inttoptr i64 16045690984833335023 to ptr
   %2 = load volatile i64, ptr %1

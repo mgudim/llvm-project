@@ -133,19 +133,19 @@ define dso_local i64 @caller_argv64i1() #0 {
 ; WIN64-NEXT:    vmovaps %xmm6, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; WIN64-NEXT:    .seh_savexmm %xmm6, 16
 ; WIN64-NEXT:    .seh_endprologue
-; WIN64-NEXT:    movabsq $4294967298, %rax # imm = 0x100000002
-; WIN64-NEXT:    movq %rax, (%rsp)
-; WIN64-NEXT:    movq %rax, %rcx
-; WIN64-NEXT:    movq %rax, %rdx
-; WIN64-NEXT:    movq %rax, %rdi
-; WIN64-NEXT:    movq %rax, %r8
-; WIN64-NEXT:    movq %rax, %r9
-; WIN64-NEXT:    movq %rax, %r10
-; WIN64-NEXT:    movq %rax, %r11
-; WIN64-NEXT:    movq %rax, %r12
-; WIN64-NEXT:    movq %rax, %r14
-; WIN64-NEXT:    movq %rax, %r15
-; WIN64-NEXT:    movq %rax, %rsi
+; WIN64-NEXT:    movabsq $4294967298, %rsi # imm = 0x100000002
+; WIN64-NEXT:    movq %rsi, (%rsp)
+; WIN64-NEXT:    movq %rsi, %rax
+; WIN64-NEXT:    movq %rsi, %rcx
+; WIN64-NEXT:    movq %rsi, %rdx
+; WIN64-NEXT:    movq %rsi, %rdi
+; WIN64-NEXT:    movq %rsi, %r8
+; WIN64-NEXT:    movq %rsi, %r9
+; WIN64-NEXT:    movq %rsi, %r10
+; WIN64-NEXT:    movq %rsi, %r11
+; WIN64-NEXT:    movq %rsi, %r12
+; WIN64-NEXT:    movq %rsi, %r14
+; WIN64-NEXT:    movq %rsi, %r15
 ; WIN64-NEXT:    callq test_argv64i1
 ; WIN64-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm6 # 16-byte Reload
 ; WIN64-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm7 # 16-byte Reload

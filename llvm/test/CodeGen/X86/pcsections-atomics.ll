@@ -13949,16 +13949,17 @@ define void @atomic128_or_monotonic(ptr %a) {
 ; O1-NEXT:  .Lpcsection443:
 ; O1-NEXT:    movq (%rdi), %rax
 ; O1-NEXT:  .Lpcsection444:
-; O1-NEXT:    movq 8(%rdi), %rdx
+; O1-NEXT:    movq 8(%rdi), %rcx
 ; O1-NEXT:    .p2align 4
 ; O1-NEXT:  .LBB212_1: # %atomicrmw.start
 ; O1-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O1-NEXT:    movq %rax, %rbx
 ; O1-NEXT:  .Lpcsection445:
 ; O1-NEXT:    orq $42, %rbx
-; O1-NEXT:    movq %rdx, %rcx
+; O1-NEXT:    movq %rcx, %rdx
 ; O1-NEXT:  .Lpcsection446:
 ; O1-NEXT:    lock cmpxchg16b (%rdi)
+; O1-NEXT:    movq %rdx, %rcx
 ; O1-NEXT:  .Lpcsection447:
 ; O1-NEXT:    jne .LBB212_1
 ; O1-NEXT:  # %bb.2: # %atomicrmw.end
@@ -13976,16 +13977,17 @@ define void @atomic128_or_monotonic(ptr %a) {
 ; O2-NEXT:  .Lpcsection443:
 ; O2-NEXT:    movq (%rdi), %rax
 ; O2-NEXT:  .Lpcsection444:
-; O2-NEXT:    movq 8(%rdi), %rdx
+; O2-NEXT:    movq 8(%rdi), %rcx
 ; O2-NEXT:    .p2align 4
 ; O2-NEXT:  .LBB212_1: # %atomicrmw.start
 ; O2-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O2-NEXT:    movq %rax, %rbx
 ; O2-NEXT:  .Lpcsection445:
 ; O2-NEXT:    orq $42, %rbx
-; O2-NEXT:    movq %rdx, %rcx
+; O2-NEXT:    movq %rcx, %rdx
 ; O2-NEXT:  .Lpcsection446:
 ; O2-NEXT:    lock cmpxchg16b (%rdi)
+; O2-NEXT:    movq %rdx, %rcx
 ; O2-NEXT:  .Lpcsection447:
 ; O2-NEXT:    jne .LBB212_1
 ; O2-NEXT:  # %bb.2: # %atomicrmw.end
@@ -14003,16 +14005,17 @@ define void @atomic128_or_monotonic(ptr %a) {
 ; O3-NEXT:  .Lpcsection443:
 ; O3-NEXT:    movq (%rdi), %rax
 ; O3-NEXT:  .Lpcsection444:
-; O3-NEXT:    movq 8(%rdi), %rdx
+; O3-NEXT:    movq 8(%rdi), %rcx
 ; O3-NEXT:    .p2align 4
 ; O3-NEXT:  .LBB212_1: # %atomicrmw.start
 ; O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O3-NEXT:    movq %rax, %rbx
 ; O3-NEXT:  .Lpcsection445:
 ; O3-NEXT:    orq $42, %rbx
-; O3-NEXT:    movq %rdx, %rcx
+; O3-NEXT:    movq %rcx, %rdx
 ; O3-NEXT:  .Lpcsection446:
 ; O3-NEXT:    lock cmpxchg16b (%rdi)
+; O3-NEXT:    movq %rdx, %rcx
 ; O3-NEXT:  .Lpcsection447:
 ; O3-NEXT:    jne .LBB212_1
 ; O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -14030,16 +14033,17 @@ define void @atomic128_or_monotonic(ptr %a) {
 ; HASWELL-O3-NEXT:  .Lpcsection420:
 ; HASWELL-O3-NEXT:    movq (%rdi), %rax
 ; HASWELL-O3-NEXT:  .Lpcsection421:
-; HASWELL-O3-NEXT:    movq 8(%rdi), %rdx
+; HASWELL-O3-NEXT:    movq 8(%rdi), %rcx
 ; HASWELL-O3-NEXT:    .p2align 4
 ; HASWELL-O3-NEXT:  .LBB212_1: # %atomicrmw.start
 ; HASWELL-O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; HASWELL-O3-NEXT:    movq %rax, %rbx
 ; HASWELL-O3-NEXT:  .Lpcsection422:
 ; HASWELL-O3-NEXT:    orq $42, %rbx
-; HASWELL-O3-NEXT:    movq %rdx, %rcx
+; HASWELL-O3-NEXT:    movq %rcx, %rdx
 ; HASWELL-O3-NEXT:  .Lpcsection423:
 ; HASWELL-O3-NEXT:    lock cmpxchg16b (%rdi)
+; HASWELL-O3-NEXT:    movq %rdx, %rcx
 ; HASWELL-O3-NEXT:  .Lpcsection424:
 ; HASWELL-O3-NEXT:    jne .LBB212_1
 ; HASWELL-O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -14101,16 +14105,17 @@ define void @atomic128_xor_monotonic(ptr %a) {
 ; O1-NEXT:  .Lpcsection448:
 ; O1-NEXT:    movq (%rdi), %rax
 ; O1-NEXT:  .Lpcsection449:
-; O1-NEXT:    movq 8(%rdi), %rdx
+; O1-NEXT:    movq 8(%rdi), %rcx
 ; O1-NEXT:    .p2align 4
 ; O1-NEXT:  .LBB213_1: # %atomicrmw.start
 ; O1-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O1-NEXT:    movq %rax, %rbx
 ; O1-NEXT:  .Lpcsection450:
 ; O1-NEXT:    xorq $42, %rbx
-; O1-NEXT:    movq %rdx, %rcx
+; O1-NEXT:    movq %rcx, %rdx
 ; O1-NEXT:  .Lpcsection451:
 ; O1-NEXT:    lock cmpxchg16b (%rdi)
+; O1-NEXT:    movq %rdx, %rcx
 ; O1-NEXT:  .Lpcsection452:
 ; O1-NEXT:    jne .LBB213_1
 ; O1-NEXT:  # %bb.2: # %atomicrmw.end
@@ -14128,16 +14133,17 @@ define void @atomic128_xor_monotonic(ptr %a) {
 ; O2-NEXT:  .Lpcsection448:
 ; O2-NEXT:    movq (%rdi), %rax
 ; O2-NEXT:  .Lpcsection449:
-; O2-NEXT:    movq 8(%rdi), %rdx
+; O2-NEXT:    movq 8(%rdi), %rcx
 ; O2-NEXT:    .p2align 4
 ; O2-NEXT:  .LBB213_1: # %atomicrmw.start
 ; O2-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O2-NEXT:    movq %rax, %rbx
 ; O2-NEXT:  .Lpcsection450:
 ; O2-NEXT:    xorq $42, %rbx
-; O2-NEXT:    movq %rdx, %rcx
+; O2-NEXT:    movq %rcx, %rdx
 ; O2-NEXT:  .Lpcsection451:
 ; O2-NEXT:    lock cmpxchg16b (%rdi)
+; O2-NEXT:    movq %rdx, %rcx
 ; O2-NEXT:  .Lpcsection452:
 ; O2-NEXT:    jne .LBB213_1
 ; O2-NEXT:  # %bb.2: # %atomicrmw.end
@@ -14155,16 +14161,17 @@ define void @atomic128_xor_monotonic(ptr %a) {
 ; O3-NEXT:  .Lpcsection448:
 ; O3-NEXT:    movq (%rdi), %rax
 ; O3-NEXT:  .Lpcsection449:
-; O3-NEXT:    movq 8(%rdi), %rdx
+; O3-NEXT:    movq 8(%rdi), %rcx
 ; O3-NEXT:    .p2align 4
 ; O3-NEXT:  .LBB213_1: # %atomicrmw.start
 ; O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O3-NEXT:    movq %rax, %rbx
 ; O3-NEXT:  .Lpcsection450:
 ; O3-NEXT:    xorq $42, %rbx
-; O3-NEXT:    movq %rdx, %rcx
+; O3-NEXT:    movq %rcx, %rdx
 ; O3-NEXT:  .Lpcsection451:
 ; O3-NEXT:    lock cmpxchg16b (%rdi)
+; O3-NEXT:    movq %rdx, %rcx
 ; O3-NEXT:  .Lpcsection452:
 ; O3-NEXT:    jne .LBB213_1
 ; O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -14182,16 +14189,17 @@ define void @atomic128_xor_monotonic(ptr %a) {
 ; HASWELL-O3-NEXT:  .Lpcsection425:
 ; HASWELL-O3-NEXT:    movq (%rdi), %rax
 ; HASWELL-O3-NEXT:  .Lpcsection426:
-; HASWELL-O3-NEXT:    movq 8(%rdi), %rdx
+; HASWELL-O3-NEXT:    movq 8(%rdi), %rcx
 ; HASWELL-O3-NEXT:    .p2align 4
 ; HASWELL-O3-NEXT:  .LBB213_1: # %atomicrmw.start
 ; HASWELL-O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; HASWELL-O3-NEXT:    movq %rax, %rbx
 ; HASWELL-O3-NEXT:  .Lpcsection427:
 ; HASWELL-O3-NEXT:    xorq $42, %rbx
-; HASWELL-O3-NEXT:    movq %rdx, %rcx
+; HASWELL-O3-NEXT:    movq %rcx, %rdx
 ; HASWELL-O3-NEXT:  .Lpcsection428:
 ; HASWELL-O3-NEXT:    lock cmpxchg16b (%rdi)
+; HASWELL-O3-NEXT:    movq %rdx, %rcx
 ; HASWELL-O3-NEXT:  .Lpcsection429:
 ; HASWELL-O3-NEXT:    jne .LBB213_1
 ; HASWELL-O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -15061,16 +15069,17 @@ define void @atomic128_or_acquire(ptr %a) {
 ; O1-NEXT:  .Lpcsection484:
 ; O1-NEXT:    movq (%rdi), %rax
 ; O1-NEXT:  .Lpcsection485:
-; O1-NEXT:    movq 8(%rdi), %rdx
+; O1-NEXT:    movq 8(%rdi), %rcx
 ; O1-NEXT:    .p2align 4
 ; O1-NEXT:  .LBB219_1: # %atomicrmw.start
 ; O1-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O1-NEXT:    movq %rax, %rbx
 ; O1-NEXT:  .Lpcsection486:
 ; O1-NEXT:    orq $42, %rbx
-; O1-NEXT:    movq %rdx, %rcx
+; O1-NEXT:    movq %rcx, %rdx
 ; O1-NEXT:  .Lpcsection487:
 ; O1-NEXT:    lock cmpxchg16b (%rdi)
+; O1-NEXT:    movq %rdx, %rcx
 ; O1-NEXT:  .Lpcsection488:
 ; O1-NEXT:    jne .LBB219_1
 ; O1-NEXT:  # %bb.2: # %atomicrmw.end
@@ -15088,16 +15097,17 @@ define void @atomic128_or_acquire(ptr %a) {
 ; O2-NEXT:  .Lpcsection484:
 ; O2-NEXT:    movq (%rdi), %rax
 ; O2-NEXT:  .Lpcsection485:
-; O2-NEXT:    movq 8(%rdi), %rdx
+; O2-NEXT:    movq 8(%rdi), %rcx
 ; O2-NEXT:    .p2align 4
 ; O2-NEXT:  .LBB219_1: # %atomicrmw.start
 ; O2-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O2-NEXT:    movq %rax, %rbx
 ; O2-NEXT:  .Lpcsection486:
 ; O2-NEXT:    orq $42, %rbx
-; O2-NEXT:    movq %rdx, %rcx
+; O2-NEXT:    movq %rcx, %rdx
 ; O2-NEXT:  .Lpcsection487:
 ; O2-NEXT:    lock cmpxchg16b (%rdi)
+; O2-NEXT:    movq %rdx, %rcx
 ; O2-NEXT:  .Lpcsection488:
 ; O2-NEXT:    jne .LBB219_1
 ; O2-NEXT:  # %bb.2: # %atomicrmw.end
@@ -15115,16 +15125,17 @@ define void @atomic128_or_acquire(ptr %a) {
 ; O3-NEXT:  .Lpcsection484:
 ; O3-NEXT:    movq (%rdi), %rax
 ; O3-NEXT:  .Lpcsection485:
-; O3-NEXT:    movq 8(%rdi), %rdx
+; O3-NEXT:    movq 8(%rdi), %rcx
 ; O3-NEXT:    .p2align 4
 ; O3-NEXT:  .LBB219_1: # %atomicrmw.start
 ; O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O3-NEXT:    movq %rax, %rbx
 ; O3-NEXT:  .Lpcsection486:
 ; O3-NEXT:    orq $42, %rbx
-; O3-NEXT:    movq %rdx, %rcx
+; O3-NEXT:    movq %rcx, %rdx
 ; O3-NEXT:  .Lpcsection487:
 ; O3-NEXT:    lock cmpxchg16b (%rdi)
+; O3-NEXT:    movq %rdx, %rcx
 ; O3-NEXT:  .Lpcsection488:
 ; O3-NEXT:    jne .LBB219_1
 ; O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -15142,16 +15153,17 @@ define void @atomic128_or_acquire(ptr %a) {
 ; HASWELL-O3-NEXT:  .Lpcsection461:
 ; HASWELL-O3-NEXT:    movq (%rdi), %rax
 ; HASWELL-O3-NEXT:  .Lpcsection462:
-; HASWELL-O3-NEXT:    movq 8(%rdi), %rdx
+; HASWELL-O3-NEXT:    movq 8(%rdi), %rcx
 ; HASWELL-O3-NEXT:    .p2align 4
 ; HASWELL-O3-NEXT:  .LBB219_1: # %atomicrmw.start
 ; HASWELL-O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; HASWELL-O3-NEXT:    movq %rax, %rbx
 ; HASWELL-O3-NEXT:  .Lpcsection463:
 ; HASWELL-O3-NEXT:    orq $42, %rbx
-; HASWELL-O3-NEXT:    movq %rdx, %rcx
+; HASWELL-O3-NEXT:    movq %rcx, %rdx
 ; HASWELL-O3-NEXT:  .Lpcsection464:
 ; HASWELL-O3-NEXT:    lock cmpxchg16b (%rdi)
+; HASWELL-O3-NEXT:    movq %rdx, %rcx
 ; HASWELL-O3-NEXT:  .Lpcsection465:
 ; HASWELL-O3-NEXT:    jne .LBB219_1
 ; HASWELL-O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -15213,16 +15225,17 @@ define void @atomic128_xor_acquire(ptr %a) {
 ; O1-NEXT:  .Lpcsection489:
 ; O1-NEXT:    movq (%rdi), %rax
 ; O1-NEXT:  .Lpcsection490:
-; O1-NEXT:    movq 8(%rdi), %rdx
+; O1-NEXT:    movq 8(%rdi), %rcx
 ; O1-NEXT:    .p2align 4
 ; O1-NEXT:  .LBB220_1: # %atomicrmw.start
 ; O1-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O1-NEXT:    movq %rax, %rbx
 ; O1-NEXT:  .Lpcsection491:
 ; O1-NEXT:    xorq $42, %rbx
-; O1-NEXT:    movq %rdx, %rcx
+; O1-NEXT:    movq %rcx, %rdx
 ; O1-NEXT:  .Lpcsection492:
 ; O1-NEXT:    lock cmpxchg16b (%rdi)
+; O1-NEXT:    movq %rdx, %rcx
 ; O1-NEXT:  .Lpcsection493:
 ; O1-NEXT:    jne .LBB220_1
 ; O1-NEXT:  # %bb.2: # %atomicrmw.end
@@ -15240,16 +15253,17 @@ define void @atomic128_xor_acquire(ptr %a) {
 ; O2-NEXT:  .Lpcsection489:
 ; O2-NEXT:    movq (%rdi), %rax
 ; O2-NEXT:  .Lpcsection490:
-; O2-NEXT:    movq 8(%rdi), %rdx
+; O2-NEXT:    movq 8(%rdi), %rcx
 ; O2-NEXT:    .p2align 4
 ; O2-NEXT:  .LBB220_1: # %atomicrmw.start
 ; O2-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O2-NEXT:    movq %rax, %rbx
 ; O2-NEXT:  .Lpcsection491:
 ; O2-NEXT:    xorq $42, %rbx
-; O2-NEXT:    movq %rdx, %rcx
+; O2-NEXT:    movq %rcx, %rdx
 ; O2-NEXT:  .Lpcsection492:
 ; O2-NEXT:    lock cmpxchg16b (%rdi)
+; O2-NEXT:    movq %rdx, %rcx
 ; O2-NEXT:  .Lpcsection493:
 ; O2-NEXT:    jne .LBB220_1
 ; O2-NEXT:  # %bb.2: # %atomicrmw.end
@@ -15267,16 +15281,17 @@ define void @atomic128_xor_acquire(ptr %a) {
 ; O3-NEXT:  .Lpcsection489:
 ; O3-NEXT:    movq (%rdi), %rax
 ; O3-NEXT:  .Lpcsection490:
-; O3-NEXT:    movq 8(%rdi), %rdx
+; O3-NEXT:    movq 8(%rdi), %rcx
 ; O3-NEXT:    .p2align 4
 ; O3-NEXT:  .LBB220_1: # %atomicrmw.start
 ; O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O3-NEXT:    movq %rax, %rbx
 ; O3-NEXT:  .Lpcsection491:
 ; O3-NEXT:    xorq $42, %rbx
-; O3-NEXT:    movq %rdx, %rcx
+; O3-NEXT:    movq %rcx, %rdx
 ; O3-NEXT:  .Lpcsection492:
 ; O3-NEXT:    lock cmpxchg16b (%rdi)
+; O3-NEXT:    movq %rdx, %rcx
 ; O3-NEXT:  .Lpcsection493:
 ; O3-NEXT:    jne .LBB220_1
 ; O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -15294,16 +15309,17 @@ define void @atomic128_xor_acquire(ptr %a) {
 ; HASWELL-O3-NEXT:  .Lpcsection466:
 ; HASWELL-O3-NEXT:    movq (%rdi), %rax
 ; HASWELL-O3-NEXT:  .Lpcsection467:
-; HASWELL-O3-NEXT:    movq 8(%rdi), %rdx
+; HASWELL-O3-NEXT:    movq 8(%rdi), %rcx
 ; HASWELL-O3-NEXT:    .p2align 4
 ; HASWELL-O3-NEXT:  .LBB220_1: # %atomicrmw.start
 ; HASWELL-O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; HASWELL-O3-NEXT:    movq %rax, %rbx
 ; HASWELL-O3-NEXT:  .Lpcsection468:
 ; HASWELL-O3-NEXT:    xorq $42, %rbx
-; HASWELL-O3-NEXT:    movq %rdx, %rcx
+; HASWELL-O3-NEXT:    movq %rcx, %rdx
 ; HASWELL-O3-NEXT:  .Lpcsection469:
 ; HASWELL-O3-NEXT:    lock cmpxchg16b (%rdi)
+; HASWELL-O3-NEXT:    movq %rdx, %rcx
 ; HASWELL-O3-NEXT:  .Lpcsection470:
 ; HASWELL-O3-NEXT:    jne .LBB220_1
 ; HASWELL-O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -16172,16 +16188,17 @@ define void @atomic128_or_release(ptr %a) {
 ; O1-NEXT:  .Lpcsection525:
 ; O1-NEXT:    movq (%rdi), %rax
 ; O1-NEXT:  .Lpcsection526:
-; O1-NEXT:    movq 8(%rdi), %rdx
+; O1-NEXT:    movq 8(%rdi), %rcx
 ; O1-NEXT:    .p2align 4
 ; O1-NEXT:  .LBB226_1: # %atomicrmw.start
 ; O1-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O1-NEXT:    movq %rax, %rbx
 ; O1-NEXT:  .Lpcsection527:
 ; O1-NEXT:    orq $42, %rbx
-; O1-NEXT:    movq %rdx, %rcx
+; O1-NEXT:    movq %rcx, %rdx
 ; O1-NEXT:  .Lpcsection528:
 ; O1-NEXT:    lock cmpxchg16b (%rdi)
+; O1-NEXT:    movq %rdx, %rcx
 ; O1-NEXT:  .Lpcsection529:
 ; O1-NEXT:    jne .LBB226_1
 ; O1-NEXT:  # %bb.2: # %atomicrmw.end
@@ -16199,16 +16216,17 @@ define void @atomic128_or_release(ptr %a) {
 ; O2-NEXT:  .Lpcsection525:
 ; O2-NEXT:    movq (%rdi), %rax
 ; O2-NEXT:  .Lpcsection526:
-; O2-NEXT:    movq 8(%rdi), %rdx
+; O2-NEXT:    movq 8(%rdi), %rcx
 ; O2-NEXT:    .p2align 4
 ; O2-NEXT:  .LBB226_1: # %atomicrmw.start
 ; O2-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O2-NEXT:    movq %rax, %rbx
 ; O2-NEXT:  .Lpcsection527:
 ; O2-NEXT:    orq $42, %rbx
-; O2-NEXT:    movq %rdx, %rcx
+; O2-NEXT:    movq %rcx, %rdx
 ; O2-NEXT:  .Lpcsection528:
 ; O2-NEXT:    lock cmpxchg16b (%rdi)
+; O2-NEXT:    movq %rdx, %rcx
 ; O2-NEXT:  .Lpcsection529:
 ; O2-NEXT:    jne .LBB226_1
 ; O2-NEXT:  # %bb.2: # %atomicrmw.end
@@ -16226,16 +16244,17 @@ define void @atomic128_or_release(ptr %a) {
 ; O3-NEXT:  .Lpcsection525:
 ; O3-NEXT:    movq (%rdi), %rax
 ; O3-NEXT:  .Lpcsection526:
-; O3-NEXT:    movq 8(%rdi), %rdx
+; O3-NEXT:    movq 8(%rdi), %rcx
 ; O3-NEXT:    .p2align 4
 ; O3-NEXT:  .LBB226_1: # %atomicrmw.start
 ; O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O3-NEXT:    movq %rax, %rbx
 ; O3-NEXT:  .Lpcsection527:
 ; O3-NEXT:    orq $42, %rbx
-; O3-NEXT:    movq %rdx, %rcx
+; O3-NEXT:    movq %rcx, %rdx
 ; O3-NEXT:  .Lpcsection528:
 ; O3-NEXT:    lock cmpxchg16b (%rdi)
+; O3-NEXT:    movq %rdx, %rcx
 ; O3-NEXT:  .Lpcsection529:
 ; O3-NEXT:    jne .LBB226_1
 ; O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -16253,16 +16272,17 @@ define void @atomic128_or_release(ptr %a) {
 ; HASWELL-O3-NEXT:  .Lpcsection502:
 ; HASWELL-O3-NEXT:    movq (%rdi), %rax
 ; HASWELL-O3-NEXT:  .Lpcsection503:
-; HASWELL-O3-NEXT:    movq 8(%rdi), %rdx
+; HASWELL-O3-NEXT:    movq 8(%rdi), %rcx
 ; HASWELL-O3-NEXT:    .p2align 4
 ; HASWELL-O3-NEXT:  .LBB226_1: # %atomicrmw.start
 ; HASWELL-O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; HASWELL-O3-NEXT:    movq %rax, %rbx
 ; HASWELL-O3-NEXT:  .Lpcsection504:
 ; HASWELL-O3-NEXT:    orq $42, %rbx
-; HASWELL-O3-NEXT:    movq %rdx, %rcx
+; HASWELL-O3-NEXT:    movq %rcx, %rdx
 ; HASWELL-O3-NEXT:  .Lpcsection505:
 ; HASWELL-O3-NEXT:    lock cmpxchg16b (%rdi)
+; HASWELL-O3-NEXT:    movq %rdx, %rcx
 ; HASWELL-O3-NEXT:  .Lpcsection506:
 ; HASWELL-O3-NEXT:    jne .LBB226_1
 ; HASWELL-O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -16324,16 +16344,17 @@ define void @atomic128_xor_release(ptr %a) {
 ; O1-NEXT:  .Lpcsection530:
 ; O1-NEXT:    movq (%rdi), %rax
 ; O1-NEXT:  .Lpcsection531:
-; O1-NEXT:    movq 8(%rdi), %rdx
+; O1-NEXT:    movq 8(%rdi), %rcx
 ; O1-NEXT:    .p2align 4
 ; O1-NEXT:  .LBB227_1: # %atomicrmw.start
 ; O1-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O1-NEXT:    movq %rax, %rbx
 ; O1-NEXT:  .Lpcsection532:
 ; O1-NEXT:    xorq $42, %rbx
-; O1-NEXT:    movq %rdx, %rcx
+; O1-NEXT:    movq %rcx, %rdx
 ; O1-NEXT:  .Lpcsection533:
 ; O1-NEXT:    lock cmpxchg16b (%rdi)
+; O1-NEXT:    movq %rdx, %rcx
 ; O1-NEXT:  .Lpcsection534:
 ; O1-NEXT:    jne .LBB227_1
 ; O1-NEXT:  # %bb.2: # %atomicrmw.end
@@ -16351,16 +16372,17 @@ define void @atomic128_xor_release(ptr %a) {
 ; O2-NEXT:  .Lpcsection530:
 ; O2-NEXT:    movq (%rdi), %rax
 ; O2-NEXT:  .Lpcsection531:
-; O2-NEXT:    movq 8(%rdi), %rdx
+; O2-NEXT:    movq 8(%rdi), %rcx
 ; O2-NEXT:    .p2align 4
 ; O2-NEXT:  .LBB227_1: # %atomicrmw.start
 ; O2-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O2-NEXT:    movq %rax, %rbx
 ; O2-NEXT:  .Lpcsection532:
 ; O2-NEXT:    xorq $42, %rbx
-; O2-NEXT:    movq %rdx, %rcx
+; O2-NEXT:    movq %rcx, %rdx
 ; O2-NEXT:  .Lpcsection533:
 ; O2-NEXT:    lock cmpxchg16b (%rdi)
+; O2-NEXT:    movq %rdx, %rcx
 ; O2-NEXT:  .Lpcsection534:
 ; O2-NEXT:    jne .LBB227_1
 ; O2-NEXT:  # %bb.2: # %atomicrmw.end
@@ -16378,16 +16400,17 @@ define void @atomic128_xor_release(ptr %a) {
 ; O3-NEXT:  .Lpcsection530:
 ; O3-NEXT:    movq (%rdi), %rax
 ; O3-NEXT:  .Lpcsection531:
-; O3-NEXT:    movq 8(%rdi), %rdx
+; O3-NEXT:    movq 8(%rdi), %rcx
 ; O3-NEXT:    .p2align 4
 ; O3-NEXT:  .LBB227_1: # %atomicrmw.start
 ; O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O3-NEXT:    movq %rax, %rbx
 ; O3-NEXT:  .Lpcsection532:
 ; O3-NEXT:    xorq $42, %rbx
-; O3-NEXT:    movq %rdx, %rcx
+; O3-NEXT:    movq %rcx, %rdx
 ; O3-NEXT:  .Lpcsection533:
 ; O3-NEXT:    lock cmpxchg16b (%rdi)
+; O3-NEXT:    movq %rdx, %rcx
 ; O3-NEXT:  .Lpcsection534:
 ; O3-NEXT:    jne .LBB227_1
 ; O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -16405,16 +16428,17 @@ define void @atomic128_xor_release(ptr %a) {
 ; HASWELL-O3-NEXT:  .Lpcsection507:
 ; HASWELL-O3-NEXT:    movq (%rdi), %rax
 ; HASWELL-O3-NEXT:  .Lpcsection508:
-; HASWELL-O3-NEXT:    movq 8(%rdi), %rdx
+; HASWELL-O3-NEXT:    movq 8(%rdi), %rcx
 ; HASWELL-O3-NEXT:    .p2align 4
 ; HASWELL-O3-NEXT:  .LBB227_1: # %atomicrmw.start
 ; HASWELL-O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; HASWELL-O3-NEXT:    movq %rax, %rbx
 ; HASWELL-O3-NEXT:  .Lpcsection509:
 ; HASWELL-O3-NEXT:    xorq $42, %rbx
-; HASWELL-O3-NEXT:    movq %rdx, %rcx
+; HASWELL-O3-NEXT:    movq %rcx, %rdx
 ; HASWELL-O3-NEXT:  .Lpcsection510:
 ; HASWELL-O3-NEXT:    lock cmpxchg16b (%rdi)
+; HASWELL-O3-NEXT:    movq %rdx, %rcx
 ; HASWELL-O3-NEXT:  .Lpcsection511:
 ; HASWELL-O3-NEXT:    jne .LBB227_1
 ; HASWELL-O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -17284,16 +17308,17 @@ define void @atomic128_or_acq_rel(ptr %a) {
 ; O1-NEXT:  .Lpcsection566:
 ; O1-NEXT:    movq (%rdi), %rax
 ; O1-NEXT:  .Lpcsection567:
-; O1-NEXT:    movq 8(%rdi), %rdx
+; O1-NEXT:    movq 8(%rdi), %rcx
 ; O1-NEXT:    .p2align 4
 ; O1-NEXT:  .LBB233_1: # %atomicrmw.start
 ; O1-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O1-NEXT:    movq %rax, %rbx
 ; O1-NEXT:  .Lpcsection568:
 ; O1-NEXT:    orq $42, %rbx
-; O1-NEXT:    movq %rdx, %rcx
+; O1-NEXT:    movq %rcx, %rdx
 ; O1-NEXT:  .Lpcsection569:
 ; O1-NEXT:    lock cmpxchg16b (%rdi)
+; O1-NEXT:    movq %rdx, %rcx
 ; O1-NEXT:  .Lpcsection570:
 ; O1-NEXT:    jne .LBB233_1
 ; O1-NEXT:  # %bb.2: # %atomicrmw.end
@@ -17311,16 +17336,17 @@ define void @atomic128_or_acq_rel(ptr %a) {
 ; O2-NEXT:  .Lpcsection566:
 ; O2-NEXT:    movq (%rdi), %rax
 ; O2-NEXT:  .Lpcsection567:
-; O2-NEXT:    movq 8(%rdi), %rdx
+; O2-NEXT:    movq 8(%rdi), %rcx
 ; O2-NEXT:    .p2align 4
 ; O2-NEXT:  .LBB233_1: # %atomicrmw.start
 ; O2-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O2-NEXT:    movq %rax, %rbx
 ; O2-NEXT:  .Lpcsection568:
 ; O2-NEXT:    orq $42, %rbx
-; O2-NEXT:    movq %rdx, %rcx
+; O2-NEXT:    movq %rcx, %rdx
 ; O2-NEXT:  .Lpcsection569:
 ; O2-NEXT:    lock cmpxchg16b (%rdi)
+; O2-NEXT:    movq %rdx, %rcx
 ; O2-NEXT:  .Lpcsection570:
 ; O2-NEXT:    jne .LBB233_1
 ; O2-NEXT:  # %bb.2: # %atomicrmw.end
@@ -17338,16 +17364,17 @@ define void @atomic128_or_acq_rel(ptr %a) {
 ; O3-NEXT:  .Lpcsection566:
 ; O3-NEXT:    movq (%rdi), %rax
 ; O3-NEXT:  .Lpcsection567:
-; O3-NEXT:    movq 8(%rdi), %rdx
+; O3-NEXT:    movq 8(%rdi), %rcx
 ; O3-NEXT:    .p2align 4
 ; O3-NEXT:  .LBB233_1: # %atomicrmw.start
 ; O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O3-NEXT:    movq %rax, %rbx
 ; O3-NEXT:  .Lpcsection568:
 ; O3-NEXT:    orq $42, %rbx
-; O3-NEXT:    movq %rdx, %rcx
+; O3-NEXT:    movq %rcx, %rdx
 ; O3-NEXT:  .Lpcsection569:
 ; O3-NEXT:    lock cmpxchg16b (%rdi)
+; O3-NEXT:    movq %rdx, %rcx
 ; O3-NEXT:  .Lpcsection570:
 ; O3-NEXT:    jne .LBB233_1
 ; O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -17365,16 +17392,17 @@ define void @atomic128_or_acq_rel(ptr %a) {
 ; HASWELL-O3-NEXT:  .Lpcsection543:
 ; HASWELL-O3-NEXT:    movq (%rdi), %rax
 ; HASWELL-O3-NEXT:  .Lpcsection544:
-; HASWELL-O3-NEXT:    movq 8(%rdi), %rdx
+; HASWELL-O3-NEXT:    movq 8(%rdi), %rcx
 ; HASWELL-O3-NEXT:    .p2align 4
 ; HASWELL-O3-NEXT:  .LBB233_1: # %atomicrmw.start
 ; HASWELL-O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; HASWELL-O3-NEXT:    movq %rax, %rbx
 ; HASWELL-O3-NEXT:  .Lpcsection545:
 ; HASWELL-O3-NEXT:    orq $42, %rbx
-; HASWELL-O3-NEXT:    movq %rdx, %rcx
+; HASWELL-O3-NEXT:    movq %rcx, %rdx
 ; HASWELL-O3-NEXT:  .Lpcsection546:
 ; HASWELL-O3-NEXT:    lock cmpxchg16b (%rdi)
+; HASWELL-O3-NEXT:    movq %rdx, %rcx
 ; HASWELL-O3-NEXT:  .Lpcsection547:
 ; HASWELL-O3-NEXT:    jne .LBB233_1
 ; HASWELL-O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -17436,16 +17464,17 @@ define void @atomic128_xor_acq_rel(ptr %a) {
 ; O1-NEXT:  .Lpcsection571:
 ; O1-NEXT:    movq (%rdi), %rax
 ; O1-NEXT:  .Lpcsection572:
-; O1-NEXT:    movq 8(%rdi), %rdx
+; O1-NEXT:    movq 8(%rdi), %rcx
 ; O1-NEXT:    .p2align 4
 ; O1-NEXT:  .LBB234_1: # %atomicrmw.start
 ; O1-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O1-NEXT:    movq %rax, %rbx
 ; O1-NEXT:  .Lpcsection573:
 ; O1-NEXT:    xorq $42, %rbx
-; O1-NEXT:    movq %rdx, %rcx
+; O1-NEXT:    movq %rcx, %rdx
 ; O1-NEXT:  .Lpcsection574:
 ; O1-NEXT:    lock cmpxchg16b (%rdi)
+; O1-NEXT:    movq %rdx, %rcx
 ; O1-NEXT:  .Lpcsection575:
 ; O1-NEXT:    jne .LBB234_1
 ; O1-NEXT:  # %bb.2: # %atomicrmw.end
@@ -17463,16 +17492,17 @@ define void @atomic128_xor_acq_rel(ptr %a) {
 ; O2-NEXT:  .Lpcsection571:
 ; O2-NEXT:    movq (%rdi), %rax
 ; O2-NEXT:  .Lpcsection572:
-; O2-NEXT:    movq 8(%rdi), %rdx
+; O2-NEXT:    movq 8(%rdi), %rcx
 ; O2-NEXT:    .p2align 4
 ; O2-NEXT:  .LBB234_1: # %atomicrmw.start
 ; O2-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O2-NEXT:    movq %rax, %rbx
 ; O2-NEXT:  .Lpcsection573:
 ; O2-NEXT:    xorq $42, %rbx
-; O2-NEXT:    movq %rdx, %rcx
+; O2-NEXT:    movq %rcx, %rdx
 ; O2-NEXT:  .Lpcsection574:
 ; O2-NEXT:    lock cmpxchg16b (%rdi)
+; O2-NEXT:    movq %rdx, %rcx
 ; O2-NEXT:  .Lpcsection575:
 ; O2-NEXT:    jne .LBB234_1
 ; O2-NEXT:  # %bb.2: # %atomicrmw.end
@@ -17490,16 +17520,17 @@ define void @atomic128_xor_acq_rel(ptr %a) {
 ; O3-NEXT:  .Lpcsection571:
 ; O3-NEXT:    movq (%rdi), %rax
 ; O3-NEXT:  .Lpcsection572:
-; O3-NEXT:    movq 8(%rdi), %rdx
+; O3-NEXT:    movq 8(%rdi), %rcx
 ; O3-NEXT:    .p2align 4
 ; O3-NEXT:  .LBB234_1: # %atomicrmw.start
 ; O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O3-NEXT:    movq %rax, %rbx
 ; O3-NEXT:  .Lpcsection573:
 ; O3-NEXT:    xorq $42, %rbx
-; O3-NEXT:    movq %rdx, %rcx
+; O3-NEXT:    movq %rcx, %rdx
 ; O3-NEXT:  .Lpcsection574:
 ; O3-NEXT:    lock cmpxchg16b (%rdi)
+; O3-NEXT:    movq %rdx, %rcx
 ; O3-NEXT:  .Lpcsection575:
 ; O3-NEXT:    jne .LBB234_1
 ; O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -17517,16 +17548,17 @@ define void @atomic128_xor_acq_rel(ptr %a) {
 ; HASWELL-O3-NEXT:  .Lpcsection548:
 ; HASWELL-O3-NEXT:    movq (%rdi), %rax
 ; HASWELL-O3-NEXT:  .Lpcsection549:
-; HASWELL-O3-NEXT:    movq 8(%rdi), %rdx
+; HASWELL-O3-NEXT:    movq 8(%rdi), %rcx
 ; HASWELL-O3-NEXT:    .p2align 4
 ; HASWELL-O3-NEXT:  .LBB234_1: # %atomicrmw.start
 ; HASWELL-O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; HASWELL-O3-NEXT:    movq %rax, %rbx
 ; HASWELL-O3-NEXT:  .Lpcsection550:
 ; HASWELL-O3-NEXT:    xorq $42, %rbx
-; HASWELL-O3-NEXT:    movq %rdx, %rcx
+; HASWELL-O3-NEXT:    movq %rcx, %rdx
 ; HASWELL-O3-NEXT:  .Lpcsection551:
 ; HASWELL-O3-NEXT:    lock cmpxchg16b (%rdi)
+; HASWELL-O3-NEXT:    movq %rdx, %rcx
 ; HASWELL-O3-NEXT:  .Lpcsection552:
 ; HASWELL-O3-NEXT:    jne .LBB234_1
 ; HASWELL-O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -18396,16 +18428,17 @@ define void @atomic128_or_seq_cst(ptr %a) {
 ; O1-NEXT:  .Lpcsection607:
 ; O1-NEXT:    movq (%rdi), %rax
 ; O1-NEXT:  .Lpcsection608:
-; O1-NEXT:    movq 8(%rdi), %rdx
+; O1-NEXT:    movq 8(%rdi), %rcx
 ; O1-NEXT:    .p2align 4
 ; O1-NEXT:  .LBB240_1: # %atomicrmw.start
 ; O1-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O1-NEXT:    movq %rax, %rbx
 ; O1-NEXT:  .Lpcsection609:
 ; O1-NEXT:    orq $42, %rbx
-; O1-NEXT:    movq %rdx, %rcx
+; O1-NEXT:    movq %rcx, %rdx
 ; O1-NEXT:  .Lpcsection610:
 ; O1-NEXT:    lock cmpxchg16b (%rdi)
+; O1-NEXT:    movq %rdx, %rcx
 ; O1-NEXT:  .Lpcsection611:
 ; O1-NEXT:    jne .LBB240_1
 ; O1-NEXT:  # %bb.2: # %atomicrmw.end
@@ -18423,16 +18456,17 @@ define void @atomic128_or_seq_cst(ptr %a) {
 ; O2-NEXT:  .Lpcsection607:
 ; O2-NEXT:    movq (%rdi), %rax
 ; O2-NEXT:  .Lpcsection608:
-; O2-NEXT:    movq 8(%rdi), %rdx
+; O2-NEXT:    movq 8(%rdi), %rcx
 ; O2-NEXT:    .p2align 4
 ; O2-NEXT:  .LBB240_1: # %atomicrmw.start
 ; O2-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O2-NEXT:    movq %rax, %rbx
 ; O2-NEXT:  .Lpcsection609:
 ; O2-NEXT:    orq $42, %rbx
-; O2-NEXT:    movq %rdx, %rcx
+; O2-NEXT:    movq %rcx, %rdx
 ; O2-NEXT:  .Lpcsection610:
 ; O2-NEXT:    lock cmpxchg16b (%rdi)
+; O2-NEXT:    movq %rdx, %rcx
 ; O2-NEXT:  .Lpcsection611:
 ; O2-NEXT:    jne .LBB240_1
 ; O2-NEXT:  # %bb.2: # %atomicrmw.end
@@ -18450,16 +18484,17 @@ define void @atomic128_or_seq_cst(ptr %a) {
 ; O3-NEXT:  .Lpcsection607:
 ; O3-NEXT:    movq (%rdi), %rax
 ; O3-NEXT:  .Lpcsection608:
-; O3-NEXT:    movq 8(%rdi), %rdx
+; O3-NEXT:    movq 8(%rdi), %rcx
 ; O3-NEXT:    .p2align 4
 ; O3-NEXT:  .LBB240_1: # %atomicrmw.start
 ; O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O3-NEXT:    movq %rax, %rbx
 ; O3-NEXT:  .Lpcsection609:
 ; O3-NEXT:    orq $42, %rbx
-; O3-NEXT:    movq %rdx, %rcx
+; O3-NEXT:    movq %rcx, %rdx
 ; O3-NEXT:  .Lpcsection610:
 ; O3-NEXT:    lock cmpxchg16b (%rdi)
+; O3-NEXT:    movq %rdx, %rcx
 ; O3-NEXT:  .Lpcsection611:
 ; O3-NEXT:    jne .LBB240_1
 ; O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -18477,16 +18512,17 @@ define void @atomic128_or_seq_cst(ptr %a) {
 ; HASWELL-O3-NEXT:  .Lpcsection584:
 ; HASWELL-O3-NEXT:    movq (%rdi), %rax
 ; HASWELL-O3-NEXT:  .Lpcsection585:
-; HASWELL-O3-NEXT:    movq 8(%rdi), %rdx
+; HASWELL-O3-NEXT:    movq 8(%rdi), %rcx
 ; HASWELL-O3-NEXT:    .p2align 4
 ; HASWELL-O3-NEXT:  .LBB240_1: # %atomicrmw.start
 ; HASWELL-O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; HASWELL-O3-NEXT:    movq %rax, %rbx
 ; HASWELL-O3-NEXT:  .Lpcsection586:
 ; HASWELL-O3-NEXT:    orq $42, %rbx
-; HASWELL-O3-NEXT:    movq %rdx, %rcx
+; HASWELL-O3-NEXT:    movq %rcx, %rdx
 ; HASWELL-O3-NEXT:  .Lpcsection587:
 ; HASWELL-O3-NEXT:    lock cmpxchg16b (%rdi)
+; HASWELL-O3-NEXT:    movq %rdx, %rcx
 ; HASWELL-O3-NEXT:  .Lpcsection588:
 ; HASWELL-O3-NEXT:    jne .LBB240_1
 ; HASWELL-O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -18548,16 +18584,17 @@ define void @atomic128_xor_seq_cst(ptr %a) {
 ; O1-NEXT:  .Lpcsection612:
 ; O1-NEXT:    movq (%rdi), %rax
 ; O1-NEXT:  .Lpcsection613:
-; O1-NEXT:    movq 8(%rdi), %rdx
+; O1-NEXT:    movq 8(%rdi), %rcx
 ; O1-NEXT:    .p2align 4
 ; O1-NEXT:  .LBB241_1: # %atomicrmw.start
 ; O1-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O1-NEXT:    movq %rax, %rbx
 ; O1-NEXT:  .Lpcsection614:
 ; O1-NEXT:    xorq $42, %rbx
-; O1-NEXT:    movq %rdx, %rcx
+; O1-NEXT:    movq %rcx, %rdx
 ; O1-NEXT:  .Lpcsection615:
 ; O1-NEXT:    lock cmpxchg16b (%rdi)
+; O1-NEXT:    movq %rdx, %rcx
 ; O1-NEXT:  .Lpcsection616:
 ; O1-NEXT:    jne .LBB241_1
 ; O1-NEXT:  # %bb.2: # %atomicrmw.end
@@ -18575,16 +18612,17 @@ define void @atomic128_xor_seq_cst(ptr %a) {
 ; O2-NEXT:  .Lpcsection612:
 ; O2-NEXT:    movq (%rdi), %rax
 ; O2-NEXT:  .Lpcsection613:
-; O2-NEXT:    movq 8(%rdi), %rdx
+; O2-NEXT:    movq 8(%rdi), %rcx
 ; O2-NEXT:    .p2align 4
 ; O2-NEXT:  .LBB241_1: # %atomicrmw.start
 ; O2-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O2-NEXT:    movq %rax, %rbx
 ; O2-NEXT:  .Lpcsection614:
 ; O2-NEXT:    xorq $42, %rbx
-; O2-NEXT:    movq %rdx, %rcx
+; O2-NEXT:    movq %rcx, %rdx
 ; O2-NEXT:  .Lpcsection615:
 ; O2-NEXT:    lock cmpxchg16b (%rdi)
+; O2-NEXT:    movq %rdx, %rcx
 ; O2-NEXT:  .Lpcsection616:
 ; O2-NEXT:    jne .LBB241_1
 ; O2-NEXT:  # %bb.2: # %atomicrmw.end
@@ -18602,16 +18640,17 @@ define void @atomic128_xor_seq_cst(ptr %a) {
 ; O3-NEXT:  .Lpcsection612:
 ; O3-NEXT:    movq (%rdi), %rax
 ; O3-NEXT:  .Lpcsection613:
-; O3-NEXT:    movq 8(%rdi), %rdx
+; O3-NEXT:    movq 8(%rdi), %rcx
 ; O3-NEXT:    .p2align 4
 ; O3-NEXT:  .LBB241_1: # %atomicrmw.start
 ; O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; O3-NEXT:    movq %rax, %rbx
 ; O3-NEXT:  .Lpcsection614:
 ; O3-NEXT:    xorq $42, %rbx
-; O3-NEXT:    movq %rdx, %rcx
+; O3-NEXT:    movq %rcx, %rdx
 ; O3-NEXT:  .Lpcsection615:
 ; O3-NEXT:    lock cmpxchg16b (%rdi)
+; O3-NEXT:    movq %rdx, %rcx
 ; O3-NEXT:  .Lpcsection616:
 ; O3-NEXT:    jne .LBB241_1
 ; O3-NEXT:  # %bb.2: # %atomicrmw.end
@@ -18629,16 +18668,17 @@ define void @atomic128_xor_seq_cst(ptr %a) {
 ; HASWELL-O3-NEXT:  .Lpcsection589:
 ; HASWELL-O3-NEXT:    movq (%rdi), %rax
 ; HASWELL-O3-NEXT:  .Lpcsection590:
-; HASWELL-O3-NEXT:    movq 8(%rdi), %rdx
+; HASWELL-O3-NEXT:    movq 8(%rdi), %rcx
 ; HASWELL-O3-NEXT:    .p2align 4
 ; HASWELL-O3-NEXT:  .LBB241_1: # %atomicrmw.start
 ; HASWELL-O3-NEXT:    # =>This Inner Loop Header: Depth=1
 ; HASWELL-O3-NEXT:    movq %rax, %rbx
 ; HASWELL-O3-NEXT:  .Lpcsection591:
 ; HASWELL-O3-NEXT:    xorq $42, %rbx
-; HASWELL-O3-NEXT:    movq %rdx, %rcx
+; HASWELL-O3-NEXT:    movq %rcx, %rdx
 ; HASWELL-O3-NEXT:  .Lpcsection592:
 ; HASWELL-O3-NEXT:    lock cmpxchg16b (%rdi)
+; HASWELL-O3-NEXT:    movq %rdx, %rcx
 ; HASWELL-O3-NEXT:  .Lpcsection593:
 ; HASWELL-O3-NEXT:    jne .LBB241_1
 ; HASWELL-O3-NEXT:  # %bb.2: # %atomicrmw.end

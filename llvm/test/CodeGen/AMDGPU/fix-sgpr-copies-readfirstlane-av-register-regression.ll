@@ -11,8 +11,8 @@ define amdgpu_kernel void @constrain_readfirstlane_av(i64 %arg, ptr addrspace(1)
 ; CHECK-NEXT:    s_load_dwordx4 s[0:3], s[8:9], 0x0
 ; CHECK-NEXT:    v_mov_b32_e32 v0, 0
 ; CHECK-NEXT:    s_mov_b32 s5, 0
-; CHECK-NEXT:    s_mov_b64 s[6:7], 0
-; CHECK-NEXT:    s_and_b64 vcc, exec, -1
+; CHECK-NEXT:    s_mov_b64 s[8:9], 0
+; CHECK-NEXT:    s_and_b64 s[6:7], exec, -1
 ; CHECK-NEXT:    s_waitcnt lgkmcnt(0)
 ; CHECK-NEXT:    global_load_ushort v1, v0, s[2:3] glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
@@ -20,19 +20,19 @@ define amdgpu_kernel void @constrain_readfirstlane_av(i64 %arg, ptr addrspace(1)
 ; CHECK-NEXT:    s_and_b32 s4, s4, 0xffff
 ; CHECK-NEXT:  .LBB0_1: ; %bb16
 ; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
-; CHECK-NEXT:    s_mul_i32 s8, s6, s1
-; CHECK-NEXT:    s_mul_hi_u32 s9, s6, s0
-; CHECK-NEXT:    s_mul_i32 s7, s7, s0
-; CHECK-NEXT:    s_add_i32 s8, s9, s8
-; CHECK-NEXT:    s_mul_i32 s6, s6, s0
-; CHECK-NEXT:    s_add_i32 s7, s8, s7
-; CHECK-NEXT:    s_lshl_b64 s[6:7], s[6:7], 5
-; CHECK-NEXT:    s_add_u32 s6, s2, s6
-; CHECK-NEXT:    s_addc_u32 s7, s3, s7
-; CHECK-NEXT:    global_load_dword v1, v0, s[6:7] glc
+; CHECK-NEXT:    s_mul_i32 s10, s8, s1
+; CHECK-NEXT:    s_mul_hi_u32 s11, s8, s0
+; CHECK-NEXT:    s_mul_i32 s9, s9, s0
+; CHECK-NEXT:    s_add_i32 s10, s11, s10
+; CHECK-NEXT:    s_mul_i32 s8, s8, s0
+; CHECK-NEXT:    s_add_i32 s9, s10, s9
+; CHECK-NEXT:    s_lshl_b64 s[8:9], s[8:9], 5
+; CHECK-NEXT:    s_add_u32 s8, s2, s8
+; CHECK-NEXT:    s_addc_u32 s9, s3, s9
+; CHECK-NEXT:    global_load_dword v1, v0, s[8:9] glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    s_mov_b64 s[6:7], s[4:5]
-; CHECK-NEXT:    s_mov_b64 vcc, vcc
+; CHECK-NEXT:    s_mov_b64 s[8:9], s[4:5]
+; CHECK-NEXT:    s_mov_b64 vcc, s[6:7]
 ; CHECK-NEXT:    s_cbranch_vccnz .LBB0_1
 ; CHECK-NEXT:  ; %bb.2: ; %DummyReturnBlock
 ; CHECK-NEXT:    s_endpgm

@@ -80,33 +80,33 @@ define i32 @Test_use_div_and_idiv(i32 %a, i32 %b) nounwind {
 ; CHECK-NEXT:    pushl %ebx
 ; CHECK-NEXT:    pushl %edi
 ; CHECK-NEXT:    pushl %esi
-; CHECK-NEXT:    movl {{[0-9]+}}(%esp), %ebx
 ; CHECK-NEXT:    movl {{[0-9]+}}(%esp), %ecx
-; CHECK-NEXT:    movl %ecx, %edi
-; CHECK-NEXT:    orl %ebx, %edi
+; CHECK-NEXT:    movl {{[0-9]+}}(%esp), %ebx
+; CHECK-NEXT:    movl %ebx, %edi
+; CHECK-NEXT:    orl %ecx, %edi
 ; CHECK-NEXT:    testl $-256, %edi
 ; CHECK-NEXT:    je .LBB3_1
 ; CHECK-NEXT:  # %bb.2:
-; CHECK-NEXT:    movl %ecx, %eax
+; CHECK-NEXT:    movl %ebx, %eax
 ; CHECK-NEXT:    cltd
-; CHECK-NEXT:    idivl %ebx
+; CHECK-NEXT:    idivl %ecx
 ; CHECK-NEXT:    movl %eax, %esi
 ; CHECK-NEXT:    testl $-256, %edi
 ; CHECK-NEXT:    je .LBB3_4
 ; CHECK-NEXT:  .LBB3_5:
-; CHECK-NEXT:    movl %ecx, %eax
+; CHECK-NEXT:    movl %ebx, %eax
 ; CHECK-NEXT:    xorl %edx, %edx
-; CHECK-NEXT:    divl %ebx
+; CHECK-NEXT:    divl %ecx
 ; CHECK-NEXT:    jmp .LBB3_6
 ; CHECK-NEXT:  .LBB3_1:
-; CHECK-NEXT:    movzbl %cl, %eax
-; CHECK-NEXT:    divb %bl
+; CHECK-NEXT:    movzbl %bl, %eax
+; CHECK-NEXT:    divb %cl
 ; CHECK-NEXT:    movzbl %al, %esi
 ; CHECK-NEXT:    testl $-256, %edi
 ; CHECK-NEXT:    jne .LBB3_5
 ; CHECK-NEXT:  .LBB3_4:
-; CHECK-NEXT:    movzbl %cl, %eax
-; CHECK-NEXT:    divb %bl
+; CHECK-NEXT:    movzbl %bl, %eax
+; CHECK-NEXT:    divb %cl
 ; CHECK-NEXT:    movzbl %al, %eax
 ; CHECK-NEXT:  .LBB3_6:
 ; CHECK-NEXT:    addl %eax, %esi

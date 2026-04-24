@@ -543,48 +543,48 @@ define <2 x i64> @stest_f64i64(<2 x double> %x) {
 ; CHECK-CVT-GI-NEXT:    .cfi_offset w30, -40
 ; CHECK-CVT-GI-NEXT:    .cfi_offset b8, -48
 ; CHECK-CVT-GI-NEXT:    mov d8, v0.d[1]
-; CHECK-CVT-GI-NEXT:    mov x21, #9223372036854775807 // =0x7fffffffffffffff
-; CHECK-CVT-GI-NEXT:    mov x22, #-9223372036854775808 // =0x8000000000000000
+; CHECK-CVT-GI-NEXT:    mov x19, #9223372036854775807 // =0x7fffffffffffffff
+; CHECK-CVT-GI-NEXT:    mov x20, #-9223372036854775808 // =0x8000000000000000
 ; CHECK-CVT-GI-NEXT:    // kill: def $d0 killed $d0 killed $q0
 ; CHECK-CVT-GI-NEXT:    bl __fixdfti
 ; CHECK-CVT-GI-NEXT:    fmov d0, d8
-; CHECK-CVT-GI-NEXT:    mov x19, x0
-; CHECK-CVT-GI-NEXT:    mov x20, x1
+; CHECK-CVT-GI-NEXT:    mov x21, x0
+; CHECK-CVT-GI-NEXT:    mov x22, x1
 ; CHECK-CVT-GI-NEXT:    bl __fixdfti
-; CHECK-CVT-GI-NEXT:    cmp x19, x21
+; CHECK-CVT-GI-NEXT:    cmp x21, x19
 ; CHECK-CVT-GI-NEXT:    ldr x30, [sp, #8] // 8-byte Reload
 ; CHECK-CVT-GI-NEXT:    cset w8, lo
-; CHECK-CVT-GI-NEXT:    cmp x20, #0
+; CHECK-CVT-GI-NEXT:    cmp x22, #0
 ; CHECK-CVT-GI-NEXT:    cset w9, mi
 ; CHECK-CVT-GI-NEXT:    csel w8, w8, w9, eq
-; CHECK-CVT-GI-NEXT:    cmp x0, x21
+; CHECK-CVT-GI-NEXT:    cmp x0, x19
 ; CHECK-CVT-GI-NEXT:    cset w9, lo
 ; CHECK-CVT-GI-NEXT:    cmp x1, #0
 ; CHECK-CVT-GI-NEXT:    cset w10, mi
 ; CHECK-CVT-GI-NEXT:    csel w9, w9, w10, eq
 ; CHECK-CVT-GI-NEXT:    tst w8, #0x1
-; CHECK-CVT-GI-NEXT:    csel x8, x19, x21, ne
-; CHECK-CVT-GI-NEXT:    csel x10, x20, xzr, ne
+; CHECK-CVT-GI-NEXT:    csel x8, x21, x19, ne
+; CHECK-CVT-GI-NEXT:    csel x10, x22, xzr, ne
 ; CHECK-CVT-GI-NEXT:    tst w9, #0x1
-; CHECK-CVT-GI-NEXT:    csel x9, x0, x21, ne
+; CHECK-CVT-GI-NEXT:    csel x9, x0, x19, ne
 ; CHECK-CVT-GI-NEXT:    csel x11, x1, xzr, ne
-; CHECK-CVT-GI-NEXT:    cmp x8, x22
+; CHECK-CVT-GI-NEXT:    cmp x8, x20
 ; CHECK-CVT-GI-NEXT:    cset w12, hi
 ; CHECK-CVT-GI-NEXT:    cmp x10, #0
 ; CHECK-CVT-GI-NEXT:    cset w13, pl
 ; CHECK-CVT-GI-NEXT:    cmn x10, #1
 ; CHECK-CVT-GI-NEXT:    csel w10, w12, w13, eq
-; CHECK-CVT-GI-NEXT:    cmp x9, x22
+; CHECK-CVT-GI-NEXT:    cmp x9, x20
 ; CHECK-CVT-GI-NEXT:    cset w12, hi
 ; CHECK-CVT-GI-NEXT:    cmp x11, #0
 ; CHECK-CVT-GI-NEXT:    cset w13, pl
 ; CHECK-CVT-GI-NEXT:    cmn x11, #1
 ; CHECK-CVT-GI-NEXT:    csel w11, w12, w13, eq
 ; CHECK-CVT-GI-NEXT:    tst w10, #0x1
-; CHECK-CVT-GI-NEXT:    csel x8, x8, x22, ne
+; CHECK-CVT-GI-NEXT:    csel x8, x8, x20, ne
 ; CHECK-CVT-GI-NEXT:    tst w11, #0x1
 ; CHECK-CVT-GI-NEXT:    fmov d0, x8
-; CHECK-CVT-GI-NEXT:    csel x9, x9, x22, ne
+; CHECK-CVT-GI-NEXT:    csel x9, x9, x20, ne
 ; CHECK-CVT-GI-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload
 ; CHECK-CVT-GI-NEXT:    ldp x22, x21, [sp, #16] // 16-byte Folded Reload
 ; CHECK-CVT-GI-NEXT:    mov v0.d[1], x9
@@ -605,48 +605,48 @@ define <2 x i64> @stest_f64i64(<2 x double> %x) {
 ; CHECK-FP16-GI-NEXT:    .cfi_offset w30, -40
 ; CHECK-FP16-GI-NEXT:    .cfi_offset b8, -48
 ; CHECK-FP16-GI-NEXT:    mov d8, v0.d[1]
-; CHECK-FP16-GI-NEXT:    mov x21, #9223372036854775807 // =0x7fffffffffffffff
-; CHECK-FP16-GI-NEXT:    mov x22, #-9223372036854775808 // =0x8000000000000000
+; CHECK-FP16-GI-NEXT:    mov x19, #9223372036854775807 // =0x7fffffffffffffff
+; CHECK-FP16-GI-NEXT:    mov x20, #-9223372036854775808 // =0x8000000000000000
 ; CHECK-FP16-GI-NEXT:    // kill: def $d0 killed $d0 killed $q0
 ; CHECK-FP16-GI-NEXT:    bl __fixdfti
 ; CHECK-FP16-GI-NEXT:    fmov d0, d8
-; CHECK-FP16-GI-NEXT:    mov x19, x0
-; CHECK-FP16-GI-NEXT:    mov x20, x1
+; CHECK-FP16-GI-NEXT:    mov x21, x0
+; CHECK-FP16-GI-NEXT:    mov x22, x1
 ; CHECK-FP16-GI-NEXT:    bl __fixdfti
-; CHECK-FP16-GI-NEXT:    cmp x19, x21
+; CHECK-FP16-GI-NEXT:    cmp x21, x19
 ; CHECK-FP16-GI-NEXT:    ldr x30, [sp, #8] // 8-byte Reload
 ; CHECK-FP16-GI-NEXT:    cset w8, lo
-; CHECK-FP16-GI-NEXT:    cmp x20, #0
+; CHECK-FP16-GI-NEXT:    cmp x22, #0
 ; CHECK-FP16-GI-NEXT:    cset w9, mi
 ; CHECK-FP16-GI-NEXT:    csel w8, w8, w9, eq
-; CHECK-FP16-GI-NEXT:    cmp x0, x21
+; CHECK-FP16-GI-NEXT:    cmp x0, x19
 ; CHECK-FP16-GI-NEXT:    cset w9, lo
 ; CHECK-FP16-GI-NEXT:    cmp x1, #0
 ; CHECK-FP16-GI-NEXT:    cset w10, mi
 ; CHECK-FP16-GI-NEXT:    csel w9, w9, w10, eq
 ; CHECK-FP16-GI-NEXT:    tst w8, #0x1
-; CHECK-FP16-GI-NEXT:    csel x8, x19, x21, ne
-; CHECK-FP16-GI-NEXT:    csel x10, x20, xzr, ne
+; CHECK-FP16-GI-NEXT:    csel x8, x21, x19, ne
+; CHECK-FP16-GI-NEXT:    csel x10, x22, xzr, ne
 ; CHECK-FP16-GI-NEXT:    tst w9, #0x1
-; CHECK-FP16-GI-NEXT:    csel x9, x0, x21, ne
+; CHECK-FP16-GI-NEXT:    csel x9, x0, x19, ne
 ; CHECK-FP16-GI-NEXT:    csel x11, x1, xzr, ne
-; CHECK-FP16-GI-NEXT:    cmp x8, x22
+; CHECK-FP16-GI-NEXT:    cmp x8, x20
 ; CHECK-FP16-GI-NEXT:    cset w12, hi
 ; CHECK-FP16-GI-NEXT:    cmp x10, #0
 ; CHECK-FP16-GI-NEXT:    cset w13, pl
 ; CHECK-FP16-GI-NEXT:    cmn x10, #1
 ; CHECK-FP16-GI-NEXT:    csel w10, w12, w13, eq
-; CHECK-FP16-GI-NEXT:    cmp x9, x22
+; CHECK-FP16-GI-NEXT:    cmp x9, x20
 ; CHECK-FP16-GI-NEXT:    cset w12, hi
 ; CHECK-FP16-GI-NEXT:    cmp x11, #0
 ; CHECK-FP16-GI-NEXT:    cset w13, pl
 ; CHECK-FP16-GI-NEXT:    cmn x11, #1
 ; CHECK-FP16-GI-NEXT:    csel w11, w12, w13, eq
 ; CHECK-FP16-GI-NEXT:    tst w10, #0x1
-; CHECK-FP16-GI-NEXT:    csel x8, x8, x22, ne
+; CHECK-FP16-GI-NEXT:    csel x8, x8, x20, ne
 ; CHECK-FP16-GI-NEXT:    tst w11, #0x1
 ; CHECK-FP16-GI-NEXT:    fmov d0, x8
-; CHECK-FP16-GI-NEXT:    csel x9, x9, x22, ne
+; CHECK-FP16-GI-NEXT:    csel x9, x9, x20, ne
 ; CHECK-FP16-GI-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload
 ; CHECK-FP16-GI-NEXT:    ldp x22, x21, [sp, #16] // 16-byte Folded Reload
 ; CHECK-FP16-GI-NEXT:    mov v0.d[1], x9
@@ -1008,48 +1008,48 @@ define <2 x i64> @stest_f32i64(<2 x float> %x) {
 ; CHECK-CVT-GI-NEXT:    .cfi_offset b8, -48
 ; CHECK-CVT-GI-NEXT:    // kill: def $d0 killed $d0 def $q0
 ; CHECK-CVT-GI-NEXT:    mov s8, v0.s[1]
-; CHECK-CVT-GI-NEXT:    mov x21, #9223372036854775807 // =0x7fffffffffffffff
-; CHECK-CVT-GI-NEXT:    mov x22, #-9223372036854775808 // =0x8000000000000000
+; CHECK-CVT-GI-NEXT:    mov x19, #9223372036854775807 // =0x7fffffffffffffff
+; CHECK-CVT-GI-NEXT:    mov x20, #-9223372036854775808 // =0x8000000000000000
 ; CHECK-CVT-GI-NEXT:    // kill: def $s0 killed $s0 killed $q0
 ; CHECK-CVT-GI-NEXT:    bl __fixsfti
 ; CHECK-CVT-GI-NEXT:    fmov s0, s8
-; CHECK-CVT-GI-NEXT:    mov x19, x0
-; CHECK-CVT-GI-NEXT:    mov x20, x1
+; CHECK-CVT-GI-NEXT:    mov x21, x0
+; CHECK-CVT-GI-NEXT:    mov x22, x1
 ; CHECK-CVT-GI-NEXT:    bl __fixsfti
-; CHECK-CVT-GI-NEXT:    cmp x19, x21
+; CHECK-CVT-GI-NEXT:    cmp x21, x19
 ; CHECK-CVT-GI-NEXT:    ldr x30, [sp, #8] // 8-byte Reload
 ; CHECK-CVT-GI-NEXT:    cset w8, lo
-; CHECK-CVT-GI-NEXT:    cmp x20, #0
+; CHECK-CVT-GI-NEXT:    cmp x22, #0
 ; CHECK-CVT-GI-NEXT:    cset w9, mi
 ; CHECK-CVT-GI-NEXT:    csel w8, w8, w9, eq
-; CHECK-CVT-GI-NEXT:    cmp x0, x21
+; CHECK-CVT-GI-NEXT:    cmp x0, x19
 ; CHECK-CVT-GI-NEXT:    cset w9, lo
 ; CHECK-CVT-GI-NEXT:    cmp x1, #0
 ; CHECK-CVT-GI-NEXT:    cset w10, mi
 ; CHECK-CVT-GI-NEXT:    csel w9, w9, w10, eq
 ; CHECK-CVT-GI-NEXT:    tst w8, #0x1
-; CHECK-CVT-GI-NEXT:    csel x8, x19, x21, ne
-; CHECK-CVT-GI-NEXT:    csel x10, x20, xzr, ne
+; CHECK-CVT-GI-NEXT:    csel x8, x21, x19, ne
+; CHECK-CVT-GI-NEXT:    csel x10, x22, xzr, ne
 ; CHECK-CVT-GI-NEXT:    tst w9, #0x1
-; CHECK-CVT-GI-NEXT:    csel x9, x0, x21, ne
+; CHECK-CVT-GI-NEXT:    csel x9, x0, x19, ne
 ; CHECK-CVT-GI-NEXT:    csel x11, x1, xzr, ne
-; CHECK-CVT-GI-NEXT:    cmp x8, x22
+; CHECK-CVT-GI-NEXT:    cmp x8, x20
 ; CHECK-CVT-GI-NEXT:    cset w12, hi
 ; CHECK-CVT-GI-NEXT:    cmp x10, #0
 ; CHECK-CVT-GI-NEXT:    cset w13, pl
 ; CHECK-CVT-GI-NEXT:    cmn x10, #1
 ; CHECK-CVT-GI-NEXT:    csel w10, w12, w13, eq
-; CHECK-CVT-GI-NEXT:    cmp x9, x22
+; CHECK-CVT-GI-NEXT:    cmp x9, x20
 ; CHECK-CVT-GI-NEXT:    cset w12, hi
 ; CHECK-CVT-GI-NEXT:    cmp x11, #0
 ; CHECK-CVT-GI-NEXT:    cset w13, pl
 ; CHECK-CVT-GI-NEXT:    cmn x11, #1
 ; CHECK-CVT-GI-NEXT:    csel w11, w12, w13, eq
 ; CHECK-CVT-GI-NEXT:    tst w10, #0x1
-; CHECK-CVT-GI-NEXT:    csel x8, x8, x22, ne
+; CHECK-CVT-GI-NEXT:    csel x8, x8, x20, ne
 ; CHECK-CVT-GI-NEXT:    tst w11, #0x1
 ; CHECK-CVT-GI-NEXT:    fmov d0, x8
-; CHECK-CVT-GI-NEXT:    csel x9, x9, x22, ne
+; CHECK-CVT-GI-NEXT:    csel x9, x9, x20, ne
 ; CHECK-CVT-GI-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload
 ; CHECK-CVT-GI-NEXT:    ldp x22, x21, [sp, #16] // 16-byte Folded Reload
 ; CHECK-CVT-GI-NEXT:    mov v0.d[1], x9
@@ -1071,48 +1071,48 @@ define <2 x i64> @stest_f32i64(<2 x float> %x) {
 ; CHECK-FP16-GI-NEXT:    .cfi_offset b8, -48
 ; CHECK-FP16-GI-NEXT:    // kill: def $d0 killed $d0 def $q0
 ; CHECK-FP16-GI-NEXT:    mov s8, v0.s[1]
-; CHECK-FP16-GI-NEXT:    mov x21, #9223372036854775807 // =0x7fffffffffffffff
-; CHECK-FP16-GI-NEXT:    mov x22, #-9223372036854775808 // =0x8000000000000000
+; CHECK-FP16-GI-NEXT:    mov x19, #9223372036854775807 // =0x7fffffffffffffff
+; CHECK-FP16-GI-NEXT:    mov x20, #-9223372036854775808 // =0x8000000000000000
 ; CHECK-FP16-GI-NEXT:    // kill: def $s0 killed $s0 killed $q0
 ; CHECK-FP16-GI-NEXT:    bl __fixsfti
 ; CHECK-FP16-GI-NEXT:    fmov s0, s8
-; CHECK-FP16-GI-NEXT:    mov x19, x0
-; CHECK-FP16-GI-NEXT:    mov x20, x1
+; CHECK-FP16-GI-NEXT:    mov x21, x0
+; CHECK-FP16-GI-NEXT:    mov x22, x1
 ; CHECK-FP16-GI-NEXT:    bl __fixsfti
-; CHECK-FP16-GI-NEXT:    cmp x19, x21
+; CHECK-FP16-GI-NEXT:    cmp x21, x19
 ; CHECK-FP16-GI-NEXT:    ldr x30, [sp, #8] // 8-byte Reload
 ; CHECK-FP16-GI-NEXT:    cset w8, lo
-; CHECK-FP16-GI-NEXT:    cmp x20, #0
+; CHECK-FP16-GI-NEXT:    cmp x22, #0
 ; CHECK-FP16-GI-NEXT:    cset w9, mi
 ; CHECK-FP16-GI-NEXT:    csel w8, w8, w9, eq
-; CHECK-FP16-GI-NEXT:    cmp x0, x21
+; CHECK-FP16-GI-NEXT:    cmp x0, x19
 ; CHECK-FP16-GI-NEXT:    cset w9, lo
 ; CHECK-FP16-GI-NEXT:    cmp x1, #0
 ; CHECK-FP16-GI-NEXT:    cset w10, mi
 ; CHECK-FP16-GI-NEXT:    csel w9, w9, w10, eq
 ; CHECK-FP16-GI-NEXT:    tst w8, #0x1
-; CHECK-FP16-GI-NEXT:    csel x8, x19, x21, ne
-; CHECK-FP16-GI-NEXT:    csel x10, x20, xzr, ne
+; CHECK-FP16-GI-NEXT:    csel x8, x21, x19, ne
+; CHECK-FP16-GI-NEXT:    csel x10, x22, xzr, ne
 ; CHECK-FP16-GI-NEXT:    tst w9, #0x1
-; CHECK-FP16-GI-NEXT:    csel x9, x0, x21, ne
+; CHECK-FP16-GI-NEXT:    csel x9, x0, x19, ne
 ; CHECK-FP16-GI-NEXT:    csel x11, x1, xzr, ne
-; CHECK-FP16-GI-NEXT:    cmp x8, x22
+; CHECK-FP16-GI-NEXT:    cmp x8, x20
 ; CHECK-FP16-GI-NEXT:    cset w12, hi
 ; CHECK-FP16-GI-NEXT:    cmp x10, #0
 ; CHECK-FP16-GI-NEXT:    cset w13, pl
 ; CHECK-FP16-GI-NEXT:    cmn x10, #1
 ; CHECK-FP16-GI-NEXT:    csel w10, w12, w13, eq
-; CHECK-FP16-GI-NEXT:    cmp x9, x22
+; CHECK-FP16-GI-NEXT:    cmp x9, x20
 ; CHECK-FP16-GI-NEXT:    cset w12, hi
 ; CHECK-FP16-GI-NEXT:    cmp x11, #0
 ; CHECK-FP16-GI-NEXT:    cset w13, pl
 ; CHECK-FP16-GI-NEXT:    cmn x11, #1
 ; CHECK-FP16-GI-NEXT:    csel w11, w12, w13, eq
 ; CHECK-FP16-GI-NEXT:    tst w10, #0x1
-; CHECK-FP16-GI-NEXT:    csel x8, x8, x22, ne
+; CHECK-FP16-GI-NEXT:    csel x8, x8, x20, ne
 ; CHECK-FP16-GI-NEXT:    tst w11, #0x1
 ; CHECK-FP16-GI-NEXT:    fmov d0, x8
-; CHECK-FP16-GI-NEXT:    csel x9, x9, x22, ne
+; CHECK-FP16-GI-NEXT:    csel x9, x9, x20, ne
 ; CHECK-FP16-GI-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload
 ; CHECK-FP16-GI-NEXT:    ldp x22, x21, [sp, #16] // 16-byte Folded Reload
 ; CHECK-FP16-GI-NEXT:    mov v0.d[1], x9
@@ -2345,48 +2345,48 @@ define <2 x i64> @stest_f64i64_mm(<2 x double> %x) {
 ; CHECK-CVT-GI-NEXT:    .cfi_offset w30, -40
 ; CHECK-CVT-GI-NEXT:    .cfi_offset b8, -48
 ; CHECK-CVT-GI-NEXT:    mov d8, v0.d[1]
-; CHECK-CVT-GI-NEXT:    mov x21, #9223372036854775807 // =0x7fffffffffffffff
-; CHECK-CVT-GI-NEXT:    mov x22, #-9223372036854775808 // =0x8000000000000000
+; CHECK-CVT-GI-NEXT:    mov x19, #9223372036854775807 // =0x7fffffffffffffff
+; CHECK-CVT-GI-NEXT:    mov x20, #-9223372036854775808 // =0x8000000000000000
 ; CHECK-CVT-GI-NEXT:    // kill: def $d0 killed $d0 killed $q0
 ; CHECK-CVT-GI-NEXT:    bl __fixdfti
 ; CHECK-CVT-GI-NEXT:    fmov d0, d8
-; CHECK-CVT-GI-NEXT:    mov x19, x0
-; CHECK-CVT-GI-NEXT:    mov x20, x1
+; CHECK-CVT-GI-NEXT:    mov x21, x0
+; CHECK-CVT-GI-NEXT:    mov x22, x1
 ; CHECK-CVT-GI-NEXT:    bl __fixdfti
-; CHECK-CVT-GI-NEXT:    cmp x19, x21
+; CHECK-CVT-GI-NEXT:    cmp x21, x19
 ; CHECK-CVT-GI-NEXT:    ldr x30, [sp, #8] // 8-byte Reload
 ; CHECK-CVT-GI-NEXT:    cset w8, lo
-; CHECK-CVT-GI-NEXT:    cmp x20, #0
+; CHECK-CVT-GI-NEXT:    cmp x22, #0
 ; CHECK-CVT-GI-NEXT:    cset w9, mi
 ; CHECK-CVT-GI-NEXT:    csel w8, w8, w9, eq
-; CHECK-CVT-GI-NEXT:    cmp x0, x21
+; CHECK-CVT-GI-NEXT:    cmp x0, x19
 ; CHECK-CVT-GI-NEXT:    cset w9, lo
 ; CHECK-CVT-GI-NEXT:    cmp x1, #0
 ; CHECK-CVT-GI-NEXT:    cset w10, mi
 ; CHECK-CVT-GI-NEXT:    csel w9, w9, w10, eq
 ; CHECK-CVT-GI-NEXT:    tst w8, #0x1
-; CHECK-CVT-GI-NEXT:    csel x8, x19, x21, ne
-; CHECK-CVT-GI-NEXT:    csel x10, x20, xzr, ne
+; CHECK-CVT-GI-NEXT:    csel x8, x21, x19, ne
+; CHECK-CVT-GI-NEXT:    csel x10, x22, xzr, ne
 ; CHECK-CVT-GI-NEXT:    tst w9, #0x1
-; CHECK-CVT-GI-NEXT:    csel x9, x0, x21, ne
+; CHECK-CVT-GI-NEXT:    csel x9, x0, x19, ne
 ; CHECK-CVT-GI-NEXT:    csel x11, x1, xzr, ne
-; CHECK-CVT-GI-NEXT:    cmp x8, x22
+; CHECK-CVT-GI-NEXT:    cmp x8, x20
 ; CHECK-CVT-GI-NEXT:    cset w12, hi
 ; CHECK-CVT-GI-NEXT:    cmp x10, #0
 ; CHECK-CVT-GI-NEXT:    cset w13, pl
 ; CHECK-CVT-GI-NEXT:    cmn x10, #1
 ; CHECK-CVT-GI-NEXT:    csel w10, w12, w13, eq
-; CHECK-CVT-GI-NEXT:    cmp x9, x22
+; CHECK-CVT-GI-NEXT:    cmp x9, x20
 ; CHECK-CVT-GI-NEXT:    cset w12, hi
 ; CHECK-CVT-GI-NEXT:    cmp x11, #0
 ; CHECK-CVT-GI-NEXT:    cset w13, pl
 ; CHECK-CVT-GI-NEXT:    cmn x11, #1
 ; CHECK-CVT-GI-NEXT:    csel w11, w12, w13, eq
 ; CHECK-CVT-GI-NEXT:    tst w10, #0x1
-; CHECK-CVT-GI-NEXT:    csel x8, x8, x22, ne
+; CHECK-CVT-GI-NEXT:    csel x8, x8, x20, ne
 ; CHECK-CVT-GI-NEXT:    tst w11, #0x1
 ; CHECK-CVT-GI-NEXT:    fmov d0, x8
-; CHECK-CVT-GI-NEXT:    csel x9, x9, x22, ne
+; CHECK-CVT-GI-NEXT:    csel x9, x9, x20, ne
 ; CHECK-CVT-GI-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload
 ; CHECK-CVT-GI-NEXT:    ldp x22, x21, [sp, #16] // 16-byte Folded Reload
 ; CHECK-CVT-GI-NEXT:    mov v0.d[1], x9
@@ -2407,48 +2407,48 @@ define <2 x i64> @stest_f64i64_mm(<2 x double> %x) {
 ; CHECK-FP16-GI-NEXT:    .cfi_offset w30, -40
 ; CHECK-FP16-GI-NEXT:    .cfi_offset b8, -48
 ; CHECK-FP16-GI-NEXT:    mov d8, v0.d[1]
-; CHECK-FP16-GI-NEXT:    mov x21, #9223372036854775807 // =0x7fffffffffffffff
-; CHECK-FP16-GI-NEXT:    mov x22, #-9223372036854775808 // =0x8000000000000000
+; CHECK-FP16-GI-NEXT:    mov x19, #9223372036854775807 // =0x7fffffffffffffff
+; CHECK-FP16-GI-NEXT:    mov x20, #-9223372036854775808 // =0x8000000000000000
 ; CHECK-FP16-GI-NEXT:    // kill: def $d0 killed $d0 killed $q0
 ; CHECK-FP16-GI-NEXT:    bl __fixdfti
 ; CHECK-FP16-GI-NEXT:    fmov d0, d8
-; CHECK-FP16-GI-NEXT:    mov x19, x0
-; CHECK-FP16-GI-NEXT:    mov x20, x1
+; CHECK-FP16-GI-NEXT:    mov x21, x0
+; CHECK-FP16-GI-NEXT:    mov x22, x1
 ; CHECK-FP16-GI-NEXT:    bl __fixdfti
-; CHECK-FP16-GI-NEXT:    cmp x19, x21
+; CHECK-FP16-GI-NEXT:    cmp x21, x19
 ; CHECK-FP16-GI-NEXT:    ldr x30, [sp, #8] // 8-byte Reload
 ; CHECK-FP16-GI-NEXT:    cset w8, lo
-; CHECK-FP16-GI-NEXT:    cmp x20, #0
+; CHECK-FP16-GI-NEXT:    cmp x22, #0
 ; CHECK-FP16-GI-NEXT:    cset w9, mi
 ; CHECK-FP16-GI-NEXT:    csel w8, w8, w9, eq
-; CHECK-FP16-GI-NEXT:    cmp x0, x21
+; CHECK-FP16-GI-NEXT:    cmp x0, x19
 ; CHECK-FP16-GI-NEXT:    cset w9, lo
 ; CHECK-FP16-GI-NEXT:    cmp x1, #0
 ; CHECK-FP16-GI-NEXT:    cset w10, mi
 ; CHECK-FP16-GI-NEXT:    csel w9, w9, w10, eq
 ; CHECK-FP16-GI-NEXT:    tst w8, #0x1
-; CHECK-FP16-GI-NEXT:    csel x8, x19, x21, ne
-; CHECK-FP16-GI-NEXT:    csel x10, x20, xzr, ne
+; CHECK-FP16-GI-NEXT:    csel x8, x21, x19, ne
+; CHECK-FP16-GI-NEXT:    csel x10, x22, xzr, ne
 ; CHECK-FP16-GI-NEXT:    tst w9, #0x1
-; CHECK-FP16-GI-NEXT:    csel x9, x0, x21, ne
+; CHECK-FP16-GI-NEXT:    csel x9, x0, x19, ne
 ; CHECK-FP16-GI-NEXT:    csel x11, x1, xzr, ne
-; CHECK-FP16-GI-NEXT:    cmp x8, x22
+; CHECK-FP16-GI-NEXT:    cmp x8, x20
 ; CHECK-FP16-GI-NEXT:    cset w12, hi
 ; CHECK-FP16-GI-NEXT:    cmp x10, #0
 ; CHECK-FP16-GI-NEXT:    cset w13, pl
 ; CHECK-FP16-GI-NEXT:    cmn x10, #1
 ; CHECK-FP16-GI-NEXT:    csel w10, w12, w13, eq
-; CHECK-FP16-GI-NEXT:    cmp x9, x22
+; CHECK-FP16-GI-NEXT:    cmp x9, x20
 ; CHECK-FP16-GI-NEXT:    cset w12, hi
 ; CHECK-FP16-GI-NEXT:    cmp x11, #0
 ; CHECK-FP16-GI-NEXT:    cset w13, pl
 ; CHECK-FP16-GI-NEXT:    cmn x11, #1
 ; CHECK-FP16-GI-NEXT:    csel w11, w12, w13, eq
 ; CHECK-FP16-GI-NEXT:    tst w10, #0x1
-; CHECK-FP16-GI-NEXT:    csel x8, x8, x22, ne
+; CHECK-FP16-GI-NEXT:    csel x8, x8, x20, ne
 ; CHECK-FP16-GI-NEXT:    tst w11, #0x1
 ; CHECK-FP16-GI-NEXT:    fmov d0, x8
-; CHECK-FP16-GI-NEXT:    csel x9, x9, x22, ne
+; CHECK-FP16-GI-NEXT:    csel x9, x9, x20, ne
 ; CHECK-FP16-GI-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload
 ; CHECK-FP16-GI-NEXT:    ldp x22, x21, [sp, #16] // 16-byte Folded Reload
 ; CHECK-FP16-GI-NEXT:    mov v0.d[1], x9
@@ -2801,48 +2801,48 @@ define <2 x i64> @stest_f32i64_mm(<2 x float> %x) {
 ; CHECK-CVT-GI-NEXT:    .cfi_offset b8, -48
 ; CHECK-CVT-GI-NEXT:    // kill: def $d0 killed $d0 def $q0
 ; CHECK-CVT-GI-NEXT:    mov s8, v0.s[1]
-; CHECK-CVT-GI-NEXT:    mov x21, #9223372036854775807 // =0x7fffffffffffffff
-; CHECK-CVT-GI-NEXT:    mov x22, #-9223372036854775808 // =0x8000000000000000
+; CHECK-CVT-GI-NEXT:    mov x19, #9223372036854775807 // =0x7fffffffffffffff
+; CHECK-CVT-GI-NEXT:    mov x20, #-9223372036854775808 // =0x8000000000000000
 ; CHECK-CVT-GI-NEXT:    // kill: def $s0 killed $s0 killed $q0
 ; CHECK-CVT-GI-NEXT:    bl __fixsfti
 ; CHECK-CVT-GI-NEXT:    fmov s0, s8
-; CHECK-CVT-GI-NEXT:    mov x19, x0
-; CHECK-CVT-GI-NEXT:    mov x20, x1
+; CHECK-CVT-GI-NEXT:    mov x21, x0
+; CHECK-CVT-GI-NEXT:    mov x22, x1
 ; CHECK-CVT-GI-NEXT:    bl __fixsfti
-; CHECK-CVT-GI-NEXT:    cmp x19, x21
+; CHECK-CVT-GI-NEXT:    cmp x21, x19
 ; CHECK-CVT-GI-NEXT:    ldr x30, [sp, #8] // 8-byte Reload
 ; CHECK-CVT-GI-NEXT:    cset w8, lo
-; CHECK-CVT-GI-NEXT:    cmp x20, #0
+; CHECK-CVT-GI-NEXT:    cmp x22, #0
 ; CHECK-CVT-GI-NEXT:    cset w9, mi
 ; CHECK-CVT-GI-NEXT:    csel w8, w8, w9, eq
-; CHECK-CVT-GI-NEXT:    cmp x0, x21
+; CHECK-CVT-GI-NEXT:    cmp x0, x19
 ; CHECK-CVT-GI-NEXT:    cset w9, lo
 ; CHECK-CVT-GI-NEXT:    cmp x1, #0
 ; CHECK-CVT-GI-NEXT:    cset w10, mi
 ; CHECK-CVT-GI-NEXT:    csel w9, w9, w10, eq
 ; CHECK-CVT-GI-NEXT:    tst w8, #0x1
-; CHECK-CVT-GI-NEXT:    csel x8, x19, x21, ne
-; CHECK-CVT-GI-NEXT:    csel x10, x20, xzr, ne
+; CHECK-CVT-GI-NEXT:    csel x8, x21, x19, ne
+; CHECK-CVT-GI-NEXT:    csel x10, x22, xzr, ne
 ; CHECK-CVT-GI-NEXT:    tst w9, #0x1
-; CHECK-CVT-GI-NEXT:    csel x9, x0, x21, ne
+; CHECK-CVT-GI-NEXT:    csel x9, x0, x19, ne
 ; CHECK-CVT-GI-NEXT:    csel x11, x1, xzr, ne
-; CHECK-CVT-GI-NEXT:    cmp x8, x22
+; CHECK-CVT-GI-NEXT:    cmp x8, x20
 ; CHECK-CVT-GI-NEXT:    cset w12, hi
 ; CHECK-CVT-GI-NEXT:    cmp x10, #0
 ; CHECK-CVT-GI-NEXT:    cset w13, pl
 ; CHECK-CVT-GI-NEXT:    cmn x10, #1
 ; CHECK-CVT-GI-NEXT:    csel w10, w12, w13, eq
-; CHECK-CVT-GI-NEXT:    cmp x9, x22
+; CHECK-CVT-GI-NEXT:    cmp x9, x20
 ; CHECK-CVT-GI-NEXT:    cset w12, hi
 ; CHECK-CVT-GI-NEXT:    cmp x11, #0
 ; CHECK-CVT-GI-NEXT:    cset w13, pl
 ; CHECK-CVT-GI-NEXT:    cmn x11, #1
 ; CHECK-CVT-GI-NEXT:    csel w11, w12, w13, eq
 ; CHECK-CVT-GI-NEXT:    tst w10, #0x1
-; CHECK-CVT-GI-NEXT:    csel x8, x8, x22, ne
+; CHECK-CVT-GI-NEXT:    csel x8, x8, x20, ne
 ; CHECK-CVT-GI-NEXT:    tst w11, #0x1
 ; CHECK-CVT-GI-NEXT:    fmov d0, x8
-; CHECK-CVT-GI-NEXT:    csel x9, x9, x22, ne
+; CHECK-CVT-GI-NEXT:    csel x9, x9, x20, ne
 ; CHECK-CVT-GI-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload
 ; CHECK-CVT-GI-NEXT:    ldp x22, x21, [sp, #16] // 16-byte Folded Reload
 ; CHECK-CVT-GI-NEXT:    mov v0.d[1], x9
@@ -2864,48 +2864,48 @@ define <2 x i64> @stest_f32i64_mm(<2 x float> %x) {
 ; CHECK-FP16-GI-NEXT:    .cfi_offset b8, -48
 ; CHECK-FP16-GI-NEXT:    // kill: def $d0 killed $d0 def $q0
 ; CHECK-FP16-GI-NEXT:    mov s8, v0.s[1]
-; CHECK-FP16-GI-NEXT:    mov x21, #9223372036854775807 // =0x7fffffffffffffff
-; CHECK-FP16-GI-NEXT:    mov x22, #-9223372036854775808 // =0x8000000000000000
+; CHECK-FP16-GI-NEXT:    mov x19, #9223372036854775807 // =0x7fffffffffffffff
+; CHECK-FP16-GI-NEXT:    mov x20, #-9223372036854775808 // =0x8000000000000000
 ; CHECK-FP16-GI-NEXT:    // kill: def $s0 killed $s0 killed $q0
 ; CHECK-FP16-GI-NEXT:    bl __fixsfti
 ; CHECK-FP16-GI-NEXT:    fmov s0, s8
-; CHECK-FP16-GI-NEXT:    mov x19, x0
-; CHECK-FP16-GI-NEXT:    mov x20, x1
+; CHECK-FP16-GI-NEXT:    mov x21, x0
+; CHECK-FP16-GI-NEXT:    mov x22, x1
 ; CHECK-FP16-GI-NEXT:    bl __fixsfti
-; CHECK-FP16-GI-NEXT:    cmp x19, x21
+; CHECK-FP16-GI-NEXT:    cmp x21, x19
 ; CHECK-FP16-GI-NEXT:    ldr x30, [sp, #8] // 8-byte Reload
 ; CHECK-FP16-GI-NEXT:    cset w8, lo
-; CHECK-FP16-GI-NEXT:    cmp x20, #0
+; CHECK-FP16-GI-NEXT:    cmp x22, #0
 ; CHECK-FP16-GI-NEXT:    cset w9, mi
 ; CHECK-FP16-GI-NEXT:    csel w8, w8, w9, eq
-; CHECK-FP16-GI-NEXT:    cmp x0, x21
+; CHECK-FP16-GI-NEXT:    cmp x0, x19
 ; CHECK-FP16-GI-NEXT:    cset w9, lo
 ; CHECK-FP16-GI-NEXT:    cmp x1, #0
 ; CHECK-FP16-GI-NEXT:    cset w10, mi
 ; CHECK-FP16-GI-NEXT:    csel w9, w9, w10, eq
 ; CHECK-FP16-GI-NEXT:    tst w8, #0x1
-; CHECK-FP16-GI-NEXT:    csel x8, x19, x21, ne
-; CHECK-FP16-GI-NEXT:    csel x10, x20, xzr, ne
+; CHECK-FP16-GI-NEXT:    csel x8, x21, x19, ne
+; CHECK-FP16-GI-NEXT:    csel x10, x22, xzr, ne
 ; CHECK-FP16-GI-NEXT:    tst w9, #0x1
-; CHECK-FP16-GI-NEXT:    csel x9, x0, x21, ne
+; CHECK-FP16-GI-NEXT:    csel x9, x0, x19, ne
 ; CHECK-FP16-GI-NEXT:    csel x11, x1, xzr, ne
-; CHECK-FP16-GI-NEXT:    cmp x8, x22
+; CHECK-FP16-GI-NEXT:    cmp x8, x20
 ; CHECK-FP16-GI-NEXT:    cset w12, hi
 ; CHECK-FP16-GI-NEXT:    cmp x10, #0
 ; CHECK-FP16-GI-NEXT:    cset w13, pl
 ; CHECK-FP16-GI-NEXT:    cmn x10, #1
 ; CHECK-FP16-GI-NEXT:    csel w10, w12, w13, eq
-; CHECK-FP16-GI-NEXT:    cmp x9, x22
+; CHECK-FP16-GI-NEXT:    cmp x9, x20
 ; CHECK-FP16-GI-NEXT:    cset w12, hi
 ; CHECK-FP16-GI-NEXT:    cmp x11, #0
 ; CHECK-FP16-GI-NEXT:    cset w13, pl
 ; CHECK-FP16-GI-NEXT:    cmn x11, #1
 ; CHECK-FP16-GI-NEXT:    csel w11, w12, w13, eq
 ; CHECK-FP16-GI-NEXT:    tst w10, #0x1
-; CHECK-FP16-GI-NEXT:    csel x8, x8, x22, ne
+; CHECK-FP16-GI-NEXT:    csel x8, x8, x20, ne
 ; CHECK-FP16-GI-NEXT:    tst w11, #0x1
 ; CHECK-FP16-GI-NEXT:    fmov d0, x8
-; CHECK-FP16-GI-NEXT:    csel x9, x9, x22, ne
+; CHECK-FP16-GI-NEXT:    csel x9, x9, x20, ne
 ; CHECK-FP16-GI-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload
 ; CHECK-FP16-GI-NEXT:    ldp x22, x21, [sp, #16] // 16-byte Folded Reload
 ; CHECK-FP16-GI-NEXT:    mov v0.d[1], x9

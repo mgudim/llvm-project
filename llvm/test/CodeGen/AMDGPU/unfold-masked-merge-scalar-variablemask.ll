@@ -23,9 +23,11 @@ define i64 @s_out64(i64 inreg %x, i64 inreg %y, i64 inreg %mask) {
 ; GCN-LABEL: s_out64:
 ; GCN:       ; %bb.0:
 ; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GCN-NEXT:    s_mov_b32 s5, s17
+; GCN-NEXT:    s_mov_b32 s4, s16
 ; GCN-NEXT:    s_xor_b64 s[0:1], s[0:1], s[2:3]
 ; GCN-NEXT:    s_delay_alu instid0(SALU_CYCLE_1) | instskip(NEXT) | instid1(SALU_CYCLE_1)
-; GCN-NEXT:    s_and_b64 s[0:1], s[0:1], s[16:17]
+; GCN-NEXT:    s_and_b64 s[0:1], s[0:1], s[4:5]
 ; GCN-NEXT:    s_xor_b64 s[0:1], s[0:1], s[2:3]
 ; GCN-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
 ; GCN-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
@@ -58,9 +60,11 @@ define i64 @s_in64(i64 inreg %x, i64 inreg %y, i64 inreg %mask) {
 ; GCN-LABEL: s_in64:
 ; GCN:       ; %bb.0:
 ; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GCN-NEXT:    s_mov_b32 s5, s17
+; GCN-NEXT:    s_mov_b32 s4, s16
 ; GCN-NEXT:    s_xor_b64 s[0:1], s[0:1], s[2:3]
 ; GCN-NEXT:    s_delay_alu instid0(SALU_CYCLE_1) | instskip(NEXT) | instid1(SALU_CYCLE_1)
-; GCN-NEXT:    s_and_b64 s[0:1], s[0:1], s[16:17]
+; GCN-NEXT:    s_and_b64 s[0:1], s[0:1], s[4:5]
 ; GCN-NEXT:    s_xor_b64 s[0:1], s[0:1], s[2:3]
 ; GCN-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
 ; GCN-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1

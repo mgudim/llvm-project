@@ -106,9 +106,7 @@ define amdgpu_ps <4 x float> @gather4_2d_tfe(<8 x i32> inreg %rsrc, <4 x i32> in
 ; GFX10NSA-NEXT:    s_mov_b32 s14, exec_lo
 ; GFX10NSA-NEXT:    s_mov_b32 s0, s2
 ; GFX10NSA-NEXT:    s_wqm_b32 exec_lo, exec_lo
-; GFX10NSA-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10NSA-NEXT:    v_mov_b32_e32 v0, 0
-; GFX10NSA-NEXT:    v_mov_b32_e32 v6, v1
+; GFX10NSA-NEXT:    v_mov_b32_e32 v2, 0
 ; GFX10NSA-NEXT:    s_mov_b32 s1, s3
 ; GFX10NSA-NEXT:    s_mov_b32 s2, s4
 ; GFX10NSA-NEXT:    s_mov_b32 s3, s5
@@ -120,13 +118,17 @@ define amdgpu_ps <4 x float> @gather4_2d_tfe(<8 x i32> inreg %rsrc, <4 x i32> in
 ; GFX10NSA-NEXT:    s_mov_b32 s9, s11
 ; GFX10NSA-NEXT:    s_mov_b32 s10, s12
 ; GFX10NSA-NEXT:    s_mov_b32 s11, s13
-; GFX10NSA-NEXT:    v_mov_b32_e32 v1, v0
-; GFX10NSA-NEXT:    v_mov_b32_e32 v2, v0
-; GFX10NSA-NEXT:    v_mov_b32_e32 v3, v0
-; GFX10NSA-NEXT:    v_mov_b32_e32 v4, v0
+; GFX10NSA-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10NSA-NEXT:    v_mov_b32_e32 v4, v2
+; GFX10NSA-NEXT:    v_mov_b32_e32 v5, v2
+; GFX10NSA-NEXT:    v_mov_b32_e32 v6, v2
 ; GFX10NSA-NEXT:    s_and_b32 exec_lo, exec_lo, s14
-; GFX10NSA-NEXT:    image_gather4 v[0:4], v[5:6], s[0:7], s[8:11] dmask:0x1 dim:SQ_RSRC_IMG_2D tfe
+; GFX10NSA-NEXT:    image_gather4 v[2:6], v[0:1], s[0:7], s[8:11] dmask:0x1 dim:SQ_RSRC_IMG_2D tfe
 ; GFX10NSA-NEXT:    s_waitcnt vmcnt(0)
+; GFX10NSA-NEXT:    v_mov_b32_e32 v0, v2
+; GFX10NSA-NEXT:    v_mov_b32_e32 v1, v3
+; GFX10NSA-NEXT:    v_mov_b32_e32 v2, v4
+; GFX10NSA-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX10NSA-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: gather4_2d_tfe:
@@ -134,9 +136,7 @@ define amdgpu_ps <4 x float> @gather4_2d_tfe(<8 x i32> inreg %rsrc, <4 x i32> in
 ; GFX12-NEXT:    s_mov_b32 s14, exec_lo
 ; GFX12-NEXT:    s_mov_b32 s0, s2
 ; GFX12-NEXT:    s_wqm_b32 exec_lo, exec_lo
-; GFX12-NEXT:    v_mov_b32_e32 v5, v0
-; GFX12-NEXT:    v_mov_b32_e32 v0, 0
-; GFX12-NEXT:    v_mov_b32_e32 v6, v1
+; GFX12-NEXT:    v_mov_b32_e32 v2, 0
 ; GFX12-NEXT:    s_mov_b32 s1, s3
 ; GFX12-NEXT:    s_mov_b32 s2, s4
 ; GFX12-NEXT:    s_mov_b32 s3, s5
@@ -148,13 +148,17 @@ define amdgpu_ps <4 x float> @gather4_2d_tfe(<8 x i32> inreg %rsrc, <4 x i32> in
 ; GFX12-NEXT:    s_mov_b32 s9, s11
 ; GFX12-NEXT:    s_mov_b32 s10, s12
 ; GFX12-NEXT:    s_mov_b32 s11, s13
-; GFX12-NEXT:    v_mov_b32_e32 v1, v0
-; GFX12-NEXT:    v_mov_b32_e32 v2, v0
-; GFX12-NEXT:    v_mov_b32_e32 v3, v0
-; GFX12-NEXT:    v_mov_b32_e32 v4, v0
+; GFX12-NEXT:    v_mov_b32_e32 v3, v2
+; GFX12-NEXT:    v_mov_b32_e32 v4, v2
+; GFX12-NEXT:    v_mov_b32_e32 v5, v2
+; GFX12-NEXT:    v_mov_b32_e32 v6, v2
 ; GFX12-NEXT:    s_and_b32 exec_lo, exec_lo, s14
-; GFX12-NEXT:    image_gather4 v[0:4], [v5, v6], s[0:7], s[8:11] dmask:0x1 dim:SQ_RSRC_IMG_2D tfe
+; GFX12-NEXT:    image_gather4 v[2:6], [v0, v1], s[0:7], s[8:11] dmask:0x1 dim:SQ_RSRC_IMG_2D tfe
 ; GFX12-NEXT:    s_wait_samplecnt 0x0
+; GFX12-NEXT:    v_mov_b32_e32 v0, v2
+; GFX12-NEXT:    v_mov_b32_e32 v1, v3
+; GFX12-NEXT:    v_mov_b32_e32 v2, v4
+; GFX12-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
   %v = call { <4 x float>, i32 } @llvm.amdgcn.image.gather4.2d.sl_v4f32i32s.f32(i32 1, float %s, float %t, <8 x i32> %rsrc, <4 x i32> %samp, i1 false, i32 1, i32 0)

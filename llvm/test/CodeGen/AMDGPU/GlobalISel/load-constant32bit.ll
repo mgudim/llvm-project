@@ -58,34 +58,58 @@ entry:
 define amdgpu_ps <8 x float> @load_constant32bit_vgpr_v8f32(ptr addrspace(6) %arg) {
 ; GFX6-LABEL: load_constant32bit_vgpr_v8f32:
 ; GFX6:       ; %bb.0: ; %entry
-; GFX6-NEXT:    v_mov_b32_e32 v4, v0
-; GFX6-NEXT:    v_mov_b32_e32 v5, 0
+; GFX6-NEXT:    v_mov_b32_e32 v1, 0
 ; GFX6-NEXT:    s_mov_b32 s2, 0
 ; GFX6-NEXT:    s_mov_b32 s3, 0xf000
 ; GFX6-NEXT:    s_mov_b64 s[0:1], 0
-; GFX6-NEXT:    buffer_load_dwordx4 v[0:3], v[4:5], s[0:3], 0 addr64
-; GFX6-NEXT:    buffer_load_dwordx4 v[4:7], v[4:5], s[0:3], 0 addr64 offset:16
+; GFX6-NEXT:    buffer_load_dwordx4 v[2:5], v[0:1], s[0:3], 0 addr64
+; GFX6-NEXT:    buffer_load_dwordx4 v[6:9], v[0:1], s[0:3], 0 addr64 offset:16
+; GFX6-NEXT:    s_waitcnt vmcnt(1)
+; GFX6-NEXT:    v_mov_b32_e32 v0, v2
+; GFX6-NEXT:    v_mov_b32_e32 v1, v3
+; GFX6-NEXT:    v_mov_b32_e32 v2, v4
+; GFX6-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX6-NEXT:    s_waitcnt vmcnt(0)
+; GFX6-NEXT:    v_mov_b32_e32 v4, v6
+; GFX6-NEXT:    v_mov_b32_e32 v5, v7
+; GFX6-NEXT:    v_mov_b32_e32 v6, v8
+; GFX6-NEXT:    v_mov_b32_e32 v7, v9
 ; GFX6-NEXT:    ; return to shader part epilog
 ;
 ; GFX8-LABEL: load_constant32bit_vgpr_v8f32:
 ; GFX8:       ; %bb.0: ; %entry
-; GFX8-NEXT:    v_mov_b32_e32 v4, v0
-; GFX8-NEXT:    v_mov_b32_e32 v5, 0
-; GFX8-NEXT:    flat_load_dwordx4 v[0:3], v[4:5]
-; GFX8-NEXT:    v_add_u32_e32 v4, vcc, 16, v4
-; GFX8-NEXT:    v_addc_u32_e64 v5, s[0:1], 0, 0, vcc
-; GFX8-NEXT:    flat_load_dwordx4 v[4:7], v[4:5]
+; GFX8-NEXT:    v_add_u32_e32 v5, vcc, 16, v0
+; GFX8-NEXT:    v_mov_b32_e32 v1, 0
+; GFX8-NEXT:    v_addc_u32_e64 v6, s[0:1], 0, 0, vcc
+; GFX8-NEXT:    flat_load_dwordx4 v[1:4], v[0:1]
+; GFX8-NEXT:    flat_load_dwordx4 v[5:8], v[5:6]
+; GFX8-NEXT:    s_waitcnt vmcnt(1)
+; GFX8-NEXT:    v_mov_b32_e32 v0, v1
+; GFX8-NEXT:    v_mov_b32_e32 v1, v2
+; GFX8-NEXT:    v_mov_b32_e32 v2, v3
+; GFX8-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX8-NEXT:    s_waitcnt vmcnt(0)
+; GFX8-NEXT:    v_mov_b32_e32 v4, v5
+; GFX8-NEXT:    v_mov_b32_e32 v5, v6
+; GFX8-NEXT:    v_mov_b32_e32 v6, v7
+; GFX8-NEXT:    v_mov_b32_e32 v7, v8
 ; GFX8-NEXT:    ; return to shader part epilog
 ;
 ; GFX9-LABEL: load_constant32bit_vgpr_v8f32:
 ; GFX9:       ; %bb.0: ; %entry
-; GFX9-NEXT:    v_mov_b32_e32 v8, v0
-; GFX9-NEXT:    v_mov_b32_e32 v9, 0
-; GFX9-NEXT:    global_load_dwordx4 v[0:3], v[8:9], off
-; GFX9-NEXT:    global_load_dwordx4 v[4:7], v[8:9], off offset:16
+; GFX9-NEXT:    v_mov_b32_e32 v1, 0
+; GFX9-NEXT:    global_load_dwordx4 v[2:5], v[0:1], off
+; GFX9-NEXT:    global_load_dwordx4 v[6:9], v[0:1], off offset:16
+; GFX9-NEXT:    s_waitcnt vmcnt(1)
+; GFX9-NEXT:    v_mov_b32_e32 v0, v2
+; GFX9-NEXT:    v_mov_b32_e32 v1, v3
+; GFX9-NEXT:    v_mov_b32_e32 v2, v4
+; GFX9-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX9-NEXT:    s_waitcnt vmcnt(0)
+; GFX9-NEXT:    v_mov_b32_e32 v4, v6
+; GFX9-NEXT:    v_mov_b32_e32 v5, v7
+; GFX9-NEXT:    v_mov_b32_e32 v6, v8
+; GFX9-NEXT:    v_mov_b32_e32 v7, v9
 ; GFX9-NEXT:    ; return to shader part epilog
 entry:
   %load = load <8 x float>, ptr addrspace(6) %arg, align 32

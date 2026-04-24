@@ -168,21 +168,21 @@ define <3 x double> @frem_v3f64(<3 x double> %a, <3 x double> %b) {
 ; CHECK-GI-NEXT:    .cfi_offset b10, -32
 ; CHECK-GI-NEXT:    .cfi_offset b11, -40
 ; CHECK-GI-NEXT:    .cfi_offset b12, -48
-; CHECK-GI-NEXT:    fmov d8, d1
+; CHECK-GI-NEXT:    fmov d11, d1
 ; CHECK-GI-NEXT:    fmov d1, d3
-; CHECK-GI-NEXT:    fmov d9, d2
-; CHECK-GI-NEXT:    fmov d10, d4
-; CHECK-GI-NEXT:    fmov d11, d5
+; CHECK-GI-NEXT:    fmov d8, d2
+; CHECK-GI-NEXT:    fmov d9, d4
+; CHECK-GI-NEXT:    fmov d10, d5
 ; CHECK-GI-NEXT:    bl fmod
 ; CHECK-GI-NEXT:    fmov d12, d0
+; CHECK-GI-NEXT:    fmov d0, d11
+; CHECK-GI-NEXT:    fmov d1, d9
+; CHECK-GI-NEXT:    bl fmod
+; CHECK-GI-NEXT:    fmov d9, d0
 ; CHECK-GI-NEXT:    fmov d0, d8
 ; CHECK-GI-NEXT:    fmov d1, d10
 ; CHECK-GI-NEXT:    bl fmod
-; CHECK-GI-NEXT:    fmov d8, d0
-; CHECK-GI-NEXT:    fmov d0, d9
-; CHECK-GI-NEXT:    fmov d1, d11
-; CHECK-GI-NEXT:    bl fmod
-; CHECK-GI-NEXT:    fmov d1, d8
+; CHECK-GI-NEXT:    fmov d1, d9
 ; CHECK-GI-NEXT:    ldp d9, d8, [sp, #24] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp d11, d10, [sp, #8] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    fmov d2, d0

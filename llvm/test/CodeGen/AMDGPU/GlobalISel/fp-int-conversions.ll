@@ -11,7 +11,8 @@ define amdgpu_ps void @s_fptoui_f16_to_i16(half inreg %x, ptr addrspace(1) %out)
 ;
 ; TRUE16-LABEL: s_fptoui_f16_to_i16:
 ; TRUE16:  ; %bb.0:
-; TRUE16:    v_cvt_u16_f16_e32 v2.l, s0
+; TRUE16:    v_dual_mov_b32 v2, v0 :: v_dual_mov_b32 v3, v1
+; TRUE16:    v_cvt_u16_f16_e32 v0.l, s0
   %result = fptoui half %x to i16
   store i16 %result, ptr addrspace(1) %out
   ret void
@@ -24,7 +25,8 @@ define amdgpu_ps void @s_fptosi_f16_to_i16(half inreg %x, ptr addrspace(1) %out)
 ;
 ; TRUE16-LABEL: s_fptosi_f16_to_i16:
 ; TRUE16:  ; %bb.0:
-; TRUE16:    v_cvt_i16_f16_e32 v2.l, s0
+; TRUE16:    v_dual_mov_b32 v2, v0 :: v_dual_mov_b32 v3, v1
+; TRUE16:    v_cvt_i16_f16_e32 v0.l, s0
   %result = fptosi half %x to i16
   store i16 %result, ptr addrspace(1) %out
   ret void
@@ -207,7 +209,8 @@ define amdgpu_ps void @s_uitofp_i16_to_f16(i16 inreg %x, ptr addrspace(1) %out) 
 ;
 ; TRUE16-LABEL: s_uitofp_i16_to_f16:
 ; TRUE16:  ; %bb.0:
-; TRUE16:    v_cvt_f16_u16_e32 v2.l, s0
+; TRUE16:    v_dual_mov_b32 v2, v0 :: v_dual_mov_b32 v3, v1
+; TRUE16:    v_cvt_f16_u16_e32 v0.l, s0
   %result = uitofp i16 %x to half
   store half %result, ptr addrspace(1) %out
   ret void
@@ -220,7 +223,8 @@ define amdgpu_ps void @s_sitofp_i16_to_f16(i16 inreg %x, ptr addrspace(1) %out) 
 ;
 ; TRUE16-LABEL: s_sitofp_i16_to_f16:
 ; TRUE16:  ; %bb.0:
-; TRUE16:    v_cvt_f16_i16_e32 v2.l, s0
+; TRUE16:    v_dual_mov_b32 v2, v0 :: v_dual_mov_b32 v3, v1
+; TRUE16:    v_cvt_f16_i16_e32 v0.l, s0
   %result = sitofp i16 %x to half
   store half %result, ptr addrspace(1) %out
   ret void
@@ -260,8 +264,9 @@ define amdgpu_ps void @s_uitofp_i32_to_f16(i32 inreg %x, ptr addrspace(1) %out) 
 ;
 ; TRUE16-LABEL: s_uitofp_i32_to_f16:
 ; TRUE16:  ; %bb.0:
-; TRUE16:    v_cvt_f32_u32_e32 v2, s0
-; TRUE16:    v_cvt_f16_f32_e32 v2.l, v2
+; TRUE16:    v_dual_mov_b32 v2, v0 :: v_dual_mov_b32 v3, v1
+; TRUE16:    v_cvt_f32_u32_e32 v0, s0
+; TRUE16:    v_cvt_f16_f32_e32 v0.l, v0
 ;
 ; GFX12-LABEL: s_uitofp_i32_to_f16:
 ; GFX12:  ; %bb.0:
@@ -281,8 +286,9 @@ define amdgpu_ps void @s_sitofp_i32_to_f16(i32 inreg %x, ptr addrspace(1) %out) 
 ;
 ; TRUE16-LABEL: s_sitofp_i32_to_f16:
 ; TRUE16:  ; %bb.0:
-; TRUE16:    v_cvt_f32_i32_e32 v2, s0
-; TRUE16:    v_cvt_f16_f32_e32 v2.l, v2
+; TRUE16:    v_dual_mov_b32 v2, v0 :: v_dual_mov_b32 v3, v1
+; TRUE16:    v_cvt_f32_i32_e32 v0, s0
+; TRUE16:    v_cvt_f16_f32_e32 v0.l, v0
 ;
 ; GFX12-LABEL: s_sitofp_i32_to_f16:
 ; GFX12:  ; %bb.0:

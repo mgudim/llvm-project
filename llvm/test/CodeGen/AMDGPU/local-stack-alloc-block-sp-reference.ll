@@ -511,84 +511,86 @@ define void @func_local_stack_offset_uses_sp(ptr addrspace(1) %out) {
 ; FLATSCR-NEXT:    s_mov_b32 s6, s34
 ; FLATSCR-NEXT:    s_mov_b32 s34, s32
 ; FLATSCR-NEXT:    s_add_i32 s32, s32, 0x8000
-; FLATSCR-NEXT:    v_mov_b32_e32 v2, 0
+; FLATSCR-NEXT:    v_mov_b32_e32 v4, v0
+; FLATSCR-NEXT:    v_mov_b32_e32 v0, 0
 ; FLATSCR-NEXT:    s_add_i32 s0, s33, 0x2000
-; FLATSCR-NEXT:    scratch_store_dword off, v2, s0
+; FLATSCR-NEXT:    scratch_store_dword off, v0, s0
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
 ; FLATSCR-NEXT:    s_mov_b32 s0, 0
-; FLATSCR-NEXT:    s_mov_b32 s3, s0
+; FLATSCR-NEXT:    v_mov_b32_e32 v5, v1
 ; FLATSCR-NEXT:    s_mov_b32 s1, s0
 ; FLATSCR-NEXT:    s_mov_b32 s2, s0
-; FLATSCR-NEXT:    v_mov_b32_e32 v5, s3
-; FLATSCR-NEXT:    v_mov_b32_e32 v4, s2
-; FLATSCR-NEXT:    v_mov_b32_e32 v3, s1
-; FLATSCR-NEXT:    v_mov_b32_e32 v2, s0
+; FLATSCR-NEXT:    s_mov_b32 s3, s0
+; FLATSCR-NEXT:    v_mov_b32_e32 v0, s0
+; FLATSCR-NEXT:    v_mov_b32_e32 v1, s1
+; FLATSCR-NEXT:    v_mov_b32_e32 v2, s2
+; FLATSCR-NEXT:    v_mov_b32_e32 v3, s3
 ; FLATSCR-NEXT:  .LBB1_1: ; %static-memset-expansion-main-body
 ; FLATSCR-NEXT:    ; =>This Inner Loop Header: Depth=1
 ; FLATSCR-NEXT:    s_add_i32 s1, s33, s0
 ; FLATSCR-NEXT:    s_addk_i32 s1, 0x3000
 ; FLATSCR-NEXT:    s_addk_i32 s0, 0x100
 ; FLATSCR-NEXT:    s_cmpk_lt_u32 s0, 0x2100
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:240
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:240
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:224
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:224
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:208
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:208
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:192
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:192
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:176
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:176
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:160
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:160
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:144
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:144
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:128
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:128
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:112
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:112
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:96
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:96
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:80
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:80
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:64
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:64
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:48
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:48
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:32
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:32
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1 offset:16
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1 offset:16
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s1
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s1
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
 ; FLATSCR-NEXT:    s_cbranch_scc1 .LBB1_1
 ; FLATSCR-NEXT:  ; %bb.2: ; %static-memset-post-expansion
 ; FLATSCR-NEXT:    s_movk_i32 s0, 0x2000
 ; FLATSCR-NEXT:    s_add_i32 s4, s33, s0
 ; FLATSCR-NEXT:    s_mov_b32 s0, 0
-; FLATSCR-NEXT:    s_mov_b32 s3, s0
 ; FLATSCR-NEXT:    s_mov_b32 s1, s0
 ; FLATSCR-NEXT:    s_mov_b32 s2, s0
-; FLATSCR-NEXT:    v_mov_b32_e32 v5, s3
+; FLATSCR-NEXT:    s_mov_b32 s3, s0
+; FLATSCR-NEXT:    v_mov_b32_e32 v0, s0
 ; FLATSCR-NEXT:    s_addk_i32 s4, 0x3000
-; FLATSCR-NEXT:    v_mov_b32_e32 v4, s2
-; FLATSCR-NEXT:    v_mov_b32_e32 v3, s1
-; FLATSCR-NEXT:    v_mov_b32_e32 v2, s0
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s4 offset:256
+; FLATSCR-NEXT:    v_mov_b32_e32 v1, s1
+; FLATSCR-NEXT:    v_mov_b32_e32 v2, s2
+; FLATSCR-NEXT:    v_mov_b32_e32 v3, s3
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s4 offset:256
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[2:5], s4 offset:272
+; FLATSCR-NEXT:    scratch_store_dwordx4 off, v[0:3], s4 offset:272
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
 ; FLATSCR-NEXT:    s_add_i32 s0, s33, 0x3000
-; FLATSCR-NEXT:    scratch_load_dwordx2 v[2:3], off, s4 offset:208 glc
+; FLATSCR-NEXT:    scratch_load_dwordx2 v[0:1], off, s4 offset:208 glc
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; FLATSCR-NEXT:    scratch_load_dwordx2 v[4:5], off, s0 offset:64 glc
+; FLATSCR-NEXT:    scratch_load_dwordx2 v[2:3], off, s0 offset:64 glc
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
 ; FLATSCR-NEXT:    s_mov_b32 s32, s34
 ; FLATSCR-NEXT:    s_mov_b32 s34, s6
 ; FLATSCR-NEXT:    s_mov_b32 s33, s5
-; FLATSCR-NEXT:    v_add_co_u32_e32 v2, vcc, v2, v4
-; FLATSCR-NEXT:    v_addc_co_u32_e32 v3, vcc, v3, v5, vcc
-; FLATSCR-NEXT:    global_store_dwordx2 v[0:1], v[2:3], off
+; FLATSCR-NEXT:    v_add_co_u32_e32 v0, vcc, v0, v2
+; FLATSCR-NEXT:    v_addc_co_u32_e32 v1, vcc, v1, v3, vcc
+; FLATSCR-NEXT:    global_store_dwordx2 v[4:5], v[0:1], off
 ; FLATSCR-NEXT:    s_waitcnt vmcnt(0)
 ; FLATSCR-NEXT:    s_setpc_b64 s[30:31]
 entry:

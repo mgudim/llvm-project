@@ -50,6 +50,7 @@ define <vscale x 2 x i1> @vtrunc_nxv2i1_nxv2i64(<vscale x 2 x i64> %a, <vscale x
 ; CHECK-LABEL: vtrunc_nxv2i1_nxv2i64:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e64, m2, ta, ma
+; CHECK-NEXT:    vmv1r.v v10, v0
 ; CHECK-NEXT:    vand.vi v8, v8, 1, v0.t
 ; CHECK-NEXT:    vmsne.vi v10, v8, 0, v0.t
 ; CHECK-NEXT:    vmv1r.v v0, v10

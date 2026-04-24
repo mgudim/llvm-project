@@ -33,10 +33,11 @@ define void @osfx(ptr %this) comdat personality ptr @__CxxFrameHandler3 {
 ; CHECK-NEXT:    add x8, x8, :lo12:osfx
 ; CHECK-NEXT:    str x8, [x0]
 ; CHECK-NEXT:    str wzr, [x21]
-; CHECK-NEXT:    ldr x0, [x0]
-; CHECK-NEXT:  .Ltmp0:
-; CHECK-NEXT:    blr x0
-; CHECK-NEXT:  .Ltmp1:
+; CHECK-NEXT:    ldr x8, [x0]
+; CHECK-NEXT:  .Ltmp0: // EH_LABEL
+; CHECK-NEXT:    mov x0, x8
+; CHECK-NEXT:    blr x8
+; CHECK-NEXT:  .Ltmp1: // EH_LABEL
 ; CHECK-NEXT:  // %bb.1: // %invoke.cont12
 ; CHECK-NEXT:    str wzr, [x20]
 ; CHECK-NEXT:    str wzr, [x21]

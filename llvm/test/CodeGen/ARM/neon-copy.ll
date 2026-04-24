@@ -542,10 +542,10 @@ define i64 @smovx2s(<2 x i32> %tmp1) {
 define <8 x i8> @test_vcopy_lane_s8(<8 x i8> %v1, <8 x i8> %v2) {
 ; CHECK-LABEL: test_vcopy_lane_s8:
 ; CHECK:       @ %bb.0:
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0 def $q0
-; CHECK-NEXT:    vldr d16, .LCPI50_0
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0 def $q0
-; CHECK-NEXT:    vtbl.8 d0, {d0, d1}, d16
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vldr d18, .LCPI50_0
+; CHECK-NEXT:    vtbl.8 d0, {d16, d17}, d18
 ; CHECK-NEXT:    bx lr
 ; CHECK-NEXT:    .p2align 3
 ; CHECK-NEXT:  @ %bb.1:
@@ -565,11 +565,11 @@ define <8 x i8> @test_vcopy_lane_s8(<8 x i8> %v1, <8 x i8> %v2) {
 define <16 x i8> @test_vcopyq_laneq_s8(<16 x i8> %v1, <16 x i8> %v2) {
 ; CHECK-LABEL: test_vcopyq_laneq_s8:
 ; CHECK:       @ %bb.0:
-; CHECK-NEXT:    @ kill: def $q1 killed $q1 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    vldr d16, .LCPI51_0
-; CHECK-NEXT:    @ kill: def $q0 killed $q0 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    vtbl.8 d1, {d1, d2}, d16
-; CHECK-NEXT:    @ kill: def $q0 killed $q0 killed $q0_q1
+; CHECK-NEXT:    vorr q9, q1, q1
+; CHECK-NEXT:    vldr d20, .LCPI51_0
+; CHECK-NEXT:    vorr q8, q0, q0
+; CHECK-NEXT:    vtbl.8 d17, {d17, d18}, d20
+; CHECK-NEXT:    vorr q0, q8, q8
 ; CHECK-NEXT:    bx lr
 ; CHECK-NEXT:    .p2align 3
 ; CHECK-NEXT:  @ %bb.1:
@@ -589,10 +589,10 @@ define <16 x i8> @test_vcopyq_laneq_s8(<16 x i8> %v1, <16 x i8> %v2) {
 define <8 x i8> @test_vcopy_lane_swap_s8(<8 x i8> %v1, <8 x i8> %v2) {
 ; CHECK-LABEL: test_vcopy_lane_swap_s8:
 ; CHECK:       @ %bb.0:
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0 def $q0
-; CHECK-NEXT:    vldr d16, .LCPI52_0
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0 def $q0
-; CHECK-NEXT:    vtbl.8 d0, {d0, d1}, d16
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vldr d18, .LCPI52_0
+; CHECK-NEXT:    vtbl.8 d0, {d16, d17}, d18
 ; CHECK-NEXT:    bx lr
 ; CHECK-NEXT:    .p2align 3
 ; CHECK-NEXT:  @ %bb.1:
@@ -612,11 +612,11 @@ define <8 x i8> @test_vcopy_lane_swap_s8(<8 x i8> %v1, <8 x i8> %v2) {
 define <16 x i8> @test_vcopyq_laneq_swap_s8(<16 x i8> %v1, <16 x i8> %v2) {
 ; CHECK-LABEL: test_vcopyq_laneq_swap_s8:
 ; CHECK:       @ %bb.0:
-; CHECK-NEXT:    @ kill: def $q1 killed $q1 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    vldr d16, .LCPI53_0
-; CHECK-NEXT:    @ kill: def $q0 killed $q0 killed $q0_q1 def $q0_q1
-; CHECK-NEXT:    vtbl.8 d2, {d1, d2}, d16
-; CHECK-NEXT:    vorr q0, q1, q1
+; CHECK-NEXT:    vorr q9, q1, q1
+; CHECK-NEXT:    vldr d20, .LCPI53_0
+; CHECK-NEXT:    vorr q8, q0, q0
+; CHECK-NEXT:    vtbl.8 d18, {d17, d18}, d20
+; CHECK-NEXT:    vorr q0, q9, q9
 ; CHECK-NEXT:    bx lr
 ; CHECK-NEXT:    .p2align 3
 ; CHECK-NEXT:  @ %bb.1:
@@ -1608,8 +1608,9 @@ entry:
 define <16 x i8> @test_concat_v16i8_v8i8_v8i8(<8 x i8> %x, <8 x i8> %y) #0 {
 ; CHECK-LABEL: test_concat_v16i8_v8i8_v8i8:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0 def $q0
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0 def $q0
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vorr q0, q8, q8
 ; CHECK-NEXT:    bx lr
 entry:
   %vecext = extractelement <8 x i8> %x, i32 0
@@ -1704,8 +1705,9 @@ entry:
 define <8 x i16> @test_concat_v8i16_v4i16_v4i16(<4 x i16> %x, <4 x i16> %y) #0 {
 ; CHECK-LABEL: test_concat_v8i16_v4i16_v4i16:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0 def $q0
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0 def $q0
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vorr q0, q8, q8
 ; CHECK-NEXT:    bx lr
 entry:
   %vecext = extractelement <4 x i16> %x, i32 0
@@ -1772,8 +1774,9 @@ entry:
 define <4 x i32> @test_concat_v4i32_v2i32_v2i32(<2 x i32> %x, <2 x i32> %y) #0 {
 ; CHECK-LABEL: test_concat_v4i32_v2i32_v2i32:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0 def $q0
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0 def $q0
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vorr q0, q8, q8
 ; CHECK-NEXT:    bx lr
 entry:
   %vecinit6 = shufflevector <2 x i32> %x, <2 x i32> %y, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -1819,8 +1822,9 @@ entry:
 define <2 x i64> @test_concat_v2i64_v1i64_v1i64(<1 x i64> %x, <1 x i64> %y) #0 {
 ; CHECK-LABEL: test_concat_v2i64_v1i64_v1i64:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    @ kill: def $d1 killed $d1 killed $q0 def $q0
-; CHECK-NEXT:    @ kill: def $d0 killed $d0 killed $q0 def $q0
+; CHECK-NEXT:    vmov.f64 d17, d1
+; CHECK-NEXT:    vorr d16, d0, d0
+; CHECK-NEXT:    vorr q0, q8, q8
 ; CHECK-NEXT:    bx lr
 entry:
   %vecext = extractelement <1 x i64> %x, i32 0

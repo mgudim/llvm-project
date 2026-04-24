@@ -218,22 +218,22 @@ define void @test_4x2bit_duplicate_mask(i64 %i, i64 %n) #0 {
 ; CHECK-SVE:       // %bb.0:
 ; CHECK-SVE-NEXT:    whilelo p0.h, x0, x1
 ; CHECK-SVE-NEXT:    punpklo p1.h, p0.b
+; CHECK-SVE-NEXT:    punpkhi p0.h, p0.b
+; CHECK-SVE-NEXT:    punpkhi p1.h, p1.b
+; CHECK-SVE-NEXT:    punpklo p2.h, p0.b
 ; CHECK-SVE-NEXT:    punpkhi p3.h, p0.b
-; CHECK-SVE-NEXT:    punpkhi p0.h, p1.b
-; CHECK-SVE-NEXT:    punpklo p2.h, p3.b
-; CHECK-SVE-NEXT:    punpkhi p3.h, p3.b
-; CHECK-SVE-NEXT:    mov p1.b, p0.b
+; CHECK-SVE-NEXT:    mov p0.b, p1.b
 ; CHECK-SVE-NEXT:    b use
 ;
 ; CHECK-SVE2p1-SME2-LABEL: test_4x2bit_duplicate_mask:
 ; CHECK-SVE2p1-SME2:       // %bb.0:
 ; CHECK-SVE2p1-SME2-NEXT:    whilelo p0.h, x0, x1
 ; CHECK-SVE2p1-SME2-NEXT:    punpklo p1.h, p0.b
+; CHECK-SVE2p1-SME2-NEXT:    punpkhi p0.h, p0.b
+; CHECK-SVE2p1-SME2-NEXT:    punpkhi p1.h, p1.b
+; CHECK-SVE2p1-SME2-NEXT:    punpklo p2.h, p0.b
 ; CHECK-SVE2p1-SME2-NEXT:    punpkhi p3.h, p0.b
-; CHECK-SVE2p1-SME2-NEXT:    punpkhi p0.h, p1.b
-; CHECK-SVE2p1-SME2-NEXT:    punpklo p2.h, p3.b
-; CHECK-SVE2p1-SME2-NEXT:    punpkhi p3.h, p3.b
-; CHECK-SVE2p1-SME2-NEXT:    mov p1.b, p0.b
+; CHECK-SVE2p1-SME2-NEXT:    mov p0.b, p1.b
 ; CHECK-SVE2p1-SME2-NEXT:    b use
   %r = call <vscale x 8 x i1> @llvm.get.active.lane.mask.nxv8i1.i64(i64 %i, i64 %n)
   %v0 = call <vscale x 2 x i1> @llvm.vector.extract.nxv2i1.nxv8i1.i64(<vscale x 8 x i1> %r, i64 2)

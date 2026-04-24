@@ -116,9 +116,9 @@ define half @vpreduce_fminimum_nxv4f16(half %start, <vscale x 4 x half> %val, <v
 ; ZVFH-LABEL: vpreduce_fminimum_nxv4f16:
 ; ZVFH:       # %bb.0:
 ; ZVFH-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
-; ZVFH-NEXT:    vmfne.vv v9, v8, v8, v0.t
+; ZVFH-NEXT:    vmfne.vv v10, v8, v8, v0.t
 ; ZVFH-NEXT:    fcvt.s.h fa5, fa0
-; ZVFH-NEXT:    vcpop.m a1, v9, v0.t
+; ZVFH-NEXT:    vcpop.m a1, v10, v0.t
 ; ZVFH-NEXT:    feq.s a2, fa5, fa5
 ; ZVFH-NEXT:    xori a2, a2, 1
 ; ZVFH-NEXT:    or a1, a1, a2
@@ -130,15 +130,16 @@ define half @vpreduce_fminimum_nxv4f16(half %start, <vscale x 4 x half> %val, <v
 ; ZVFH-NEXT:    ret
 ; ZVFH-NEXT:  .LBB4_2:
 ; ZVFH-NEXT:    vsetivli zero, 1, e16, m1, ta, ma
-; ZVFH-NEXT:    vfmv.s.f v9, fa0
+; ZVFH-NEXT:    vfmv.s.f v10, fa0
 ; ZVFH-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
-; ZVFH-NEXT:    vfredmin.vs v9, v8, v9, v0.t
-; ZVFH-NEXT:    vfmv.f.s fa0, v9
+; ZVFH-NEXT:    vfredmin.vs v10, v8, v10, v0.t
+; ZVFH-NEXT:    vfmv.f.s fa0, v10
 ; ZVFH-NEXT:    ret
 ;
 ; ZVFHMIN-LABEL: vpreduce_fminimum_nxv4f16:
 ; ZVFHMIN:       # %bb.0:
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
+; ZVFHMIN-NEXT:    vmv1r.v v9, v0
 ; ZVFHMIN-NEXT:    vfwcvt.f.f.v v10, v8
 ; ZVFHMIN-NEXT:    fcvt.s.h fa5, fa0
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e32, m2, ta, ma
@@ -156,6 +157,7 @@ define half @vpreduce_fminimum_nxv4f16(half %start, <vscale x 4 x half> %val, <v
 ; ZVFHMIN-NEXT:  .LBB4_2:
 ; ZVFHMIN-NEXT:    vsetivli zero, 1, e32, m2, ta, ma
 ; ZVFHMIN-NEXT:    vfmv.s.f v8, fa5
+; ZVFHMIN-NEXT:    vmv1r.v v0, v9
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e32, m2, ta, ma
 ; ZVFHMIN-NEXT:    vfredmin.vs v8, v10, v8, v0.t
 ; ZVFHMIN-NEXT:    vfmv.f.s fa5, v8
@@ -169,9 +171,9 @@ define half @vpreduce_fmaximum_nxv4f16(half %start, <vscale x 4 x half> %val, <v
 ; ZVFH-LABEL: vpreduce_fmaximum_nxv4f16:
 ; ZVFH:       # %bb.0:
 ; ZVFH-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
-; ZVFH-NEXT:    vmfne.vv v9, v8, v8, v0.t
+; ZVFH-NEXT:    vmfne.vv v10, v8, v8, v0.t
 ; ZVFH-NEXT:    fcvt.s.h fa5, fa0
-; ZVFH-NEXT:    vcpop.m a1, v9, v0.t
+; ZVFH-NEXT:    vcpop.m a1, v10, v0.t
 ; ZVFH-NEXT:    feq.s a2, fa5, fa5
 ; ZVFH-NEXT:    xori a2, a2, 1
 ; ZVFH-NEXT:    or a1, a1, a2
@@ -183,15 +185,16 @@ define half @vpreduce_fmaximum_nxv4f16(half %start, <vscale x 4 x half> %val, <v
 ; ZVFH-NEXT:    ret
 ; ZVFH-NEXT:  .LBB5_2:
 ; ZVFH-NEXT:    vsetivli zero, 1, e16, m1, ta, ma
-; ZVFH-NEXT:    vfmv.s.f v9, fa0
+; ZVFH-NEXT:    vfmv.s.f v10, fa0
 ; ZVFH-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
-; ZVFH-NEXT:    vfredmax.vs v9, v8, v9, v0.t
-; ZVFH-NEXT:    vfmv.f.s fa0, v9
+; ZVFH-NEXT:    vfredmax.vs v10, v8, v10, v0.t
+; ZVFH-NEXT:    vfmv.f.s fa0, v10
 ; ZVFH-NEXT:    ret
 ;
 ; ZVFHMIN-LABEL: vpreduce_fmaximum_nxv4f16:
 ; ZVFHMIN:       # %bb.0:
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
+; ZVFHMIN-NEXT:    vmv1r.v v9, v0
 ; ZVFHMIN-NEXT:    vfwcvt.f.f.v v10, v8
 ; ZVFHMIN-NEXT:    fcvt.s.h fa5, fa0
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e32, m2, ta, ma
@@ -209,6 +212,7 @@ define half @vpreduce_fmaximum_nxv4f16(half %start, <vscale x 4 x half> %val, <v
 ; ZVFHMIN-NEXT:  .LBB5_2:
 ; ZVFHMIN-NEXT:    vsetivli zero, 1, e32, m2, ta, ma
 ; ZVFHMIN-NEXT:    vfmv.s.f v8, fa5
+; ZVFHMIN-NEXT:    vmv1r.v v0, v9
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e32, m2, ta, ma
 ; ZVFHMIN-NEXT:    vfredmax.vs v8, v10, v8, v0.t
 ; ZVFHMIN-NEXT:    vfmv.f.s fa5, v8

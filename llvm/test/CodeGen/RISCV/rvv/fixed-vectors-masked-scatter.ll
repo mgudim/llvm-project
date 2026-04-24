@@ -12075,6 +12075,7 @@ define void @mscatter_baseidx_v32i8(<32 x i8> %val, ptr %base, <32 x i8> %idxs, 
 ; RV64V-LABEL: mscatter_baseidx_v32i8:
 ; RV64V:       # %bb.0:
 ; RV64V-NEXT:    vsetivli zero, 16, e64, m8, ta, ma
+; RV64V-NEXT:    vmv1r.v v12, v0
 ; RV64V-NEXT:    vsext.vf8 v16, v10
 ; RV64V-NEXT:    vsetvli zero, zero, e8, m1, ta, ma
 ; RV64V-NEXT:    vsoxei64.v v8, (a0), v16, v0.t

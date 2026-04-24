@@ -519,16 +519,18 @@ define void @global_fp_truncstore_v6f32_to_v6f16(ptr addrspace(1) %ptr, <6 x flo
 ; VI-LABEL: global_fp_truncstore_v6f32_to_v6f16:
 ; VI:       ; %bb.0:
 ; VI-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; VI-NEXT:    v_cvt_f16_f32_sdwa v7, v7 dst_sel:WORD_1 dst_unused:UNUSED_PAD src0_sel:DWORD
-; VI-NEXT:    v_cvt_f16_f32_e32 v6, v6
+; VI-NEXT:    v_mov_b32_e32 v9, v1
+; VI-NEXT:    v_mov_b32_e32 v8, v0
+; VI-NEXT:    v_cvt_f16_f32_sdwa v0, v7 dst_sel:WORD_1 dst_unused:UNUSED_PAD src0_sel:DWORD
+; VI-NEXT:    v_cvt_f16_f32_e32 v1, v6
 ; VI-NEXT:    v_cvt_f16_f32_sdwa v5, v5 dst_sel:WORD_1 dst_unused:UNUSED_PAD src0_sel:DWORD
-; VI-NEXT:    v_cvt_f16_f32_e32 v8, v4
-; VI-NEXT:    v_cvt_f16_f32_sdwa v9, v3 dst_sel:WORD_1 dst_unused:UNUSED_PAD src0_sel:DWORD
-; VI-NEXT:    v_cvt_f16_f32_e32 v2, v2
-; VI-NEXT:    v_or_b32_e32 v4, v6, v7
-; VI-NEXT:    v_or_b32_e32 v3, v8, v5
-; VI-NEXT:    v_or_b32_e32 v2, v2, v9
-; VI-NEXT:    flat_store_dwordx3 v[0:1], v[2:4]
+; VI-NEXT:    v_cvt_f16_f32_e32 v4, v4
+; VI-NEXT:    v_cvt_f16_f32_sdwa v3, v3 dst_sel:WORD_1 dst_unused:UNUSED_PAD src0_sel:DWORD
+; VI-NEXT:    v_cvt_f16_f32_e32 v6, v2
+; VI-NEXT:    v_or_b32_e32 v2, v1, v0
+; VI-NEXT:    v_or_b32_e32 v1, v4, v5
+; VI-NEXT:    v_or_b32_e32 v0, v6, v3
+; VI-NEXT:    flat_store_dwordx3 v[8:9], v[0:2]
 ; VI-NEXT:    s_waitcnt vmcnt(0)
 ; VI-NEXT:    s_setpc_b64 s[30:31]
   %trunc = fptrunc <6 x float> %src to <6 x half>

@@ -56,17 +56,21 @@ define void @f3(i16 %b) {
 ; MIPS64-N32-NEXT:    .cfi_def_cfa_offset 32
 ; MIPS64-N32-NEXT:    sd $ra, 24($sp) # 8-byte Folded Spill
 ; MIPS64-N32-NEXT:    sd $gp, 16($sp) # 8-byte Folded Spill
+; MIPS64-N32-NEXT:    sd $16, 8($sp) # 8-byte Folded Spill
 ; MIPS64-N32-NEXT:    .cfi_offset 31, -8
 ; MIPS64-N32-NEXT:    .cfi_offset 28, -16
+; MIPS64-N32-NEXT:    .cfi_offset 16, -24
 ; MIPS64-N32-NEXT:    lui $1, %hi(%neg(%gp_rel(f3)))
 ; MIPS64-N32-NEXT:    addu $1, $1, $25
-; MIPS64-N32-NEXT:    addiu $gp, $1, %lo(%neg(%gp_rel(f3)))
-; MIPS64-N32-NEXT:    sh $4, 14($sp)
-; MIPS64-N32-NEXT:    lw $25, %call16(k2)($gp)
+; MIPS64-N32-NEXT:    addiu $16, $1, %lo(%neg(%gp_rel(f3)))
+; MIPS64-N32-NEXT:    sh $4, 6($sp)
+; MIPS64-N32-NEXT:    addiu $4, $sp, 6
+; MIPS64-N32-NEXT:    lw $25, %call16(k2)($16)
 ; MIPS64-N32-NEXT:    jalr $25
-; MIPS64-N32-NEXT:    addiu $4, $sp, 14
-; MIPS64-N32-NEXT:    lw $1, %got_disp(k)($gp)
+; MIPS64-N32-NEXT:    move $gp, $16
+; MIPS64-N32-NEXT:    lw $1, %got_disp(k)($16)
 ; MIPS64-N32-NEXT:    swc1 $f0, 0($1)
+; MIPS64-N32-NEXT:    ld $16, 8($sp) # 8-byte Folded Reload
 ; MIPS64-N32-NEXT:    ld $gp, 16($sp) # 8-byte Folded Reload
 ; MIPS64-N32-NEXT:    ld $ra, 24($sp) # 8-byte Folded Reload
 ; MIPS64-N32-NEXT:    jr $ra
@@ -78,17 +82,21 @@ define void @f3(i16 %b) {
 ; MIPS64-N64-NEXT:    .cfi_def_cfa_offset 32
 ; MIPS64-N64-NEXT:    sd $ra, 24($sp) # 8-byte Folded Spill
 ; MIPS64-N64-NEXT:    sd $gp, 16($sp) # 8-byte Folded Spill
+; MIPS64-N64-NEXT:    sd $16, 8($sp) # 8-byte Folded Spill
 ; MIPS64-N64-NEXT:    .cfi_offset 31, -8
 ; MIPS64-N64-NEXT:    .cfi_offset 28, -16
+; MIPS64-N64-NEXT:    .cfi_offset 16, -24
 ; MIPS64-N64-NEXT:    lui $1, %hi(%neg(%gp_rel(f3)))
 ; MIPS64-N64-NEXT:    daddu $1, $1, $25
-; MIPS64-N64-NEXT:    daddiu $gp, $1, %lo(%neg(%gp_rel(f3)))
-; MIPS64-N64-NEXT:    sh $4, 14($sp)
-; MIPS64-N64-NEXT:    ld $25, %call16(k2)($gp)
+; MIPS64-N64-NEXT:    daddiu $16, $1, %lo(%neg(%gp_rel(f3)))
+; MIPS64-N64-NEXT:    sh $4, 6($sp)
+; MIPS64-N64-NEXT:    daddiu $4, $sp, 6
+; MIPS64-N64-NEXT:    ld $25, %call16(k2)($16)
 ; MIPS64-N64-NEXT:    jalr $25
-; MIPS64-N64-NEXT:    daddiu $4, $sp, 14
-; MIPS64-N64-NEXT:    ld $1, %got_disp(k)($gp)
+; MIPS64-N64-NEXT:    move $gp, $16
+; MIPS64-N64-NEXT:    ld $1, %got_disp(k)($16)
 ; MIPS64-N64-NEXT:    swc1 $f0, 0($1)
+; MIPS64-N64-NEXT:    ld $16, 8($sp) # 8-byte Folded Reload
 ; MIPS64-N64-NEXT:    ld $gp, 16($sp) # 8-byte Folded Reload
 ; MIPS64-N64-NEXT:    ld $ra, 24($sp) # 8-byte Folded Reload
 ; MIPS64-N64-NEXT:    jr $ra
@@ -813,10 +821,10 @@ define void @frem() {
 ; MIPS32-NEXT:    fill.h $w0, $1
 ; MIPS32-NEXT:    fexupr.w $w0, $w0
 ; MIPS32-NEXT:    copy_s.w $1, $w0[0]
-; MIPS32-NEXT:    mtc1 $1, $f12
+; MIPS32-NEXT:    mtc1 $1, $f14
 ; MIPS32-NEXT:    lw $25, %call16(fmodf)($gp)
 ; MIPS32-NEXT:    jalr $25
-; MIPS32-NEXT:    mov.s $f14, $f12
+; MIPS32-NEXT:    mov.s $f12, $f14
 ; MIPS32-NEXT:    mfc1 $1, $f0
 ; MIPS32-NEXT:    fill.w $w0, $1
 ; MIPS32-NEXT:    fexdo.h $w0, $w0, $w0
@@ -845,10 +853,10 @@ define void @frem() {
 ; MIPS64-N32-NEXT:    fill.h $w0, $1
 ; MIPS64-N32-NEXT:    fexupr.w $w0, $w0
 ; MIPS64-N32-NEXT:    copy_s.w $1, $w0[0]
-; MIPS64-N32-NEXT:    mtc1 $1, $f12
+; MIPS64-N32-NEXT:    mtc1 $1, $f13
 ; MIPS64-N32-NEXT:    lw $25, %call16(fmodf)($gp)
 ; MIPS64-N32-NEXT:    jalr $25
-; MIPS64-N32-NEXT:    mov.s $f13, $f12
+; MIPS64-N32-NEXT:    mov.s $f12, $f13
 ; MIPS64-N32-NEXT:    mfc1 $1, $f0
 ; MIPS64-N32-NEXT:    fill.w $w0, $1
 ; MIPS64-N32-NEXT:    fexdo.h $w0, $w0, $w0
@@ -878,10 +886,10 @@ define void @frem() {
 ; MIPS64-N64-NEXT:    fill.h $w0, $1
 ; MIPS64-N64-NEXT:    fexupr.w $w0, $w0
 ; MIPS64-N64-NEXT:    copy_s.w $1, $w0[0]
-; MIPS64-N64-NEXT:    mtc1 $1, $f12
+; MIPS64-N64-NEXT:    mtc1 $1, $f13
 ; MIPS64-N64-NEXT:    ld $25, %call16(fmodf)($gp)
 ; MIPS64-N64-NEXT:    jalr $25
-; MIPS64-N64-NEXT:    mov.s $f13, $f12
+; MIPS64-N64-NEXT:    mov.s $f12, $f13
 ; MIPS64-N64-NEXT:    mfc1 $1, $f0
 ; MIPS64-N64-NEXT:    fill.w $w0, $1
 ; MIPS64-N64-NEXT:    fexdo.h $w0, $w0, $w0

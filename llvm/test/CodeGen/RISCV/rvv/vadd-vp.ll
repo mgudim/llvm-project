@@ -1350,6 +1350,7 @@ define <vscale x 32 x i32> @vadd_vi_nxv32i32_unmasked(<vscale x 32 x i32> %va, i
 define <vscale x 32 x i32> @vadd_vi_nxv32i32_evl_nx8(<vscale x 32 x i32> %va, <vscale x 32 x i1> %m) {
 ; RV32-LABEL: vadd_vi_nxv32i32_evl_nx8:
 ; RV32:       # %bb.0:
+; RV32-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; RV32-NEXT:    csrr a0, vlenb
 ; RV32-NEXT:    srli a1, a0, 2
 ; RV32-NEXT:    vsetvli zero, a0, e32, m8, ta, ma

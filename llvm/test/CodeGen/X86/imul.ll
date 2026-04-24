@@ -421,16 +421,16 @@ define i64 @test5(i64 %a) {
 ; X86-NEXT:    pushl %esi
 ; X86-NEXT:    .cfi_def_cfa_offset 8
 ; X86-NEXT:    .cfi_offset %esi, -8
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
-; X86-NEXT:    movl %esi, %eax
-; X86-NEXT:    shll $5, %eax
-; X86-NEXT:    subl %eax, %esi
-; X86-NEXT:    movl $-31, %edx
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
 ; X86-NEXT:    movl %ecx, %eax
+; X86-NEXT:    shll $5, %eax
+; X86-NEXT:    subl %eax, %ecx
+; X86-NEXT:    movl $-31, %edx
+; X86-NEXT:    movl %esi, %eax
 ; X86-NEXT:    mull %edx
-; X86-NEXT:    subl %ecx, %edx
-; X86-NEXT:    addl %esi, %edx
+; X86-NEXT:    subl %esi, %edx
+; X86-NEXT:    addl %ecx, %edx
 ; X86-NEXT:    popl %esi
 ; X86-NEXT:    .cfi_def_cfa_offset 4
 ; X86-NEXT:    retl

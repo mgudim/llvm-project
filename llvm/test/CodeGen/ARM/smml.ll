@@ -12,8 +12,6 @@
 ; Next test would previously trigger an assertion responsible for verification of
 ; call site info state.
 ; RUN: llc -stop-after=if-converter -debug-entry-values -mtriple=thumbv6t2-eabi %s -o -| FileCheck %s -check-prefix=CHECK-CALLSITE
-; CHECK-CALLSITE: name:  test_used_flags
-; CHECK-CALLSITE: callSites:
 
 define i32 @Test0(i32 %a, i32 %b, i32 %c) nounwind readnone ssp {
 ; CHECK-V4-LABEL: Test0:
@@ -32,14 +30,14 @@ define i32 @Test0(i32 %a, i32 %b, i32 %c) nounwind readnone ssp {
 ; CHECK-THUMB:       @ %bb.0: @ %entry
 ; CHECK-THUMB-NEXT:    .save {r4, r5, r7, lr}
 ; CHECK-THUMB-NEXT:    push {r4, r5, r7, lr}
-; CHECK-THUMB-NEXT:    movs r5, r1
-; CHECK-THUMB-NEXT:    movs r4, r0
+; CHECK-THUMB-NEXT:    movs r4, r1
+; CHECK-THUMB-NEXT:    movs r5, r0
 ; CHECK-THUMB-NEXT:    asrs r1, r2, #31
-; CHECK-THUMB-NEXT:    asrs r3, r5, #31
+; CHECK-THUMB-NEXT:    asrs r3, r4, #31
 ; CHECK-THUMB-NEXT:    movs r0, r2
-; CHECK-THUMB-NEXT:    movs r2, r5
+; CHECK-THUMB-NEXT:    movs r2, r4
 ; CHECK-THUMB-NEXT:    bl __aeabi_lmul
-; CHECK-THUMB-NEXT:    subs r0, r4, r1
+; CHECK-THUMB-NEXT:    subs r0, r5, r1
 ; CHECK-THUMB-NEXT:    pop {r4, r5, r7}
 ; CHECK-THUMB-NEXT:    pop {r1}
 ; CHECK-THUMB-NEXT:    bx r1
@@ -48,14 +46,14 @@ define i32 @Test0(i32 %a, i32 %b, i32 %c) nounwind readnone ssp {
 ; CHECK-THUMBV6:       @ %bb.0: @ %entry
 ; CHECK-THUMBV6-NEXT:    .save {r4, r5, r7, lr}
 ; CHECK-THUMBV6-NEXT:    push {r4, r5, r7, lr}
-; CHECK-THUMBV6-NEXT:    mov r5, r1
-; CHECK-THUMBV6-NEXT:    mov r4, r0
+; CHECK-THUMBV6-NEXT:    mov r4, r1
+; CHECK-THUMBV6-NEXT:    mov r5, r0
 ; CHECK-THUMBV6-NEXT:    asrs r1, r2, #31
-; CHECK-THUMBV6-NEXT:    asrs r3, r5, #31
+; CHECK-THUMBV6-NEXT:    asrs r3, r4, #31
 ; CHECK-THUMBV6-NEXT:    mov r0, r2
-; CHECK-THUMBV6-NEXT:    mov r2, r5
+; CHECK-THUMBV6-NEXT:    mov r2, r4
 ; CHECK-THUMBV6-NEXT:    bl __aeabi_lmul
-; CHECK-THUMBV6-NEXT:    subs r0, r4, r1
+; CHECK-THUMBV6-NEXT:    subs r0, r5, r1
 ; CHECK-THUMBV6-NEXT:    pop {r4, r5, r7, pc}
 ;
 ; CHECK-THUMB-V6V7-LABEL: Test0:
@@ -69,6 +67,13 @@ define i32 @Test0(i32 %a, i32 %b, i32 %c) nounwind readnone ssp {
 ; CHECK-THUMBV7M-NEXT:    smull r1, r2, r2, r1
 ; CHECK-THUMBV7M-NEXT:    subs r0, r0, r2
 ; CHECK-THUMBV7M-NEXT:    bx lr
+; CHECK-CALLSITE-LABEL: name: Test0
+; CHECK-CALLSITE: bb.0.entry:
+; CHECK-CALLSITE-NEXT:   liveins: $r0, $r1, $r2
+; CHECK-CALLSITE-NEXT: {{  $}}
+; CHECK-CALLSITE-NEXT:   renamable $r1 = t2SMMUL killed renamable $r2, killed renamable $r1, 14 /* CC::al */, $noreg
+; CHECK-CALLSITE-NEXT:   renamable $r0 = t2SUBrr killed renamable $r0, killed renamable $r1, 14 /* CC::al */, $noreg, $noreg
+; CHECK-CALLSITE-NEXT:   tBX_RET 14 /* CC::al */, $noreg, implicit $r0
 entry:
   %conv4 = zext i32 %a to i64
   %conv1 = sext i32 %b to i64
@@ -97,16 +102,16 @@ define i32 @Test1(i32 %a, i32 %b, i32 %c) {
 ; CHECK-THUMB:       @ %bb.0: @ %entry
 ; CHECK-THUMB-NEXT:    .save {r4, r5, r7, lr}
 ; CHECK-THUMB-NEXT:    push {r4, r5, r7, lr}
-; CHECK-THUMB-NEXT:    movs r5, r1
-; CHECK-THUMB-NEXT:    movs r4, r0
+; CHECK-THUMB-NEXT:    movs r4, r1
+; CHECK-THUMB-NEXT:    movs r5, r0
 ; CHECK-THUMB-NEXT:    asrs r1, r2, #31
-; CHECK-THUMB-NEXT:    asrs r3, r5, #31
+; CHECK-THUMB-NEXT:    asrs r3, r4, #31
 ; CHECK-THUMB-NEXT:    movs r0, r2
-; CHECK-THUMB-NEXT:    movs r2, r5
+; CHECK-THUMB-NEXT:    movs r2, r4
 ; CHECK-THUMB-NEXT:    bl __aeabi_lmul
 ; CHECK-THUMB-NEXT:    rsbs r0, r0, #0
-; CHECK-THUMB-NEXT:    sbcs r4, r1
-; CHECK-THUMB-NEXT:    movs r0, r4
+; CHECK-THUMB-NEXT:    sbcs r5, r1
+; CHECK-THUMB-NEXT:    movs r0, r5
 ; CHECK-THUMB-NEXT:    pop {r4, r5, r7}
 ; CHECK-THUMB-NEXT:    pop {r1}
 ; CHECK-THUMB-NEXT:    bx r1
@@ -115,16 +120,16 @@ define i32 @Test1(i32 %a, i32 %b, i32 %c) {
 ; CHECK-THUMBV6:       @ %bb.0: @ %entry
 ; CHECK-THUMBV6-NEXT:    .save {r4, r5, r7, lr}
 ; CHECK-THUMBV6-NEXT:    push {r4, r5, r7, lr}
-; CHECK-THUMBV6-NEXT:    mov r5, r1
-; CHECK-THUMBV6-NEXT:    mov r4, r0
+; CHECK-THUMBV6-NEXT:    mov r4, r1
+; CHECK-THUMBV6-NEXT:    mov r5, r0
 ; CHECK-THUMBV6-NEXT:    asrs r1, r2, #31
-; CHECK-THUMBV6-NEXT:    asrs r3, r5, #31
+; CHECK-THUMBV6-NEXT:    asrs r3, r4, #31
 ; CHECK-THUMBV6-NEXT:    mov r0, r2
-; CHECK-THUMBV6-NEXT:    mov r2, r5
+; CHECK-THUMBV6-NEXT:    mov r2, r4
 ; CHECK-THUMBV6-NEXT:    bl __aeabi_lmul
 ; CHECK-THUMBV6-NEXT:    rsbs r0, r0, #0
-; CHECK-THUMBV6-NEXT:    sbcs r4, r1
-; CHECK-THUMBV6-NEXT:    mov r0, r4
+; CHECK-THUMBV6-NEXT:    sbcs r5, r1
+; CHECK-THUMBV6-NEXT:    mov r0, r5
 ; CHECK-THUMBV6-NEXT:    pop {r4, r5, r7, pc}
 ;
 ; CHECK-THUMBV7M-LABEL: Test1:
@@ -133,6 +138,12 @@ define i32 @Test1(i32 %a, i32 %b, i32 %c) {
 ; CHECK-THUMBV7M-NEXT:    rsbs r1, r1, #0
 ; CHECK-THUMBV7M-NEXT:    sbcs r0, r2
 ; CHECK-THUMBV7M-NEXT:    bx lr
+; CHECK-CALLSITE-LABEL: name: Test1
+; CHECK-CALLSITE: bb.0.entry:
+; CHECK-CALLSITE-NEXT:   liveins: $r0, $r1, $r2
+; CHECK-CALLSITE-NEXT: {{  $}}
+; CHECK-CALLSITE-NEXT:   renamable $r0 = t2SMMLS killed renamable $r2, killed renamable $r1, killed renamable $r0, 14 /* CC::al */, $noreg
+; CHECK-CALLSITE-NEXT:   tBX_RET 14 /* CC::al */, $noreg, implicit $r0
 entry:
   %conv = sext i32 %b to i64
   %conv1 = sext i32 %c to i64
@@ -280,6 +291,22 @@ define void @test_used_flags(i32 %in1, i32 %in2) {
 ; CHECK-THUMBV7EM-NEXT:    movlt r0, #42
 ; CHECK-THUMBV7EM-NEXT:    bl opaque
 ; CHECK-THUMBV7EM-NEXT:    pop {r7, pc}
+; CHECK-CALLSITE-LABEL: name: test_used_flags
+; CHECK-CALLSITE: bb.0 (%ir-block.0):
+; CHECK-CALLSITE-NEXT:   liveins: $r0, $r1, $r7, $lr
+; CHECK-CALLSITE-NEXT: {{  $}}
+; CHECK-CALLSITE-NEXT:   $sp = frame-setup t2STMDB_UPD $sp, 14 /* CC::al */, $noreg, killed $r7, killed $lr
+; CHECK-CALLSITE-NEXT:   frame-setup CFI_INSTRUCTION def_cfa_offset 8
+; CHECK-CALLSITE-NEXT:   frame-setup CFI_INSTRUCTION offset $lr, -4
+; CHECK-CALLSITE-NEXT:   frame-setup CFI_INSTRUCTION offset $r7, -8
+; CHECK-CALLSITE-NEXT:   renamable $r0, renamable $r1 = t2SMULL killed renamable $r0, killed renamable $r1, 14 /* CC::al */, $noreg
+; CHECK-CALLSITE-NEXT:   renamable $r2 = t2MOVi 0, 14 /* CC::al */, $noreg, $noreg
+; CHECK-CALLSITE-NEXT:   dead renamable $r0 = t2RSBri killed renamable $r0, 0, 14 /* CC::al */, $noreg, def $cpsr
+; CHECK-CALLSITE-NEXT:   dead renamable $r0 = t2SBCrr killed renamable $r2, killed renamable $r1, 14 /* CC::al */, $noreg, def $cpsr, implicit killed $cpsr
+; CHECK-CALLSITE-NEXT:   $r0 = t2MOVi 56, 11 /* CC::lt */, $cpsr, $noreg
+; CHECK-CALLSITE-NEXT:   $r0 = t2MOVi 42, 10 /* CC::ge */, killed $cpsr, $noreg, implicit killed $r0
+; CHECK-CALLSITE-NEXT:   tBL 14 /* CC::al */, $noreg, @opaque, csr_aapcs, implicit-def dead $lr, implicit $sp, implicit killed $r0, implicit-def $sp
+; CHECK-CALLSITE-NEXT:   $sp = frame-destroy t2LDMIA_RET $sp, 14 /* CC::al */, $noreg, def $r7, def $pc
   %in1.64 = sext i32 %in1 to i64
   %in2.64 = sext i32 %in2 to i64
   %mul = mul nsw i64 %in1.64, %in2.64

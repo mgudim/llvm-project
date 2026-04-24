@@ -91,34 +91,34 @@ define void @vp_sdiv_v4i32(<4 x i32> %a0, <4 x i32> %a1, ptr %out, i32 %vp) noun
 ; X86:       # %bb.0:
 ; X86-NEXT:    pushl %edi
 ; X86-NEXT:    pushl %esi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
 ; X86-NEXT:    vbroadcastss {{[0-9]+}}(%esp), %xmm2
 ; X86-NEXT:    vpmovsxbd {{.*#+}} xmm3 = [0,1,2,3]
 ; X86-NEXT:    vpmaxud %xmm3, %xmm2, %xmm2
 ; X86-NEXT:    vpcmpeqd %xmm3, %xmm2, %xmm2
 ; X86-NEXT:    vblendvps %xmm2, {{\.?LCPI[0-9]+_[0-9]+}}, %xmm1, %xmm1
-; X86-NEXT:    vextractps $1, %xmm1, %ecx
+; X86-NEXT:    vextractps $1, %xmm1, %esi
 ; X86-NEXT:    vpextrd $1, %xmm0, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %ecx
-; X86-NEXT:    movl %eax, %ecx
+; X86-NEXT:    idivl %esi
+; X86-NEXT:    movl %eax, %esi
 ; X86-NEXT:    vmovd %xmm1, %edi
 ; X86-NEXT:    vmovd %xmm0, %eax
 ; X86-NEXT:    cltd
 ; X86-NEXT:    idivl %edi
 ; X86-NEXT:    vmovd %eax, %xmm2
-; X86-NEXT:    vpinsrd $1, %ecx, %xmm2, %xmm2
-; X86-NEXT:    vpextrd $2, %xmm1, %ecx
+; X86-NEXT:    vpinsrd $1, %esi, %xmm2, %xmm2
+; X86-NEXT:    vpextrd $2, %xmm1, %esi
 ; X86-NEXT:    vpextrd $2, %xmm0, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %ecx
+; X86-NEXT:    idivl %esi
 ; X86-NEXT:    vpinsrd $2, %eax, %xmm2, %xmm2
-; X86-NEXT:    vpextrd $3, %xmm1, %ecx
+; X86-NEXT:    vpextrd $3, %xmm1, %esi
 ; X86-NEXT:    vpextrd $3, %xmm0, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %ecx
+; X86-NEXT:    idivl %esi
 ; X86-NEXT:    vpinsrd $3, %eax, %xmm2, %xmm0
-; X86-NEXT:    vmovdqa %xmm0, (%esi)
+; X86-NEXT:    vmovdqa %xmm0, (%ecx)
 ; X86-NEXT:    popl %esi
 ; X86-NEXT:    popl %edi
 ; X86-NEXT:    retl
@@ -270,34 +270,34 @@ define void @vp_udiv_v4i32(<4 x i32> %a0, <4 x i32> %a1, ptr %out, i32 %vp) noun
 ; X86:       # %bb.0:
 ; X86-NEXT:    pushl %edi
 ; X86-NEXT:    pushl %esi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
 ; X86-NEXT:    vbroadcastss {{[0-9]+}}(%esp), %xmm2
 ; X86-NEXT:    vpmovsxbd {{.*#+}} xmm3 = [0,1,2,3]
 ; X86-NEXT:    vpmaxud %xmm3, %xmm2, %xmm2
 ; X86-NEXT:    vpcmpeqd %xmm3, %xmm2, %xmm2
 ; X86-NEXT:    vblendvps %xmm2, {{\.?LCPI[0-9]+_[0-9]+}}, %xmm1, %xmm1
-; X86-NEXT:    vextractps $1, %xmm1, %ecx
+; X86-NEXT:    vextractps $1, %xmm1, %esi
 ; X86-NEXT:    vpextrd $1, %xmm0, %eax
 ; X86-NEXT:    xorl %edx, %edx
-; X86-NEXT:    divl %ecx
-; X86-NEXT:    movl %eax, %ecx
+; X86-NEXT:    divl %esi
+; X86-NEXT:    movl %eax, %esi
 ; X86-NEXT:    vmovd %xmm1, %edi
 ; X86-NEXT:    vmovd %xmm0, %eax
 ; X86-NEXT:    xorl %edx, %edx
 ; X86-NEXT:    divl %edi
 ; X86-NEXT:    vmovd %eax, %xmm2
-; X86-NEXT:    vpinsrd $1, %ecx, %xmm2, %xmm2
-; X86-NEXT:    vpextrd $2, %xmm1, %ecx
+; X86-NEXT:    vpinsrd $1, %esi, %xmm2, %xmm2
+; X86-NEXT:    vpextrd $2, %xmm1, %esi
 ; X86-NEXT:    vpextrd $2, %xmm0, %eax
 ; X86-NEXT:    xorl %edx, %edx
-; X86-NEXT:    divl %ecx
+; X86-NEXT:    divl %esi
 ; X86-NEXT:    vpinsrd $2, %eax, %xmm2, %xmm2
-; X86-NEXT:    vpextrd $3, %xmm1, %ecx
+; X86-NEXT:    vpextrd $3, %xmm1, %esi
 ; X86-NEXT:    vpextrd $3, %xmm0, %eax
 ; X86-NEXT:    xorl %edx, %edx
-; X86-NEXT:    divl %ecx
+; X86-NEXT:    divl %esi
 ; X86-NEXT:    vpinsrd $3, %eax, %xmm2, %xmm0
-; X86-NEXT:    vmovdqa %xmm0, (%esi)
+; X86-NEXT:    vmovdqa %xmm0, (%ecx)
 ; X86-NEXT:    popl %esi
 ; X86-NEXT:    popl %edi
 ; X86-NEXT:    retl
@@ -449,34 +449,34 @@ define void @vp_srem_v4i32(<4 x i32> %a0, <4 x i32> %a1, ptr %out, i32 %vp) noun
 ; X86:       # %bb.0:
 ; X86-NEXT:    pushl %edi
 ; X86-NEXT:    pushl %esi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
 ; X86-NEXT:    vbroadcastss {{[0-9]+}}(%esp), %xmm2
 ; X86-NEXT:    vpmovsxbd {{.*#+}} xmm3 = [0,1,2,3]
 ; X86-NEXT:    vpmaxud %xmm3, %xmm2, %xmm2
 ; X86-NEXT:    vpcmpeqd %xmm3, %xmm2, %xmm2
 ; X86-NEXT:    vblendvps %xmm2, {{\.?LCPI[0-9]+_[0-9]+}}, %xmm1, %xmm1
-; X86-NEXT:    vextractps $1, %xmm1, %ecx
+; X86-NEXT:    vextractps $1, %xmm1, %esi
 ; X86-NEXT:    vpextrd $1, %xmm0, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %ecx
-; X86-NEXT:    movl %edx, %ecx
+; X86-NEXT:    idivl %esi
+; X86-NEXT:    movl %edx, %esi
 ; X86-NEXT:    vmovd %xmm1, %edi
 ; X86-NEXT:    vmovd %xmm0, %eax
 ; X86-NEXT:    cltd
 ; X86-NEXT:    idivl %edi
 ; X86-NEXT:    vmovd %edx, %xmm2
-; X86-NEXT:    vpinsrd $1, %ecx, %xmm2, %xmm2
-; X86-NEXT:    vpextrd $2, %xmm1, %ecx
+; X86-NEXT:    vpinsrd $1, %esi, %xmm2, %xmm2
+; X86-NEXT:    vpextrd $2, %xmm1, %esi
 ; X86-NEXT:    vpextrd $2, %xmm0, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %ecx
+; X86-NEXT:    idivl %esi
 ; X86-NEXT:    vpinsrd $2, %edx, %xmm2, %xmm2
-; X86-NEXT:    vpextrd $3, %xmm1, %ecx
+; X86-NEXT:    vpextrd $3, %xmm1, %esi
 ; X86-NEXT:    vpextrd $3, %xmm0, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %ecx
+; X86-NEXT:    idivl %esi
 ; X86-NEXT:    vpinsrd $3, %edx, %xmm2, %xmm0
-; X86-NEXT:    vmovdqa %xmm0, (%esi)
+; X86-NEXT:    vmovdqa %xmm0, (%ecx)
 ; X86-NEXT:    popl %esi
 ; X86-NEXT:    popl %edi
 ; X86-NEXT:    retl
@@ -628,34 +628,34 @@ define void @vp_urem_v4i32(<4 x i32> %a0, <4 x i32> %a1, ptr %out, i32 %vp) noun
 ; X86:       # %bb.0:
 ; X86-NEXT:    pushl %edi
 ; X86-NEXT:    pushl %esi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
 ; X86-NEXT:    vbroadcastss {{[0-9]+}}(%esp), %xmm2
 ; X86-NEXT:    vpmovsxbd {{.*#+}} xmm3 = [0,1,2,3]
 ; X86-NEXT:    vpmaxud %xmm3, %xmm2, %xmm2
 ; X86-NEXT:    vpcmpeqd %xmm3, %xmm2, %xmm2
 ; X86-NEXT:    vblendvps %xmm2, {{\.?LCPI[0-9]+_[0-9]+}}, %xmm1, %xmm1
-; X86-NEXT:    vextractps $1, %xmm1, %ecx
+; X86-NEXT:    vextractps $1, %xmm1, %esi
 ; X86-NEXT:    vpextrd $1, %xmm0, %eax
 ; X86-NEXT:    xorl %edx, %edx
-; X86-NEXT:    divl %ecx
-; X86-NEXT:    movl %edx, %ecx
+; X86-NEXT:    divl %esi
+; X86-NEXT:    movl %edx, %esi
 ; X86-NEXT:    vmovd %xmm1, %edi
 ; X86-NEXT:    vmovd %xmm0, %eax
 ; X86-NEXT:    xorl %edx, %edx
 ; X86-NEXT:    divl %edi
 ; X86-NEXT:    vmovd %edx, %xmm2
-; X86-NEXT:    vpinsrd $1, %ecx, %xmm2, %xmm2
-; X86-NEXT:    vpextrd $2, %xmm1, %ecx
+; X86-NEXT:    vpinsrd $1, %esi, %xmm2, %xmm2
+; X86-NEXT:    vpextrd $2, %xmm1, %esi
 ; X86-NEXT:    vpextrd $2, %xmm0, %eax
 ; X86-NEXT:    xorl %edx, %edx
-; X86-NEXT:    divl %ecx
+; X86-NEXT:    divl %esi
 ; X86-NEXT:    vpinsrd $2, %edx, %xmm2, %xmm2
-; X86-NEXT:    vpextrd $3, %xmm1, %ecx
+; X86-NEXT:    vpextrd $3, %xmm1, %esi
 ; X86-NEXT:    vpextrd $3, %xmm0, %eax
 ; X86-NEXT:    xorl %edx, %edx
-; X86-NEXT:    divl %ecx
+; X86-NEXT:    divl %esi
 ; X86-NEXT:    vpinsrd $3, %edx, %xmm2, %xmm0
-; X86-NEXT:    vmovdqa %xmm0, (%esi)
+; X86-NEXT:    vmovdqa %xmm0, (%ecx)
 ; X86-NEXT:    popl %esi
 ; X86-NEXT:    popl %edi
 ; X86-NEXT:    retl

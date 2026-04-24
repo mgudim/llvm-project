@@ -43,7 +43,7 @@ body:             |
     ; CHECK-NEXT: $vgpr1 = COPY [[FLAT_LOAD_DWORDX4_]].sub1
     ; CHECK-NEXT: $vgpr2 = COPY [[FLAT_LOAD_DWORDX4_]].sub2
     ; CHECK-NEXT: $vgpr3 = COPY undef %4:vgpr_32
-    ; CHECK-NEXT: dead $sgpr30_sgpr31 = SI_CALL killed renamable $sgpr6_sgpr7, @bar, csr_amdgpu, implicit $sgpr0_sgpr1_sgpr2_sgpr3, implicit $sgpr4, implicit $vgpr0, implicit killed $vgpr1, implicit killed $vgpr2, implicit killed $vgpr3, implicit-def $vgpr0
+    ; CHECK-NEXT: dead $sgpr30_sgpr31 = SI_CALL killed renamable $sgpr6_sgpr7, @bar, csr_amdgpu, implicit $sgpr0_sgpr1_sgpr2_sgpr3, implicit $sgpr4, implicit $vgpr0, implicit killed $vgpr1, implicit killed $vgpr2, implicit $vgpr3, implicit-def $vgpr0
     ; CHECK-NEXT: [[COPY:%[0-9]+]]:vgpr_32 = COPY $vgpr0
     ; CHECK-NEXT: ADJCALLSTACKDOWN 0, 4, implicit-def $scc, implicit-def $sgpr32, implicit $sgpr32, implicit $sgpr95
     ; CHECK-NEXT: FLAT_STORE_DWORD undef %6:vreg_64, [[COPY]], 0, 0, implicit $exec, implicit $flat_scr :: (store (s32), addrspace 1)

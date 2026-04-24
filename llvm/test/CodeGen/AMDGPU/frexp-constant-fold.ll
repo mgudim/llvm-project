@@ -82,10 +82,10 @@ define { <2 x float>, <2 x i32> } @frexp_undef_vector() {
 ; CHECK-LABEL: frexp_undef_vector:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    v_frexp_mant_f32_e32 v0, s4
-; CHECK-NEXT:    v_frexp_exp_i32_f32_e32 v2, s4
-; CHECK-NEXT:    v_mov_b32_e32 v1, v0
-; CHECK-NEXT:    v_mov_b32_e32 v3, v2
+; CHECK-NEXT:    v_frexp_mant_f32_e32 v1, s4
+; CHECK-NEXT:    v_frexp_exp_i32_f32_e32 v3, s4
+; CHECK-NEXT:    v_mov_b32_e32 v0, v1
+; CHECK-NEXT:    v_mov_b32_e32 v2, v3
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
   %ret = call { <2 x float>, <2 x i32> } @llvm.frexp.v2f32.v2i32(<2 x float> undef)
   ret { <2 x float>, <2 x i32> } %ret

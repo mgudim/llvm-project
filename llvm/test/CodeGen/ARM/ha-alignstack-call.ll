@@ -13,12 +13,12 @@ declare dso_local float @f0_0(double, double, double, double, double, double, %s
 define dso_local float @f0_0_call() local_unnamed_addr #0 {
 ; CHECK-LABEL: f0_0_call:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    vldr s13, .LCPI0_5
+; CHECK-NEXT:    vldr s15, .LCPI0_5
 ; CHECK-NEXT:    vmov.i32 d0, #0x0
 ; CHECK-NEXT:    vmov.f64 d5, #5.000000e-01
-; CHECK-NEXT:    vmov.f32 s14, s13
+; CHECK-NEXT:    vmov.f32 s13, s15
 ; CHECK-NEXT:    vldr d1, .LCPI0_0
-; CHECK-NEXT:    vmov.f32 s15, s13
+; CHECK-NEXT:    vmov.f32 s14, s15
 ; CHECK-NEXT:    vldr d2, .LCPI0_1
 ; CHECK-NEXT:    vldr d3, .LCPI0_2
 ; CHECK-NEXT:    vldr d4, .LCPI0_3
@@ -295,12 +295,12 @@ declare dso_local float @f2_0(double, double, double, double, double, double, %s
 define dso_local float @f2_0_call() local_unnamed_addr #0 {
 ; CHECK-LABEL: f2_0_call:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    vldr s13, .LCPI6_5
+; CHECK-NEXT:    vldr s15, .LCPI6_5
 ; CHECK-NEXT:    vmov.i32 d0, #0x0
 ; CHECK-NEXT:    vmov.f64 d5, #5.000000e-01
-; CHECK-NEXT:    vmov.f32 s14, s13
+; CHECK-NEXT:    vmov.f32 s13, s15
 ; CHECK-NEXT:    vldr d1, .LCPI6_0
-; CHECK-NEXT:    vmov.f32 s15, s13
+; CHECK-NEXT:    vmov.f32 s14, s15
 ; CHECK-NEXT:    vldr d2, .LCPI6_1
 ; CHECK-NEXT:    vldr d3, .LCPI6_2
 ; CHECK-NEXT:    vldr d4, .LCPI6_3

@@ -15,10 +15,10 @@ define fastcc void @foo(i32 %0, i1 %or.cond) nounwind {
 ; CHECK-NEXT:    pushq %rbx
 ; CHECK-NEXT:    pushq %rax
 ; CHECK-NEXT:    movl %esi, %ebx
-; CHECK-NEXT:    movslq %edi, %r15
-; CHECK-NEXT:    leaq (,%r15,4), %rax
-; CHECK-NEXT:    leaq (%rax,%rax,4), %r14
-; CHECK-NEXT:    movl %r15d, %r12d
+; CHECK-NEXT:    movslq %edi, %r14
+; CHECK-NEXT:    leaq (,%r14,4), %rax
+; CHECK-NEXT:    leaq (%rax,%rax,4), %r15
+; CHECK-NEXT:    movl %r14d, %r12d
 ; CHECK-NEXT:    xorl %r13d, %r13d
 ; CHECK-NEXT:    xorl %ebp, %ebp
 ; CHECK-NEXT:    jmp .LBB0_1
@@ -28,20 +28,20 @@ define fastcc void @foo(i32 %0, i1 %or.cond) nounwind {
 ; CHECK-NEXT:    leaq (%r12,%rbp), %rdi
 ; CHECK-NEXT:    # kill: def $edi killed $edi killed $rdi
 ; CHECK-NEXT:    xorl %esi, %esi
-; CHECK-NEXT:    movq %r14, %rdx
+; CHECK-NEXT:    movq %r15, %rdx
 ; CHECK-NEXT:    callq *%r13
 ; CHECK-NEXT:    incq %rbp
-; CHECK-NEXT:    addq $20, %r14
+; CHECK-NEXT:    addq $20, %r15
 ; CHECK-NEXT:  .LBB0_1: # %for.body30
 ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
 ; CHECK-NEXT:    testb $1, %bl
 ; CHECK-NEXT:    je .LBB0_3
 ; CHECK-NEXT:  # %bb.2: # %if.then37
 ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
-; CHECK-NEXT:    movq %r15, %rax
+; CHECK-NEXT:    movq %r14, %rax
 ; CHECK-NEXT:    addq %rbp, %rax
 ; CHECK-NEXT:    movq 0, %rax
-; CHECK-NEXT:    {nf} addq %r15, %rax
+; CHECK-NEXT:    {nf} addq %r14, %rax
 ; CHECK-NEXT:    movb $0, (%rbp,%rax)
 ; CHECK-NEXT:    jmp .LBB0_3
 entry:

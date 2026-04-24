@@ -1686,8 +1686,8 @@ define double @test_spill(double %a, i32 %a1, i64 %a2, ptr %a3, ptr %a4, ptr %a5
 ; EFPU2:       # %bb.0: # %entry
 ; EFPU2-NEXT:    mflr 0
 ; EFPU2-NEXT:    stwu 1, -128(1)
-; EFPU2-NEXT:    mr 5, 3
 ; EFPU2-NEXT:    mr 6, 4
+; EFPU2-NEXT:    mr 5, 3
 ; EFPU2-NEXT:    stw 0, 132(1)
 ; EFPU2-NEXT:    stw 27, 108(1) # 4-byte Folded Spill
 ; EFPU2-NEXT:    stw 28, 112(1) # 4-byte Folded Spill
@@ -1760,8 +1760,8 @@ define dso_local float @test_fma(i32 %d) local_unnamed_addr #0 {
 ; CHECK-NEXT:    # implicit-def: $r5
 ; CHECK-NEXT:  .LBB56_2: # %for.body
 ; CHECK-NEXT:    #
-; CHECK-NEXT:    efscfsi 3, 29
-; CHECK-NEXT:    mr 4, 3
+; CHECK-NEXT:    efscfsi 4, 29
+; CHECK-NEXT:    mr 3, 4
 ; CHECK-NEXT:    bl fmaf
 ; CHECK-NEXT:    addi 30, 30, -1
 ; CHECK-NEXT:    mr 5, 3

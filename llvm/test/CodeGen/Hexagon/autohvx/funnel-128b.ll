@@ -550,16 +550,16 @@ define <32 x i32> @f5(<32 x i32> %a0, <32 x i32> %a1, i32 %a2) #0 {
 ; V66-NEXT:     r0 = and(r0,#31)
 ; V66-NEXT:    }
 ; V66-NEXT:    {
-; V66-NEXT:     v3 = vsplat(r0)
+; V66-NEXT:     v2 = vsplat(r0)
 ; V66-NEXT:    }
 ; V66-NEXT:    {
-; V66-NEXT:     v2.w = vlsr(v1.w,v3.w)
+; V66-NEXT:     v4.w = vlsr(v1.w,v2.w)
 ; V66-NEXT:    }
 ; V66-NEXT:    {
-; V66-NEXT:     v3:2.w = vasrinto(v0.w,v3.w)
+; V66-NEXT:     v5:4.w = vasrinto(v0.w,v2.w)
 ; V66-NEXT:    }
 ; V66-NEXT:    {
-; V66-NEXT:     v0 = v2
+; V66-NEXT:     v0 = v4
 ; V66-NEXT:    }
 ; V66-NEXT:    {
 ; V66-NEXT:     jumpr r31
@@ -1161,16 +1161,16 @@ define <32 x i32> @f11(<32 x i32> %a0, <32 x i32> %a1, <32 x i32> %a2) #0 {
 ; V66-NEXT:     v3 = vsplat(r0)
 ; V66-NEXT:    }
 ; V66-NEXT:    {
-; V66-NEXT:     v3 = vand(v2,v3)
+; V66-NEXT:     v2 = vand(v2,v3)
 ; V66-NEXT:    }
 ; V66-NEXT:    {
-; V66-NEXT:     v2.w = vlsr(v1.w,v3.w)
+; V66-NEXT:     v4.w = vlsr(v1.w,v2.w)
 ; V66-NEXT:    }
 ; V66-NEXT:    {
-; V66-NEXT:     v3:2.w = vasrinto(v0.w,v3.w)
+; V66-NEXT:     v5:4.w = vasrinto(v0.w,v2.w)
 ; V66-NEXT:    }
 ; V66-NEXT:    {
-; V66-NEXT:     v0 = v2
+; V66-NEXT:     v0 = v4
 ; V66-NEXT:    }
 ; V66-NEXT:    {
 ; V66-NEXT:     jumpr r31

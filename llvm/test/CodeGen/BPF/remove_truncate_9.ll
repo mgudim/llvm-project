@@ -13,31 +13,31 @@
 define void @shl_lshr_same_bb(ptr %p) {
 ; CHECK-V2-LABEL: shl_lshr_same_bb:
 ; CHECK-V2:       # %bb.0: # %entry
-; CHECK-V2-NEXT:    r1 = *(u8 *)(r1 + 0)
+; CHECK-V2-NEXT:    r4 = *(u8 *)(r1 + 0)
 ; CHECK-V2-NEXT:    r5 = 1
-; CHECK-V2-NEXT:    if r1 == 0 goto .LBB0_2
+; CHECK-V2-NEXT:    if r4 == 0 goto .LBB0_2
 ; CHECK-V2-NEXT:  # %bb.1: # %entry
 ; CHECK-V2-NEXT:    r5 = 0
 ; CHECK-V2-NEXT:  .LBB0_2: # %entry
-; CHECK-V2-NEXT:    r3 = r1
+; CHECK-V2-NEXT:    r3 = r4
 ; CHECK-V2-NEXT:    r3 <<= 56
-; CHECK-V2-NEXT:    r2 = r1
-; CHECK-V2-NEXT:    r4 = r1
+; CHECK-V2-NEXT:    r1 = r4
+; CHECK-V2-NEXT:    r2 = r4
 ; CHECK-V2-NEXT:    call sink1
 ; CHECK-V2-NEXT:    exit
 ;
 ; CHECK-V4-LABEL: shl_lshr_same_bb:
 ; CHECK-V4:       # %bb.0: # %entry
-; CHECK-V4-NEXT:    w1 = *(u8 *)(r1 + 0)
+; CHECK-V4-NEXT:    w4 = *(u8 *)(r1 + 0)
 ; CHECK-V4-NEXT:    w5 = 1
-; CHECK-V4-NEXT:    if w1 == 0 goto .LBB0_2
+; CHECK-V4-NEXT:    if w4 == 0 goto .LBB0_2
 ; CHECK-V4-NEXT:  # %bb.1: # %entry
 ; CHECK-V4-NEXT:    w5 = 0
 ; CHECK-V4-NEXT:  .LBB0_2: # %entry
-; CHECK-V4-NEXT:    r3 = r1
+; CHECK-V4-NEXT:    r3 = r4
 ; CHECK-V4-NEXT:    r3 <<= 56
-; CHECK-V4-NEXT:    r2 = r1
-; CHECK-V4-NEXT:    r4 = r1
+; CHECK-V4-NEXT:    w1 = w4
+; CHECK-V4-NEXT:    r2 = r4
 ; CHECK-V4-NEXT:    call sink1
 ; CHECK-V4-NEXT:    exit
 entry:
@@ -55,31 +55,31 @@ entry:
 define void @shl_lshr_diff_bb(ptr %p) {
 ; CHECK-V2-LABEL: shl_lshr_diff_bb:
 ; CHECK-V2:       # %bb.0: # %entry
-; CHECK-V2-NEXT:    r1 = *(u16 *)(r1 + 0)
+; CHECK-V2-NEXT:    r4 = *(u16 *)(r1 + 0)
 ; CHECK-V2-NEXT:    r5 = 1
-; CHECK-V2-NEXT:    if r1 == 0 goto .LBB1_2
+; CHECK-V2-NEXT:    if r4 == 0 goto .LBB1_2
 ; CHECK-V2-NEXT:  # %bb.1: # %entry
 ; CHECK-V2-NEXT:    r5 = 0
 ; CHECK-V2-NEXT:  .LBB1_2: # %entry
-; CHECK-V2-NEXT:    r3 = r1
+; CHECK-V2-NEXT:    r3 = r4
 ; CHECK-V2-NEXT:    r3 <<= 48
-; CHECK-V2-NEXT:    r2 = r1
-; CHECK-V2-NEXT:    r4 = r1
+; CHECK-V2-NEXT:    r1 = r4
+; CHECK-V2-NEXT:    r2 = r4
 ; CHECK-V2-NEXT:    call sink2
 ; CHECK-V2-NEXT:    exit
 ;
 ; CHECK-V4-LABEL: shl_lshr_diff_bb:
 ; CHECK-V4:       # %bb.0: # %entry
-; CHECK-V4-NEXT:    w1 = *(u16 *)(r1 + 0)
+; CHECK-V4-NEXT:    w4 = *(u16 *)(r1 + 0)
 ; CHECK-V4-NEXT:    w5 = 1
-; CHECK-V4-NEXT:    if w1 == 0 goto .LBB1_2
+; CHECK-V4-NEXT:    if w4 == 0 goto .LBB1_2
 ; CHECK-V4-NEXT:  # %bb.1: # %entry
 ; CHECK-V4-NEXT:    w5 = 0
 ; CHECK-V4-NEXT:  .LBB1_2: # %entry
-; CHECK-V4-NEXT:    r3 = r1
+; CHECK-V4-NEXT:    r3 = r4
 ; CHECK-V4-NEXT:    r3 <<= 48
-; CHECK-V4-NEXT:    r2 = r1
-; CHECK-V4-NEXT:    r4 = r1
+; CHECK-V4-NEXT:    w1 = w4
+; CHECK-V4-NEXT:    r2 = r4
 ; CHECK-V4-NEXT:    call sink2
 ; CHECK-V4-NEXT:    exit
 entry:

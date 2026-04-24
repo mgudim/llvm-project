@@ -243,11 +243,11 @@ define <4 x float> @fptrunc(<4 x float> %a, <4 x float> %b, <4 x double> %c, <4 
 ; SSE41-NEXT:    cvtpd2ps %xmm3, %xmm1
 ; SSE41-NEXT:    cvtpd2ps %xmm2, %xmm2
 ; SSE41-NEXT:    unpcklpd {{.*#+}} xmm2 = xmm2[0],xmm1[0]
-; SSE41-NEXT:    cvtpd2ps %xmm5, %xmm3
-; SSE41-NEXT:    cvtpd2ps %xmm4, %xmm1
-; SSE41-NEXT:    unpcklpd {{.*#+}} xmm1 = xmm1[0],xmm3[0]
-; SSE41-NEXT:    blendvps %xmm0, %xmm2, %xmm1
-; SSE41-NEXT:    movaps %xmm1, %xmm0
+; SSE41-NEXT:    cvtpd2ps %xmm5, %xmm1
+; SSE41-NEXT:    cvtpd2ps %xmm4, %xmm3
+; SSE41-NEXT:    unpcklpd {{.*#+}} xmm3 = xmm3[0],xmm1[0]
+; SSE41-NEXT:    blendvps %xmm0, %xmm2, %xmm3
+; SSE41-NEXT:    movaps %xmm3, %xmm0
 ; SSE41-NEXT:    retq
 ;
 ; AVX-LABEL: fptrunc:

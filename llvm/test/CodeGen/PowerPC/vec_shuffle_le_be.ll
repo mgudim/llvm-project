@@ -34,11 +34,10 @@ define <32 x i32> @issue_172265(<32 x i32> %BS_ARG_1, <3 x i32> %0) {
 ; CHECK-LE-LABEL: issue_172265:
 ; CHECK-LE:       # %bb.0: # %entry
 ; CHECK-LE-NEXT:    addis 3, 2, .LCPI0_0@toc@ha
-; CHECK-LE-NEXT:    xxspltw 35, 42, 1
+; CHECK-LE-NEXT:    xxspltw 41, 42, 1
 ; CHECK-LE-NEXT:    addi 3, 3, .LCPI0_0@toc@l
-; CHECK-LE-NEXT:    vmr 7, 3
-; CHECK-LE-NEXT:    vmr 8, 3
-; CHECK-LE-NEXT:    vmr 9, 3
+; CHECK-LE-NEXT:    vmr 7, 9
+; CHECK-LE-NEXT:    vmr 8, 9
 ; CHECK-LE-NEXT:    lxvd2x 0, 0, 3
 ; CHECK-LE-NEXT:    addis 3, 2, .LCPI0_1@toc@ha
 ; CHECK-LE-NEXT:    addi 3, 3, .LCPI0_1@toc@l
@@ -48,44 +47,45 @@ define <32 x i32> @issue_172265(<32 x i32> %BS_ARG_1, <3 x i32> %0) {
 ; CHECK-LE-NEXT:    lxvd2x 2, 0, 3
 ; CHECK-LE-NEXT:    addis 3, 2, .LCPI0_3@toc@ha
 ; CHECK-LE-NEXT:    addi 3, 3, .LCPI0_3@toc@l
-; CHECK-LE-NEXT:    xxswapd 36, 0
+; CHECK-LE-NEXT:    xxswapd 35, 0
 ; CHECK-LE-NEXT:    lxvd2x 0, 0, 3
-; CHECK-LE-NEXT:    vperm 4, 2, 3, 4
+; CHECK-LE-NEXT:    vperm 4, 2, 9, 3
+; CHECK-LE-NEXT:    vmr 3, 9
 ; CHECK-LE-NEXT:    xxswapd 37, 1
-; CHECK-LE-NEXT:    vperm 2, 3, 3, 5
+; CHECK-LE-NEXT:    vperm 2, 9, 9, 5
 ; CHECK-LE-NEXT:    xxswapd 32, 2
-; CHECK-LE-NEXT:    vperm 5, 3, 3, 0
+; CHECK-LE-NEXT:    vperm 5, 9, 9, 0
 ; CHECK-LE-NEXT:    xxswapd 33, 0
-; CHECK-LE-NEXT:    vperm 6, 3, 3, 1
+; CHECK-LE-NEXT:    vperm 6, 9, 9, 1
 ; CHECK-LE-NEXT:    blr
 ;
 ; CHECK-BE-LABEL: issue_172265:
 ; CHECK-BE:       # %bb.0: # %entry
 ; CHECK-BE-NEXT:    addis 3, 2, .LCPI0_0@toc@ha
-; CHECK-BE-NEXT:    vspltw 3, 10, 2
+; CHECK-BE-NEXT:    vspltw 9, 10, 2
 ; CHECK-BE-NEXT:    addi 3, 3, .LCPI0_0@toc@l
-; CHECK-BE-NEXT:    vmr 7, 3
-; CHECK-BE-NEXT:    lvx 4, 0, 3
+; CHECK-BE-NEXT:    vmr 7, 9
+; CHECK-BE-NEXT:    lvx 3, 0, 3
 ; CHECK-BE-NEXT:    addis 3, 2, .LCPI0_2@toc@ha
 ; CHECK-BE-NEXT:    addi 3, 3, .LCPI0_2@toc@l
-; CHECK-BE-NEXT:    lvx 5, 0, 3
+; CHECK-BE-NEXT:    vperm 4, 9, 9, 3
+; CHECK-BE-NEXT:    lvx 3, 0, 3
 ; CHECK-BE-NEXT:    addis 3, 2, .LCPI0_3@toc@ha
 ; CHECK-BE-NEXT:    addi 3, 3, .LCPI0_3@toc@l
-; CHECK-BE-NEXT:    vperm 0, 3, 3, 5
 ; CHECK-BE-NEXT:    lvx 5, 0, 3
 ; CHECK-BE-NEXT:    addis 3, 2, .LCPI0_1@toc@ha
 ; CHECK-BE-NEXT:    addi 3, 3, .LCPI0_1@toc@l
-; CHECK-BE-NEXT:    lvx 1, 0, 3
+; CHECK-BE-NEXT:    lvx 0, 0, 3
 ; CHECK-BE-NEXT:    addis 3, 2, .LCPI0_4@toc@ha
 ; CHECK-BE-NEXT:    addi 3, 3, .LCPI0_4@toc@l
-; CHECK-BE-NEXT:    vperm 4, 3, 3, 4
-; CHECK-BE-NEXT:    vperm 4, 4, 2, 1
+; CHECK-BE-NEXT:    vperm 3, 9, 9, 3
+; CHECK-BE-NEXT:    vperm 4, 4, 2, 0
 ; CHECK-BE-NEXT:    lvx 2, 0, 3
-; CHECK-BE-NEXT:    vperm 5, 3, 3, 5
-; CHECK-BE-NEXT:    vperm 6, 3, 3, 2
-; CHECK-BE-NEXT:    vmr 2, 0
-; CHECK-BE-NEXT:    vmr 8, 3
-; CHECK-BE-NEXT:    vmr 9, 3
+; CHECK-BE-NEXT:    vperm 5, 9, 9, 5
+; CHECK-BE-NEXT:    vperm 6, 9, 9, 2
+; CHECK-BE-NEXT:    vmr 2, 3
+; CHECK-BE-NEXT:    vmr 3, 9
+; CHECK-BE-NEXT:    vmr 8, 9
 ; CHECK-BE-NEXT:    blr
 entry:
   %vecinit37 = shufflevector <3 x i32> %0, <3 x i32> zeroinitializer, <32 x i32> <i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 2, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>

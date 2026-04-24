@@ -7,7 +7,9 @@
 define amdgpu_ps i32 @ps_load_uniform_global_i32_align4(ptr addrspace(1) inreg %ptr) {
 ; GCN-LABEL: ps_load_uniform_global_i32_align4:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    s_load_dword s0, s[2:3], 0x0
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    s_load_dword s0, s[0:1], 0x0
 ; GCN-NEXT:    s_waitcnt lgkmcnt(0)
 ; GCN-NEXT:    ; return to shader part epilog
   %load = load i32, ptr addrspace(1) %ptr, align 4
@@ -17,7 +19,9 @@ define amdgpu_ps i32 @ps_load_uniform_global_i32_align4(ptr addrspace(1) inreg %
 define amdgpu_cs i32 @cs_load_uniform_global_i32_align4(ptr addrspace(1) inreg %ptr) {
 ; GCN-LABEL: cs_load_uniform_global_i32_align4:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    s_load_dword s0, s[2:3], 0x0
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    s_load_dword s0, s[0:1], 0x0
 ; GCN-NEXT:    s_waitcnt lgkmcnt(0)
 ; GCN-NEXT:    ; return to shader part epilog
   %load = load i32, ptr addrspace(1) %ptr, align 4

@@ -176,19 +176,19 @@ define void @test8(ptr nocapture %fn, i32 %x) local_unnamed_addr {
 ; CHECK:       @ %bb.0: @ %entry
 ; CHECK-NEXT:    push {r4, r5, r6, r7, lr}
 ; CHECK-NEXT:    sub sp, #4
-; CHECK-NEXT:    mov r4, r1
+; CHECK-NEXT:    mov r5, r1
 ; CHECK-NEXT:    str r0, [sp] @ 4-byte Spill
 ; CHECK-NEXT:    bl test8_u
-; CHECK-NEXT:    mov r5, r0
-; CHECK-NEXT:    ldr r6, [r0]
-; CHECK-NEXT:    movs r7, #0
-; CHECK-NEXT:    mov r0, r7
+; CHECK-NEXT:    mov r6, r0
+; CHECK-NEXT:    ldr r7, [r0]
+; CHECK-NEXT:    movs r4, #0
+; CHECK-NEXT:    mov r0, r4
 ; CHECK-NEXT:    bl test8_h
 ; CHECK-NEXT:    mov r1, r0
-; CHECK-NEXT:    mov r0, r6
-; CHECK-NEXT:    mov r2, r7
+; CHECK-NEXT:    mov r0, r7
+; CHECK-NEXT:    mov r2, r4
 ; CHECK-NEXT:    bl test8_g
-; CHECK-NEXT:    str r4, [r5]
+; CHECK-NEXT:    str r5, [r6]
 ; CHECK-NEXT:    movs r0, #1
 ; CHECK-NEXT:    movs r1, #2
 ; CHECK-NEXT:    movs r2, #3

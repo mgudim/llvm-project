@@ -21,8 +21,8 @@ define void @wobble() #0 {
 ; CHECK-NEXT:    buffer_store_dword v40, off, s[0:3], s33 offset:8 ; 4-byte Folded Spill
 ; CHECK-NEXT:    buffer_store_dword v41, off, s[0:3], s33 offset:4 ; 4-byte Folded Spill
 ; CHECK-NEXT:    buffer_store_dword v42, off, s[0:3], s33 ; 4-byte Folded Spill
-; CHECK-NEXT:    v_mov_b32_e32 v40, v31
-; CHECK-NEXT:    v_mov_b32_e32 v41, 0
+; CHECK-NEXT:    v_mov_b32_e32 v42, v31
+; CHECK-NEXT:    v_mov_b32_e32 v40, 0
 ; CHECK-NEXT:    s_addk_i32 s32, 0x400
 ; CHECK-NEXT:    v_writelane_b32 v43, s30, 0
 ; CHECK-NEXT:    v_writelane_b32 v43, s31, 1
@@ -33,7 +33,7 @@ define void @wobble() #0 {
 ; CHECK-NEXT:    v_writelane_b32 v43, s37, 5
 ; CHECK-NEXT:    s_mov_b64 s[36:37], s[8:9]
 ; CHECK-NEXT:    s_mov_b64 s[8:9], src_private_base
-; CHECK-NEXT:    v_mov_b32_e32 v42, s9
+; CHECK-NEXT:    v_mov_b32_e32 v41, s9
 ; CHECK-NEXT:    v_writelane_b32 v43, s38, 6
 ; CHECK-NEXT:    v_writelane_b32 v43, s39, 7
 ; CHECK-NEXT:    s_mov_b64 s[38:39], s[6:7]
@@ -58,8 +58,8 @@ define void @wobble() #0 {
 ; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
 ; CHECK-NEXT:    v_lshrrev_b32_e64 v0, 5, s33
 ; CHECK-NEXT:    s_cmp_eq_u32 s4, 0
-; CHECK-NEXT:    flat_store_dword v[41:42], v41
-; CHECK-NEXT:    v_mov_b32_e32 v31, v40
+; CHECK-NEXT:    flat_store_dword v[40:41], v40
+; CHECK-NEXT:    v_mov_b32_e32 v31, v42
 ; CHECK-NEXT:    v_mov_b32_e32 v2, 0
 ; CHECK-NEXT:    v_add_nc_u32_e32 v0, 12, v0
 ; CHECK-NEXT:    s_mov_b64 s[6:7], s[38:39]

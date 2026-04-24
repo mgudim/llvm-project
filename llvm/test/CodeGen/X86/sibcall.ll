@@ -414,8 +414,9 @@ define dso_local void @t14(ptr nocapture %.block_descriptor) nounwind ssp {
 ;
 ; X64-LABEL: t14:
 ; X64:       # %bb.0: # %entry
-; X64-NEXT:    movq 32(%rdi), %rdi
-; X64-NEXT:    jmpq *16(%rdi) # TAILCALL
+; X64-NEXT:    movq 32(%rdi), %rax
+; X64-NEXT:    movq %rax, %rdi
+; X64-NEXT:    jmpq *16(%rax) # TAILCALL
 ;
 ; X32-LABEL: t14:
 ; X32:       # %bb.0: # %entry

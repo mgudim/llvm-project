@@ -157,9 +157,9 @@ define {float, float, float} @f7(float %a, float %b) nounwind {
 ;
 ; NOSSE-NOX87-LABEL: f7:
 ; NOSSE-NOX87:       # %bb.0: # %entry
-; NOSSE-NOX87-NEXT:    movl {{[0-9]+}}(%esp), %eax
+; NOSSE-NOX87-NEXT:    movl {{[0-9]+}}(%esp), %edx
 ; NOSSE-NOX87-NEXT:    movl {{[0-9]+}}(%esp), %ecx
-; NOSSE-NOX87-NEXT:    movl %eax, %edx
+; NOSSE-NOX87-NEXT:    movl %edx, %eax
 ; NOSSE-NOX87-NEXT:    retl
 ;
 ; SSE-NOX87-LABEL: f7:

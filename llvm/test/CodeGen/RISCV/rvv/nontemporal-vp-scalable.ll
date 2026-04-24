@@ -37269,7 +37269,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    add a1, a1, a2
 ; CHECK-RV64V-NEXT:    sub sp, sp, a1
 ; CHECK-RV64V-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x30, 0x22, 0x11, 0x38, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 48 + 56 * vlenb
-; CHECK-RV64V-NEXT:    mv s1, a7
+; CHECK-RV64V-NEXT:    mv s0, a7
 ; CHECK-RV64V-NEXT:    mv s2, a0
 ; CHECK-RV64V-NEXT:    csrr a0, vlenb
 ; CHECK-RV64V-NEXT:    slli a0, a0, 4
@@ -37284,9 +37284,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    add a0, sp, a0
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64V-NEXT:    csrr s0, vlenb
+; CHECK-RV64V-NEXT:    csrr s1, vlenb
 ; CHECK-RV64V-NEXT:    li a1, 48
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
@@ -37299,7 +37299,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64V-NEXT:    li a1, 40
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
@@ -37308,7 +37308,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    add a0, sp, a0
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64V-NEXT:    slli a0, s0, 5
+; CHECK-RV64V-NEXT:    slli a0, s1, 5
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64V-NEXT:    csrr a0, vlenb
@@ -37320,17 +37320,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64V-NEXT:    li a1, 24
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
-; CHECK-RV64V-NEXT:    slli a2, s0, 2
-; CHECK-RV64V-NEXT:    mv a3, s1
-; CHECK-RV64V-NEXT:    bltu s1, a2, .LBB915_2
+; CHECK-RV64V-NEXT:    slli a2, s1, 2
+; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    bltu s0, a2, .LBB915_2
 ; CHECK-RV64V-NEXT:  # %bb.1:
 ; CHECK-RV64V-NEXT:    mv a3, a2
 ; CHECK-RV64V-NEXT:  .LBB915_2:
-; CHECK-RV64V-NEXT:    slli a5, s0, 4
-; CHECK-RV64V-NEXT:    slli a1, s0, 1
-; CHECK-RV64V-NEXT:    slli a6, s0, 3
+; CHECK-RV64V-NEXT:    slli a5, s1, 4
+; CHECK-RV64V-NEXT:    slli a1, s1, 1
+; CHECK-RV64V-NEXT:    slli a6, s1, 3
 ; CHECK-RV64V-NEXT:    mv a4, a3
 ; CHECK-RV64V-NEXT:    bltu a3, a1, .LBB915_4
 ; CHECK-RV64V-NEXT:  # %bb.3:
@@ -37341,9 +37341,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    add a5, s2, a5
 ; CHECK-RV64V-NEXT:    add a6, s2, a6
 ; CHECK-RV64V-NEXT:    mv a0, a4
-; CHECK-RV64V-NEXT:    bltu a4, s0, .LBB915_6
+; CHECK-RV64V-NEXT:    bltu a4, s1, .LBB915_6
 ; CHECK-RV64V-NEXT:  # %bb.5:
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:  .LBB915_6:
 ; CHECK-RV64V-NEXT:    vl8re64.v v16, (a7)
 ; CHECK-RV64V-NEXT:    csrr a7, vlenb
@@ -37371,7 +37371,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.p1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v24, (zero), v16
-; CHECK-RV64V-NEXT:    sub a0, a4, s0
+; CHECK-RV64V-NEXT:    sub a0, a4, s1
 ; CHECK-RV64V-NEXT:    sub a5, a3, a1
 ; CHECK-RV64V-NEXT:    sltu a4, a4, a0
 ; CHECK-RV64V-NEXT:    sltu a3, a3, a5
@@ -37383,17 +37383,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    ntl.p1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v25, (zero), v8
 ; CHECK-RV64V-NEXT:    mv a3, a0
-; CHECK-RV64V-NEXT:    bltu a0, s0, .LBB915_8
+; CHECK-RV64V-NEXT:    bltu a0, s1, .LBB915_8
 ; CHECK-RV64V-NEXT:  # %bb.7:
-; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    mv a3, s1
 ; CHECK-RV64V-NEXT:  .LBB915_8:
 ; CHECK-RV64V-NEXT:    vsetvli zero, a3, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.p1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v26, (zero), v0
-; CHECK-RV64V-NEXT:    sub a3, a0, s0
-; CHECK-RV64V-NEXT:    sub a2, s1, a2
+; CHECK-RV64V-NEXT:    sub a3, a0, s1
+; CHECK-RV64V-NEXT:    sub a2, s0, a2
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a3
-; CHECK-RV64V-NEXT:    sltu a4, s1, a2
+; CHECK-RV64V-NEXT:    sltu a4, s0, a2
 ; CHECK-RV64V-NEXT:    addi a0, a0, -1
 ; CHECK-RV64V-NEXT:    addi a4, a4, -1
 ; CHECK-RV64V-NEXT:    and a3, a0, a3
@@ -37409,9 +37409,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    mv a2, a1
 ; CHECK-RV64V-NEXT:  .LBB915_10:
 ; CHECK-RV64V-NEXT:    mv a3, a2
-; CHECK-RV64V-NEXT:    bltu a2, s0, .LBB915_12
+; CHECK-RV64V-NEXT:    bltu a2, s1, .LBB915_12
 ; CHECK-RV64V-NEXT:  # %bb.11:
-; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    mv a3, s1
 ; CHECK-RV64V-NEXT:  .LBB915_12:
 ; CHECK-RV64V-NEXT:    csrr a4, vlenb
 ; CHECK-RV64V-NEXT:    slli a4, a4, 3
@@ -37421,7 +37421,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    vsetvli zero, a3, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.p1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v28, (zero), v8
-; CHECK-RV64V-NEXT:    sub a3, a2, s0
+; CHECK-RV64V-NEXT:    sub a3, a2, s1
 ; CHECK-RV64V-NEXT:    sub a1, a0, a1
 ; CHECK-RV64V-NEXT:    sltu a2, a2, a3
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a1
@@ -37441,9 +37441,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    ntl.p1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v29, (zero), v8
 ; CHECK-RV64V-NEXT:    mv a1, a0
-; CHECK-RV64V-NEXT:    bltu a0, s0, .LBB915_14
+; CHECK-RV64V-NEXT:    bltu a0, s1, .LBB915_14
 ; CHECK-RV64V-NEXT:  # %bb.13:
-; CHECK-RV64V-NEXT:    mv a1, s0
+; CHECK-RV64V-NEXT:    mv a1, s1
 ; CHECK-RV64V-NEXT:  .LBB915_14:
 ; CHECK-RV64V-NEXT:    csrr a2, vlenb
 ; CHECK-RV64V-NEXT:    slli a2, a2, 5
@@ -37453,7 +37453,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.p1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v30, (zero), v8
-; CHECK-RV64V-NEXT:    sub a1, a0, s0
+; CHECK-RV64V-NEXT:    sub a1, a0, s1
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64V-NEXT:    addi a0, a0, -1
 ; CHECK-RV64V-NEXT:    and a0, a0, a1
@@ -37580,7 +37580,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    sub sp, sp, a1
 ; CHECK-RV64VC-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x30, 0x22, 0x11, 0x38, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 48 + 56 * vlenb
 ; CHECK-RV64VC-NEXT:    mv s2, a7
-; CHECK-RV64VC-NEXT:    mv s1, a0
+; CHECK-RV64VC-NEXT:    mv s0, a0
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 4
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
@@ -37594,11 +37594,11 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64VC-NEXT:    csrr s0, vlenb
+; CHECK-RV64VC-NEXT:    csrr s1, vlenb
 ; CHECK-RV64VC-NEXT:    li a1, 48
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 3
@@ -37609,17 +37609,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64VC-NEXT:    li a1, 40
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 5
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64VC-NEXT:    slli a0, s0, 5
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    slli a0, s1, 5
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 3
@@ -37630,30 +37630,30 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64VC-NEXT:    li a1, 24
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    slli a6, s0, 2
+; CHECK-RV64VC-NEXT:    slli a6, s1, 2
 ; CHECK-RV64VC-NEXT:    mv a3, s2
 ; CHECK-RV64VC-NEXT:    bltu s2, a6, .LBB915_2
 ; CHECK-RV64VC-NEXT:  # %bb.1:
 ; CHECK-RV64VC-NEXT:    mv a3, a6
 ; CHECK-RV64VC-NEXT:  .LBB915_2:
-; CHECK-RV64VC-NEXT:    slli a5, s0, 4
-; CHECK-RV64VC-NEXT:    slli a7, s0, 1
-; CHECK-RV64VC-NEXT:    slli a2, s0, 3
+; CHECK-RV64VC-NEXT:    slli a5, s1, 4
+; CHECK-RV64VC-NEXT:    slli a7, s1, 1
+; CHECK-RV64VC-NEXT:    slli a2, s1, 3
 ; CHECK-RV64VC-NEXT:    mv a4, a3
 ; CHECK-RV64VC-NEXT:    bltu a3, a7, .LBB915_4
 ; CHECK-RV64VC-NEXT:  # %bb.3:
 ; CHECK-RV64VC-NEXT:    mv a4, a7
 ; CHECK-RV64VC-NEXT:  .LBB915_4:
-; CHECK-RV64VC-NEXT:    vl8re64.v v8, (s1)
-; CHECK-RV64VC-NEXT:    add a1, s1, a0
-; CHECK-RV64VC-NEXT:    add a5, a5, s1
-; CHECK-RV64VC-NEXT:    add a2, a2, s1
+; CHECK-RV64VC-NEXT:    vl8re64.v v8, (s0)
+; CHECK-RV64VC-NEXT:    add a1, s0, a0
+; CHECK-RV64VC-NEXT:    add a5, a5, s0
+; CHECK-RV64VC-NEXT:    add a2, a2, s0
 ; CHECK-RV64VC-NEXT:    mv a0, a4
-; CHECK-RV64VC-NEXT:    bltu a4, s0, .LBB915_6
+; CHECK-RV64VC-NEXT:    bltu a4, s1, .LBB915_6
 ; CHECK-RV64VC-NEXT:  # %bb.5:
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:  .LBB915_6:
 ; CHECK-RV64VC-NEXT:    vl8re64.v v16, (a1)
 ; CHECK-RV64VC-NEXT:    csrr a1, vlenb
@@ -37681,7 +37681,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.p1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v24, (zero), v16
-; CHECK-RV64VC-NEXT:    sub a0, a4, s0
+; CHECK-RV64VC-NEXT:    sub a0, a4, s1
 ; CHECK-RV64VC-NEXT:    sub a1, a3, a7
 ; CHECK-RV64VC-NEXT:    sltu a2, a4, a0
 ; CHECK-RV64VC-NEXT:    sltu a3, a3, a1
@@ -37693,14 +37693,14 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    c.ntl.p1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v25, (zero), v8
 ; CHECK-RV64VC-NEXT:    mv a1, a0
-; CHECK-RV64VC-NEXT:    bltu a0, s0, .LBB915_8
+; CHECK-RV64VC-NEXT:    bltu a0, s1, .LBB915_8
 ; CHECK-RV64VC-NEXT:  # %bb.7:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB915_8:
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.p1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v26, (zero), v0
-; CHECK-RV64VC-NEXT:    sub a1, a0, s0
+; CHECK-RV64VC-NEXT:    sub a1, a0, s1
 ; CHECK-RV64VC-NEXT:    sub a2, s2, a6
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64VC-NEXT:    sltu a3, s2, a2
@@ -37719,9 +37719,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    mv a2, a7
 ; CHECK-RV64VC-NEXT:  .LBB915_10:
 ; CHECK-RV64VC-NEXT:    mv a1, a2
-; CHECK-RV64VC-NEXT:    bltu a2, s0, .LBB915_12
+; CHECK-RV64VC-NEXT:    bltu a2, s1, .LBB915_12
 ; CHECK-RV64VC-NEXT:  # %bb.11:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB915_12:
 ; CHECK-RV64VC-NEXT:    csrr a3, vlenb
 ; CHECK-RV64VC-NEXT:    slli a3, a3, 3
@@ -37731,7 +37731,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.p1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v28, (zero), v8
-; CHECK-RV64VC-NEXT:    sub a1, a2, s0
+; CHECK-RV64VC-NEXT:    sub a1, a2, s1
 ; CHECK-RV64VC-NEXT:    sub a3, a0, a7
 ; CHECK-RV64VC-NEXT:    sltu a2, a2, a1
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a3
@@ -37751,9 +37751,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    c.ntl.p1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v29, (zero), v8
 ; CHECK-RV64VC-NEXT:    mv a1, a0
-; CHECK-RV64VC-NEXT:    bltu a0, s0, .LBB915_14
+; CHECK-RV64VC-NEXT:    bltu a0, s1, .LBB915_14
 ; CHECK-RV64VC-NEXT:  # %bb.13:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB915_14:
 ; CHECK-RV64VC-NEXT:    csrr a2, vlenb
 ; CHECK-RV64VC-NEXT:    slli a2, a2, 5
@@ -37763,7 +37763,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_P1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.p1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v30, (zero), v8
-; CHECK-RV64VC-NEXT:    sub a1, a0, s0
+; CHECK-RV64VC-NEXT:    sub a1, a0, s1
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64VC-NEXT:    addi a0, a0, -1
 ; CHECK-RV64VC-NEXT:    and a0, a0, a1
@@ -37894,7 +37894,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    add a1, a1, a2
 ; CHECK-RV64V-NEXT:    sub sp, sp, a1
 ; CHECK-RV64V-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x30, 0x22, 0x11, 0x38, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 48 + 56 * vlenb
-; CHECK-RV64V-NEXT:    mv s1, a7
+; CHECK-RV64V-NEXT:    mv s0, a7
 ; CHECK-RV64V-NEXT:    mv s2, a0
 ; CHECK-RV64V-NEXT:    csrr a0, vlenb
 ; CHECK-RV64V-NEXT:    slli a0, a0, 4
@@ -37909,9 +37909,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    add a0, sp, a0
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64V-NEXT:    csrr s0, vlenb
+; CHECK-RV64V-NEXT:    csrr s1, vlenb
 ; CHECK-RV64V-NEXT:    li a1, 48
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
@@ -37924,7 +37924,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64V-NEXT:    li a1, 40
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
@@ -37933,7 +37933,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    add a0, sp, a0
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64V-NEXT:    slli a0, s0, 5
+; CHECK-RV64V-NEXT:    slli a0, s1, 5
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64V-NEXT:    csrr a0, vlenb
@@ -37945,17 +37945,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64V-NEXT:    li a1, 24
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
-; CHECK-RV64V-NEXT:    slli a2, s0, 2
-; CHECK-RV64V-NEXT:    mv a3, s1
-; CHECK-RV64V-NEXT:    bltu s1, a2, .LBB916_2
+; CHECK-RV64V-NEXT:    slli a2, s1, 2
+; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    bltu s0, a2, .LBB916_2
 ; CHECK-RV64V-NEXT:  # %bb.1:
 ; CHECK-RV64V-NEXT:    mv a3, a2
 ; CHECK-RV64V-NEXT:  .LBB916_2:
-; CHECK-RV64V-NEXT:    slli a5, s0, 4
-; CHECK-RV64V-NEXT:    slli a1, s0, 1
-; CHECK-RV64V-NEXT:    slli a6, s0, 3
+; CHECK-RV64V-NEXT:    slli a5, s1, 4
+; CHECK-RV64V-NEXT:    slli a1, s1, 1
+; CHECK-RV64V-NEXT:    slli a6, s1, 3
 ; CHECK-RV64V-NEXT:    mv a4, a3
 ; CHECK-RV64V-NEXT:    bltu a3, a1, .LBB916_4
 ; CHECK-RV64V-NEXT:  # %bb.3:
@@ -37966,9 +37966,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    add a5, s2, a5
 ; CHECK-RV64V-NEXT:    add a6, s2, a6
 ; CHECK-RV64V-NEXT:    mv a0, a4
-; CHECK-RV64V-NEXT:    bltu a4, s0, .LBB916_6
+; CHECK-RV64V-NEXT:    bltu a4, s1, .LBB916_6
 ; CHECK-RV64V-NEXT:  # %bb.5:
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:  .LBB916_6:
 ; CHECK-RV64V-NEXT:    vl8re64.v v16, (a7)
 ; CHECK-RV64V-NEXT:    csrr a7, vlenb
@@ -37996,7 +37996,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.pall
 ; CHECK-RV64V-NEXT:    vsoxei64.v v24, (zero), v16
-; CHECK-RV64V-NEXT:    sub a0, a4, s0
+; CHECK-RV64V-NEXT:    sub a0, a4, s1
 ; CHECK-RV64V-NEXT:    sub a5, a3, a1
 ; CHECK-RV64V-NEXT:    sltu a4, a4, a0
 ; CHECK-RV64V-NEXT:    sltu a3, a3, a5
@@ -38008,17 +38008,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    ntl.pall
 ; CHECK-RV64V-NEXT:    vsoxei64.v v25, (zero), v8
 ; CHECK-RV64V-NEXT:    mv a3, a0
-; CHECK-RV64V-NEXT:    bltu a0, s0, .LBB916_8
+; CHECK-RV64V-NEXT:    bltu a0, s1, .LBB916_8
 ; CHECK-RV64V-NEXT:  # %bb.7:
-; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    mv a3, s1
 ; CHECK-RV64V-NEXT:  .LBB916_8:
 ; CHECK-RV64V-NEXT:    vsetvli zero, a3, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.pall
 ; CHECK-RV64V-NEXT:    vsoxei64.v v26, (zero), v0
-; CHECK-RV64V-NEXT:    sub a3, a0, s0
-; CHECK-RV64V-NEXT:    sub a2, s1, a2
+; CHECK-RV64V-NEXT:    sub a3, a0, s1
+; CHECK-RV64V-NEXT:    sub a2, s0, a2
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a3
-; CHECK-RV64V-NEXT:    sltu a4, s1, a2
+; CHECK-RV64V-NEXT:    sltu a4, s0, a2
 ; CHECK-RV64V-NEXT:    addi a0, a0, -1
 ; CHECK-RV64V-NEXT:    addi a4, a4, -1
 ; CHECK-RV64V-NEXT:    and a3, a0, a3
@@ -38034,9 +38034,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    mv a2, a1
 ; CHECK-RV64V-NEXT:  .LBB916_10:
 ; CHECK-RV64V-NEXT:    mv a3, a2
-; CHECK-RV64V-NEXT:    bltu a2, s0, .LBB916_12
+; CHECK-RV64V-NEXT:    bltu a2, s1, .LBB916_12
 ; CHECK-RV64V-NEXT:  # %bb.11:
-; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    mv a3, s1
 ; CHECK-RV64V-NEXT:  .LBB916_12:
 ; CHECK-RV64V-NEXT:    csrr a4, vlenb
 ; CHECK-RV64V-NEXT:    slli a4, a4, 3
@@ -38046,7 +38046,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    vsetvli zero, a3, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.pall
 ; CHECK-RV64V-NEXT:    vsoxei64.v v28, (zero), v8
-; CHECK-RV64V-NEXT:    sub a3, a2, s0
+; CHECK-RV64V-NEXT:    sub a3, a2, s1
 ; CHECK-RV64V-NEXT:    sub a1, a0, a1
 ; CHECK-RV64V-NEXT:    sltu a2, a2, a3
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a1
@@ -38066,9 +38066,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    ntl.pall
 ; CHECK-RV64V-NEXT:    vsoxei64.v v29, (zero), v8
 ; CHECK-RV64V-NEXT:    mv a1, a0
-; CHECK-RV64V-NEXT:    bltu a0, s0, .LBB916_14
+; CHECK-RV64V-NEXT:    bltu a0, s1, .LBB916_14
 ; CHECK-RV64V-NEXT:  # %bb.13:
-; CHECK-RV64V-NEXT:    mv a1, s0
+; CHECK-RV64V-NEXT:    mv a1, s1
 ; CHECK-RV64V-NEXT:  .LBB916_14:
 ; CHECK-RV64V-NEXT:    csrr a2, vlenb
 ; CHECK-RV64V-NEXT:    slli a2, a2, 5
@@ -38078,7 +38078,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64V-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.pall
 ; CHECK-RV64V-NEXT:    vsoxei64.v v30, (zero), v8
-; CHECK-RV64V-NEXT:    sub a1, a0, s0
+; CHECK-RV64V-NEXT:    sub a1, a0, s1
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64V-NEXT:    addi a0, a0, -1
 ; CHECK-RV64V-NEXT:    and a0, a0, a1
@@ -38205,7 +38205,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64VC-NEXT:    sub sp, sp, a1
 ; CHECK-RV64VC-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x30, 0x22, 0x11, 0x38, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 48 + 56 * vlenb
 ; CHECK-RV64VC-NEXT:    mv s2, a7
-; CHECK-RV64VC-NEXT:    mv s1, a0
+; CHECK-RV64VC-NEXT:    mv s0, a0
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 4
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
@@ -38219,11 +38219,11 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64VC-NEXT:    csrr s0, vlenb
+; CHECK-RV64VC-NEXT:    csrr s1, vlenb
 ; CHECK-RV64VC-NEXT:    li a1, 48
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 3
@@ -38234,17 +38234,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64VC-NEXT:    li a1, 40
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 5
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64VC-NEXT:    slli a0, s0, 5
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    slli a0, s1, 5
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 3
@@ -38255,30 +38255,30 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64VC-NEXT:    li a1, 24
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    slli a6, s0, 2
+; CHECK-RV64VC-NEXT:    slli a6, s1, 2
 ; CHECK-RV64VC-NEXT:    mv a3, s2
 ; CHECK-RV64VC-NEXT:    bltu s2, a6, .LBB916_2
 ; CHECK-RV64VC-NEXT:  # %bb.1:
 ; CHECK-RV64VC-NEXT:    mv a3, a6
 ; CHECK-RV64VC-NEXT:  .LBB916_2:
-; CHECK-RV64VC-NEXT:    slli a5, s0, 4
-; CHECK-RV64VC-NEXT:    slli a7, s0, 1
-; CHECK-RV64VC-NEXT:    slli a2, s0, 3
+; CHECK-RV64VC-NEXT:    slli a5, s1, 4
+; CHECK-RV64VC-NEXT:    slli a7, s1, 1
+; CHECK-RV64VC-NEXT:    slli a2, s1, 3
 ; CHECK-RV64VC-NEXT:    mv a4, a3
 ; CHECK-RV64VC-NEXT:    bltu a3, a7, .LBB916_4
 ; CHECK-RV64VC-NEXT:  # %bb.3:
 ; CHECK-RV64VC-NEXT:    mv a4, a7
 ; CHECK-RV64VC-NEXT:  .LBB916_4:
-; CHECK-RV64VC-NEXT:    vl8re64.v v8, (s1)
-; CHECK-RV64VC-NEXT:    add a1, s1, a0
-; CHECK-RV64VC-NEXT:    add a5, a5, s1
-; CHECK-RV64VC-NEXT:    add a2, a2, s1
+; CHECK-RV64VC-NEXT:    vl8re64.v v8, (s0)
+; CHECK-RV64VC-NEXT:    add a1, s0, a0
+; CHECK-RV64VC-NEXT:    add a5, a5, s0
+; CHECK-RV64VC-NEXT:    add a2, a2, s0
 ; CHECK-RV64VC-NEXT:    mv a0, a4
-; CHECK-RV64VC-NEXT:    bltu a4, s0, .LBB916_6
+; CHECK-RV64VC-NEXT:    bltu a4, s1, .LBB916_6
 ; CHECK-RV64VC-NEXT:  # %bb.5:
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:  .LBB916_6:
 ; CHECK-RV64VC-NEXT:    vl8re64.v v16, (a1)
 ; CHECK-RV64VC-NEXT:    csrr a1, vlenb
@@ -38306,7 +38306,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.pall
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v24, (zero), v16
-; CHECK-RV64VC-NEXT:    sub a0, a4, s0
+; CHECK-RV64VC-NEXT:    sub a0, a4, s1
 ; CHECK-RV64VC-NEXT:    sub a1, a3, a7
 ; CHECK-RV64VC-NEXT:    sltu a2, a4, a0
 ; CHECK-RV64VC-NEXT:    sltu a3, a3, a1
@@ -38318,14 +38318,14 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64VC-NEXT:    c.ntl.pall
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v25, (zero), v8
 ; CHECK-RV64VC-NEXT:    mv a1, a0
-; CHECK-RV64VC-NEXT:    bltu a0, s0, .LBB916_8
+; CHECK-RV64VC-NEXT:    bltu a0, s1, .LBB916_8
 ; CHECK-RV64VC-NEXT:  # %bb.7:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB916_8:
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.pall
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v26, (zero), v0
-; CHECK-RV64VC-NEXT:    sub a1, a0, s0
+; CHECK-RV64VC-NEXT:    sub a1, a0, s1
 ; CHECK-RV64VC-NEXT:    sub a2, s2, a6
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64VC-NEXT:    sltu a3, s2, a2
@@ -38344,9 +38344,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64VC-NEXT:    mv a2, a7
 ; CHECK-RV64VC-NEXT:  .LBB916_10:
 ; CHECK-RV64VC-NEXT:    mv a1, a2
-; CHECK-RV64VC-NEXT:    bltu a2, s0, .LBB916_12
+; CHECK-RV64VC-NEXT:    bltu a2, s1, .LBB916_12
 ; CHECK-RV64VC-NEXT:  # %bb.11:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB916_12:
 ; CHECK-RV64VC-NEXT:    csrr a3, vlenb
 ; CHECK-RV64VC-NEXT:    slli a3, a3, 3
@@ -38356,7 +38356,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.pall
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v28, (zero), v8
-; CHECK-RV64VC-NEXT:    sub a1, a2, s0
+; CHECK-RV64VC-NEXT:    sub a1, a2, s1
 ; CHECK-RV64VC-NEXT:    sub a3, a0, a7
 ; CHECK-RV64VC-NEXT:    sltu a2, a2, a1
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a3
@@ -38376,9 +38376,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64VC-NEXT:    c.ntl.pall
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v29, (zero), v8
 ; CHECK-RV64VC-NEXT:    mv a1, a0
-; CHECK-RV64VC-NEXT:    bltu a0, s0, .LBB916_14
+; CHECK-RV64VC-NEXT:    bltu a0, s1, .LBB916_14
 ; CHECK-RV64VC-NEXT:  # %bb.13:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB916_14:
 ; CHECK-RV64VC-NEXT:    csrr a2, vlenb
 ; CHECK-RV64VC-NEXT:    slli a2, a2, 5
@@ -38388,7 +38388,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_PALL(<vscale x 64 x i8> %val, <
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.pall
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v30, (zero), v8
-; CHECK-RV64VC-NEXT:    sub a1, a0, s0
+; CHECK-RV64VC-NEXT:    sub a1, a0, s1
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64VC-NEXT:    addi a0, a0, -1
 ; CHECK-RV64VC-NEXT:    and a0, a0, a1
@@ -38519,7 +38519,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    add a1, a1, a2
 ; CHECK-RV64V-NEXT:    sub sp, sp, a1
 ; CHECK-RV64V-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x30, 0x22, 0x11, 0x38, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 48 + 56 * vlenb
-; CHECK-RV64V-NEXT:    mv s1, a7
+; CHECK-RV64V-NEXT:    mv s0, a7
 ; CHECK-RV64V-NEXT:    mv s2, a0
 ; CHECK-RV64V-NEXT:    csrr a0, vlenb
 ; CHECK-RV64V-NEXT:    slli a0, a0, 4
@@ -38534,9 +38534,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    add a0, sp, a0
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64V-NEXT:    csrr s0, vlenb
+; CHECK-RV64V-NEXT:    csrr s1, vlenb
 ; CHECK-RV64V-NEXT:    li a1, 48
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
@@ -38549,7 +38549,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64V-NEXT:    li a1, 40
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
@@ -38558,7 +38558,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    add a0, sp, a0
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64V-NEXT:    slli a0, s0, 5
+; CHECK-RV64V-NEXT:    slli a0, s1, 5
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64V-NEXT:    csrr a0, vlenb
@@ -38570,17 +38570,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64V-NEXT:    li a1, 24
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
-; CHECK-RV64V-NEXT:    slli a2, s0, 2
-; CHECK-RV64V-NEXT:    mv a3, s1
-; CHECK-RV64V-NEXT:    bltu s1, a2, .LBB917_2
+; CHECK-RV64V-NEXT:    slli a2, s1, 2
+; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    bltu s0, a2, .LBB917_2
 ; CHECK-RV64V-NEXT:  # %bb.1:
 ; CHECK-RV64V-NEXT:    mv a3, a2
 ; CHECK-RV64V-NEXT:  .LBB917_2:
-; CHECK-RV64V-NEXT:    slli a5, s0, 4
-; CHECK-RV64V-NEXT:    slli a1, s0, 1
-; CHECK-RV64V-NEXT:    slli a6, s0, 3
+; CHECK-RV64V-NEXT:    slli a5, s1, 4
+; CHECK-RV64V-NEXT:    slli a1, s1, 1
+; CHECK-RV64V-NEXT:    slli a6, s1, 3
 ; CHECK-RV64V-NEXT:    mv a4, a3
 ; CHECK-RV64V-NEXT:    bltu a3, a1, .LBB917_4
 ; CHECK-RV64V-NEXT:  # %bb.3:
@@ -38591,9 +38591,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    add a5, s2, a5
 ; CHECK-RV64V-NEXT:    add a6, s2, a6
 ; CHECK-RV64V-NEXT:    mv a0, a4
-; CHECK-RV64V-NEXT:    bltu a4, s0, .LBB917_6
+; CHECK-RV64V-NEXT:    bltu a4, s1, .LBB917_6
 ; CHECK-RV64V-NEXT:  # %bb.5:
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:  .LBB917_6:
 ; CHECK-RV64V-NEXT:    vl8re64.v v16, (a7)
 ; CHECK-RV64V-NEXT:    csrr a7, vlenb
@@ -38621,7 +38621,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.s1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v24, (zero), v16
-; CHECK-RV64V-NEXT:    sub a0, a4, s0
+; CHECK-RV64V-NEXT:    sub a0, a4, s1
 ; CHECK-RV64V-NEXT:    sub a5, a3, a1
 ; CHECK-RV64V-NEXT:    sltu a4, a4, a0
 ; CHECK-RV64V-NEXT:    sltu a3, a3, a5
@@ -38633,17 +38633,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    ntl.s1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v25, (zero), v8
 ; CHECK-RV64V-NEXT:    mv a3, a0
-; CHECK-RV64V-NEXT:    bltu a0, s0, .LBB917_8
+; CHECK-RV64V-NEXT:    bltu a0, s1, .LBB917_8
 ; CHECK-RV64V-NEXT:  # %bb.7:
-; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    mv a3, s1
 ; CHECK-RV64V-NEXT:  .LBB917_8:
 ; CHECK-RV64V-NEXT:    vsetvli zero, a3, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.s1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v26, (zero), v0
-; CHECK-RV64V-NEXT:    sub a3, a0, s0
-; CHECK-RV64V-NEXT:    sub a2, s1, a2
+; CHECK-RV64V-NEXT:    sub a3, a0, s1
+; CHECK-RV64V-NEXT:    sub a2, s0, a2
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a3
-; CHECK-RV64V-NEXT:    sltu a4, s1, a2
+; CHECK-RV64V-NEXT:    sltu a4, s0, a2
 ; CHECK-RV64V-NEXT:    addi a0, a0, -1
 ; CHECK-RV64V-NEXT:    addi a4, a4, -1
 ; CHECK-RV64V-NEXT:    and a3, a0, a3
@@ -38659,9 +38659,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    mv a2, a1
 ; CHECK-RV64V-NEXT:  .LBB917_10:
 ; CHECK-RV64V-NEXT:    mv a3, a2
-; CHECK-RV64V-NEXT:    bltu a2, s0, .LBB917_12
+; CHECK-RV64V-NEXT:    bltu a2, s1, .LBB917_12
 ; CHECK-RV64V-NEXT:  # %bb.11:
-; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    mv a3, s1
 ; CHECK-RV64V-NEXT:  .LBB917_12:
 ; CHECK-RV64V-NEXT:    csrr a4, vlenb
 ; CHECK-RV64V-NEXT:    slli a4, a4, 3
@@ -38671,7 +38671,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    vsetvli zero, a3, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.s1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v28, (zero), v8
-; CHECK-RV64V-NEXT:    sub a3, a2, s0
+; CHECK-RV64V-NEXT:    sub a3, a2, s1
 ; CHECK-RV64V-NEXT:    sub a1, a0, a1
 ; CHECK-RV64V-NEXT:    sltu a2, a2, a3
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a1
@@ -38691,9 +38691,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    ntl.s1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v29, (zero), v8
 ; CHECK-RV64V-NEXT:    mv a1, a0
-; CHECK-RV64V-NEXT:    bltu a0, s0, .LBB917_14
+; CHECK-RV64V-NEXT:    bltu a0, s1, .LBB917_14
 ; CHECK-RV64V-NEXT:  # %bb.13:
-; CHECK-RV64V-NEXT:    mv a1, s0
+; CHECK-RV64V-NEXT:    mv a1, s1
 ; CHECK-RV64V-NEXT:  .LBB917_14:
 ; CHECK-RV64V-NEXT:    csrr a2, vlenb
 ; CHECK-RV64V-NEXT:    slli a2, a2, 5
@@ -38703,7 +38703,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64V-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.s1
 ; CHECK-RV64V-NEXT:    vsoxei64.v v30, (zero), v8
-; CHECK-RV64V-NEXT:    sub a1, a0, s0
+; CHECK-RV64V-NEXT:    sub a1, a0, s1
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64V-NEXT:    addi a0, a0, -1
 ; CHECK-RV64V-NEXT:    and a0, a0, a1
@@ -38830,7 +38830,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    sub sp, sp, a1
 ; CHECK-RV64VC-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x30, 0x22, 0x11, 0x38, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 48 + 56 * vlenb
 ; CHECK-RV64VC-NEXT:    mv s2, a7
-; CHECK-RV64VC-NEXT:    mv s1, a0
+; CHECK-RV64VC-NEXT:    mv s0, a0
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 4
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
@@ -38844,11 +38844,11 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64VC-NEXT:    csrr s0, vlenb
+; CHECK-RV64VC-NEXT:    csrr s1, vlenb
 ; CHECK-RV64VC-NEXT:    li a1, 48
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 3
@@ -38859,17 +38859,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64VC-NEXT:    li a1, 40
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 5
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64VC-NEXT:    slli a0, s0, 5
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    slli a0, s1, 5
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 3
@@ -38880,30 +38880,30 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64VC-NEXT:    li a1, 24
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    slli a6, s0, 2
+; CHECK-RV64VC-NEXT:    slli a6, s1, 2
 ; CHECK-RV64VC-NEXT:    mv a3, s2
 ; CHECK-RV64VC-NEXT:    bltu s2, a6, .LBB917_2
 ; CHECK-RV64VC-NEXT:  # %bb.1:
 ; CHECK-RV64VC-NEXT:    mv a3, a6
 ; CHECK-RV64VC-NEXT:  .LBB917_2:
-; CHECK-RV64VC-NEXT:    slli a5, s0, 4
-; CHECK-RV64VC-NEXT:    slli a7, s0, 1
-; CHECK-RV64VC-NEXT:    slli a2, s0, 3
+; CHECK-RV64VC-NEXT:    slli a5, s1, 4
+; CHECK-RV64VC-NEXT:    slli a7, s1, 1
+; CHECK-RV64VC-NEXT:    slli a2, s1, 3
 ; CHECK-RV64VC-NEXT:    mv a4, a3
 ; CHECK-RV64VC-NEXT:    bltu a3, a7, .LBB917_4
 ; CHECK-RV64VC-NEXT:  # %bb.3:
 ; CHECK-RV64VC-NEXT:    mv a4, a7
 ; CHECK-RV64VC-NEXT:  .LBB917_4:
-; CHECK-RV64VC-NEXT:    vl8re64.v v8, (s1)
-; CHECK-RV64VC-NEXT:    add a1, s1, a0
-; CHECK-RV64VC-NEXT:    add a5, a5, s1
-; CHECK-RV64VC-NEXT:    add a2, a2, s1
+; CHECK-RV64VC-NEXT:    vl8re64.v v8, (s0)
+; CHECK-RV64VC-NEXT:    add a1, s0, a0
+; CHECK-RV64VC-NEXT:    add a5, a5, s0
+; CHECK-RV64VC-NEXT:    add a2, a2, s0
 ; CHECK-RV64VC-NEXT:    mv a0, a4
-; CHECK-RV64VC-NEXT:    bltu a4, s0, .LBB917_6
+; CHECK-RV64VC-NEXT:    bltu a4, s1, .LBB917_6
 ; CHECK-RV64VC-NEXT:  # %bb.5:
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:  .LBB917_6:
 ; CHECK-RV64VC-NEXT:    vl8re64.v v16, (a1)
 ; CHECK-RV64VC-NEXT:    csrr a1, vlenb
@@ -38931,7 +38931,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.s1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v24, (zero), v16
-; CHECK-RV64VC-NEXT:    sub a0, a4, s0
+; CHECK-RV64VC-NEXT:    sub a0, a4, s1
 ; CHECK-RV64VC-NEXT:    sub a1, a3, a7
 ; CHECK-RV64VC-NEXT:    sltu a2, a4, a0
 ; CHECK-RV64VC-NEXT:    sltu a3, a3, a1
@@ -38943,14 +38943,14 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    c.ntl.s1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v25, (zero), v8
 ; CHECK-RV64VC-NEXT:    mv a1, a0
-; CHECK-RV64VC-NEXT:    bltu a0, s0, .LBB917_8
+; CHECK-RV64VC-NEXT:    bltu a0, s1, .LBB917_8
 ; CHECK-RV64VC-NEXT:  # %bb.7:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB917_8:
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.s1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v26, (zero), v0
-; CHECK-RV64VC-NEXT:    sub a1, a0, s0
+; CHECK-RV64VC-NEXT:    sub a1, a0, s1
 ; CHECK-RV64VC-NEXT:    sub a2, s2, a6
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64VC-NEXT:    sltu a3, s2, a2
@@ -38969,9 +38969,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    mv a2, a7
 ; CHECK-RV64VC-NEXT:  .LBB917_10:
 ; CHECK-RV64VC-NEXT:    mv a1, a2
-; CHECK-RV64VC-NEXT:    bltu a2, s0, .LBB917_12
+; CHECK-RV64VC-NEXT:    bltu a2, s1, .LBB917_12
 ; CHECK-RV64VC-NEXT:  # %bb.11:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB917_12:
 ; CHECK-RV64VC-NEXT:    csrr a3, vlenb
 ; CHECK-RV64VC-NEXT:    slli a3, a3, 3
@@ -38981,7 +38981,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.s1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v28, (zero), v8
-; CHECK-RV64VC-NEXT:    sub a1, a2, s0
+; CHECK-RV64VC-NEXT:    sub a1, a2, s1
 ; CHECK-RV64VC-NEXT:    sub a3, a0, a7
 ; CHECK-RV64VC-NEXT:    sltu a2, a2, a1
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a3
@@ -39001,9 +39001,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    c.ntl.s1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v29, (zero), v8
 ; CHECK-RV64VC-NEXT:    mv a1, a0
-; CHECK-RV64VC-NEXT:    bltu a0, s0, .LBB917_14
+; CHECK-RV64VC-NEXT:    bltu a0, s1, .LBB917_14
 ; CHECK-RV64VC-NEXT:  # %bb.13:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB917_14:
 ; CHECK-RV64VC-NEXT:    csrr a2, vlenb
 ; CHECK-RV64VC-NEXT:    slli a2, a2, 5
@@ -39013,7 +39013,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_S1(<vscale x 64 x i8> %val, <vs
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.s1
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v30, (zero), v8
-; CHECK-RV64VC-NEXT:    sub a1, a0, s0
+; CHECK-RV64VC-NEXT:    sub a1, a0, s1
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64VC-NEXT:    addi a0, a0, -1
 ; CHECK-RV64VC-NEXT:    and a0, a0, a1
@@ -39144,7 +39144,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    add a1, a1, a2
 ; CHECK-RV64V-NEXT:    sub sp, sp, a1
 ; CHECK-RV64V-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x30, 0x22, 0x11, 0x38, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 48 + 56 * vlenb
-; CHECK-RV64V-NEXT:    mv s1, a7
+; CHECK-RV64V-NEXT:    mv s0, a7
 ; CHECK-RV64V-NEXT:    mv s2, a0
 ; CHECK-RV64V-NEXT:    csrr a0, vlenb
 ; CHECK-RV64V-NEXT:    slli a0, a0, 4
@@ -39159,9 +39159,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    add a0, sp, a0
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64V-NEXT:    csrr s0, vlenb
+; CHECK-RV64V-NEXT:    csrr s1, vlenb
 ; CHECK-RV64V-NEXT:    li a1, 48
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
@@ -39174,7 +39174,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64V-NEXT:    li a1, 40
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
@@ -39183,7 +39183,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    add a0, sp, a0
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64V-NEXT:    slli a0, s0, 5
+; CHECK-RV64V-NEXT:    slli a0, s1, 5
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64V-NEXT:    csrr a0, vlenb
@@ -39195,17 +39195,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64V-NEXT:    li a1, 24
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
-; CHECK-RV64V-NEXT:    slli a2, s0, 2
-; CHECK-RV64V-NEXT:    mv a3, s1
-; CHECK-RV64V-NEXT:    bltu s1, a2, .LBB918_2
+; CHECK-RV64V-NEXT:    slli a2, s1, 2
+; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    bltu s0, a2, .LBB918_2
 ; CHECK-RV64V-NEXT:  # %bb.1:
 ; CHECK-RV64V-NEXT:    mv a3, a2
 ; CHECK-RV64V-NEXT:  .LBB918_2:
-; CHECK-RV64V-NEXT:    slli a5, s0, 4
-; CHECK-RV64V-NEXT:    slli a1, s0, 1
-; CHECK-RV64V-NEXT:    slli a6, s0, 3
+; CHECK-RV64V-NEXT:    slli a5, s1, 4
+; CHECK-RV64V-NEXT:    slli a1, s1, 1
+; CHECK-RV64V-NEXT:    slli a6, s1, 3
 ; CHECK-RV64V-NEXT:    mv a4, a3
 ; CHECK-RV64V-NEXT:    bltu a3, a1, .LBB918_4
 ; CHECK-RV64V-NEXT:  # %bb.3:
@@ -39216,9 +39216,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    add a5, s2, a5
 ; CHECK-RV64V-NEXT:    add a6, s2, a6
 ; CHECK-RV64V-NEXT:    mv a0, a4
-; CHECK-RV64V-NEXT:    bltu a4, s0, .LBB918_6
+; CHECK-RV64V-NEXT:    bltu a4, s1, .LBB918_6
 ; CHECK-RV64V-NEXT:  # %bb.5:
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:  .LBB918_6:
 ; CHECK-RV64V-NEXT:    vl8re64.v v16, (a7)
 ; CHECK-RV64V-NEXT:    csrr a7, vlenb
@@ -39246,7 +39246,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v24, (zero), v16
-; CHECK-RV64V-NEXT:    sub a0, a4, s0
+; CHECK-RV64V-NEXT:    sub a0, a4, s1
 ; CHECK-RV64V-NEXT:    sub a5, a3, a1
 ; CHECK-RV64V-NEXT:    sltu a4, a4, a0
 ; CHECK-RV64V-NEXT:    sltu a3, a3, a5
@@ -39258,17 +39258,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v25, (zero), v8
 ; CHECK-RV64V-NEXT:    mv a3, a0
-; CHECK-RV64V-NEXT:    bltu a0, s0, .LBB918_8
+; CHECK-RV64V-NEXT:    bltu a0, s1, .LBB918_8
 ; CHECK-RV64V-NEXT:  # %bb.7:
-; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    mv a3, s1
 ; CHECK-RV64V-NEXT:  .LBB918_8:
 ; CHECK-RV64V-NEXT:    vsetvli zero, a3, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v26, (zero), v0
-; CHECK-RV64V-NEXT:    sub a3, a0, s0
-; CHECK-RV64V-NEXT:    sub a2, s1, a2
+; CHECK-RV64V-NEXT:    sub a3, a0, s1
+; CHECK-RV64V-NEXT:    sub a2, s0, a2
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a3
-; CHECK-RV64V-NEXT:    sltu a4, s1, a2
+; CHECK-RV64V-NEXT:    sltu a4, s0, a2
 ; CHECK-RV64V-NEXT:    addi a0, a0, -1
 ; CHECK-RV64V-NEXT:    addi a4, a4, -1
 ; CHECK-RV64V-NEXT:    and a3, a0, a3
@@ -39284,9 +39284,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    mv a2, a1
 ; CHECK-RV64V-NEXT:  .LBB918_10:
 ; CHECK-RV64V-NEXT:    mv a3, a2
-; CHECK-RV64V-NEXT:    bltu a2, s0, .LBB918_12
+; CHECK-RV64V-NEXT:    bltu a2, s1, .LBB918_12
 ; CHECK-RV64V-NEXT:  # %bb.11:
-; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    mv a3, s1
 ; CHECK-RV64V-NEXT:  .LBB918_12:
 ; CHECK-RV64V-NEXT:    csrr a4, vlenb
 ; CHECK-RV64V-NEXT:    slli a4, a4, 3
@@ -39296,7 +39296,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    vsetvli zero, a3, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v28, (zero), v8
-; CHECK-RV64V-NEXT:    sub a3, a2, s0
+; CHECK-RV64V-NEXT:    sub a3, a2, s1
 ; CHECK-RV64V-NEXT:    sub a1, a0, a1
 ; CHECK-RV64V-NEXT:    sltu a2, a2, a3
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a1
@@ -39316,9 +39316,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v29, (zero), v8
 ; CHECK-RV64V-NEXT:    mv a1, a0
-; CHECK-RV64V-NEXT:    bltu a0, s0, .LBB918_14
+; CHECK-RV64V-NEXT:    bltu a0, s1, .LBB918_14
 ; CHECK-RV64V-NEXT:  # %bb.13:
-; CHECK-RV64V-NEXT:    mv a1, s0
+; CHECK-RV64V-NEXT:    mv a1, s1
 ; CHECK-RV64V-NEXT:  .LBB918_14:
 ; CHECK-RV64V-NEXT:    csrr a2, vlenb
 ; CHECK-RV64V-NEXT:    slli a2, a2, 5
@@ -39328,7 +39328,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64V-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v30, (zero), v8
-; CHECK-RV64V-NEXT:    sub a1, a0, s0
+; CHECK-RV64V-NEXT:    sub a1, a0, s1
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64V-NEXT:    addi a0, a0, -1
 ; CHECK-RV64V-NEXT:    and a0, a0, a1
@@ -39455,7 +39455,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64VC-NEXT:    sub sp, sp, a1
 ; CHECK-RV64VC-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x30, 0x22, 0x11, 0x38, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 48 + 56 * vlenb
 ; CHECK-RV64VC-NEXT:    mv s2, a7
-; CHECK-RV64VC-NEXT:    mv s1, a0
+; CHECK-RV64VC-NEXT:    mv s0, a0
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 4
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
@@ -39469,11 +39469,11 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64VC-NEXT:    csrr s0, vlenb
+; CHECK-RV64VC-NEXT:    csrr s1, vlenb
 ; CHECK-RV64VC-NEXT:    li a1, 48
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 3
@@ -39484,17 +39484,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64VC-NEXT:    li a1, 40
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 5
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64VC-NEXT:    slli a0, s0, 5
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    slli a0, s1, 5
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 3
@@ -39505,30 +39505,30 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64VC-NEXT:    li a1, 24
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    slli a6, s0, 2
+; CHECK-RV64VC-NEXT:    slli a6, s1, 2
 ; CHECK-RV64VC-NEXT:    mv a3, s2
 ; CHECK-RV64VC-NEXT:    bltu s2, a6, .LBB918_2
 ; CHECK-RV64VC-NEXT:  # %bb.1:
 ; CHECK-RV64VC-NEXT:    mv a3, a6
 ; CHECK-RV64VC-NEXT:  .LBB918_2:
-; CHECK-RV64VC-NEXT:    slli a5, s0, 4
-; CHECK-RV64VC-NEXT:    slli a7, s0, 1
-; CHECK-RV64VC-NEXT:    slli a2, s0, 3
+; CHECK-RV64VC-NEXT:    slli a5, s1, 4
+; CHECK-RV64VC-NEXT:    slli a7, s1, 1
+; CHECK-RV64VC-NEXT:    slli a2, s1, 3
 ; CHECK-RV64VC-NEXT:    mv a4, a3
 ; CHECK-RV64VC-NEXT:    bltu a3, a7, .LBB918_4
 ; CHECK-RV64VC-NEXT:  # %bb.3:
 ; CHECK-RV64VC-NEXT:    mv a4, a7
 ; CHECK-RV64VC-NEXT:  .LBB918_4:
-; CHECK-RV64VC-NEXT:    vl8re64.v v8, (s1)
-; CHECK-RV64VC-NEXT:    add a1, s1, a0
-; CHECK-RV64VC-NEXT:    add a5, a5, s1
-; CHECK-RV64VC-NEXT:    add a2, a2, s1
+; CHECK-RV64VC-NEXT:    vl8re64.v v8, (s0)
+; CHECK-RV64VC-NEXT:    add a1, s0, a0
+; CHECK-RV64VC-NEXT:    add a5, a5, s0
+; CHECK-RV64VC-NEXT:    add a2, a2, s0
 ; CHECK-RV64VC-NEXT:    mv a0, a4
-; CHECK-RV64VC-NEXT:    bltu a4, s0, .LBB918_6
+; CHECK-RV64VC-NEXT:    bltu a4, s1, .LBB918_6
 ; CHECK-RV64VC-NEXT:  # %bb.5:
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:  .LBB918_6:
 ; CHECK-RV64VC-NEXT:    vl8re64.v v16, (a1)
 ; CHECK-RV64VC-NEXT:    csrr a1, vlenb
@@ -39556,7 +39556,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v24, (zero), v16
-; CHECK-RV64VC-NEXT:    sub a0, a4, s0
+; CHECK-RV64VC-NEXT:    sub a0, a4, s1
 ; CHECK-RV64VC-NEXT:    sub a1, a3, a7
 ; CHECK-RV64VC-NEXT:    sltu a2, a4, a0
 ; CHECK-RV64VC-NEXT:    sltu a3, a3, a1
@@ -39568,14 +39568,14 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v25, (zero), v8
 ; CHECK-RV64VC-NEXT:    mv a1, a0
-; CHECK-RV64VC-NEXT:    bltu a0, s0, .LBB918_8
+; CHECK-RV64VC-NEXT:    bltu a0, s1, .LBB918_8
 ; CHECK-RV64VC-NEXT:  # %bb.7:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB918_8:
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v26, (zero), v0
-; CHECK-RV64VC-NEXT:    sub a1, a0, s0
+; CHECK-RV64VC-NEXT:    sub a1, a0, s1
 ; CHECK-RV64VC-NEXT:    sub a2, s2, a6
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64VC-NEXT:    sltu a3, s2, a2
@@ -39594,9 +39594,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64VC-NEXT:    mv a2, a7
 ; CHECK-RV64VC-NEXT:  .LBB918_10:
 ; CHECK-RV64VC-NEXT:    mv a1, a2
-; CHECK-RV64VC-NEXT:    bltu a2, s0, .LBB918_12
+; CHECK-RV64VC-NEXT:    bltu a2, s1, .LBB918_12
 ; CHECK-RV64VC-NEXT:  # %bb.11:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB918_12:
 ; CHECK-RV64VC-NEXT:    csrr a3, vlenb
 ; CHECK-RV64VC-NEXT:    slli a3, a3, 3
@@ -39606,7 +39606,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v28, (zero), v8
-; CHECK-RV64VC-NEXT:    sub a1, a2, s0
+; CHECK-RV64VC-NEXT:    sub a1, a2, s1
 ; CHECK-RV64VC-NEXT:    sub a3, a0, a7
 ; CHECK-RV64VC-NEXT:    sltu a2, a2, a1
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a3
@@ -39626,9 +39626,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v29, (zero), v8
 ; CHECK-RV64VC-NEXT:    mv a1, a0
-; CHECK-RV64VC-NEXT:    bltu a0, s0, .LBB918_14
+; CHECK-RV64VC-NEXT:    bltu a0, s1, .LBB918_14
 ; CHECK-RV64VC-NEXT:  # %bb.13:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB918_14:
 ; CHECK-RV64VC-NEXT:    csrr a2, vlenb
 ; CHECK-RV64VC-NEXT:    slli a2, a2, 5
@@ -39638,7 +39638,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_ALL(<vscale x 64 x i8> %val, <v
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v30, (zero), v8
-; CHECK-RV64VC-NEXT:    sub a1, a0, s0
+; CHECK-RV64VC-NEXT:    sub a1, a0, s1
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64VC-NEXT:    addi a0, a0, -1
 ; CHECK-RV64VC-NEXT:    and a0, a0, a1
@@ -39768,7 +39768,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    add a1, a1, a2
 ; CHECK-RV64V-NEXT:    sub sp, sp, a1
 ; CHECK-RV64V-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x30, 0x22, 0x11, 0x38, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 48 + 56 * vlenb
-; CHECK-RV64V-NEXT:    mv s1, a7
+; CHECK-RV64V-NEXT:    mv s0, a7
 ; CHECK-RV64V-NEXT:    mv s2, a0
 ; CHECK-RV64V-NEXT:    csrr a0, vlenb
 ; CHECK-RV64V-NEXT:    slli a0, a0, 4
@@ -39783,9 +39783,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    add a0, sp, a0
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64V-NEXT:    csrr s0, vlenb
+; CHECK-RV64V-NEXT:    csrr s1, vlenb
 ; CHECK-RV64V-NEXT:    li a1, 48
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
@@ -39798,7 +39798,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64V-NEXT:    li a1, 40
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
@@ -39807,7 +39807,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    add a0, sp, a0
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64V-NEXT:    slli a0, s0, 5
+; CHECK-RV64V-NEXT:    slli a0, s1, 5
 ; CHECK-RV64V-NEXT:    add a0, s2, a0
 ; CHECK-RV64V-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64V-NEXT:    csrr a0, vlenb
@@ -39819,17 +39819,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    addi a0, a0, 16
 ; CHECK-RV64V-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64V-NEXT:    li a1, 24
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:    call __muldi3
-; CHECK-RV64V-NEXT:    slli a2, s0, 2
-; CHECK-RV64V-NEXT:    mv a3, s1
-; CHECK-RV64V-NEXT:    bltu s1, a2, .LBB919_2
+; CHECK-RV64V-NEXT:    slli a2, s1, 2
+; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    bltu s0, a2, .LBB919_2
 ; CHECK-RV64V-NEXT:  # %bb.1:
 ; CHECK-RV64V-NEXT:    mv a3, a2
 ; CHECK-RV64V-NEXT:  .LBB919_2:
-; CHECK-RV64V-NEXT:    slli a5, s0, 4
-; CHECK-RV64V-NEXT:    slli a1, s0, 1
-; CHECK-RV64V-NEXT:    slli a6, s0, 3
+; CHECK-RV64V-NEXT:    slli a5, s1, 4
+; CHECK-RV64V-NEXT:    slli a1, s1, 1
+; CHECK-RV64V-NEXT:    slli a6, s1, 3
 ; CHECK-RV64V-NEXT:    mv a4, a3
 ; CHECK-RV64V-NEXT:    bltu a3, a1, .LBB919_4
 ; CHECK-RV64V-NEXT:  # %bb.3:
@@ -39840,9 +39840,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    add a5, s2, a5
 ; CHECK-RV64V-NEXT:    add a6, s2, a6
 ; CHECK-RV64V-NEXT:    mv a0, a4
-; CHECK-RV64V-NEXT:    bltu a4, s0, .LBB919_6
+; CHECK-RV64V-NEXT:    bltu a4, s1, .LBB919_6
 ; CHECK-RV64V-NEXT:  # %bb.5:
-; CHECK-RV64V-NEXT:    mv a0, s0
+; CHECK-RV64V-NEXT:    mv a0, s1
 ; CHECK-RV64V-NEXT:  .LBB919_6:
 ; CHECK-RV64V-NEXT:    vl8re64.v v16, (a7)
 ; CHECK-RV64V-NEXT:    csrr a7, vlenb
@@ -39870,7 +39870,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v24, (zero), v16
-; CHECK-RV64V-NEXT:    sub a0, a4, s0
+; CHECK-RV64V-NEXT:    sub a0, a4, s1
 ; CHECK-RV64V-NEXT:    sub a5, a3, a1
 ; CHECK-RV64V-NEXT:    sltu a4, a4, a0
 ; CHECK-RV64V-NEXT:    sltu a3, a3, a5
@@ -39882,17 +39882,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v25, (zero), v8
 ; CHECK-RV64V-NEXT:    mv a3, a0
-; CHECK-RV64V-NEXT:    bltu a0, s0, .LBB919_8
+; CHECK-RV64V-NEXT:    bltu a0, s1, .LBB919_8
 ; CHECK-RV64V-NEXT:  # %bb.7:
-; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    mv a3, s1
 ; CHECK-RV64V-NEXT:  .LBB919_8:
 ; CHECK-RV64V-NEXT:    vsetvli zero, a3, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v26, (zero), v0
-; CHECK-RV64V-NEXT:    sub a3, a0, s0
-; CHECK-RV64V-NEXT:    sub a2, s1, a2
+; CHECK-RV64V-NEXT:    sub a3, a0, s1
+; CHECK-RV64V-NEXT:    sub a2, s0, a2
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a3
-; CHECK-RV64V-NEXT:    sltu a4, s1, a2
+; CHECK-RV64V-NEXT:    sltu a4, s0, a2
 ; CHECK-RV64V-NEXT:    addi a0, a0, -1
 ; CHECK-RV64V-NEXT:    addi a4, a4, -1
 ; CHECK-RV64V-NEXT:    and a3, a0, a3
@@ -39908,9 +39908,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    mv a2, a1
 ; CHECK-RV64V-NEXT:  .LBB919_10:
 ; CHECK-RV64V-NEXT:    mv a3, a2
-; CHECK-RV64V-NEXT:    bltu a2, s0, .LBB919_12
+; CHECK-RV64V-NEXT:    bltu a2, s1, .LBB919_12
 ; CHECK-RV64V-NEXT:  # %bb.11:
-; CHECK-RV64V-NEXT:    mv a3, s0
+; CHECK-RV64V-NEXT:    mv a3, s1
 ; CHECK-RV64V-NEXT:  .LBB919_12:
 ; CHECK-RV64V-NEXT:    csrr a4, vlenb
 ; CHECK-RV64V-NEXT:    slli a4, a4, 3
@@ -39920,7 +39920,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    vsetvli zero, a3, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v28, (zero), v8
-; CHECK-RV64V-NEXT:    sub a3, a2, s0
+; CHECK-RV64V-NEXT:    sub a3, a2, s1
 ; CHECK-RV64V-NEXT:    sub a1, a0, a1
 ; CHECK-RV64V-NEXT:    sltu a2, a2, a3
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a1
@@ -39940,9 +39940,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v29, (zero), v8
 ; CHECK-RV64V-NEXT:    mv a1, a0
-; CHECK-RV64V-NEXT:    bltu a0, s0, .LBB919_14
+; CHECK-RV64V-NEXT:    bltu a0, s1, .LBB919_14
 ; CHECK-RV64V-NEXT:  # %bb.13:
-; CHECK-RV64V-NEXT:    mv a1, s0
+; CHECK-RV64V-NEXT:    mv a1, s1
 ; CHECK-RV64V-NEXT:  .LBB919_14:
 ; CHECK-RV64V-NEXT:    csrr a2, vlenb
 ; CHECK-RV64V-NEXT:    slli a2, a2, 5
@@ -39952,7 +39952,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64V-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64V-NEXT:    ntl.all
 ; CHECK-RV64V-NEXT:    vsoxei64.v v30, (zero), v8
-; CHECK-RV64V-NEXT:    sub a1, a0, s0
+; CHECK-RV64V-NEXT:    sub a1, a0, s1
 ; CHECK-RV64V-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64V-NEXT:    addi a0, a0, -1
 ; CHECK-RV64V-NEXT:    and a0, a0, a1
@@ -40079,7 +40079,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64VC-NEXT:    sub sp, sp, a1
 ; CHECK-RV64VC-NEXT:    .cfi_escape 0x0f, 0x0d, 0x72, 0x00, 0x11, 0x30, 0x22, 0x11, 0x38, 0x92, 0xa2, 0x38, 0x00, 0x1e, 0x22 # sp + 48 + 56 * vlenb
 ; CHECK-RV64VC-NEXT:    mv s2, a7
-; CHECK-RV64VC-NEXT:    mv s1, a0
+; CHECK-RV64VC-NEXT:    mv s0, a0
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 4
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
@@ -40093,11 +40093,11 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64VC-NEXT:    csrr s0, vlenb
+; CHECK-RV64VC-NEXT:    csrr s1, vlenb
 ; CHECK-RV64VC-NEXT:    li a1, 48
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 3
@@ -40108,17 +40108,17 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64VC-NEXT:    li a1, 40
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 5
 ; CHECK-RV64VC-NEXT:    add a0, a0, sp
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
-; CHECK-RV64VC-NEXT:    slli a0, s0, 5
-; CHECK-RV64VC-NEXT:    add a0, a0, s1
+; CHECK-RV64VC-NEXT:    slli a0, s1, 5
+; CHECK-RV64VC-NEXT:    add a0, a0, s0
 ; CHECK-RV64VC-NEXT:    vl8re64.v v8, (a0)
 ; CHECK-RV64VC-NEXT:    csrr a0, vlenb
 ; CHECK-RV64VC-NEXT:    slli a0, a0, 3
@@ -40129,30 +40129,30 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64VC-NEXT:    addi a0, a0, 16
 ; CHECK-RV64VC-NEXT:    vs8r.v v8, (a0) # vscale x 64-byte Folded Spill
 ; CHECK-RV64VC-NEXT:    li a1, 24
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:    call __muldi3
-; CHECK-RV64VC-NEXT:    slli a6, s0, 2
+; CHECK-RV64VC-NEXT:    slli a6, s1, 2
 ; CHECK-RV64VC-NEXT:    mv a3, s2
 ; CHECK-RV64VC-NEXT:    bltu s2, a6, .LBB919_2
 ; CHECK-RV64VC-NEXT:  # %bb.1:
 ; CHECK-RV64VC-NEXT:    mv a3, a6
 ; CHECK-RV64VC-NEXT:  .LBB919_2:
-; CHECK-RV64VC-NEXT:    slli a5, s0, 4
-; CHECK-RV64VC-NEXT:    slli a7, s0, 1
-; CHECK-RV64VC-NEXT:    slli a2, s0, 3
+; CHECK-RV64VC-NEXT:    slli a5, s1, 4
+; CHECK-RV64VC-NEXT:    slli a7, s1, 1
+; CHECK-RV64VC-NEXT:    slli a2, s1, 3
 ; CHECK-RV64VC-NEXT:    mv a4, a3
 ; CHECK-RV64VC-NEXT:    bltu a3, a7, .LBB919_4
 ; CHECK-RV64VC-NEXT:  # %bb.3:
 ; CHECK-RV64VC-NEXT:    mv a4, a7
 ; CHECK-RV64VC-NEXT:  .LBB919_4:
-; CHECK-RV64VC-NEXT:    vl8re64.v v8, (s1)
-; CHECK-RV64VC-NEXT:    add a1, s1, a0
-; CHECK-RV64VC-NEXT:    add a5, a5, s1
-; CHECK-RV64VC-NEXT:    add a2, a2, s1
+; CHECK-RV64VC-NEXT:    vl8re64.v v8, (s0)
+; CHECK-RV64VC-NEXT:    add a1, s0, a0
+; CHECK-RV64VC-NEXT:    add a5, a5, s0
+; CHECK-RV64VC-NEXT:    add a2, a2, s0
 ; CHECK-RV64VC-NEXT:    mv a0, a4
-; CHECK-RV64VC-NEXT:    bltu a4, s0, .LBB919_6
+; CHECK-RV64VC-NEXT:    bltu a4, s1, .LBB919_6
 ; CHECK-RV64VC-NEXT:  # %bb.5:
-; CHECK-RV64VC-NEXT:    mv a0, s0
+; CHECK-RV64VC-NEXT:    mv a0, s1
 ; CHECK-RV64VC-NEXT:  .LBB919_6:
 ; CHECK-RV64VC-NEXT:    vl8re64.v v16, (a1)
 ; CHECK-RV64VC-NEXT:    csrr a1, vlenb
@@ -40180,7 +40180,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v24, (zero), v16
-; CHECK-RV64VC-NEXT:    sub a0, a4, s0
+; CHECK-RV64VC-NEXT:    sub a0, a4, s1
 ; CHECK-RV64VC-NEXT:    sub a1, a3, a7
 ; CHECK-RV64VC-NEXT:    sltu a2, a4, a0
 ; CHECK-RV64VC-NEXT:    sltu a3, a3, a1
@@ -40192,14 +40192,14 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v25, (zero), v8
 ; CHECK-RV64VC-NEXT:    mv a1, a0
-; CHECK-RV64VC-NEXT:    bltu a0, s0, .LBB919_8
+; CHECK-RV64VC-NEXT:    bltu a0, s1, .LBB919_8
 ; CHECK-RV64VC-NEXT:  # %bb.7:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB919_8:
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v26, (zero), v0
-; CHECK-RV64VC-NEXT:    sub a1, a0, s0
+; CHECK-RV64VC-NEXT:    sub a1, a0, s1
 ; CHECK-RV64VC-NEXT:    sub a2, s2, a6
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64VC-NEXT:    sltu a3, s2, a2
@@ -40218,9 +40218,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64VC-NEXT:    mv a2, a7
 ; CHECK-RV64VC-NEXT:  .LBB919_10:
 ; CHECK-RV64VC-NEXT:    mv a1, a2
-; CHECK-RV64VC-NEXT:    bltu a2, s0, .LBB919_12
+; CHECK-RV64VC-NEXT:    bltu a2, s1, .LBB919_12
 ; CHECK-RV64VC-NEXT:  # %bb.11:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB919_12:
 ; CHECK-RV64VC-NEXT:    csrr a3, vlenb
 ; CHECK-RV64VC-NEXT:    slli a3, a3, 3
@@ -40230,7 +40230,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v28, (zero), v8
-; CHECK-RV64VC-NEXT:    sub a1, a2, s0
+; CHECK-RV64VC-NEXT:    sub a1, a2, s1
 ; CHECK-RV64VC-NEXT:    sub a3, a0, a7
 ; CHECK-RV64VC-NEXT:    sltu a2, a2, a1
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a3
@@ -40250,9 +40250,9 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v29, (zero), v8
 ; CHECK-RV64VC-NEXT:    mv a1, a0
-; CHECK-RV64VC-NEXT:    bltu a0, s0, .LBB919_14
+; CHECK-RV64VC-NEXT:    bltu a0, s1, .LBB919_14
 ; CHECK-RV64VC-NEXT:  # %bb.13:
-; CHECK-RV64VC-NEXT:    mv a1, s0
+; CHECK-RV64VC-NEXT:    mv a1, s1
 ; CHECK-RV64VC-NEXT:  .LBB919_14:
 ; CHECK-RV64VC-NEXT:    csrr a2, vlenb
 ; CHECK-RV64VC-NEXT:    slli a2, a2, 5
@@ -40262,7 +40262,7 @@ define void @test_nontemporal_vp_scatter_nxv64i8_DEFAULT(<vscale x 64 x i8> %val
 ; CHECK-RV64VC-NEXT:    vsetvli zero, a1, e8, m1, ta, ma
 ; CHECK-RV64VC-NEXT:    c.ntl.all
 ; CHECK-RV64VC-NEXT:    vsoxei64.v v30, (zero), v8
-; CHECK-RV64VC-NEXT:    sub a1, a0, s0
+; CHECK-RV64VC-NEXT:    sub a1, a0, s1
 ; CHECK-RV64VC-NEXT:    sltu a0, a0, a1
 ; CHECK-RV64VC-NEXT:    addi a0, a0, -1
 ; CHECK-RV64VC-NEXT:    and a0, a0, a1

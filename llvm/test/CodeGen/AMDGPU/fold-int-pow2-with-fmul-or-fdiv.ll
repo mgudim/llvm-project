@@ -938,11 +938,15 @@ define <2 x double> @fmul_pow_shl_cnt_vec_non_splat_todo(<2 x i64> %cnt) nounwin
 ; VI-NEXT:    v_cvt_f64_u32_e32 v[6:7], v0
 ; VI-NEXT:    v_cvt_f64_u32_e32 v[0:1], v1
 ; VI-NEXT:    v_add_f64 v[2:3], v[2:3], v[6:7]
-; VI-NEXT:    v_add_f64 v[4:5], v[4:5], v[0:1]
-; VI-NEXT:    v_mul_f64 v[0:1], v[2:3], s[4:5]
+; VI-NEXT:    v_add_f64 v[0:1], v[4:5], v[0:1]
+; VI-NEXT:    v_mul_f64 v[2:3], v[2:3], s[4:5]
 ; VI-NEXT:    s_mov_b32 s4, 0
 ; VI-NEXT:    s_mov_b32 s5, 0x402c0000
-; VI-NEXT:    v_mul_f64 v[2:3], v[4:5], s[4:5]
+; VI-NEXT:    v_mul_f64 v[4:5], v[0:1], s[4:5]
+; VI-NEXT:    v_mov_b32_e32 v0, v2
+; VI-NEXT:    v_mov_b32_e32 v1, v3
+; VI-NEXT:    v_mov_b32_e32 v2, v4
+; VI-NEXT:    v_mov_b32_e32 v3, v5
 ; VI-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX10-LABEL: fmul_pow_shl_cnt_vec_non_splat_todo:

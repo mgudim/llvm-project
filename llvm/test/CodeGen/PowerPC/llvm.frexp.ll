@@ -77,22 +77,22 @@ define { <2 x half>, <2 x i32> } @test_frexp_v2f16_v2i32(<2 x half> %a) nounwind
 ; CHECK-NEXT:    std r29, -24(r1) # 8-byte Folded Spill
 ; CHECK-NEXT:    std r30, -16(r1) # 8-byte Folded Spill
 ; CHECK-NEXT:    stdu r1, -80(r1)
-; CHECK-NEXT:    clrlwi r29, r3, 16
+; CHECK-NEXT:    clrlwi r30, r3, 16
 ; CHECK-NEXT:    clrlwi r3, r4, 16
-; CHECK-NEXT:    addi r30, r1, 44
+; CHECK-NEXT:    addi r29, r1, 44
 ; CHECK-NEXT:    mtfprwz f0, r3
 ; CHECK-NEXT:    std r0, 96(r1)
-; CHECK-NEXT:    mr r4, r30
+; CHECK-NEXT:    mr r4, r29
 ; CHECK-NEXT:    xscvhpdp f1, f0
 ; CHECK-NEXT:    bl frexpf
 ; CHECK-NEXT:    nop
 ; CHECK-NEXT:    xscvdphp f0, f1
 ; CHECK-NEXT:    mffprwz r3, f0
-; CHECK-NEXT:    mtfprwz f0, r29
-; CHECK-NEXT:    addi r29, r1, 40
+; CHECK-NEXT:    mtfprwz f0, r30
+; CHECK-NEXT:    addi r30, r1, 40
 ; CHECK-NEXT:    sth r3, 50(r1)
 ; CHECK-NEXT:    xscvhpdp f1, f0
-; CHECK-NEXT:    mr r4, r29
+; CHECK-NEXT:    mr r4, r30
 ; CHECK-NEXT:    bl frexpf
 ; CHECK-NEXT:    nop
 ; CHECK-NEXT:    xscvdphp f0, f1
@@ -101,8 +101,8 @@ define { <2 x half>, <2 x i32> } @test_frexp_v2f16_v2i32(<2 x half> %a) nounwind
 ; CHECK-NEXT:    sth r3, 48(r1)
 ; CHECK-NEXT:    li r3, 0
 ; CHECK-NEXT:    lxv v3, 48(r1)
-; CHECK-NEXT:    lfiwzx f0, 0, r29
-; CHECK-NEXT:    lfiwzx f1, 0, r30
+; CHECK-NEXT:    lfiwzx f0, 0, r30
+; CHECK-NEXT:    lfiwzx f1, 0, r29
 ; CHECK-NEXT:    xxmrghw v2, vs1, vs0
 ; CHECK-NEXT:    vextuhrx r3, r3, v3
 ; CHECK-NEXT:    vextuhrx r4, r4, v3
@@ -165,21 +165,21 @@ define <2 x i32> @test_frexp_v2f16_v2i32_only_use_exp(<2 x half> %a) nounwind {
 ; CHECK-NEXT:    stdu r1, -64(r1)
 ; CHECK-NEXT:    clrlwi r3, r3, 16
 ; CHECK-NEXT:    std r0, 80(r1)
-; CHECK-NEXT:    addi r30, r1, 32
+; CHECK-NEXT:    addi r29, r1, 32
 ; CHECK-NEXT:    mtfprwz f0, r3
-; CHECK-NEXT:    clrlwi r29, r4, 16
-; CHECK-NEXT:    mr r4, r30
-; CHECK-NEXT:    xscvhpdp f1, f0
-; CHECK-NEXT:    bl frexpf
-; CHECK-NEXT:    nop
-; CHECK-NEXT:    mtfprwz f0, r29
-; CHECK-NEXT:    addi r29, r1, 36
-; CHECK-NEXT:    xscvhpdp f1, f0
+; CHECK-NEXT:    clrlwi r30, r4, 16
 ; CHECK-NEXT:    mr r4, r29
+; CHECK-NEXT:    xscvhpdp f1, f0
 ; CHECK-NEXT:    bl frexpf
 ; CHECK-NEXT:    nop
-; CHECK-NEXT:    lfiwzx f0, 0, r30
-; CHECK-NEXT:    lfiwzx f1, 0, r29
+; CHECK-NEXT:    mtfprwz f0, r30
+; CHECK-NEXT:    addi r30, r1, 36
+; CHECK-NEXT:    xscvhpdp f1, f0
+; CHECK-NEXT:    mr r4, r30
+; CHECK-NEXT:    bl frexpf
+; CHECK-NEXT:    nop
+; CHECK-NEXT:    lfiwzx f0, 0, r29
+; CHECK-NEXT:    lfiwzx f1, 0, r30
 ; CHECK-NEXT:    xxmrghw v2, vs1, vs0
 ; CHECK-NEXT:    addi r1, r1, 64
 ; CHECK-NEXT:    ld r0, 16(r1)

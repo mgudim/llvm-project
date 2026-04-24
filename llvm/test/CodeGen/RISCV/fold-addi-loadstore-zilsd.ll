@@ -40,24 +40,24 @@ define double @fold_addi_from_different_bb(i32 %k, i32 %n, ptr %a) nounwind {
 ; CHECK-NEXT:    sd s2, 8(sp) # 8-byte Folded Spill
 ; CHECK-NEXT:    blez a1, .LBB2_3
 ; CHECK-NEXT:  # %bb.1: # %for.body.lr.ph
-; CHECK-NEXT:    mv s2, a2
-; CHECK-NEXT:    mv s3, a1
-; CHECK-NEXT:    fmv.d s0, zero
+; CHECK-NEXT:    mv s0, a2
+; CHECK-NEXT:    mv s1, a1
+; CHECK-NEXT:    fmv.d s2, zero
 ; CHECK-NEXT:    slli a0, a0, 4
 ; CHECK-NEXT:    add s4, a2, a0
 ; CHECK-NEXT:  .LBB2_2: # %for.body
 ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
-; CHECK-NEXT:    mv a0, s2
+; CHECK-NEXT:    mv a0, s0
 ; CHECK-NEXT:    call f
 ; CHECK-NEXT:    ld a0, 8(s4)
-; CHECK-NEXT:    addi s3, s3, -1
-; CHECK-NEXT:    fadd.d s0, a0, s0
-; CHECK-NEXT:    bnez s3, .LBB2_2
+; CHECK-NEXT:    addi s1, s1, -1
+; CHECK-NEXT:    fadd.d s2, a0, s2
+; CHECK-NEXT:    bnez s1, .LBB2_2
 ; CHECK-NEXT:    j .LBB2_4
 ; CHECK-NEXT:  .LBB2_3:
-; CHECK-NEXT:    fmv.d s0, zero
+; CHECK-NEXT:    fmv.d s2, zero
 ; CHECK-NEXT:  .LBB2_4: # %for.cond.cleanup
-; CHECK-NEXT:    fmv.d a0, s0
+; CHECK-NEXT:    fmv.d a0, s2
 ; CHECK-NEXT:    lw ra, 28(sp) # 4-byte Folded Reload
 ; CHECK-NEXT:    lw s4, 24(sp) # 4-byte Folded Reload
 ; CHECK-NEXT:    ld s0, 16(sp) # 8-byte Folded Reload

@@ -1442,14 +1442,14 @@ define <4 x half> @v_minimum_v4f16(<4 x half> %src0, <4 x half> %src1) {
 ; GFX10-NEXT:    v_mov_b32_e32 v4, 0x7e00
 ; GFX10-NEXT:    v_cmp_o_f16_sdwa vcc_lo, v1, v3 src0_sel:WORD_1 src1_sel:WORD_1
 ; GFX10-NEXT:    v_pk_min_f16 v6, v1, v3
-; GFX10-NEXT:    v_cmp_o_f16_sdwa s4, v0, v2 src0_sel:WORD_1 src1_sel:WORD_1
+; GFX10-NEXT:    v_cmp_o_f16_sdwa s5, v0, v2 src0_sel:WORD_1 src1_sel:WORD_1
 ; GFX10-NEXT:    v_pk_min_f16 v5, v0, v2
-; GFX10-NEXT:    v_cmp_o_f16_e64 s5, v0, v2
+; GFX10-NEXT:    v_cmp_o_f16_e64 s4, v0, v2
 ; GFX10-NEXT:    v_cndmask_b32_sdwa v2, v4, v6, vcc_lo dst_sel:DWORD dst_unused:UNUSED_PAD src0_sel:DWORD src1_sel:WORD_1
-; GFX10-NEXT:    s_mov_b32 vcc_lo, s4
+; GFX10-NEXT:    s_mov_b32 vcc_lo, s5
 ; GFX10-NEXT:    v_cndmask_b32_sdwa v4, v4, v5, vcc_lo dst_sel:DWORD dst_unused:UNUSED_PAD src0_sel:DWORD src1_sel:WORD_1
 ; GFX10-NEXT:    v_cmp_o_f16_e32 vcc_lo, v1, v3
-; GFX10-NEXT:    v_cndmask_b32_e64 v0, 0x7e00, v5, s5
+; GFX10-NEXT:    v_cndmask_b32_e64 v0, 0x7e00, v5, s4
 ; GFX10-NEXT:    v_cndmask_b32_e32 v1, 0x7e00, v6, vcc_lo
 ; GFX10-NEXT:    v_perm_b32 v0, v4, v0, 0x5040100
 ; GFX10-NEXT:    v_perm_b32 v1, v2, v1, 0x5040100
@@ -1630,14 +1630,14 @@ define <4 x half> @v_minimum_v4f16__nsz(<4 x half> %src0, <4 x half> %src1) {
 ; GFX10-NEXT:    v_mov_b32_e32 v4, 0x7e00
 ; GFX10-NEXT:    v_cmp_o_f16_sdwa vcc_lo, v1, v3 src0_sel:WORD_1 src1_sel:WORD_1
 ; GFX10-NEXT:    v_pk_min_f16 v6, v1, v3
-; GFX10-NEXT:    v_cmp_o_f16_sdwa s4, v0, v2 src0_sel:WORD_1 src1_sel:WORD_1
+; GFX10-NEXT:    v_cmp_o_f16_sdwa s5, v0, v2 src0_sel:WORD_1 src1_sel:WORD_1
 ; GFX10-NEXT:    v_pk_min_f16 v5, v0, v2
-; GFX10-NEXT:    v_cmp_o_f16_e64 s5, v0, v2
+; GFX10-NEXT:    v_cmp_o_f16_e64 s4, v0, v2
 ; GFX10-NEXT:    v_cndmask_b32_sdwa v2, v4, v6, vcc_lo dst_sel:DWORD dst_unused:UNUSED_PAD src0_sel:DWORD src1_sel:WORD_1
-; GFX10-NEXT:    s_mov_b32 vcc_lo, s4
+; GFX10-NEXT:    s_mov_b32 vcc_lo, s5
 ; GFX10-NEXT:    v_cndmask_b32_sdwa v4, v4, v5, vcc_lo dst_sel:DWORD dst_unused:UNUSED_PAD src0_sel:DWORD src1_sel:WORD_1
 ; GFX10-NEXT:    v_cmp_o_f16_e32 vcc_lo, v1, v3
-; GFX10-NEXT:    v_cndmask_b32_e64 v0, 0x7e00, v5, s5
+; GFX10-NEXT:    v_cndmask_b32_e64 v0, 0x7e00, v5, s4
 ; GFX10-NEXT:    v_cndmask_b32_e32 v1, 0x7e00, v6, vcc_lo
 ; GFX10-NEXT:    v_perm_b32 v0, v4, v0, 0x5040100
 ; GFX10-NEXT:    v_perm_b32 v1, v2, v1, 0x5040100

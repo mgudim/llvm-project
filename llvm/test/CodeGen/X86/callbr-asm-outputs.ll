@@ -36,14 +36,16 @@ define i32 @test2(i32 %out1, i32 %out2) nounwind {
 ; CHECK:       # %bb.0: # %entry
 ; CHECK-NEXT:    pushl %edi
 ; CHECK-NEXT:    pushl %esi
-; CHECK-NEXT:    movl {{[0-9]+}}(%esp), %edi
-; CHECK-NEXT:    movl {{[0-9]+}}(%esp), %esi
-; CHECK-NEXT:    cmpl %edi, %esi
+; CHECK-NEXT:    movl {{[0-9]+}}(%esp), %ecx
+; CHECK-NEXT:    movl {{[0-9]+}}(%esp), %eax
+; CHECK-NEXT:    cmpl %ecx, %eax
 ; CHECK-NEXT:    jge .LBB1_3
 ; CHECK-NEXT:  # %bb.1: # %if.then
+; CHECK-NEXT:    movl %ecx, %edi
+; CHECK-NEXT:    movl %eax, %esi
 ; CHECK-NEXT:    #APP
 ; CHECK-NEXT:    testl %esi, %esi
-; CHECK-NEXT:    testl %edi, %esi
+; CHECK-NEXT:    testl %edi, %eax
 ; CHECK-NEXT:    jne .LBB1_2
 ; CHECK-NEXT:    #NO_APP
 ; CHECK-NEXT:    jmp .LBB1_4
@@ -52,9 +54,11 @@ define i32 @test2(i32 %out1, i32 %out2) nounwind {
 ; CHECK-NEXT:    # Label of block must be emitted
 ; CHECK-NEXT:    jmp .LBB1_9
 ; CHECK-NEXT:  .LBB1_3: # %if.else
+; CHECK-NEXT:    movl %eax, %esi
+; CHECK-NEXT:    movl %ecx, %edi
 ; CHECK-NEXT:    #APP
 ; CHECK-NEXT:    testl %esi, %edi
-; CHECK-NEXT:    testl %esi, %edi
+; CHECK-NEXT:    testl %eax, %ecx
 ; CHECK-NEXT:    jne .LBB1_7
 ; CHECK-NEXT:    #NO_APP
 ; CHECK-NEXT:  .LBB1_4:

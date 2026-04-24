@@ -8,8 +8,8 @@ define <vscale x 2 x i7> @vfptosi_v4i7_v4bf16(<vscale x 2 x bfloat> %va, <vscale
 ; CHECK-LABEL: vfptosi_v4i7_v4bf16:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
-; CHECK-NEXT:    vfwcvtbf16.f.f.v v9, v8
-; CHECK-NEXT:    vfncvt.rtz.x.f.w v8, v9, v0.t
+; CHECK-NEXT:    vfwcvtbf16.f.f.v v10, v8
+; CHECK-NEXT:    vfncvt.rtz.x.f.w v8, v10, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e8, mf4, ta, ma
 ; CHECK-NEXT:    vnsrl.wi v8, v8, 0, v0.t
 ; CHECK-NEXT:    ret
@@ -21,8 +21,8 @@ define <vscale x 2 x i8> @vfptosi_nxv2i8_nxv2bf16(<vscale x 2 x bfloat> %va, <vs
 ; CHECK-LABEL: vfptosi_nxv2i8_nxv2bf16:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
-; CHECK-NEXT:    vfwcvtbf16.f.f.v v9, v8
-; CHECK-NEXT:    vfncvt.rtz.x.f.w v8, v9, v0.t
+; CHECK-NEXT:    vfwcvtbf16.f.f.v v10, v8
+; CHECK-NEXT:    vfncvt.rtz.x.f.w v8, v10, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e8, mf4, ta, ma
 ; CHECK-NEXT:    vnsrl.wi v8, v8, 0, v0.t
 ; CHECK-NEXT:    ret
@@ -124,8 +124,8 @@ define <vscale x 2 x i7> @vfptosi_v4i7_v4f16(<vscale x 2 x half> %va, <vscale x 
 ; ZVFHMIN-LABEL: vfptosi_v4i7_v4f16:
 ; ZVFHMIN:       # %bb.0:
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
-; ZVFHMIN-NEXT:    vfwcvt.f.f.v v9, v8
-; ZVFHMIN-NEXT:    vfncvt.rtz.x.f.w v8, v9, v0.t
+; ZVFHMIN-NEXT:    vfwcvt.f.f.v v10, v8
+; ZVFHMIN-NEXT:    vfncvt.rtz.x.f.w v8, v10, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e8, mf4, ta, ma
 ; ZVFHMIN-NEXT:    vnsrl.wi v8, v8, 0, v0.t
 ; ZVFHMIN-NEXT:    ret
@@ -144,8 +144,8 @@ define <vscale x 2 x i8> @vfptosi_nxv2i8_nxv2f16(<vscale x 2 x half> %va, <vscal
 ; ZVFHMIN-LABEL: vfptosi_nxv2i8_nxv2f16:
 ; ZVFHMIN:       # %bb.0:
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
-; ZVFHMIN-NEXT:    vfwcvt.f.f.v v9, v8
-; ZVFHMIN-NEXT:    vfncvt.rtz.x.f.w v8, v9, v0.t
+; ZVFHMIN-NEXT:    vfwcvt.f.f.v v10, v8
+; ZVFHMIN-NEXT:    vfncvt.rtz.x.f.w v8, v10, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e8, mf4, ta, ma
 ; ZVFHMIN-NEXT:    vnsrl.wi v8, v8, 0, v0.t
 ; ZVFHMIN-NEXT:    ret
@@ -249,6 +249,7 @@ define <vscale x 2 x i64> @vfptosi_nxv2i64_nxv2f16(<vscale x 2 x half> %va, <vsc
 ; ZVFH-LABEL: vfptosi_nxv2i64_nxv2f16:
 ; ZVFH:       # %bb.0:
 ; ZVFH-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
+; ZVFH-NEXT:    vmv1r.v v9, v0
 ; ZVFH-NEXT:    vfwcvt.f.f.v v10, v8, v0.t
 ; ZVFH-NEXT:    vsetvli zero, zero, e32, m1, ta, ma
 ; ZVFH-NEXT:    vfwcvt.rtz.x.f.v v8, v10, v0.t
@@ -281,9 +282,9 @@ define <vscale x 2 x i8> @vfptosi_nxv2i8_nxv2f32(<vscale x 2 x float> %va, <vsca
 ; CHECK-LABEL: vfptosi_nxv2i8_nxv2f32:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
-; CHECK-NEXT:    vfncvt.rtz.x.f.w v9, v8, v0.t
+; CHECK-NEXT:    vfncvt.rtz.x.f.w v10, v8, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e8, mf4, ta, ma
-; CHECK-NEXT:    vnsrl.wi v8, v9, 0, v0.t
+; CHECK-NEXT:    vnsrl.wi v8, v10, 0, v0.t
 ; CHECK-NEXT:    ret
   %v = call <vscale x 2 x i8> @llvm.vp.fptosi.nxv2i8.nxv2f32(<vscale x 2 x float> %va, <vscale x 2 x i1> %m, i32 %evl)
   ret <vscale x 2 x i8> %v
@@ -369,9 +370,9 @@ define <vscale x 2 x i8> @vfptosi_nxv2i8_nxv2f64(<vscale x 2 x double> %va, <vsc
 ; CHECK-LABEL: vfptosi_nxv2i8_nxv2f64:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m1, ta, ma
-; CHECK-NEXT:    vfncvt.rtz.x.f.w v10, v8, v0.t
+; CHECK-NEXT:    vfncvt.rtz.x.f.w v11, v8, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e16, mf2, ta, ma
-; CHECK-NEXT:    vnsrl.wi v8, v10, 0, v0.t
+; CHECK-NEXT:    vnsrl.wi v8, v11, 0, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e8, mf4, ta, ma
 ; CHECK-NEXT:    vnsrl.wi v8, v8, 0, v0.t
 ; CHECK-NEXT:    ret
@@ -397,9 +398,9 @@ define <vscale x 2 x i16> @vfptosi_nxv2i16_nxv2f64(<vscale x 2 x double> %va, <v
 ; CHECK-LABEL: vfptosi_nxv2i16_nxv2f64:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m1, ta, ma
-; CHECK-NEXT:    vfncvt.rtz.x.f.w v10, v8, v0.t
+; CHECK-NEXT:    vfncvt.rtz.x.f.w v11, v8, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e16, mf2, ta, ma
-; CHECK-NEXT:    vnsrl.wi v8, v10, 0, v0.t
+; CHECK-NEXT:    vnsrl.wi v8, v11, 0, v0.t
 ; CHECK-NEXT:    ret
   %v = call <vscale x 2 x i16> @llvm.vp.fptosi.nxv2i16.nxv2f64(<vscale x 2 x double> %va, <vscale x 2 x i1> %m, i32 %evl)
   ret <vscale x 2 x i16> %v

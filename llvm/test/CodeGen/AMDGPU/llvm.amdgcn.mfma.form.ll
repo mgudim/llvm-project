@@ -197,9 +197,17 @@ define <16 x float> @mfma_scale_respect_flag(<8 x i32> %arg0, <8 x i32> %arg1, <
 ; HEURRC-LABEL: mfma_scale_respect_flag:
 ; HEURRC:       ; %bb.0:
 ; HEURRC-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; HEURRC-NEXT:    v_mov_b32_e32 v33, v1
+; HEURRC-NEXT:    v_mov_b32_e32 v32, v0
 ; HEURRC-NEXT:    scratch_load_dword a15, off, s32
-; HEURRC-NEXT:    scratch_load_dword v31, off, s32 offset:8
-; HEURRC-NEXT:    scratch_load_dword v32, off, s32 offset:4
+; HEURRC-NEXT:    scratch_load_dword v0, off, s32 offset:8
+; HEURRC-NEXT:    scratch_load_dword v1, off, s32 offset:4
+; HEURRC-NEXT:    v_mov_b32_e32 v39, v7
+; HEURRC-NEXT:    v_mov_b32_e32 v38, v6
+; HEURRC-NEXT:    v_mov_b32_e32 v37, v5
+; HEURRC-NEXT:    v_mov_b32_e32 v36, v4
+; HEURRC-NEXT:    v_mov_b32_e32 v35, v3
+; HEURRC-NEXT:    v_mov_b32_e32 v34, v2
 ; HEURRC-NEXT:    v_accvgpr_write_b32 a0, v16
 ; HEURRC-NEXT:    v_accvgpr_write_b32 a1, v17
 ; HEURRC-NEXT:    v_accvgpr_write_b32 a2, v18
@@ -217,7 +225,7 @@ define <16 x float> @mfma_scale_respect_flag(<8 x i32> %arg0, <8 x i32> %arg1, <
 ; HEURRC-NEXT:    v_accvgpr_write_b32 a14, v30
 ; HEURRC-NEXT:    s_waitcnt vmcnt(0)
 ; HEURRC-NEXT:    s_nop 0
-; HEURRC-NEXT:    v_mfma_scale_f32_32x32x64_f8f6f4 a[0:15], v[0:7], v[8:15], a[0:15], v32, v31 op_sel_hi:[0,0,0]
+; HEURRC-NEXT:    v_mfma_scale_f32_32x32x64_f8f6f4 a[0:15], v[32:39], v[8:15], a[0:15], v1, v0 op_sel_hi:[0,0,0]
 ; HEURRC-NEXT:    s_nop 15
 ; HEURRC-NEXT:    s_nop 3
 ; HEURRC-NEXT:    v_accvgpr_read_b32 v0, a0
@@ -241,11 +249,20 @@ define <16 x float> @mfma_scale_respect_flag(<8 x i32> %arg0, <8 x i32> %arg1, <
 ; VGPRRC-LABEL: mfma_scale_respect_flag:
 ; VGPRRC:       ; %bb.0:
 ; VGPRRC-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; VGPRRC-NEXT:    v_mov_b32_e32 v33, v1
+; VGPRRC-NEXT:    v_mov_b32_e32 v32, v0
 ; VGPRRC-NEXT:    scratch_load_dword v31, off, s32
-; VGPRRC-NEXT:    scratch_load_dword v32, off, s32 offset:8
-; VGPRRC-NEXT:    scratch_load_dword v33, off, s32 offset:4
+; VGPRRC-NEXT:    scratch_load_dword v0, off, s32 offset:8
+; VGPRRC-NEXT:    scratch_load_dword v1, off, s32 offset:4
+; VGPRRC-NEXT:    v_mov_b32_e32 v39, v7
+; VGPRRC-NEXT:    v_mov_b32_e32 v38, v6
+; VGPRRC-NEXT:    v_mov_b32_e32 v37, v5
+; VGPRRC-NEXT:    v_mov_b32_e32 v36, v4
+; VGPRRC-NEXT:    v_mov_b32_e32 v35, v3
+; VGPRRC-NEXT:    v_mov_b32_e32 v34, v2
 ; VGPRRC-NEXT:    s_waitcnt vmcnt(0)
-; VGPRRC-NEXT:    v_mfma_scale_f32_32x32x64_f8f6f4 v[16:31], v[0:7], v[8:15], v[16:31], v33, v32 op_sel_hi:[0,0,0]
+; VGPRRC-NEXT:    s_nop 0
+; VGPRRC-NEXT:    v_mfma_scale_f32_32x32x64_f8f6f4 v[16:31], v[32:39], v[8:15], v[16:31], v1, v0 op_sel_hi:[0,0,0]
 ; VGPRRC-NEXT:    s_nop 15
 ; VGPRRC-NEXT:    s_nop 3
 ; VGPRRC-NEXT:    v_mov_b32_e32 v0, v16

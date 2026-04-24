@@ -8,24 +8,24 @@ declare void @llvm.lifetime.start.p0(i64 immarg, ptr nocapture)
 define void @foo(ptr %p1, ptr %p2, ptr %p3, ptr %p4) {
 ; CHECK-LABEL: foo:
 ; CHECK:       # %bb.0: # %entry
-; CHECK-NEXT:    movq %rcx, %rax
 ; CHECK-NEXT:    movl $5, -{{[0-9]+}}(%rsp)
-; CHECK-NEXT:    movl $5, %r8d
-; CHECK-NEXT:    xorl %ecx, %ecx
+; CHECK-NEXT:    movl $5, %eax
+; CHECK-NEXT:    xorl %r8d, %r8d
 ; CHECK-NEXT:    cmpl $0, (%rdi)
-; CHECK-NEXT:    setle %cl
-; CHECK-NEXT:    movl (%rax), %eax
-; CHECK-NEXT:    shll %cl, %eax
-; CHECK-NEXT:    movl %r8d, (%rdx)
+; CHECK-NEXT:    setle %r8b
+; CHECK-NEXT:    movl (%rcx), %edi
+; CHECK-NEXT:    movl %r8d, %ecx
+; CHECK-NEXT:    shll %cl, %edi
+; CHECK-NEXT:    movl %eax, (%rdx)
 ; CHECK-NEXT:    .p2align 4
 ; CHECK-NEXT:  .LBB0_1: # %loop2.header
 ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
-; CHECK-NEXT:    movl $5, %edi
-; CHECK-NEXT:    orl %eax, %edi
+; CHECK-NEXT:    movl $5, %ecx
+; CHECK-NEXT:    orl %edi, %ecx
 ; CHECK-NEXT:    je .LBB0_1
 ; CHECK-NEXT:  # %bb.2: # %exit
-; CHECK-NEXT:    movl %r8d, (%rdx)
-; CHECK-NEXT:    movl %ecx, (%rsi)
+; CHECK-NEXT:    movl %eax, (%rdx)
+; CHECK-NEXT:    movl %r8d, (%rsi)
 ; CHECK-NEXT:    retq
 entry:
   %q = alloca i32, align 4

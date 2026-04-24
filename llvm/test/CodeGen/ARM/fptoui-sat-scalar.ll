@@ -1295,33 +1295,32 @@ define i32 @test_signed_i32_f64(double %f) nounwind {
 ; SOFT-NEXT:    sub sp, #4
 ; SOFT-NEXT:    mov r5, r1
 ; SOFT-NEXT:    mov r6, r0
-; SOFT-NEXT:    movs r4, #0
-; SOFT-NEXT:    mov r2, r4
-; SOFT-NEXT:    mov r3, r4
+; SOFT-NEXT:    movs r3, #0
+; SOFT-NEXT:    mov r2, r3
+; SOFT-NEXT:    str r3, [sp] @ 4-byte Spill
 ; SOFT-NEXT:    bl __aeabi_dcmpge
 ; SOFT-NEXT:    mov r7, r0
 ; SOFT-NEXT:    mov r0, r6
 ; SOFT-NEXT:    mov r1, r5
 ; SOFT-NEXT:    bl __aeabi_d2uiz
+; SOFT-NEXT:    mov r4, r0
 ; SOFT-NEXT:    cmp r7, #0
 ; SOFT-NEXT:    bne .LBB15_2
 ; SOFT-NEXT:  @ %bb.1:
-; SOFT-NEXT:    mov r0, r7
+; SOFT-NEXT:    mov r4, r7
 ; SOFT-NEXT:  .LBB15_2:
-; SOFT-NEXT:    mov r7, r0
 ; SOFT-NEXT:    ldr r2, .LCPI15_0
 ; SOFT-NEXT:    ldr r3, .LCPI15_1
 ; SOFT-NEXT:    mov r0, r6
 ; SOFT-NEXT:    mov r1, r5
 ; SOFT-NEXT:    bl __aeabi_dcmpgt
 ; SOFT-NEXT:    cmp r0, #0
-; SOFT-NEXT:    bne .LBB15_4
+; SOFT-NEXT:    beq .LBB15_4
 ; SOFT-NEXT:  @ %bb.3:
-; SOFT-NEXT:    mov r0, r7
-; SOFT-NEXT:    add sp, #4
-; SOFT-NEXT:    pop {r4, r5, r6, r7, pc}
+; SOFT-NEXT:    ldr r0, [sp] @ 4-byte Reload
+; SOFT-NEXT:    mvns r4, r0
 ; SOFT-NEXT:  .LBB15_4:
-; SOFT-NEXT:    mvns r0, r4
+; SOFT-NEXT:    mov r0, r4
 ; SOFT-NEXT:    add sp, #4
 ; SOFT-NEXT:    pop {r4, r5, r6, r7, pc}
 ; SOFT-NEXT:    .p2align 2

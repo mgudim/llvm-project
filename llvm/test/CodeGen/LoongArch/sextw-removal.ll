@@ -1384,23 +1384,23 @@ define fastcc ptr @test21(ptr %B, ptr %Op0, ptr %Op1, ptr %P, ptr %M, i1 zeroext
 ; CHECK-NEXT:    .cfi_offset 28, -64
 ; CHECK-NEXT:    .cfi_offset 29, -72
 ; CHECK-NEXT:    ld.w $s6, $sp, 80
-; CHECK-NEXT:    move $s2, $a7
-; CHECK-NEXT:    move $s4, $a5
-; CHECK-NEXT:    move $s0, $a4
-; CHECK-NEXT:    move $fp, $a3
-; CHECK-NEXT:    move $s5, $a2
-; CHECK-NEXT:    move $s3, $a1
-; CHECK-NEXT:    move $s1, $a0
+; CHECK-NEXT:    move $fp, $a7
+; CHECK-NEXT:    move $s1, $a5
+; CHECK-NEXT:    move $s4, $a4
+; CHECK-NEXT:    move $s3, $a3
+; CHECK-NEXT:    move $s2, $a2
+; CHECK-NEXT:    move $s0, $a1
+; CHECK-NEXT:    move $s5, $a0
 ; CHECK-NEXT:    move $a0, $zero
 ; CHECK-NEXT:    jirl $ra, $zero, 0
-; CHECK-NEXT:    beqz $s4, .LBB24_2
+; CHECK-NEXT:    beqz $s1, .LBB24_2
 ; CHECK-NEXT:  # %bb.1: # %if.then26
 ; CHECK-NEXT:    addi.w $s6, $s6, 1
-; CHECK-NEXT:    beqz $s4, .LBB24_3
+; CHECK-NEXT:    beqz $s1, .LBB24_3
 ; CHECK-NEXT:    b .LBB24_6
 ; CHECK-NEXT:  .LBB24_2:
-; CHECK-NEXT:    move $s3, $s5
-; CHECK-NEXT:    bnez $s4, .LBB24_6
+; CHECK-NEXT:    move $s0, $s2
+; CHECK-NEXT:    bnez $s1, .LBB24_6
 ; CHECK-NEXT:  .LBB24_3: # %for.cond32.preheader.preheader
 ; CHECK-NEXT:    ld.d $a0, $sp, 96
 ; CHECK-NEXT:    ld.d $a1, $sp, 88
@@ -1412,20 +1412,20 @@ define fastcc ptr @test21(ptr %B, ptr %Op0, ptr %Op1, ptr %P, ptr %M, i1 zeroext
 ; CHECK-NEXT:  .LBB24_4: # %for.cond32.preheader
 ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
 ; CHECK-NEXT:    st.w $a0, $zero, 0
-; CHECK-NEXT:    vst $vr0, $s2, 0
+; CHECK-NEXT:    vst $vr0, $fp, 0
 ; CHECK-NEXT:    bnez $a1, .LBB24_4
 ; CHECK-NEXT:  # %bb.5: # %for.cond.cleanup
 ; CHECK-NEXT:    move $a0, $zero
-; CHECK-NEXT:    move $a1, $s3
+; CHECK-NEXT:    move $a1, $s0
 ; CHECK-NEXT:    move $a2, $zero
 ; CHECK-NEXT:    move $a3, $zero
 ; CHECK-NEXT:    move $a4, $zero
 ; CHECK-NEXT:    move $a5, $zero
 ; CHECK-NEXT:    jirl $ra, $zero, 0
-; CHECK-NEXT:    move $a0, $s1
-; CHECK-NEXT:    move $a1, $s0
+; CHECK-NEXT:    move $a0, $s5
+; CHECK-NEXT:    move $a1, $s4
 ; CHECK-NEXT:    move $a2, $zero
-; CHECK-NEXT:    move $a3, $fp
+; CHECK-NEXT:    move $a3, $s3
 ; CHECK-NEXT:    jirl $ra, $zero, 0
 ; CHECK-NEXT:  .LBB24_6: # %for.cond32.preheader.us.preheader
 ; CHECK-NEXT:    move $a0, $zero
@@ -1464,24 +1464,24 @@ define fastcc ptr @test21(ptr %B, ptr %Op0, ptr %Op1, ptr %P, ptr %M, i1 zeroext
 ; NORMV-NEXT:    .cfi_offset 28, -64
 ; NORMV-NEXT:    .cfi_offset 29, -72
 ; NORMV-NEXT:    ld.d $s6, $sp, 80
-; NORMV-NEXT:    move $s2, $a7
-; NORMV-NEXT:    move $s4, $a5
-; NORMV-NEXT:    move $s0, $a4
-; NORMV-NEXT:    move $fp, $a3
-; NORMV-NEXT:    move $s5, $a2
-; NORMV-NEXT:    move $s3, $a1
-; NORMV-NEXT:    move $s1, $a0
+; NORMV-NEXT:    move $fp, $a7
+; NORMV-NEXT:    move $s1, $a5
+; NORMV-NEXT:    move $s4, $a4
+; NORMV-NEXT:    move $s3, $a3
+; NORMV-NEXT:    move $s2, $a2
+; NORMV-NEXT:    move $s0, $a1
+; NORMV-NEXT:    move $s5, $a0
 ; NORMV-NEXT:    move $a0, $zero
 ; NORMV-NEXT:    jirl $ra, $zero, 0
-; NORMV-NEXT:    beqz $s4, .LBB24_2
+; NORMV-NEXT:    beqz $s1, .LBB24_2
 ; NORMV-NEXT:  # %bb.1: # %if.then26
 ; NORMV-NEXT:    addi.d $a0, $s6, 1
 ; NORMV-NEXT:    addi.d $s6, $a0, 0
-; NORMV-NEXT:    beqz $s4, .LBB24_3
+; NORMV-NEXT:    beqz $s1, .LBB24_3
 ; NORMV-NEXT:    b .LBB24_6
 ; NORMV-NEXT:  .LBB24_2:
-; NORMV-NEXT:    move $s3, $s5
-; NORMV-NEXT:    bnez $s4, .LBB24_6
+; NORMV-NEXT:    move $s0, $s2
+; NORMV-NEXT:    bnez $s1, .LBB24_6
 ; NORMV-NEXT:  .LBB24_3: # %for.cond32.preheader.preheader
 ; NORMV-NEXT:    ld.d $a0, $sp, 96
 ; NORMV-NEXT:    ld.d $a1, $sp, 88
@@ -1494,20 +1494,20 @@ define fastcc ptr @test21(ptr %B, ptr %Op0, ptr %Op1, ptr %P, ptr %M, i1 zeroext
 ; NORMV-NEXT:  .LBB24_4: # %for.cond32.preheader
 ; NORMV-NEXT:    # =>This Inner Loop Header: Depth=1
 ; NORMV-NEXT:    st.w $a0, $zero, 0
-; NORMV-NEXT:    vst $vr0, $s2, 0
+; NORMV-NEXT:    vst $vr0, $fp, 0
 ; NORMV-NEXT:    bnez $a1, .LBB24_4
 ; NORMV-NEXT:  # %bb.5: # %for.cond.cleanup
 ; NORMV-NEXT:    move $a0, $zero
-; NORMV-NEXT:    move $a1, $s3
+; NORMV-NEXT:    move $a1, $s0
 ; NORMV-NEXT:    move $a2, $zero
 ; NORMV-NEXT:    move $a3, $zero
 ; NORMV-NEXT:    move $a4, $zero
 ; NORMV-NEXT:    move $a5, $zero
 ; NORMV-NEXT:    jirl $ra, $zero, 0
-; NORMV-NEXT:    move $a0, $s1
-; NORMV-NEXT:    move $a1, $s0
+; NORMV-NEXT:    move $a0, $s5
+; NORMV-NEXT:    move $a1, $s4
 ; NORMV-NEXT:    move $a2, $zero
-; NORMV-NEXT:    move $a3, $fp
+; NORMV-NEXT:    move $a3, $s3
 ; NORMV-NEXT:    jirl $ra, $zero, 0
 ; NORMV-NEXT:  .LBB24_6: # %for.cond32.preheader.us.preheader
 ; NORMV-NEXT:    move $a0, $zero

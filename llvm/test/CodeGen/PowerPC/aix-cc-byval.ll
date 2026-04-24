@@ -81,10 +81,10 @@ define void @call_test_byval_2Byte() {
 ; 32BIT-NEXT:    lwz 3, L..C1(2) # @f
 ; 32BIT-NEXT:    stw 0, 72(1)
 ; 32BIT-NEXT:    li 7, 43
-; 32BIT-NEXT:    lfs 1, 0(3)
+; 32BIT-NEXT:    lfs 2, 0(3)
 ; 32BIT-NEXT:    lwz 3, L..C2(2) # @gS2
 ; 32BIT-NEXT:    lhz 3, 0(3)
-; 32BIT-NEXT:    fmr 2, 1
+; 32BIT-NEXT:    fmr 1, 2
 ; 32BIT-NEXT:    slwi 5, 3, 16
 ; 32BIT-NEXT:    li 3, 42
 ; 32BIT-NEXT:    bl .test_byval_2Byte
@@ -101,10 +101,10 @@ define void @call_test_byval_2Byte() {
 ; 64BIT-NEXT:    ld 3, L..C1(2) # @f
 ; 64BIT-NEXT:    std 0, 128(1)
 ; 64BIT-NEXT:    li 7, 43
-; 64BIT-NEXT:    lfs 1, 0(3)
+; 64BIT-NEXT:    lfs 2, 0(3)
 ; 64BIT-NEXT:    ld 3, L..C2(2) # @gS2
 ; 64BIT-NEXT:    lhz 3, 0(3)
-; 64BIT-NEXT:    fmr 2, 1
+; 64BIT-NEXT:    fmr 1, 2
 ; 64BIT-NEXT:    sldi 5, 3, 48
 ; 64BIT-NEXT:    li 3, 42
 ; 64BIT-NEXT:    bl .test_byval_2Byte

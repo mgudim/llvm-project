@@ -1141,24 +1141,24 @@ define void @move_to_valu_vgpr_operand_phi(ptr addrspace(3) %out) {
 ; SI:       ; %bb.0: ; %bb0
 ; SI-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; SI-NEXT:    v_mov_b32_e32 v1, 1
-; SI-NEXT:    s_and_b64 vcc, exec, 0
+; SI-NEXT:    s_and_b64 s[4:5], exec, 0
 ; SI-NEXT:    s_mov_b32 m0, -1
 ; SI-NEXT:    s_branch .LBB20_2
 ; SI-NEXT:  .LBB20_1: ; %bb3
 ; SI-NEXT:    ; in Loop: Header=BB20_2 Depth=1
-; SI-NEXT:    v_add_i32_e64 v0, s[4:5], 8, v0
+; SI-NEXT:    v_add_i32_e32 v0, vcc, 8, v0
 ; SI-NEXT:  .LBB20_2: ; %bb1
 ; SI-NEXT:    ; =>This Inner Loop Header: Depth=1
 ; SI-NEXT:    ;;#ASMSTART
-; SI-NEXT:    ; def s4
+; SI-NEXT:    ; def s6
 ; SI-NEXT:    ;;#ASMEND
-; SI-NEXT:    s_cmp_lg_u32 s4, 0
+; SI-NEXT:    s_cmp_lg_u32 s6, 0
 ; SI-NEXT:    s_cbranch_scc1 .LBB20_1
 ; SI-NEXT:  ; %bb.3: ; %bb2
 ; SI-NEXT:    ; in Loop: Header=BB20_2 Depth=1
-; SI-NEXT:    v_add_i32_e64 v2, s[4:5], 28, v0
+; SI-NEXT:    v_add_i32_e32 v2, vcc, 28, v0
+; SI-NEXT:    s_mov_b64 vcc, s[4:5]
 ; SI-NEXT:    ds_write_b32 v2, v1
-; SI-NEXT:    s_mov_b64 vcc, vcc
 ; SI-NEXT:    s_cbranch_vccz .LBB20_1
 ; SI-NEXT:  ; %bb.4: ; %DummyReturnBlock
 ; SI-NEXT:    s_waitcnt lgkmcnt(0)
@@ -1168,23 +1168,23 @@ define void @move_to_valu_vgpr_operand_phi(ptr addrspace(3) %out) {
 ; VI:       ; %bb.0: ; %bb0
 ; VI-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; VI-NEXT:    v_mov_b32_e32 v1, 1
-; VI-NEXT:    s_and_b64 vcc, exec, 0
+; VI-NEXT:    s_and_b64 s[4:5], exec, 0
 ; VI-NEXT:    s_mov_b32 m0, -1
 ; VI-NEXT:    s_branch .LBB20_2
 ; VI-NEXT:  .LBB20_1: ; %bb3
 ; VI-NEXT:    ; in Loop: Header=BB20_2 Depth=1
-; VI-NEXT:    v_add_u32_e64 v0, s[4:5], 8, v0
+; VI-NEXT:    v_add_u32_e32 v0, vcc, 8, v0
 ; VI-NEXT:  .LBB20_2: ; %bb1
 ; VI-NEXT:    ; =>This Inner Loop Header: Depth=1
 ; VI-NEXT:    ;;#ASMSTART
-; VI-NEXT:    ; def s4
+; VI-NEXT:    ; def s6
 ; VI-NEXT:    ;;#ASMEND
-; VI-NEXT:    s_cmp_lg_u32 s4, 0
+; VI-NEXT:    s_cmp_lg_u32 s6, 0
 ; VI-NEXT:    s_cbranch_scc1 .LBB20_1
 ; VI-NEXT:  ; %bb.3: ; %bb2
 ; VI-NEXT:    ; in Loop: Header=BB20_2 Depth=1
+; VI-NEXT:    s_mov_b64 vcc, s[4:5]
 ; VI-NEXT:    ds_write_b32 v0, v1 offset:28
-; VI-NEXT:    s_mov_b64 vcc, vcc
 ; VI-NEXT:    s_cbranch_vccz .LBB20_1
 ; VI-NEXT:  ; %bb.4: ; %DummyReturnBlock
 ; VI-NEXT:    s_waitcnt lgkmcnt(0)

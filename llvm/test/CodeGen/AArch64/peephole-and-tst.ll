@@ -238,13 +238,13 @@ define i64 @test_and3(i64 %x, i64 %y) {
 ; CHECK-GI-NEXT:    .cfi_offset w20, -16
 ; CHECK-GI-NEXT:    .cfi_offset w21, -24
 ; CHECK-GI-NEXT:    .cfi_offset w30, -32
-; CHECK-GI-NEXT:    mov x19, x0
+; CHECK-GI-NEXT:    mov x20, x0
 ; CHECK-GI-NEXT:    and x21, x0, #0x3
 ; CHECK-GI-NEXT:    mov x0, xzr
-; CHECK-GI-NEXT:    mov x20, x1
+; CHECK-GI-NEXT:    mov x19, x1
 ; CHECK-GI-NEXT:    bl callee
-; CHECK-GI-NEXT:    tst x19, #0x3
-; CHECK-GI-NEXT:    csel x0, x21, x20, eq
+; CHECK-GI-NEXT:    tst x20, #0x3
+; CHECK-GI-NEXT:    csel x0, x21, x19, eq
 ; CHECK-GI-NEXT:    ldp x20, x19, [sp, #16] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x30, x21, [sp], #32 // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ret

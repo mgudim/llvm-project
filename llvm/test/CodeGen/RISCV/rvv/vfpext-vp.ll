@@ -30,6 +30,7 @@ define <vscale x 2 x double> @vfpext_nxv2f16_nxv2f64(<vscale x 2 x half> %a, <vs
 ; CHECK-LABEL: vfpext_nxv2f16_nxv2f64:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
+; CHECK-NEXT:    vmv1r.v v9, v0
 ; CHECK-NEXT:    vfwcvt.f.f.v v10, v8, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e32, m1, ta, ma
 ; CHECK-NEXT:    vfwcvt.f.f.v v8, v10, v0.t
@@ -137,6 +138,7 @@ define <vscale x 2 x double> @vfpext_nxv2bf16_nxv2f64(<vscale x 2 x bfloat> %a, 
 ; CHECK-LABEL: vfpext_nxv2bf16_nxv2f64:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
+; CHECK-NEXT:    vmv1r.v v9, v0
 ; CHECK-NEXT:    vfwcvtbf16.f.f.v v10, v8, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e32, m1, ta, ma
 ; CHECK-NEXT:    vfwcvt.f.f.v v8, v10, v0.t

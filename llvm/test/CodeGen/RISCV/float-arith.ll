@@ -851,10 +851,10 @@ define float @fnmadd_s_fmul_fneg(float %a, float %b, float %c, float %d) nounwin
 ; RV32I-NEXT:    sw s1, 4(sp) # 4-byte Folded Spill
 ; RV32I-NEXT:    mv s0, a3
 ; RV32I-NEXT:    mv s1, a2
-; RV32I-NEXT:    mv a2, a1
-; RV32I-NEXT:    lui a1, 524288
-; RV32I-NEXT:    xor a1, a0, a1
-; RV32I-NEXT:    mv a0, a2
+; RV32I-NEXT:    lui a2, 524288
+; RV32I-NEXT:    xor a2, a0, a2
+; RV32I-NEXT:    mv a0, a1
+; RV32I-NEXT:    mv a1, a2
 ; RV32I-NEXT:    call __mulsf3
 ; RV32I-NEXT:    mv a2, a0
 ; RV32I-NEXT:    mv a0, s1
@@ -874,10 +874,10 @@ define float @fnmadd_s_fmul_fneg(float %a, float %b, float %c, float %d) nounwin
 ; RV64I-NEXT:    sd s1, 8(sp) # 8-byte Folded Spill
 ; RV64I-NEXT:    mv s0, a3
 ; RV64I-NEXT:    mv s1, a2
-; RV64I-NEXT:    mv a2, a1
-; RV64I-NEXT:    lui a1, 524288
-; RV64I-NEXT:    xor a1, a0, a1
-; RV64I-NEXT:    mv a0, a2
+; RV64I-NEXT:    lui a2, 524288
+; RV64I-NEXT:    xor a2, a0, a2
+; RV64I-NEXT:    mv a0, a1
+; RV64I-NEXT:    mv a1, a2
 ; RV64I-NEXT:    call __mulsf3
 ; RV64I-NEXT:    mv a2, a0
 ; RV64I-NEXT:    mv a0, s1

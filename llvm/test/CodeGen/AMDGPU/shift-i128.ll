@@ -110,12 +110,12 @@ define i128 @v_ashr_i128_vk(i128 %lhs) {
 ; GCN-LABEL: v_ashr_i128_vk:
 ; GCN:       ; %bb.0:
 ; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mov_b32_e32 v4, v1
-; GCN-NEXT:    v_lshl_b64 v[0:1], v[2:3], 31
-; GCN-NEXT:    v_lshrrev_b32_e32 v2, 1, v4
-; GCN-NEXT:    v_or_b32_e32 v0, v2, v0
+; GCN-NEXT:    v_lshl_b64 v[4:5], v[2:3], 31
+; GCN-NEXT:    v_lshrrev_b32_e32 v0, 1, v1
+; GCN-NEXT:    v_or_b32_e32 v0, v0, v4
 ; GCN-NEXT:    v_ashrrev_i32_e32 v2, 1, v3
 ; GCN-NEXT:    v_ashrrev_i32_e32 v3, 31, v3
+; GCN-NEXT:    v_mov_b32_e32 v1, v5
 ; GCN-NEXT:    s_setpc_b64 s[30:31]
   %shl = ashr i128 %lhs, 33
   ret i128 %shl

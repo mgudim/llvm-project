@@ -534,10 +534,11 @@ define <vscale x 1 x i64> @commutable_vwmacc_vv_masked(<vscale x 1 x i32> %0, <v
 ; CHECK-LABEL: commutable_vwmacc_vv_masked:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e32, mf2, ta, ma
-; CHECK-NEXT:    vwmacc.vv v10, v8, v9, v0.t
-; CHECK-NEXT:    vwmacc.vv v11, v9, v8, v0.t
+; CHECK-NEXT:    vmv1r.v v10, v0
+; CHECK-NEXT:    vwmacc.vv v11, v8, v9, v0.t
+; CHECK-NEXT:    vwmacc.vv v10, v9, v8, v0.t
 ; CHECK-NEXT:    vsetvli a0, zero, e64, m1, ta, ma
-; CHECK-NEXT:    vadd.vv v8, v10, v11
+; CHECK-NEXT:    vadd.vv v8, v11, v10
 ; CHECK-NEXT:    ret
   %a = call <vscale x 1 x i64> @llvm.riscv.vwmacc.mask.nxv1i64.nxv1i32(<vscale x 1 x i64> poison, <vscale x 1 x i32> %0, <vscale x 1 x i32> %1, <vscale x 1 x i1> %mask, iXLen %2, iXLen 1)
   %b = call <vscale x 1 x i64> @llvm.riscv.vwmacc.mask.nxv1i64.nxv1i32(<vscale x 1 x i64> poison, <vscale x 1 x i32> %1, <vscale x 1 x i32> %0, <vscale x 1 x i1> %mask, iXLen %2, iXLen 1)
@@ -565,10 +566,11 @@ define <vscale x 1 x i64> @commutable_vwmaccu_vv_masked(<vscale x 1 x i32> %0, <
 ; CHECK-LABEL: commutable_vwmaccu_vv_masked:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e32, mf2, ta, ma
-; CHECK-NEXT:    vwmaccu.vv v10, v8, v9, v0.t
-; CHECK-NEXT:    vwmaccu.vv v11, v9, v8, v0.t
+; CHECK-NEXT:    vmv1r.v v10, v0
+; CHECK-NEXT:    vwmaccu.vv v11, v8, v9, v0.t
+; CHECK-NEXT:    vwmaccu.vv v10, v9, v8, v0.t
 ; CHECK-NEXT:    vsetvli a0, zero, e64, m1, ta, ma
-; CHECK-NEXT:    vadd.vv v8, v10, v11
+; CHECK-NEXT:    vadd.vv v8, v11, v10
 ; CHECK-NEXT:    ret
   %a = call <vscale x 1 x i64> @llvm.riscv.vwmaccu.mask.nxv1i64.nxv1i32(<vscale x 1 x i64> poison, <vscale x 1 x i32> %0, <vscale x 1 x i32> %1, <vscale x 1 x i1> %mask, iXLen %2, iXLen 1)
   %b = call <vscale x 1 x i64> @llvm.riscv.vwmaccu.mask.nxv1i64.nxv1i32(<vscale x 1 x i64> poison, <vscale x 1 x i32> %1, <vscale x 1 x i32> %0, <vscale x 1 x i1> %mask, iXLen %2, iXLen 1)

@@ -51,52 +51,61 @@ main_body:
 define amdgpu_ps <4 x float> @load_1d_tfe(<8 x i32> inreg %rsrc, ptr addrspace(1) inreg %out, i32 %s) {
 ; VERDE-LABEL: load_1d_tfe:
 ; VERDE:       ; %bb.0: ; %main_body
-; VERDE-NEXT:    v_mov_b32_e32 v5, v0
-; VERDE-NEXT:    v_mov_b32_e32 v0, 0
-; VERDE-NEXT:    v_mov_b32_e32 v1, v0
-; VERDE-NEXT:    v_mov_b32_e32 v2, v0
-; VERDE-NEXT:    v_mov_b32_e32 v3, v0
-; VERDE-NEXT:    v_mov_b32_e32 v4, v0
-; VERDE-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf unorm tfe
+; VERDE-NEXT:    v_mov_b32_e32 v1, 0
+; VERDE-NEXT:    v_mov_b32_e32 v2, v1
+; VERDE-NEXT:    v_mov_b32_e32 v3, v1
+; VERDE-NEXT:    v_mov_b32_e32 v4, v1
+; VERDE-NEXT:    v_mov_b32_e32 v5, v1
+; VERDE-NEXT:    image_load v[1:5], v0, s[0:7] dmask:0xf unorm tfe
 ; VERDE-NEXT:    s_mov_b32 s11, 0xf000
 ; VERDE-NEXT:    s_mov_b32 s10, -1
 ; VERDE-NEXT:    s_waitcnt vmcnt(0)
-; VERDE-NEXT:    buffer_store_dword v4, off, s[8:11], 0
+; VERDE-NEXT:    v_mov_b32_e32 v0, v1
+; VERDE-NEXT:    v_mov_b32_e32 v1, v2
+; VERDE-NEXT:    v_mov_b32_e32 v2, v3
+; VERDE-NEXT:    v_mov_b32_e32 v3, v4
+; VERDE-NEXT:    buffer_store_dword v5, off, s[8:11], 0
 ; VERDE-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; VERDE-NEXT:    ; return to shader part epilog
 ;
 ; FIJI-LABEL: load_1d_tfe:
 ; FIJI:       ; %bb.0: ; %main_body
-; FIJI-NEXT:    v_mov_b32_e32 v5, v0
-; FIJI-NEXT:    v_mov_b32_e32 v0, 0
-; FIJI-NEXT:    v_mov_b32_e32 v1, v0
-; FIJI-NEXT:    v_mov_b32_e32 v2, v0
-; FIJI-NEXT:    v_mov_b32_e32 v3, v0
-; FIJI-NEXT:    v_mov_b32_e32 v4, v0
-; FIJI-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf unorm tfe
+; FIJI-NEXT:    v_mov_b32_e32 v1, 0
+; FIJI-NEXT:    v_mov_b32_e32 v2, v1
+; FIJI-NEXT:    v_mov_b32_e32 v3, v1
+; FIJI-NEXT:    v_mov_b32_e32 v4, v1
+; FIJI-NEXT:    v_mov_b32_e32 v5, v1
+; FIJI-NEXT:    image_load v[1:5], v0, s[0:7] dmask:0xf unorm tfe
 ; FIJI-NEXT:    s_mov_b32 s11, 0xf000
 ; FIJI-NEXT:    s_mov_b32 s10, -1
 ; FIJI-NEXT:    s_waitcnt vmcnt(0)
-; FIJI-NEXT:    buffer_store_dword v4, off, s[8:11], 0
+; FIJI-NEXT:    v_mov_b32_e32 v0, v1
+; FIJI-NEXT:    v_mov_b32_e32 v1, v2
+; FIJI-NEXT:    v_mov_b32_e32 v2, v3
+; FIJI-NEXT:    v_mov_b32_e32 v3, v4
+; FIJI-NEXT:    buffer_store_dword v5, off, s[8:11], 0
 ; FIJI-NEXT:    s_waitcnt vmcnt(0)
 ; FIJI-NEXT:    ; return to shader part epilog
 ;
 ; GFX6789-LABEL: load_1d_tfe:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v6, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v7, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v8, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v9, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v10
-; GFX6789-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf unorm tfe
+; GFX6789-NEXT:    v_mov_b32_e32 v1, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v5
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    image_load v[2:6], v0, s[0:7] dmask:0xf unorm tfe
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v6, v4, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v2
+; GFX6789-NEXT:    global_store_dword v1, v6, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -112,48 +121,61 @@ define amdgpu_ps <4 x float> @load_1d_tfe(<8 x i32> inreg %rsrc, ptr addrspace(1
 ;
 ; GFX10-LABEL: load_1d_tfe:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v6, 0
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v7, v6
-; GFX10-NEXT:    v_mov_b32_e32 v8, v6
-; GFX10-NEXT:    v_mov_b32_e32 v9, v6
-; GFX10-NEXT:    v_mov_b32_e32 v10, v6
-; GFX10-NEXT:    v_mov_b32_e32 v0, v6
-; GFX10-NEXT:    v_mov_b32_e32 v1, v7
-; GFX10-NEXT:    v_mov_b32_e32 v2, v8
-; GFX10-NEXT:    v_mov_b32_e32 v3, v9
-; GFX10-NEXT:    v_mov_b32_e32 v4, v10
-; GFX10-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm tfe
+; GFX10-NEXT:    v_mov_b32_e32 v1, 0
+; GFX10-NEXT:    v_mov_b32_e32 v5, v1
+; GFX10-NEXT:    v_mov_b32_e32 v2, v1
+; GFX10-NEXT:    v_mov_b32_e32 v3, v1
+; GFX10-NEXT:    v_mov_b32_e32 v4, v1
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10-NEXT:    v_mov_b32_e32 v2, v1
+; GFX10-NEXT:    image_load v[2:6], v0, s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm tfe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v6, v4, s[8:9]
+; GFX10-NEXT:    global_store_dword v1, v6, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v2
+; GFX10-NEXT:    v_mov_b32_e32 v1, v3
+; GFX10-NEXT:    v_mov_b32_e32 v2, v4
+; GFX10-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_1d_tfe:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v6, 0
-; GFX11-NEXT:    v_mov_b32_e32 v7, v6
-; GFX11-NEXT:    v_mov_b32_e32 v8, v6
-; GFX11-NEXT:    v_mov_b32_e32 v9, v6
-; GFX11-NEXT:    v_mov_b32_e32 v10, v6
-; GFX11-NEXT:    v_dual_mov_b32 v0, v6 :: v_dual_mov_b32 v1, v7
-; GFX11-NEXT:    v_dual_mov_b32 v2, v8 :: v_dual_mov_b32 v3, v9
-; GFX11-NEXT:    v_mov_b32_e32 v4, v10
-; GFX11-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm tfe
+; GFX11-NEXT:    v_mov_b32_e32 v1, 0
+; GFX11-NEXT:    v_mov_b32_e32 v5, v1
+; GFX11-NEXT:    v_mov_b32_e32 v2, v1
+; GFX11-NEXT:    v_mov_b32_e32 v3, v1
+; GFX11-NEXT:    v_mov_b32_e32 v4, v1
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    v_mov_b32_e32 v2, v1
+; GFX11-NEXT:    image_load v[2:6], v0, s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm tfe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v6, v4, s[8:9]
+; GFX11-NEXT:    v_mov_b32_e32 v0, v2
+; GFX11-NEXT:    global_store_b32 v1, v6, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v1, v3 :: v_dual_mov_b32 v2, v4
+; GFX11-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_1d_tfe:
 ; GFX12:       ; %bb.0: ; %main_body
-; GFX12-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v6, 0
-; GFX12-NEXT:    v_dual_mov_b32 v7, v6 :: v_dual_mov_b32 v8, v6
-; GFX12-NEXT:    v_dual_mov_b32 v9, v6 :: v_dual_mov_b32 v10, v6
-; GFX12-NEXT:    v_dual_mov_b32 v0, v6 :: v_dual_mov_b32 v1, v7
-; GFX12-NEXT:    v_dual_mov_b32 v2, v8 :: v_dual_mov_b32 v3, v9
-; GFX12-NEXT:    v_mov_b32_e32 v4, v10
-; GFX12-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D tfe
+; GFX12-NEXT:    v_mov_b32_e32 v1, 0
+; GFX12-NEXT:    v_dual_mov_b32 v4, v1 :: v_dual_mov_b32 v5, v1
+; GFX12-NEXT:    v_dual_mov_b32 v2, v1 :: v_dual_mov_b32 v3, v1
+; GFX12-NEXT:    v_mov_b32_e32 v6, v5
+; GFX12-NEXT:    v_mov_b32_e32 v5, v4
+; GFX12-NEXT:    v_mov_b32_e32 v4, v3
+; GFX12-NEXT:    v_mov_b32_e32 v3, v2
+; GFX12-NEXT:    v_mov_b32_e32 v2, v1
+; GFX12-NEXT:    image_load v[2:6], v0, s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D tfe
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b32 v6, v4, s[8:9]
+; GFX12-NEXT:    v_mov_b32_e32 v0, v2
+; GFX12-NEXT:    global_store_b32 v1, v6, s[8:9]
+; GFX12-NEXT:    v_dual_mov_b32 v1, v3 :: v_dual_mov_b32 v2, v4
+; GFX12-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
   %v = call {<4 x float>,i32} @llvm.amdgcn.image.load.1d.v4f32i32.i32(i32 15, i32 %s, <8 x i32> %rsrc, i32 1, i32 0)
@@ -166,52 +188,61 @@ main_body:
 define amdgpu_ps <4 x float> @load_1d_lwe(<8 x i32> inreg %rsrc, ptr addrspace(1) inreg %out, i32 %s) {
 ; VERDE-LABEL: load_1d_lwe:
 ; VERDE:       ; %bb.0: ; %main_body
-; VERDE-NEXT:    v_mov_b32_e32 v5, v0
-; VERDE-NEXT:    v_mov_b32_e32 v0, 0
-; VERDE-NEXT:    v_mov_b32_e32 v1, v0
-; VERDE-NEXT:    v_mov_b32_e32 v2, v0
-; VERDE-NEXT:    v_mov_b32_e32 v3, v0
-; VERDE-NEXT:    v_mov_b32_e32 v4, v0
-; VERDE-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf unorm lwe
+; VERDE-NEXT:    v_mov_b32_e32 v1, 0
+; VERDE-NEXT:    v_mov_b32_e32 v2, v1
+; VERDE-NEXT:    v_mov_b32_e32 v3, v1
+; VERDE-NEXT:    v_mov_b32_e32 v4, v1
+; VERDE-NEXT:    v_mov_b32_e32 v5, v1
+; VERDE-NEXT:    image_load v[1:5], v0, s[0:7] dmask:0xf unorm lwe
 ; VERDE-NEXT:    s_mov_b32 s11, 0xf000
 ; VERDE-NEXT:    s_mov_b32 s10, -1
 ; VERDE-NEXT:    s_waitcnt vmcnt(0)
-; VERDE-NEXT:    buffer_store_dword v4, off, s[8:11], 0
+; VERDE-NEXT:    v_mov_b32_e32 v0, v1
+; VERDE-NEXT:    v_mov_b32_e32 v1, v2
+; VERDE-NEXT:    v_mov_b32_e32 v2, v3
+; VERDE-NEXT:    v_mov_b32_e32 v3, v4
+; VERDE-NEXT:    buffer_store_dword v5, off, s[8:11], 0
 ; VERDE-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; VERDE-NEXT:    ; return to shader part epilog
 ;
 ; FIJI-LABEL: load_1d_lwe:
 ; FIJI:       ; %bb.0: ; %main_body
-; FIJI-NEXT:    v_mov_b32_e32 v5, v0
-; FIJI-NEXT:    v_mov_b32_e32 v0, 0
-; FIJI-NEXT:    v_mov_b32_e32 v1, v0
-; FIJI-NEXT:    v_mov_b32_e32 v2, v0
-; FIJI-NEXT:    v_mov_b32_e32 v3, v0
-; FIJI-NEXT:    v_mov_b32_e32 v4, v0
-; FIJI-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf unorm lwe
+; FIJI-NEXT:    v_mov_b32_e32 v1, 0
+; FIJI-NEXT:    v_mov_b32_e32 v2, v1
+; FIJI-NEXT:    v_mov_b32_e32 v3, v1
+; FIJI-NEXT:    v_mov_b32_e32 v4, v1
+; FIJI-NEXT:    v_mov_b32_e32 v5, v1
+; FIJI-NEXT:    image_load v[1:5], v0, s[0:7] dmask:0xf unorm lwe
 ; FIJI-NEXT:    s_mov_b32 s11, 0xf000
 ; FIJI-NEXT:    s_mov_b32 s10, -1
 ; FIJI-NEXT:    s_waitcnt vmcnt(0)
-; FIJI-NEXT:    buffer_store_dword v4, off, s[8:11], 0
+; FIJI-NEXT:    v_mov_b32_e32 v0, v1
+; FIJI-NEXT:    v_mov_b32_e32 v1, v2
+; FIJI-NEXT:    v_mov_b32_e32 v2, v3
+; FIJI-NEXT:    v_mov_b32_e32 v3, v4
+; FIJI-NEXT:    buffer_store_dword v5, off, s[8:11], 0
 ; FIJI-NEXT:    s_waitcnt vmcnt(0)
 ; FIJI-NEXT:    ; return to shader part epilog
 ;
 ; GFX6789-LABEL: load_1d_lwe:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v6, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v7, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v8, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v9, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v10
-; GFX6789-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf unorm lwe
+; GFX6789-NEXT:    v_mov_b32_e32 v1, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v5
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    image_load v[2:6], v0, s[0:7] dmask:0xf unorm lwe
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v6, v4, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v2
+; GFX6789-NEXT:    global_store_dword v1, v6, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -227,35 +258,43 @@ define amdgpu_ps <4 x float> @load_1d_lwe(<8 x i32> inreg %rsrc, ptr addrspace(1
 ;
 ; GFX10-LABEL: load_1d_lwe:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v6, 0
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v7, v6
-; GFX10-NEXT:    v_mov_b32_e32 v8, v6
-; GFX10-NEXT:    v_mov_b32_e32 v9, v6
-; GFX10-NEXT:    v_mov_b32_e32 v10, v6
-; GFX10-NEXT:    v_mov_b32_e32 v0, v6
-; GFX10-NEXT:    v_mov_b32_e32 v1, v7
-; GFX10-NEXT:    v_mov_b32_e32 v2, v8
-; GFX10-NEXT:    v_mov_b32_e32 v3, v9
-; GFX10-NEXT:    v_mov_b32_e32 v4, v10
-; GFX10-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm lwe
+; GFX10-NEXT:    v_mov_b32_e32 v1, 0
+; GFX10-NEXT:    v_mov_b32_e32 v5, v1
+; GFX10-NEXT:    v_mov_b32_e32 v2, v1
+; GFX10-NEXT:    v_mov_b32_e32 v3, v1
+; GFX10-NEXT:    v_mov_b32_e32 v4, v1
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10-NEXT:    v_mov_b32_e32 v2, v1
+; GFX10-NEXT:    image_load v[2:6], v0, s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm lwe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v6, v4, s[8:9]
+; GFX10-NEXT:    global_store_dword v1, v6, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v2
+; GFX10-NEXT:    v_mov_b32_e32 v1, v3
+; GFX10-NEXT:    v_mov_b32_e32 v2, v4
+; GFX10-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_1d_lwe:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v6, 0
-; GFX11-NEXT:    v_mov_b32_e32 v7, v6
-; GFX11-NEXT:    v_mov_b32_e32 v8, v6
-; GFX11-NEXT:    v_mov_b32_e32 v9, v6
-; GFX11-NEXT:    v_mov_b32_e32 v10, v6
-; GFX11-NEXT:    v_dual_mov_b32 v0, v6 :: v_dual_mov_b32 v1, v7
-; GFX11-NEXT:    v_dual_mov_b32 v2, v8 :: v_dual_mov_b32 v3, v9
-; GFX11-NEXT:    v_mov_b32_e32 v4, v10
-; GFX11-NEXT:    image_load v[0:4], v5, s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm lwe
+; GFX11-NEXT:    v_mov_b32_e32 v1, 0
+; GFX11-NEXT:    v_mov_b32_e32 v5, v1
+; GFX11-NEXT:    v_mov_b32_e32 v2, v1
+; GFX11-NEXT:    v_mov_b32_e32 v3, v1
+; GFX11-NEXT:    v_mov_b32_e32 v4, v1
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    v_mov_b32_e32 v2, v1
+; GFX11-NEXT:    image_load v[2:6], v0, s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm lwe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v6, v4, s[8:9]
+; GFX11-NEXT:    v_mov_b32_e32 v0, v2
+; GFX11-NEXT:    global_store_b32 v1, v6, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v1, v3 :: v_dual_mov_b32 v2, v4
+; GFX11-NEXT:    v_mov_b32_e32 v3, v5
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_1d_lwe:
@@ -351,21 +390,25 @@ define amdgpu_ps <4 x float> @load_2d_tfe(<8 x i32> inreg %rsrc, ptr addrspace(1
 ;
 ; GFX6789-LABEL: load_2d_tfe:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v7, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v1
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v8, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v9, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v11, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v10
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v11
-; GFX6789-NEXT:    image_load v[0:4], v[5:6], s[0:7] dmask:0xf unorm tfe
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v0, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v7, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    image_load v[1:5], v[6:7], s[0:7] dmask:0xf unorm tfe
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v7, v4, s[8:9]
+; GFX6789-NEXT:    global_store_dword v0, v5, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -381,50 +424,59 @@ define amdgpu_ps <4 x float> @load_2d_tfe(<8 x i32> inreg %rsrc, ptr addrspace(1
 ;
 ; GFX10-LABEL: load_2d_tfe:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v7, 0
-; GFX10-NEXT:    v_mov_b32_e32 v6, v1
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v8, v7
-; GFX10-NEXT:    v_mov_b32_e32 v9, v7
-; GFX10-NEXT:    v_mov_b32_e32 v10, v7
-; GFX10-NEXT:    v_mov_b32_e32 v11, v7
-; GFX10-NEXT:    v_mov_b32_e32 v0, v7
-; GFX10-NEXT:    v_mov_b32_e32 v1, v8
-; GFX10-NEXT:    v_mov_b32_e32 v2, v9
-; GFX10-NEXT:    v_mov_b32_e32 v3, v10
-; GFX10-NEXT:    v_mov_b32_e32 v4, v11
-; GFX10-NEXT:    image_load v[0:4], v[5:6], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm tfe
+; GFX10-NEXT:    v_mov_b32_e32 v2, 0
+; GFX10-NEXT:    v_mov_b32_e32 v6, v2
+; GFX10-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10-NEXT:    v_mov_b32_e32 v4, v2
+; GFX10-NEXT:    v_mov_b32_e32 v5, v2
+; GFX10-NEXT:    v_mov_b32_e32 v7, v6
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10-NEXT:    image_load v[3:7], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm tfe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v7, v4, s[8:9]
+; GFX10-NEXT:    global_store_dword v2, v7, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v3
+; GFX10-NEXT:    v_mov_b32_e32 v1, v4
+; GFX10-NEXT:    v_mov_b32_e32 v2, v5
+; GFX10-NEXT:    v_mov_b32_e32 v3, v6
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_2d_tfe:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v7, 0 :: v_dual_mov_b32 v6, v1
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v8, v7
-; GFX11-NEXT:    v_mov_b32_e32 v9, v7
-; GFX11-NEXT:    v_mov_b32_e32 v10, v7
-; GFX11-NEXT:    v_mov_b32_e32 v11, v7
-; GFX11-NEXT:    v_dual_mov_b32 v0, v7 :: v_dual_mov_b32 v1, v8
-; GFX11-NEXT:    v_dual_mov_b32 v2, v9 :: v_dual_mov_b32 v3, v10
-; GFX11-NEXT:    v_mov_b32_e32 v4, v11
-; GFX11-NEXT:    image_load v[0:4], v[5:6], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm tfe
+; GFX11-NEXT:    v_mov_b32_e32 v2, 0
+; GFX11-NEXT:    v_mov_b32_e32 v6, v2
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    v_mov_b32_e32 v4, v2
+; GFX11-NEXT:    v_mov_b32_e32 v5, v2
+; GFX11-NEXT:    v_mov_b32_e32 v7, v6
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    image_load v[3:7], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm tfe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v7, v4, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v0, v3 :: v_dual_mov_b32 v1, v4
+; GFX11-NEXT:    global_store_b32 v2, v7, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v2, v5 :: v_dual_mov_b32 v3, v6
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_2d_tfe:
 ; GFX12:       ; %bb.0: ; %main_body
-; GFX12-NEXT:    v_mov_b32_e32 v7, 0
-; GFX12-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v6, v0
-; GFX12-NEXT:    v_dual_mov_b32 v8, v7 :: v_dual_mov_b32 v9, v7
-; GFX12-NEXT:    v_dual_mov_b32 v10, v7 :: v_dual_mov_b32 v11, v7
-; GFX12-NEXT:    v_dual_mov_b32 v0, v7 :: v_dual_mov_b32 v1, v8
-; GFX12-NEXT:    v_dual_mov_b32 v2, v9 :: v_dual_mov_b32 v3, v10
-; GFX12-NEXT:    v_mov_b32_e32 v4, v11
-; GFX12-NEXT:    image_load v[0:4], [v6, v5], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D tfe
+; GFX12-NEXT:    v_mov_b32_e32 v2, 0
+; GFX12-NEXT:    v_dual_mov_b32 v5, v2 :: v_dual_mov_b32 v6, v2
+; GFX12-NEXT:    v_dual_mov_b32 v3, v2 :: v_dual_mov_b32 v4, v2
+; GFX12-NEXT:    v_mov_b32_e32 v7, v6
+; GFX12-NEXT:    v_mov_b32_e32 v6, v5
+; GFX12-NEXT:    v_mov_b32_e32 v5, v4
+; GFX12-NEXT:    v_mov_b32_e32 v4, v3
+; GFX12-NEXT:    v_mov_b32_e32 v3, v2
+; GFX12-NEXT:    image_load v[3:7], [v0, v1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D tfe
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b32 v7, v4, s[8:9]
+; GFX12-NEXT:    v_dual_mov_b32 v0, v3 :: v_dual_mov_b32 v1, v4
+; GFX12-NEXT:    global_store_b32 v2, v7, s[8:9]
+; GFX12-NEXT:    v_dual_mov_b32 v2, v5 :: v_dual_mov_b32 v3, v6
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
   %v = call {<4 x float>,i32} @llvm.amdgcn.image.load.2d.v4f32i32.i32(i32 15, i32 %s, i32 %t, <8 x i32> %rsrc, i32 1, i32 0)
@@ -514,22 +566,26 @@ define amdgpu_ps <4 x float> @load_3d_tfe_lwe(<8 x i32> inreg %rsrc, ptr addrspa
 ;
 ; GFX6789-LABEL: load_3d_tfe_lwe:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v8, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v7, v2
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v1
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v9, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v11, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v12, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v10
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v11
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v12
-; GFX6789-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf unorm tfe lwe
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v0, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v8, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v7, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    image_load v[1:5], v[6:8], s[0:7] dmask:0xf unorm tfe lwe
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v8, v4, s[8:9]
+; GFX6789-NEXT:    global_store_dword v0, v5, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -545,52 +601,61 @@ define amdgpu_ps <4 x float> @load_3d_tfe_lwe(<8 x i32> inreg %rsrc, ptr addrspa
 ;
 ; GFX10-LABEL: load_3d_tfe_lwe:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v8, 0
-; GFX10-NEXT:    v_mov_b32_e32 v7, v2
-; GFX10-NEXT:    v_mov_b32_e32 v6, v1
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v9, v8
-; GFX10-NEXT:    v_mov_b32_e32 v10, v8
-; GFX10-NEXT:    v_mov_b32_e32 v11, v8
-; GFX10-NEXT:    v_mov_b32_e32 v12, v8
-; GFX10-NEXT:    v_mov_b32_e32 v0, v8
-; GFX10-NEXT:    v_mov_b32_e32 v1, v9
-; GFX10-NEXT:    v_mov_b32_e32 v2, v10
-; GFX10-NEXT:    v_mov_b32_e32 v3, v11
-; GFX10-NEXT:    v_mov_b32_e32 v4, v12
-; GFX10-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_3D unorm tfe lwe
+; GFX10-NEXT:    v_mov_b32_e32 v3, 0
+; GFX10-NEXT:    v_mov_b32_e32 v7, v3
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v5, v3
+; GFX10-NEXT:    v_mov_b32_e32 v6, v3
+; GFX10-NEXT:    v_mov_b32_e32 v8, v7
+; GFX10-NEXT:    v_mov_b32_e32 v7, v6
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    image_load v[4:8], v[0:2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_3D unorm tfe lwe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v8, v4, s[8:9]
+; GFX10-NEXT:    global_store_dword v3, v8, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v4
+; GFX10-NEXT:    v_mov_b32_e32 v1, v5
+; GFX10-NEXT:    v_mov_b32_e32 v2, v6
+; GFX10-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_3d_tfe_lwe:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v8, 0
-; GFX11-NEXT:    v_dual_mov_b32 v7, v2 :: v_dual_mov_b32 v6, v1
-; GFX11-NEXT:    v_mov_b32_e32 v9, v8
-; GFX11-NEXT:    v_mov_b32_e32 v10, v8
-; GFX11-NEXT:    v_mov_b32_e32 v11, v8
-; GFX11-NEXT:    v_mov_b32_e32 v12, v8
-; GFX11-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
-; GFX11-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
-; GFX11-NEXT:    v_mov_b32_e32 v4, v12
-; GFX11-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_3D unorm tfe lwe
+; GFX11-NEXT:    v_mov_b32_e32 v3, 0
+; GFX11-NEXT:    v_mov_b32_e32 v7, v3
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v5, v3
+; GFX11-NEXT:    v_mov_b32_e32 v6, v3
+; GFX11-NEXT:    v_mov_b32_e32 v8, v7
+; GFX11-NEXT:    v_mov_b32_e32 v7, v6
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    image_load v[4:8], v[0:2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_3D unorm tfe lwe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v8, v4, s[8:9]
+; GFX11-NEXT:    v_mov_b32_e32 v0, v4
+; GFX11-NEXT:    global_store_b32 v3, v8, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v1, v5 :: v_dual_mov_b32 v2, v6
+; GFX11-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_3d_tfe_lwe:
 ; GFX12:       ; %bb.0: ; %main_body
-; GFX12-NEXT:    v_dual_mov_b32 v7, v0 :: v_dual_mov_b32 v8, 0
-; GFX12-NEXT:    v_dual_mov_b32 v5, v2 :: v_dual_mov_b32 v6, v1
-; GFX12-NEXT:    v_dual_mov_b32 v9, v8 :: v_dual_mov_b32 v10, v8
-; GFX12-NEXT:    v_dual_mov_b32 v11, v8 :: v_dual_mov_b32 v12, v8
-; GFX12-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
-; GFX12-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
-; GFX12-NEXT:    v_mov_b32_e32 v4, v12
-; GFX12-NEXT:    image_load v[0:4], [v7, v6, v5], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_3D tfe
+; GFX12-NEXT:    v_mov_b32_e32 v3, 0
+; GFX12-NEXT:    v_dual_mov_b32 v6, v3 :: v_dual_mov_b32 v7, v3
+; GFX12-NEXT:    v_dual_mov_b32 v4, v3 :: v_dual_mov_b32 v5, v3
+; GFX12-NEXT:    v_mov_b32_e32 v8, v7
+; GFX12-NEXT:    v_mov_b32_e32 v7, v6
+; GFX12-NEXT:    v_mov_b32_e32 v6, v5
+; GFX12-NEXT:    v_mov_b32_e32 v5, v4
+; GFX12-NEXT:    v_mov_b32_e32 v4, v3
+; GFX12-NEXT:    image_load v[4:8], [v0, v1, v2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_3D tfe
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b32 v8, v4, s[8:9]
+; GFX12-NEXT:    v_mov_b32_e32 v0, v4
+; GFX12-NEXT:    global_store_b32 v3, v8, s[8:9]
+; GFX12-NEXT:    v_dual_mov_b32 v1, v5 :: v_dual_mov_b32 v2, v6
+; GFX12-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
   %v = call {<4 x float>,i32} @llvm.amdgcn.image.load.3d.v4f32i32.i32(i32 15, i32 %s, i32 %t, i32 %r, <8 x i32> %rsrc, i32 3, i32 0)
@@ -680,22 +745,26 @@ define amdgpu_ps <4 x float> @load_cube_lwe(<8 x i32> inreg %rsrc, ptr addrspace
 ;
 ; GFX6789-LABEL: load_cube_lwe:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v8, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v7, v2
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v1
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v9, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v11, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v12, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v10
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v11
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v12
-; GFX6789-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf unorm lwe da
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v0, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v8, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v7, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    image_load v[1:5], v[6:8], s[0:7] dmask:0xf unorm lwe da
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v8, v4, s[8:9]
+; GFX6789-NEXT:    global_store_dword v0, v5, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -711,38 +780,43 @@ define amdgpu_ps <4 x float> @load_cube_lwe(<8 x i32> inreg %rsrc, ptr addrspace
 ;
 ; GFX10-LABEL: load_cube_lwe:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v8, 0
-; GFX10-NEXT:    v_mov_b32_e32 v7, v2
-; GFX10-NEXT:    v_mov_b32_e32 v6, v1
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v9, v8
-; GFX10-NEXT:    v_mov_b32_e32 v10, v8
-; GFX10-NEXT:    v_mov_b32_e32 v11, v8
-; GFX10-NEXT:    v_mov_b32_e32 v12, v8
-; GFX10-NEXT:    v_mov_b32_e32 v0, v8
-; GFX10-NEXT:    v_mov_b32_e32 v1, v9
-; GFX10-NEXT:    v_mov_b32_e32 v2, v10
-; GFX10-NEXT:    v_mov_b32_e32 v3, v11
-; GFX10-NEXT:    v_mov_b32_e32 v4, v12
-; GFX10-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_CUBE unorm lwe
+; GFX10-NEXT:    v_mov_b32_e32 v3, 0
+; GFX10-NEXT:    v_mov_b32_e32 v7, v3
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v5, v3
+; GFX10-NEXT:    v_mov_b32_e32 v6, v3
+; GFX10-NEXT:    v_mov_b32_e32 v8, v7
+; GFX10-NEXT:    v_mov_b32_e32 v7, v6
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    image_load v[4:8], v[0:2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_CUBE unorm lwe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v8, v4, s[8:9]
+; GFX10-NEXT:    global_store_dword v3, v8, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v4
+; GFX10-NEXT:    v_mov_b32_e32 v1, v5
+; GFX10-NEXT:    v_mov_b32_e32 v2, v6
+; GFX10-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_cube_lwe:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v8, 0
-; GFX11-NEXT:    v_dual_mov_b32 v7, v2 :: v_dual_mov_b32 v6, v1
-; GFX11-NEXT:    v_mov_b32_e32 v9, v8
-; GFX11-NEXT:    v_mov_b32_e32 v10, v8
-; GFX11-NEXT:    v_mov_b32_e32 v11, v8
-; GFX11-NEXT:    v_mov_b32_e32 v12, v8
-; GFX11-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
-; GFX11-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
-; GFX11-NEXT:    v_mov_b32_e32 v4, v12
-; GFX11-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_CUBE unorm lwe
+; GFX11-NEXT:    v_mov_b32_e32 v3, 0
+; GFX11-NEXT:    v_mov_b32_e32 v7, v3
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v5, v3
+; GFX11-NEXT:    v_mov_b32_e32 v6, v3
+; GFX11-NEXT:    v_mov_b32_e32 v8, v7
+; GFX11-NEXT:    v_mov_b32_e32 v7, v6
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    image_load v[4:8], v[0:2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_CUBE unorm lwe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v8, v4, s[8:9]
+; GFX11-NEXT:    v_mov_b32_e32 v0, v4
+; GFX11-NEXT:    global_store_b32 v3, v8, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v1, v5 :: v_dual_mov_b32 v2, v6
+; GFX11-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_cube_lwe:
@@ -838,21 +912,25 @@ define amdgpu_ps <4 x float> @load_1darray_tfe(<8 x i32> inreg %rsrc, ptr addrsp
 ;
 ; GFX6789-LABEL: load_1darray_tfe:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v7, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v1
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v8, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v9, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v11, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v10
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v11
-; GFX6789-NEXT:    image_load v[0:4], v[5:6], s[0:7] dmask:0xf unorm tfe da
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v0, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v7, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    image_load v[1:5], v[6:7], s[0:7] dmask:0xf unorm tfe da
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v7, v4, s[8:9]
+; GFX6789-NEXT:    global_store_dword v0, v5, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -868,50 +946,59 @@ define amdgpu_ps <4 x float> @load_1darray_tfe(<8 x i32> inreg %rsrc, ptr addrsp
 ;
 ; GFX10-LABEL: load_1darray_tfe:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v7, 0
-; GFX10-NEXT:    v_mov_b32_e32 v6, v1
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v8, v7
-; GFX10-NEXT:    v_mov_b32_e32 v9, v7
-; GFX10-NEXT:    v_mov_b32_e32 v10, v7
-; GFX10-NEXT:    v_mov_b32_e32 v11, v7
-; GFX10-NEXT:    v_mov_b32_e32 v0, v7
-; GFX10-NEXT:    v_mov_b32_e32 v1, v8
-; GFX10-NEXT:    v_mov_b32_e32 v2, v9
-; GFX10-NEXT:    v_mov_b32_e32 v3, v10
-; GFX10-NEXT:    v_mov_b32_e32 v4, v11
-; GFX10-NEXT:    image_load v[0:4], v[5:6], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D_ARRAY unorm tfe
+; GFX10-NEXT:    v_mov_b32_e32 v2, 0
+; GFX10-NEXT:    v_mov_b32_e32 v6, v2
+; GFX10-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10-NEXT:    v_mov_b32_e32 v4, v2
+; GFX10-NEXT:    v_mov_b32_e32 v5, v2
+; GFX10-NEXT:    v_mov_b32_e32 v7, v6
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10-NEXT:    image_load v[3:7], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D_ARRAY unorm tfe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v7, v4, s[8:9]
+; GFX10-NEXT:    global_store_dword v2, v7, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v3
+; GFX10-NEXT:    v_mov_b32_e32 v1, v4
+; GFX10-NEXT:    v_mov_b32_e32 v2, v5
+; GFX10-NEXT:    v_mov_b32_e32 v3, v6
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_1darray_tfe:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v7, 0 :: v_dual_mov_b32 v6, v1
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v8, v7
-; GFX11-NEXT:    v_mov_b32_e32 v9, v7
-; GFX11-NEXT:    v_mov_b32_e32 v10, v7
-; GFX11-NEXT:    v_mov_b32_e32 v11, v7
-; GFX11-NEXT:    v_dual_mov_b32 v0, v7 :: v_dual_mov_b32 v1, v8
-; GFX11-NEXT:    v_dual_mov_b32 v2, v9 :: v_dual_mov_b32 v3, v10
-; GFX11-NEXT:    v_mov_b32_e32 v4, v11
-; GFX11-NEXT:    image_load v[0:4], v[5:6], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D_ARRAY unorm tfe
+; GFX11-NEXT:    v_mov_b32_e32 v2, 0
+; GFX11-NEXT:    v_mov_b32_e32 v6, v2
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    v_mov_b32_e32 v4, v2
+; GFX11-NEXT:    v_mov_b32_e32 v5, v2
+; GFX11-NEXT:    v_mov_b32_e32 v7, v6
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    image_load v[3:7], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D_ARRAY unorm tfe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v7, v4, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v0, v3 :: v_dual_mov_b32 v1, v4
+; GFX11-NEXT:    global_store_b32 v2, v7, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v2, v5 :: v_dual_mov_b32 v3, v6
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_1darray_tfe:
 ; GFX12:       ; %bb.0: ; %main_body
-; GFX12-NEXT:    v_mov_b32_e32 v7, 0
-; GFX12-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v6, v0
-; GFX12-NEXT:    v_dual_mov_b32 v8, v7 :: v_dual_mov_b32 v9, v7
-; GFX12-NEXT:    v_dual_mov_b32 v10, v7 :: v_dual_mov_b32 v11, v7
-; GFX12-NEXT:    v_dual_mov_b32 v0, v7 :: v_dual_mov_b32 v1, v8
-; GFX12-NEXT:    v_dual_mov_b32 v2, v9 :: v_dual_mov_b32 v3, v10
-; GFX12-NEXT:    v_mov_b32_e32 v4, v11
-; GFX12-NEXT:    image_load v[0:4], [v6, v5], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D_ARRAY tfe
+; GFX12-NEXT:    v_mov_b32_e32 v2, 0
+; GFX12-NEXT:    v_dual_mov_b32 v5, v2 :: v_dual_mov_b32 v6, v2
+; GFX12-NEXT:    v_dual_mov_b32 v3, v2 :: v_dual_mov_b32 v4, v2
+; GFX12-NEXT:    v_mov_b32_e32 v7, v6
+; GFX12-NEXT:    v_mov_b32_e32 v6, v5
+; GFX12-NEXT:    v_mov_b32_e32 v5, v4
+; GFX12-NEXT:    v_mov_b32_e32 v4, v3
+; GFX12-NEXT:    v_mov_b32_e32 v3, v2
+; GFX12-NEXT:    image_load v[3:7], [v0, v1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D_ARRAY tfe
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b32 v7, v4, s[8:9]
+; GFX12-NEXT:    v_dual_mov_b32 v0, v3 :: v_dual_mov_b32 v1, v4
+; GFX12-NEXT:    global_store_b32 v2, v7, s[8:9]
+; GFX12-NEXT:    v_dual_mov_b32 v2, v5 :: v_dual_mov_b32 v3, v6
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
   %v = call {<4 x float>,i32} @llvm.amdgcn.image.load.1darray.v4f32i32.i32(i32 15, i32 %s, i32 %slice, <8 x i32> %rsrc, i32 1, i32 0)
@@ -1001,22 +1088,26 @@ define amdgpu_ps <4 x float> @load_2darray_lwe(<8 x i32> inreg %rsrc, ptr addrsp
 ;
 ; GFX6789-LABEL: load_2darray_lwe:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v8, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v7, v2
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v1
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v9, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v11, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v12, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v10
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v11
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v12
-; GFX6789-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf unorm lwe da
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v0, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v8, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v7, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    image_load v[1:5], v[6:8], s[0:7] dmask:0xf unorm lwe da
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v8, v4, s[8:9]
+; GFX6789-NEXT:    global_store_dword v0, v5, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -1032,38 +1123,43 @@ define amdgpu_ps <4 x float> @load_2darray_lwe(<8 x i32> inreg %rsrc, ptr addrsp
 ;
 ; GFX10-LABEL: load_2darray_lwe:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v8, 0
-; GFX10-NEXT:    v_mov_b32_e32 v7, v2
-; GFX10-NEXT:    v_mov_b32_e32 v6, v1
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v9, v8
-; GFX10-NEXT:    v_mov_b32_e32 v10, v8
-; GFX10-NEXT:    v_mov_b32_e32 v11, v8
-; GFX10-NEXT:    v_mov_b32_e32 v12, v8
-; GFX10-NEXT:    v_mov_b32_e32 v0, v8
-; GFX10-NEXT:    v_mov_b32_e32 v1, v9
-; GFX10-NEXT:    v_mov_b32_e32 v2, v10
-; GFX10-NEXT:    v_mov_b32_e32 v3, v11
-; GFX10-NEXT:    v_mov_b32_e32 v4, v12
-; GFX10-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_ARRAY unorm lwe
+; GFX10-NEXT:    v_mov_b32_e32 v3, 0
+; GFX10-NEXT:    v_mov_b32_e32 v7, v3
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v5, v3
+; GFX10-NEXT:    v_mov_b32_e32 v6, v3
+; GFX10-NEXT:    v_mov_b32_e32 v8, v7
+; GFX10-NEXT:    v_mov_b32_e32 v7, v6
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    image_load v[4:8], v[0:2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_ARRAY unorm lwe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v8, v4, s[8:9]
+; GFX10-NEXT:    global_store_dword v3, v8, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v4
+; GFX10-NEXT:    v_mov_b32_e32 v1, v5
+; GFX10-NEXT:    v_mov_b32_e32 v2, v6
+; GFX10-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_2darray_lwe:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v8, 0
-; GFX11-NEXT:    v_dual_mov_b32 v7, v2 :: v_dual_mov_b32 v6, v1
-; GFX11-NEXT:    v_mov_b32_e32 v9, v8
-; GFX11-NEXT:    v_mov_b32_e32 v10, v8
-; GFX11-NEXT:    v_mov_b32_e32 v11, v8
-; GFX11-NEXT:    v_mov_b32_e32 v12, v8
-; GFX11-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
-; GFX11-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
-; GFX11-NEXT:    v_mov_b32_e32 v4, v12
-; GFX11-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_ARRAY unorm lwe
+; GFX11-NEXT:    v_mov_b32_e32 v3, 0
+; GFX11-NEXT:    v_mov_b32_e32 v7, v3
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v5, v3
+; GFX11-NEXT:    v_mov_b32_e32 v6, v3
+; GFX11-NEXT:    v_mov_b32_e32 v8, v7
+; GFX11-NEXT:    v_mov_b32_e32 v7, v6
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    image_load v[4:8], v[0:2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_ARRAY unorm lwe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v8, v4, s[8:9]
+; GFX11-NEXT:    v_mov_b32_e32 v0, v4
+; GFX11-NEXT:    global_store_b32 v3, v8, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v1, v5 :: v_dual_mov_b32 v2, v6
+; GFX11-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_2darray_lwe:
@@ -1161,22 +1257,26 @@ define amdgpu_ps <4 x float> @load_2dmsaa_both(<8 x i32> inreg %rsrc, ptr addrsp
 ;
 ; GFX6789-LABEL: load_2dmsaa_both:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v8, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v7, v2
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v1
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v9, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v11, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v12, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v10
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v11
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v12
-; GFX6789-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf unorm tfe lwe
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v0, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v8, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v7, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    image_load v[1:5], v[6:8], s[0:7] dmask:0xf unorm tfe lwe
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v8, v4, s[8:9]
+; GFX6789-NEXT:    global_store_dword v0, v5, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -1192,52 +1292,61 @@ define amdgpu_ps <4 x float> @load_2dmsaa_both(<8 x i32> inreg %rsrc, ptr addrsp
 ;
 ; GFX10-LABEL: load_2dmsaa_both:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v8, 0
-; GFX10-NEXT:    v_mov_b32_e32 v7, v2
-; GFX10-NEXT:    v_mov_b32_e32 v6, v1
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v9, v8
-; GFX10-NEXT:    v_mov_b32_e32 v10, v8
-; GFX10-NEXT:    v_mov_b32_e32 v11, v8
-; GFX10-NEXT:    v_mov_b32_e32 v12, v8
-; GFX10-NEXT:    v_mov_b32_e32 v0, v8
-; GFX10-NEXT:    v_mov_b32_e32 v1, v9
-; GFX10-NEXT:    v_mov_b32_e32 v2, v10
-; GFX10-NEXT:    v_mov_b32_e32 v3, v11
-; GFX10-NEXT:    v_mov_b32_e32 v4, v12
-; GFX10-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA unorm tfe lwe
+; GFX10-NEXT:    v_mov_b32_e32 v3, 0
+; GFX10-NEXT:    v_mov_b32_e32 v7, v3
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v5, v3
+; GFX10-NEXT:    v_mov_b32_e32 v6, v3
+; GFX10-NEXT:    v_mov_b32_e32 v8, v7
+; GFX10-NEXT:    v_mov_b32_e32 v7, v6
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    image_load v[4:8], v[0:2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA unorm tfe lwe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v8, v4, s[8:9]
+; GFX10-NEXT:    global_store_dword v3, v8, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v4
+; GFX10-NEXT:    v_mov_b32_e32 v1, v5
+; GFX10-NEXT:    v_mov_b32_e32 v2, v6
+; GFX10-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_2dmsaa_both:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v8, 0
-; GFX11-NEXT:    v_dual_mov_b32 v7, v2 :: v_dual_mov_b32 v6, v1
-; GFX11-NEXT:    v_mov_b32_e32 v9, v8
-; GFX11-NEXT:    v_mov_b32_e32 v10, v8
-; GFX11-NEXT:    v_mov_b32_e32 v11, v8
-; GFX11-NEXT:    v_mov_b32_e32 v12, v8
-; GFX11-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
-; GFX11-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
-; GFX11-NEXT:    v_mov_b32_e32 v4, v12
-; GFX11-NEXT:    image_load v[0:4], v[5:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA unorm tfe lwe
+; GFX11-NEXT:    v_mov_b32_e32 v3, 0
+; GFX11-NEXT:    v_mov_b32_e32 v7, v3
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v5, v3
+; GFX11-NEXT:    v_mov_b32_e32 v6, v3
+; GFX11-NEXT:    v_mov_b32_e32 v8, v7
+; GFX11-NEXT:    v_mov_b32_e32 v7, v6
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    image_load v[4:8], v[0:2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA unorm tfe lwe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v8, v4, s[8:9]
+; GFX11-NEXT:    v_mov_b32_e32 v0, v4
+; GFX11-NEXT:    global_store_b32 v3, v8, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v1, v5 :: v_dual_mov_b32 v2, v6
+; GFX11-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_2dmsaa_both:
 ; GFX12:       ; %bb.0: ; %main_body
-; GFX12-NEXT:    v_dual_mov_b32 v7, v0 :: v_dual_mov_b32 v8, 0
-; GFX12-NEXT:    v_dual_mov_b32 v5, v2 :: v_dual_mov_b32 v6, v1
-; GFX12-NEXT:    v_dual_mov_b32 v9, v8 :: v_dual_mov_b32 v10, v8
-; GFX12-NEXT:    v_dual_mov_b32 v11, v8 :: v_dual_mov_b32 v12, v8
-; GFX12-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
-; GFX12-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
-; GFX12-NEXT:    v_mov_b32_e32 v4, v12
-; GFX12-NEXT:    image_load v[0:4], [v7, v6, v5], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA tfe
+; GFX12-NEXT:    v_mov_b32_e32 v3, 0
+; GFX12-NEXT:    v_dual_mov_b32 v6, v3 :: v_dual_mov_b32 v7, v3
+; GFX12-NEXT:    v_dual_mov_b32 v4, v3 :: v_dual_mov_b32 v5, v3
+; GFX12-NEXT:    v_mov_b32_e32 v8, v7
+; GFX12-NEXT:    v_mov_b32_e32 v7, v6
+; GFX12-NEXT:    v_mov_b32_e32 v6, v5
+; GFX12-NEXT:    v_mov_b32_e32 v5, v4
+; GFX12-NEXT:    v_mov_b32_e32 v4, v3
+; GFX12-NEXT:    image_load v[4:8], [v0, v1, v2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA tfe
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b32 v8, v4, s[8:9]
+; GFX12-NEXT:    v_mov_b32_e32 v0, v4
+; GFX12-NEXT:    global_store_b32 v3, v8, s[8:9]
+; GFX12-NEXT:    v_dual_mov_b32 v1, v5 :: v_dual_mov_b32 v2, v6
+; GFX12-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
   %v = call {<4 x float>,i32} @llvm.amdgcn.image.load.2dmsaa.v4f32i32.i32(i32 15, i32 %s, i32 %t, i32 %fragid, <8 x i32> %rsrc, i32 3, i32 0)
@@ -1329,23 +1438,27 @@ define amdgpu_ps <4 x float> @load_2darraymsaa_tfe(<8 x i32> inreg %rsrc, ptr ad
 ;
 ; GFX6789-LABEL: load_2darraymsaa_tfe:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v9, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v8, v3
-; GFX6789-NEXT:    v_mov_b32_e32 v7, v2
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v1
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v11, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v12, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v13, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v10
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v11
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v12
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v13
-; GFX6789-NEXT:    image_load v[0:4], v[5:8], s[0:7] dmask:0xf unorm tfe da
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v0, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v9, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v8, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v7, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    image_load v[1:5], v[6:9], s[0:7] dmask:0xf unorm tfe da
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v9, v4, s[8:9]
+; GFX6789-NEXT:    global_store_dword v0, v5, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -1361,54 +1474,59 @@ define amdgpu_ps <4 x float> @load_2darraymsaa_tfe(<8 x i32> inreg %rsrc, ptr ad
 ;
 ; GFX10-LABEL: load_2darraymsaa_tfe:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v9, 0
-; GFX10-NEXT:    v_mov_b32_e32 v8, v3
-; GFX10-NEXT:    v_mov_b32_e32 v7, v2
-; GFX10-NEXT:    v_mov_b32_e32 v6, v1
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v10, v9
-; GFX10-NEXT:    v_mov_b32_e32 v11, v9
-; GFX10-NEXT:    v_mov_b32_e32 v12, v9
-; GFX10-NEXT:    v_mov_b32_e32 v13, v9
-; GFX10-NEXT:    v_mov_b32_e32 v0, v9
-; GFX10-NEXT:    v_mov_b32_e32 v1, v10
-; GFX10-NEXT:    v_mov_b32_e32 v2, v11
-; GFX10-NEXT:    v_mov_b32_e32 v3, v12
-; GFX10-NEXT:    v_mov_b32_e32 v4, v13
-; GFX10-NEXT:    image_load v[0:4], v[5:8], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA_ARRAY unorm tfe
+; GFX10-NEXT:    v_mov_b32_e32 v4, 0
+; GFX10-NEXT:    v_mov_b32_e32 v8, v4
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v6, v4
+; GFX10-NEXT:    v_mov_b32_e32 v7, v4
+; GFX10-NEXT:    v_mov_b32_e32 v9, v8
+; GFX10-NEXT:    v_mov_b32_e32 v8, v7
+; GFX10-NEXT:    v_mov_b32_e32 v7, v6
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    image_load v[5:9], v[0:3], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA_ARRAY unorm tfe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v9, v4, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v5
+; GFX10-NEXT:    v_mov_b32_e32 v1, v6
+; GFX10-NEXT:    v_mov_b32_e32 v2, v7
+; GFX10-NEXT:    v_mov_b32_e32 v3, v8
+; GFX10-NEXT:    global_store_dword v4, v9, s[8:9]
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_2darraymsaa_tfe:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v9, 0 :: v_dual_mov_b32 v8, v3
-; GFX11-NEXT:    v_dual_mov_b32 v7, v2 :: v_dual_mov_b32 v6, v1
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v10, v9
-; GFX11-NEXT:    v_mov_b32_e32 v11, v9
-; GFX11-NEXT:    v_mov_b32_e32 v12, v9
-; GFX11-NEXT:    v_mov_b32_e32 v13, v9
-; GFX11-NEXT:    v_dual_mov_b32 v0, v9 :: v_dual_mov_b32 v1, v10
-; GFX11-NEXT:    v_dual_mov_b32 v2, v11 :: v_dual_mov_b32 v3, v12
-; GFX11-NEXT:    v_mov_b32_e32 v4, v13
-; GFX11-NEXT:    image_load v[0:4], v[5:8], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA_ARRAY unorm tfe
+; GFX11-NEXT:    v_mov_b32_e32 v4, 0
+; GFX11-NEXT:    v_mov_b32_e32 v8, v4
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v6, v4
+; GFX11-NEXT:    v_mov_b32_e32 v7, v4
+; GFX11-NEXT:    v_mov_b32_e32 v9, v8
+; GFX11-NEXT:    v_mov_b32_e32 v8, v7
+; GFX11-NEXT:    v_mov_b32_e32 v7, v6
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    image_load v[5:9], v[0:3], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA_ARRAY unorm tfe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v9, v4, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v0, v5 :: v_dual_mov_b32 v1, v6
+; GFX11-NEXT:    v_dual_mov_b32 v2, v7 :: v_dual_mov_b32 v3, v8
+; GFX11-NEXT:    global_store_b32 v4, v9, s[8:9]
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_2darraymsaa_tfe:
 ; GFX12:       ; %bb.0: ; %main_body
-; GFX12-NEXT:    v_mov_b32_e32 v9, 0
-; GFX12-NEXT:    v_dual_mov_b32 v5, v3 :: v_dual_mov_b32 v6, v2
-; GFX12-NEXT:    v_dual_mov_b32 v7, v1 :: v_dual_mov_b32 v8, v0
-; GFX12-NEXT:    v_dual_mov_b32 v10, v9 :: v_dual_mov_b32 v11, v9
-; GFX12-NEXT:    v_dual_mov_b32 v12, v9 :: v_dual_mov_b32 v13, v9
-; GFX12-NEXT:    v_dual_mov_b32 v0, v9 :: v_dual_mov_b32 v1, v10
-; GFX12-NEXT:    v_dual_mov_b32 v2, v11 :: v_dual_mov_b32 v3, v12
-; GFX12-NEXT:    v_mov_b32_e32 v4, v13
-; GFX12-NEXT:    image_load v[0:4], [v8, v7, v6, v5], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA_ARRAY tfe
+; GFX12-NEXT:    v_mov_b32_e32 v4, 0
+; GFX12-NEXT:    v_dual_mov_b32 v7, v4 :: v_dual_mov_b32 v8, v4
+; GFX12-NEXT:    v_dual_mov_b32 v5, v4 :: v_dual_mov_b32 v6, v4
+; GFX12-NEXT:    v_mov_b32_e32 v9, v8
+; GFX12-NEXT:    v_mov_b32_e32 v8, v7
+; GFX12-NEXT:    v_mov_b32_e32 v7, v6
+; GFX12-NEXT:    v_mov_b32_e32 v6, v5
+; GFX12-NEXT:    v_mov_b32_e32 v5, v4
+; GFX12-NEXT:    image_load v[5:9], [v0, v1, v2, v3], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D_MSAA_ARRAY tfe
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b32 v9, v4, s[8:9]
+; GFX12-NEXT:    v_dual_mov_b32 v0, v5 :: v_dual_mov_b32 v1, v6
+; GFX12-NEXT:    v_dual_mov_b32 v2, v7 :: v_dual_mov_b32 v3, v8
+; GFX12-NEXT:    global_store_b32 v4, v9, s[8:9]
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
   %v = call {<4 x float>,i32} @llvm.amdgcn.image.load.2darraymsaa.v4f32i32.i32(i32 15, i32 %s, i32 %t, i32 %slice, i32 %fragid, <8 x i32> %rsrc, i32 1, i32 0)
@@ -1496,21 +1614,25 @@ define amdgpu_ps <4 x float> @load_mip_1d_lwe(<8 x i32> inreg %rsrc, ptr addrspa
 ;
 ; GFX6789-LABEL: load_mip_1d_lwe:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v7, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v1
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v8, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v9, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v11, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v10
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v11
-; GFX6789-NEXT:    image_load_mip v[0:4], v[5:6], s[0:7] dmask:0xf unorm lwe
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v0, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v7, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    image_load_mip v[1:5], v[6:7], s[0:7] dmask:0xf unorm lwe
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v7, v4, s[8:9]
+; GFX6789-NEXT:    global_store_dword v0, v5, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -1526,36 +1648,42 @@ define amdgpu_ps <4 x float> @load_mip_1d_lwe(<8 x i32> inreg %rsrc, ptr addrspa
 ;
 ; GFX10-LABEL: load_mip_1d_lwe:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v7, 0
-; GFX10-NEXT:    v_mov_b32_e32 v6, v1
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v8, v7
-; GFX10-NEXT:    v_mov_b32_e32 v9, v7
-; GFX10-NEXT:    v_mov_b32_e32 v10, v7
-; GFX10-NEXT:    v_mov_b32_e32 v11, v7
-; GFX10-NEXT:    v_mov_b32_e32 v0, v7
-; GFX10-NEXT:    v_mov_b32_e32 v1, v8
-; GFX10-NEXT:    v_mov_b32_e32 v2, v9
-; GFX10-NEXT:    v_mov_b32_e32 v3, v10
-; GFX10-NEXT:    v_mov_b32_e32 v4, v11
-; GFX10-NEXT:    image_load_mip v[0:4], v[5:6], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm lwe
+; GFX10-NEXT:    v_mov_b32_e32 v2, 0
+; GFX10-NEXT:    v_mov_b32_e32 v6, v2
+; GFX10-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10-NEXT:    v_mov_b32_e32 v4, v2
+; GFX10-NEXT:    v_mov_b32_e32 v5, v2
+; GFX10-NEXT:    v_mov_b32_e32 v7, v6
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10-NEXT:    image_load_mip v[3:7], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm lwe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v7, v4, s[8:9]
+; GFX10-NEXT:    global_store_dword v2, v7, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v3
+; GFX10-NEXT:    v_mov_b32_e32 v1, v4
+; GFX10-NEXT:    v_mov_b32_e32 v2, v5
+; GFX10-NEXT:    v_mov_b32_e32 v3, v6
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_mip_1d_lwe:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v7, 0 :: v_dual_mov_b32 v6, v1
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v8, v7
-; GFX11-NEXT:    v_mov_b32_e32 v9, v7
-; GFX11-NEXT:    v_mov_b32_e32 v10, v7
-; GFX11-NEXT:    v_mov_b32_e32 v11, v7
-; GFX11-NEXT:    v_dual_mov_b32 v0, v7 :: v_dual_mov_b32 v1, v8
-; GFX11-NEXT:    v_dual_mov_b32 v2, v9 :: v_dual_mov_b32 v3, v10
-; GFX11-NEXT:    v_mov_b32_e32 v4, v11
-; GFX11-NEXT:    image_load_mip v[0:4], v[5:6], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm lwe
+; GFX11-NEXT:    v_mov_b32_e32 v2, 0
+; GFX11-NEXT:    v_mov_b32_e32 v6, v2
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    v_mov_b32_e32 v4, v2
+; GFX11-NEXT:    v_mov_b32_e32 v5, v2
+; GFX11-NEXT:    v_mov_b32_e32 v7, v6
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    image_load_mip v[3:7], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_1D unorm lwe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v7, v4, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v0, v3 :: v_dual_mov_b32 v1, v4
+; GFX11-NEXT:    global_store_b32 v2, v7, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v2, v5 :: v_dual_mov_b32 v3, v6
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_mip_1d_lwe:
@@ -1653,22 +1781,26 @@ define amdgpu_ps <4 x float> @load_mip_2d_tfe(<8 x i32> inreg %rsrc, ptr addrspa
 ;
 ; GFX6789-LABEL: load_mip_2d_tfe:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v8, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v7, v2
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v1
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v9, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v10, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v11, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v12, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v8
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v9
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v10
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v11
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v12
-; GFX6789-NEXT:    image_load_mip v[0:4], v[5:7], s[0:7] dmask:0xf unorm tfe
+; GFX6789-NEXT:    v_mov_b32_e32 v6, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v0, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v8, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v7, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v0
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v0
+; GFX6789-NEXT:    image_load_mip v[1:5], v[6:8], s[0:7] dmask:0xf unorm tfe
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v8, v4, s[8:9]
+; GFX6789-NEXT:    global_store_dword v0, v5, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -1684,52 +1816,61 @@ define amdgpu_ps <4 x float> @load_mip_2d_tfe(<8 x i32> inreg %rsrc, ptr addrspa
 ;
 ; GFX10-LABEL: load_mip_2d_tfe:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v8, 0
-; GFX10-NEXT:    v_mov_b32_e32 v7, v2
-; GFX10-NEXT:    v_mov_b32_e32 v6, v1
-; GFX10-NEXT:    v_mov_b32_e32 v5, v0
-; GFX10-NEXT:    v_mov_b32_e32 v9, v8
-; GFX10-NEXT:    v_mov_b32_e32 v10, v8
-; GFX10-NEXT:    v_mov_b32_e32 v11, v8
-; GFX10-NEXT:    v_mov_b32_e32 v12, v8
-; GFX10-NEXT:    v_mov_b32_e32 v0, v8
-; GFX10-NEXT:    v_mov_b32_e32 v1, v9
-; GFX10-NEXT:    v_mov_b32_e32 v2, v10
-; GFX10-NEXT:    v_mov_b32_e32 v3, v11
-; GFX10-NEXT:    v_mov_b32_e32 v4, v12
-; GFX10-NEXT:    image_load_mip v[0:4], v[5:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm tfe
+; GFX10-NEXT:    v_mov_b32_e32 v3, 0
+; GFX10-NEXT:    v_mov_b32_e32 v7, v3
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v5, v3
+; GFX10-NEXT:    v_mov_b32_e32 v6, v3
+; GFX10-NEXT:    v_mov_b32_e32 v8, v7
+; GFX10-NEXT:    v_mov_b32_e32 v7, v6
+; GFX10-NEXT:    v_mov_b32_e32 v6, v5
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    image_load_mip v[4:8], v[0:2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm tfe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v8, v4, s[8:9]
+; GFX10-NEXT:    global_store_dword v3, v8, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v4
+; GFX10-NEXT:    v_mov_b32_e32 v1, v5
+; GFX10-NEXT:    v_mov_b32_e32 v2, v6
+; GFX10-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_mip_2d_tfe:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v5, v0 :: v_dual_mov_b32 v8, 0
-; GFX11-NEXT:    v_dual_mov_b32 v7, v2 :: v_dual_mov_b32 v6, v1
-; GFX11-NEXT:    v_mov_b32_e32 v9, v8
-; GFX11-NEXT:    v_mov_b32_e32 v10, v8
-; GFX11-NEXT:    v_mov_b32_e32 v11, v8
-; GFX11-NEXT:    v_mov_b32_e32 v12, v8
-; GFX11-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
-; GFX11-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
-; GFX11-NEXT:    v_mov_b32_e32 v4, v12
-; GFX11-NEXT:    image_load_mip v[0:4], v[5:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm tfe
+; GFX11-NEXT:    v_mov_b32_e32 v3, 0
+; GFX11-NEXT:    v_mov_b32_e32 v7, v3
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v5, v3
+; GFX11-NEXT:    v_mov_b32_e32 v6, v3
+; GFX11-NEXT:    v_mov_b32_e32 v8, v7
+; GFX11-NEXT:    v_mov_b32_e32 v7, v6
+; GFX11-NEXT:    v_mov_b32_e32 v6, v5
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    image_load_mip v[4:8], v[0:2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm tfe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v8, v4, s[8:9]
+; GFX11-NEXT:    v_mov_b32_e32 v0, v4
+; GFX11-NEXT:    global_store_b32 v3, v8, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v1, v5 :: v_dual_mov_b32 v2, v6
+; GFX11-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_mip_2d_tfe:
 ; GFX12:       ; %bb.0: ; %main_body
-; GFX12-NEXT:    v_dual_mov_b32 v7, v0 :: v_dual_mov_b32 v8, 0
-; GFX12-NEXT:    v_dual_mov_b32 v5, v2 :: v_dual_mov_b32 v6, v1
-; GFX12-NEXT:    v_dual_mov_b32 v9, v8 :: v_dual_mov_b32 v10, v8
-; GFX12-NEXT:    v_dual_mov_b32 v11, v8 :: v_dual_mov_b32 v12, v8
-; GFX12-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
-; GFX12-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
-; GFX12-NEXT:    v_mov_b32_e32 v4, v12
-; GFX12-NEXT:    image_load_mip v[0:4], [v7, v6, v5], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D tfe
+; GFX12-NEXT:    v_mov_b32_e32 v3, 0
+; GFX12-NEXT:    v_dual_mov_b32 v6, v3 :: v_dual_mov_b32 v7, v3
+; GFX12-NEXT:    v_dual_mov_b32 v4, v3 :: v_dual_mov_b32 v5, v3
+; GFX12-NEXT:    v_mov_b32_e32 v8, v7
+; GFX12-NEXT:    v_mov_b32_e32 v7, v6
+; GFX12-NEXT:    v_mov_b32_e32 v6, v5
+; GFX12-NEXT:    v_mov_b32_e32 v5, v4
+; GFX12-NEXT:    v_mov_b32_e32 v4, v3
+; GFX12-NEXT:    image_load_mip v[4:8], [v0, v1, v2], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D tfe
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b32 v8, v4, s[8:9]
+; GFX12-NEXT:    v_mov_b32_e32 v0, v4
+; GFX12-NEXT:    global_store_b32 v3, v8, s[8:9]
+; GFX12-NEXT:    v_dual_mov_b32 v1, v5 :: v_dual_mov_b32 v2, v6
+; GFX12-NEXT:    v_mov_b32_e32 v3, v7
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
   %v = call {<4 x float>,i32} @llvm.amdgcn.image.load.mip.2d.v4f32i32.i32(i32 15, i32 %s, i32 %t, i32 %mip, <8 x i32> %rsrc, i32 1, i32 0)
@@ -2102,48 +2243,54 @@ main_body:
 define amdgpu_ps <4 x float> @load_1d_tfe_V4_dmask3(<8 x i32> inreg %rsrc, ptr addrspace(1) inreg %out, i32 %s) {
 ; VERDE-LABEL: load_1d_tfe_V4_dmask3:
 ; VERDE:       ; %bb.0: ; %main_body
-; VERDE-NEXT:    v_mov_b32_e32 v4, v0
-; VERDE-NEXT:    v_mov_b32_e32 v0, 0
-; VERDE-NEXT:    v_mov_b32_e32 v1, v0
-; VERDE-NEXT:    v_mov_b32_e32 v2, v0
-; VERDE-NEXT:    v_mov_b32_e32 v3, v0
-; VERDE-NEXT:    image_load v[0:3], v4, s[0:7] dmask:0x7 unorm tfe
+; VERDE-NEXT:    v_mov_b32_e32 v1, 0
+; VERDE-NEXT:    v_mov_b32_e32 v2, v1
+; VERDE-NEXT:    v_mov_b32_e32 v3, v1
+; VERDE-NEXT:    v_mov_b32_e32 v4, v1
+; VERDE-NEXT:    image_load v[1:4], v0, s[0:7] dmask:0x7 unorm tfe
 ; VERDE-NEXT:    s_mov_b32 s11, 0xf000
 ; VERDE-NEXT:    s_mov_b32 s10, -1
 ; VERDE-NEXT:    s_waitcnt vmcnt(0)
-; VERDE-NEXT:    buffer_store_dword v3, off, s[8:11], 0
+; VERDE-NEXT:    v_mov_b32_e32 v0, v1
+; VERDE-NEXT:    v_mov_b32_e32 v1, v2
+; VERDE-NEXT:    v_mov_b32_e32 v2, v3
+; VERDE-NEXT:    buffer_store_dword v4, off, s[8:11], 0
 ; VERDE-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; VERDE-NEXT:    ; return to shader part epilog
 ;
 ; FIJI-LABEL: load_1d_tfe_V4_dmask3:
 ; FIJI:       ; %bb.0: ; %main_body
-; FIJI-NEXT:    v_mov_b32_e32 v4, v0
-; FIJI-NEXT:    v_mov_b32_e32 v0, 0
-; FIJI-NEXT:    v_mov_b32_e32 v1, v0
-; FIJI-NEXT:    v_mov_b32_e32 v2, v0
-; FIJI-NEXT:    v_mov_b32_e32 v3, v0
-; FIJI-NEXT:    image_load v[0:3], v4, s[0:7] dmask:0x7 unorm tfe
+; FIJI-NEXT:    v_mov_b32_e32 v1, 0
+; FIJI-NEXT:    v_mov_b32_e32 v2, v1
+; FIJI-NEXT:    v_mov_b32_e32 v3, v1
+; FIJI-NEXT:    v_mov_b32_e32 v4, v1
+; FIJI-NEXT:    image_load v[1:4], v0, s[0:7] dmask:0x7 unorm tfe
 ; FIJI-NEXT:    s_mov_b32 s11, 0xf000
 ; FIJI-NEXT:    s_mov_b32 s10, -1
 ; FIJI-NEXT:    s_waitcnt vmcnt(0)
-; FIJI-NEXT:    buffer_store_dword v3, off, s[8:11], 0
+; FIJI-NEXT:    v_mov_b32_e32 v0, v1
+; FIJI-NEXT:    v_mov_b32_e32 v1, v2
+; FIJI-NEXT:    v_mov_b32_e32 v2, v3
+; FIJI-NEXT:    buffer_store_dword v4, off, s[8:11], 0
 ; FIJI-NEXT:    s_waitcnt vmcnt(0)
 ; FIJI-NEXT:    ; return to shader part epilog
 ;
 ; GFX6789-LABEL: load_1d_tfe_V4_dmask3:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v5, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v4, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v5
-; GFX6789-NEXT:    v_mov_b32_e32 v7, v5
-; GFX6789-NEXT:    v_mov_b32_e32 v8, v5
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v5
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v6
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v7
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v8
-; GFX6789-NEXT:    image_load v[0:3], v4, s[0:7] dmask:0x7 unorm tfe
+; GFX6789-NEXT:    v_mov_b32_e32 v1, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    image_load v[2:5], v0, s[0:7] dmask:0x7 unorm tfe
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v5, v3, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v2
+; GFX6789-NEXT:    global_store_dword v1, v5, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v4
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -2159,43 +2306,53 @@ define amdgpu_ps <4 x float> @load_1d_tfe_V4_dmask3(<8 x i32> inreg %rsrc, ptr a
 ;
 ; GFX10-LABEL: load_1d_tfe_V4_dmask3:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v5, 0
-; GFX10-NEXT:    v_mov_b32_e32 v4, v0
-; GFX10-NEXT:    v_mov_b32_e32 v6, v5
-; GFX10-NEXT:    v_mov_b32_e32 v7, v5
-; GFX10-NEXT:    v_mov_b32_e32 v8, v5
-; GFX10-NEXT:    v_mov_b32_e32 v0, v5
-; GFX10-NEXT:    v_mov_b32_e32 v1, v6
-; GFX10-NEXT:    v_mov_b32_e32 v2, v7
-; GFX10-NEXT:    v_mov_b32_e32 v3, v8
-; GFX10-NEXT:    image_load v[0:3], v4, s[0:7] dmask:0x7 dim:SQ_RSRC_IMG_1D unorm tfe
+; GFX10-NEXT:    v_mov_b32_e32 v1, 0
+; GFX10-NEXT:    v_mov_b32_e32 v4, v1
+; GFX10-NEXT:    v_mov_b32_e32 v2, v1
+; GFX10-NEXT:    v_mov_b32_e32 v3, v1
+; GFX10-NEXT:    v_mov_b32_e32 v5, v4
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10-NEXT:    v_mov_b32_e32 v2, v1
+; GFX10-NEXT:    image_load v[2:5], v0, s[0:7] dmask:0x7 dim:SQ_RSRC_IMG_1D unorm tfe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v5, v3, s[8:9]
+; GFX10-NEXT:    global_store_dword v1, v5, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v2
+; GFX10-NEXT:    v_mov_b32_e32 v1, v3
+; GFX10-NEXT:    v_mov_b32_e32 v2, v4
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_1d_tfe_V4_dmask3:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v4, v0 :: v_dual_mov_b32 v5, 0
-; GFX11-NEXT:    v_mov_b32_e32 v6, v5
-; GFX11-NEXT:    v_mov_b32_e32 v7, v5
-; GFX11-NEXT:    v_mov_b32_e32 v8, v5
-; GFX11-NEXT:    v_dual_mov_b32 v0, v5 :: v_dual_mov_b32 v1, v6
-; GFX11-NEXT:    v_dual_mov_b32 v2, v7 :: v_dual_mov_b32 v3, v8
-; GFX11-NEXT:    image_load v[0:3], v4, s[0:7] dmask:0x7 dim:SQ_RSRC_IMG_1D unorm tfe
+; GFX11-NEXT:    v_mov_b32_e32 v1, 0
+; GFX11-NEXT:    v_mov_b32_e32 v4, v1
+; GFX11-NEXT:    v_mov_b32_e32 v2, v1
+; GFX11-NEXT:    v_mov_b32_e32 v3, v1
+; GFX11-NEXT:    v_mov_b32_e32 v5, v4
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    v_mov_b32_e32 v2, v1
+; GFX11-NEXT:    image_load v[2:5], v0, s[0:7] dmask:0x7 dim:SQ_RSRC_IMG_1D unorm tfe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v5, v3, s[8:9]
+; GFX11-NEXT:    v_mov_b32_e32 v0, v2
+; GFX11-NEXT:    global_store_b32 v1, v5, s[8:9]
+; GFX11-NEXT:    v_dual_mov_b32 v1, v3 :: v_dual_mov_b32 v2, v4
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_1d_tfe_V4_dmask3:
 ; GFX12:       ; %bb.0: ; %main_body
-; GFX12-NEXT:    v_dual_mov_b32 v4, v0 :: v_dual_mov_b32 v5, 0
-; GFX12-NEXT:    v_dual_mov_b32 v6, v5 :: v_dual_mov_b32 v7, v5
-; GFX12-NEXT:    v_mov_b32_e32 v8, v5
-; GFX12-NEXT:    v_dual_mov_b32 v0, v5 :: v_dual_mov_b32 v1, v6
-; GFX12-NEXT:    v_dual_mov_b32 v2, v7 :: v_dual_mov_b32 v3, v8
-; GFX12-NEXT:    image_load v[0:3], v4, s[0:7] dmask:0x7 dim:SQ_RSRC_IMG_1D tfe
+; GFX12-NEXT:    v_mov_b32_e32 v1, 0
+; GFX12-NEXT:    v_mov_b32_e32 v4, v1
+; GFX12-NEXT:    v_dual_mov_b32 v2, v1 :: v_dual_mov_b32 v3, v1
+; GFX12-NEXT:    v_mov_b32_e32 v5, v4
+; GFX12-NEXT:    v_mov_b32_e32 v4, v3
+; GFX12-NEXT:    v_mov_b32_e32 v3, v2
+; GFX12-NEXT:    v_mov_b32_e32 v2, v1
+; GFX12-NEXT:    image_load v[2:5], v0, s[0:7] dmask:0x7 dim:SQ_RSRC_IMG_1D tfe
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b32 v5, v3, s[8:9]
+; GFX12-NEXT:    v_mov_b32_e32 v0, v2
+; GFX12-NEXT:    global_store_b32 v1, v5, s[8:9]
+; GFX12-NEXT:    v_dual_mov_b32 v1, v3 :: v_dual_mov_b32 v2, v4
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
   %v = call {<4 x float>,i32} @llvm.amdgcn.image.load.1d.v4f32i32.i32(i32 7, i32 %s, <8 x i32> %rsrc, i32 1, i32 0)
@@ -2208,44 +2365,47 @@ main_body:
 define amdgpu_ps <4 x float> @load_1d_tfe_V4_dmask2(<8 x i32> inreg %rsrc, ptr addrspace(1) inreg %out, i32 %s) {
 ; VERDE-LABEL: load_1d_tfe_V4_dmask2:
 ; VERDE:       ; %bb.0: ; %main_body
-; VERDE-NEXT:    v_mov_b32_e32 v3, v0
-; VERDE-NEXT:    v_mov_b32_e32 v0, 0
-; VERDE-NEXT:    v_mov_b32_e32 v1, v0
-; VERDE-NEXT:    v_mov_b32_e32 v2, v0
-; VERDE-NEXT:    image_load v[0:2], v3, s[0:7] dmask:0x6 unorm tfe
+; VERDE-NEXT:    v_mov_b32_e32 v1, 0
+; VERDE-NEXT:    v_mov_b32_e32 v2, v1
+; VERDE-NEXT:    v_mov_b32_e32 v3, v1
+; VERDE-NEXT:    image_load v[1:3], v0, s[0:7] dmask:0x6 unorm tfe
 ; VERDE-NEXT:    s_mov_b32 s11, 0xf000
 ; VERDE-NEXT:    s_mov_b32 s10, -1
 ; VERDE-NEXT:    s_waitcnt vmcnt(0)
-; VERDE-NEXT:    buffer_store_dword v2, off, s[8:11], 0
+; VERDE-NEXT:    v_mov_b32_e32 v0, v1
+; VERDE-NEXT:    v_mov_b32_e32 v1, v2
+; VERDE-NEXT:    buffer_store_dword v3, off, s[8:11], 0
 ; VERDE-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; VERDE-NEXT:    ; return to shader part epilog
 ;
 ; FIJI-LABEL: load_1d_tfe_V4_dmask2:
 ; FIJI:       ; %bb.0: ; %main_body
-; FIJI-NEXT:    v_mov_b32_e32 v3, v0
-; FIJI-NEXT:    v_mov_b32_e32 v0, 0
-; FIJI-NEXT:    v_mov_b32_e32 v1, v0
-; FIJI-NEXT:    v_mov_b32_e32 v2, v0
-; FIJI-NEXT:    image_load v[0:2], v3, s[0:7] dmask:0x6 unorm tfe
+; FIJI-NEXT:    v_mov_b32_e32 v1, 0
+; FIJI-NEXT:    v_mov_b32_e32 v2, v1
+; FIJI-NEXT:    v_mov_b32_e32 v3, v1
+; FIJI-NEXT:    image_load v[1:3], v0, s[0:7] dmask:0x6 unorm tfe
 ; FIJI-NEXT:    s_mov_b32 s11, 0xf000
 ; FIJI-NEXT:    s_mov_b32 s10, -1
 ; FIJI-NEXT:    s_waitcnt vmcnt(0)
-; FIJI-NEXT:    buffer_store_dword v2, off, s[8:11], 0
+; FIJI-NEXT:    v_mov_b32_e32 v0, v1
+; FIJI-NEXT:    v_mov_b32_e32 v1, v2
+; FIJI-NEXT:    buffer_store_dword v3, off, s[8:11], 0
 ; FIJI-NEXT:    s_waitcnt vmcnt(0)
 ; FIJI-NEXT:    ; return to shader part epilog
 ;
 ; GFX6789-LABEL: load_1d_tfe_V4_dmask2:
 ; GFX6789:       ; %bb.0: ; %main_body
-; GFX6789-NEXT:    v_mov_b32_e32 v4, 0
-; GFX6789-NEXT:    v_mov_b32_e32 v3, v0
-; GFX6789-NEXT:    v_mov_b32_e32 v5, v4
-; GFX6789-NEXT:    v_mov_b32_e32 v6, v4
-; GFX6789-NEXT:    v_mov_b32_e32 v0, v4
-; GFX6789-NEXT:    v_mov_b32_e32 v1, v5
-; GFX6789-NEXT:    v_mov_b32_e32 v2, v6
-; GFX6789-NEXT:    image_load v[0:2], v3, s[0:7] dmask:0x6 unorm tfe
+; GFX6789-NEXT:    v_mov_b32_e32 v1, 0
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v1
+; GFX6789-NEXT:    v_mov_b32_e32 v4, v3
+; GFX6789-NEXT:    v_mov_b32_e32 v3, v2
+; GFX6789-NEXT:    v_mov_b32_e32 v2, v1
+; GFX6789-NEXT:    image_load v[2:4], v0, s[0:7] dmask:0x6 unorm tfe
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
-; GFX6789-NEXT:    global_store_dword v4, v2, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v0, v2
+; GFX6789-NEXT:    global_store_dword v1, v4, s[8:9]
+; GFX6789-NEXT:    v_mov_b32_e32 v1, v3
 ; GFX6789-NEXT:    s_waitcnt vmcnt(0)
 ; GFX6789-NEXT:    ; return to shader part epilog
 ;
@@ -2261,39 +2421,46 @@ define amdgpu_ps <4 x float> @load_1d_tfe_V4_dmask2(<8 x i32> inreg %rsrc, ptr a
 ;
 ; GFX10-LABEL: load_1d_tfe_V4_dmask2:
 ; GFX10:       ; %bb.0: ; %main_body
-; GFX10-NEXT:    v_mov_b32_e32 v4, 0
-; GFX10-NEXT:    v_mov_b32_e32 v3, v0
-; GFX10-NEXT:    v_mov_b32_e32 v5, v4
-; GFX10-NEXT:    v_mov_b32_e32 v6, v4
-; GFX10-NEXT:    v_mov_b32_e32 v0, v4
-; GFX10-NEXT:    v_mov_b32_e32 v1, v5
-; GFX10-NEXT:    v_mov_b32_e32 v2, v6
-; GFX10-NEXT:    image_load v[0:2], v3, s[0:7] dmask:0x6 dim:SQ_RSRC_IMG_1D unorm tfe
+; GFX10-NEXT:    v_mov_b32_e32 v1, 0
+; GFX10-NEXT:    v_mov_b32_e32 v3, v1
+; GFX10-NEXT:    v_mov_b32_e32 v2, v1
+; GFX10-NEXT:    v_mov_b32_e32 v4, v3
+; GFX10-NEXT:    v_mov_b32_e32 v3, v2
+; GFX10-NEXT:    v_mov_b32_e32 v2, v1
+; GFX10-NEXT:    image_load v[2:4], v0, s[0:7] dmask:0x6 dim:SQ_RSRC_IMG_1D unorm tfe
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    global_store_dword v4, v2, s[8:9]
+; GFX10-NEXT:    global_store_dword v1, v4, s[8:9]
+; GFX10-NEXT:    v_mov_b32_e32 v0, v2
+; GFX10-NEXT:    v_mov_b32_e32 v1, v3
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: load_1d_tfe_V4_dmask2:
 ; GFX11:       ; %bb.0: ; %main_body
-; GFX11-NEXT:    v_dual_mov_b32 v3, v0 :: v_dual_mov_b32 v4, 0
-; GFX11-NEXT:    v_mov_b32_e32 v5, v4
-; GFX11-NEXT:    v_mov_b32_e32 v6, v4
-; GFX11-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
-; GFX11-NEXT:    v_mov_b32_e32 v2, v6
-; GFX11-NEXT:    image_load v[0:2], v3, s[0:7] dmask:0x6 dim:SQ_RSRC_IMG_1D unorm tfe
+; GFX11-NEXT:    v_mov_b32_e32 v1, 0
+; GFX11-NEXT:    v_mov_b32_e32 v3, v1
+; GFX11-NEXT:    v_mov_b32_e32 v2, v1
+; GFX11-NEXT:    v_mov_b32_e32 v4, v3
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    v_mov_b32_e32 v2, v1
+; GFX11-NEXT:    image_load v[2:4], v0, s[0:7] dmask:0x6 dim:SQ_RSRC_IMG_1D unorm tfe
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    global_store_b32 v4, v2, s[8:9]
+; GFX11-NEXT:    v_mov_b32_e32 v0, v2
+; GFX11-NEXT:    global_store_b32 v1, v4, s[8:9]
+; GFX11-NEXT:    v_mov_b32_e32 v1, v3
 ; GFX11-NEXT:    ; return to shader part epilog
 ;
 ; GFX12-LABEL: load_1d_tfe_V4_dmask2:
 ; GFX12:       ; %bb.0: ; %main_body
-; GFX12-NEXT:    v_dual_mov_b32 v3, v0 :: v_dual_mov_b32 v4, 0
-; GFX12-NEXT:    v_dual_mov_b32 v5, v4 :: v_dual_mov_b32 v6, v4
-; GFX12-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
-; GFX12-NEXT:    v_mov_b32_e32 v2, v6
-; GFX12-NEXT:    image_load v[0:2], v3, s[0:7] dmask:0x6 dim:SQ_RSRC_IMG_1D tfe
+; GFX12-NEXT:    v_mov_b32_e32 v1, 0
+; GFX12-NEXT:    v_dual_mov_b32 v2, v1 :: v_dual_mov_b32 v3, v1
+; GFX12-NEXT:    v_mov_b32_e32 v4, v3
+; GFX12-NEXT:    v_mov_b32_e32 v3, v2
+; GFX12-NEXT:    v_mov_b32_e32 v2, v1
+; GFX12-NEXT:    image_load v[2:4], v0, s[0:7] dmask:0x6 dim:SQ_RSRC_IMG_1D tfe
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b32 v4, v2, s[8:9]
+; GFX12-NEXT:    v_mov_b32_e32 v0, v2
+; GFX12-NEXT:    global_store_b32 v1, v4, s[8:9]
+; GFX12-NEXT:    v_mov_b32_e32 v1, v3
 ; GFX12-NEXT:    ; return to shader part epilog
 main_body:
   %v = call {<4 x float>,i32} @llvm.amdgcn.image.load.1d.v4f32i32.i32(i32 6, i32 %s, <8 x i32> %rsrc, i32 1, i32 0)

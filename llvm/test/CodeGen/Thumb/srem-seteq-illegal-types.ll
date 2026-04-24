@@ -81,54 +81,53 @@ define <3 x i1> @test_srem_vec(<3 x i33> %X) nounwind {
 ; CHECK-NEXT:    push {r4, r5, r6, r7, lr}
 ; CHECK-NEXT:    .pad #12
 ; CHECK-NEXT:    sub sp, #12
-; CHECK-NEXT:    movs r7, r3
+; CHECK-NEXT:    movs r4, r3
 ; CHECK-NEXT:    str r2, [sp, #4] @ 4-byte Spill
-; CHECK-NEXT:    movs r5, #1
-; CHECK-NEXT:    ands r1, r5
+; CHECK-NEXT:    movs r6, #1
+; CHECK-NEXT:    ands r1, r6
 ; CHECK-NEXT:    rsbs r1, r1, #0
-; CHECK-NEXT:    movs r6, #9
-; CHECK-NEXT:    movs r3, #0
-; CHECK-NEXT:    str r3, [sp] @ 4-byte Spill
-; CHECK-NEXT:    movs r2, r6
-; CHECK-NEXT:    bl __aeabi_ldivmod
-; CHECK-NEXT:    movs r4, r2
-; CHECK-NEXT:    movs r0, #3
-; CHECK-NEXT:    str r0, [sp, #8] @ 4-byte Spill
-; CHECK-NEXT:    eors r4, r0
-; CHECK-NEXT:    orrs r4, r3
-; CHECK-NEXT:    subs r0, r4, #1
-; CHECK-NEXT:    sbcs r4, r0
-; CHECK-NEXT:    ands r7, r5
-; CHECK-NEXT:    rsbs r1, r7, #0
-; CHECK-NEXT:    ldr r0, [sp, #4] @ 4-byte Reload
-; CHECK-NEXT:    movs r2, r6
-; CHECK-NEXT:    ldr r7, [sp] @ 4-byte Reload
+; CHECK-NEXT:    movs r2, #9
+; CHECK-NEXT:    str r2, [sp] @ 4-byte Spill
+; CHECK-NEXT:    movs r7, #0
 ; CHECK-NEXT:    movs r3, r7
 ; CHECK-NEXT:    bl __aeabi_ldivmod
-; CHECK-NEXT:    movs r0, r5
+; CHECK-NEXT:    movs r5, r2
+; CHECK-NEXT:    movs r0, #3
+; CHECK-NEXT:    str r0, [sp, #8] @ 4-byte Spill
+; CHECK-NEXT:    eors r5, r0
+; CHECK-NEXT:    orrs r5, r3
+; CHECK-NEXT:    subs r0, r5, #1
+; CHECK-NEXT:    sbcs r5, r0
+; CHECK-NEXT:    ands r4, r6
+; CHECK-NEXT:    rsbs r1, r4, #0
+; CHECK-NEXT:    ldr r0, [sp, #4] @ 4-byte Reload
+; CHECK-NEXT:    ldr r2, [sp] @ 4-byte Reload
+; CHECK-NEXT:    movs r3, r7
+; CHECK-NEXT:    bl __aeabi_ldivmod
+; CHECK-NEXT:    movs r0, r6
 ; CHECK-NEXT:    bics r0, r3
 ; CHECK-NEXT:    movs r1, #2
-; CHECK-NEXT:    mvns r6, r1
-; CHECK-NEXT:    eors r6, r2
-; CHECK-NEXT:    orrs r6, r0
-; CHECK-NEXT:    subs r0, r6, #1
-; CHECK-NEXT:    sbcs r6, r0
+; CHECK-NEXT:    mvns r4, r1
+; CHECK-NEXT:    eors r4, r2
+; CHECK-NEXT:    orrs r4, r0
+; CHECK-NEXT:    subs r0, r4, #1
+; CHECK-NEXT:    sbcs r4, r0
 ; CHECK-NEXT:    ldr r0, [sp, #36]
-; CHECK-NEXT:    ands r0, r5
+; CHECK-NEXT:    ands r0, r6
 ; CHECK-NEXT:    rsbs r1, r0, #0
 ; CHECK-NEXT:    movs r0, #8
 ; CHECK-NEXT:    mvns r2, r0
 ; CHECK-NEXT:    mvns r3, r7
 ; CHECK-NEXT:    ldr r0, [sp, #32]
 ; CHECK-NEXT:    bl __aeabi_ldivmod
-; CHECK-NEXT:    ands r5, r3
+; CHECK-NEXT:    ands r6, r3
 ; CHECK-NEXT:    ldr r0, [sp, #8] @ 4-byte Reload
 ; CHECK-NEXT:    eors r2, r0
-; CHECK-NEXT:    orrs r2, r5
+; CHECK-NEXT:    orrs r2, r6
 ; CHECK-NEXT:    subs r0, r2, #1
 ; CHECK-NEXT:    sbcs r2, r0
-; CHECK-NEXT:    movs r0, r4
-; CHECK-NEXT:    movs r1, r6
+; CHECK-NEXT:    movs r0, r5
+; CHECK-NEXT:    movs r1, r4
 ; CHECK-NEXT:    add sp, #12
 ; CHECK-NEXT:    pop {r4, r5, r6, r7}
 ; CHECK-NEXT:    pop {r3}

@@ -745,25 +745,25 @@ define void @test_limit_one_pred(ptr noalias %s1, ptr nocapture %s2, i32 %x, ptr
 ; CHECK-NEXT:    .cfi_offset %r12, -32
 ; CHECK-NEXT:    .cfi_offset %r14, -24
 ; CHECK-NEXT:    .cfi_offset %r15, -16
-; CHECK-NEXT:    movq %r8, %r12
-; CHECK-NEXT:    movq %rcx, %r15
+; CHECK-NEXT:    movq %r8, %r15
+; CHECK-NEXT:    movq %rcx, %r14
 ; CHECK-NEXT:    movq %rsi, %rbx
-; CHECK-NEXT:    movq %rdi, %r14
+; CHECK-NEXT:    movq %rdi, %r12
 ; CHECK-NEXT:    movl %r9d, 12(%rdi)
 ; CHECK-NEXT:    cmpl $18, %edx
 ; CHECK-NEXT:    jl .LBB10_2
 ; CHECK-NEXT:  # %bb.1: # %if.then
-; CHECK-NEXT:    movl %edx, 4(%r14)
-; CHECK-NEXT:    movq %r14, %rdi
+; CHECK-NEXT:    movl %edx, 4(%r12)
+; CHECK-NEXT:    movq %r12, %rdi
 ; CHECK-NEXT:    callq bar@PLT
 ; CHECK-NEXT:  .LBB10_2: # %if.end
-; CHECK-NEXT:    movups (%r12), %xmm0
-; CHECK-NEXT:    movups %xmm0, (%r15)
-; CHECK-NEXT:    movq (%r14), %rax
+; CHECK-NEXT:    movups (%r15), %xmm0
+; CHECK-NEXT:    movups %xmm0, (%r14)
+; CHECK-NEXT:    movq (%r12), %rax
 ; CHECK-NEXT:    movq %rax, (%rbx)
-; CHECK-NEXT:    movl 8(%r14), %eax
+; CHECK-NEXT:    movl 8(%r12), %eax
 ; CHECK-NEXT:    movl %eax, 8(%rbx)
-; CHECK-NEXT:    movl 12(%r14), %eax
+; CHECK-NEXT:    movl 12(%r12), %eax
 ; CHECK-NEXT:    movl %eax, 12(%rbx)
 ; CHECK-NEXT:    addq $8, %rsp
 ; CHECK-NEXT:    .cfi_def_cfa_offset 40
@@ -837,25 +837,25 @@ define void @test_limit_one_pred(ptr noalias %s1, ptr nocapture %s2, i32 %x, ptr
 ; AVX-NEXT:    .cfi_offset %r12, -32
 ; AVX-NEXT:    .cfi_offset %r14, -24
 ; AVX-NEXT:    .cfi_offset %r15, -16
-; AVX-NEXT:    movq %r8, %r12
-; AVX-NEXT:    movq %rcx, %r15
+; AVX-NEXT:    movq %r8, %r15
+; AVX-NEXT:    movq %rcx, %r14
 ; AVX-NEXT:    movq %rsi, %rbx
-; AVX-NEXT:    movq %rdi, %r14
+; AVX-NEXT:    movq %rdi, %r12
 ; AVX-NEXT:    movl %r9d, 12(%rdi)
 ; AVX-NEXT:    cmpl $18, %edx
 ; AVX-NEXT:    jl .LBB10_2
 ; AVX-NEXT:  # %bb.1: # %if.then
-; AVX-NEXT:    movl %edx, 4(%r14)
-; AVX-NEXT:    movq %r14, %rdi
+; AVX-NEXT:    movl %edx, 4(%r12)
+; AVX-NEXT:    movq %r12, %rdi
 ; AVX-NEXT:    callq bar@PLT
 ; AVX-NEXT:  .LBB10_2: # %if.end
-; AVX-NEXT:    vmovups (%r12), %xmm0
-; AVX-NEXT:    vmovups %xmm0, (%r15)
-; AVX-NEXT:    movq (%r14), %rax
+; AVX-NEXT:    vmovups (%r15), %xmm0
+; AVX-NEXT:    vmovups %xmm0, (%r14)
+; AVX-NEXT:    movq (%r12), %rax
 ; AVX-NEXT:    movq %rax, (%rbx)
-; AVX-NEXT:    movl 8(%r14), %eax
+; AVX-NEXT:    movl 8(%r12), %eax
 ; AVX-NEXT:    movl %eax, 8(%rbx)
-; AVX-NEXT:    movl 12(%r14), %eax
+; AVX-NEXT:    movl 12(%r12), %eax
 ; AVX-NEXT:    movl %eax, 12(%rbx)
 ; AVX-NEXT:    addq $8, %rsp
 ; AVX-NEXT:    .cfi_def_cfa_offset 40

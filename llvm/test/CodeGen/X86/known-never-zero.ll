@@ -1581,19 +1581,19 @@ define i32 @udiv_known_nonzero_vec(<4 x i32> %xx, <4 x i32> %y, ptr %p) nounwind
 ; X86:       # %bb.0:
 ; X86-NEXT:    pushl %edi
 ; X86-NEXT:    pushl %esi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
 ; X86-NEXT:    por {{\.?LCPI[0-9]+_[0-9]+}}, %xmm0
 ; X86-NEXT:    pshufd {{.*#+}} xmm2 = xmm1[1,1,1,1]
-; X86-NEXT:    movd %xmm2, %ecx
+; X86-NEXT:    movd %xmm2, %esi
 ; X86-NEXT:    movl $-1, %eax
 ; X86-NEXT:    xorl %edx, %edx
-; X86-NEXT:    divl %ecx
+; X86-NEXT:    divl %esi
 ; X86-NEXT:    movd %eax, %xmm3
-; X86-NEXT:    movd %xmm1, %ecx
+; X86-NEXT:    movd %xmm1, %esi
 ; X86-NEXT:    movd %xmm0, %eax
 ; X86-NEXT:    xorl %edx, %edx
-; X86-NEXT:    divl %ecx
-; X86-NEXT:    movl %eax, %ecx
+; X86-NEXT:    divl %esi
+; X86-NEXT:    movl %eax, %esi
 ; X86-NEXT:    movd %eax, %xmm2
 ; X86-NEXT:    punpckldq {{.*#+}} xmm2 = xmm2[0],xmm3[0],xmm2[1],xmm3[1]
 ; X86-NEXT:    pshufd {{.*#+}} xmm3 = xmm1[3,3,3,3]
@@ -1612,8 +1612,8 @@ define i32 @udiv_known_nonzero_vec(<4 x i32> %xx, <4 x i32> %y, ptr %p) nounwind
 ; X86-NEXT:    movd %eax, %xmm0
 ; X86-NEXT:    punpckldq {{.*#+}} xmm0 = xmm0[0],xmm3[0],xmm0[1],xmm3[1]
 ; X86-NEXT:    punpcklqdq {{.*#+}} xmm2 = xmm2[0],xmm0[0]
-; X86-NEXT:    movdqa %xmm2, (%esi)
-; X86-NEXT:    bsfl %ecx, %ecx
+; X86-NEXT:    movdqa %xmm2, (%ecx)
+; X86-NEXT:    bsfl %esi, %ecx
 ; X86-NEXT:    movl $32, %eax
 ; X86-NEXT:    cmovnel %ecx, %eax
 ; X86-NEXT:    popl %esi
@@ -1711,19 +1711,19 @@ define i32 @sdiv_known_nonzero_vec(<4 x i32> %xx, <4 x i32> %y, ptr %p) nounwind
 ; X86:       # %bb.0:
 ; X86-NEXT:    pushl %edi
 ; X86-NEXT:    pushl %esi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
 ; X86-NEXT:    por {{\.?LCPI[0-9]+_[0-9]+}}, %xmm0
 ; X86-NEXT:    pshufd {{.*#+}} xmm2 = xmm1[1,1,1,1]
-; X86-NEXT:    movd %xmm2, %ecx
+; X86-NEXT:    movd %xmm2, %esi
 ; X86-NEXT:    movl $-1, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %ecx
+; X86-NEXT:    idivl %esi
 ; X86-NEXT:    movd %eax, %xmm3
-; X86-NEXT:    movd %xmm1, %ecx
+; X86-NEXT:    movd %xmm1, %esi
 ; X86-NEXT:    movd %xmm0, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %ecx
-; X86-NEXT:    movl %eax, %ecx
+; X86-NEXT:    idivl %esi
+; X86-NEXT:    movl %eax, %esi
 ; X86-NEXT:    movd %eax, %xmm2
 ; X86-NEXT:    punpckldq {{.*#+}} xmm2 = xmm2[0],xmm3[0],xmm2[1],xmm3[1]
 ; X86-NEXT:    pshufd {{.*#+}} xmm3 = xmm1[3,3,3,3]
@@ -1742,8 +1742,8 @@ define i32 @sdiv_known_nonzero_vec(<4 x i32> %xx, <4 x i32> %y, ptr %p) nounwind
 ; X86-NEXT:    movd %eax, %xmm0
 ; X86-NEXT:    punpckldq {{.*#+}} xmm0 = xmm0[0],xmm3[0],xmm0[1],xmm3[1]
 ; X86-NEXT:    punpcklqdq {{.*#+}} xmm2 = xmm2[0],xmm0[0]
-; X86-NEXT:    movdqa %xmm2, (%esi)
-; X86-NEXT:    bsfl %ecx, %ecx
+; X86-NEXT:    movdqa %xmm2, (%ecx)
+; X86-NEXT:    bsfl %esi, %ecx
 ; X86-NEXT:    movl $32, %eax
 ; X86-NEXT:    cmovnel %ecx, %eax
 ; X86-NEXT:    popl %esi

@@ -8,7 +8,9 @@
 define amdgpu_ps float @global_csub_saddr_i32_rtn(ptr addrspace(1) inreg %sbase, i32 %voffset, i32 %data) {
 ; GCN-LABEL: global_csub_saddr_i32_rtn:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_atomic_csub v0, v0, v1, s[2:3] glc
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_atomic_csub v0, v0, v1, s[0:1] glc
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    buffer_gl1_inv
 ; GCN-NEXT:    buffer_gl0_inv
@@ -23,7 +25,9 @@ define amdgpu_ps float @global_csub_saddr_i32_rtn(ptr addrspace(1) inreg %sbase,
 define amdgpu_ps float @global_csub_saddr_i32_rtn_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, i32 %data) {
 ; GCN-LABEL: global_csub_saddr_i32_rtn_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_atomic_csub v0, v0, v1, s[2:3] offset:-128 glc
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_atomic_csub v0, v0, v1, s[0:1] offset:-128 glc
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    buffer_gl1_inv
 ; GCN-NEXT:    buffer_gl0_inv
@@ -39,7 +43,9 @@ define amdgpu_ps float @global_csub_saddr_i32_rtn_neg128(ptr addrspace(1) inreg 
 define amdgpu_ps void @global_csub_saddr_i32_nortn(ptr addrspace(1) inreg %sbase, i32 %voffset, i32 %data) {
 ; GCN-LABEL: global_csub_saddr_i32_nortn:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_atomic_csub v0, v0, v1, s[2:3] glc
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_atomic_csub v0, v0, v1, s[0:1] glc
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    buffer_gl1_inv
 ; GCN-NEXT:    buffer_gl0_inv
@@ -53,7 +59,9 @@ define amdgpu_ps void @global_csub_saddr_i32_nortn(ptr addrspace(1) inreg %sbase
 define amdgpu_ps void @global_csub_saddr_i32_nortn_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, i32 %data) {
 ; GCN-LABEL: global_csub_saddr_i32_nortn_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_atomic_csub v0, v0, v1, s[2:3] offset:-128 glc
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_atomic_csub v0, v0, v1, s[0:1] offset:-128 glc
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    buffer_gl1_inv
 ; GCN-NEXT:    buffer_gl0_inv

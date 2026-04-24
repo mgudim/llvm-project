@@ -21,14 +21,14 @@ define arm_aapcs_vfpcc double @zero(double %a, double %b, double %c) {
 ; CHECK-NEXT:    vmov r2, r3, d8
 ; CHECK-NEXT:    vmov r0, r1, d0
 ; CHECK-NEXT:    bl __aeabi_dadd
+; CHECK-NEXT:    vmov r2, r3, d9
 ; CHECK-NEXT:    str r1, [sp, #4]
 ; CHECK-NEXT:    mov r4, r0
 ; CHECK-NEXT:    ldrb.w r0, [sp, #7]
 ; CHECK-NEXT:    eor r0, r0, #128
 ; CHECK-NEXT:    strb.w r0, [sp, #7]
-; CHECK-NEXT:    vmov r0, r1, d9
-; CHECK-NEXT:    mov r2, r0
-; CHECK-NEXT:    mov r3, r1
+; CHECK-NEXT:    mov r0, r2
+; CHECK-NEXT:    mov r1, r3
 ; CHECK-NEXT:    bl __aeabi_dadd
 ; CHECK-NEXT:    mov r3, r1
 ; CHECK-NEXT:    ldr r1, [sp, #4]

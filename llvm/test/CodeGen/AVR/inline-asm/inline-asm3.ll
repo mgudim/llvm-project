@@ -311,20 +311,20 @@ define void @add_w_i8(i8 signext %0, i8 signext %1) {
 define void @add_w_i16(i16 signext %0, i16 signext %1) {
 ; CHECK-LABEL: add_w_i16:
 ; CHECK:       ; %bb.0:
-; CHECK-NEXT:    mov r26, r22
-; CHECK-NEXT:    mov r27, r23
-; CHECK-NEXT:    mov r30, r24
-; CHECK-NEXT:    mov r31, r25
+; CHECK-NEXT:    mov r30, r22
+; CHECK-NEXT:    mov r31, r23
+; CHECK-NEXT:    mov r26, r24
+; CHECK-NEXT:    mov r27, r25
 ; CHECK-NEXT:    ;APP
-; CHECK-NEXT:    mov r24, r30
-; CHECK-NEXT:    mov r25, r31
-; CHECK-NEXT:    add r24, r26
-; CHECK-NEXT:    adc r25, r27
+; CHECK-NEXT:    mov r24, r26
+; CHECK-NEXT:    mov r25, r27
+; CHECK-NEXT:    add r24, r30
+; CHECK-NEXT:    adc r25, r31
 ; CHECK-NEXT:    ;NO_APP
-; CHECK-NEXT:    mov r22, r30
-; CHECK-NEXT:    mov r23, r31
-; CHECK-NEXT:    mov r20, r26
-; CHECK-NEXT:    mov r21, r27
+; CHECK-NEXT:    mov r22, r26
+; CHECK-NEXT:    mov r23, r27
+; CHECK-NEXT:    mov r20, r30
+; CHECK-NEXT:    mov r21, r31
 ; CHECK-NEXT:    rcall foo16
 ; CHECK-NEXT:    ret
   %3 = tail call i16 asm sideeffect "mov ${0:A}, ${1:A}\0Amov ${0:B}, ${1:B}\0Aadd ${0:A}, ${2:A}\0Aadc ${0:B}, ${2:B}", "=w,w,w"(i16 %0, i16 %1)

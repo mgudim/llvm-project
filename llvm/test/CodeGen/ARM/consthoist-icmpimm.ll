@@ -222,48 +222,46 @@ define i32 @icmp32_sge_0(i32 %x, i32 %y, i32 %a, i32 %b, i1 %c) {
 ;
 ; CHECKV7M-LABEL: icmp32_sge_0:
 ; CHECKV7M:       @ %bb.0:
-; CHECKV7M-NEXT:    mov r12, r3
-; CHECKV7M-NEXT:    ldr r3, [sp]
-; CHECKV7M-NEXT:    lsls r3, r3, #31
+; CHECKV7M-NEXT:    ldr.w r12, [sp]
+; CHECKV7M-NEXT:    lsls.w r12, r12, #31
 ; CHECKV7M-NEXT:    beq .LBB2_2
 ; CHECKV7M-NEXT:  @ %bb.1: @ %then
 ; CHECKV7M-NEXT:    cmp.w r1, #-1
-; CHECKV7M-NEXT:    mov r1, r12
+; CHECKV7M-NEXT:    mov r1, r3
 ; CHECKV7M-NEXT:    it gt
 ; CHECKV7M-NEXT:    movgt r1, r2
 ; CHECKV7M-NEXT:    cmp.w r0, #-1
 ; CHECKV7M-NEXT:    it gt
-; CHECKV7M-NEXT:    movgt r12, r2
-; CHECKV7M-NEXT:    add.w r0, r12, r1
+; CHECKV7M-NEXT:    movgt r3, r2
+; CHECKV7M-NEXT:    adds r0, r3, r1
 ; CHECKV7M-NEXT:    bx lr
 ; CHECKV7M-NEXT:  .LBB2_2: @ %else
 ; CHECKV7M-NEXT:    cmp.w r0, #-1
 ; CHECKV7M-NEXT:    it gt
-; CHECKV7M-NEXT:    movgt r12, r2
-; CHECKV7M-NEXT:    mov r0, r12
+; CHECKV7M-NEXT:    movgt r3, r2
+; CHECKV7M-NEXT:    mov r0, r3
 ; CHECKV7M-NEXT:    bx lr
 ;
 ; CHECKV7A-LABEL: icmp32_sge_0:
 ; CHECKV7A:       @ %bb.0:
-; CHECKV7A-NEXT:    mov r12, r3
-; CHECKV7A-NEXT:    ldr r3, [sp]
-; CHECKV7A-NEXT:    lsls r3, r3, #31
+; CHECKV7A-NEXT:    ldr.w r12, [sp]
+; CHECKV7A-NEXT:    lsls.w r12, r12, #31
 ; CHECKV7A-NEXT:    beq .LBB2_2
 ; CHECKV7A-NEXT:  @ %bb.1: @ %then
 ; CHECKV7A-NEXT:    cmp.w r1, #-1
-; CHECKV7A-NEXT:    mov r1, r12
+; CHECKV7A-NEXT:    mov r1, r3
 ; CHECKV7A-NEXT:    it gt
 ; CHECKV7A-NEXT:    movgt r1, r2
 ; CHECKV7A-NEXT:    cmp.w r0, #-1
 ; CHECKV7A-NEXT:    it gt
-; CHECKV7A-NEXT:    movgt r12, r2
-; CHECKV7A-NEXT:    add.w r0, r12, r1
+; CHECKV7A-NEXT:    movgt r3, r2
+; CHECKV7A-NEXT:    adds r0, r3, r1
 ; CHECKV7A-NEXT:    bx lr
 ; CHECKV7A-NEXT:  .LBB2_2: @ %else
 ; CHECKV7A-NEXT:    cmp.w r0, #-1
 ; CHECKV7A-NEXT:    it gt
-; CHECKV7A-NEXT:    movgt r12, r2
-; CHECKV7A-NEXT:    mov r0, r12
+; CHECKV7A-NEXT:    movgt r3, r2
+; CHECKV7A-NEXT:    mov r0, r3
 ; CHECKV7A-NEXT:    bx lr
   br i1 %c, label %then, label %else
 then:
@@ -316,48 +314,46 @@ define i32 @icmp32_sgt_m1(i32 %x, i32 %y, i32 %a, i32 %b, i1 %c) {
 ;
 ; CHECKV7M-LABEL: icmp32_sgt_m1:
 ; CHECKV7M:       @ %bb.0:
-; CHECKV7M-NEXT:    mov r12, r3
-; CHECKV7M-NEXT:    ldr r3, [sp]
-; CHECKV7M-NEXT:    lsls r3, r3, #31
+; CHECKV7M-NEXT:    ldr.w r12, [sp]
+; CHECKV7M-NEXT:    lsls.w r12, r12, #31
 ; CHECKV7M-NEXT:    beq .LBB3_2
 ; CHECKV7M-NEXT:  @ %bb.1: @ %then
 ; CHECKV7M-NEXT:    cmp.w r1, #-1
-; CHECKV7M-NEXT:    mov r1, r12
+; CHECKV7M-NEXT:    mov r1, r3
 ; CHECKV7M-NEXT:    it gt
 ; CHECKV7M-NEXT:    movgt r1, r2
 ; CHECKV7M-NEXT:    cmp.w r0, #-1
 ; CHECKV7M-NEXT:    it gt
-; CHECKV7M-NEXT:    movgt r12, r2
-; CHECKV7M-NEXT:    add.w r0, r12, r1
+; CHECKV7M-NEXT:    movgt r3, r2
+; CHECKV7M-NEXT:    adds r0, r3, r1
 ; CHECKV7M-NEXT:    bx lr
 ; CHECKV7M-NEXT:  .LBB3_2: @ %else
 ; CHECKV7M-NEXT:    cmp.w r1, #-1
 ; CHECKV7M-NEXT:    it gt
-; CHECKV7M-NEXT:    movgt r12, r2
-; CHECKV7M-NEXT:    mov r0, r12
+; CHECKV7M-NEXT:    movgt r3, r2
+; CHECKV7M-NEXT:    mov r0, r3
 ; CHECKV7M-NEXT:    bx lr
 ;
 ; CHECKV7A-LABEL: icmp32_sgt_m1:
 ; CHECKV7A:       @ %bb.0:
-; CHECKV7A-NEXT:    mov r12, r3
-; CHECKV7A-NEXT:    ldr r3, [sp]
-; CHECKV7A-NEXT:    lsls r3, r3, #31
+; CHECKV7A-NEXT:    ldr.w r12, [sp]
+; CHECKV7A-NEXT:    lsls.w r12, r12, #31
 ; CHECKV7A-NEXT:    beq .LBB3_2
 ; CHECKV7A-NEXT:  @ %bb.1: @ %then
 ; CHECKV7A-NEXT:    cmp.w r1, #-1
-; CHECKV7A-NEXT:    mov r1, r12
+; CHECKV7A-NEXT:    mov r1, r3
 ; CHECKV7A-NEXT:    it gt
 ; CHECKV7A-NEXT:    movgt r1, r2
 ; CHECKV7A-NEXT:    cmp.w r0, #-1
 ; CHECKV7A-NEXT:    it gt
-; CHECKV7A-NEXT:    movgt r12, r2
-; CHECKV7A-NEXT:    add.w r0, r12, r1
+; CHECKV7A-NEXT:    movgt r3, r2
+; CHECKV7A-NEXT:    adds r0, r3, r1
 ; CHECKV7A-NEXT:    bx lr
 ; CHECKV7A-NEXT:  .LBB3_2: @ %else
 ; CHECKV7A-NEXT:    cmp.w r1, #-1
 ; CHECKV7A-NEXT:    it gt
-; CHECKV7A-NEXT:    movgt r12, r2
-; CHECKV7A-NEXT:    mov r0, r12
+; CHECKV7A-NEXT:    movgt r3, r2
+; CHECKV7A-NEXT:    mov r0, r3
 ; CHECKV7A-NEXT:    bx lr
   br i1 %c, label %then, label %else
 then:

@@ -453,8 +453,8 @@ define <2 x double> @vec_neg_fma_flag_propagation(<2 x double> %a) {
 ; CHECK-FAST-NOVSX-LABEL: vec_neg_fma_flag_propagation:
 ; CHECK-FAST-NOVSX:       # %bb.0: # %entry
 ; CHECK-FAST-NOVSX-NEXT:    addis 3, 2, .LCPI12_0@toc@ha
-; CHECK-FAST-NOVSX-NEXT:    lfs 1, .LCPI12_0@toc@l(3)
-; CHECK-FAST-NOVSX-NEXT:    fmr 2, 1
+; CHECK-FAST-NOVSX-NEXT:    lfs 2, .LCPI12_0@toc@l(3)
+; CHECK-FAST-NOVSX-NEXT:    fmr 1, 2
 ; CHECK-FAST-NOVSX-NEXT:    blr
 ;
 ; CHECK-LABEL: vec_neg_fma_flag_propagation:

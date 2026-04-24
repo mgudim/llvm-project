@@ -147,11 +147,11 @@ define amdgpu_kernel void @withcall() {
 ; G_GFX9-NEXT:    s_mov_b32 s23, 0xe00000
 ; G_GFX9-NEXT:    s_add_u32 s20, s20, s11
 ; G_GFX9-NEXT:    s_addc_u32 s21, s21, 0
-; G_GFX9-NEXT:    s_mov_b32 s16, s8
+; G_GFX9-NEXT:    s_mov_b32 s12, s8
 ; G_GFX9-NEXT:    s_add_u32 s8, s4, 36
-; G_GFX9-NEXT:    s_mov_b32 s15, s9
+; G_GFX9-NEXT:    s_mov_b32 s13, s9
 ; G_GFX9-NEXT:    s_addc_u32 s9, s5, 0
-; G_GFX9-NEXT:    s_mov_b64 s[12:13], s[0:1]
+; G_GFX9-NEXT:    s_mov_b64 s[16:17], s[0:1]
 ; G_GFX9-NEXT:    s_getpc_b64 s[0:1]
 ; G_GFX9-NEXT:    s_add_u32 s0, s0, nonkernel@gotpcrel32@lo+4
 ; G_GFX9-NEXT:    s_addc_u32 s1, s1, nonkernel@gotpcrel32@hi+12
@@ -166,9 +166,7 @@ define amdgpu_kernel void @withcall() {
 ; G_GFX9-NEXT:    v_mov_b32_e32 v4, 8
 ; G_GFX9-NEXT:    v_or3_b32 v31, v0, v1, v2
 ; G_GFX9-NEXT:    s_mov_b64 s[2:3], s[22:23]
-; G_GFX9-NEXT:    s_mov_b64 s[4:5], s[12:13]
-; G_GFX9-NEXT:    s_mov_b32 s12, s16
-; G_GFX9-NEXT:    s_mov_b32 s13, s15
+; G_GFX9-NEXT:    s_mov_b64 s[4:5], s[16:17]
 ; G_GFX9-NEXT:    s_mov_b32 s32, 0
 ; G_GFX9-NEXT:    ds_write_b32 v4, v3
 ; G_GFX9-NEXT:    s_waitcnt lgkmcnt(0)
@@ -183,11 +181,11 @@ define amdgpu_kernel void @withcall() {
 ; G_GFX10-NEXT:    s_mov_b32 s23, 0x31c16000
 ; G_GFX10-NEXT:    s_add_u32 s20, s20, s11
 ; G_GFX10-NEXT:    s_addc_u32 s21, s21, 0
-; G_GFX10-NEXT:    s_mov_b32 s16, s8
+; G_GFX10-NEXT:    s_mov_b32 s12, s8
 ; G_GFX10-NEXT:    s_add_u32 s8, s4, 36
-; G_GFX10-NEXT:    s_mov_b32 s15, s9
+; G_GFX10-NEXT:    s_mov_b32 s13, s9
 ; G_GFX10-NEXT:    s_addc_u32 s9, s5, 0
-; G_GFX10-NEXT:    s_mov_b64 s[12:13], s[0:1]
+; G_GFX10-NEXT:    s_mov_b64 s[16:17], s[0:1]
 ; G_GFX10-NEXT:    s_getpc_b64 s[0:1]
 ; G_GFX10-NEXT:    s_add_u32 s0, s0, nonkernel@gotpcrel32@lo+4
 ; G_GFX10-NEXT:    s_addc_u32 s1, s1, nonkernel@gotpcrel32@hi+12
@@ -202,9 +200,7 @@ define amdgpu_kernel void @withcall() {
 ; G_GFX10-NEXT:    s_mov_b64 s[6:7], s[2:3]
 ; G_GFX10-NEXT:    s_mov_b64 s[0:1], s[20:21]
 ; G_GFX10-NEXT:    s_mov_b64 s[2:3], s[22:23]
-; G_GFX10-NEXT:    s_mov_b64 s[4:5], s[12:13]
-; G_GFX10-NEXT:    s_mov_b32 s12, s16
-; G_GFX10-NEXT:    s_mov_b32 s13, s15
+; G_GFX10-NEXT:    s_mov_b64 s[4:5], s[16:17]
 ; G_GFX10-NEXT:    s_mov_b32 s32, 0
 ; G_GFX10-NEXT:    ds_write_b32 v4, v3
 ; G_GFX10-NEXT:    s_waitcnt lgkmcnt(0)

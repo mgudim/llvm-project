@@ -92,14 +92,14 @@ define i64 @test_mul_i64(i64 %a, i64 %b) {
 ; CHECK32-LABEL: test_mul_i64:
 ; CHECK32:       # %bb.0:
 ; CHECK32-NEXT:    pushl %esi
-; CHECK32-NEXT:    movl {{[0-9]+}}(%esp), %ecx
 ; CHECK32-NEXT:    movl {{[0-9]+}}(%esp), %esi
-; CHECK32-NEXT:    movl %ecx, %eax
-; CHECK32-NEXT:    mull %esi
-; CHECK32-NEXT:    imull {{[0-9]+}}(%esp), %ecx
-; CHECK32-NEXT:    addl %ecx, %edx
+; CHECK32-NEXT:    movl {{[0-9]+}}(%esp), %ecx
+; CHECK32-NEXT:    movl %esi, %eax
+; CHECK32-NEXT:    mull %ecx
 ; CHECK32-NEXT:    imull {{[0-9]+}}(%esp), %esi
 ; CHECK32-NEXT:    addl %esi, %edx
+; CHECK32-NEXT:    imull {{[0-9]+}}(%esp), %ecx
+; CHECK32-NEXT:    addl %ecx, %edx
 ; CHECK32-NEXT:    popl %esi
 ; CHECK32-NEXT:    retl
 ;

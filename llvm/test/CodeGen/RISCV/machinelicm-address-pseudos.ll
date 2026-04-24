@@ -153,17 +153,17 @@ define void @test_la_tls_gd(i32 signext %n) nounwind {
 ; RV32I-NEXT:    sw s1, 4(sp) # 4-byte Folded Spill
 ; RV32I-NEXT:    sw s2, 0(sp) # 4-byte Folded Spill
 ; RV32I-NEXT:    mv s0, a0
-; RV32I-NEXT:    li s2, 0
+; RV32I-NEXT:    li s1, 0
 ; RV32I-NEXT:  .Lpcrel_hi3:
-; RV32I-NEXT:    auipc s1, %tls_gd_pcrel_hi(gd)
-; RV32I-NEXT:    addi s1, s1, %pcrel_lo(.Lpcrel_hi3)
+; RV32I-NEXT:    auipc s2, %tls_gd_pcrel_hi(gd)
+; RV32I-NEXT:    addi s2, s2, %pcrel_lo(.Lpcrel_hi3)
 ; RV32I-NEXT:  .LBB3_1: # %loop
 ; RV32I-NEXT:    # =>This Inner Loop Header: Depth=1
-; RV32I-NEXT:    mv a0, s1
+; RV32I-NEXT:    mv a0, s2
 ; RV32I-NEXT:    call __tls_get_addr
 ; RV32I-NEXT:    lw zero, 0(a0)
-; RV32I-NEXT:    addi s2, s2, 1
-; RV32I-NEXT:    blt s2, s0, .LBB3_1
+; RV32I-NEXT:    addi s1, s1, 1
+; RV32I-NEXT:    blt s1, s0, .LBB3_1
 ; RV32I-NEXT:  # %bb.2: # %ret
 ; RV32I-NEXT:    lw ra, 12(sp) # 4-byte Folded Reload
 ; RV32I-NEXT:    lw s0, 8(sp) # 4-byte Folded Reload
@@ -180,17 +180,17 @@ define void @test_la_tls_gd(i32 signext %n) nounwind {
 ; RV64I-NEXT:    sd s1, 8(sp) # 8-byte Folded Spill
 ; RV64I-NEXT:    sd s2, 0(sp) # 8-byte Folded Spill
 ; RV64I-NEXT:    mv s0, a0
-; RV64I-NEXT:    li s2, 0
+; RV64I-NEXT:    li s1, 0
 ; RV64I-NEXT:  .Lpcrel_hi3:
-; RV64I-NEXT:    auipc s1, %tls_gd_pcrel_hi(gd)
-; RV64I-NEXT:    addi s1, s1, %pcrel_lo(.Lpcrel_hi3)
+; RV64I-NEXT:    auipc s2, %tls_gd_pcrel_hi(gd)
+; RV64I-NEXT:    addi s2, s2, %pcrel_lo(.Lpcrel_hi3)
 ; RV64I-NEXT:  .LBB3_1: # %loop
 ; RV64I-NEXT:    # =>This Inner Loop Header: Depth=1
-; RV64I-NEXT:    mv a0, s1
+; RV64I-NEXT:    mv a0, s2
 ; RV64I-NEXT:    call __tls_get_addr
 ; RV64I-NEXT:    lw zero, 0(a0)
-; RV64I-NEXT:    addiw s2, s2, 1
-; RV64I-NEXT:    blt s2, s0, .LBB3_1
+; RV64I-NEXT:    addiw s1, s1, 1
+; RV64I-NEXT:    blt s1, s0, .LBB3_1
 ; RV64I-NEXT:  # %bb.2: # %ret
 ; RV64I-NEXT:    ld ra, 24(sp) # 8-byte Folded Reload
 ; RV64I-NEXT:    ld s0, 16(sp) # 8-byte Folded Reload

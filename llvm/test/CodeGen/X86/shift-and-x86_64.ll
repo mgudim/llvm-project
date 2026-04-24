@@ -4,12 +4,11 @@
 define { i64, i64 } @PR36721_u8(i64, i64, i8 zeroext) nounwind {
 ; CHECK-LABEL: PR36721_u8:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    movl %edx, %ecx
-; CHECK-NEXT:    movq %rsi, %rdx
 ; CHECK-NEXT:    movq %rdi, %rax
-; CHECK-NEXT:    shldq %cl, %rdi, %rdx
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $ecx
+; CHECK-NEXT:    movl %edx, %ecx
+; CHECK-NEXT:    shldq %cl, %rdi, %rsi
 ; CHECK-NEXT:    shlq %cl, %rax
+; CHECK-NEXT:    movq %rsi, %rdx
 ; CHECK-NEXT:    retq
   %4 = zext i64 %1 to i128
   %5 = shl nuw i128 %4, 64
@@ -29,12 +28,11 @@ define { i64, i64 } @PR36721_u8(i64, i64, i8 zeroext) nounwind {
 define { i64, i64 } @PR36721_u32(i64, i64, i32) nounwind {
 ; CHECK-LABEL: PR36721_u32:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    movl %edx, %ecx
-; CHECK-NEXT:    movq %rsi, %rdx
 ; CHECK-NEXT:    movq %rdi, %rax
-; CHECK-NEXT:    shldq %cl, %rdi, %rdx
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $ecx
+; CHECK-NEXT:    movl %edx, %ecx
+; CHECK-NEXT:    shldq %cl, %rdi, %rsi
 ; CHECK-NEXT:    shlq %cl, %rax
+; CHECK-NEXT:    movq %rsi, %rdx
 ; CHECK-NEXT:    retq
   %4 = zext i64 %1 to i128
   %5 = shl nuw i128 %4, 64

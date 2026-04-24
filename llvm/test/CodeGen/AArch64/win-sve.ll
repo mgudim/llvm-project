@@ -219,9 +219,10 @@ define void @f2(i64 %n, <vscale x 2 x i64> %x) {
 ; CHECK-NEXT:    lsl x8, x0, #3
 ; CHECK-NEXT:    mov x19, sp
 ; CHECK-NEXT:    add x8, x8, #15
-; CHECK-NEXT:    lsr x15, x8, #4
+; CHECK-NEXT:    lsr x8, x8, #4
+; CHECK-NEXT:    mov x15, x8
 ; CHECK-NEXT:    bl __chkstk
-; CHECK-NEXT:    sub x1, sp, x15, lsl #4
+; CHECK-NEXT:    sub x1, sp, x8, lsl #4
 ; CHECK-NEXT:    mov sp, x1
 ; CHECK-NEXT:    add x0, x19, #0
 ; CHECK-NEXT:    bl g2
@@ -679,9 +680,10 @@ define void @f5(i64 %n, <vscale x 2 x i64> %x) {
 ; CHECK-NEXT:    lsl x8, x0, #3
 ; CHECK-NEXT:    mov x19, sp
 ; CHECK-NEXT:    add x8, x8, #15
-; CHECK-NEXT:    lsr x15, x8, #4
+; CHECK-NEXT:    lsr x8, x8, #4
+; CHECK-NEXT:    mov x15, x8
 ; CHECK-NEXT:    bl __chkstk
-; CHECK-NEXT:    sub x2, sp, x15, lsl #4
+; CHECK-NEXT:    sub x2, sp, x8, lsl #4
 ; CHECK-NEXT:    mov sp, x2
 ; CHECK-NEXT:    sub x1, x29, #16
 ; CHECK-NEXT:    add x0, x19, #0

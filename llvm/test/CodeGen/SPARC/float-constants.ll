@@ -93,9 +93,9 @@ define double @test_intrins_call() nounwind {
 ; CHECK-LABEL: test_intrins_call:
 ; CHECK:       ! %bb.0:
 ; CHECK-NEXT:    save %sp, -96, %sp
-; CHECK-NEXT:    sethi 1048576, %o0
+; CHECK-NEXT:    sethi 1048576, %o2
+; CHECK-NEXT:    mov %o2, %o0
 ; CHECK-NEXT:    mov %g0, %o1
-; CHECK-NEXT:    mov %o0, %o2
 ; CHECK-NEXT:    call pow
 ; CHECK-NEXT:    mov %g0, %o3
 ; CHECK-NEXT:    ret
@@ -104,11 +104,11 @@ define double @test_intrins_call() nounwind {
 ; CHECK-LE-LABEL: test_intrins_call:
 ; CHECK-LE:       ! %bb.0:
 ; CHECK-LE-NEXT:    save %sp, -96, %sp
-; CHECK-LE-NEXT:    sethi 1048576, %o1
+; CHECK-LE-NEXT:    sethi 1048576, %o3
 ; CHECK-LE-NEXT:    mov %g0, %o0
-; CHECK-LE-NEXT:    mov %g0, %o2
+; CHECK-LE-NEXT:    mov %o3, %o1
 ; CHECK-LE-NEXT:    call pow
-; CHECK-LE-NEXT:    mov %o1, %o3
+; CHECK-LE-NEXT:    mov %g0, %o2
 ; CHECK-LE-NEXT:    ret
 ; CHECK-LE-NEXT:    restore
 ;
@@ -118,8 +118,8 @@ define double @test_intrins_call() nounwind {
 ; CHECK-VIS-NEXT:    sethi %h44(.LCPI2_0), %i0
 ; CHECK-VIS-NEXT:    add %i0, %m44(.LCPI2_0), %i0
 ; CHECK-VIS-NEXT:    sllx %i0, 12, %i0
-; CHECK-VIS-NEXT:    ldd [%i0+%l44(.LCPI2_0)], %f0
-; CHECK-VIS-NEXT:    fmovd %f0, %f2
+; CHECK-VIS-NEXT:    ldd [%i0+%l44(.LCPI2_0)], %f2
+; CHECK-VIS-NEXT:    fmovd %f2, %f0
 ; CHECK-VIS-NEXT:    call pow
 ; CHECK-VIS-NEXT:    nop
 ; CHECK-VIS-NEXT:    ret
@@ -131,8 +131,8 @@ define double @test_intrins_call() nounwind {
 ; CHECK-VIS3-NEXT:    sethi %h44(.LCPI2_0), %i0
 ; CHECK-VIS3-NEXT:    add %i0, %m44(.LCPI2_0), %i0
 ; CHECK-VIS3-NEXT:    sllx %i0, 12, %i0
-; CHECK-VIS3-NEXT:    ldd [%i0+%l44(.LCPI2_0)], %f0
-; CHECK-VIS3-NEXT:    fmovd %f0, %f2
+; CHECK-VIS3-NEXT:    ldd [%i0+%l44(.LCPI2_0)], %f2
+; CHECK-VIS3-NEXT:    fmovd %f2, %f0
 ; CHECK-VIS3-NEXT:    call pow
 ; CHECK-VIS3-NEXT:    nop
 ; CHECK-VIS3-NEXT:    ret

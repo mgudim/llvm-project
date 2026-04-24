@@ -776,28 +776,24 @@ define void @fcmp_f64_uniform(double inreg %a, double inreg %b, ptr %p) {
 ; GFX10-LABEL: fcmp_f64_uniform:
 ; GFX10:       ; %bb.0:
 ; GFX10-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX10-NEXT:    v_cmp_eq_f64_e64 s4, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_gt_f64_e64 s5, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_ge_f64_e64 s6, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_lt_f64_e64 s7, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_le_f64_e64 s8, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_lg_f64_e64 s9, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_o_f64_e64 s10, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_nlg_f64_e64 s11, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_nle_f64_e64 s12, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_nlt_f64_e64 s13, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_nge_f64_e64 s14, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_ngt_f64_e64 s15, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_neq_f64_e64 s20, s[16:17], s[18:19]
-; GFX10-NEXT:    v_cmp_u_f64_e64 s16, s[16:17], s[18:19]
-; GFX10-NEXT:    s_cmp_lg_u32 s4, 0
-; GFX10-NEXT:    s_cselect_b32 s4, 1, 0
-; GFX10-NEXT:    s_cmp_lg_u32 s5, 0
-; GFX10-NEXT:    s_cselect_b32 s5, 1, 0
-; GFX10-NEXT:    s_cmp_lg_u32 s6, 0
-; GFX10-NEXT:    s_cselect_b32 s6, 1, 0
-; GFX10-NEXT:    s_cmp_lg_u32 s7, 0
-; GFX10-NEXT:    s_cselect_b32 s7, 1, 0
+; GFX10-NEXT:    s_mov_b32 s4, s16
+; GFX10-NEXT:    s_mov_b32 s5, s17
+; GFX10-NEXT:    s_mov_b32 s6, s18
+; GFX10-NEXT:    s_mov_b32 s7, s19
+; GFX10-NEXT:    v_cmp_eq_f64_e64 s8, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_gt_f64_e64 s9, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_ge_f64_e64 s10, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_lt_f64_e64 s11, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_le_f64_e64 s12, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_lg_f64_e64 s13, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_o_f64_e64 s14, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_nlg_f64_e64 s15, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_nle_f64_e64 s16, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_nlt_f64_e64 s17, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_nge_f64_e64 s18, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_ngt_f64_e64 s19, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_neq_f64_e64 s20, s[4:5], s[6:7]
+; GFX10-NEXT:    v_cmp_u_f64_e64 s4, s[4:5], s[6:7]
 ; GFX10-NEXT:    s_cmp_lg_u32 s8, 0
 ; GFX10-NEXT:    s_cselect_b32 s8, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s9, 0
@@ -811,21 +807,21 @@ define void @fcmp_f64_uniform(double inreg %a, double inreg %b, ptr %p) {
 ; GFX10-NEXT:    s_cmp_lg_u32 s13, 0
 ; GFX10-NEXT:    s_cselect_b32 s13, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s14, 0
-; GFX10-NEXT:    s_cselect_b32 s14, 1, 0
+; GFX10-NEXT:    s_cselect_b32 s5, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s15, 0
+; GFX10-NEXT:    s_cselect_b32 s6, 1, 0
+; GFX10-NEXT:    s_cmp_lg_u32 s16, 0
+; GFX10-NEXT:    s_cselect_b32 s7, 1, 0
+; GFX10-NEXT:    s_cmp_lg_u32 s17, 0
+; GFX10-NEXT:    s_cselect_b32 s14, 1, 0
+; GFX10-NEXT:    s_cmp_lg_u32 s18, 0
 ; GFX10-NEXT:    s_cselect_b32 s15, 1, 0
+; GFX10-NEXT:    s_cmp_lg_u32 s19, 0
+; GFX10-NEXT:    s_cselect_b32 s16, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s20, 0
 ; GFX10-NEXT:    s_cselect_b32 s17, 1, 0
-; GFX10-NEXT:    s_cmp_lg_u32 s16, 0
-; GFX10-NEXT:    s_cselect_b32 s16, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s4, 0
 ; GFX10-NEXT:    s_cselect_b32 s4, 1, 0
-; GFX10-NEXT:    s_cmp_lg_u32 s5, 0
-; GFX10-NEXT:    s_cselect_b32 s5, 1, 0
-; GFX10-NEXT:    s_cmp_lg_u32 s6, 0
-; GFX10-NEXT:    s_cselect_b32 s6, 1, 0
-; GFX10-NEXT:    s_cmp_lg_u32 s7, 0
-; GFX10-NEXT:    s_cselect_b32 s7, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s8, 0
 ; GFX10-NEXT:    s_cselect_b32 s8, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s9, 0
@@ -838,27 +834,35 @@ define void @fcmp_f64_uniform(double inreg %a, double inreg %b, ptr %p) {
 ; GFX10-NEXT:    s_cselect_b32 s12, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s13, 0
 ; GFX10-NEXT:    s_cselect_b32 s13, 1, 0
+; GFX10-NEXT:    s_cmp_lg_u32 s5, 0
+; GFX10-NEXT:    s_cselect_b32 s5, 1, 0
+; GFX10-NEXT:    s_cmp_lg_u32 s6, 0
+; GFX10-NEXT:    s_cselect_b32 s6, 1, 0
+; GFX10-NEXT:    s_cmp_lg_u32 s7, 0
+; GFX10-NEXT:    s_cselect_b32 s7, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s14, 0
 ; GFX10-NEXT:    s_cselect_b32 s14, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s15, 0
 ; GFX10-NEXT:    s_cselect_b32 s15, 1, 0
-; GFX10-NEXT:    s_cmp_lg_u32 s17, 0
-; GFX10-NEXT:    s_cselect_b32 s17, 1, 0
 ; GFX10-NEXT:    s_cmp_lg_u32 s16, 0
 ; GFX10-NEXT:    s_cselect_b32 s16, 1, 0
-; GFX10-NEXT:    s_add_i32 s4, s4, s5
-; GFX10-NEXT:    s_add_i32 s4, s4, s6
-; GFX10-NEXT:    s_add_i32 s4, s4, s7
-; GFX10-NEXT:    s_add_i32 s4, s4, s8
-; GFX10-NEXT:    s_add_i32 s4, s4, s9
-; GFX10-NEXT:    s_add_i32 s4, s4, s10
-; GFX10-NEXT:    s_add_i32 s4, s4, s11
-; GFX10-NEXT:    s_add_i32 s4, s4, s12
-; GFX10-NEXT:    s_add_i32 s4, s4, s13
-; GFX10-NEXT:    s_add_i32 s4, s4, s14
-; GFX10-NEXT:    s_add_i32 s4, s4, s15
-; GFX10-NEXT:    s_add_i32 s4, s4, s17
-; GFX10-NEXT:    s_add_i32 s4, s4, s16
+; GFX10-NEXT:    s_cmp_lg_u32 s17, 0
+; GFX10-NEXT:    s_cselect_b32 s17, 1, 0
+; GFX10-NEXT:    s_cmp_lg_u32 s4, 0
+; GFX10-NEXT:    s_cselect_b32 s4, 1, 0
+; GFX10-NEXT:    s_add_i32 s8, s8, s9
+; GFX10-NEXT:    s_add_i32 s8, s8, s10
+; GFX10-NEXT:    s_add_i32 s8, s8, s11
+; GFX10-NEXT:    s_add_i32 s8, s8, s12
+; GFX10-NEXT:    s_add_i32 s8, s8, s13
+; GFX10-NEXT:    s_add_i32 s5, s8, s5
+; GFX10-NEXT:    s_add_i32 s5, s5, s6
+; GFX10-NEXT:    s_add_i32 s5, s5, s7
+; GFX10-NEXT:    s_add_i32 s5, s5, s14
+; GFX10-NEXT:    s_add_i32 s5, s5, s15
+; GFX10-NEXT:    s_add_i32 s5, s5, s16
+; GFX10-NEXT:    s_add_i32 s5, s5, s17
+; GFX10-NEXT:    s_add_i32 s4, s5, s4
 ; GFX10-NEXT:    v_mov_b32_e32 v2, s4
 ; GFX10-NEXT:    flat_store_dword v[0:1], v2
 ; GFX10-NEXT:    s_waitcnt lgkmcnt(0)

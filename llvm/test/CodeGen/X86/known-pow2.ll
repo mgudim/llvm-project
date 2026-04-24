@@ -1151,8 +1151,9 @@ define i1 @pow2_and_i50(i50 %num, i50 %shift) {
 define i1 @pow2_and_i128(i128 %num, i128 %shift) {
 ; CHECK-LABEL: pow2_and_i128:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    movl %edx, %ecx
-; CHECK-NEXT:    andb $32, %cl
+; CHECK-NEXT:    movl %edx, %eax
+; CHECK-NEXT:    andb $32, %al
+; CHECK-NEXT:    movl %eax, %ecx
 ; CHECK-NEXT:    shrq %cl, %rsi
 ; CHECK-NEXT:    shrq %cl, %rdi
 ; CHECK-NEXT:    testb $64, %dl

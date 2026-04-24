@@ -104,10 +104,10 @@ define i32 @t4(i64 %x) nounwind readnone ssp {
 define i64 @t5(i32 %x) nounwind readnone ssp {
 ; X86-LABEL: t5:
 ; X86:       # %bb.0:
-; X86-NEXT:    xorl %eax, %eax
+; X86-NEXT:    xorl %edx, %edx
 ; X86-NEXT:    cmpl $1, {{[0-9]+}}(%esp)
-; X86-NEXT:    sbbl %eax, %eax
-; X86-NEXT:    movl %eax, %edx
+; X86-NEXT:    sbbl %edx, %edx
+; X86-NEXT:    movl %edx, %eax
 ; X86-NEXT:    retl
 ;
 ; X64-LABEL: t5:

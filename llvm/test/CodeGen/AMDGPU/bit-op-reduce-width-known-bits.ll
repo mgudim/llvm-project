@@ -48,7 +48,9 @@ define i64 @s_xor_i64_known_i32_from_arg_range(i64 range(i64 0, 65) inreg %arg) 
 ; CHECK-LABEL: s_xor_i64_known_i32_from_arg_range:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    s_not_b64 s[4:5], s[16:17]
+; CHECK-NEXT:    s_mov_b32 s5, s17
+; CHECK-NEXT:    s_mov_b32 s4, s16
+; CHECK-NEXT:    s_not_b64 s[4:5], s[4:5]
 ; CHECK-NEXT:    v_mov_b32_e32 v0, s4
 ; CHECK-NEXT:    v_mov_b32_e32 v1, s5
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
@@ -130,14 +132,16 @@ define i64 @s_xor_i64_known_i32_from_range_use_out_of_block(i64 inreg %x) {
 ; CHECK-LABEL: s_xor_i64_known_i32_from_range_use_out_of_block:
 ; CHECK:       ; %bb.0: ; %entry
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    s_flbit_i32_b64 s4, s[16:17]
-; CHECK-NEXT:    s_mov_b32 s5, 0
-; CHECK-NEXT:    s_cmp_lg_u64 s[4:5], s[16:17]
+; CHECK-NEXT:    s_mov_b32 s5, s17
+; CHECK-NEXT:    s_mov_b32 s4, s16
+; CHECK-NEXT:    s_flbit_i32_b64 s6, s[4:5]
+; CHECK-NEXT:    s_mov_b32 s7, 0
+; CHECK-NEXT:    s_cmp_lg_u64 s[6:7], s[4:5]
 ; CHECK-NEXT:    s_cbranch_scc1 .LBB7_2
 ; CHECK-NEXT:  ; %bb.1: ; %inc
-; CHECK-NEXT:    s_not_b64 s[4:5], s[4:5]
-; CHECK-NEXT:    s_add_u32 s4, s16, s4
-; CHECK-NEXT:    s_addc_u32 s5, s17, s5
+; CHECK-NEXT:    s_not_b64 s[6:7], s[6:7]
+; CHECK-NEXT:    s_add_u32 s4, s4, s6
+; CHECK-NEXT:    s_addc_u32 s5, s5, s7
 ; CHECK-NEXT:    v_mov_b32_e32 v0, s4
 ; CHECK-NEXT:    v_mov_b32_e32 v1, s5
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]

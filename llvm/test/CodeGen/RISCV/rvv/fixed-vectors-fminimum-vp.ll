@@ -157,21 +157,21 @@ define <8 x half> @vfmin_vv_v8f16(<8 x half> %va, <8 x half> %vb, <8 x i1> %m, i
 ; ZVFHMIN-LABEL: vfmin_vv_v8f16:
 ; ZVFHMIN:       # %bb.0:
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
-; ZVFHMIN-NEXT:    vmv1r.v v10, v0
-; ZVFHMIN-NEXT:    vfwcvt.f.f.v v12, v9, v0.t
-; ZVFHMIN-NEXT:    vfwcvt.f.f.v v14, v8, v0.t
+; ZVFHMIN-NEXT:    vmv1r.v v14, v0
+; ZVFHMIN-NEXT:    vfwcvt.f.f.v v10, v9, v0.t
+; ZVFHMIN-NEXT:    vfwcvt.f.f.v v12, v8, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e32, m2, ta, ma
-; ZVFHMIN-NEXT:    vmfeq.vv v8, v14, v14, v0.t
+; ZVFHMIN-NEXT:    vmfeq.vv v8, v12, v12, v0.t
 ; ZVFHMIN-NEXT:    vmv1r.v v0, v8
-; ZVFHMIN-NEXT:    vmerge.vvm v8, v14, v12, v0
-; ZVFHMIN-NEXT:    vmv1r.v v0, v10
-; ZVFHMIN-NEXT:    vmfeq.vv v11, v12, v12, v0.t
-; ZVFHMIN-NEXT:    vmv1r.v v0, v11
-; ZVFHMIN-NEXT:    vmerge.vvm v12, v12, v14, v0
-; ZVFHMIN-NEXT:    vmv1r.v v0, v10
-; ZVFHMIN-NEXT:    vfmin.vv v12, v12, v8, v0.t
+; ZVFHMIN-NEXT:    vmerge.vvm v8, v12, v10, v0
+; ZVFHMIN-NEXT:    vmv1r.v v0, v14
+; ZVFHMIN-NEXT:    vmfeq.vv v15, v10, v10, v0.t
+; ZVFHMIN-NEXT:    vmv1r.v v0, v15
+; ZVFHMIN-NEXT:    vmerge.vvm v10, v10, v12, v0
+; ZVFHMIN-NEXT:    vmv1r.v v0, v14
+; ZVFHMIN-NEXT:    vfmin.vv v10, v10, v8, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e16, m1, ta, ma
-; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v12, v0.t
+; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v10, v0.t
 ; ZVFHMIN-NEXT:    ret
   %v = call <8 x half> @llvm.vp.minimum.v8f16(<8 x half> %va, <8 x half> %vb, <8 x i1> %m, i32 %evl)
   ret <8 x half> %v
@@ -212,36 +212,36 @@ define <16 x half> @vfmin_vv_v16f16(<16 x half> %va, <16 x half> %vb, <16 x i1> 
 ; ZVFH-LABEL: vfmin_vv_v16f16:
 ; ZVFH:       # %bb.0:
 ; ZVFH-NEXT:    vsetvli zero, a0, e16, m2, ta, ma
-; ZVFH-NEXT:    vmv1r.v v12, v0
-; ZVFH-NEXT:    vmfeq.vv v13, v8, v8, v0.t
-; ZVFH-NEXT:    vmv1r.v v0, v13
-; ZVFH-NEXT:    vmerge.vvm v14, v8, v10, v0
+; ZVFH-NEXT:    vmv1r.v v14, v0
+; ZVFH-NEXT:    vmfeq.vv v12, v8, v8, v0.t
 ; ZVFH-NEXT:    vmv1r.v v0, v12
-; ZVFH-NEXT:    vmfeq.vv v13, v10, v10, v0.t
-; ZVFH-NEXT:    vmv1r.v v0, v13
+; ZVFH-NEXT:    vmerge.vvm v12, v8, v10, v0
+; ZVFH-NEXT:    vmv1r.v v0, v14
+; ZVFH-NEXT:    vmfeq.vv v15, v10, v10, v0.t
+; ZVFH-NEXT:    vmv1r.v v0, v15
 ; ZVFH-NEXT:    vmerge.vvm v8, v10, v8, v0
-; ZVFH-NEXT:    vmv1r.v v0, v12
-; ZVFH-NEXT:    vfmin.vv v8, v8, v14, v0.t
+; ZVFH-NEXT:    vmv1r.v v0, v14
+; ZVFH-NEXT:    vfmin.vv v8, v8, v12, v0.t
 ; ZVFH-NEXT:    ret
 ;
 ; ZVFHMIN-LABEL: vfmin_vv_v16f16:
 ; ZVFHMIN:       # %bb.0:
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e16, m2, ta, ma
-; ZVFHMIN-NEXT:    vmv1r.v v12, v0
-; ZVFHMIN-NEXT:    vfwcvt.f.f.v v16, v10, v0.t
-; ZVFHMIN-NEXT:    vfwcvt.f.f.v v20, v8, v0.t
+; ZVFHMIN-NEXT:    vmv1r.v v20, v0
+; ZVFHMIN-NEXT:    vfwcvt.f.f.v v12, v10, v0.t
+; ZVFHMIN-NEXT:    vfwcvt.f.f.v v16, v8, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e32, m4, ta, ma
-; ZVFHMIN-NEXT:    vmfeq.vv v8, v20, v20, v0.t
+; ZVFHMIN-NEXT:    vmfeq.vv v8, v16, v16, v0.t
 ; ZVFHMIN-NEXT:    vmv1r.v v0, v8
-; ZVFHMIN-NEXT:    vmerge.vvm v8, v20, v16, v0
-; ZVFHMIN-NEXT:    vmv1r.v v0, v12
-; ZVFHMIN-NEXT:    vmfeq.vv v13, v16, v16, v0.t
-; ZVFHMIN-NEXT:    vmv1r.v v0, v13
-; ZVFHMIN-NEXT:    vmerge.vvm v16, v16, v20, v0
-; ZVFHMIN-NEXT:    vmv1r.v v0, v12
-; ZVFHMIN-NEXT:    vfmin.vv v16, v16, v8, v0.t
+; ZVFHMIN-NEXT:    vmerge.vvm v8, v16, v12, v0
+; ZVFHMIN-NEXT:    vmv1r.v v0, v20
+; ZVFHMIN-NEXT:    vmfeq.vv v21, v12, v12, v0.t
+; ZVFHMIN-NEXT:    vmv1r.v v0, v21
+; ZVFHMIN-NEXT:    vmerge.vvm v12, v12, v16, v0
+; ZVFHMIN-NEXT:    vmv1r.v v0, v20
+; ZVFHMIN-NEXT:    vfmin.vv v12, v12, v8, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e16, m2, ta, ma
-; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v16, v0.t
+; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v12, v0.t
 ; ZVFHMIN-NEXT:    ret
   %v = call <16 x half> @llvm.vp.minimum.v16f16(<16 x half> %va, <16 x half> %vb, <16 x i1> %m, i32 %evl)
   ret <16 x half> %v
@@ -344,16 +344,16 @@ define <8 x float> @vfmin_vv_v8f32(<8 x float> %va, <8 x float> %vb, <8 x i1> %m
 ; CHECK-LABEL: vfmin_vv_v8f32:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m2, ta, ma
-; CHECK-NEXT:    vmv1r.v v12, v0
-; CHECK-NEXT:    vmfeq.vv v13, v8, v8, v0.t
-; CHECK-NEXT:    vmv1r.v v0, v13
-; CHECK-NEXT:    vmerge.vvm v14, v8, v10, v0
+; CHECK-NEXT:    vmv1r.v v14, v0
+; CHECK-NEXT:    vmfeq.vv v12, v8, v8, v0.t
 ; CHECK-NEXT:    vmv1r.v v0, v12
-; CHECK-NEXT:    vmfeq.vv v13, v10, v10, v0.t
-; CHECK-NEXT:    vmv1r.v v0, v13
+; CHECK-NEXT:    vmerge.vvm v12, v8, v10, v0
+; CHECK-NEXT:    vmv1r.v v0, v14
+; CHECK-NEXT:    vmfeq.vv v15, v10, v10, v0.t
+; CHECK-NEXT:    vmv1r.v v0, v15
 ; CHECK-NEXT:    vmerge.vvm v8, v10, v8, v0
-; CHECK-NEXT:    vmv1r.v v0, v12
-; CHECK-NEXT:    vfmin.vv v8, v8, v14, v0.t
+; CHECK-NEXT:    vmv1r.v v0, v14
+; CHECK-NEXT:    vfmin.vv v8, v8, v12, v0.t
 ; CHECK-NEXT:    ret
   %v = call <8 x float> @llvm.vp.minimum.v8f32(<8 x float> %va, <8 x float> %vb, <8 x i1> %m, i32 %evl)
   ret <8 x float> %v
@@ -377,16 +377,16 @@ define <16 x float> @vfmin_vv_v16f32(<16 x float> %va, <16 x float> %vb, <16 x i
 ; CHECK-LABEL: vfmin_vv_v16f32:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m4, ta, ma
-; CHECK-NEXT:    vmv1r.v v16, v0
-; CHECK-NEXT:    vmfeq.vv v17, v8, v8, v0.t
-; CHECK-NEXT:    vmv1r.v v0, v17
-; CHECK-NEXT:    vmerge.vvm v20, v8, v12, v0
+; CHECK-NEXT:    vmv1r.v v20, v0
+; CHECK-NEXT:    vmfeq.vv v16, v8, v8, v0.t
 ; CHECK-NEXT:    vmv1r.v v0, v16
-; CHECK-NEXT:    vmfeq.vv v17, v12, v12, v0.t
-; CHECK-NEXT:    vmv1r.v v0, v17
+; CHECK-NEXT:    vmerge.vvm v16, v8, v12, v0
+; CHECK-NEXT:    vmv1r.v v0, v20
+; CHECK-NEXT:    vmfeq.vv v21, v12, v12, v0.t
+; CHECK-NEXT:    vmv1r.v v0, v21
 ; CHECK-NEXT:    vmerge.vvm v8, v12, v8, v0
-; CHECK-NEXT:    vmv1r.v v0, v16
-; CHECK-NEXT:    vfmin.vv v8, v8, v20, v0.t
+; CHECK-NEXT:    vmv1r.v v0, v20
+; CHECK-NEXT:    vfmin.vv v8, v8, v16, v0.t
 ; CHECK-NEXT:    ret
   %v = call <16 x float> @llvm.vp.minimum.v16f32(<16 x float> %va, <16 x float> %vb, <16 x i1> %m, i32 %evl)
   ret <16 x float> %v
@@ -441,16 +441,16 @@ define <4 x double> @vfmin_vv_v4f64(<4 x double> %va, <4 x double> %vb, <4 x i1>
 ; CHECK-LABEL: vfmin_vv_v4f64:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e64, m2, ta, ma
-; CHECK-NEXT:    vmv1r.v v12, v0
-; CHECK-NEXT:    vmfeq.vv v13, v8, v8, v0.t
-; CHECK-NEXT:    vmv1r.v v0, v13
-; CHECK-NEXT:    vmerge.vvm v14, v8, v10, v0
+; CHECK-NEXT:    vmv1r.v v14, v0
+; CHECK-NEXT:    vmfeq.vv v12, v8, v8, v0.t
 ; CHECK-NEXT:    vmv1r.v v0, v12
-; CHECK-NEXT:    vmfeq.vv v13, v10, v10, v0.t
-; CHECK-NEXT:    vmv1r.v v0, v13
+; CHECK-NEXT:    vmerge.vvm v12, v8, v10, v0
+; CHECK-NEXT:    vmv1r.v v0, v14
+; CHECK-NEXT:    vmfeq.vv v15, v10, v10, v0.t
+; CHECK-NEXT:    vmv1r.v v0, v15
 ; CHECK-NEXT:    vmerge.vvm v8, v10, v8, v0
-; CHECK-NEXT:    vmv1r.v v0, v12
-; CHECK-NEXT:    vfmin.vv v8, v8, v14, v0.t
+; CHECK-NEXT:    vmv1r.v v0, v14
+; CHECK-NEXT:    vfmin.vv v8, v8, v12, v0.t
 ; CHECK-NEXT:    ret
   %v = call <4 x double> @llvm.vp.minimum.v4f64(<4 x double> %va, <4 x double> %vb, <4 x i1> %m, i32 %evl)
   ret <4 x double> %v
@@ -474,16 +474,16 @@ define <8 x double> @vfmin_vv_v8f64(<8 x double> %va, <8 x double> %vb, <8 x i1>
 ; CHECK-LABEL: vfmin_vv_v8f64:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e64, m4, ta, ma
-; CHECK-NEXT:    vmv1r.v v16, v0
-; CHECK-NEXT:    vmfeq.vv v17, v8, v8, v0.t
-; CHECK-NEXT:    vmv1r.v v0, v17
-; CHECK-NEXT:    vmerge.vvm v20, v8, v12, v0
+; CHECK-NEXT:    vmv1r.v v20, v0
+; CHECK-NEXT:    vmfeq.vv v16, v8, v8, v0.t
 ; CHECK-NEXT:    vmv1r.v v0, v16
-; CHECK-NEXT:    vmfeq.vv v17, v12, v12, v0.t
-; CHECK-NEXT:    vmv1r.v v0, v17
+; CHECK-NEXT:    vmerge.vvm v16, v8, v12, v0
+; CHECK-NEXT:    vmv1r.v v0, v20
+; CHECK-NEXT:    vmfeq.vv v21, v12, v12, v0.t
+; CHECK-NEXT:    vmv1r.v v0, v21
 ; CHECK-NEXT:    vmerge.vvm v8, v12, v8, v0
-; CHECK-NEXT:    vmv1r.v v0, v16
-; CHECK-NEXT:    vfmin.vv v8, v8, v20, v0.t
+; CHECK-NEXT:    vmv1r.v v0, v20
+; CHECK-NEXT:    vfmin.vv v8, v8, v16, v0.t
 ; CHECK-NEXT:    ret
   %v = call <8 x double> @llvm.vp.minimum.v8f64(<8 x double> %va, <8 x double> %vb, <8 x i1> %m, i32 %evl)
   ret <8 x double> %v

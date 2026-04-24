@@ -36,8 +36,8 @@ define <4 x double> @prefer_f32_v4f64(ptr %p) nounwind {
 ; SSE:       # %bb.0: # %entry
 ; SSE-NEXT:    movss {{.*#+}} xmm0 = mem[0],zero,zero,zero
 ; SSE-NEXT:    shufps {{.*#+}} xmm0 = xmm0[0,0,0,0]
-; SSE-NEXT:    cvtps2pd %xmm0, %xmm0
-; SSE-NEXT:    movaps %xmm0, %xmm1
+; SSE-NEXT:    cvtps2pd %xmm0, %xmm1
+; SSE-NEXT:    movaps %xmm1, %xmm0
 ; SSE-NEXT:    retq
 ;
 ; AVX-LABEL: prefer_f32_v4f64:
@@ -110,8 +110,9 @@ define <8 x float> @prefer_f16_v8f32(ptr %p) nounwind {
 ; SSE-NEXT:    pushq %rax
 ; SSE-NEXT:    pinsrw $0, (%rdi), %xmm0
 ; SSE-NEXT:    callq __extendhfsf2@PLT
-; SSE-NEXT:    shufps {{.*#+}} xmm0 = xmm0[0,0,0,0]
-; SSE-NEXT:    movaps %xmm0, %xmm1
+; SSE-NEXT:    movdqa %xmm0, %xmm1
+; SSE-NEXT:    shufps {{.*#+}} xmm1 = xmm1[0,0],xmm0[0,0]
+; SSE-NEXT:    movaps %xmm1, %xmm0
 ; SSE-NEXT:    popq %rax
 ; SSE-NEXT:    retq
 ;
@@ -198,9 +199,9 @@ define <4 x double> @prefer_f16_v4f64(ptr %p) nounwind {
 ; SSE-NEXT:    pushq %rax
 ; SSE-NEXT:    pinsrw $0, (%rdi), %xmm0
 ; SSE-NEXT:    callq __extendhfsf2@PLT
-; SSE-NEXT:    cvtss2sd %xmm0, %xmm0
-; SSE-NEXT:    movlhps {{.*#+}} xmm0 = xmm0[0,0]
-; SSE-NEXT:    movaps %xmm0, %xmm1
+; SSE-NEXT:    cvtss2sd %xmm0, %xmm1
+; SSE-NEXT:    movlhps {{.*#+}} xmm1 = xmm1[0,0]
+; SSE-NEXT:    movaps %xmm1, %xmm0
 ; SSE-NEXT:    popq %rax
 ; SSE-NEXT:    retq
 ;

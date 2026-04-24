@@ -13,18 +13,18 @@ define void @variable_alloca_with_adj_call_stack(i32 %num) nounwind {
 ; V8-NEXT:    and %i0, -8, %i0
 ; V8-NEXT:    sub %sp, %i0, %i0
 ; V8-NEXT:    add %i0, -8, %sp
-; V8-NEXT:    add %i0, 88, %o0
+; V8-NEXT:    add %i0, 88, %o5
 ; V8-NEXT:    add %sp, -16, %sp
-; V8-NEXT:    st %o0, [%sp+104]
-; V8-NEXT:    st %o0, [%sp+100]
-; V8-NEXT:    st %o0, [%sp+96]
-; V8-NEXT:    st %o0, [%sp+92]
-; V8-NEXT:    mov %o0, %o1
-; V8-NEXT:    mov %o0, %o2
-; V8-NEXT:    mov %o0, %o3
-; V8-NEXT:    mov %o0, %o4
+; V8-NEXT:    st %o5, [%sp+104]
+; V8-NEXT:    st %o5, [%sp+100]
+; V8-NEXT:    st %o5, [%sp+96]
+; V8-NEXT:    st %o5, [%sp+92]
+; V8-NEXT:    mov %o5, %o0
+; V8-NEXT:    mov %o5, %o1
+; V8-NEXT:    mov %o5, %o2
+; V8-NEXT:    mov %o5, %o3
 ; V8-NEXT:    call foo
-; V8-NEXT:    mov %o0, %o5
+; V8-NEXT:    mov %o5, %o4
 ; V8-NEXT:    add %sp, 16, %sp
 ; V8-NEXT:    ret
 ; V8-NEXT:    restore
@@ -42,19 +42,19 @@ define void @variable_alloca_with_adj_call_stack(i32 %num) nounwind {
 ; SPARC64-NEXT:    or %i2, %i1, %i1
 ; SPARC64-NEXT:    and %i0, %i1, %i0
 ; SPARC64-NEXT:    sub %sp, %i0, %i0
-; SPARC64-NEXT:    add %i0, 2175, %o0
+; SPARC64-NEXT:    add %i0, 2175, %o5
 ; SPARC64-NEXT:    mov %i0, %sp
 ; SPARC64-NEXT:    add %sp, -80, %sp
-; SPARC64-NEXT:    stx %o0, [%sp+2247]
-; SPARC64-NEXT:    stx %o0, [%sp+2239]
-; SPARC64-NEXT:    stx %o0, [%sp+2231]
-; SPARC64-NEXT:    stx %o0, [%sp+2223]
-; SPARC64-NEXT:    mov %o0, %o1
-; SPARC64-NEXT:    mov %o0, %o2
-; SPARC64-NEXT:    mov %o0, %o3
-; SPARC64-NEXT:    mov %o0, %o4
+; SPARC64-NEXT:    stx %o5, [%sp+2247]
+; SPARC64-NEXT:    stx %o5, [%sp+2239]
+; SPARC64-NEXT:    stx %o5, [%sp+2231]
+; SPARC64-NEXT:    stx %o5, [%sp+2223]
+; SPARC64-NEXT:    mov %o5, %o0
+; SPARC64-NEXT:    mov %o5, %o1
+; SPARC64-NEXT:    mov %o5, %o2
+; SPARC64-NEXT:    mov %o5, %o3
 ; SPARC64-NEXT:    call foo
-; SPARC64-NEXT:    mov %o0, %o5
+; SPARC64-NEXT:    mov %o5, %o4
 ; SPARC64-NEXT:    add %sp, 80, %sp
 ; SPARC64-NEXT:    ret
 ; SPARC64-NEXT:    restore

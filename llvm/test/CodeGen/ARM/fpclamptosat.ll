@@ -3565,19 +3565,19 @@ define void @unroll_maxmin(ptr nocapture %0, ptr nocapture readonly %1, i32 %2) 
 ; SOFT-NEXT:    lsls r1, r0, #31
 ; SOFT-NEXT:    str r1, [sp, #12] @ 4-byte Spill
 ; SOFT-NEXT:    str r0, [sp, #4] @ 4-byte Spill
-; SOFT-NEXT:    lsls r7, r0, #10
+; SOFT-NEXT:    lsls r6, r0, #10
 ; SOFT-NEXT:    b .LBB54_2
 ; SOFT-NEXT:  .LBB54_1: @ in Loop: Header=BB54_2 Depth=1
 ; SOFT-NEXT:    str r0, [r5, #4]
 ; SOFT-NEXT:    adds r4, #8
 ; SOFT-NEXT:    adds r5, #8
-; SOFT-NEXT:    subs r7, r7, #2
+; SOFT-NEXT:    subs r6, r6, #2
 ; SOFT-NEXT:    beq .LBB54_18
 ; SOFT-NEXT:  .LBB54_2: @ =>This Inner Loop Header: Depth=1
 ; SOFT-NEXT:    ldr r0, [r4]
 ; SOFT-NEXT:    movs r1, #79
-; SOFT-NEXT:    lsls r6, r1, #24
-; SOFT-NEXT:    mov r1, r6
+; SOFT-NEXT:    lsls r7, r1, #24
+; SOFT-NEXT:    mov r1, r7
 ; SOFT-NEXT:    bl __aeabi_fmul
 ; SOFT-NEXT:    bl __aeabi_f2lz
 ; SOFT-NEXT:    ldr r2, .LCPI54_0
@@ -3605,7 +3605,7 @@ define void @unroll_maxmin(ptr nocapture %0, ptr nocapture readonly %1, i32 %2) 
 ; SOFT-NEXT:  .LBB54_8: @ in Loop: Header=BB54_2 Depth=1
 ; SOFT-NEXT:    str r0, [r5]
 ; SOFT-NEXT:    ldr r0, [r4, #4]
-; SOFT-NEXT:    mov r1, r6
+; SOFT-NEXT:    mov r1, r7
 ; SOFT-NEXT:    bl __aeabi_fmul
 ; SOFT-NEXT:    bl __aeabi_f2lz
 ; SOFT-NEXT:    ldr r2, .LCPI54_0

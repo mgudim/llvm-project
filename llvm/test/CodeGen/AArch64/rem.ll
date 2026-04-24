@@ -3781,19 +3781,19 @@ define <2 x i128> @sv2i128(<2 x i128> %d, <2 x i128> %e) {
 ; CHECK-GI-NEXT:    .cfi_offset w23, -40
 ; CHECK-GI-NEXT:    .cfi_offset w24, -48
 ; CHECK-GI-NEXT:    .cfi_offset w30, -64
-; CHECK-GI-NEXT:    mov x19, x2
-; CHECK-GI-NEXT:    mov x20, x3
+; CHECK-GI-NEXT:    mov x21, x2
+; CHECK-GI-NEXT:    mov x22, x3
 ; CHECK-GI-NEXT:    mov x2, x4
 ; CHECK-GI-NEXT:    mov x3, x5
-; CHECK-GI-NEXT:    mov x21, x6
-; CHECK-GI-NEXT:    mov x22, x7
+; CHECK-GI-NEXT:    mov x19, x6
+; CHECK-GI-NEXT:    mov x20, x7
 ; CHECK-GI-NEXT:    bl __modti3
 ; CHECK-GI-NEXT:    mov x23, x0
 ; CHECK-GI-NEXT:    mov x24, x1
-; CHECK-GI-NEXT:    mov x0, x19
-; CHECK-GI-NEXT:    mov x1, x20
-; CHECK-GI-NEXT:    mov x2, x21
-; CHECK-GI-NEXT:    mov x3, x22
+; CHECK-GI-NEXT:    mov x0, x21
+; CHECK-GI-NEXT:    mov x1, x22
+; CHECK-GI-NEXT:    mov x2, x19
+; CHECK-GI-NEXT:    mov x3, x20
 ; CHECK-GI-NEXT:    bl __modti3
 ; CHECK-GI-NEXT:    mov x2, x0
 ; CHECK-GI-NEXT:    mov x3, x1
@@ -3888,25 +3888,25 @@ define <3 x i128> @sv3i128(<3 x i128> %d, <3 x i128> %e) {
 ; CHECK-GI-NEXT:    .cfi_offset w28, -80
 ; CHECK-GI-NEXT:    .cfi_offset w30, -96
 ; CHECK-GI-NEXT:    ldp x23, x24, [sp, #96]
-; CHECK-GI-NEXT:    mov x19, x2
+; CHECK-GI-NEXT:    mov x21, x2
 ; CHECK-GI-NEXT:    ldp x25, x26, [sp, #112]
-; CHECK-GI-NEXT:    mov x20, x3
+; CHECK-GI-NEXT:    mov x22, x3
 ; CHECK-GI-NEXT:    mov x2, x6
 ; CHECK-GI-NEXT:    mov x3, x7
-; CHECK-GI-NEXT:    mov x21, x4
-; CHECK-GI-NEXT:    mov x22, x5
+; CHECK-GI-NEXT:    mov x19, x4
+; CHECK-GI-NEXT:    mov x20, x5
 ; CHECK-GI-NEXT:    bl __modti3
 ; CHECK-GI-NEXT:    mov x27, x0
 ; CHECK-GI-NEXT:    mov x28, x1
-; CHECK-GI-NEXT:    mov x0, x19
-; CHECK-GI-NEXT:    mov x1, x20
+; CHECK-GI-NEXT:    mov x0, x21
+; CHECK-GI-NEXT:    mov x1, x22
 ; CHECK-GI-NEXT:    mov x2, x23
 ; CHECK-GI-NEXT:    mov x3, x24
 ; CHECK-GI-NEXT:    bl __modti3
-; CHECK-GI-NEXT:    mov x19, x0
-; CHECK-GI-NEXT:    mov x20, x1
-; CHECK-GI-NEXT:    mov x0, x21
-; CHECK-GI-NEXT:    mov x1, x22
+; CHECK-GI-NEXT:    mov x21, x0
+; CHECK-GI-NEXT:    mov x22, x1
+; CHECK-GI-NEXT:    mov x0, x19
+; CHECK-GI-NEXT:    mov x1, x20
 ; CHECK-GI-NEXT:    mov x2, x25
 ; CHECK-GI-NEXT:    mov x3, x26
 ; CHECK-GI-NEXT:    bl __modti3
@@ -3914,8 +3914,8 @@ define <3 x i128> @sv3i128(<3 x i128> %d, <3 x i128> %e) {
 ; CHECK-GI-NEXT:    mov x5, x1
 ; CHECK-GI-NEXT:    mov x0, x27
 ; CHECK-GI-NEXT:    mov x1, x28
-; CHECK-GI-NEXT:    mov x2, x19
-; CHECK-GI-NEXT:    mov x3, x20
+; CHECK-GI-NEXT:    mov x2, x21
+; CHECK-GI-NEXT:    mov x3, x22
 ; CHECK-GI-NEXT:    ldp x20, x19, [sp, #80] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x22, x21, [sp, #64] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x24, x23, [sp, #48] // 16-byte Folded Reload
@@ -4021,46 +4021,46 @@ define <4 x i128> @sv4i128(<4 x i128> %d, <4 x i128> %e) {
 ; CHECK-GI-NEXT:    .cfi_offset w28, -80
 ; CHECK-GI-NEXT:    .cfi_offset w30, -88
 ; CHECK-GI-NEXT:    .cfi_offset w29, -96
-; CHECK-GI-NEXT:    mov x19, x2
-; CHECK-GI-NEXT:    mov x20, x3
-; CHECK-GI-NEXT:    mov x21, x4
+; CHECK-GI-NEXT:    mov x23, x2
+; CHECK-GI-NEXT:    mov x24, x3
+; CHECK-GI-NEXT:    mov x19, x4
 ; CHECK-GI-NEXT:    ldp x2, x3, [sp, #128]
-; CHECK-GI-NEXT:    mov x22, x5
+; CHECK-GI-NEXT:    mov x20, x5
 ; CHECK-GI-NEXT:    ldp x9, x8, [sp, #176]
-; CHECK-GI-NEXT:    mov x23, x7
-; CHECK-GI-NEXT:    ldp x24, x25, [sp, #144]
-; CHECK-GI-NEXT:    ldp x26, x27, [sp, #160]
+; CHECK-GI-NEXT:    mov x22, x7
+; CHECK-GI-NEXT:    ldp x25, x26, [sp, #144]
+; CHECK-GI-NEXT:    ldp x27, x28, [sp, #160]
 ; CHECK-GI-NEXT:    stp x9, x6, [sp, #16] // 16-byte Folded Spill
 ; CHECK-GI-NEXT:    str x8, [sp, #8] // 8-byte Spill
 ; CHECK-GI-NEXT:    bl __modti3
-; CHECK-GI-NEXT:    mov x28, x0
+; CHECK-GI-NEXT:    mov x21, x0
 ; CHECK-GI-NEXT:    mov x29, x1
+; CHECK-GI-NEXT:    mov x0, x23
+; CHECK-GI-NEXT:    mov x1, x24
+; CHECK-GI-NEXT:    mov x2, x25
+; CHECK-GI-NEXT:    mov x3, x26
+; CHECK-GI-NEXT:    bl __modti3
+; CHECK-GI-NEXT:    mov x23, x0
+; CHECK-GI-NEXT:    mov x24, x1
 ; CHECK-GI-NEXT:    mov x0, x19
 ; CHECK-GI-NEXT:    mov x1, x20
-; CHECK-GI-NEXT:    mov x2, x24
-; CHECK-GI-NEXT:    mov x3, x25
+; CHECK-GI-NEXT:    mov x2, x27
+; CHECK-GI-NEXT:    mov x3, x28
 ; CHECK-GI-NEXT:    bl __modti3
 ; CHECK-GI-NEXT:    mov x19, x0
-; CHECK-GI-NEXT:    mov x20, x1
-; CHECK-GI-NEXT:    mov x0, x21
-; CHECK-GI-NEXT:    mov x1, x22
-; CHECK-GI-NEXT:    mov x2, x26
-; CHECK-GI-NEXT:    mov x3, x27
-; CHECK-GI-NEXT:    bl __modti3
-; CHECK-GI-NEXT:    mov x21, x0
 ; CHECK-GI-NEXT:    ldp x2, x0, [sp, #16] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldr x3, [sp, #8] // 8-byte Reload
-; CHECK-GI-NEXT:    mov x22, x1
-; CHECK-GI-NEXT:    mov x1, x23
+; CHECK-GI-NEXT:    mov x20, x1
+; CHECK-GI-NEXT:    mov x1, x22
 ; CHECK-GI-NEXT:    bl __modti3
 ; CHECK-GI-NEXT:    mov x6, x0
 ; CHECK-GI-NEXT:    mov x7, x1
-; CHECK-GI-NEXT:    mov x0, x28
+; CHECK-GI-NEXT:    mov x0, x21
 ; CHECK-GI-NEXT:    mov x1, x29
-; CHECK-GI-NEXT:    mov x2, x19
-; CHECK-GI-NEXT:    mov x3, x20
-; CHECK-GI-NEXT:    mov x4, x21
-; CHECK-GI-NEXT:    mov x5, x22
+; CHECK-GI-NEXT:    mov x2, x23
+; CHECK-GI-NEXT:    mov x3, x24
+; CHECK-GI-NEXT:    mov x4, x19
+; CHECK-GI-NEXT:    mov x5, x20
 ; CHECK-GI-NEXT:    ldp x20, x19, [sp, #112] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x22, x21, [sp, #96] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x24, x23, [sp, #80] // 16-byte Folded Reload
@@ -4127,19 +4127,19 @@ define <2 x i128> @uv2i128(<2 x i128> %d, <2 x i128> %e) {
 ; CHECK-GI-NEXT:    .cfi_offset w23, -40
 ; CHECK-GI-NEXT:    .cfi_offset w24, -48
 ; CHECK-GI-NEXT:    .cfi_offset w30, -64
-; CHECK-GI-NEXT:    mov x19, x2
-; CHECK-GI-NEXT:    mov x20, x3
+; CHECK-GI-NEXT:    mov x21, x2
+; CHECK-GI-NEXT:    mov x22, x3
 ; CHECK-GI-NEXT:    mov x2, x4
 ; CHECK-GI-NEXT:    mov x3, x5
-; CHECK-GI-NEXT:    mov x21, x6
-; CHECK-GI-NEXT:    mov x22, x7
+; CHECK-GI-NEXT:    mov x19, x6
+; CHECK-GI-NEXT:    mov x20, x7
 ; CHECK-GI-NEXT:    bl __umodti3
 ; CHECK-GI-NEXT:    mov x23, x0
 ; CHECK-GI-NEXT:    mov x24, x1
-; CHECK-GI-NEXT:    mov x0, x19
-; CHECK-GI-NEXT:    mov x1, x20
-; CHECK-GI-NEXT:    mov x2, x21
-; CHECK-GI-NEXT:    mov x3, x22
+; CHECK-GI-NEXT:    mov x0, x21
+; CHECK-GI-NEXT:    mov x1, x22
+; CHECK-GI-NEXT:    mov x2, x19
+; CHECK-GI-NEXT:    mov x3, x20
 ; CHECK-GI-NEXT:    bl __umodti3
 ; CHECK-GI-NEXT:    mov x2, x0
 ; CHECK-GI-NEXT:    mov x3, x1
@@ -4234,25 +4234,25 @@ define <3 x i128> @uv3i128(<3 x i128> %d, <3 x i128> %e) {
 ; CHECK-GI-NEXT:    .cfi_offset w28, -80
 ; CHECK-GI-NEXT:    .cfi_offset w30, -96
 ; CHECK-GI-NEXT:    ldp x23, x24, [sp, #96]
-; CHECK-GI-NEXT:    mov x19, x2
+; CHECK-GI-NEXT:    mov x21, x2
 ; CHECK-GI-NEXT:    ldp x25, x26, [sp, #112]
-; CHECK-GI-NEXT:    mov x20, x3
+; CHECK-GI-NEXT:    mov x22, x3
 ; CHECK-GI-NEXT:    mov x2, x6
 ; CHECK-GI-NEXT:    mov x3, x7
-; CHECK-GI-NEXT:    mov x21, x4
-; CHECK-GI-NEXT:    mov x22, x5
+; CHECK-GI-NEXT:    mov x19, x4
+; CHECK-GI-NEXT:    mov x20, x5
 ; CHECK-GI-NEXT:    bl __umodti3
 ; CHECK-GI-NEXT:    mov x27, x0
 ; CHECK-GI-NEXT:    mov x28, x1
-; CHECK-GI-NEXT:    mov x0, x19
-; CHECK-GI-NEXT:    mov x1, x20
+; CHECK-GI-NEXT:    mov x0, x21
+; CHECK-GI-NEXT:    mov x1, x22
 ; CHECK-GI-NEXT:    mov x2, x23
 ; CHECK-GI-NEXT:    mov x3, x24
 ; CHECK-GI-NEXT:    bl __umodti3
-; CHECK-GI-NEXT:    mov x19, x0
-; CHECK-GI-NEXT:    mov x20, x1
-; CHECK-GI-NEXT:    mov x0, x21
-; CHECK-GI-NEXT:    mov x1, x22
+; CHECK-GI-NEXT:    mov x21, x0
+; CHECK-GI-NEXT:    mov x22, x1
+; CHECK-GI-NEXT:    mov x0, x19
+; CHECK-GI-NEXT:    mov x1, x20
 ; CHECK-GI-NEXT:    mov x2, x25
 ; CHECK-GI-NEXT:    mov x3, x26
 ; CHECK-GI-NEXT:    bl __umodti3
@@ -4260,8 +4260,8 @@ define <3 x i128> @uv3i128(<3 x i128> %d, <3 x i128> %e) {
 ; CHECK-GI-NEXT:    mov x5, x1
 ; CHECK-GI-NEXT:    mov x0, x27
 ; CHECK-GI-NEXT:    mov x1, x28
-; CHECK-GI-NEXT:    mov x2, x19
-; CHECK-GI-NEXT:    mov x3, x20
+; CHECK-GI-NEXT:    mov x2, x21
+; CHECK-GI-NEXT:    mov x3, x22
 ; CHECK-GI-NEXT:    ldp x20, x19, [sp, #80] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x22, x21, [sp, #64] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x24, x23, [sp, #48] // 16-byte Folded Reload
@@ -4367,46 +4367,46 @@ define <4 x i128> @uv4i128(<4 x i128> %d, <4 x i128> %e) {
 ; CHECK-GI-NEXT:    .cfi_offset w28, -80
 ; CHECK-GI-NEXT:    .cfi_offset w30, -88
 ; CHECK-GI-NEXT:    .cfi_offset w29, -96
-; CHECK-GI-NEXT:    mov x19, x2
-; CHECK-GI-NEXT:    mov x20, x3
-; CHECK-GI-NEXT:    mov x21, x4
+; CHECK-GI-NEXT:    mov x23, x2
+; CHECK-GI-NEXT:    mov x24, x3
+; CHECK-GI-NEXT:    mov x19, x4
 ; CHECK-GI-NEXT:    ldp x2, x3, [sp, #128]
-; CHECK-GI-NEXT:    mov x22, x5
+; CHECK-GI-NEXT:    mov x20, x5
 ; CHECK-GI-NEXT:    ldp x9, x8, [sp, #176]
-; CHECK-GI-NEXT:    mov x23, x7
-; CHECK-GI-NEXT:    ldp x24, x25, [sp, #144]
-; CHECK-GI-NEXT:    ldp x26, x27, [sp, #160]
+; CHECK-GI-NEXT:    mov x22, x7
+; CHECK-GI-NEXT:    ldp x25, x26, [sp, #144]
+; CHECK-GI-NEXT:    ldp x27, x28, [sp, #160]
 ; CHECK-GI-NEXT:    stp x9, x6, [sp, #16] // 16-byte Folded Spill
 ; CHECK-GI-NEXT:    str x8, [sp, #8] // 8-byte Spill
 ; CHECK-GI-NEXT:    bl __umodti3
-; CHECK-GI-NEXT:    mov x28, x0
+; CHECK-GI-NEXT:    mov x21, x0
 ; CHECK-GI-NEXT:    mov x29, x1
+; CHECK-GI-NEXT:    mov x0, x23
+; CHECK-GI-NEXT:    mov x1, x24
+; CHECK-GI-NEXT:    mov x2, x25
+; CHECK-GI-NEXT:    mov x3, x26
+; CHECK-GI-NEXT:    bl __umodti3
+; CHECK-GI-NEXT:    mov x23, x0
+; CHECK-GI-NEXT:    mov x24, x1
 ; CHECK-GI-NEXT:    mov x0, x19
 ; CHECK-GI-NEXT:    mov x1, x20
-; CHECK-GI-NEXT:    mov x2, x24
-; CHECK-GI-NEXT:    mov x3, x25
+; CHECK-GI-NEXT:    mov x2, x27
+; CHECK-GI-NEXT:    mov x3, x28
 ; CHECK-GI-NEXT:    bl __umodti3
 ; CHECK-GI-NEXT:    mov x19, x0
-; CHECK-GI-NEXT:    mov x20, x1
-; CHECK-GI-NEXT:    mov x0, x21
-; CHECK-GI-NEXT:    mov x1, x22
-; CHECK-GI-NEXT:    mov x2, x26
-; CHECK-GI-NEXT:    mov x3, x27
-; CHECK-GI-NEXT:    bl __umodti3
-; CHECK-GI-NEXT:    mov x21, x0
 ; CHECK-GI-NEXT:    ldp x2, x0, [sp, #16] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldr x3, [sp, #8] // 8-byte Reload
-; CHECK-GI-NEXT:    mov x22, x1
-; CHECK-GI-NEXT:    mov x1, x23
+; CHECK-GI-NEXT:    mov x20, x1
+; CHECK-GI-NEXT:    mov x1, x22
 ; CHECK-GI-NEXT:    bl __umodti3
 ; CHECK-GI-NEXT:    mov x6, x0
 ; CHECK-GI-NEXT:    mov x7, x1
-; CHECK-GI-NEXT:    mov x0, x28
+; CHECK-GI-NEXT:    mov x0, x21
 ; CHECK-GI-NEXT:    mov x1, x29
-; CHECK-GI-NEXT:    mov x2, x19
-; CHECK-GI-NEXT:    mov x3, x20
-; CHECK-GI-NEXT:    mov x4, x21
-; CHECK-GI-NEXT:    mov x5, x22
+; CHECK-GI-NEXT:    mov x2, x23
+; CHECK-GI-NEXT:    mov x3, x24
+; CHECK-GI-NEXT:    mov x4, x19
+; CHECK-GI-NEXT:    mov x5, x20
 ; CHECK-GI-NEXT:    ldp x20, x19, [sp, #112] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x22, x21, [sp, #96] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x24, x23, [sp, #80] // 16-byte Folded Reload

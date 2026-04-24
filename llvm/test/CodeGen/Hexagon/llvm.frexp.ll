@@ -71,7 +71,7 @@ define { <2 x half>, <2 x i32> } @test_frexp_v2f16_v2i32(<2 x half> %a) nounwind
 ; CHECK-LABEL: test_frexp_v2f16_v2i32:
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r17:16 = combine(r2,r0)
+; CHECK-NEXT:     r17:16 = combine(r0,r2)
 ; CHECK-NEXT:     r0 = r3
 ; CHECK-NEXT:     memd(r29+#-16) = r17:16
 ; CHECK-NEXT:     allocframe(#32)
@@ -88,7 +88,7 @@ define { <2 x half>, <2 x i32> } @test_frexp_v2f16_v2i32(<2 x half> %a) nounwind
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call __extendhfsf2
 ; CHECK-NEXT:     r18 = r0
-; CHECK-NEXT:     r0 = r17
+; CHECK-NEXT:     r0 = r16
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
@@ -101,15 +101,15 @@ define { <2 x half>, <2 x i32> } @test_frexp_v2f16_v2i32(<2 x half> %a) nounwind
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call __truncsfhf2
-; CHECK-NEXT:     r17 = r0
+; CHECK-NEXT:     r16 = r0
 ; CHECK-NEXT:     r0 = r18
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memh(r16+#2) = r0
-; CHECK-NEXT:     memh(r16+#0) = r17
+; CHECK-NEXT:     memh(r17+#2) = r0
+; CHECK-NEXT:     memh(r17+#0) = r16
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#8) = r21:20
+; CHECK-NEXT:     memd(r17+#8) = r21:20
 ; CHECK-NEXT:     r17:16 = memd(r29+#24)
 ; CHECK-EMPTY:
 ; CHECK-NEXT:    } :mem_noshuf // 8-byte Folded Reload
@@ -204,42 +204,42 @@ define { <3 x float>, <3 x i32> } @test_frexp_v3f32_v3i32(<3 x float> %a) nounwi
 ; CHECK-LABEL: test_frexp_v3f32_v3i32:
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r17:16 = combine(r4,r0)
-; CHECK-NEXT:     r0 = r2
+; CHECK-NEXT:     r17:16 = combine(r3,r4)
 ; CHECK-NEXT:     memd(r29+#-16) = r17:16
 ; CHECK-NEXT:     allocframe(#32)
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
+; CHECK-NEXT:     r0 = r2
 ; CHECK-NEXT:     r1 = add(r29,#4)
-; CHECK-NEXT:     r18 = r3
+; CHECK-NEXT:     r18 = r0
 ; CHECK-NEXT:     memd(r29+#16) = r19:18
+; CHECK-NEXT:    } // 8-byte Folded Spill
+; CHECK-NEXT:    {
+; CHECK-NEXT:     call frexpf
 ; CHECK-NEXT:     memd(r29+#8) = r21:20
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:    }
-; CHECK-NEXT:    {
-; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r0 = r18
+; CHECK-NEXT:     r0 = r17
 ; CHECK-NEXT:     r1 = add(r29,#0)
 ; CHECK-NEXT:     r20 = r0
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r1 = add(r16,#24)
+; CHECK-NEXT:     r1 = add(r18,#24)
 ; CHECK-NEXT:     r21 = r0
-; CHECK-NEXT:     r0 = r17
+; CHECK-NEXT:     r0 = r16
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     r2 = memw(r29+#4)
 ; CHECK-NEXT:     r3 = memw(r29+#0)
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#0) = r21:20
-; CHECK-NEXT:     memd(r16+#16) = r3:2
+; CHECK-NEXT:     memd(r18+#0) = r21:20
+; CHECK-NEXT:     memd(r18+#16) = r3:2
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memw(r16+#8) = r0
+; CHECK-NEXT:     memw(r18+#8) = r0
 ; CHECK-NEXT:     r17:16 = memd(r29+#24)
 ; CHECK-EMPTY:
 ; CHECK-NEXT:    } :mem_noshuf // 8-byte Folded Reload
@@ -331,7 +331,7 @@ define { <2 x float>, <2 x i32> } @test_frexp_v2f32_v2i32(<2 x float> %a) nounwi
 ; CHECK-LABEL: test_frexp_v2f32_v2i32:
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r17:16 = combine(r3,r0)
+; CHECK-NEXT:     r17:16 = combine(r0,r3)
 ; CHECK-NEXT:     r0 = r2
 ; CHECK-NEXT:     memd(r29+#-16) = r17:16
 ; CHECK-NEXT:     allocframe(#24)
@@ -343,7 +343,7 @@ define { <2 x float>, <2 x i32> } @test_frexp_v2f32_v2i32(<2 x float> %a) nounwi
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r0 = r17
+; CHECK-NEXT:     r0 = r16
 ; CHECK-NEXT:     r1 = add(r29,#0)
 ; CHECK-NEXT:     r18 = r0
 ; CHECK-NEXT:    }
@@ -353,8 +353,8 @@ define { <2 x float>, <2 x i32> } @test_frexp_v2f32_v2i32(<2 x float> %a) nounwi
 ; CHECK-NEXT:     r3 = memw(r29+#0)
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#0) = r1:0
-; CHECK-NEXT:     memd(r16+#8) = r3:2
+; CHECK-NEXT:     memd(r17+#0) = r1:0
+; CHECK-NEXT:     memd(r17+#8) = r3:2
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     r17:16 = memd(r29+#16)
@@ -429,56 +429,57 @@ define { <4 x float>, <4 x i32> } @test_frexp_v4f32_v4i32(<4 x float> %a) nounwi
 ; CHECK-LABEL: test_frexp_v4f32_v4i32:
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r17:16 = combine(r5,r0)
-; CHECK-NEXT:     r0 = r2
+; CHECK-NEXT:     r17:16 = combine(r4,r5)
 ; CHECK-NEXT:     memd(r29+#-16) = r17:16
 ; CHECK-NEXT:     allocframe(#48)
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
+; CHECK-NEXT:     r0 = r2
 ; CHECK-NEXT:     r1 = add(r29,#12)
-; CHECK-NEXT:     r19:18 = combine(r3,r4)
-; CHECK-NEXT:     memd(r29+#32) = r19:18
+; CHECK-NEXT:     r20 = r0
 ; CHECK-NEXT:     memd(r29+#24) = r21:20
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
+; CHECK-NEXT:     r18 = r3
+; CHECK-NEXT:     memd(r29+#32) = r19:18
 ; CHECK-NEXT:     memd(r29+#16) = r23:22
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r0 = r19
-; CHECK-NEXT:     r1 = add(r29,#8)
-; CHECK-NEXT:     r20 = r0
-; CHECK-NEXT:    }
-; CHECK-NEXT:    {
 ; CHECK-NEXT:     r0 = r18
-; CHECK-NEXT:     r1 = add(r29,#4)
-; CHECK-NEXT:     r19 = r0
-; CHECK-NEXT:     r22 = memw(r29+#12)
+; CHECK-NEXT:     r1 = add(r29,#8)
+; CHECK-NEXT:     r21 = r0
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r23 = memw(r29+#8)
-; CHECK-NEXT:    }
-; CHECK-NEXT:    {
-; CHECK-NEXT:     call frexpf
 ; CHECK-NEXT:     r0 = r17
-; CHECK-NEXT:     r1 = add(r29,#0)
-; CHECK-NEXT:     r18 = r0
+; CHECK-NEXT:     r1 = add(r29,#4)
+; CHECK-NEXT:     r22 = r0
+; CHECK-NEXT:     r18 = memw(r29+#12)
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r1:0 = combine(r0,r18)
-; CHECK-NEXT:     r5:4 = combine(r19,r20)
+; CHECK-NEXT:     call frexpf
+; CHECK-NEXT:     r19 = memw(r29+#8)
+; CHECK-NEXT:    }
+; CHECK-NEXT:    {
+; CHECK-NEXT:     call frexpf
+; CHECK-NEXT:     r0 = r16
+; CHECK-NEXT:     r1 = add(r29,#0)
+; CHECK-NEXT:     r17 = r0
+; CHECK-NEXT:    }
+; CHECK-NEXT:    {
+; CHECK-NEXT:     r1:0 = combine(r0,r17)
+; CHECK-NEXT:     r5:4 = combine(r22,r21)
 ; CHECK-NEXT:     r2 = memw(r29+#4)
 ; CHECK-NEXT:     r3 = memw(r29+#0)
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#8) = r1:0
-; CHECK-NEXT:     memd(r16+#0) = r5:4
+; CHECK-NEXT:     memd(r20+#8) = r1:0
+; CHECK-NEXT:     memd(r20+#0) = r5:4
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#24) = r3:2
-; CHECK-NEXT:     memd(r16+#16) = r23:22
+; CHECK-NEXT:     memd(r20+#24) = r3:2
+; CHECK-NEXT:     memd(r20+#16) = r19:18
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     r17:16 = memd(r29+#40)
@@ -499,45 +500,45 @@ define <4 x float> @test_frexp_v4f32_v4i32_only_use_fract(<4 x float> %a) nounwi
 ; CHECK-LABEL: test_frexp_v4f32_v4i32_only_use_fract:
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r17:16 = combine(r5,r0)
-; CHECK-NEXT:     r0 = r2
+; CHECK-NEXT:     r17:16 = combine(r4,r5)
 ; CHECK-NEXT:     memd(r29+#-16) = r17:16
 ; CHECK-NEXT:     allocframe(#40)
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
+; CHECK-NEXT:     r19:18 = combine(r0,r3)
 ; CHECK-NEXT:     r1 = add(r29,#12)
-; CHECK-NEXT:     r19:18 = combine(r3,r4)
+; CHECK-NEXT:     r0 = r2
 ; CHECK-NEXT:     memd(r29+#24) = r19:18
+; CHECK-NEXT:    } // 8-byte Folded Spill
+; CHECK-NEXT:    {
+; CHECK-NEXT:     call frexpf
 ; CHECK-NEXT:     memd(r29+#16) = r21:20
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:    }
-; CHECK-NEXT:    {
-; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r0 = r19
+; CHECK-NEXT:     r0 = r18
 ; CHECK-NEXT:     r1 = add(r29,#8)
 ; CHECK-NEXT:     r20 = r0
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r0 = r18
-; CHECK-NEXT:     r1 = add(r29,#4)
-; CHECK-NEXT:     r19 = r0
-; CHECK-NEXT:    }
-; CHECK-NEXT:    {
-; CHECK-NEXT:     call frexpf
 ; CHECK-NEXT:     r0 = r17
-; CHECK-NEXT:     r1 = add(r29,#0)
+; CHECK-NEXT:     r1 = add(r29,#4)
 ; CHECK-NEXT:     r18 = r0
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r1:0 = combine(r0,r18)
-; CHECK-NEXT:     r3:2 = combine(r19,r20)
+; CHECK-NEXT:     call frexpf
+; CHECK-NEXT:     r0 = r16
+; CHECK-NEXT:     r1 = add(r29,#0)
+; CHECK-NEXT:     r17 = r0
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#8) = r1:0
-; CHECK-NEXT:     memd(r16+#0) = r3:2
+; CHECK-NEXT:     r1:0 = combine(r0,r17)
+; CHECK-NEXT:     r3:2 = combine(r18,r20)
+; CHECK-NEXT:    }
+; CHECK-NEXT:    {
+; CHECK-NEXT:     memd(r19+#8) = r1:0
+; CHECK-NEXT:     memd(r19+#0) = r3:2
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     r17:16 = memd(r29+#32)
@@ -556,31 +557,33 @@ define <4 x i32> @test_frexp_v4f32_v4i32_only_use_exp(<4 x float> %a) nounwind {
 ; CHECK-LABEL: test_frexp_v4f32_v4i32_only_use_exp:
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r17:16 = combine(r5,r0)
-; CHECK-NEXT:     r0 = r2
+; CHECK-NEXT:     r17:16 = combine(r4,r5)
 ; CHECK-NEXT:     memd(r29+#-16) = r17:16
 ; CHECK-NEXT:     allocframe(#32)
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r19:18 = combine(r3,r4)
+; CHECK-NEXT:     r19:18 = combine(r0,r3)
 ; CHECK-NEXT:     r1 = add(r29,#12)
+; CHECK-NEXT:     r0 = r2
 ; CHECK-NEXT:     memd(r29+#16) = r19:18
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r1 = add(r29,#8)
-; CHECK-NEXT:     r0 = r19
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r1 = add(r29,#4)
+; CHECK-NEXT:     r1 = add(r29,#8)
 ; CHECK-NEXT:     r0 = r18
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexpf
-; CHECK-NEXT:     r1 = add(r29,#0)
+; CHECK-NEXT:     r1 = add(r29,#4)
 ; CHECK-NEXT:     r0 = r17
+; CHECK-NEXT:    }
+; CHECK-NEXT:    {
+; CHECK-NEXT:     call frexpf
+; CHECK-NEXT:     r1 = add(r29,#0)
+; CHECK-NEXT:     r0 = r16
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     r0 = memw(r29+#12)
@@ -591,8 +594,8 @@ define <4 x i32> @test_frexp_v4f32_v4i32_only_use_exp(<4 x float> %a) nounwind {
 ; CHECK-NEXT:     r3 = memw(r29+#0)
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#8) = r3:2
-; CHECK-NEXT:     memd(r16+#0) = r1:0
+; CHECK-NEXT:     memd(r19+#8) = r3:2
+; CHECK-NEXT:     memd(r19+#0) = r1:0
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     r17:16 = memd(r29+#24)
@@ -672,24 +675,24 @@ define { <2 x double>, <2 x i32> } @test_frexp_v2f64_v2i32(<2 x double> %a) noun
 ; CHECK-LABEL: test_frexp_v2f64_v2i32:
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r16 = r0
-; CHECK-NEXT:     r1:0 = combine(r3,r2)
+; CHECK-NEXT:     r17:16 = combine(r5,r4)
 ; CHECK-NEXT:     memd(r29+#-16) = r17:16
 ; CHECK-NEXT:     allocframe(#32)
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
+; CHECK-NEXT:     r1:0 = combine(r3,r2)
 ; CHECK-NEXT:     r2 = add(r29,#4)
-; CHECK-NEXT:     r19:18 = combine(r5,r4)
+; CHECK-NEXT:     r18 = r0
 ; CHECK-NEXT:     memd(r29+#16) = r19:18
+; CHECK-NEXT:    } // 8-byte Folded Spill
+; CHECK-NEXT:    {
+; CHECK-NEXT:     call frexp
 ; CHECK-NEXT:     memd(r29+#8) = r21:20
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexp
-; CHECK-NEXT:    }
-; CHECK-NEXT:    {
-; CHECK-NEXT:     call frexp
 ; CHECK-NEXT:     r21:20 = combine(r1,r0)
-; CHECK-NEXT:     r1:0 = combine(r19,r18)
+; CHECK-NEXT:     r1:0 = combine(r17,r16)
 ; CHECK-NEXT:     r2 = add(r29,#0)
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
@@ -697,11 +700,11 @@ define { <2 x double>, <2 x i32> } @test_frexp_v2f64_v2i32(<2 x double> %a) noun
 ; CHECK-NEXT:     r3 = memw(r29+#0)
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#8) = r1:0
-; CHECK-NEXT:     memd(r16+#0) = r21:20
+; CHECK-NEXT:     memd(r18+#8) = r1:0
+; CHECK-NEXT:     memd(r18+#0) = r21:20
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#16) = r3:2
+; CHECK-NEXT:     memd(r18+#16) = r3:2
 ; CHECK-NEXT:     r17:16 = memd(r29+#24)
 ; CHECK-EMPTY:
 ; CHECK-NEXT:    } :mem_noshuf // 8-byte Folded Reload
@@ -720,29 +723,29 @@ define <2 x double> @test_frexp_v2f64_v2i32_only_use_fract(<2 x double> %a) noun
 ; CHECK-LABEL: test_frexp_v2f64_v2i32_only_use_fract:
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r16 = r0
-; CHECK-NEXT:     r1:0 = combine(r3,r2)
+; CHECK-NEXT:     r17:16 = combine(r5,r4)
 ; CHECK-NEXT:     memd(r29+#-16) = r17:16
 ; CHECK-NEXT:     allocframe(#32)
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
+; CHECK-NEXT:     r1:0 = combine(r3,r2)
 ; CHECK-NEXT:     r2 = add(r29,#4)
-; CHECK-NEXT:     r19:18 = combine(r5,r4)
+; CHECK-NEXT:     r18 = r0
 ; CHECK-NEXT:     memd(r29+#16) = r19:18
+; CHECK-NEXT:    } // 8-byte Folded Spill
+; CHECK-NEXT:    {
+; CHECK-NEXT:     call frexp
 ; CHECK-NEXT:     memd(r29+#8) = r21:20
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call frexp
-; CHECK-NEXT:    }
-; CHECK-NEXT:    {
-; CHECK-NEXT:     call frexp
 ; CHECK-NEXT:     r21:20 = combine(r1,r0)
-; CHECK-NEXT:     r1:0 = combine(r19,r18)
+; CHECK-NEXT:     r1:0 = combine(r17,r16)
 ; CHECK-NEXT:     r2 = add(r29,#0)
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#8) = r1:0
-; CHECK-NEXT:     memd(r16+#0) = r21:20
+; CHECK-NEXT:     memd(r18+#8) = r1:0
+; CHECK-NEXT:     memd(r18+#0) = r21:20
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     r17:16 = memd(r29+#24)

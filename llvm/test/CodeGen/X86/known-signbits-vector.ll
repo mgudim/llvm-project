@@ -668,10 +668,10 @@ define i64 @signbits_cmpsd(double %0, double %1) {
 ; X86:       # %bb.0:
 ; X86-NEXT:    vmovsd {{.*#+}} xmm0 = mem[0],zero
 ; X86-NEXT:    vcmpeqsd {{[0-9]+}}(%esp), %xmm0, %xmm0
-; X86-NEXT:    vmovd %xmm0, %eax
-; X86-NEXT:    andl $1, %eax
-; X86-NEXT:    negl %eax
-; X86-NEXT:    movl %eax, %edx
+; X86-NEXT:    vmovd %xmm0, %edx
+; X86-NEXT:    andl $1, %edx
+; X86-NEXT:    negl %edx
+; X86-NEXT:    movl %edx, %eax
 ; X86-NEXT:    retl
 ;
 ; X64-LABEL: signbits_cmpsd:
@@ -688,8 +688,8 @@ define i64 @signbits_cmpsd_int(<2 x double> %0, <2 x double> %1) {
 ; X86-LABEL: signbits_cmpsd_int:
 ; X86:       # %bb.0:
 ; X86-NEXT:    vcmpeqsd %xmm1, %xmm0, %xmm0
-; X86-NEXT:    vextractps $1, %xmm0, %eax
-; X86-NEXT:    movl %eax, %edx
+; X86-NEXT:    vextractps $1, %xmm0, %edx
+; X86-NEXT:    movl %edx, %eax
 ; X86-NEXT:    retl
 ;
 ; X64-LABEL: signbits_cmpsd_int:

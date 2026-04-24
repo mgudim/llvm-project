@@ -376,15 +376,17 @@ define void @global_atomic_cmpxchg_i64_ret_av_av__av(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_av_av__av:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; def v[4:5]
+; CHECK-NEXT:    ; def v[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def v[2:3]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -405,15 +407,17 @@ define void @global_atomic_cmpxchg_i64_ret_av_av__v(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_av_av__v:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; def v[4:5]
+; CHECK-NEXT:    ; def v[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def v[2:3]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -434,15 +438,17 @@ define void @global_atomic_cmpxchg_i64_ret_av_av__a(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_av_av__a:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; def v[4:5]
+; CHECK-NEXT:    ; def v[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def v[2:3]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -465,19 +471,21 @@ define void @global_atomic_cmpxchg_i64_ret_a_a__a(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_a_a__a:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def a[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def a[2:3]
 ; CHECK-NEXT:    ;;#ASMEND
-; CHECK-NEXT:    v_accvgpr_read_b32 v2, a2
-; CHECK-NEXT:    v_accvgpr_read_b32 v3, a3
-; CHECK-NEXT:    v_accvgpr_read_b32 v4, a0
-; CHECK-NEXT:    v_accvgpr_read_b32 v5, a1
+; CHECK-NEXT:    v_accvgpr_read_b32 v0, a2
+; CHECK-NEXT:    v_accvgpr_read_b32 v1, a3
+; CHECK-NEXT:    v_accvgpr_read_b32 v2, a0
+; CHECK-NEXT:    v_accvgpr_read_b32 v3, a1
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -500,19 +508,21 @@ define void @global_atomic_cmpxchg_i64_ret_a_a__v(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_a_a__v:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def a[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def a[2:3]
 ; CHECK-NEXT:    ;;#ASMEND
-; CHECK-NEXT:    v_accvgpr_read_b32 v2, a2
-; CHECK-NEXT:    v_accvgpr_read_b32 v3, a3
-; CHECK-NEXT:    v_accvgpr_read_b32 v4, a0
-; CHECK-NEXT:    v_accvgpr_read_b32 v5, a1
+; CHECK-NEXT:    v_accvgpr_read_b32 v0, a2
+; CHECK-NEXT:    v_accvgpr_read_b32 v1, a3
+; CHECK-NEXT:    v_accvgpr_read_b32 v2, a0
+; CHECK-NEXT:    v_accvgpr_read_b32 v3, a1
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -533,17 +543,19 @@ define void @global_atomic_cmpxchg_i64_ret_v_a__v(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_v_a__v:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def a[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
-; CHECK-NEXT:    v_accvgpr_read_b32 v2, a0
-; CHECK-NEXT:    v_accvgpr_read_b32 v3, a1
+; CHECK-NEXT:    v_accvgpr_read_b32 v0, a0
+; CHECK-NEXT:    v_accvgpr_read_b32 v1, a1
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; def v[4:5]
+; CHECK-NEXT:    ; def v[2:3]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -564,17 +576,19 @@ define void @global_atomic_cmpxchg_i64_ret_a_v__v(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_a_v__v:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def a[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
-; CHECK-NEXT:    v_accvgpr_read_b32 v4, a0
-; CHECK-NEXT:    v_accvgpr_read_b32 v5, a1
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; def v[2:3]
+; CHECK-NEXT:    ; def v[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
+; CHECK-NEXT:    v_accvgpr_read_b32 v2, a0
+; CHECK-NEXT:    v_accvgpr_read_b32 v3, a1
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -595,15 +609,17 @@ define void @global_atomic_cmpxchg_i64_ret_v_v__a(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_v_v__a:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; def v[4:5]
+; CHECK-NEXT:    ; def v[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def v[2:3]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -626,15 +642,17 @@ define void @global_atomic_cmpxchg_i64_ret_av_v__av(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_av_v__av:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; def v[4:5]
+; CHECK-NEXT:    ; def v[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def v[2:3]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -655,15 +673,17 @@ define void @global_atomic_cmpxchg_i64_ret_v_av__av(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_v_av__av:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; def v[4:5]
+; CHECK-NEXT:    ; def v[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def v[2:3]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -684,17 +704,19 @@ define void @global_atomic_cmpxchg_i64_ret_av_a__av(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_av_a__av:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def a[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
-; CHECK-NEXT:    v_accvgpr_read_b32 v2, a0
-; CHECK-NEXT:    v_accvgpr_read_b32 v3, a1
+; CHECK-NEXT:    v_accvgpr_read_b32 v0, a0
+; CHECK-NEXT:    v_accvgpr_read_b32 v1, a1
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; def v[4:5]
+; CHECK-NEXT:    ; def v[2:3]
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol
@@ -715,17 +737,19 @@ define void @global_atomic_cmpxchg_i64_ret_a_av__av(ptr addrspace(1) %ptr) #0 {
 ; CHECK-LABEL: global_atomic_cmpxchg_i64_ret_a_av__av:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; CHECK-NEXT:    v_mov_b32_e32 v5, v1
+; CHECK-NEXT:    v_mov_b32_e32 v4, v0
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    ; def a[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
-; CHECK-NEXT:    v_accvgpr_read_b32 v4, a0
-; CHECK-NEXT:    v_accvgpr_read_b32 v5, a1
 ; CHECK-NEXT:    ;;#ASMSTART
-; CHECK-NEXT:    ; def v[2:3]
+; CHECK-NEXT:    ; def v[0:1]
 ; CHECK-NEXT:    ;;#ASMEND
+; CHECK-NEXT:    v_accvgpr_read_b32 v2, a0
+; CHECK-NEXT:    v_accvgpr_read_b32 v3, a1
 ; CHECK-NEXT:    buffer_wbl2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
-; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[0:1], v[2:5], off offset:80 glc
+; CHECK-NEXT:    global_atomic_cmpswap_x2 v[0:1], v[4:5], v[0:3], off offset:80 glc
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    buffer_invl2
 ; CHECK-NEXT:    buffer_wbinvl1_vol

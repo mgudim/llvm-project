@@ -19877,17 +19877,17 @@ define void @mul_use_commutative_clmul_v2i64(<2 x i64> %x, <2 x i64> %y, ptr %p0
 ; RV64I-NEXT:    xor a1, a2, a1
 ; RV64I-NEXT:    xor a4, a4, a5
 ; RV64I-NEXT:    xor a0, a0, a1
-; RV64I-NEXT:    xor s1, a4, t0
-; RV64I-NEXT:    xor s2, a0, a3
+; RV64I-NEXT:    xor s0, a4, t0
+; RV64I-NEXT:    xor s1, a0, a3
 ; RV64I-NEXT:    ld a0, 968(sp) # 8-byte Folded Reload
-; RV64I-NEXT:    sd s1, 0(a0)
-; RV64I-NEXT:    sd s2, 8(a0)
-; RV64I-NEXT:    mv a0, s1
-; RV64I-NEXT:    mv a1, s2
+; RV64I-NEXT:    sd s0, 0(a0)
+; RV64I-NEXT:    sd s1, 8(a0)
+; RV64I-NEXT:    mv a0, s0
+; RV64I-NEXT:    mv a1, s1
 ; RV64I-NEXT:    call vector_use
 ; RV64I-NEXT:    ld a0, 976(sp) # 8-byte Folded Reload
-; RV64I-NEXT:    sd s1, 0(a0)
-; RV64I-NEXT:    sd s2, 8(a0)
+; RV64I-NEXT:    sd s0, 0(a0)
+; RV64I-NEXT:    sd s1, 8(a0)
 ; RV64I-NEXT:    ld ra, 1080(sp) # 8-byte Folded Reload
 ; RV64I-NEXT:    ld s0, 1072(sp) # 8-byte Folded Reload
 ; RV64I-NEXT:    ld s1, 1064(sp) # 8-byte Folded Reload
@@ -22571,17 +22571,17 @@ define void @mul_use_commutative_clmul_v2i64(<2 x i64> %x, <2 x i64> %y, ptr %p0
 ; RV64IM-NEXT:    xor a1, a2, a1
 ; RV64IM-NEXT:    xor a3, a3, a4
 ; RV64IM-NEXT:    xor a0, a0, a1
-; RV64IM-NEXT:    xor s1, a3, a6
-; RV64IM-NEXT:    xor s2, a0, t5
+; RV64IM-NEXT:    xor s0, a3, a6
+; RV64IM-NEXT:    xor s1, a0, t5
 ; RV64IM-NEXT:    ld a0, 864(sp) # 8-byte Folded Reload
-; RV64IM-NEXT:    sd s1, 0(a0)
-; RV64IM-NEXT:    sd s2, 8(a0)
-; RV64IM-NEXT:    mv a0, s1
-; RV64IM-NEXT:    mv a1, s2
+; RV64IM-NEXT:    sd s0, 0(a0)
+; RV64IM-NEXT:    sd s1, 8(a0)
+; RV64IM-NEXT:    mv a0, s0
+; RV64IM-NEXT:    mv a1, s1
 ; RV64IM-NEXT:    call vector_use
 ; RV64IM-NEXT:    ld a0, 872(sp) # 8-byte Folded Reload
-; RV64IM-NEXT:    sd s1, 0(a0)
-; RV64IM-NEXT:    sd s2, 8(a0)
+; RV64IM-NEXT:    sd s0, 0(a0)
+; RV64IM-NEXT:    sd s1, 8(a0)
 ; RV64IM-NEXT:    ld ra, 1096(sp) # 8-byte Folded Reload
 ; RV64IM-NEXT:    ld s0, 1088(sp) # 8-byte Folded Reload
 ; RV64IM-NEXT:    ld s1, 1080(sp) # 8-byte Folded Reload
@@ -25484,17 +25484,17 @@ define void @mul_use_commutative_clmul_v2i64(<2 x i64> %x, <2 x i64> %y, ptr %p0
 ; RV64IMZBS-NEXT:    xor a1, a2, a1
 ; RV64IMZBS-NEXT:    xor a3, a3, a5
 ; RV64IMZBS-NEXT:    xor a0, a0, a1
-; RV64IMZBS-NEXT:    xor s1, a3, t1
-; RV64IMZBS-NEXT:    xor s2, a0, a4
+; RV64IMZBS-NEXT:    xor s0, a3, t1
+; RV64IMZBS-NEXT:    xor s1, a0, a4
 ; RV64IMZBS-NEXT:    ld a0, 920(sp) # 8-byte Folded Reload
-; RV64IMZBS-NEXT:    sd s1, 0(a0)
-; RV64IMZBS-NEXT:    sd s2, 8(a0)
-; RV64IMZBS-NEXT:    mv a0, s1
-; RV64IMZBS-NEXT:    mv a1, s2
+; RV64IMZBS-NEXT:    sd s0, 0(a0)
+; RV64IMZBS-NEXT:    sd s1, 8(a0)
+; RV64IMZBS-NEXT:    mv a0, s0
+; RV64IMZBS-NEXT:    mv a1, s1
 ; RV64IMZBS-NEXT:    call vector_use
 ; RV64IMZBS-NEXT:    ld a0, 928(sp) # 8-byte Folded Reload
-; RV64IMZBS-NEXT:    sd s1, 0(a0)
-; RV64IMZBS-NEXT:    sd s2, 8(a0)
+; RV64IMZBS-NEXT:    sd s0, 0(a0)
+; RV64IMZBS-NEXT:    sd s1, 8(a0)
 ; RV64IMZBS-NEXT:    ld ra, 1032(sp) # 8-byte Folded Reload
 ; RV64IMZBS-NEXT:    ld s0, 1024(sp) # 8-byte Folded Reload
 ; RV64IMZBS-NEXT:    ld s1, 1016(sp) # 8-byte Folded Reload

@@ -50,16 +50,17 @@ define cc 11 i32 @caller(i32 %a0, i32 %b0, i32 %c0, i32 %d0, i32 %e0) nounwind {
 define x86_regcallcc {i32, i32, i32} @test_callee(i32 %a0, i32 %b0, i32 %c0, i32 %d0, i32 %e0) nounwind {
 ; CHECK-LABEL: test_callee:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    leal (,%esi,8), %ecx
-; CHECK-NEXT:    subl %esi, %ecx
+; CHECK-NEXT:    pushl %ebx
+; CHECK-NEXT:    leal (,%esi,8), %ebx
+; CHECK-NEXT:    subl %esi, %ebx
 ; CHECK-NEXT:    movl $5, %eax
 ; CHECK-NEXT:    xorl %edx, %edx
 ; CHECK-NEXT:    divl %esi
-; CHECK-NEXT:    movl %eax, %esi
+; CHECK-NEXT:    movl %eax, %ecx
 ; CHECK-NEXT:    leal (,%edi,8), %edx
 ; CHECK-NEXT:    subl %edi, %edx
-; CHECK-NEXT:    movl %ecx, %eax
-; CHECK-NEXT:    movl %esi, %ecx
+; CHECK-NEXT:    movl %ebx, %eax
+; CHECK-NEXT:    popl %ebx
 ; CHECK-NEXT:    retl
   %b1 = mul i32 7, %e0
   %b2 = udiv i32 5, %e0

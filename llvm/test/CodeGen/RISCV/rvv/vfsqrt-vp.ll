@@ -16,11 +16,11 @@ define <vscale x 1 x bfloat> @vfsqrt_vv_nxv1bf16(<vscale x 1 x bfloat> %va, <vsc
 ; CHECK-LABEL: vfsqrt_vv_nxv1bf16:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, mf4, ta, ma
-; CHECK-NEXT:    vfwcvtbf16.f.f.v v9, v8, v0.t
+; CHECK-NEXT:    vfwcvtbf16.f.f.v v10, v8, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e32, mf2, ta, ma
-; CHECK-NEXT:    vfsqrt.v v9, v9, v0.t
+; CHECK-NEXT:    vfsqrt.v v10, v10, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e16, mf4, ta, ma
-; CHECK-NEXT:    vfncvtbf16.f.f.w v8, v9, v0.t
+; CHECK-NEXT:    vfncvtbf16.f.f.w v8, v10, v0.t
 ; CHECK-NEXT:    ret
   %v = call <vscale x 1 x bfloat> @llvm.vp.sqrt.nxv1bf16(<vscale x 1 x bfloat> %va, <vscale x 1 x i1> %m, i32 %evl)
   ret <vscale x 1 x bfloat> %v
@@ -44,11 +44,11 @@ define <vscale x 2 x bfloat> @vfsqrt_vv_nxv2bf16(<vscale x 2 x bfloat> %va, <vsc
 ; CHECK-LABEL: vfsqrt_vv_nxv2bf16:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
-; CHECK-NEXT:    vfwcvtbf16.f.f.v v9, v8, v0.t
+; CHECK-NEXT:    vfwcvtbf16.f.f.v v10, v8, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e32, m1, ta, ma
-; CHECK-NEXT:    vfsqrt.v v9, v9, v0.t
+; CHECK-NEXT:    vfsqrt.v v10, v10, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e16, mf2, ta, ma
-; CHECK-NEXT:    vfncvtbf16.f.f.w v8, v9, v0.t
+; CHECK-NEXT:    vfncvtbf16.f.f.w v8, v10, v0.t
 ; CHECK-NEXT:    ret
   %v = call <vscale x 2 x bfloat> @llvm.vp.sqrt.nxv2bf16(<vscale x 2 x bfloat> %va, <vscale x 2 x i1> %m, i32 %evl)
   ret <vscale x 2 x bfloat> %v
@@ -163,8 +163,9 @@ define <vscale x 32 x bfloat> @vfsqrt_vv_nxv32bf16(<vscale x 32 x bfloat> %va, <
 ; CHECK-NEXT:    sub a3, a0, a1
 ; CHECK-NEXT:    sltu a4, a0, a3
 ; CHECK-NEXT:    addi a4, a4, -1
-; CHECK-NEXT:    vslidedown.vx v0, v0, a2
+; CHECK-NEXT:    vslidedown.vx v17, v0, a2
 ; CHECK-NEXT:    and a3, a4, a3
+; CHECK-NEXT:    vmv1r.v v0, v17
 ; CHECK-NEXT:    vsetvli zero, a3, e16, m4, ta, ma
 ; CHECK-NEXT:    vfwcvtbf16.f.f.v v24, v12, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e32, m8, ta, ma
@@ -199,8 +200,9 @@ define <vscale x 32 x bfloat> @vfsqrt_vv_nxv32bf16_unmasked(<vscale x 32 x bfloa
 ; CHECK-NEXT:    sltu a4, a0, a3
 ; CHECK-NEXT:    addi a4, a4, -1
 ; CHECK-NEXT:    vsetvli a5, zero, e8, mf2, ta, ma
-; CHECK-NEXT:    vslidedown.vx v0, v16, a2
+; CHECK-NEXT:    vslidedown.vx v24, v16, a2
 ; CHECK-NEXT:    and a3, a4, a3
+; CHECK-NEXT:    vmv1r.v v0, v24
 ; CHECK-NEXT:    vsetvli zero, a3, e16, m4, ta, ma
 ; CHECK-NEXT:    vfwcvtbf16.f.f.v v16, v12, v0.t
 ; CHECK-NEXT:    vsetvli zero, zero, e32, m8, ta, ma
@@ -232,11 +234,11 @@ define <vscale x 1 x half> @vfsqrt_vv_nxv1f16(<vscale x 1 x half> %va, <vscale x
 ; ZVFHMIN-LABEL: vfsqrt_vv_nxv1f16:
 ; ZVFHMIN:       # %bb.0:
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e16, mf4, ta, ma
-; ZVFHMIN-NEXT:    vfwcvt.f.f.v v9, v8, v0.t
+; ZVFHMIN-NEXT:    vfwcvt.f.f.v v10, v8, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e32, mf2, ta, ma
-; ZVFHMIN-NEXT:    vfsqrt.v v9, v9, v0.t
+; ZVFHMIN-NEXT:    vfsqrt.v v10, v10, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e16, mf4, ta, ma
-; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v9, v0.t
+; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v10, v0.t
 ; ZVFHMIN-NEXT:    ret
   %v = call <vscale x 1 x half> @llvm.vp.sqrt.nxv1f16(<vscale x 1 x half> %va, <vscale x 1 x i1> %m, i32 %evl)
   ret <vscale x 1 x half> %v
@@ -272,11 +274,11 @@ define <vscale x 2 x half> @vfsqrt_vv_nxv2f16(<vscale x 2 x half> %va, <vscale x
 ; ZVFHMIN-LABEL: vfsqrt_vv_nxv2f16:
 ; ZVFHMIN:       # %bb.0:
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
-; ZVFHMIN-NEXT:    vfwcvt.f.f.v v9, v8, v0.t
+; ZVFHMIN-NEXT:    vfwcvt.f.f.v v10, v8, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e32, m1, ta, ma
-; ZVFHMIN-NEXT:    vfsqrt.v v9, v9, v0.t
+; ZVFHMIN-NEXT:    vfsqrt.v v10, v10, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e16, mf2, ta, ma
-; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v9, v0.t
+; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v10, v0.t
 ; ZVFHMIN-NEXT:    ret
   %v = call <vscale x 2 x half> @llvm.vp.sqrt.nxv2f16(<vscale x 2 x half> %va, <vscale x 2 x i1> %m, i32 %evl)
   ret <vscale x 2 x half> %v
@@ -439,8 +441,9 @@ define <vscale x 32 x half> @vfsqrt_vv_nxv32f16(<vscale x 32 x half> %va, <vscal
 ; ZVFHMIN-NEXT:    sub a3, a0, a1
 ; ZVFHMIN-NEXT:    sltu a4, a0, a3
 ; ZVFHMIN-NEXT:    addi a4, a4, -1
-; ZVFHMIN-NEXT:    vslidedown.vx v0, v0, a2
+; ZVFHMIN-NEXT:    vslidedown.vx v17, v0, a2
 ; ZVFHMIN-NEXT:    and a3, a4, a3
+; ZVFHMIN-NEXT:    vmv1r.v v0, v17
 ; ZVFHMIN-NEXT:    vsetvli zero, a3, e16, m4, ta, ma
 ; ZVFHMIN-NEXT:    vfwcvt.f.f.v v24, v12, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e32, m8, ta, ma
@@ -481,8 +484,9 @@ define <vscale x 32 x half> @vfsqrt_vv_nxv32f16_unmasked(<vscale x 32 x half> %v
 ; ZVFHMIN-NEXT:    sltu a4, a0, a3
 ; ZVFHMIN-NEXT:    addi a4, a4, -1
 ; ZVFHMIN-NEXT:    vsetvli a5, zero, e8, mf2, ta, ma
-; ZVFHMIN-NEXT:    vslidedown.vx v0, v16, a2
+; ZVFHMIN-NEXT:    vslidedown.vx v24, v16, a2
 ; ZVFHMIN-NEXT:    and a3, a4, a3
+; ZVFHMIN-NEXT:    vmv1r.v v0, v24
 ; ZVFHMIN-NEXT:    vsetvli zero, a3, e16, m4, ta, ma
 ; ZVFHMIN-NEXT:    vfwcvt.f.f.v v16, v12, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e32, m8, ta, ma

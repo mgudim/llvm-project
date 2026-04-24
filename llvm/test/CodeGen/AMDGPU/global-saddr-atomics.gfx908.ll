@@ -10,7 +10,9 @@
 define amdgpu_ps void @global_fadd_saddr_f32_nortn(ptr addrspace(1) inreg %sbase, i32 %voffset, float %data) {
 ; GCN-LABEL: global_fadd_saddr_f32_nortn:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_atomic_add_f32 v0, v1, s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_atomic_add_f32 v0, v1, s[0:1]
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    buffer_wbinvl1
 ; GCN-NEXT:    s_endpgm
@@ -23,7 +25,9 @@ define amdgpu_ps void @global_fadd_saddr_f32_nortn(ptr addrspace(1) inreg %sbase
 define amdgpu_ps void @global_fadd_saddr_f32_nortn_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, float %data) {
 ; GCN-LABEL: global_fadd_saddr_f32_nortn_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_atomic_add_f32 v0, v1, s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_atomic_add_f32 v0, v1, s[0:1] offset:-128
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    buffer_wbinvl1
 ; GCN-NEXT:    s_endpgm
@@ -37,7 +41,9 @@ define amdgpu_ps void @global_fadd_saddr_f32_nortn_neg128(ptr addrspace(1) inreg
 define amdgpu_ps void @global_fadd_saddr_v2f16_nortn(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x half> %data) {
 ; GCN-LABEL: global_fadd_saddr_v2f16_nortn:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_atomic_pk_add_f16 v0, v1, s[2:3]
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_atomic_pk_add_f16 v0, v1, s[0:1]
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    buffer_wbinvl1
 ; GCN-NEXT:    s_endpgm
@@ -50,7 +56,9 @@ define amdgpu_ps void @global_fadd_saddr_v2f16_nortn(ptr addrspace(1) inreg %sba
 define amdgpu_ps void @global_fadd_saddr_v2f16_nortn_neg128(ptr addrspace(1) inreg %sbase, i32 %voffset, <2 x half> %data) {
 ; GCN-LABEL: global_fadd_saddr_v2f16_nortn_neg128:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    global_atomic_pk_add_f16 v0, v1, s[2:3] offset:-128
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    global_atomic_pk_add_f16 v0, v1, s[0:1] offset:-128
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    buffer_wbinvl1
 ; GCN-NEXT:    s_endpgm

@@ -25,21 +25,21 @@ define i64 @fn1() #0 {
 ; CHECK-NEXT:    .cfi_offset %edi, -16
 ; CHECK-NEXT:    .cfi_offset %ebx, -12
 ; CHECK-NEXT:    movl $-1028477379, %eax # imm = 0xC2B2AE3D
-; CHECK-NEXT:    movl $668265295, %ebx # imm = 0x27D4EB4F
-; CHECK-NEXT:    movl a, %edi
-; CHECK-NEXT:    cmpl $0, (%edi)
+; CHECK-NEXT:    movl $668265295, %edi # imm = 0x27D4EB4F
+; CHECK-NEXT:    movl a, %ebx
+; CHECK-NEXT:    cmpl $0, (%ebx)
 ; CHECK-NEXT:    je .LBB0_2
 ; CHECK-NEXT:  # %bb.1: # %if.then
-; CHECK-NEXT:    movl 8(%edi), %esi
-; CHECK-NEXT:    movl 12(%edi), %edx
+; CHECK-NEXT:    movl 8(%ebx), %esi
+; CHECK-NEXT:    movl 12(%ebx), %edx
 ; CHECK-NEXT:    movl %edx, %eax
 ; CHECK-NEXT:    shldl $1, %esi, %eax
 ; CHECK-NEXT:    orl %edx, %eax
 ; CHECK-NEXT:    leal (%esi,%esi), %ecx
 ; CHECK-NEXT:    orl %esi, %ecx
 ; CHECK-NEXT:    movl %ecx, {{[-0-9]+}}(%e{{[sb]}}p) # 4-byte Spill
-; CHECK-NEXT:    movl 16(%edi), %ecx
-; CHECK-NEXT:    movl 20(%edi), %esi
+; CHECK-NEXT:    movl 16(%ebx), %ecx
+; CHECK-NEXT:    movl 20(%ebx), %esi
 ; CHECK-NEXT:    movl %esi, %edx
 ; CHECK-NEXT:    shldl $2, %ecx, %edx
 ; CHECK-NEXT:    movl %edx, {{[-0-9]+}}(%e{{[sb]}}p) # 4-byte Spill
@@ -53,57 +53,57 @@ define i64 @fn1() #0 {
 ; CHECK-NEXT:    movl %ecx, {{[-0-9]+}}(%e{{[sb]}}p) # 4-byte Spill
 ; CHECK-NEXT:    adcl %eax, %esi
 ; CHECK-NEXT:    movl %esi, {{[-0-9]+}}(%e{{[sb]}}p) # 4-byte Spill
-; CHECK-NEXT:    movl 24(%edi), %eax
+; CHECK-NEXT:    movl 24(%ebx), %eax
 ; CHECK-NEXT:    movl %eax, {{[-0-9]+}}(%e{{[sb]}}p) # 4-byte Spill
 ; CHECK-NEXT:    movl $-1028477379, %ecx # imm = 0xC2B2AE3D
 ; CHECK-NEXT:    imull %eax, %ecx
-; CHECK-NEXT:    mull %ebx
+; CHECK-NEXT:    mull %edi
 ; CHECK-NEXT:    movl %eax, %esi
 ; CHECK-NEXT:    addl %ecx, %edx
-; CHECK-NEXT:    movl 28(%edi), %edi
-; CHECK-NEXT:    imull %edi, %ebx
-; CHECK-NEXT:    addl %edx, %ebx
+; CHECK-NEXT:    movl 28(%ebx), %ebx
+; CHECK-NEXT:    imull %ebx, %edi
+; CHECK-NEXT:    addl %edx, %edi
 ; CHECK-NEXT:    movl $1336530590, %edx # imm = 0x4FA9D69E
 ; CHECK-NEXT:    movl {{[-0-9]+}}(%e{{[sb]}}p), %ecx # 4-byte Reload
 ; CHECK-NEXT:    movl %ecx, %eax
 ; CHECK-NEXT:    mull %edx
 ; CHECK-NEXT:    imull $-2056954758, %ecx, %ecx # imm = 0x85655C7A
 ; CHECK-NEXT:    addl %edx, %ecx
-; CHECK-NEXT:    imull $1336530590, %edi, %edx # imm = 0x4FA9D69E
+; CHECK-NEXT:    imull $1336530590, %ebx, %edx # imm = 0x4FA9D69E
 ; CHECK-NEXT:    addl %ecx, %edx
-; CHECK-NEXT:    shrdl $3, %ebx, %esi
-; CHECK-NEXT:    sarl $3, %ebx
-; CHECK-NEXT:    orl %edx, %ebx
+; CHECK-NEXT:    shrdl $3, %edi, %esi
+; CHECK-NEXT:    sarl $3, %edi
+; CHECK-NEXT:    orl %edx, %edi
 ; CHECK-NEXT:    orl %eax, %esi
 ; CHECK-NEXT:    movl $-66860409, %ecx # imm = 0xFC03CA87
 ; CHECK-NEXT:    movl %esi, %eax
 ; CHECK-NEXT:    mull %ecx
-; CHECK-NEXT:    movl %eax, %edi
+; CHECK-NEXT:    movl %eax, %ebx
 ; CHECK-NEXT:    imull $326129324, %esi, %eax # imm = 0x137056AC
 ; CHECK-NEXT:    addl %edx, %eax
-; CHECK-NEXT:    imull $-66860409, %ebx, %ecx # imm = 0xFC03CA87
+; CHECK-NEXT:    imull $-66860409, %edi, %ecx # imm = 0xFC03CA87
 ; CHECK-NEXT:    addl %eax, %ecx
 ; CHECK-NEXT:    xorl {{[-0-9]+}}(%e{{[sb]}}p), %ecx # 4-byte Folded Reload
-; CHECK-NEXT:    xorl {{[-0-9]+}}(%e{{[sb]}}p), %edi # 4-byte Folded Reload
-; CHECK-NEXT:    movl %edi, b
-; CHECK-NEXT:    movl %edi, %eax
+; CHECK-NEXT:    xorl {{[-0-9]+}}(%e{{[sb]}}p), %ebx # 4-byte Folded Reload
+; CHECK-NEXT:    movl %ebx, b
+; CHECK-NEXT:    movl %ebx, %eax
 ; CHECK-NEXT:    movl $-66860409, %edx # imm = 0xFC03CA87
 ; CHECK-NEXT:    mull %edx
-; CHECK-NEXT:    imull $326129324, %edi, %esi # imm = 0x137056AC
+; CHECK-NEXT:    imull $326129324, %ebx, %esi # imm = 0x137056AC
 ; CHECK-NEXT:    addl %edx, %esi
 ; CHECK-NEXT:    movl %ecx, b+4
 ; CHECK-NEXT:    imull $-66860409, %ecx, %ecx # imm = 0xFC03CA87
 ; CHECK-NEXT:    jmp .LBB0_3
 ; CHECK-NEXT:  .LBB0_2: # %if.else
 ; CHECK-NEXT:    xorl b+4, %eax
-; CHECK-NEXT:    xorl b, %ebx
+; CHECK-NEXT:    xorl b, %edi
 ; CHECK-NEXT:    movl $1419758215, %ecx # imm = 0x549FCA87
-; CHECK-NEXT:    movl %eax, %edi
-; CHECK-NEXT:    movl %ebx, %eax
+; CHECK-NEXT:    movl %eax, %ebx
+; CHECK-NEXT:    movl %edi, %eax
 ; CHECK-NEXT:    mull %ecx
-; CHECK-NEXT:    imull $93298681, %ebx, %esi # imm = 0x58F9FF9
+; CHECK-NEXT:    imull $93298681, %edi, %esi # imm = 0x58F9FF9
 ; CHECK-NEXT:    addl %edx, %esi
-; CHECK-NEXT:    imull $1419758215, %edi, %ecx # imm = 0x549FCA87
+; CHECK-NEXT:    imull $1419758215, %ebx, %ecx # imm = 0x549FCA87
 ; CHECK-NEXT:  .LBB0_3: # %if.end
 ; CHECK-NEXT:    addl %esi, %ecx
 ; CHECK-NEXT:    addl $-1028477341, %eax # imm = 0xC2B2AE63

@@ -74,10 +74,10 @@ define void @interleave_store_legalization(ptr %a, <8 x i32> %v1, <8 x i32> %v2)
 ; CHECK-NEXT:    mov z5.d, z2.d
 ; CHECK-NEXT:    mov z4.d, z0.d
 ; CHECK-NEXT:    mov x8, #8 // =0x8
-; CHECK-NEXT:    mov z2.d, z3.d
+; CHECK-NEXT:    mov z2.d, z1.d
 ; CHECK-NEXT:    ptrue p0.s, vl4
 ; CHECK-NEXT:    st2w { z4.s, z5.s }, p0, [x0]
-; CHECK-NEXT:    st2w { z1.s, z2.s }, p0, [x0, x8, lsl #2]
+; CHECK-NEXT:    st2w { z2.s, z3.s }, p0, [x0, x8, lsl #2]
 ; CHECK-NEXT:    ret
 ;
 ; NONEON-NOSVE-LABEL: interleave_store_legalization:

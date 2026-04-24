@@ -287,8 +287,8 @@ define <4 x i32> @vec(<4 x i32> %x, <4 x i32> %y) nounwind {
 ; X86-NEXT:    pushl %eax
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %edi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %ebp
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %ebx
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ebp
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %eax
 ; X86-NEXT:    movl %eax, %ecx
 ; X86-NEXT:    shrl %ecx
@@ -300,16 +300,6 @@ define <4 x i32> @vec(<4 x i32> %x, <4 x i32> %y) nounwind {
 ; X86-NEXT:    calll __udivdi3
 ; X86-NEXT:    addl $16, %esp
 ; X86-NEXT:    movl %eax, (%esp) # 4-byte Spill
-; X86-NEXT:    movl %ebx, %eax
-; X86-NEXT:    shrl %eax
-; X86-NEXT:    shll $31, %ebx
-; X86-NEXT:    pushl $0
-; X86-NEXT:    pushl {{[0-9]+}}(%esp)
-; X86-NEXT:    pushl %eax
-; X86-NEXT:    pushl %ebx
-; X86-NEXT:    calll __udivdi3
-; X86-NEXT:    addl $16, %esp
-; X86-NEXT:    movl %eax, %ebx
 ; X86-NEXT:    movl %ebp, %eax
 ; X86-NEXT:    shrl %eax
 ; X86-NEXT:    shll $31, %ebp
@@ -320,6 +310,16 @@ define <4 x i32> @vec(<4 x i32> %x, <4 x i32> %y) nounwind {
 ; X86-NEXT:    calll __udivdi3
 ; X86-NEXT:    addl $16, %esp
 ; X86-NEXT:    movl %eax, %ebp
+; X86-NEXT:    movl %ebx, %eax
+; X86-NEXT:    shrl %eax
+; X86-NEXT:    shll $31, %ebx
+; X86-NEXT:    pushl $0
+; X86-NEXT:    pushl {{[0-9]+}}(%esp)
+; X86-NEXT:    pushl %eax
+; X86-NEXT:    pushl %ebx
+; X86-NEXT:    calll __udivdi3
+; X86-NEXT:    addl $16, %esp
+; X86-NEXT:    movl %eax, %ebx
 ; X86-NEXT:    movl %edi, %eax
 ; X86-NEXT:    shrl %eax
 ; X86-NEXT:    shll $31, %edi
@@ -330,8 +330,8 @@ define <4 x i32> @vec(<4 x i32> %x, <4 x i32> %y) nounwind {
 ; X86-NEXT:    calll __udivdi3
 ; X86-NEXT:    addl $16, %esp
 ; X86-NEXT:    movl %eax, 12(%esi)
-; X86-NEXT:    movl %ebp, 8(%esi)
-; X86-NEXT:    movl %ebx, 4(%esi)
+; X86-NEXT:    movl %ebx, 8(%esi)
+; X86-NEXT:    movl %ebp, 4(%esi)
 ; X86-NEXT:    movl (%esp), %eax # 4-byte Reload
 ; X86-NEXT:    movl %eax, (%esi)
 ; X86-NEXT:    movl %esi, %eax

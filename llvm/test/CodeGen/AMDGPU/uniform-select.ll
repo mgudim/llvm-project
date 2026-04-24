@@ -8,47 +8,47 @@ define amdgpu_kernel void @test_insert_extract(i32 %p, i32 %q) {
 ; GFX90A-LABEL: test_insert_extract:
 ; GFX90A:       ; %bb.0: ; %entry
 ; GFX90A-NEXT:    s_load_dwordx2 s[0:1], s[8:9], 0x0
-; GFX90A-NEXT:    s_mov_b32 s2, 0
-; GFX90A-NEXT:    s_and_b64 vcc, exec, -1
-; GFX90A-NEXT:    s_mov_b32 s3, 0
 ; GFX90A-NEXT:    s_mov_b32 s4, 0
+; GFX90A-NEXT:    s_and_b64 s[2:3], exec, -1
 ; GFX90A-NEXT:    s_mov_b32 s5, 0
 ; GFX90A-NEXT:    s_mov_b32 s6, 0
+; GFX90A-NEXT:    s_mov_b32 s7, 0
+; GFX90A-NEXT:    s_mov_b32 s8, 0
 ; GFX90A-NEXT:  .LBB0_1: ; %for.body
 ; GFX90A-NEXT:    ; =>This Inner Loop Header: Depth=1
 ; GFX90A-NEXT:    s_waitcnt lgkmcnt(0)
 ; GFX90A-NEXT:    s_cmp_eq_u32 s1, 1
-; GFX90A-NEXT:    s_cselect_b64 s[8:9], -1, 0
-; GFX90A-NEXT:    s_and_b64 s[8:9], s[8:9], exec
-; GFX90A-NEXT:    s_cselect_b32 s7, s3, s2
+; GFX90A-NEXT:    s_cselect_b64 s[10:11], -1, 0
+; GFX90A-NEXT:    s_and_b64 s[10:11], s[10:11], exec
+; GFX90A-NEXT:    s_cselect_b32 s9, s5, s4
 ; GFX90A-NEXT:    s_cmp_eq_u32 s1, 2
-; GFX90A-NEXT:    s_cselect_b64 s[8:9], -1, 0
-; GFX90A-NEXT:    s_and_b64 s[8:9], s[8:9], exec
-; GFX90A-NEXT:    s_cselect_b32 s7, s4, s7
-; GFX90A-NEXT:    s_cmp_eq_u32 s1, 3
-; GFX90A-NEXT:    s_cselect_b64 s[8:9], -1, 0
-; GFX90A-NEXT:    s_and_b64 s[8:9], s[8:9], exec
-; GFX90A-NEXT:    s_cselect_b32 s7, s5, s7
-; GFX90A-NEXT:    s_or_b32 s7, s7, s0
-; GFX90A-NEXT:    s_cmp_eq_u32 s1, 1
-; GFX90A-NEXT:    s_cselect_b64 s[8:9], -1, 0
-; GFX90A-NEXT:    s_and_b64 s[10:11], s[8:9], exec
-; GFX90A-NEXT:    s_cselect_b32 s3, s7, s3
+; GFX90A-NEXT:    s_cselect_b64 s[10:11], -1, 0
+; GFX90A-NEXT:    s_and_b64 s[10:11], s[10:11], exec
+; GFX90A-NEXT:    s_cselect_b32 s9, s6, s9
 ; GFX90A-NEXT:    s_cmp_eq_u32 s1, 3
 ; GFX90A-NEXT:    s_cselect_b64 s[10:11], -1, 0
+; GFX90A-NEXT:    s_and_b64 s[10:11], s[10:11], exec
+; GFX90A-NEXT:    s_cselect_b32 s9, s7, s9
+; GFX90A-NEXT:    s_or_b32 s9, s9, s0
+; GFX90A-NEXT:    s_cmp_eq_u32 s1, 1
+; GFX90A-NEXT:    s_cselect_b64 s[10:11], -1, 0
 ; GFX90A-NEXT:    s_and_b64 s[12:13], s[10:11], exec
-; GFX90A-NEXT:    s_cselect_b32 s5, s7, s5
-; GFX90A-NEXT:    s_cmp_eq_u32 s1, 2
+; GFX90A-NEXT:    s_cselect_b32 s5, s9, s5
+; GFX90A-NEXT:    s_cmp_eq_u32 s1, 3
 ; GFX90A-NEXT:    s_cselect_b64 s[12:13], -1, 0
 ; GFX90A-NEXT:    s_and_b64 s[14:15], s[12:13], exec
-; GFX90A-NEXT:    s_cselect_b32 s4, s7, s4
+; GFX90A-NEXT:    s_cselect_b32 s7, s9, s7
+; GFX90A-NEXT:    s_cmp_eq_u32 s1, 2
+; GFX90A-NEXT:    s_cselect_b64 s[14:15], -1, 0
+; GFX90A-NEXT:    s_and_b64 s[16:17], s[14:15], exec
+; GFX90A-NEXT:    s_cselect_b32 s6, s9, s6
 ; GFX90A-NEXT:    s_cmp_eq_u32 s1, 0
-; GFX90A-NEXT:    s_cselect_b32 s2, s7, s2
-; GFX90A-NEXT:    s_or_b64 s[8:9], s[12:13], s[8:9]
-; GFX90A-NEXT:    s_or_b64 s[8:9], s[10:11], s[8:9]
-; GFX90A-NEXT:    s_and_b64 s[8:9], s[8:9], exec
-; GFX90A-NEXT:    s_cselect_b32 s6, 0, s6
-; GFX90A-NEXT:    s_mov_b64 vcc, vcc
+; GFX90A-NEXT:    s_cselect_b32 s4, s9, s4
+; GFX90A-NEXT:    s_or_b64 s[10:11], s[14:15], s[10:11]
+; GFX90A-NEXT:    s_or_b64 s[10:11], s[12:13], s[10:11]
+; GFX90A-NEXT:    s_and_b64 s[10:11], s[10:11], exec
+; GFX90A-NEXT:    s_cselect_b32 s8, 0, s8
+; GFX90A-NEXT:    s_mov_b64 vcc, s[2:3]
 ; GFX90A-NEXT:    s_cbranch_vccnz .LBB0_1
 ; GFX90A-NEXT:  ; %bb.2: ; %DummyReturnBlock
 ; GFX90A-NEXT:    s_endpgm
@@ -56,47 +56,47 @@ define amdgpu_kernel void @test_insert_extract(i32 %p, i32 %q) {
 ; GFX942-LABEL: test_insert_extract:
 ; GFX942:       ; %bb.0: ; %entry
 ; GFX942-NEXT:    s_load_dwordx2 s[0:1], s[4:5], 0x0
-; GFX942-NEXT:    s_mov_b32 s2, 0
-; GFX942-NEXT:    s_and_b64 vcc, exec, -1
-; GFX942-NEXT:    s_mov_b32 s3, 0
 ; GFX942-NEXT:    s_mov_b32 s4, 0
+; GFX942-NEXT:    s_and_b64 s[2:3], exec, -1
 ; GFX942-NEXT:    s_mov_b32 s5, 0
 ; GFX942-NEXT:    s_mov_b32 s6, 0
+; GFX942-NEXT:    s_mov_b32 s7, 0
+; GFX942-NEXT:    s_mov_b32 s8, 0
 ; GFX942-NEXT:  .LBB0_1: ; %for.body
 ; GFX942-NEXT:    ; =>This Inner Loop Header: Depth=1
 ; GFX942-NEXT:    s_waitcnt lgkmcnt(0)
 ; GFX942-NEXT:    s_cmp_eq_u32 s1, 1
-; GFX942-NEXT:    s_cselect_b64 s[8:9], -1, 0
-; GFX942-NEXT:    s_and_b64 s[8:9], s[8:9], exec
-; GFX942-NEXT:    s_cselect_b32 s7, s3, s2
+; GFX942-NEXT:    s_cselect_b64 s[10:11], -1, 0
+; GFX942-NEXT:    s_and_b64 s[10:11], s[10:11], exec
+; GFX942-NEXT:    s_cselect_b32 s9, s5, s4
 ; GFX942-NEXT:    s_cmp_eq_u32 s1, 2
-; GFX942-NEXT:    s_cselect_b64 s[8:9], -1, 0
-; GFX942-NEXT:    s_and_b64 s[8:9], s[8:9], exec
-; GFX942-NEXT:    s_cselect_b32 s7, s4, s7
-; GFX942-NEXT:    s_cmp_eq_u32 s1, 3
-; GFX942-NEXT:    s_cselect_b64 s[8:9], -1, 0
-; GFX942-NEXT:    s_and_b64 s[8:9], s[8:9], exec
-; GFX942-NEXT:    s_cselect_b32 s7, s5, s7
-; GFX942-NEXT:    s_or_b32 s7, s7, s0
-; GFX942-NEXT:    s_cmp_eq_u32 s1, 1
-; GFX942-NEXT:    s_cselect_b64 s[8:9], -1, 0
-; GFX942-NEXT:    s_and_b64 s[10:11], s[8:9], exec
-; GFX942-NEXT:    s_cselect_b32 s3, s7, s3
+; GFX942-NEXT:    s_cselect_b64 s[10:11], -1, 0
+; GFX942-NEXT:    s_and_b64 s[10:11], s[10:11], exec
+; GFX942-NEXT:    s_cselect_b32 s9, s6, s9
 ; GFX942-NEXT:    s_cmp_eq_u32 s1, 3
 ; GFX942-NEXT:    s_cselect_b64 s[10:11], -1, 0
+; GFX942-NEXT:    s_and_b64 s[10:11], s[10:11], exec
+; GFX942-NEXT:    s_cselect_b32 s9, s7, s9
+; GFX942-NEXT:    s_or_b32 s9, s9, s0
+; GFX942-NEXT:    s_cmp_eq_u32 s1, 1
+; GFX942-NEXT:    s_cselect_b64 s[10:11], -1, 0
 ; GFX942-NEXT:    s_and_b64 s[12:13], s[10:11], exec
-; GFX942-NEXT:    s_cselect_b32 s5, s7, s5
-; GFX942-NEXT:    s_cmp_eq_u32 s1, 2
+; GFX942-NEXT:    s_cselect_b32 s5, s9, s5
+; GFX942-NEXT:    s_cmp_eq_u32 s1, 3
 ; GFX942-NEXT:    s_cselect_b64 s[12:13], -1, 0
 ; GFX942-NEXT:    s_and_b64 s[14:15], s[12:13], exec
-; GFX942-NEXT:    s_cselect_b32 s4, s7, s4
+; GFX942-NEXT:    s_cselect_b32 s7, s9, s7
+; GFX942-NEXT:    s_cmp_eq_u32 s1, 2
+; GFX942-NEXT:    s_cselect_b64 s[14:15], -1, 0
+; GFX942-NEXT:    s_and_b64 s[16:17], s[14:15], exec
+; GFX942-NEXT:    s_cselect_b32 s6, s9, s6
 ; GFX942-NEXT:    s_cmp_eq_u32 s1, 0
-; GFX942-NEXT:    s_cselect_b32 s2, s7, s2
-; GFX942-NEXT:    s_or_b64 s[8:9], s[12:13], s[8:9]
-; GFX942-NEXT:    s_or_b64 s[8:9], s[10:11], s[8:9]
-; GFX942-NEXT:    s_and_b64 s[8:9], s[8:9], exec
-; GFX942-NEXT:    s_cselect_b32 s6, 0, s6
-; GFX942-NEXT:    s_mov_b64 vcc, vcc
+; GFX942-NEXT:    s_cselect_b32 s4, s9, s4
+; GFX942-NEXT:    s_or_b64 s[10:11], s[14:15], s[10:11]
+; GFX942-NEXT:    s_or_b64 s[10:11], s[12:13], s[10:11]
+; GFX942-NEXT:    s_and_b64 s[10:11], s[10:11], exec
+; GFX942-NEXT:    s_cselect_b32 s8, 0, s8
+; GFX942-NEXT:    s_mov_b64 vcc, s[2:3]
 ; GFX942-NEXT:    s_cbranch_vccnz .LBB0_1
 ; GFX942-NEXT:  ; %bb.2: ; %DummyReturnBlock
 ; GFX942-NEXT:    s_endpgm

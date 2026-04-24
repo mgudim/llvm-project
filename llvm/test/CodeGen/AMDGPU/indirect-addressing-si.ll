@@ -9389,69 +9389,71 @@ bb8:
 define amdgpu_cs void @insert_or_disj_index(ptr addrspace(1) %out, ptr addrspace(4) %in, i32 %val, <4 x i32> inreg %desc, i32 inreg %A) {
 ; GENERIC-LABEL: insert_or_disj_index:
 ; GENERIC:       ; %bb.0: ; %entry
-; GENERIC-NEXT:    v_mov_b32_e32 v2, s4
-; GENERIC-NEXT:    buffer_load_dword v2, v2, s[0:3], 0 offen
+; GENERIC-NEXT:    v_mov_b32_e32 v12, v1
+; GENERIC-NEXT:    v_mov_b32_e32 v11, v0
+; GENERIC-NEXT:    v_mov_b32_e32 v0, s4
+; GENERIC-NEXT:    buffer_load_dword v0, v0, s[0:3], 0 offen
 ; GENERIC-NEXT:    s_mov_b32 s2, 0
 ; GENERIC-NEXT:    s_mov_b32 s3, 0xf000
 ; GENERIC-NEXT:    s_mov_b32 s0, s2
 ; GENERIC-NEXT:    s_mov_b32 s1, s2
 ; GENERIC-NEXT:    s_waitcnt vmcnt(0)
-; GENERIC-NEXT:    v_readfirstlane_b32 s4, v2
+; GENERIC-NEXT:    v_readfirstlane_b32 s4, v0
 ; GENERIC-NEXT:    s_or_b32 s4, s4, 1
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 3
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v8, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v3, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 2
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v7, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v2, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 1
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v6, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v1, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 0
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v5, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v0, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 7
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v12, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v8, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 6
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v11, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v7, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 5
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v10, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v6, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 4
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v9, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v5, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 11
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v13, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v9, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 10
-; GENERIC-NEXT:    buffer_store_dwordx4 v[9:12], v[0:1], s[0:3], 0 addr64 offset:16
+; GENERIC-NEXT:    buffer_store_dwordx4 v[5:8], v[11:12], s[0:3], 0 addr64 offset:16
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
 ; GENERIC-NEXT:    s_waitcnt expcnt(0)
-; GENERIC-NEXT:    v_cndmask_b32_e32 v12, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v8, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 9
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v11, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v7, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 8
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v10, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v6, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 15
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v14, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v10, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 14
-; GENERIC-NEXT:    buffer_store_dwordx4 v[10:13], v[0:1], s[0:3], 0 addr64 offset:32
+; GENERIC-NEXT:    buffer_store_dwordx4 v[6:9], v[11:12], s[0:3], 0 addr64 offset:32
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
 ; GENERIC-NEXT:    s_waitcnt expcnt(0)
-; GENERIC-NEXT:    v_cndmask_b32_e32 v13, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v9, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 13
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v12, 0, v4, vcc
+; GENERIC-NEXT:    v_cndmask_b32_e32 v8, 0, v4, vcc
 ; GENERIC-NEXT:    s_cmp_eq_u32 s4, 12
 ; GENERIC-NEXT:    s_cselect_b64 vcc, -1, 0
-; GENERIC-NEXT:    v_cndmask_b32_e32 v11, 0, v4, vcc
-; GENERIC-NEXT:    buffer_store_dwordx4 v[11:14], v[0:1], s[0:3], 0 addr64 offset:48
-; GENERIC-NEXT:    buffer_store_dwordx4 v[5:8], v[0:1], s[0:3], 0 addr64
+; GENERIC-NEXT:    v_cndmask_b32_e32 v7, 0, v4, vcc
+; GENERIC-NEXT:    buffer_store_dwordx4 v[7:10], v[11:12], s[0:3], 0 addr64 offset:48
+; GENERIC-NEXT:    buffer_store_dwordx4 v[0:3], v[11:12], s[0:3], 0 addr64
 ; GENERIC-NEXT:    s_endpgm
 ;
 ; NOOPT-LABEL: insert_or_disj_index:

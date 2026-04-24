@@ -149,28 +149,28 @@ define i64 @test_cttz_i64(i64 %a) nounwind {
 ; RV32I-NEXT:    sw s2, 16(sp) # 4-byte Folded Spill
 ; RV32I-NEXT:    sw s3, 12(sp) # 4-byte Folded Spill
 ; RV32I-NEXT:    sw s4, 8(sp) # 4-byte Folded Spill
-; RV32I-NEXT:    not s3, a1
-; RV32I-NEXT:    not s2, a0
-; RV32I-NEXT:    or a0, s2, s3
+; RV32I-NEXT:    not s1, a1
+; RV32I-NEXT:    not s0, a0
+; RV32I-NEXT:    or a0, s0, s1
 ; RV32I-NEXT:    beqz a0, .LBB3_3
 ; RV32I-NEXT:  # %bb.1: # %cond.false
-; RV32I-NEXT:    neg a0, s2
-; RV32I-NEXT:    and a0, s2, a0
-; RV32I-NEXT:    lui s1, 30667
-; RV32I-NEXT:    addi s1, s1, 1329
-; RV32I-NEXT:    mv a1, s1
+; RV32I-NEXT:    neg a0, s0
+; RV32I-NEXT:    and a0, s0, a0
+; RV32I-NEXT:    lui a1, 30667
+; RV32I-NEXT:    addi s4, a1, 1329
+; RV32I-NEXT:    mv a1, s4
 ; RV32I-NEXT:    call __mulsi3
-; RV32I-NEXT:    mv s0, a0
-; RV32I-NEXT:    lui s4, %hi(.LCPI3_0)
-; RV32I-NEXT:    addi s4, s4, %lo(.LCPI3_0)
-; RV32I-NEXT:    neg a0, s3
-; RV32I-NEXT:    and a0, s3, a0
-; RV32I-NEXT:    mv a1, s1
+; RV32I-NEXT:    mv s3, a0
+; RV32I-NEXT:    lui s2, %hi(.LCPI3_0)
+; RV32I-NEXT:    addi s2, s2, %lo(.LCPI3_0)
+; RV32I-NEXT:    neg a0, s1
+; RV32I-NEXT:    and a0, s1, a0
+; RV32I-NEXT:    mv a1, s4
 ; RV32I-NEXT:    call __mulsi3
-; RV32I-NEXT:    bnez s2, .LBB3_4
+; RV32I-NEXT:    bnez s0, .LBB3_4
 ; RV32I-NEXT:  # %bb.2: # %cond.false
 ; RV32I-NEXT:    srli a0, a0, 27
-; RV32I-NEXT:    add a0, s4, a0
+; RV32I-NEXT:    add a0, s2, a0
 ; RV32I-NEXT:    lbu a0, 0(a0)
 ; RV32I-NEXT:    addi a0, a0, 32
 ; RV32I-NEXT:    j .LBB3_5
@@ -178,9 +178,9 @@ define i64 @test_cttz_i64(i64 %a) nounwind {
 ; RV32I-NEXT:    li a0, 64
 ; RV32I-NEXT:    j .LBB3_5
 ; RV32I-NEXT:  .LBB3_4:
-; RV32I-NEXT:    srli s0, s0, 27
-; RV32I-NEXT:    add s0, s4, s0
-; RV32I-NEXT:    lbu a0, 0(s0)
+; RV32I-NEXT:    srli a0, s3, 27
+; RV32I-NEXT:    add a0, s2, a0
+; RV32I-NEXT:    lbu a0, 0(a0)
 ; RV32I-NEXT:  .LBB3_5: # %cond.end
 ; RV32I-NEXT:    li a1, 0
 ; RV32I-NEXT:    lw ra, 28(sp) # 4-byte Folded Reload
@@ -343,31 +343,31 @@ define i64 @test_cttz_i64_zero_undef(i64 %a) nounwind {
 ; RV32I-NEXT:    sw s2, 16(sp) # 4-byte Folded Spill
 ; RV32I-NEXT:    sw s3, 12(sp) # 4-byte Folded Spill
 ; RV32I-NEXT:    sw s4, 8(sp) # 4-byte Folded Spill
-; RV32I-NEXT:    not s3, a1
-; RV32I-NEXT:    not s4, a0
-; RV32I-NEXT:    neg a0, s4
-; RV32I-NEXT:    and a0, s4, a0
-; RV32I-NEXT:    lui s1, 30667
-; RV32I-NEXT:    addi s1, s1, 1329
-; RV32I-NEXT:    mv a1, s1
-; RV32I-NEXT:    call __mulsi3
-; RV32I-NEXT:    mv s0, a0
-; RV32I-NEXT:    lui s2, %hi(.LCPI7_0)
-; RV32I-NEXT:    addi s2, s2, %lo(.LCPI7_0)
+; RV32I-NEXT:    not s2, a1
+; RV32I-NEXT:    not s3, a0
 ; RV32I-NEXT:    neg a0, s3
 ; RV32I-NEXT:    and a0, s3, a0
-; RV32I-NEXT:    mv a1, s1
+; RV32I-NEXT:    lui a1, 30667
+; RV32I-NEXT:    addi s4, a1, 1329
+; RV32I-NEXT:    mv a1, s4
 ; RV32I-NEXT:    call __mulsi3
-; RV32I-NEXT:    bnez s4, .LBB7_2
+; RV32I-NEXT:    mv s1, a0
+; RV32I-NEXT:    lui s0, %hi(.LCPI7_0)
+; RV32I-NEXT:    addi s0, s0, %lo(.LCPI7_0)
+; RV32I-NEXT:    neg a0, s2
+; RV32I-NEXT:    and a0, s2, a0
+; RV32I-NEXT:    mv a1, s4
+; RV32I-NEXT:    call __mulsi3
+; RV32I-NEXT:    bnez s3, .LBB7_2
 ; RV32I-NEXT:  # %bb.1:
 ; RV32I-NEXT:    srli a0, a0, 27
-; RV32I-NEXT:    add a0, s2, a0
+; RV32I-NEXT:    add a0, s0, a0
 ; RV32I-NEXT:    lbu a0, 0(a0)
 ; RV32I-NEXT:    addi a0, a0, 32
 ; RV32I-NEXT:    j .LBB7_3
 ; RV32I-NEXT:  .LBB7_2:
-; RV32I-NEXT:    srli s0, s0, 27
-; RV32I-NEXT:    add s0, s2, s0
+; RV32I-NEXT:    srli s1, s1, 27
+; RV32I-NEXT:    add s0, s0, s1
 ; RV32I-NEXT:    lbu a0, 0(s0)
 ; RV32I-NEXT:  .LBB7_3:
 ; RV32I-NEXT:    li a1, 0

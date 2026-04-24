@@ -5,8 +5,19 @@
 define amdgpu_ps void @test_wmma_f32_16x16x16_f16(<4 x half> %A, <4 x half> %B, <4 x float> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_f32_16x16x16_f16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_f32_16x16x16_f16 v[4:7], v[0:1], v[2:3], v[4:7]
-; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v0
+; GCN-NEXT:    v_mov_b32_e32 v11, v1
+; GCN-NEXT:    v_mov_b32_e32 v12, v2
+; GCN-NEXT:    v_mov_b32_e32 v13, v3
+; GCN-NEXT:    v_mov_b32_e32 v0, v4
+; GCN-NEXT:    v_mov_b32_e32 v1, v5
+; GCN-NEXT:    v_mov_b32_e32 v2, v6
+; GCN-NEXT:    v_mov_b32_e32 v3, v7
+; GCN-NEXT:    v_mov_b32_e32 v4, v8
+; GCN-NEXT:    v_mov_b32_e32 v5, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_wmma_f32_16x16x16_f16 v[0:3], v[10:11], v[12:13], v[0:3]
+; GCN-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x float>@llvm.amdgcn.wmma.f32.16x16x16.f16.v4f32.v4f16.v4f16.v4f32(<4 x half> %A, <4 x half> %B, <4 x float> %C)
@@ -17,8 +28,19 @@ bb:
 define amdgpu_ps void @test_wmma_f32_16x16x16_bf16(<4 x i16> %A, <4 x i16> %B, <4 x float> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_f32_16x16x16_bf16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_f32_16x16x16_bf16 v[4:7], v[0:1], v[2:3], v[4:7]
-; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v0
+; GCN-NEXT:    v_mov_b32_e32 v11, v1
+; GCN-NEXT:    v_mov_b32_e32 v12, v2
+; GCN-NEXT:    v_mov_b32_e32 v13, v3
+; GCN-NEXT:    v_mov_b32_e32 v0, v4
+; GCN-NEXT:    v_mov_b32_e32 v1, v5
+; GCN-NEXT:    v_mov_b32_e32 v2, v6
+; GCN-NEXT:    v_mov_b32_e32 v3, v7
+; GCN-NEXT:    v_mov_b32_e32 v4, v8
+; GCN-NEXT:    v_mov_b32_e32 v5, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_wmma_f32_16x16x16_bf16 v[0:3], v[10:11], v[12:13], v[0:3]
+; GCN-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x float> @llvm.amdgcn.wmma.f32.16x16x16.bf16.v4f32.v4i16.v4i16.v4f32(<4 x i16> %A, <4 x i16> %B, <4 x float> %C)
@@ -137,8 +159,21 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_f16(<4 x half> %A, <8 x half> %B, <4 x float> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_f16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_f16 v[6:9], v[0:1], v[2:5], v10
-; GCN-NEXT:    global_store_b128 v[11:12], v[6:9], off
+; GCN-NEXT:    v_mov_b32_e32 v13, v0
+; GCN-NEXT:    v_mov_b32_e32 v14, v1
+; GCN-NEXT:    v_mov_b32_e32 v0, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v7
+; GCN-NEXT:    v_mov_b32_e32 v6, v8
+; GCN-NEXT:    v_mov_b32_e32 v7, v9
+; GCN-NEXT:    v_mov_b32_e32 v8, v11
+; GCN-NEXT:    v_mov_b32_e32 v9, v12
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_f16 v[4:7], v[13:14], v[0:3], v10
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x float> @llvm.amdgcn.swmmac.f32.16x16x32.f16.v4f32.v4f16.v8f16.v4f32.i8(<4 x half> %A, <8 x half> %B, <4 x float> %C, i8 %Index)
@@ -149,8 +184,21 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_bf16(<4 x i16> %A, <8 x i16> %B, <4 x float> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_bf16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_bf16 v[6:9], v[0:1], v[2:5], v10
-; GCN-NEXT:    global_store_b128 v[11:12], v[6:9], off
+; GCN-NEXT:    v_mov_b32_e32 v13, v0
+; GCN-NEXT:    v_mov_b32_e32 v14, v1
+; GCN-NEXT:    v_mov_b32_e32 v0, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v7
+; GCN-NEXT:    v_mov_b32_e32 v6, v8
+; GCN-NEXT:    v_mov_b32_e32 v7, v9
+; GCN-NEXT:    v_mov_b32_e32 v8, v11
+; GCN-NEXT:    v_mov_b32_e32 v9, v12
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_bf16 v[4:7], v[13:14], v[0:3], v10
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x float> @llvm.amdgcn.swmmac.f32.16x16x32.bf16.v4f32.v4i16.v8i16.v4f32.i8(<4 x i16> %A, <8 x i16> %B, <4 x float> %C, i8 %Index)
@@ -161,8 +209,19 @@ bb:
 define amdgpu_ps void @test_swmmac_f16_16x16x32_f16(<4 x half> %A, <8 x half> %B, <4 x half> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f16_16x16x32_f16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f16_16x16x32_f16 v[6:7], v[0:1], v[2:5], v8
-; GCN-NEXT:    global_store_b64 v[9:10], v[6:7], off
+; GCN-NEXT:    v_mov_b32_e32 v11, v0
+; GCN-NEXT:    v_mov_b32_e32 v12, v1
+; GCN-NEXT:    v_mov_b32_e32 v0, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v7
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    v_mov_b32_e32 v7, v10
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_f16_16x16x32_f16 v[4:5], v[11:12], v[0:3], v8
+; GCN-NEXT:    global_store_b64 v[6:7], v[4:5], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x half> @llvm.amdgcn.swmmac.f16.16x16x32.f16.v4f16.v4f16.v8f16.v4f16.i8(<4 x half> %A, <8 x half> %B, <4 x half> %C, i8 %Index)
@@ -173,8 +232,19 @@ bb:
 define amdgpu_ps void @test_swmmac_bf16_16x16x32_bf16(<4 x i16> %A, <8 x i16> %B, <4 x i16> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_bf16_16x16x32_bf16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_bf16_16x16x32_bf16 v[6:7], v[0:1], v[2:5], v8
-; GCN-NEXT:    global_store_b64 v[9:10], v[6:7], off
+; GCN-NEXT:    v_mov_b32_e32 v11, v0
+; GCN-NEXT:    v_mov_b32_e32 v12, v1
+; GCN-NEXT:    v_mov_b32_e32 v0, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v7
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    v_mov_b32_e32 v7, v10
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_bf16_16x16x32_bf16 v[4:5], v[11:12], v[0:3], v8
+; GCN-NEXT:    global_store_b64 v[6:7], v[4:5], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x i16> @llvm.amdgcn.swmmac.bf16.16x16x32.bf16.v4i16.v4i16.v8i16.v4i16.i8(<4 x i16> %A, <8 x i16> %B, <4 x i16> %C, i8 %Index)
@@ -185,8 +255,17 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x32_iu8(i32 %A, <2 x i32> %B, <4 x i32> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x32_iu8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x32_iu8 v[3:6], v0, v[1:2], v7
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_i32_16x16x32_iu8 v[1:4], v0, v[10:11], v7
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.swmmac.i32.16x16x32.iu8.v4i32.i32.v2i32.v4i32.i8(i1 0, i32 %A, i1 0, <2 x i32> %B, <4 x i32> %C, i8 %Index, i1 0)
@@ -209,8 +288,17 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x64_iu4(i32 %A, <2 x i32> %B, <4 x i32> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x64_iu4:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x64_iu4 v[3:6], v0, v[1:2], v7
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_i32_16x16x64_iu4 v[1:4], v0, v[10:11], v7
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.swmmac.i32.16x16x64.iu4.v4i32.i32.v2i32.v4i32.i16(i1 0, i32 %A, i1 0, <2 x i32> %B, <4 x i32> %C, i16 %Index, i1 0)
@@ -221,8 +309,17 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_fp8_fp8(i32 %A, <2 x i32> %B, <4 x float> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_fp8_fp8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_fp8_fp8 v[3:6], v0, v[1:2], v7
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_fp8_fp8 v[1:4], v0, v[10:11], v7
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x float> @llvm.amdgcn.swmmac.f32.16x16x32.fp8.fp8.v4f32.i32.v2i32.v4f32.i8(i32 %A, <2 x i32> %B, <4 x float> %C, i8 %Index)
@@ -233,8 +330,17 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_fp8_bf8(i32 %A, <2 x i32> %B, <4 x float> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_fp8_bf8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_fp8_bf8 v[3:6], v0, v[1:2], v7
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_fp8_bf8 v[1:4], v0, v[10:11], v7
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x float> @llvm.amdgcn.swmmac.f32.16x16x32.fp8.bf8.v4f32.i32.v2i32.v4f32.i8(i32 %A, <2 x i32> %B, <4 x float> %C, i8 %Index)
@@ -245,8 +351,17 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_bf8_fp8(i32 %A, <2 x i32> %B, <4 x float> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_bf8_fp8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_bf8_fp8 v[3:6], v0, v[1:2], v7
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_bf8_fp8 v[1:4], v0, v[10:11], v7
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x float> @llvm.amdgcn.swmmac.f32.16x16x32.bf8.fp8.v4f32.i32.v2i32.v4f32.i8(i32 %A, <2 x i32> %B, <4 x float> %C, i8 %Index)
@@ -257,8 +372,17 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_bf8_bf8(i32 %A, <2 x i32> %B, <4 x float> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_bf8_bf8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_bf8_bf8 v[3:6], v0, v[1:2], v7
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_bf8_bf8 v[1:4], v0, v[10:11], v7
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x float> @llvm.amdgcn.swmmac.f32.16x16x32.bf8.bf8.v4f32.i32.v2i32.v4f32.i8(i32 %A, <2 x i32> %B, <4 x float> %C, i8 %Index)

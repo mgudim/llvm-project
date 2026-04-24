@@ -6,14 +6,14 @@ define i64 @foo(i64 %t, i64 %u) nounwind {
 ; X86-LABEL: foo:
 ; X86:       # %bb.0:
 ; X86-NEXT:    pushl %esi
-; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
 ; X86-NEXT:    movl {{[0-9]+}}(%esp), %esi
-; X86-NEXT:    movl %ecx, %eax
-; X86-NEXT:    mull %esi
-; X86-NEXT:    imull {{[0-9]+}}(%esp), %ecx
-; X86-NEXT:    addl %ecx, %edx
+; X86-NEXT:    movl {{[0-9]+}}(%esp), %ecx
+; X86-NEXT:    movl %esi, %eax
+; X86-NEXT:    mull %ecx
 ; X86-NEXT:    imull {{[0-9]+}}(%esp), %esi
 ; X86-NEXT:    addl %esi, %edx
+; X86-NEXT:    imull {{[0-9]+}}(%esp), %ecx
+; X86-NEXT:    addl %ecx, %edx
 ; X86-NEXT:    popl %esi
 ; X86-NEXT:    retl
 ;

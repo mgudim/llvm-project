@@ -100,23 +100,23 @@ define <4 x float> @fmul_pow2_ldexp_4xfloat(<4 x i32> %i) {
 ; CHECK-NO-NEON-NEXT:    mov w20, w2
 ; CHECK-NO-NEON-NEXT:    mov w21, w1
 ; CHECK-NO-NEON-NEXT:    bl ldexpf
-; CHECK-NO-NEON-NEXT:    fmov s8, s0
+; CHECK-NO-NEON-NEXT:    fmov s10, s0
 ; CHECK-NO-NEON-NEXT:    fmov s0, #9.00000000
 ; CHECK-NO-NEON-NEXT:    mov w0, w21
 ; CHECK-NO-NEON-NEXT:    bl ldexpf
-; CHECK-NO-NEON-NEXT:    fmov s9, s0
+; CHECK-NO-NEON-NEXT:    fmov s8, s0
 ; CHECK-NO-NEON-NEXT:    fmov s0, #9.00000000
 ; CHECK-NO-NEON-NEXT:    mov w0, w20
 ; CHECK-NO-NEON-NEXT:    bl ldexpf
-; CHECK-NO-NEON-NEXT:    fmov s10, s0
+; CHECK-NO-NEON-NEXT:    fmov s9, s0
 ; CHECK-NO-NEON-NEXT:    fmov s0, #9.00000000
 ; CHECK-NO-NEON-NEXT:    mov w0, w19
 ; CHECK-NO-NEON-NEXT:    bl ldexpf
+; CHECK-NO-NEON-NEXT:    fmov s1, s8
+; CHECK-NO-NEON-NEXT:    fmov s2, s9
 ; CHECK-NO-NEON-NEXT:    fmov s3, s0
-; CHECK-NO-NEON-NEXT:    fmov s0, s8
-; CHECK-NO-NEON-NEXT:    fmov s1, s9
 ; CHECK-NO-NEON-NEXT:    ldp x20, x19, [sp, #48] // 16-byte Folded Reload
-; CHECK-NO-NEON-NEXT:    fmov s2, s10
+; CHECK-NO-NEON-NEXT:    fmov s0, s10
 ; CHECK-NO-NEON-NEXT:    ldp x30, x21, [sp, #32] // 16-byte Folded Reload
 ; CHECK-NO-NEON-NEXT:    ldp d9, d8, [sp, #16] // 16-byte Folded Reload
 ; CHECK-NO-NEON-NEXT:    ldr d10, [sp], #64 // 8-byte Folded Reload

@@ -6,13 +6,13 @@
 define { <vscale x 8 x half>, <vscale x 8 x half> } @multi_vec_max_multi_x2_f16(<vscale x 8 x half> %unused, <vscale x 8 x half> %zdn1, <vscale x 8 x half> %zdn2, <vscale x 8 x half> %zm1, <vscale x 8 x half> %zm2) {
 ; CHECK-LABEL: multi_vec_max_multi_x2_f16:
 ; CHECK:       // %bb.0:
-; CHECK-NEXT:    mov z7.d, z4.d
-; CHECK-NEXT:    mov z5.d, z2.d
-; CHECK-NEXT:    mov z6.d, z3.d
-; CHECK-NEXT:    mov z4.d, z1.d
-; CHECK-NEXT:    famax { z4.h, z5.h }, { z4.h, z5.h }, { z6.h, z7.h }
-; CHECK-NEXT:    mov z0.d, z4.d
-; CHECK-NEXT:    mov z1.d, z5.d
+; CHECK-NEXT:    mov z5.d, z4.d
+; CHECK-NEXT:    mov z7.d, z2.d
+; CHECK-NEXT:    mov z4.d, z3.d
+; CHECK-NEXT:    mov z6.d, z1.d
+; CHECK-NEXT:    famax { z6.h, z7.h }, { z6.h, z7.h }, { z4.h, z5.h }
+; CHECK-NEXT:    mov z0.d, z6.d
+; CHECK-NEXT:    mov z1.d, z7.d
 ; CHECK-NEXT:    ret
   %res = call { <vscale x 8 x half>, <vscale x 8 x half> } @llvm.aarch64.sme.famax.x2.nxv8f16(<vscale x 8 x half> %zdn1, <vscale x 8 x half> %zdn2, <vscale x 8 x half> %zm1, <vscale x 8 x half> %zm2)
   ret { <vscale x 8 x half>, <vscale x 8 x half> } %res
@@ -21,13 +21,13 @@ define { <vscale x 8 x half>, <vscale x 8 x half> } @multi_vec_max_multi_x2_f16(
 define { <vscale x 4 x float>, <vscale x 4 x float> } @multi_vec_max_multi_x2_f32(<vscale x 4 x float> %unused, <vscale x 4 x float> %zdn1, <vscale x 4 x float> %zdn2, <vscale x 4 x float> %zm1, <vscale x 4 x float> %zm2) {
 ; CHECK-LABEL: multi_vec_max_multi_x2_f32:
 ; CHECK:       // %bb.0:
-; CHECK-NEXT:    mov z7.d, z4.d
-; CHECK-NEXT:    mov z5.d, z2.d
-; CHECK-NEXT:    mov z6.d, z3.d
-; CHECK-NEXT:    mov z4.d, z1.d
-; CHECK-NEXT:    famax { z4.s, z5.s }, { z4.s, z5.s }, { z6.s, z7.s }
-; CHECK-NEXT:    mov z0.d, z4.d
-; CHECK-NEXT:    mov z1.d, z5.d
+; CHECK-NEXT:    mov z5.d, z4.d
+; CHECK-NEXT:    mov z7.d, z2.d
+; CHECK-NEXT:    mov z4.d, z3.d
+; CHECK-NEXT:    mov z6.d, z1.d
+; CHECK-NEXT:    famax { z6.s, z7.s }, { z6.s, z7.s }, { z4.s, z5.s }
+; CHECK-NEXT:    mov z0.d, z6.d
+; CHECK-NEXT:    mov z1.d, z7.d
 ; CHECK-NEXT:    ret
   %res = call { <vscale x 4 x float>, <vscale x 4 x float> } @llvm.aarch64.sme.famax.x2.nxv4f32(<vscale x 4 x float> %zdn1, <vscale x 4 x float> %zdn2, <vscale x 4 x float> %zm1, <vscale x 4 x float> %zm2)
   ret { <vscale x 4 x float>, <vscale x 4 x float> } %res
@@ -36,13 +36,13 @@ define { <vscale x 4 x float>, <vscale x 4 x float> } @multi_vec_max_multi_x2_f3
 define { <vscale x 2 x double>, <vscale x 2 x double> } @multi_vec_max_multi_x2_f64(<vscale x 2 x double> %unused, <vscale x 2 x double> %zdn1, <vscale x 2 x double> %zdn2, <vscale x 2 x double> %zm1, <vscale x 2 x double> %zm2) {
 ; CHECK-LABEL: multi_vec_max_multi_x2_f64:
 ; CHECK:       // %bb.0:
-; CHECK-NEXT:    mov z7.d, z4.d
-; CHECK-NEXT:    mov z5.d, z2.d
-; CHECK-NEXT:    mov z6.d, z3.d
-; CHECK-NEXT:    mov z4.d, z1.d
-; CHECK-NEXT:    famax { z4.d, z5.d }, { z4.d, z5.d }, { z6.d, z7.d }
-; CHECK-NEXT:    mov z0.d, z4.d
-; CHECK-NEXT:    mov z1.d, z5.d
+; CHECK-NEXT:    mov z5.d, z4.d
+; CHECK-NEXT:    mov z7.d, z2.d
+; CHECK-NEXT:    mov z4.d, z3.d
+; CHECK-NEXT:    mov z6.d, z1.d
+; CHECK-NEXT:    famax { z6.d, z7.d }, { z6.d, z7.d }, { z4.d, z5.d }
+; CHECK-NEXT:    mov z0.d, z6.d
+; CHECK-NEXT:    mov z1.d, z7.d
 ; CHECK-NEXT:    ret
   %res = call { <vscale x 2 x double>, <vscale x 2 x double> } @llvm.aarch64.sme.famax.x2.nxv2f64(<vscale x 2 x double> %zdn1, <vscale x 2 x double> %zdn2, <vscale x 2 x double> %zm1, <vscale x 2 x double> %zm2)
   ret { <vscale x 2 x double>, <vscale x 2 x double> } %res
@@ -121,13 +121,13 @@ define { <vscale x 2 x double>, <vscale x 2 x double>, <vscale x 2 x double>, <v
 define { <vscale x 8 x half>, <vscale x 8 x half> } @multi_vec_min_multi_x2_f16(<vscale x 8 x half> %unused, <vscale x 8 x half> %zdn1, <vscale x 8 x half> %zdn2, <vscale x 8 x half> %zm1, <vscale x 8 x half> %zm2) {
 ; CHECK-LABEL: multi_vec_min_multi_x2_f16:
 ; CHECK:       // %bb.0:
-; CHECK-NEXT:    mov z7.d, z4.d
-; CHECK-NEXT:    mov z5.d, z2.d
-; CHECK-NEXT:    mov z6.d, z3.d
-; CHECK-NEXT:    mov z4.d, z1.d
-; CHECK-NEXT:    famin { z4.h, z5.h }, { z4.h, z5.h }, { z6.h, z7.h }
-; CHECK-NEXT:    mov z0.d, z4.d
-; CHECK-NEXT:    mov z1.d, z5.d
+; CHECK-NEXT:    mov z5.d, z4.d
+; CHECK-NEXT:    mov z7.d, z2.d
+; CHECK-NEXT:    mov z4.d, z3.d
+; CHECK-NEXT:    mov z6.d, z1.d
+; CHECK-NEXT:    famin { z6.h, z7.h }, { z6.h, z7.h }, { z4.h, z5.h }
+; CHECK-NEXT:    mov z0.d, z6.d
+; CHECK-NEXT:    mov z1.d, z7.d
 ; CHECK-NEXT:    ret
   %res = call { <vscale x 8 x half>, <vscale x 8 x half> } @llvm.aarch64.sme.famin.x2.nxv8f16(<vscale x 8 x half> %zdn1, <vscale x 8 x half> %zdn2, <vscale x 8 x half> %zm1, <vscale x 8 x half> %zm2)
   ret { <vscale x 8 x half>, <vscale x 8 x half> } %res
@@ -136,13 +136,13 @@ define { <vscale x 8 x half>, <vscale x 8 x half> } @multi_vec_min_multi_x2_f16(
 define { <vscale x 4 x float>, <vscale x 4 x float> } @multi_vec_min_multi_x2_f32(<vscale x 4 x float> %unused, <vscale x 4 x float> %zdn1, <vscale x 4 x float> %zdn2, <vscale x 4 x float> %zm1, <vscale x 4 x float> %zm2) {
 ; CHECK-LABEL: multi_vec_min_multi_x2_f32:
 ; CHECK:       // %bb.0:
-; CHECK-NEXT:    mov z7.d, z4.d
-; CHECK-NEXT:    mov z5.d, z2.d
-; CHECK-NEXT:    mov z6.d, z3.d
-; CHECK-NEXT:    mov z4.d, z1.d
-; CHECK-NEXT:    famin { z4.s, z5.s }, { z4.s, z5.s }, { z6.s, z7.s }
-; CHECK-NEXT:    mov z0.d, z4.d
-; CHECK-NEXT:    mov z1.d, z5.d
+; CHECK-NEXT:    mov z5.d, z4.d
+; CHECK-NEXT:    mov z7.d, z2.d
+; CHECK-NEXT:    mov z4.d, z3.d
+; CHECK-NEXT:    mov z6.d, z1.d
+; CHECK-NEXT:    famin { z6.s, z7.s }, { z6.s, z7.s }, { z4.s, z5.s }
+; CHECK-NEXT:    mov z0.d, z6.d
+; CHECK-NEXT:    mov z1.d, z7.d
 ; CHECK-NEXT:    ret
   %res = call { <vscale x 4 x float>, <vscale x 4 x float> } @llvm.aarch64.sme.famin.x2.nxv4f32(<vscale x 4 x float> %zdn1, <vscale x 4 x float> %zdn2, <vscale x 4 x float> %zm1, <vscale x 4 x float> %zm2)
   ret { <vscale x 4 x float>, <vscale x 4 x float> } %res
@@ -151,13 +151,13 @@ define { <vscale x 4 x float>, <vscale x 4 x float> } @multi_vec_min_multi_x2_f3
 define { <vscale x 2 x double>, <vscale x 2 x double> } @multi_vec_main_multi_x2_f64(<vscale x 2 x double> %unused, <vscale x 2 x double> %zdn1, <vscale x 2 x double> %zdn2, <vscale x 2 x double> %zm1, <vscale x 2 x double> %zm2) {
 ; CHECK-LABEL: multi_vec_main_multi_x2_f64:
 ; CHECK:       // %bb.0:
-; CHECK-NEXT:    mov z7.d, z4.d
-; CHECK-NEXT:    mov z5.d, z2.d
-; CHECK-NEXT:    mov z6.d, z3.d
-; CHECK-NEXT:    mov z4.d, z1.d
-; CHECK-NEXT:    famin { z4.d, z5.d }, { z4.d, z5.d }, { z6.d, z7.d }
-; CHECK-NEXT:    mov z0.d, z4.d
-; CHECK-NEXT:    mov z1.d, z5.d
+; CHECK-NEXT:    mov z5.d, z4.d
+; CHECK-NEXT:    mov z7.d, z2.d
+; CHECK-NEXT:    mov z4.d, z3.d
+; CHECK-NEXT:    mov z6.d, z1.d
+; CHECK-NEXT:    famin { z6.d, z7.d }, { z6.d, z7.d }, { z4.d, z5.d }
+; CHECK-NEXT:    mov z0.d, z6.d
+; CHECK-NEXT:    mov z1.d, z7.d
 ; CHECK-NEXT:    ret
   %res = call { <vscale x 2 x double>, <vscale x 2 x double> } @llvm.aarch64.sme.famin.x2.nxv2f64(<vscale x 2 x double> %zdn1, <vscale x 2 x double> %zdn2, <vscale x 2 x double> %zm1, <vscale x 2 x double> %zm2)
   ret { <vscale x 2 x double>, <vscale x 2 x double> } %res

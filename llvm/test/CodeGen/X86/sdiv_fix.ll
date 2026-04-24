@@ -12,51 +12,49 @@ declare  <4 x i32> @llvm.sdiv.fix.v4i32(<4 x i32>, <4 x i32>, i32)
 define i16 @func(i16 %x, i16 %y) nounwind {
 ; X64-LABEL: func:
 ; X64:       # %bb.0:
-; X64-NEXT:    movswl %si, %esi
-; X64-NEXT:    movswl %di, %ecx
-; X64-NEXT:    shll $7, %ecx
-; X64-NEXT:    movl %ecx, %eax
+; X64-NEXT:    movswl %si, %ecx
+; X64-NEXT:    movswl %di, %esi
+; X64-NEXT:    shll $7, %esi
+; X64-NEXT:    movl %esi, %eax
 ; X64-NEXT:    cltd
-; X64-NEXT:    idivl %esi
+; X64-NEXT:    idivl %ecx
 ; X64-NEXT:    # kill: def $eax killed $eax def $rax
 ; X64-NEXT:    leal -1(%rax), %edi
-; X64-NEXT:    testl %esi, %esi
-; X64-NEXT:    sets %sil
 ; X64-NEXT:    testl %ecx, %ecx
 ; X64-NEXT:    sets %cl
-; X64-NEXT:    xorb %sil, %cl
+; X64-NEXT:    testl %esi, %esi
+; X64-NEXT:    sets %sil
+; X64-NEXT:    xorb %cl, %sil
 ; X64-NEXT:    testl %edx, %edx
-; X64-NEXT:    setne %dl
-; X64-NEXT:    testb %cl, %dl
+; X64-NEXT:    setne %cl
+; X64-NEXT:    testb %sil, %cl
 ; X64-NEXT:    cmovnel %edi, %eax
 ; X64-NEXT:    # kill: def $ax killed $ax killed $rax
 ; X64-NEXT:    retq
 ;
 ; X86-LABEL: func:
 ; X86:       # %bb.0:
-; X86-NEXT:    pushl %ebx
 ; X86-NEXT:    pushl %edi
 ; X86-NEXT:    pushl %esi
-; X86-NEXT:    movswl {{[0-9]+}}(%esp), %esi
 ; X86-NEXT:    movswl {{[0-9]+}}(%esp), %ecx
-; X86-NEXT:    shll $7, %ecx
-; X86-NEXT:    movl %ecx, %eax
+; X86-NEXT:    movswl {{[0-9]+}}(%esp), %esi
+; X86-NEXT:    shll $7, %esi
+; X86-NEXT:    movl %esi, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %esi
+; X86-NEXT:    idivl %ecx
 ; X86-NEXT:    leal -1(%eax), %edi
-; X86-NEXT:    testl %esi, %esi
-; X86-NEXT:    sets %bl
 ; X86-NEXT:    testl %ecx, %ecx
 ; X86-NEXT:    sets %cl
-; X86-NEXT:    xorb %bl, %cl
+; X86-NEXT:    testl %esi, %esi
+; X86-NEXT:    sets %ch
+; X86-NEXT:    xorb %cl, %ch
 ; X86-NEXT:    testl %edx, %edx
-; X86-NEXT:    setne %dl
-; X86-NEXT:    testb %cl, %dl
+; X86-NEXT:    setne %cl
+; X86-NEXT:    testb %ch, %cl
 ; X86-NEXT:    cmovnel %edi, %eax
 ; X86-NEXT:    # kill: def $ax killed $ax killed $eax
 ; X86-NEXT:    popl %esi
 ; X86-NEXT:    popl %edi
-; X86-NEXT:    popl %ebx
 ; X86-NEXT:    retl
   %tmp = call i16 @llvm.sdiv.fix.i16(i16 %x, i16 %y, i32 7)
   ret i16 %tmp
@@ -65,22 +63,22 @@ define i16 @func(i16 %x, i16 %y) nounwind {
 define i16 @func2(i8 %x, i8 %y) nounwind {
 ; X64-LABEL: func2:
 ; X64:       # %bb.0:
-; X64-NEXT:    movsbl %sil, %esi
-; X64-NEXT:    movsbl %dil, %ecx
-; X64-NEXT:    shll $14, %ecx
-; X64-NEXT:    movl %ecx, %eax
+; X64-NEXT:    movsbl %sil, %ecx
+; X64-NEXT:    movsbl %dil, %esi
+; X64-NEXT:    shll $14, %esi
+; X64-NEXT:    movl %esi, %eax
 ; X64-NEXT:    cltd
-; X64-NEXT:    idivl %esi
+; X64-NEXT:    idivl %ecx
 ; X64-NEXT:    # kill: def $eax killed $eax def $rax
 ; X64-NEXT:    leal -1(%rax), %edi
-; X64-NEXT:    testl %esi, %esi
-; X64-NEXT:    sets %sil
 ; X64-NEXT:    testl %ecx, %ecx
 ; X64-NEXT:    sets %cl
-; X64-NEXT:    xorb %sil, %cl
+; X64-NEXT:    testl %esi, %esi
+; X64-NEXT:    sets %sil
+; X64-NEXT:    xorb %cl, %sil
 ; X64-NEXT:    testl %edx, %edx
-; X64-NEXT:    setne %dl
-; X64-NEXT:    testb %cl, %dl
+; X64-NEXT:    setne %cl
+; X64-NEXT:    testb %sil, %cl
 ; X64-NEXT:    cmovel %eax, %edi
 ; X64-NEXT:    addl %edi, %edi
 ; X64-NEXT:    movswl %di, %eax
@@ -93,24 +91,24 @@ define i16 @func2(i8 %x, i8 %y) nounwind {
 ; X86-NEXT:    pushl %ebx
 ; X86-NEXT:    pushl %edi
 ; X86-NEXT:    pushl %esi
+; X86-NEXT:    movsbl {{[0-9]+}}(%esp), %esi
 ; X86-NEXT:    movsbl {{[0-9]+}}(%esp), %edi
-; X86-NEXT:    movsbl {{[0-9]+}}(%esp), %ecx
-; X86-NEXT:    shll $14, %ecx
-; X86-NEXT:    movl %ecx, %eax
+; X86-NEXT:    shll $14, %edi
+; X86-NEXT:    movl %edi, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %edi
-; X86-NEXT:    leal -1(%eax), %esi
-; X86-NEXT:    testl %edi, %edi
+; X86-NEXT:    idivl %esi
+; X86-NEXT:    leal -1(%eax), %ecx
+; X86-NEXT:    testl %esi, %esi
 ; X86-NEXT:    sets %bl
-; X86-NEXT:    testl %ecx, %ecx
-; X86-NEXT:    sets %cl
-; X86-NEXT:    xorb %bl, %cl
+; X86-NEXT:    testl %edi, %edi
+; X86-NEXT:    sets %bh
+; X86-NEXT:    xorb %bl, %bh
 ; X86-NEXT:    testl %edx, %edx
 ; X86-NEXT:    setne %dl
-; X86-NEXT:    testb %cl, %dl
-; X86-NEXT:    cmovel %eax, %esi
-; X86-NEXT:    addl %esi, %esi
-; X86-NEXT:    movswl %si, %eax
+; X86-NEXT:    testb %bh, %dl
+; X86-NEXT:    cmovel %eax, %ecx
+; X86-NEXT:    addl %ecx, %ecx
+; X86-NEXT:    movswl %cx, %eax
 ; X86-NEXT:    shrl %eax
 ; X86-NEXT:    # kill: def $ax killed $ax killed $eax
 ; X86-NEXT:    popl %esi
@@ -197,21 +195,21 @@ define i4 @func4(i4 %x, i4 %y) nounwind {
 ; X64-NEXT:    shlb $4, %dil
 ; X64-NEXT:    sarb $4, %dil
 ; X64-NEXT:    shlb $2, %dil
-; X64-NEXT:    movsbl %dil, %ecx
-; X64-NEXT:    movl %ecx, %eax
+; X64-NEXT:    movsbl %dil, %edx
+; X64-NEXT:    movl %edx, %eax
 ; X64-NEXT:    idivb %sil
-; X64-NEXT:    movsbl %ah, %edx
+; X64-NEXT:    movsbl %ah, %ecx
 ; X64-NEXT:    movzbl %al, %edi
 ; X64-NEXT:    leal -1(%rdi), %eax
 ; X64-NEXT:    movzbl %al, %eax
 ; X64-NEXT:    testb %sil, %sil
 ; X64-NEXT:    sets %sil
-; X64-NEXT:    testb %cl, %cl
-; X64-NEXT:    sets %cl
-; X64-NEXT:    xorb %sil, %cl
 ; X64-NEXT:    testb %dl, %dl
-; X64-NEXT:    setne %dl
-; X64-NEXT:    testb %cl, %dl
+; X64-NEXT:    sets %dl
+; X64-NEXT:    xorb %sil, %dl
+; X64-NEXT:    testb %cl, %cl
+; X64-NEXT:    setne %cl
+; X64-NEXT:    testb %dl, %cl
 ; X64-NEXT:    cmovel %edi, %eax
 ; X64-NEXT:    # kill: def $al killed $al killed $eax
 ; X64-NEXT:    retq
@@ -406,28 +404,26 @@ define i18 @func6(i16 %x, i16 %y) nounwind {
 ;
 ; X86-LABEL: func6:
 ; X86:       # %bb.0:
-; X86-NEXT:    pushl %ebx
 ; X86-NEXT:    pushl %edi
 ; X86-NEXT:    pushl %esi
-; X86-NEXT:    movswl {{[0-9]+}}(%esp), %esi
 ; X86-NEXT:    movswl {{[0-9]+}}(%esp), %ecx
-; X86-NEXT:    shll $7, %ecx
-; X86-NEXT:    movl %ecx, %eax
+; X86-NEXT:    movswl {{[0-9]+}}(%esp), %esi
+; X86-NEXT:    shll $7, %esi
+; X86-NEXT:    movl %esi, %eax
 ; X86-NEXT:    cltd
-; X86-NEXT:    idivl %esi
+; X86-NEXT:    idivl %ecx
 ; X86-NEXT:    leal -1(%eax), %edi
-; X86-NEXT:    testl %esi, %esi
-; X86-NEXT:    sets %bl
 ; X86-NEXT:    testl %ecx, %ecx
 ; X86-NEXT:    sets %cl
-; X86-NEXT:    xorb %bl, %cl
+; X86-NEXT:    testl %esi, %esi
+; X86-NEXT:    sets %ch
+; X86-NEXT:    xorb %cl, %ch
 ; X86-NEXT:    testl %edx, %edx
-; X86-NEXT:    setne %dl
-; X86-NEXT:    testb %cl, %dl
+; X86-NEXT:    setne %cl
+; X86-NEXT:    testb %ch, %cl
 ; X86-NEXT:    cmovnel %edi, %eax
 ; X86-NEXT:    popl %esi
 ; X86-NEXT:    popl %edi
-; X86-NEXT:    popl %ebx
 ; X86-NEXT:    retl
   %x2 = sext i16 %x to i18
   %y2 = sext i16 %y to i18

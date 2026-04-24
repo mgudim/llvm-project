@@ -342,11 +342,13 @@ define void @shl_base_global_ptr_global_atomic_fadd(ptr addrspace(1) %out, ptr a
 ; GFX942-LABEL: shl_base_global_ptr_global_atomic_fadd:
 ; GFX942:       ; %bb.0:
 ; GFX942-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX942-NEXT:    v_lshlrev_b64 v[0:1], 2, v[4:5]
+; GFX942-NEXT:    v_mov_b32_e32 v1, v5
+; GFX942-NEXT:    v_mov_b32_e32 v0, v4
+; GFX942-NEXT:    v_lshlrev_b64 v[4:5], 2, v[0:1]
 ; GFX942-NEXT:    v_mov_b32_e32 v6, 0x42c80000
-; GFX942-NEXT:    global_atomic_add_f32 v[0:1], v6, off offset:512
+; GFX942-NEXT:    global_atomic_add_f32 v[4:5], v6, off offset:512
 ; GFX942-NEXT:    s_mov_b64 s[0:1], 0x80
-; GFX942-NEXT:    v_lshl_add_u64 v[0:1], v[4:5], 0, s[0:1]
+; GFX942-NEXT:    v_lshl_add_u64 v[0:1], v[0:1], 0, s[0:1]
 ; GFX942-NEXT:    global_store_dwordx2 v[2:3], v[0:1], off sc0 sc1
 ; GFX942-NEXT:    s_waitcnt vmcnt(0)
 ; GFX942-NEXT:    s_setpc_b64 s[30:31]

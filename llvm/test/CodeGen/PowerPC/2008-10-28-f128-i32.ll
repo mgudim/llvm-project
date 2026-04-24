@@ -14,22 +14,22 @@ define i64 @__fixunstfdi(ppc_fp128 %a) nounwind readnone {
 ; CHECK-NEXT:    stw 12, 408(1)
 ; CHECK-NEXT:    stfd 2, 376(1)
 ; CHECK-NEXT:    lwz 4, 380(1)
-; CHECK-NEXT:    stfd 27, 424(1) # 8-byte Folded Spill
+; CHECK-NEXT:    stfd 31, 456(1) # 8-byte Folded Spill
 ; CHECK-NEXT:    stw 4, 396(1)
 ; CHECK-NEXT:    lwz 4, 376(1)
-; CHECK-NEXT:    lfs 27, .LCPI0_0@l(3)
+; CHECK-NEXT:    lfs 31, .LCPI0_0@l(3)
 ; CHECK-NEXT:    stfd 1, 384(1)
 ; CHECK-NEXT:    stw 4, 392(1)
-; CHECK-NEXT:    fcmpu 0, 2, 27
+; CHECK-NEXT:    fcmpu 0, 2, 31
 ; CHECK-NEXT:    lwz 4, 388(1)
-; CHECK-NEXT:    fcmpu 1, 1, 27
+; CHECK-NEXT:    fcmpu 1, 1, 31
 ; CHECK-NEXT:    lwz 3, 384(1)
 ; CHECK-NEXT:    crand 20, 6, 0
 ; CHECK-NEXT:    cror 20, 4, 20
+; CHECK-NEXT:    stfd 27, 424(1) # 8-byte Folded Spill
 ; CHECK-NEXT:    stfd 28, 432(1) # 8-byte Folded Spill
 ; CHECK-NEXT:    stfd 29, 440(1) # 8-byte Folded Spill
 ; CHECK-NEXT:    stfd 30, 448(1) # 8-byte Folded Spill
-; CHECK-NEXT:    stfd 31, 456(1) # 8-byte Folded Spill
 ; CHECK-NEXT:    stw 4, 404(1)
 ; CHECK-NEXT:    stw 3, 400(1)
 ; CHECK-NEXT:    bc 4, 20, .LBB0_2
@@ -56,18 +56,18 @@ define i64 @__fixunstfdi(ppc_fp128 %a) nounwind readnone {
 ; CHECK-NEXT:    stw 29, 332(1)
 ; CHECK-NEXT:    stw 3, 312(1)
 ; CHECK-NEXT:    stw 29, 328(1)
-; CHECK-NEXT:    lfd 31, 320(1)
-; CHECK-NEXT:    lfd 30, 312(1)
+; CHECK-NEXT:    lfd 30, 320(1)
+; CHECK-NEXT:    lfd 29, 312(1)
 ; CHECK-NEXT:    lfd 3, 336(1)
-; CHECK-NEXT:    fmr 1, 31
+; CHECK-NEXT:    fmr 1, 30
 ; CHECK-NEXT:    lfd 4, 328(1)
-; CHECK-NEXT:    fmr 2, 30
+; CHECK-NEXT:    fmr 2, 29
 ; CHECK-NEXT:    bl __gcc_qmul
 ; CHECK-NEXT:    lis 3, 16864
 ; CHECK-NEXT:    stfd 1, 280(1)
-; CHECK-NEXT:    fmr 29, 1
+; CHECK-NEXT:    fmr 28, 1
 ; CHECK-NEXT:    stw 3, 368(1)
-; CHECK-NEXT:    fmr 28, 2
+; CHECK-NEXT:    fmr 27, 2
 ; CHECK-NEXT:    lwz 3, 284(1)
 ; CHECK-NEXT:    stfd 2, 288(1)
 ; CHECK-NEXT:    stw 3, 356(1)
@@ -96,12 +96,12 @@ define i64 @__fixunstfdi(ppc_fp128 %a) nounwind readnone {
 ; CHECK-NEXT:    mtfsb1 31
 ; CHECK-NEXT:    lis 3, .LCPI0_1@ha
 ; CHECK-NEXT:    mtfsb0 30
-; CHECK-NEXT:    fadd 1, 28, 29
+; CHECK-NEXT:    fadd 1, 27, 28
 ; CHECK-NEXT:    mtfsf 1, 0
 ; CHECK-NEXT:    lfs 0, .LCPI0_1@l(3)
-; CHECK-NEXT:    fcmpu 0, 28, 27
+; CHECK-NEXT:    fcmpu 0, 27, 31
 ; CHECK-NEXT:    fctiwz 1, 1
-; CHECK-NEXT:    fcmpu 1, 29, 0
+; CHECK-NEXT:    fcmpu 1, 28, 0
 ; CHECK-NEXT:    crandc 20, 6, 0
 ; CHECK-NEXT:    cror 20, 5, 20
 ; CHECK-NEXT:    stfd 1, 152(1)
@@ -118,9 +118,9 @@ define i64 @__fixunstfdi(ppc_fp128 %a) nounwind readnone {
 ; CHECK-NEXT:    bl __floatditf
 ; CHECK-NEXT:    lis 3, 17392
 ; CHECK-NEXT:    stfd 1, 208(1)
-; CHECK-NEXT:    fmr 29, 1
+; CHECK-NEXT:    fmr 28, 1
 ; CHECK-NEXT:    stw 3, 240(1)
-; CHECK-NEXT:    fmr 28, 2
+; CHECK-NEXT:    fmr 27, 2
 ; CHECK-NEXT:    lwz 3, 212(1)
 ; CHECK-NEXT:    cmpwi 2, 30, 0
 ; CHECK-NEXT:    stfd 2, 200(1)
@@ -141,17 +141,17 @@ define i64 @__fixunstfdi(ppc_fp128 %a) nounwind readnone {
 ; CHECK-NEXT:    bl __gcc_qadd
 ; CHECK-NEXT:    blt 2, .LBB0_7
 ; CHECK-NEXT:  # %bb.6: # %bb1
-; CHECK-NEXT:    fmr 2, 28
+; CHECK-NEXT:    fmr 2, 27
 ; CHECK-NEXT:  .LBB0_7: # %bb1
 ; CHECK-NEXT:    blt 2, .LBB0_9
 ; CHECK-NEXT:  # %bb.8: # %bb1
-; CHECK-NEXT:    fmr 1, 29
+; CHECK-NEXT:    fmr 1, 28
 ; CHECK-NEXT:  .LBB0_9: # %bb1
 ; CHECK-NEXT:    stfd 1, 184(1)
-; CHECK-NEXT:    fmr 1, 31
+; CHECK-NEXT:    fmr 1, 30
 ; CHECK-NEXT:    lwz 3, 188(1)
 ; CHECK-NEXT:    stfd 2, 192(1)
-; CHECK-NEXT:    fmr 2, 30
+; CHECK-NEXT:    fmr 2, 29
 ; CHECK-NEXT:    stw 3, 260(1)
 ; CHECK-NEXT:    lwz 3, 184(1)
 ; CHECK-NEXT:    stw 3, 256(1)
@@ -163,9 +163,9 @@ define i64 @__fixunstfdi(ppc_fp128 %a) nounwind readnone {
 ; CHECK-NEXT:    lfd 4, 248(1)
 ; CHECK-NEXT:    bl __gcc_qsub
 ; CHECK-NEXT:    stfd 2, 176(1)
-; CHECK-NEXT:    fcmpu 1, 2, 27
+; CHECK-NEXT:    fcmpu 1, 2, 31
 ; CHECK-NEXT:    lwz 3, 180(1)
-; CHECK-NEXT:    fcmpu 0, 1, 27
+; CHECK-NEXT:    fcmpu 0, 1, 31
 ; CHECK-NEXT:    stfd 1, 168(1)
 ; CHECK-NEXT:    crandc 20, 2, 4
 ; CHECK-NEXT:    stw 3, 268(1)

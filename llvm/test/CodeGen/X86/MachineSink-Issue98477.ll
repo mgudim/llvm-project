@@ -7,7 +7,7 @@ target triple = "x86_64-unknown-linux-gnu"
 define i32 @main(i1 %tobool.not, i32 %0) {
 ; CHECK-LABEL: main:
 ; CHECK:       # %bb.0: # %entry
-; CHECK-NEXT:    movl $1, %r8d
+; CHECK-NEXT:    movl $1, %ecx
 ; CHECK-NEXT:    testb $1, %dil
 ; CHECK-NEXT:    jne .LBB0_8
 ; CHECK-NEXT:  .LBB0_1: # %j.preheader
@@ -18,7 +18,7 @@ define i32 @main(i1 %tobool.not, i32 %0) {
 ; CHECK-NEXT:    # in Loop: Header=BB0_2 Depth=1
 ; CHECK-NEXT:    movl $1, %eax
 ; CHECK-NEXT:    xorl %edx, %edx
-; CHECK-NEXT:    divl %r8d
+; CHECK-NEXT:    divl %ecx
 ; CHECK-NEXT:    testb $1, %dil
 ; CHECK-NEXT:    jne .LBB0_6
 ; CHECK-NEXT:  .LBB0_2: # %j
@@ -26,7 +26,7 @@ define i32 @main(i1 %tobool.not, i32 %0) {
 ; CHECK-NEXT:    movl $1, %eax
 ; CHECK-NEXT:    xorl %edx, %edx
 ; CHECK-NEXT:    idivl %esi
-; CHECK-NEXT:    movl %edx, %ecx
+; CHECK-NEXT:    movl %edx, %r8d
 ; CHECK-NEXT:    testb %r9b, %r9b
 ; CHECK-NEXT:    jne .LBB0_5
 ; CHECK-NEXT:  # %bb.3: # %j
@@ -39,10 +39,10 @@ define i32 @main(i1 %tobool.not, i32 %0) {
 ; CHECK-NEXT:    testl %edx, %edx
 ; CHECK-NEXT:    jne .LBB0_7
 ; CHECK-NEXT:  .LBB0_8: # %if.end13
-; CHECK-NEXT:    xorl %r8d, %r8d
+; CHECK-NEXT:    xorl %ecx, %ecx
 ; CHECK-NEXT:    jmp .LBB0_1
 ; CHECK-NEXT:  .LBB0_7: # %while.body.lr.ph
-; CHECK-NEXT:    movl %ecx, %eax
+; CHECK-NEXT:    movl %r8d, %eax
 ; CHECK-NEXT:    retq
 entry:
   br i1 %tobool.not, label %if.end13, label %j.preheader

@@ -620,44 +620,43 @@ define hidden fastcc i32 @indirect_divergent_sibling_call_i32_fastcc_i32_i32(ptr
 ; FIJI-NEXT:    v_writelane_b32 v40, s54, 14
 ; FIJI-NEXT:    v_writelane_b32 v40, s55, 15
 ; FIJI-NEXT:    v_writelane_b32 v40, s64, 16
-; FIJI-NEXT:    s_mov_b32 s50, s15
-; FIJI-NEXT:    s_mov_b32 s51, s14
-; FIJI-NEXT:    s_mov_b32 s52, s13
-; FIJI-NEXT:    s_mov_b32 s53, s12
+; FIJI-NEXT:    v_writelane_b32 v40, s65, 17
+; FIJI-NEXT:    s_mov_b32 s54, s15
+; FIJI-NEXT:    s_mov_b32 s55, s14
+; FIJI-NEXT:    s_mov_b32 s64, s13
+; FIJI-NEXT:    s_mov_b32 s65, s12
 ; FIJI-NEXT:    s_mov_b64 s[34:35], s[10:11]
 ; FIJI-NEXT:    s_mov_b64 s[36:37], s[8:9]
 ; FIJI-NEXT:    s_mov_b64 s[38:39], s[6:7]
 ; FIJI-NEXT:    s_mov_b64 s[48:49], s[4:5]
-; FIJI-NEXT:    v_add_u32_e32 v3, vcc, v3, v4
-; FIJI-NEXT:    s_mov_b64 s[54:55], exec
+; FIJI-NEXT:    v_mov_b32_e32 v6, v1
+; FIJI-NEXT:    v_mov_b32_e32 v5, v0
+; FIJI-NEXT:    v_add_u32_e32 v1, vcc, v3, v4
+; FIJI-NEXT:    s_mov_b64 s[50:51], exec
 ; FIJI-NEXT:    s_addk_i32 s32, 0x400
-; FIJI-NEXT:    v_writelane_b32 v40, s65, 17
 ; FIJI-NEXT:  .LBB18_1: ; =>This Inner Loop Header: Depth=1
-; FIJI-NEXT:    v_readfirstlane_b32 s16, v0
-; FIJI-NEXT:    v_readfirstlane_b32 s17, v1
-; FIJI-NEXT:    v_cmp_eq_u64_e32 vcc, s[16:17], v[0:1]
-; FIJI-NEXT:    s_and_saveexec_b64 s[64:65], vcc
+; FIJI-NEXT:    v_readfirstlane_b32 s16, v5
+; FIJI-NEXT:    v_readfirstlane_b32 s17, v6
+; FIJI-NEXT:    v_cmp_eq_u64_e32 vcc, s[16:17], v[5:6]
+; FIJI-NEXT:    s_and_saveexec_b64 s[52:53], vcc
 ; FIJI-NEXT:    s_mov_b64 s[4:5], s[48:49]
 ; FIJI-NEXT:    s_mov_b64 s[6:7], s[38:39]
 ; FIJI-NEXT:    s_mov_b64 s[8:9], s[36:37]
 ; FIJI-NEXT:    s_mov_b64 s[10:11], s[34:35]
-; FIJI-NEXT:    s_mov_b32 s12, s53
-; FIJI-NEXT:    s_mov_b32 s13, s52
-; FIJI-NEXT:    s_mov_b32 s14, s51
-; FIJI-NEXT:    s_mov_b32 s15, s50
+; FIJI-NEXT:    s_mov_b32 s12, s65
+; FIJI-NEXT:    s_mov_b32 s13, s64
+; FIJI-NEXT:    s_mov_b32 s14, s55
+; FIJI-NEXT:    s_mov_b32 s15, s54
 ; FIJI-NEXT:    v_mov_b32_e32 v0, v2
-; FIJI-NEXT:    v_mov_b32_e32 v1, v3
 ; FIJI-NEXT:    s_swappc_b64 s[30:31], s[16:17]
-; FIJI-NEXT:    v_mov_b32_e32 v4, v0
-; FIJI-NEXT:    ; implicit-def: $vgpr0_vgpr1
+; FIJI-NEXT:    ; implicit-def: $vgpr5_vgpr6
 ; FIJI-NEXT:    ; implicit-def: $vgpr31
 ; FIJI-NEXT:    ; implicit-def: $vgpr2
-; FIJI-NEXT:    ; implicit-def: $vgpr3
-; FIJI-NEXT:    s_xor_b64 exec, exec, s[64:65]
+; FIJI-NEXT:    ; implicit-def: $vgpr1
+; FIJI-NEXT:    s_xor_b64 exec, exec, s[52:53]
 ; FIJI-NEXT:    s_cbranch_execnz .LBB18_1
 ; FIJI-NEXT:  ; %bb.2:
-; FIJI-NEXT:    s_mov_b64 exec, s[54:55]
-; FIJI-NEXT:    v_mov_b32_e32 v0, v4
+; FIJI-NEXT:    s_mov_b64 exec, s[50:51]
 ; FIJI-NEXT:    v_readlane_b32 s65, v40, 17
 ; FIJI-NEXT:    v_readlane_b32 s64, v40, 16
 ; FIJI-NEXT:    v_readlane_b32 s55, v40, 15
@@ -711,44 +710,43 @@ define hidden fastcc i32 @indirect_divergent_sibling_call_i32_fastcc_i32_i32(ptr
 ; HAWAII-NEXT:    v_writelane_b32 v40, s54, 14
 ; HAWAII-NEXT:    v_writelane_b32 v40, s55, 15
 ; HAWAII-NEXT:    v_writelane_b32 v40, s64, 16
-; HAWAII-NEXT:    s_mov_b32 s50, s15
-; HAWAII-NEXT:    s_mov_b32 s51, s14
-; HAWAII-NEXT:    s_mov_b32 s52, s13
-; HAWAII-NEXT:    s_mov_b32 s53, s12
+; HAWAII-NEXT:    v_writelane_b32 v40, s65, 17
+; HAWAII-NEXT:    s_mov_b32 s54, s15
+; HAWAII-NEXT:    s_mov_b32 s55, s14
+; HAWAII-NEXT:    s_mov_b32 s64, s13
+; HAWAII-NEXT:    s_mov_b32 s65, s12
 ; HAWAII-NEXT:    s_mov_b64 s[34:35], s[10:11]
 ; HAWAII-NEXT:    s_mov_b64 s[36:37], s[8:9]
 ; HAWAII-NEXT:    s_mov_b64 s[38:39], s[6:7]
 ; HAWAII-NEXT:    s_mov_b64 s[48:49], s[4:5]
-; HAWAII-NEXT:    v_add_i32_e32 v3, vcc, v3, v4
-; HAWAII-NEXT:    s_mov_b64 s[54:55], exec
+; HAWAII-NEXT:    v_mov_b32_e32 v6, v1
+; HAWAII-NEXT:    v_mov_b32_e32 v5, v0
+; HAWAII-NEXT:    v_add_i32_e32 v1, vcc, v3, v4
+; HAWAII-NEXT:    s_mov_b64 s[50:51], exec
 ; HAWAII-NEXT:    s_addk_i32 s32, 0x400
-; HAWAII-NEXT:    v_writelane_b32 v40, s65, 17
 ; HAWAII-NEXT:  .LBB18_1: ; =>This Inner Loop Header: Depth=1
-; HAWAII-NEXT:    v_readfirstlane_b32 s16, v0
-; HAWAII-NEXT:    v_readfirstlane_b32 s17, v1
-; HAWAII-NEXT:    v_cmp_eq_u64_e32 vcc, s[16:17], v[0:1]
-; HAWAII-NEXT:    s_and_saveexec_b64 s[64:65], vcc
+; HAWAII-NEXT:    v_readfirstlane_b32 s16, v5
+; HAWAII-NEXT:    v_readfirstlane_b32 s17, v6
+; HAWAII-NEXT:    v_cmp_eq_u64_e32 vcc, s[16:17], v[5:6]
+; HAWAII-NEXT:    s_and_saveexec_b64 s[52:53], vcc
 ; HAWAII-NEXT:    s_mov_b64 s[4:5], s[48:49]
 ; HAWAII-NEXT:    s_mov_b64 s[6:7], s[38:39]
 ; HAWAII-NEXT:    s_mov_b64 s[8:9], s[36:37]
 ; HAWAII-NEXT:    s_mov_b64 s[10:11], s[34:35]
-; HAWAII-NEXT:    s_mov_b32 s12, s53
-; HAWAII-NEXT:    s_mov_b32 s13, s52
-; HAWAII-NEXT:    s_mov_b32 s14, s51
-; HAWAII-NEXT:    s_mov_b32 s15, s50
+; HAWAII-NEXT:    s_mov_b32 s12, s65
+; HAWAII-NEXT:    s_mov_b32 s13, s64
+; HAWAII-NEXT:    s_mov_b32 s14, s55
+; HAWAII-NEXT:    s_mov_b32 s15, s54
 ; HAWAII-NEXT:    v_mov_b32_e32 v0, v2
-; HAWAII-NEXT:    v_mov_b32_e32 v1, v3
 ; HAWAII-NEXT:    s_swappc_b64 s[30:31], s[16:17]
-; HAWAII-NEXT:    v_mov_b32_e32 v4, v0
-; HAWAII-NEXT:    ; implicit-def: $vgpr0_vgpr1
+; HAWAII-NEXT:    ; implicit-def: $vgpr5_vgpr6
 ; HAWAII-NEXT:    ; implicit-def: $vgpr31
 ; HAWAII-NEXT:    ; implicit-def: $vgpr2
-; HAWAII-NEXT:    ; implicit-def: $vgpr3
-; HAWAII-NEXT:    s_xor_b64 exec, exec, s[64:65]
+; HAWAII-NEXT:    ; implicit-def: $vgpr1
+; HAWAII-NEXT:    s_xor_b64 exec, exec, s[52:53]
 ; HAWAII-NEXT:    s_cbranch_execnz .LBB18_1
 ; HAWAII-NEXT:  ; %bb.2:
-; HAWAII-NEXT:    s_mov_b64 exec, s[54:55]
-; HAWAII-NEXT:    v_mov_b32_e32 v0, v4
+; HAWAII-NEXT:    s_mov_b64 exec, s[50:51]
 ; HAWAII-NEXT:    v_readlane_b32 s65, v40, 17
 ; HAWAII-NEXT:    v_readlane_b32 s64, v40, 16
 ; HAWAII-NEXT:    v_readlane_b32 s55, v40, 15
@@ -802,44 +800,43 @@ define hidden fastcc i32 @indirect_divergent_sibling_call_i32_fastcc_i32_i32(ptr
 ; GFX9-NEXT:    v_writelane_b32 v40, s54, 14
 ; GFX9-NEXT:    v_writelane_b32 v40, s55, 15
 ; GFX9-NEXT:    v_writelane_b32 v40, s64, 16
-; GFX9-NEXT:    s_mov_b32 s50, s15
-; GFX9-NEXT:    s_mov_b32 s51, s14
-; GFX9-NEXT:    s_mov_b32 s52, s13
-; GFX9-NEXT:    s_mov_b32 s53, s12
+; GFX9-NEXT:    v_writelane_b32 v40, s65, 17
+; GFX9-NEXT:    s_mov_b32 s54, s15
+; GFX9-NEXT:    s_mov_b32 s55, s14
+; GFX9-NEXT:    s_mov_b32 s64, s13
+; GFX9-NEXT:    s_mov_b32 s65, s12
 ; GFX9-NEXT:    s_mov_b64 s[34:35], s[10:11]
 ; GFX9-NEXT:    s_mov_b64 s[36:37], s[8:9]
 ; GFX9-NEXT:    s_mov_b64 s[38:39], s[6:7]
 ; GFX9-NEXT:    s_mov_b64 s[48:49], s[4:5]
-; GFX9-NEXT:    v_add_u32_e32 v3, v3, v4
-; GFX9-NEXT:    s_mov_b64 s[54:55], exec
+; GFX9-NEXT:    v_mov_b32_e32 v6, v1
+; GFX9-NEXT:    v_mov_b32_e32 v5, v0
+; GFX9-NEXT:    v_add_u32_e32 v1, v3, v4
+; GFX9-NEXT:    s_mov_b64 s[50:51], exec
 ; GFX9-NEXT:    s_addk_i32 s32, 0x400
-; GFX9-NEXT:    v_writelane_b32 v40, s65, 17
 ; GFX9-NEXT:  .LBB18_1: ; =>This Inner Loop Header: Depth=1
-; GFX9-NEXT:    v_readfirstlane_b32 s16, v0
-; GFX9-NEXT:    v_readfirstlane_b32 s17, v1
-; GFX9-NEXT:    v_cmp_eq_u64_e32 vcc, s[16:17], v[0:1]
-; GFX9-NEXT:    s_and_saveexec_b64 s[64:65], vcc
+; GFX9-NEXT:    v_readfirstlane_b32 s16, v5
+; GFX9-NEXT:    v_readfirstlane_b32 s17, v6
+; GFX9-NEXT:    v_cmp_eq_u64_e32 vcc, s[16:17], v[5:6]
+; GFX9-NEXT:    s_and_saveexec_b64 s[52:53], vcc
 ; GFX9-NEXT:    s_mov_b64 s[4:5], s[48:49]
 ; GFX9-NEXT:    s_mov_b64 s[6:7], s[38:39]
 ; GFX9-NEXT:    s_mov_b64 s[8:9], s[36:37]
 ; GFX9-NEXT:    s_mov_b64 s[10:11], s[34:35]
-; GFX9-NEXT:    s_mov_b32 s12, s53
-; GFX9-NEXT:    s_mov_b32 s13, s52
-; GFX9-NEXT:    s_mov_b32 s14, s51
-; GFX9-NEXT:    s_mov_b32 s15, s50
+; GFX9-NEXT:    s_mov_b32 s12, s65
+; GFX9-NEXT:    s_mov_b32 s13, s64
+; GFX9-NEXT:    s_mov_b32 s14, s55
+; GFX9-NEXT:    s_mov_b32 s15, s54
 ; GFX9-NEXT:    v_mov_b32_e32 v0, v2
-; GFX9-NEXT:    v_mov_b32_e32 v1, v3
 ; GFX9-NEXT:    s_swappc_b64 s[30:31], s[16:17]
-; GFX9-NEXT:    v_mov_b32_e32 v4, v0
-; GFX9-NEXT:    ; implicit-def: $vgpr0_vgpr1
+; GFX9-NEXT:    ; implicit-def: $vgpr5_vgpr6
 ; GFX9-NEXT:    ; implicit-def: $vgpr31
 ; GFX9-NEXT:    ; implicit-def: $vgpr2
-; GFX9-NEXT:    ; implicit-def: $vgpr3
-; GFX9-NEXT:    s_xor_b64 exec, exec, s[64:65]
+; GFX9-NEXT:    ; implicit-def: $vgpr1
+; GFX9-NEXT:    s_xor_b64 exec, exec, s[52:53]
 ; GFX9-NEXT:    s_cbranch_execnz .LBB18_1
 ; GFX9-NEXT:  ; %bb.2:
-; GFX9-NEXT:    s_mov_b64 exec, s[54:55]
-; GFX9-NEXT:    v_mov_b32_e32 v0, v4
+; GFX9-NEXT:    s_mov_b64 exec, s[50:51]
 ; GFX9-NEXT:    v_readlane_b32 s65, v40, 17
 ; GFX9-NEXT:    v_readlane_b32 s64, v40, 16
 ; GFX9-NEXT:    v_readlane_b32 s55, v40, 15

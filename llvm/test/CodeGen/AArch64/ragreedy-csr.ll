@@ -33,162 +33,161 @@ define fastcc i32 @prune_match(ptr nocapture readonly %a, ptr nocapture readonly
 ; CHECK-NEXT:    .cfi_offset w29, -16
 ; CHECK-NEXT:  Lloh0:
 ; CHECK-NEXT:    adrp x14, __DefaultRuneLocale@GOTPAGE
-; CHECK-NEXT:    ldrb w12, [x0, #4]
-; CHECK-NEXT:    ldrb w13, [x1, #4]
-; CHECK-NEXT:    ldr x9, [x0, #16]
-; CHECK-NEXT:    ldr x10, [x1, #16]
-; CHECK-NEXT:    mov x11, xzr
+; CHECK-NEXT:    ldrb w11, [x0, #4]
+; CHECK-NEXT:    ldrb w12, [x1, #4]
+; CHECK-NEXT:    ldr x8, [x0, #16]
+; CHECK-NEXT:    ldr x9, [x1, #16]
+; CHECK-NEXT:    mov x13, x0
 ; CHECK-NEXT:  Lloh1:
 ; CHECK-NEXT:    ldr x14, [x14, __DefaultRuneLocale@GOTPAGEOFF]
-; CHECK-NEXT:    ldrsb x8, [x9, x11]
-; CHECK-NEXT:    tbz x8, #63, LBB0_3
+; CHECK-NEXT:    mov x10, xzr
+; CHECK-NEXT:    ldrsb x0, [x8, x10]
+; CHECK-NEXT:    tbz x0, #63, LBB0_3
 ; CHECK-NEXT:  LBB0_2: ; %cond.false.i.i
-; CHECK-NEXT:    stp x9, x0, [sp, #32] ; 16-byte Folded Spill
-; CHECK-NEXT:    mov w0, w8
 ; CHECK-NEXT:    mov w1, #32768 ; =0x8000
-; CHECK-NEXT:    str x10, [sp, #8] ; 8-byte Spill
-; CHECK-NEXT:    str x11, [sp, #24] ; 8-byte Spill
-; CHECK-NEXT:    str w12, [sp, #4] ; 4-byte Spill
-; CHECK-NEXT:    str w13, [sp, #20] ; 4-byte Spill
+; CHECK-NEXT:    ; kill: def $w0 killed $w0 killed $x0
+; CHECK-NEXT:    stp x10, x8, [sp, #32] ; 16-byte Folded Spill
+; CHECK-NEXT:    str x9, [sp, #16] ; 8-byte Spill
+; CHECK-NEXT:    str w11, [sp, #12] ; 4-byte Spill
+; CHECK-NEXT:    str w12, [sp, #28] ; 4-byte Spill
+; CHECK-NEXT:    str x13, [sp] ; 8-byte Spill
 ; CHECK-NEXT:    bl ___maskrune
 ; CHECK-NEXT:  Lloh2:
 ; CHECK-NEXT:    adrp x14, __DefaultRuneLocale@GOTPAGE
-; CHECK-NEXT:    mov w8, w0
 ; CHECK-NEXT:  Lloh3:
 ; CHECK-NEXT:    ldr x14, [x14, __DefaultRuneLocale@GOTPAGEOFF]
-; CHECK-NEXT:    ldp x11, x9, [sp, #24] ; 16-byte Folded Reload
-; CHECK-NEXT:    ldr w13, [sp, #20] ; 4-byte Reload
-; CHECK-NEXT:    ldr w12, [sp, #4] ; 4-byte Reload
-; CHECK-NEXT:    ldr x10, [sp, #8] ; 8-byte Reload
-; CHECK-NEXT:    ldr x0, [sp, #40] ; 8-byte Reload
-; CHECK-NEXT:    cbz w8, LBB0_4
+; CHECK-NEXT:    ldp x10, x8, [sp, #32] ; 16-byte Folded Reload
+; CHECK-NEXT:    ldr x13, [sp] ; 8-byte Reload
+; CHECK-NEXT:    ldr w12, [sp, #28] ; 4-byte Reload
+; CHECK-NEXT:    ldr w11, [sp, #12] ; 4-byte Reload
+; CHECK-NEXT:    ldr x9, [sp, #16] ; 8-byte Reload
+; CHECK-NEXT:    cbz w0, LBB0_4
 ; CHECK-NEXT:    b LBB0_6
 ; CHECK-NEXT:  LBB0_3: ; %cond.true.i.i
-; CHECK-NEXT:    add x8, x14, x8, lsl #2
-; CHECK-NEXT:    ldr w8, [x8, #60]
-; CHECK-NEXT:    and w8, w8, #0x8000
-; CHECK-NEXT:    cbnz w8, LBB0_6
+; CHECK-NEXT:    add x15, x14, x0, lsl #2
+; CHECK-NEXT:    ldr w15, [x15, #60]
+; CHECK-NEXT:    and w0, w15, #0x8000
+; CHECK-NEXT:    cbnz w0, LBB0_6
 ; CHECK-NEXT:  LBB0_4: ; %lor.rhs
-; CHECK-NEXT:    ldrsb x8, [x10, x11]
-; CHECK-NEXT:    tbnz x8, #63, LBB0_8
+; CHECK-NEXT:    ldrsb x0, [x9, x10]
+; CHECK-NEXT:    tbnz x0, #63, LBB0_8
 ; CHECK-NEXT:  ; %bb.5: ; %cond.true.i.i217
-; CHECK-NEXT:    add x8, x14, x8, lsl #2
-; CHECK-NEXT:    ldr w8, [x8, #60]
-; CHECK-NEXT:    and w8, w8, #0x8000
-; CHECK-NEXT:    cbz w8, LBB0_9
+; CHECK-NEXT:    add x15, x14, x0, lsl #2
+; CHECK-NEXT:    ldr w15, [x15, #60]
+; CHECK-NEXT:    and w0, w15, #0x8000
+; CHECK-NEXT:    cbz w0, LBB0_9
 ; CHECK-NEXT:  LBB0_6: ; %while.body
-; CHECK-NEXT:    ldrb w8, [x9, x11]
-; CHECK-NEXT:    ldrb w15, [x10, x11]
-; CHECK-NEXT:    cmp w8, w15
+; CHECK-NEXT:    ldrb w15, [x8, x10]
+; CHECK-NEXT:    ldrb w16, [x9, x10]
+; CHECK-NEXT:    cmp w15, w16
 ; CHECK-NEXT:    b.ne LBB0_42
 ; CHECK-NEXT:  ; %bb.7: ; %if.end17
-; CHECK-NEXT:    add x11, x11, #1
-; CHECK-NEXT:    ldrsb x8, [x9, x11]
-; CHECK-NEXT:    tbz x8, #63, LBB0_3
+; CHECK-NEXT:    add x10, x10, #1
+; CHECK-NEXT:    ldrsb x0, [x8, x10]
+; CHECK-NEXT:    tbz x0, #63, LBB0_3
 ; CHECK-NEXT:    b LBB0_2
 ; CHECK-NEXT:  LBB0_8: ; %cond.false.i.i219
-; CHECK-NEXT:    stp x9, x0, [sp, #32] ; 16-byte Folded Spill
-; CHECK-NEXT:    mov w0, w8
 ; CHECK-NEXT:    mov w1, #32768 ; =0x8000
-; CHECK-NEXT:    str x10, [sp, #8] ; 8-byte Spill
-; CHECK-NEXT:    str x11, [sp, #24] ; 8-byte Spill
-; CHECK-NEXT:    str w12, [sp, #4] ; 4-byte Spill
-; CHECK-NEXT:    str w13, [sp, #20] ; 4-byte Spill
+; CHECK-NEXT:    ; kill: def $w0 killed $w0 killed $x0
+; CHECK-NEXT:    stp x10, x8, [sp, #32] ; 16-byte Folded Spill
+; CHECK-NEXT:    str x9, [sp, #16] ; 8-byte Spill
+; CHECK-NEXT:    str w11, [sp, #12] ; 4-byte Spill
+; CHECK-NEXT:    str w12, [sp, #28] ; 4-byte Spill
+; CHECK-NEXT:    str x13, [sp] ; 8-byte Spill
 ; CHECK-NEXT:    bl ___maskrune
 ; CHECK-NEXT:  Lloh4:
 ; CHECK-NEXT:    adrp x14, __DefaultRuneLocale@GOTPAGE
-; CHECK-NEXT:    mov w8, w0
 ; CHECK-NEXT:  Lloh5:
 ; CHECK-NEXT:    ldr x14, [x14, __DefaultRuneLocale@GOTPAGEOFF]
-; CHECK-NEXT:    ldp x11, x9, [sp, #24] ; 16-byte Folded Reload
-; CHECK-NEXT:    ldr w13, [sp, #20] ; 4-byte Reload
-; CHECK-NEXT:    ldr w12, [sp, #4] ; 4-byte Reload
-; CHECK-NEXT:    ldr x10, [sp, #8] ; 8-byte Reload
-; CHECK-NEXT:    ldr x0, [sp, #40] ; 8-byte Reload
-; CHECK-NEXT:    cbnz w8, LBB0_6
+; CHECK-NEXT:    ldp x10, x8, [sp, #32] ; 16-byte Folded Reload
+; CHECK-NEXT:    ldr x13, [sp] ; 8-byte Reload
+; CHECK-NEXT:    ldr w12, [sp, #28] ; 4-byte Reload
+; CHECK-NEXT:    ldr w11, [sp, #12] ; 4-byte Reload
+; CHECK-NEXT:    ldr x9, [sp, #16] ; 8-byte Reload
+; CHECK-NEXT:    cbnz w0, LBB0_6
 ; CHECK-NEXT:  LBB0_9: ; %while.end
-; CHECK-NEXT:    orr w8, w13, w12
-; CHECK-NEXT:    cbnz w8, LBB0_24
+; CHECK-NEXT:    orr w14, w12, w11
+; CHECK-NEXT:    cbnz w14, LBB0_24
 ; CHECK-NEXT:  ; %bb.10: ; %if.then23
-; CHECK-NEXT:    ldr x12, [x0, #16]
-; CHECK-NEXT:    ldrb w8, [x9, x11]
+; CHECK-NEXT:    ldr x12, [x13, #16]
+; CHECK-NEXT:    ldrb w11, [x8, x10]
 ; CHECK-NEXT:    ldrb w13, [x12]
 ; CHECK-NEXT:    cmp w13, #83
 ; CHECK-NEXT:    b.eq LBB0_19
 ; CHECK-NEXT:  LBB0_11: ; %while.cond59.preheader
-; CHECK-NEXT:    cbz w8, LBB0_23
+; CHECK-NEXT:    cbz w11, LBB0_23
 ; CHECK-NEXT:  LBB0_12: ; %land.rhs.preheader
-; CHECK-NEXT:    add x12, x9, x11
-; CHECK-NEXT:    add x9, x10, x11
-; CHECK-NEXT:    add x10, x12, #1
+; CHECK-NEXT:    add x12, x8, x10
+; CHECK-NEXT:    add x8, x9, x10
+; CHECK-NEXT:    add x9, x12, #1
 ; CHECK-NEXT:  LBB0_13: ; %land.rhs
 ; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
-; CHECK-NEXT:    ldrb w11, [x9], #1
-; CHECK-NEXT:    cbz w11, LBB0_23
+; CHECK-NEXT:    ldrb w10, [x8], #1
+; CHECK-NEXT:    cbz w10, LBB0_23
 ; CHECK-NEXT:  ; %bb.14: ; %while.body66
-; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
-; CHECK-NEXT:    cmp w8, #42
-; CHECK-NEXT:    b.eq LBB0_18
-; CHECK-NEXT:  ; %bb.15: ; %while.body66
 ; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
 ; CHECK-NEXT:    cmp w11, #42
 ; CHECK-NEXT:    b.eq LBB0_18
+; CHECK-NEXT:  ; %bb.15: ; %while.body66
+; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
+; CHECK-NEXT:    cmp w10, #42
+; CHECK-NEXT:    b.eq LBB0_18
 ; CHECK-NEXT:  ; %bb.16: ; %lor.lhs.false74
 ; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
-; CHECK-NEXT:    cmp w8, w11
+; CHECK-NEXT:    cmp w11, w10
 ; CHECK-NEXT:    mov w0, wzr
 ; CHECK-NEXT:    b.ne LBB0_43
 ; CHECK-NEXT:  ; %bb.17: ; %lor.lhs.false74
 ; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
-; CHECK-NEXT:    cmp w8, #94
+; CHECK-NEXT:    cmp w11, #94
 ; CHECK-NEXT:    b.eq LBB0_43
 ; CHECK-NEXT:  LBB0_18: ; %if.then83
 ; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
-; CHECK-NEXT:    ldrb w8, [x10], #1
+; CHECK-NEXT:    ldrb w11, [x9], #1
 ; CHECK-NEXT:    mov w0, #1 ; =0x1
-; CHECK-NEXT:    cbnz w8, LBB0_13
+; CHECK-NEXT:    cbnz w11, LBB0_13
 ; CHECK-NEXT:    b LBB0_43
 ; CHECK-NEXT:  LBB0_19: ; %land.lhs.true28
-; CHECK-NEXT:    cbz w8, LBB0_23
+; CHECK-NEXT:    cbz w11, LBB0_23
 ; CHECK-NEXT:  ; %bb.20: ; %land.lhs.true28
-; CHECK-NEXT:    cmp w8, #112
+; CHECK-NEXT:    cmp w11, #112
 ; CHECK-NEXT:    b.ne LBB0_12
 ; CHECK-NEXT:  ; %bb.21: ; %land.lhs.true35
-; CHECK-NEXT:    ldrb w13, [x10, x11]
+; CHECK-NEXT:    ldrb w13, [x9, x10]
 ; CHECK-NEXT:    cmp w13, #112
 ; CHECK-NEXT:    b.ne LBB0_12
 ; CHECK-NEXT:  ; %bb.22: ; %land.lhs.true43
-; CHECK-NEXT:    sub x12, x9, x12
-; CHECK-NEXT:    add x12, x12, x11
+; CHECK-NEXT:    sub x12, x8, x12
+; CHECK-NEXT:    add x12, x12, x10
 ; CHECK-NEXT:    cmp x12, #1
 ; CHECK-NEXT:    b.ne LBB0_44
 ; CHECK-NEXT:  LBB0_23:
 ; CHECK-NEXT:    mov w0, #1 ; =0x1
 ; CHECK-NEXT:    b LBB0_43
 ; CHECK-NEXT:  LBB0_24: ; %if.else88
-; CHECK-NEXT:    cmp w12, #1
+; CHECK-NEXT:    cmp w11, #1
 ; CHECK-NEXT:    b.ne LBB0_33
 ; CHECK-NEXT:  ; %bb.25: ; %if.else88
-; CHECK-NEXT:    cmp w13, #2
+; CHECK-NEXT:    cmp w12, #2
 ; CHECK-NEXT:    b.ne LBB0_33
 ; CHECK-NEXT:  ; %bb.26: ; %while.cond95.preheader
-; CHECK-NEXT:    ldrb w12, [x9, x11]
+; CHECK-NEXT:    ldrb w12, [x8, x10]
 ; CHECK-NEXT:    cbz w12, LBB0_23
 ; CHECK-NEXT:  ; %bb.27: ; %land.rhs99.preheader
-; CHECK-NEXT:    mov x8, xzr
+; CHECK-NEXT:    mov x11, xzr
 ; CHECK-NEXT:    mov w0, #1 ; =0x1
 ; CHECK-NEXT:    b LBB0_29
 ; CHECK-NEXT:  LBB0_28: ; %if.then117
 ; CHECK-NEXT:    ; in Loop: Header=BB0_29 Depth=1
-; CHECK-NEXT:    add x12, x9, x8
-; CHECK-NEXT:    add x8, x8, #1
-; CHECK-NEXT:    add x12, x12, x11
+; CHECK-NEXT:    add x12, x8, x11
+; CHECK-NEXT:    add x11, x11, #1
+; CHECK-NEXT:    add x12, x12, x10
 ; CHECK-NEXT:    ldrb w12, [x12, #1]
 ; CHECK-NEXT:    cbz w12, LBB0_43
 ; CHECK-NEXT:  LBB0_29: ; %land.rhs99
 ; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
-; CHECK-NEXT:    add x13, x10, x8
-; CHECK-NEXT:    ldrb w13, [x13, x11]
+; CHECK-NEXT:    add x13, x9, x11
+; CHECK-NEXT:    ldrb w13, [x13, x10]
 ; CHECK-NEXT:    cbz w13, LBB0_23
 ; CHECK-NEXT:  ; %bb.30: ; %while.body104
 ; CHECK-NEXT:    ; in Loop: Header=BB0_29 Depth=1
@@ -204,34 +203,34 @@ define fastcc i32 @prune_match(ptr nocapture readonly %a, ptr nocapture readonly
 ; CHECK-NEXT:    b.eq LBB0_28
 ; CHECK-NEXT:    b LBB0_42
 ; CHECK-NEXT:  LBB0_33: ; %if.else123
-; CHECK-NEXT:    cmp w13, #1
+; CHECK-NEXT:    cmp w12, #1
 ; CHECK-NEXT:    mov w0, wzr
 ; CHECK-NEXT:    b.ne LBB0_43
 ; CHECK-NEXT:  ; %bb.34: ; %if.else123
-; CHECK-NEXT:    cmp w12, #2
+; CHECK-NEXT:    cmp w11, #2
 ; CHECK-NEXT:    b.ne LBB0_43
 ; CHECK-NEXT:  ; %bb.35: ; %while.cond130.preheader
-; CHECK-NEXT:    ldrb w8, [x9, x11]
-; CHECK-NEXT:    cbz w8, LBB0_23
+; CHECK-NEXT:    ldrb w11, [x8, x10]
+; CHECK-NEXT:    cbz w11, LBB0_23
 ; CHECK-NEXT:  ; %bb.36: ; %land.rhs134.preheader
 ; CHECK-NEXT:    mov x12, xzr
 ; CHECK-NEXT:    mov w0, #1 ; =0x1
 ; CHECK-NEXT:    b LBB0_38
 ; CHECK-NEXT:  LBB0_37: ; %if.then152
 ; CHECK-NEXT:    ; in Loop: Header=BB0_38 Depth=1
-; CHECK-NEXT:    add x8, x9, x12
+; CHECK-NEXT:    add x11, x8, x12
 ; CHECK-NEXT:    add x12, x12, #1
-; CHECK-NEXT:    add x8, x8, x11
-; CHECK-NEXT:    ldrb w8, [x8, #1]
-; CHECK-NEXT:    cbz w8, LBB0_43
+; CHECK-NEXT:    add x11, x11, x10
+; CHECK-NEXT:    ldrb w11, [x11, #1]
+; CHECK-NEXT:    cbz w11, LBB0_43
 ; CHECK-NEXT:  LBB0_38: ; %land.rhs134
 ; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
-; CHECK-NEXT:    add x13, x10, x12
-; CHECK-NEXT:    ldrb w13, [x13, x11]
+; CHECK-NEXT:    add x13, x9, x12
+; CHECK-NEXT:    ldrb w13, [x13, x10]
 ; CHECK-NEXT:    cbz w13, LBB0_23
 ; CHECK-NEXT:  ; %bb.39: ; %while.body139
 ; CHECK-NEXT:    ; in Loop: Header=BB0_38 Depth=1
-; CHECK-NEXT:    cmp w8, w13
+; CHECK-NEXT:    cmp w11, w13
 ; CHECK-NEXT:    b.eq LBB0_37
 ; CHECK-NEXT:  ; %bb.40: ; %while.body139
 ; CHECK-NEXT:    ; in Loop: Header=BB0_38 Depth=1
@@ -239,7 +238,7 @@ define fastcc i32 @prune_match(ptr nocapture readonly %a, ptr nocapture readonly
 ; CHECK-NEXT:    b.eq LBB0_37
 ; CHECK-NEXT:  ; %bb.41: ; %while.body139
 ; CHECK-NEXT:    ; in Loop: Header=BB0_38 Depth=1
-; CHECK-NEXT:    cmp w8, #94
+; CHECK-NEXT:    cmp w11, #94
 ; CHECK-NEXT:    b.eq LBB0_37
 ; CHECK-NEXT:  LBB0_42:
 ; CHECK-NEXT:    mov w0, wzr
@@ -251,13 +250,13 @@ define fastcc i32 @prune_match(ptr nocapture readonly %a, ptr nocapture readonly
 ; CHECK-NEXT:    cmp x12, #2
 ; CHECK-NEXT:    b.ne LBB0_11
 ; CHECK-NEXT:  ; %bb.45: ; %land.lhs.true52
-; CHECK-NEXT:    add x12, x9, x11
+; CHECK-NEXT:    add x12, x8, x10
 ; CHECK-NEXT:    mov w0, #1 ; =0x1
 ; CHECK-NEXT:    ldurb w12, [x12, #-1]
 ; CHECK-NEXT:    cmp w12, #73
 ; CHECK-NEXT:    b.eq LBB0_43
 ; CHECK-NEXT:  ; %bb.46: ; %land.lhs.true52
-; CHECK-NEXT:    cbz w8, LBB0_43
+; CHECK-NEXT:    cbz w11, LBB0_43
 ; CHECK-NEXT:    b LBB0_12
 ; CHECK-NEXT:  LBB0_47:
 ; CHECK-NEXT:    mov w0, wzr

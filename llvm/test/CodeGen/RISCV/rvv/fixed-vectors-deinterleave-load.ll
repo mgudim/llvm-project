@@ -11,25 +11,26 @@ define {<16 x i1>, <16 x i1>} @vector_deinterleave_load_v16i1_v32i1(ptr %p) {
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    li a1, 32
 ; CHECK-NEXT:    vsetvli zero, a1, e8, m2, ta, ma
-; CHECK-NEXT:    vlm.v v0, (a0)
+; CHECK-NEXT:    vlm.v v8, (a0)
 ; CHECK-NEXT:    vsetivli zero, 16, e8, m1, ta, ma
-; CHECK-NEXT:    vmv.v.i v8, 0
-; CHECK-NEXT:    vmerge.vim v9, v8, 1, v0
+; CHECK-NEXT:    vmv.v.i v9, 0
+; CHECK-NEXT:    vmv1r.v v0, v8
+; CHECK-NEXT:    vmerge.vim v10, v9, 1, v0
 ; CHECK-NEXT:    vsetivli zero, 2, e8, mf4, ta, ma
-; CHECK-NEXT:    vslidedown.vi v0, v0, 2
+; CHECK-NEXT:    vslidedown.vi v0, v8, 2
 ; CHECK-NEXT:    vsetivli zero, 8, e8, mf2, ta, ma
-; CHECK-NEXT:    vnsrl.wi v10, v9, 0
+; CHECK-NEXT:    vnsrl.wi v8, v10, 0
 ; CHECK-NEXT:    vsetivli zero, 16, e8, m1, ta, ma
-; CHECK-NEXT:    vmerge.vim v8, v8, 1, v0
+; CHECK-NEXT:    vmerge.vim v9, v9, 1, v0
 ; CHECK-NEXT:    vsetivli zero, 8, e8, mf2, ta, ma
+; CHECK-NEXT:    vnsrl.wi v10, v10, 8
+; CHECK-NEXT:    vnsrl.wi v11, v9, 0
 ; CHECK-NEXT:    vnsrl.wi v9, v9, 8
-; CHECK-NEXT:    vnsrl.wi v11, v8, 0
-; CHECK-NEXT:    vnsrl.wi v8, v8, 8
 ; CHECK-NEXT:    vsetivli zero, 16, e8, m1, ta, ma
-; CHECK-NEXT:    vslideup.vi v10, v11, 8
-; CHECK-NEXT:    vslideup.vi v9, v8, 8
-; CHECK-NEXT:    vmsne.vi v0, v10, 0
-; CHECK-NEXT:    vmsne.vi v8, v9, 0
+; CHECK-NEXT:    vslideup.vi v8, v11, 8
+; CHECK-NEXT:    vslideup.vi v10, v9, 8
+; CHECK-NEXT:    vmsne.vi v0, v8, 0
+; CHECK-NEXT:    vmsne.vi v8, v10, 0
 ; CHECK-NEXT:    ret
   %vec = load <32 x i1>, ptr %p
   %deinterleaved.results = call {<16 x i1>, <16 x i1>} @llvm.vector.deinterleave2.v32i1(<32 x i1> %vec)
@@ -278,8 +279,8 @@ define { <8 x i8>, <8 x i8> } @vector_deinterleave_load_factor3_partial(ptr %p) 
 ; CHECK-LABEL: vector_deinterleave_load_factor3_partial:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetivli zero, 8, e8, mf2, ta, ma
-; CHECK-NEXT:    vlseg3e8.v v7, (a0)
-; CHECK-NEXT:    vmv1r.v v8, v7
+; CHECK-NEXT:    vlseg3e8.v v8, (a0)
+; CHECK-NEXT:    vmv1r.v v9, v10
 ; CHECK-NEXT:    ret
   %vec = load <24 x i8>, ptr %p
   %d0 = call {<8 x i8>, <8 x i8>, <8 x i8>} @llvm.vector.deinterleave3(<24 x i8> %vec)

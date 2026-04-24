@@ -60,6 +60,10 @@ define void @divergent_i1_phi_used_outside_loop_larger_loop_body(float %val, ptr
 ; GFX10-LABEL: divergent_i1_phi_used_outside_loop_larger_loop_body:
 ; GFX10:       ; %bb.0: ; %entry
 ; GFX10-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX10-NEXT:    v_mov_b32_e32 v0, v1
+; GFX10-NEXT:    v_mov_b32_e32 v1, v2
+; GFX10-NEXT:    v_mov_b32_e32 v2, v3
+; GFX10-NEXT:    v_mov_b32_e32 v3, v4
 ; GFX10-NEXT:    s_andn2_b32 s5, s4, exec_lo
 ; GFX10-NEXT:    s_and_b32 s6, exec_lo, exec_lo
 ; GFX10-NEXT:    s_mov_b32 s4, -1
@@ -70,9 +74,9 @@ define void @divergent_i1_phi_used_outside_loop_larger_loop_body(float %val, ptr
 ; GFX10-NEXT:    ; in Loop: Header=BB1_2 Depth=1
 ; GFX10-NEXT:    s_or_b32 exec_lo, exec_lo, s7
 ; GFX10-NEXT:    s_add_i32 s4, s4, 1
-; GFX10-NEXT:    v_add_co_u32 v1, vcc_lo, v1, 4
+; GFX10-NEXT:    v_add_co_u32 v0, vcc_lo, v0, 4
 ; GFX10-NEXT:    s_cmp_ge_i32 s4, 10
-; GFX10-NEXT:    v_add_co_ci_u32_e32 v2, vcc_lo, 0, v2, vcc_lo
+; GFX10-NEXT:    v_add_co_ci_u32_e32 v1, vcc_lo, 0, v1, vcc_lo
 ; GFX10-NEXT:    s_cselect_b32 s8, 1, 0
 ; GFX10-NEXT:    s_andn2_b32 s7, s6, exec_lo
 ; GFX10-NEXT:    s_and_b32 s9, exec_lo, s5
@@ -89,16 +93,16 @@ define void @divergent_i1_phi_used_outside_loop_larger_loop_body(float %val, ptr
 ; GFX10-NEXT:    s_cbranch_execz .LBB1_1
 ; GFX10-NEXT:  ; %bb.3: ; %is.eq.zero
 ; GFX10-NEXT:    ; in Loop: Header=BB1_2 Depth=1
-; GFX10-NEXT:    global_load_dword v0, v[1:2], off
+; GFX10-NEXT:    global_load_dword v4, v[0:1], off
 ; GFX10-NEXT:    s_andn2_b32 s5, s5, exec_lo
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
-; GFX10-NEXT:    v_cmp_eq_u32_e32 vcc_lo, 0, v0
+; GFX10-NEXT:    v_cmp_eq_u32_e32 vcc_lo, 0, v4
 ; GFX10-NEXT:    s_and_b32 s8, exec_lo, vcc_lo
 ; GFX10-NEXT:    s_or_b32 s5, s5, s8
 ; GFX10-NEXT:    s_branch .LBB1_1
 ; GFX10-NEXT:  .LBB1_4: ; %exit
 ; GFX10-NEXT:    v_cndmask_b32_e64 v0, 0, 1.0, s6
-; GFX10-NEXT:    flat_store_dword v[3:4], v0
+; GFX10-NEXT:    flat_store_dword v[2:3], v0
 ; GFX10-NEXT:    s_waitcnt lgkmcnt(0)
 ; GFX10-NEXT:    s_setpc_b64 s[30:31]
 entry:
@@ -345,6 +349,8 @@ define void @divergent_i1_icmp_used_outside_loop(i32 %v0, i32 %v1, ptr addrspace
 ; GFX10-LABEL: divergent_i1_icmp_used_outside_loop:
 ; GFX10:       ; %bb.0: ; %entry
 ; GFX10-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX10-NEXT:    v_mov_b32_e32 v4, v6
+; GFX10-NEXT:    v_mov_b32_e32 v5, v7
 ; GFX10-NEXT:    s_mov_b32 s4, 0
 ; GFX10-NEXT:    s_mov_b32 s6, 0
 ; GFX10-NEXT:    ; implicit-def: $sgpr7
@@ -359,7 +365,7 @@ define void @divergent_i1_icmp_used_outside_loop(i32 %v0, i32 %v1, ptr addrspace
 ; GFX10-NEXT:  .LBB5_2: ; %cond.block.0
 ; GFX10-NEXT:    ; =>This Inner Loop Header: Depth=1
 ; GFX10-NEXT:    v_cmp_eq_u32_e32 vcc_lo, s4, v0
-; GFX10-NEXT:    v_mov_b32_e32 v4, s4
+; GFX10-NEXT:    v_mov_b32_e32 v6, s4
 ; GFX10-NEXT:    s_andn2_b32 s5, s7, exec_lo
 ; GFX10-NEXT:    s_and_b32 s7, exec_lo, vcc_lo
 ; GFX10-NEXT:    s_or_b32 s7, s5, s7
@@ -368,13 +374,13 @@ define void @divergent_i1_icmp_used_outside_loop(i32 %v0, i32 %v1, ptr addrspace
 ; GFX10-NEXT:  ; %bb.3: ; %if.block.0
 ; GFX10-NEXT:    ; in Loop: Header=BB5_2 Depth=1
 ; GFX10-NEXT:    s_ashr_i32 s5, s4, 31
-; GFX10-NEXT:    v_mov_b32_e32 v5, s4
+; GFX10-NEXT:    v_mov_b32_e32 v9, s4
 ; GFX10-NEXT:    s_lshl_b64 s[10:11], s[4:5], 2
-; GFX10-NEXT:    v_mov_b32_e32 v8, s10
-; GFX10-NEXT:    v_mov_b32_e32 v9, s11
-; GFX10-NEXT:    v_add_co_u32 v8, vcc_lo, v2, v8
-; GFX10-NEXT:    v_add_co_ci_u32_e32 v9, vcc_lo, v3, v9, vcc_lo
-; GFX10-NEXT:    global_store_dword v[8:9], v5, off
+; GFX10-NEXT:    v_mov_b32_e32 v7, s10
+; GFX10-NEXT:    v_mov_b32_e32 v8, s11
+; GFX10-NEXT:    v_add_co_u32 v7, vcc_lo, v2, v7
+; GFX10-NEXT:    v_add_co_ci_u32_e32 v8, vcc_lo, v3, v8, vcc_lo
+; GFX10-NEXT:    global_store_dword v[7:8], v9, off
 ; GFX10-NEXT:  .LBB5_4: ; %loop.break.block
 ; GFX10-NEXT:    ; in Loop: Header=BB5_2 Depth=1
 ; GFX10-NEXT:    s_waitcnt_depctr depctr_vm_vsrc(0)
@@ -395,7 +401,7 @@ define void @divergent_i1_icmp_used_outside_loop(i32 %v0, i32 %v1, ptr addrspace
 ; GFX10-NEXT:    s_and_saveexec_b32 s4, s7
 ; GFX10-NEXT:    s_cbranch_execz .LBB5_8
 ; GFX10-NEXT:  ; %bb.7: ; %if.block.1
-; GFX10-NEXT:    global_store_dword v[6:7], v4, off
+; GFX10-NEXT:    global_store_dword v[4:5], v6, off
 ; GFX10-NEXT:  .LBB5_8: ; %exit
 ; GFX10-NEXT:    s_waitcnt_depctr depctr_vm_vsrc(0)
 ; GFX10-NEXT:    s_or_b32 exec_lo, exec_lo, s4

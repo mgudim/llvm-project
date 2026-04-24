@@ -898,13 +898,13 @@ define amdgpu_cs_chain void @wwm_write_to_arg_reg(<3 x i32> inreg %sgpr, ptr inr
 ; GISEL10-LABEL: wwm_write_to_arg_reg:
 ; GISEL10:       ; %bb.0: ; %entry
 ; GISEL10-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL10-NEXT:    s_or_saveexec_b32 s9, -1
+; GISEL10-NEXT:    s_or_saveexec_b32 s11, -1
 ; GISEL10-NEXT:    s_or_saveexec_b32 s12, -1
-; GISEL10-NEXT:    s_mov_b32 s6, s0
-; GISEL10-NEXT:    s_mov_b32 s7, s1
-; GISEL10-NEXT:    s_mov_b32 s8, s2
-; GISEL10-NEXT:    s_mov_b32 s10, s3
-; GISEL10-NEXT:    s_mov_b32 s11, s4
+; GISEL10-NEXT:    s_mov_b32 s8, s0
+; GISEL10-NEXT:    s_mov_b32 s9, s1
+; GISEL10-NEXT:    s_mov_b32 s10, s2
+; GISEL10-NEXT:    s_mov_b32 s6, s3
+; GISEL10-NEXT:    s_mov_b32 s7, s4
 ; GISEL10-NEXT:    v_mov_b32_e32 v24, v8
 ; GISEL10-NEXT:    v_mov_b32_e32 v25, v9
 ; GISEL10-NEXT:    v_mov_b32_e32 v26, v10
@@ -922,10 +922,10 @@ define amdgpu_cs_chain void @wwm_write_to_arg_reg(<3 x i32> inreg %sgpr, ptr inr
 ; GISEL10-NEXT:    v_mov_b32_e32 v38, v22
 ; GISEL10-NEXT:    v_mov_b32_e32 v39, v23
 ; GISEL10-NEXT:    s_mov_b32 exec_lo, s12
-; GISEL10-NEXT:    s_and_saveexec_b32 s4, s9
+; GISEL10-NEXT:    s_and_saveexec_b32 s4, s11
 ; GISEL10-NEXT:    s_cbranch_execz .LBB5_2
 ; GISEL10-NEXT:  ; %bb.1: ; %shader
-; GISEL10-NEXT:    s_or_saveexec_b32 s9, -1
+; GISEL10-NEXT:    s_or_saveexec_b32 s11, -1
 ; GISEL10-NEXT:    s_getpc_b64 s[0:1]
 ; GISEL10-NEXT:    s_add_u32 s0, s0, write_v0_v15@gotpcrel32@lo+4
 ; GISEL10-NEXT:    s_addc_u32 s1, s1, write_v0_v15@gotpcrel32@hi+12
@@ -966,7 +966,7 @@ define amdgpu_cs_chain void @wwm_write_to_arg_reg(<3 x i32> inreg %sgpr, ptr inr
 ; GISEL10-NEXT:    v_mov_b32_e32 v53, v13
 ; GISEL10-NEXT:    v_mov_b32_e32 v54, v14
 ; GISEL10-NEXT:    v_mov_b32_e32 v55, v15
-; GISEL10-NEXT:    s_mov_b32 exec_lo, s9
+; GISEL10-NEXT:    s_mov_b32 exec_lo, s11
 ; GISEL10-NEXT:    v_mov_b32_e32 v24, v40
 ; GISEL10-NEXT:    v_mov_b32_e32 v25, v41
 ; GISEL10-NEXT:    v_mov_b32_e32 v26, v42
@@ -1001,11 +1001,11 @@ define amdgpu_cs_chain void @wwm_write_to_arg_reg(<3 x i32> inreg %sgpr, ptr inr
 ; GISEL10-NEXT:    v_mov_b32_e32 v21, v37
 ; GISEL10-NEXT:    v_mov_b32_e32 v22, v38
 ; GISEL10-NEXT:    v_mov_b32_e32 v23, v39
-; GISEL10-NEXT:    s_mov_b32 s0, s6
-; GISEL10-NEXT:    s_mov_b32 s1, s7
-; GISEL10-NEXT:    s_mov_b32 s2, s8
+; GISEL10-NEXT:    s_mov_b32 s0, s8
+; GISEL10-NEXT:    s_mov_b32 s1, s9
+; GISEL10-NEXT:    s_mov_b32 s2, s10
 ; GISEL10-NEXT:    s_mov_b32 exec_lo, s5
-; GISEL10-NEXT:    s_setpc_b64 s[10:11]
+; GISEL10-NEXT:    s_setpc_b64 s[6:7]
 ;
 ; DAGISEL10-LABEL: wwm_write_to_arg_reg:
 ; DAGISEL10:       ; %bb.0: ; %entry
@@ -1029,11 +1029,11 @@ define amdgpu_cs_chain void @wwm_write_to_arg_reg(<3 x i32> inreg %sgpr, ptr inr
 ; DAGISEL10-NEXT:    v_mov_b32_e32 v25, v9
 ; DAGISEL10-NEXT:    v_mov_b32_e32 v24, v8
 ; DAGISEL10-NEXT:    s_mov_b32 exec_lo, s6
-; DAGISEL10-NEXT:    s_mov_b32 s9, s4
-; DAGISEL10-NEXT:    s_mov_b32 s8, s3
+; DAGISEL10-NEXT:    s_mov_b32 s7, s4
+; DAGISEL10-NEXT:    s_mov_b32 s6, s3
 ; DAGISEL10-NEXT:    s_mov_b32 s4, s2
-; DAGISEL10-NEXT:    s_mov_b32 s6, s1
-; DAGISEL10-NEXT:    s_mov_b32 s7, s0
+; DAGISEL10-NEXT:    s_mov_b32 s8, s1
+; DAGISEL10-NEXT:    s_mov_b32 s9, s0
 ; DAGISEL10-NEXT:    s_and_saveexec_b32 s10, s11
 ; DAGISEL10-NEXT:    s_cbranch_execz .LBB5_2
 ; DAGISEL10-NEXT:  ; %bb.1: ; %shader
@@ -1113,11 +1113,11 @@ define amdgpu_cs_chain void @wwm_write_to_arg_reg(<3 x i32> inreg %sgpr, ptr inr
 ; DAGISEL10-NEXT:    v_mov_b32_e32 v21, v37
 ; DAGISEL10-NEXT:    v_mov_b32_e32 v22, v38
 ; DAGISEL10-NEXT:    v_mov_b32_e32 v23, v39
-; DAGISEL10-NEXT:    s_mov_b32 s0, s7
-; DAGISEL10-NEXT:    s_mov_b32 s1, s6
+; DAGISEL10-NEXT:    s_mov_b32 s0, s9
+; DAGISEL10-NEXT:    s_mov_b32 s1, s8
 ; DAGISEL10-NEXT:    s_mov_b32 s2, s4
 ; DAGISEL10-NEXT:    s_mov_b32 exec_lo, s5
-; DAGISEL10-NEXT:    s_setpc_b64 s[8:9]
+; DAGISEL10-NEXT:    s_setpc_b64 s[6:7]
 entry:
   %entry_exec = call i1 @llvm.amdgcn.init.whole.wave()
   br i1 %entry_exec, label %shader, label %tail

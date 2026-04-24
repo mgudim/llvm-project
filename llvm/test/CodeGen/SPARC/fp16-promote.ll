@@ -213,8 +213,10 @@ define void @test_fptrunc_double(double %d, ptr %p) nounwind {
 ; V8-OPT-NEXT:    std %i0, [%fp+-8]
 ; V8-OPT-NEXT:    ldd [%fp+-8], %f0
 ; V8-OPT-NEXT:    std %f0, [%fp+-16]
+; V8-OPT-NEXT:    ldd [%fp+-16], %i0
+; V8-OPT-NEXT:    mov %i0, %o0
 ; V8-OPT-NEXT:    call __truncdfhf2
-; V8-OPT-NEXT:    ldd [%fp+-16], %o0
+; V8-OPT-NEXT:    mov %i1, %o1
 ; V8-OPT-NEXT:    sth %o0, [%i2]
 ; V8-OPT-NEXT:    ret
 ; V8-OPT-NEXT:    restore
@@ -246,8 +248,10 @@ define void @test_fptrunc_double(double %d, ptr %p) nounwind {
 ; V9-NEXT:    std %i0, [%fp+-8]
 ; V9-NEXT:    ldd [%fp+-8], %f0
 ; V9-NEXT:    std %f0, [%fp+-16]
+; V9-NEXT:    ldd [%fp+-16], %i0
+; V9-NEXT:    mov %i0, %o0
 ; V9-NEXT:    call __truncdfhf2
-; V9-NEXT:    ldd [%fp+-16], %o0
+; V9-NEXT:    mov %i1, %o1
 ; V9-NEXT:    sth %o0, [%i2]
 ; V9-NEXT:    ret
 ; V9-NEXT:    restore

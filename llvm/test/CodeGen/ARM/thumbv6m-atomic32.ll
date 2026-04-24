@@ -308,8 +308,8 @@ define void @store64(ptr %p) {
 ; CHECK-NEXT:    sub sp, #8
 ; CHECK-NEXT:    movs r1, #5
 ; CHECK-NEXT:    str r1, [sp]
-; CHECK-NEXT:    movs r2, #0
-; CHECK-NEXT:    mov r3, r2
+; CHECK-NEXT:    movs r3, #0
+; CHECK-NEXT:    mov r2, r3
 ; CHECK-NEXT:    bl __atomic_store_8
 ; CHECK-NEXT:    add sp, #8
 ; CHECK-NEXT:    pop {r7, pc}

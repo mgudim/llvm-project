@@ -301,22 +301,22 @@ define <8 x float> @select_cast_cond_multiuse_v8i16_v8f32(<8 x float> %x, <8 x f
 ; SSE42-NEXT:    movaps %xmm0, %xmm4
 ; SSE42-NEXT:    movd %edi, %xmm0
 ; SSE42-NEXT:    pshuflw {{.*#+}} xmm5 = xmm0[0,0,0,0,4,5,6,7]
-; SSE42-NEXT:    pshufd {{.*#+}} xmm6 = xmm5[0,1,0,1]
-; SSE42-NEXT:    pmovzxbw {{.*#+}} xmm5 = [1,2,4,8,16,32,64,128]
-; SSE42-NEXT:    pand %xmm5, %xmm6
-; SSE42-NEXT:    pcmpeqw %xmm5, %xmm6
-; SSE42-NEXT:    pshufd {{.*#+}} xmm5 = xmm0[0,0,0,0]
+; SSE42-NEXT:    pshufd {{.*#+}} xmm5 = xmm5[0,1,0,1]
+; SSE42-NEXT:    pmovzxbw {{.*#+}} xmm6 = [1,2,4,8,16,32,64,128]
+; SSE42-NEXT:    pand %xmm6, %xmm5
+; SSE42-NEXT:    pcmpeqw %xmm6, %xmm5
+; SSE42-NEXT:    pshufd {{.*#+}} xmm6 = xmm0[0,0,0,0]
 ; SSE42-NEXT:    pmovsxbd {{.*#+}} xmm7 = [1,2,4,8]
-; SSE42-NEXT:    movdqa %xmm5, %xmm0
+; SSE42-NEXT:    movdqa %xmm6, %xmm0
 ; SSE42-NEXT:    pand %xmm7, %xmm0
 ; SSE42-NEXT:    pcmpeqd %xmm7, %xmm0
 ; SSE42-NEXT:    blendvps %xmm0, %xmm4, %xmm2
 ; SSE42-NEXT:    pmovzxbd {{.*#+}} xmm0 = [16,32,64,128]
-; SSE42-NEXT:    pand %xmm0, %xmm5
-; SSE42-NEXT:    pcmpeqd %xmm0, %xmm5
-; SSE42-NEXT:    movdqa %xmm5, %xmm0
+; SSE42-NEXT:    pand %xmm0, %xmm6
+; SSE42-NEXT:    pcmpeqd %xmm0, %xmm6
+; SSE42-NEXT:    movdqa %xmm6, %xmm0
 ; SSE42-NEXT:    blendvps %xmm0, %xmm1, %xmm3
-; SSE42-NEXT:    movdqa %xmm6, (%rsi)
+; SSE42-NEXT:    movdqa %xmm5, (%rsi)
 ; SSE42-NEXT:    movaps %xmm2, %xmm0
 ; SSE42-NEXT:    movaps %xmm3, %xmm1
 ; SSE42-NEXT:    retq

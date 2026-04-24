@@ -315,18 +315,18 @@ define dso_local i64 @twomasks(i64 noundef %word) local_unnamed_addr #0 {
 ; AIX32-NEXT:    iseleq r5, r6, r5
 ; AIX32-NEXT:    andi. r6, r5, 32
 ; AIX32-NEXT:    clrlwi r5, r5, 27
-; AIX32-NEXT:    iseleq r6, r3, r4
+; AIX32-NEXT:    iseleq r7, r3, r4
 ; AIX32-NEXT:    iseleq r3, r4, r3
-; AIX32-NEXT:    subfic r7, r5, 32
-; AIX32-NEXT:    srw r8, r6, r7
+; AIX32-NEXT:    subfic r8, r5, 32
+; AIX32-NEXT:    srw r6, r7, r8
 ; AIX32-NEXT:    slw r4, r3, r5
-; AIX32-NEXT:    srw r3, r3, r7
-; AIX32-NEXT:    slw r5, r6, r5
-; AIX32-NEXT:    or r4, r4, r8
-; AIX32-NEXT:    or r5, r5, r3
-; AIX32-NEXT:    clrlwi r3, r5, 1
-; AIX32-NEXT:    clrlwi r5, r5, 16
-; AIX32-NEXT:    mr r6, r4
+; AIX32-NEXT:    srw r3, r3, r8
+; AIX32-NEXT:    or r6, r4, r6
+; AIX32-NEXT:    slw r4, r7, r5
+; AIX32-NEXT:    or r4, r4, r3
+; AIX32-NEXT:    clrlwi r3, r4, 1
+; AIX32-NEXT:    clrlwi r5, r4, 16
+; AIX32-NEXT:    mr r4, r6
 ; AIX32-NEXT:    bl .callee[PR]
 ; AIX32-NEXT:    nop
 ; AIX32-NEXT:    addi r1, r1, 64

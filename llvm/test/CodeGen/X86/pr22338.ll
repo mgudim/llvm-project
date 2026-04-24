@@ -5,30 +5,25 @@
 define i32 @fn(i32 %a0, i32 %a1) {
 ; X86-LABEL: fn:
 ; X86:       # %bb.0: # %entry
-; X86-NEXT:    pushl %ebx
-; X86-NEXT:    .cfi_def_cfa_offset 8
-; X86-NEXT:    .cfi_offset %ebx, -8
 ; X86-NEXT:    xorl %eax, %eax
 ; X86-NEXT:    cmpl $1, {{[0-9]+}}(%esp)
 ; X86-NEXT:    sete %cl
 ; X86-NEXT:    setne %al
 ; X86-NEXT:    cmpl $1, {{[0-9]+}}(%esp)
-; X86-NEXT:    sete %dl
+; X86-NEXT:    sete %ch
 ; X86-NEXT:    negl %eax
 ; X86-NEXT:    addb %cl, %cl
-; X86-NEXT:    movl %eax, %ebx
-; X86-NEXT:    shll %cl, %ebx
-; X86-NEXT:    addb %dl, %dl
-; X86-NEXT:    movl %edx, %ecx
+; X86-NEXT:    movl %eax, %edx
+; X86-NEXT:    shll %cl, %edx
+; X86-NEXT:    addb %ch, %ch
+; X86-NEXT:    movb %ch, %cl
 ; X86-NEXT:    shll %cl, %eax
 ; X86-NEXT:    .p2align 4
 ; X86-NEXT:  .LBB0_1: # %bb1
 ; X86-NEXT:    # =>This Inner Loop Header: Depth=1
-; X86-NEXT:    testl %ebx, %ebx
+; X86-NEXT:    testl %edx, %edx
 ; X86-NEXT:    je .LBB0_1
 ; X86-NEXT:  # %bb.2: # %bb2
-; X86-NEXT:    popl %ebx
-; X86-NEXT:    .cfi_def_cfa_offset 4
 ; X86-NEXT:    retl
 ;
 ; X64-LABEL: fn:
@@ -38,18 +33,18 @@ define i32 @fn(i32 %a0, i32 %a1) {
 ; X64-NEXT:    sete %cl
 ; X64-NEXT:    setne %al
 ; X64-NEXT:    cmpl $1, %esi
-; X64-NEXT:    sete %dl
+; X64-NEXT:    sete %sil
 ; X64-NEXT:    negl %eax
 ; X64-NEXT:    addb %cl, %cl
-; X64-NEXT:    movl %eax, %esi
-; X64-NEXT:    shll %cl, %esi
-; X64-NEXT:    addb %dl, %dl
-; X64-NEXT:    movl %edx, %ecx
+; X64-NEXT:    movl %eax, %edx
+; X64-NEXT:    shll %cl, %edx
+; X64-NEXT:    addb %sil, %sil
+; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    shll %cl, %eax
 ; X64-NEXT:    .p2align 4
 ; X64-NEXT:  .LBB0_1: # %bb1
 ; X64-NEXT:    # =>This Inner Loop Header: Depth=1
-; X64-NEXT:    testl %esi, %esi
+; X64-NEXT:    testl %edx, %edx
 ; X64-NEXT:    je .LBB0_1
 ; X64-NEXT:  # %bb.2: # %bb2
 ; X64-NEXT:    retq

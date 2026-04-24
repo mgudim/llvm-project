@@ -151,17 +151,29 @@ define amdgpu_ps float @v_andn2_i32_vs(i32 %src0, i32 inreg %src1) {
 define amdgpu_ps i64 @s_andn2_i64(i64 inreg %src0, i64 inreg %src1) {
 ; GCN-LABEL: s_andn2_i64:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[4:5]
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s2, s4
+; GCN-NEXT:    s_mov_b32 s3, s5
+; GCN-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[2:3]
 ; GCN-NEXT:    ; return to shader part epilog
 ;
 ; GFX10-LABEL: s_andn2_i64:
 ; GFX10:       ; %bb.0:
-; GFX10-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[4:5]
+; GFX10-NEXT:    s_mov_b32 s0, s2
+; GFX10-NEXT:    s_mov_b32 s1, s3
+; GFX10-NEXT:    s_mov_b32 s2, s4
+; GFX10-NEXT:    s_mov_b32 s3, s5
+; GFX10-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[2:3]
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: s_andn2_i64:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[2:3], s[4:5]
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s2, s4
+; GFX11-NEXT:    s_mov_b32 s3, s5
+; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[0:1], s[2:3]
 ; GFX11-NEXT:    ; return to shader part epilog
   %not.src1 = xor i64 %src1, -1
   %and = and i64 %src0, %not.src1
@@ -171,17 +183,29 @@ define amdgpu_ps i64 @s_andn2_i64(i64 inreg %src0, i64 inreg %src1) {
 define amdgpu_ps i64 @s_andn2_i64_commute(i64 inreg %src0, i64 inreg %src1) {
 ; GCN-LABEL: s_andn2_i64_commute:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[4:5]
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s2, s4
+; GCN-NEXT:    s_mov_b32 s3, s5
+; GCN-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[2:3]
 ; GCN-NEXT:    ; return to shader part epilog
 ;
 ; GFX10-LABEL: s_andn2_i64_commute:
 ; GFX10:       ; %bb.0:
-; GFX10-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[4:5]
+; GFX10-NEXT:    s_mov_b32 s0, s2
+; GFX10-NEXT:    s_mov_b32 s1, s3
+; GFX10-NEXT:    s_mov_b32 s2, s4
+; GFX10-NEXT:    s_mov_b32 s3, s5
+; GFX10-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[2:3]
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: s_andn2_i64_commute:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[2:3], s[4:5]
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s2, s4
+; GFX11-NEXT:    s_mov_b32 s3, s5
+; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[0:1], s[2:3]
 ; GFX11-NEXT:    ; return to shader part epilog
   %not.src1 = xor i64 %src1, -1
   %and = and i64 %not.src1, %src0
@@ -191,20 +215,38 @@ define amdgpu_ps i64 @s_andn2_i64_commute(i64 inreg %src0, i64 inreg %src1) {
 define amdgpu_ps { i64, i64 } @s_andn2_i64_multi_foldable_use(i64 inreg %src0, i64 inreg %src1, i64 inreg %src2) {
 ; GCN-LABEL: s_andn2_i64_multi_foldable_use:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[6:7]
-; GCN-NEXT:    s_andn2_b64 s[2:3], s[4:5], s[6:7]
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s2, s4
+; GCN-NEXT:    s_mov_b32 s3, s5
+; GCN-NEXT:    s_mov_b32 s4, s6
+; GCN-NEXT:    s_mov_b32 s5, s7
+; GCN-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[4:5]
+; GCN-NEXT:    s_andn2_b64 s[2:3], s[2:3], s[4:5]
 ; GCN-NEXT:    ; return to shader part epilog
 ;
 ; GFX10-LABEL: s_andn2_i64_multi_foldable_use:
 ; GFX10:       ; %bb.0:
-; GFX10-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[6:7]
-; GFX10-NEXT:    s_andn2_b64 s[2:3], s[4:5], s[6:7]
+; GFX10-NEXT:    s_mov_b32 s0, s2
+; GFX10-NEXT:    s_mov_b32 s1, s3
+; GFX10-NEXT:    s_mov_b32 s2, s4
+; GFX10-NEXT:    s_mov_b32 s3, s5
+; GFX10-NEXT:    s_mov_b32 s4, s6
+; GFX10-NEXT:    s_mov_b32 s5, s7
+; GFX10-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[4:5]
+; GFX10-NEXT:    s_andn2_b64 s[2:3], s[2:3], s[4:5]
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: s_andn2_i64_multi_foldable_use:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[2:3], s[6:7]
-; GFX11-NEXT:    s_and_not1_b64 s[2:3], s[4:5], s[6:7]
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s2, s4
+; GFX11-NEXT:    s_mov_b32 s3, s5
+; GFX11-NEXT:    s_mov_b32 s4, s6
+; GFX11-NEXT:    s_mov_b32 s5, s7
+; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[0:1], s[4:5]
+; GFX11-NEXT:    s_and_not1_b64 s[2:3], s[2:3], s[4:5]
 ; GFX11-NEXT:    ; return to shader part epilog
   %not.src2 = xor i64 %src2, -1
   %and0 = and i64 %src0, %not.src2
@@ -217,22 +259,34 @@ define amdgpu_ps { i64, i64 } @s_andn2_i64_multi_foldable_use(i64 inreg %src0, i
 define amdgpu_ps { i64, i64 } @s_andn2_i64_multi_use(i64 inreg %src0, i64 inreg %src1) {
 ; GCN-LABEL: s_andn2_i64_multi_use:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    s_not_b64 s[6:7], s[4:5]
-; GCN-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[4:5]
-; GCN-NEXT:    s_mov_b32 s2, s6
-; GCN-NEXT:    s_mov_b32 s3, s7
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s2, s4
+; GCN-NEXT:    s_mov_b32 s3, s5
+; GCN-NEXT:    s_not_b64 s[4:5], s[2:3]
+; GCN-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[2:3]
+; GCN-NEXT:    s_mov_b32 s2, s4
+; GCN-NEXT:    s_mov_b32 s3, s5
 ; GCN-NEXT:    ; return to shader part epilog
 ;
 ; GFX10-LABEL: s_andn2_i64_multi_use:
 ; GFX10:       ; %bb.0:
-; GFX10-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[4:5]
-; GFX10-NEXT:    s_not_b64 s[2:3], s[4:5]
+; GFX10-NEXT:    s_mov_b32 s0, s2
+; GFX10-NEXT:    s_mov_b32 s1, s3
+; GFX10-NEXT:    s_mov_b32 s2, s4
+; GFX10-NEXT:    s_mov_b32 s3, s5
+; GFX10-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[2:3]
+; GFX10-NEXT:    s_not_b64 s[2:3], s[2:3]
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: s_andn2_i64_multi_use:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[2:3], s[4:5]
-; GFX11-NEXT:    s_not_b64 s[2:3], s[4:5]
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s2, s4
+; GFX11-NEXT:    s_mov_b32 s3, s5
+; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[0:1], s[2:3]
+; GFX11-NEXT:    s_not_b64 s[2:3], s[2:3]
 ; GFX11-NEXT:    ; return to shader part epilog
   %not.src1 = xor i64 %src1, -1
   %and = and i64 %src0, %not.src1
@@ -289,7 +343,9 @@ define amdgpu_ps <2 x float> @v_andn2_i64_sv(i64 inreg %src0, i64 %src1) {
 define amdgpu_ps <2 x float> @v_andn2_i64_vs(i64 %src0, i64 inreg %src1) {
 ; GCN-LABEL: v_andn2_i64_vs:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    s_not_b64 s[0:1], s[2:3]
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_not_b64 s[0:1], s[0:1]
 ; GCN-NEXT:    v_mov_b32_e32 v3, s1
 ; GCN-NEXT:    v_mov_b32_e32 v2, s0
 ; GCN-NEXT:    v_and_b32_e32 v0, v0, v2
@@ -298,7 +354,9 @@ define amdgpu_ps <2 x float> @v_andn2_i64_vs(i64 %src0, i64 inreg %src1) {
 ;
 ; GFX10-LABEL: v_andn2_i64_vs:
 ; GFX10:       ; %bb.0:
-; GFX10-NEXT:    s_not_b64 s[0:1], s[2:3]
+; GFX10-NEXT:    s_mov_b32 s0, s2
+; GFX10-NEXT:    s_mov_b32 s1, s3
+; GFX10-NEXT:    s_not_b64 s[0:1], s[0:1]
 ; GFX10-NEXT:    v_mov_b32_e32 v3, s1
 ; GFX10-NEXT:    v_mov_b32_e32 v2, s0
 ; GFX10-NEXT:    v_and_b32_e32 v1, v1, v3
@@ -307,7 +365,9 @@ define amdgpu_ps <2 x float> @v_andn2_i64_vs(i64 %src0, i64 inreg %src1) {
 ;
 ; GFX11-LABEL: v_andn2_i64_vs:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    s_not_b64 s[0:1], s[2:3]
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_not_b64 s[0:1], s[0:1]
 ; GFX11-NEXT:    v_dual_mov_b32 v3, s1 :: v_dual_mov_b32 v2, s0
 ; GFX11-NEXT:    v_and_b32_e32 v1, v1, v3
 ; GFX11-NEXT:    v_and_b32_e32 v0, v0, v2
@@ -321,17 +381,29 @@ define amdgpu_ps <2 x float> @v_andn2_i64_vs(i64 %src0, i64 inreg %src1) {
 define amdgpu_ps <2 x i32> @s_andn2_v2i32(<2 x i32> inreg %src0, <2 x i32> inreg %src1) {
 ; GCN-LABEL: s_andn2_v2i32:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[4:5]
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s2, s4
+; GCN-NEXT:    s_mov_b32 s3, s5
+; GCN-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[2:3]
 ; GCN-NEXT:    ; return to shader part epilog
 ;
 ; GFX10-LABEL: s_andn2_v2i32:
 ; GFX10:       ; %bb.0:
-; GFX10-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[4:5]
+; GFX10-NEXT:    s_mov_b32 s0, s2
+; GFX10-NEXT:    s_mov_b32 s1, s3
+; GFX10-NEXT:    s_mov_b32 s2, s4
+; GFX10-NEXT:    s_mov_b32 s3, s5
+; GFX10-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[2:3]
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: s_andn2_v2i32:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[2:3], s[4:5]
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s2, s4
+; GFX11-NEXT:    s_mov_b32 s3, s5
+; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[0:1], s[2:3]
 ; GFX11-NEXT:    ; return to shader part epilog
   %not.src1 = xor <2 x i32> %src1, <i32 -1, i32 -1>
   %and = and <2 x i32> %src0, %not.src1
@@ -341,17 +413,29 @@ define amdgpu_ps <2 x i32> @s_andn2_v2i32(<2 x i32> inreg %src0, <2 x i32> inreg
 define amdgpu_ps <2 x i32> @s_andn2_v2i32_commute(<2 x i32> inreg %src0, <2 x i32> inreg %src1) {
 ; GCN-LABEL: s_andn2_v2i32_commute:
 ; GCN:       ; %bb.0:
-; GCN-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[4:5]
+; GCN-NEXT:    s_mov_b32 s0, s2
+; GCN-NEXT:    s_mov_b32 s1, s3
+; GCN-NEXT:    s_mov_b32 s2, s4
+; GCN-NEXT:    s_mov_b32 s3, s5
+; GCN-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[2:3]
 ; GCN-NEXT:    ; return to shader part epilog
 ;
 ; GFX10-LABEL: s_andn2_v2i32_commute:
 ; GFX10:       ; %bb.0:
-; GFX10-NEXT:    s_andn2_b64 s[0:1], s[2:3], s[4:5]
+; GFX10-NEXT:    s_mov_b32 s0, s2
+; GFX10-NEXT:    s_mov_b32 s1, s3
+; GFX10-NEXT:    s_mov_b32 s2, s4
+; GFX10-NEXT:    s_mov_b32 s3, s5
+; GFX10-NEXT:    s_andn2_b64 s[0:1], s[0:1], s[2:3]
 ; GFX10-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-LABEL: s_andn2_v2i32_commute:
 ; GFX11:       ; %bb.0:
-; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[2:3], s[4:5]
+; GFX11-NEXT:    s_mov_b32 s0, s2
+; GFX11-NEXT:    s_mov_b32 s1, s3
+; GFX11-NEXT:    s_mov_b32 s2, s4
+; GFX11-NEXT:    s_mov_b32 s3, s5
+; GFX11-NEXT:    s_and_not1_b64 s[0:1], s[0:1], s[2:3]
 ; GFX11-NEXT:    ; return to shader part epilog
   %not.src1 = xor <2 x i32> %src1, <i32 -1, i32 -1>
   %and = and <2 x i32> %not.src1, %src0
@@ -680,9 +764,13 @@ define amdgpu_ps i48 @s_andn2_v3i16(<3 x i16> inreg %src0, <3 x i16> inreg %src1
 ;
 ; GFX9-LABEL: s_andn2_v3i16:
 ; GFX9:       ; %bb.0:
-; GFX9-NEXT:    s_mov_b64 s[0:1], -1
-; GFX9-NEXT:    s_xor_b64 s[0:1], s[4:5], s[0:1]
-; GFX9-NEXT:    s_and_b64 s[0:1], s[2:3], s[0:1]
+; GFX9-NEXT:    s_mov_b32 s0, s2
+; GFX9-NEXT:    s_mov_b32 s1, s3
+; GFX9-NEXT:    s_mov_b32 s2, s4
+; GFX9-NEXT:    s_mov_b32 s3, s5
+; GFX9-NEXT:    s_mov_b64 s[4:5], -1
+; GFX9-NEXT:    s_xor_b64 s[2:3], s[2:3], s[4:5]
+; GFX9-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
 ; GFX9-NEXT:    s_lshr_b32 s2, s0, 16
 ; GFX9-NEXT:    s_and_b32 s0, s0, 0xffff
 ; GFX9-NEXT:    s_lshl_b32 s2, s2, 16
@@ -692,9 +780,11 @@ define amdgpu_ps i48 @s_andn2_v3i16(<3 x i16> inreg %src0, <3 x i16> inreg %src1
 ;
 ; GFX10PLUS-LABEL: s_andn2_v3i16:
 ; GFX10PLUS:       ; %bb.0:
-; GFX10PLUS-NEXT:    s_mov_b64 s[0:1], -1
-; GFX10PLUS-NEXT:    s_xor_b64 s[0:1], s[4:5], s[0:1]
-; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[2:3], s[0:1]
+; GFX10PLUS-NEXT:    s_mov_b32 s0, s2
+; GFX10PLUS-NEXT:    s_mov_b32 s1, s3
+; GFX10PLUS-NEXT:    s_mov_b64 s[2:3], -1
+; GFX10PLUS-NEXT:    s_xor_b64 s[2:3], s[4:5], s[2:3]
+; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
 ; GFX10PLUS-NEXT:    s_lshr_b32 s2, s0, 16
 ; GFX10PLUS-NEXT:    s_and_b32 s0, s0, 0xffff
 ; GFX10PLUS-NEXT:    s_lshl_b32 s2, s2, 16
@@ -733,9 +823,13 @@ define amdgpu_ps i48 @s_andn2_v3i16_commute(<3 x i16> inreg %src0, <3 x i16> inr
 ;
 ; GFX9-LABEL: s_andn2_v3i16_commute:
 ; GFX9:       ; %bb.0:
-; GFX9-NEXT:    s_mov_b64 s[0:1], -1
-; GFX9-NEXT:    s_xor_b64 s[0:1], s[4:5], s[0:1]
-; GFX9-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
+; GFX9-NEXT:    s_mov_b32 s0, s2
+; GFX9-NEXT:    s_mov_b32 s1, s3
+; GFX9-NEXT:    s_mov_b32 s2, s4
+; GFX9-NEXT:    s_mov_b32 s3, s5
+; GFX9-NEXT:    s_mov_b64 s[4:5], -1
+; GFX9-NEXT:    s_xor_b64 s[2:3], s[2:3], s[4:5]
+; GFX9-NEXT:    s_and_b64 s[0:1], s[2:3], s[0:1]
 ; GFX9-NEXT:    s_lshr_b32 s2, s0, 16
 ; GFX9-NEXT:    s_and_b32 s0, s0, 0xffff
 ; GFX9-NEXT:    s_lshl_b32 s2, s2, 16
@@ -745,9 +839,11 @@ define amdgpu_ps i48 @s_andn2_v3i16_commute(<3 x i16> inreg %src0, <3 x i16> inr
 ;
 ; GFX10PLUS-LABEL: s_andn2_v3i16_commute:
 ; GFX10PLUS:       ; %bb.0:
-; GFX10PLUS-NEXT:    s_mov_b64 s[0:1], -1
-; GFX10PLUS-NEXT:    s_xor_b64 s[0:1], s[4:5], s[0:1]
-; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
+; GFX10PLUS-NEXT:    s_mov_b32 s0, s2
+; GFX10PLUS-NEXT:    s_mov_b32 s1, s3
+; GFX10PLUS-NEXT:    s_mov_b64 s[2:3], -1
+; GFX10PLUS-NEXT:    s_xor_b64 s[2:3], s[4:5], s[2:3]
+; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[2:3], s[0:1]
 ; GFX10PLUS-NEXT:    s_lshr_b32 s2, s0, 16
 ; GFX10PLUS-NEXT:    s_and_b32 s0, s0, 0xffff
 ; GFX10PLUS-NEXT:    s_lshl_b32 s2, s2, 16
@@ -791,36 +887,44 @@ define amdgpu_ps { i48, i48 } @s_andn2_v3i16_multi_use(<3 x i16> inreg %src0, <3
 ;
 ; GFX9-LABEL: s_andn2_v3i16_multi_use:
 ; GFX9:       ; %bb.0:
-; GFX9-NEXT:    s_mov_b64 s[0:1], -1
-; GFX9-NEXT:    s_xor_b64 s[4:5], s[4:5], s[0:1]
-; GFX9-NEXT:    s_and_b64 s[0:1], s[2:3], s[4:5]
-; GFX9-NEXT:    s_lshr_b32 s2, s0, 16
-; GFX9-NEXT:    s_lshr_b32 s6, s4, 16
+; GFX9-NEXT:    s_mov_b32 s0, s2
+; GFX9-NEXT:    s_mov_b32 s1, s3
+; GFX9-NEXT:    s_mov_b32 s2, s4
+; GFX9-NEXT:    s_mov_b32 s3, s5
+; GFX9-NEXT:    s_mov_b64 s[4:5], -1
+; GFX9-NEXT:    s_xor_b64 s[2:3], s[2:3], s[4:5]
+; GFX9-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
+; GFX9-NEXT:    s_lshr_b32 s4, s2, 16
+; GFX9-NEXT:    s_lshr_b32 s5, s0, 16
 ; GFX9-NEXT:    s_and_b32 s0, s0, 0xffff
-; GFX9-NEXT:    s_lshl_b32 s2, s2, 16
-; GFX9-NEXT:    s_or_b32 s0, s0, s2
-; GFX9-NEXT:    s_and_b32 s2, s4, 0xffff
-; GFX9-NEXT:    s_lshl_b32 s3, s6, 16
+; GFX9-NEXT:    s_lshl_b32 s5, s5, 16
+; GFX9-NEXT:    s_and_b32 s2, s2, 0xffff
+; GFX9-NEXT:    s_lshl_b32 s4, s4, 16
+; GFX9-NEXT:    s_or_b32 s0, s0, s5
 ; GFX9-NEXT:    s_and_b32 s1, s1, 0xffff
-; GFX9-NEXT:    s_or_b32 s2, s2, s3
-; GFX9-NEXT:    s_and_b32 s3, s5, 0xffff
+; GFX9-NEXT:    s_or_b32 s2, s2, s4
+; GFX9-NEXT:    s_and_b32 s3, s3, 0xffff
 ; GFX9-NEXT:    ; return to shader part epilog
 ;
 ; GFX10PLUS-LABEL: s_andn2_v3i16_multi_use:
 ; GFX10PLUS:       ; %bb.0:
-; GFX10PLUS-NEXT:    s_mov_b64 s[0:1], -1
-; GFX10PLUS-NEXT:    s_xor_b64 s[4:5], s[4:5], s[0:1]
-; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[2:3], s[4:5]
-; GFX10PLUS-NEXT:    s_lshr_b32 s3, s4, 16
-; GFX10PLUS-NEXT:    s_lshr_b32 s2, s0, 16
+; GFX10PLUS-NEXT:    s_mov_b32 s0, s2
+; GFX10PLUS-NEXT:    s_mov_b32 s1, s3
+; GFX10PLUS-NEXT:    s_mov_b32 s2, s4
+; GFX10PLUS-NEXT:    s_mov_b32 s3, s5
+; GFX10PLUS-NEXT:    s_mov_b64 s[4:5], -1
+; GFX10PLUS-NEXT:    s_xor_b64 s[2:3], s[2:3], s[4:5]
+; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
+; GFX10PLUS-NEXT:    s_lshr_b32 s5, s2, 16
+; GFX10PLUS-NEXT:    s_lshr_b32 s4, s0, 16
 ; GFX10PLUS-NEXT:    s_and_b32 s0, s0, 0xffff
-; GFX10PLUS-NEXT:    s_lshl_b32 s2, s2, 16
-; GFX10PLUS-NEXT:    s_lshl_b32 s3, s3, 16
-; GFX10PLUS-NEXT:    s_or_b32 s0, s0, s2
-; GFX10PLUS-NEXT:    s_and_b32 s2, s4, 0xffff
+; GFX10PLUS-NEXT:    s_lshl_b32 s4, s4, 16
+; GFX10PLUS-NEXT:    s_and_b32 s2, s2, 0xffff
+; GFX10PLUS-NEXT:    s_or_b32 s0, s0, s4
+; GFX10PLUS-NEXT:    s_lshl_b32 s4, s5, 16
 ; GFX10PLUS-NEXT:    s_and_b32 s1, s1, 0xffff
-; GFX10PLUS-NEXT:    s_or_b32 s2, s2, s3
-; GFX10PLUS-NEXT:    s_and_b32 s3, s5, 0xffff
+; GFX10PLUS-NEXT:    s_or_b32 s2, s2, s4
+; GFX10PLUS-NEXT:    s_and_b32 s3, s3, 0xffff
 ; GFX10PLUS-NEXT:    ; return to shader part epilog
   %not.src1 = xor <3 x i16> %src1, <i16 -1, i16 -1, i16 -1>
   %and = and <3 x i16> %src0, %not.src1
@@ -903,18 +1007,24 @@ define amdgpu_ps i64 @s_andn2_v4i16(<4 x i16> inreg %src0, <4 x i16> inreg %src1
 ;
 ; GFX9-LABEL: s_andn2_v4i16:
 ; GFX9:       ; %bb.0:
-; GFX9-NEXT:    s_mov_b32 s0, -1
-; GFX9-NEXT:    s_mov_b32 s1, s0
-; GFX9-NEXT:    s_xor_b64 s[0:1], s[4:5], s[0:1]
-; GFX9-NEXT:    s_and_b64 s[0:1], s[2:3], s[0:1]
+; GFX9-NEXT:    s_mov_b32 s0, s2
+; GFX9-NEXT:    s_mov_b32 s2, s4
+; GFX9-NEXT:    s_mov_b32 s4, -1
+; GFX9-NEXT:    s_mov_b32 s1, s3
+; GFX9-NEXT:    s_mov_b32 s3, s5
+; GFX9-NEXT:    s_mov_b32 s5, s4
+; GFX9-NEXT:    s_xor_b64 s[2:3], s[2:3], s[4:5]
+; GFX9-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
 ; GFX9-NEXT:    ; return to shader part epilog
 ;
 ; GFX10PLUS-LABEL: s_andn2_v4i16:
 ; GFX10PLUS:       ; %bb.0:
-; GFX10PLUS-NEXT:    s_mov_b32 s0, -1
-; GFX10PLUS-NEXT:    s_mov_b32 s1, s0
-; GFX10PLUS-NEXT:    s_xor_b64 s[0:1], s[4:5], s[0:1]
-; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[2:3], s[0:1]
+; GFX10PLUS-NEXT:    s_mov_b32 s0, s2
+; GFX10PLUS-NEXT:    s_mov_b32 s2, -1
+; GFX10PLUS-NEXT:    s_mov_b32 s1, s3
+; GFX10PLUS-NEXT:    s_mov_b32 s3, s2
+; GFX10PLUS-NEXT:    s_xor_b64 s[2:3], s[4:5], s[2:3]
+; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
 ; GFX10PLUS-NEXT:    ; return to shader part epilog
   %not.src1 = xor <4 x i16> %src1, <i16 -1, i16 -1, i16 -1, i16 -1>
   %and = and <4 x i16> %src0, %not.src1
@@ -947,18 +1057,24 @@ define amdgpu_ps i64 @s_andn2_v4i16_commute(<4 x i16> inreg %src0, <4 x i16> inr
 ;
 ; GFX9-LABEL: s_andn2_v4i16_commute:
 ; GFX9:       ; %bb.0:
-; GFX9-NEXT:    s_mov_b32 s0, -1
-; GFX9-NEXT:    s_mov_b32 s1, s0
-; GFX9-NEXT:    s_xor_b64 s[0:1], s[4:5], s[0:1]
-; GFX9-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
+; GFX9-NEXT:    s_mov_b32 s0, s2
+; GFX9-NEXT:    s_mov_b32 s2, s4
+; GFX9-NEXT:    s_mov_b32 s4, -1
+; GFX9-NEXT:    s_mov_b32 s1, s3
+; GFX9-NEXT:    s_mov_b32 s3, s5
+; GFX9-NEXT:    s_mov_b32 s5, s4
+; GFX9-NEXT:    s_xor_b64 s[2:3], s[2:3], s[4:5]
+; GFX9-NEXT:    s_and_b64 s[0:1], s[2:3], s[0:1]
 ; GFX9-NEXT:    ; return to shader part epilog
 ;
 ; GFX10PLUS-LABEL: s_andn2_v4i16_commute:
 ; GFX10PLUS:       ; %bb.0:
-; GFX10PLUS-NEXT:    s_mov_b32 s0, -1
-; GFX10PLUS-NEXT:    s_mov_b32 s1, s0
-; GFX10PLUS-NEXT:    s_xor_b64 s[0:1], s[4:5], s[0:1]
-; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
+; GFX10PLUS-NEXT:    s_mov_b32 s0, s2
+; GFX10PLUS-NEXT:    s_mov_b32 s2, -1
+; GFX10PLUS-NEXT:    s_mov_b32 s1, s3
+; GFX10PLUS-NEXT:    s_mov_b32 s3, s2
+; GFX10PLUS-NEXT:    s_xor_b64 s[2:3], s[4:5], s[2:3]
+; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[2:3], s[0:1]
 ; GFX10PLUS-NEXT:    ; return to shader part epilog
   %not.src1 = xor <4 x i16> %src1, <i16 -1, i16 -1, i16 -1, i16 -1>
   %and = and <4 x i16> %not.src1, %src0
@@ -991,22 +1107,24 @@ define amdgpu_ps { i64, i64 } @s_andn2_v4i16_multi_use(<4 x i16> inreg %src0, <4
 ;
 ; GFX9-LABEL: s_andn2_v4i16_multi_use:
 ; GFX9:       ; %bb.0:
-; GFX9-NEXT:    s_mov_b32 s0, -1
-; GFX9-NEXT:    s_mov_b32 s1, s0
-; GFX9-NEXT:    s_xor_b64 s[4:5], s[4:5], s[0:1]
-; GFX9-NEXT:    s_and_b64 s[0:1], s[2:3], s[4:5]
+; GFX9-NEXT:    s_mov_b32 s0, s2
 ; GFX9-NEXT:    s_mov_b32 s2, s4
+; GFX9-NEXT:    s_mov_b32 s4, -1
+; GFX9-NEXT:    s_mov_b32 s1, s3
 ; GFX9-NEXT:    s_mov_b32 s3, s5
+; GFX9-NEXT:    s_mov_b32 s5, s4
+; GFX9-NEXT:    s_xor_b64 s[2:3], s[2:3], s[4:5]
+; GFX9-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
 ; GFX9-NEXT:    ; return to shader part epilog
 ;
 ; GFX10PLUS-LABEL: s_andn2_v4i16_multi_use:
 ; GFX10PLUS:       ; %bb.0:
-; GFX10PLUS-NEXT:    s_mov_b32 s0, -1
-; GFX10PLUS-NEXT:    s_mov_b32 s1, s0
-; GFX10PLUS-NEXT:    s_xor_b64 s[4:5], s[4:5], s[0:1]
-; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[2:3], s[4:5]
-; GFX10PLUS-NEXT:    s_mov_b32 s2, s4
-; GFX10PLUS-NEXT:    s_mov_b32 s3, s5
+; GFX10PLUS-NEXT:    s_mov_b32 s0, s2
+; GFX10PLUS-NEXT:    s_mov_b32 s2, -1
+; GFX10PLUS-NEXT:    s_mov_b32 s1, s3
+; GFX10PLUS-NEXT:    s_mov_b32 s3, s2
+; GFX10PLUS-NEXT:    s_xor_b64 s[2:3], s[4:5], s[2:3]
+; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[0:1], s[2:3]
 ; GFX10PLUS-NEXT:    ; return to shader part epilog
   %not.src1 = xor <4 x i16> %src1, <i16 -1, i16 -1, i16 -1, i16 -1>
   %and = and <4 x i16> %src0, %not.src1
@@ -1052,20 +1170,32 @@ define amdgpu_ps { i64, i64 } @s_andn2_v4i16_multi_foldable_use(<4 x i16> inreg 
 ;
 ; GFX9-LABEL: s_andn2_v4i16_multi_foldable_use:
 ; GFX9:       ; %bb.0:
-; GFX9-NEXT:    s_mov_b32 s0, -1
-; GFX9-NEXT:    s_mov_b32 s1, s0
-; GFX9-NEXT:    s_xor_b64 s[6:7], s[6:7], s[0:1]
-; GFX9-NEXT:    s_and_b64 s[0:1], s[2:3], s[6:7]
-; GFX9-NEXT:    s_and_b64 s[2:3], s[4:5], s[6:7]
+; GFX9-NEXT:    s_mov_b32 s0, s2
+; GFX9-NEXT:    s_mov_b32 s2, s4
+; GFX9-NEXT:    s_mov_b32 s4, s6
+; GFX9-NEXT:    s_mov_b32 s6, -1
+; GFX9-NEXT:    s_mov_b32 s1, s3
+; GFX9-NEXT:    s_mov_b32 s3, s5
+; GFX9-NEXT:    s_mov_b32 s5, s7
+; GFX9-NEXT:    s_mov_b32 s7, s6
+; GFX9-NEXT:    s_xor_b64 s[4:5], s[4:5], s[6:7]
+; GFX9-NEXT:    s_and_b64 s[0:1], s[0:1], s[4:5]
+; GFX9-NEXT:    s_and_b64 s[2:3], s[2:3], s[4:5]
 ; GFX9-NEXT:    ; return to shader part epilog
 ;
 ; GFX10PLUS-LABEL: s_andn2_v4i16_multi_foldable_use:
 ; GFX10PLUS:       ; %bb.0:
-; GFX10PLUS-NEXT:    s_mov_b32 s0, -1
-; GFX10PLUS-NEXT:    s_mov_b32 s1, s0
-; GFX10PLUS-NEXT:    s_xor_b64 s[6:7], s[6:7], s[0:1]
-; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[2:3], s[6:7]
-; GFX10PLUS-NEXT:    s_and_b64 s[2:3], s[4:5], s[6:7]
+; GFX10PLUS-NEXT:    s_mov_b32 s0, s2
+; GFX10PLUS-NEXT:    s_mov_b32 s2, s4
+; GFX10PLUS-NEXT:    s_mov_b32 s4, s6
+; GFX10PLUS-NEXT:    s_mov_b32 s6, -1
+; GFX10PLUS-NEXT:    s_mov_b32 s1, s3
+; GFX10PLUS-NEXT:    s_mov_b32 s3, s5
+; GFX10PLUS-NEXT:    s_mov_b32 s5, s7
+; GFX10PLUS-NEXT:    s_mov_b32 s7, s6
+; GFX10PLUS-NEXT:    s_xor_b64 s[4:5], s[4:5], s[6:7]
+; GFX10PLUS-NEXT:    s_and_b64 s[0:1], s[0:1], s[4:5]
+; GFX10PLUS-NEXT:    s_and_b64 s[2:3], s[2:3], s[4:5]
 ; GFX10PLUS-NEXT:    ; return to shader part epilog
   %not.src2 = xor <4 x i16> %src2, <i16 -1, i16 -1, i16 -1, i16 -1>
   %and0 = and <4 x i16> %src0, %not.src2

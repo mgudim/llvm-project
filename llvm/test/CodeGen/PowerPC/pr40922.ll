@@ -18,10 +18,10 @@ define i32 @a() {
 ; CHECK-NEXT:    stw 29, 20(1) # 4-byte Folded Spill
 ; CHECK-NEXT:    stw 30, 24(1) # 4-byte Folded Spill
 ; CHECK-NEXT:    bl d
-; CHECK-NEXT:    lis 29, a.b@ha
-; CHECK-NEXT:    lwz 4, a.b@l(29)
+; CHECK-NEXT:    lis 30, a.b@ha
+; CHECK-NEXT:    lwz 4, a.b@l(30)
 ; CHECK-NEXT:    li 5, 0
-; CHECK-NEXT:    mr 30, 3
+; CHECK-NEXT:    mr 29, 3
 ; CHECK-NEXT:    addic 6, 4, 6
 ; CHECK-NEXT:    addze. 5, 5
 ; CHECK-NEXT:    rlwinm 5, 6, 0, 28, 26
@@ -31,7 +31,7 @@ define i32 @a() {
 ; CHECK-NEXT:  # %bb.1: # %if.then
 ; CHECK-NEXT:    bl e
 ; CHECK-NEXT:  .LBB0_2: # %if.end
-; CHECK-NEXT:    stw 30, a.b@l(29)
+; CHECK-NEXT:    stw 29, a.b@l(30)
 ; CHECK-NEXT:    lwz 30, 24(1) # 4-byte Folded Reload
 ; CHECK-NEXT:    lwz 29, 20(1) # 4-byte Folded Reload
 ; CHECK-NEXT:    lwz 0, 36(1)

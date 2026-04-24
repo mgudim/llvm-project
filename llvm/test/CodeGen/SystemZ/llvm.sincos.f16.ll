@@ -101,21 +101,21 @@ define { <2 x half>, <2 x half> } @test_sincos_v2f16(<2 x half> %a) #0 {
 ; LINUX-NEXT:    le %f0, 172(%r15)
 ; LINUX-NEXT:    brasl %r14, __truncsfhf2@PLT
 ; LINUX-NEXT:    le %f1, 164(%r15)
-; LINUX-NEXT:    ler %f8, %f0
-; LINUX-NEXT:    ler %f0, %f1
-; LINUX-NEXT:    brasl %r14, __truncsfhf2@PLT
-; LINUX-NEXT:    le %f1, 168(%r15)
-; LINUX-NEXT:    ler %f9, %f0
-; LINUX-NEXT:    ler %f0, %f1
-; LINUX-NEXT:    brasl %r14, __truncsfhf2@PLT
-; LINUX-NEXT:    le %f1, 160(%r15)
 ; LINUX-NEXT:    ler %f10, %f0
 ; LINUX-NEXT:    ler %f0, %f1
 ; LINUX-NEXT:    brasl %r14, __truncsfhf2@PLT
+; LINUX-NEXT:    le %f1, 168(%r15)
+; LINUX-NEXT:    ler %f8, %f0
+; LINUX-NEXT:    ler %f0, %f1
+; LINUX-NEXT:    brasl %r14, __truncsfhf2@PLT
+; LINUX-NEXT:    le %f1, 160(%r15)
+; LINUX-NEXT:    ler %f9, %f0
+; LINUX-NEXT:    ler %f0, %f1
+; LINUX-NEXT:    brasl %r14, __truncsfhf2@PLT
 ; LINUX-NEXT:    ler %f6, %f0
-; LINUX-NEXT:    ler %f0, %f8
-; LINUX-NEXT:    ler %f2, %f9
-; LINUX-NEXT:    ler %f4, %f10
+; LINUX-NEXT:    ler %f0, %f10
+; LINUX-NEXT:    ler %f2, %f8
+; LINUX-NEXT:    ler %f4, %f9
 ; LINUX-NEXT:    ld %f8, 192(%r15) # 8-byte Reload
 ; LINUX-NEXT:    ld %f9, 184(%r15) # 8-byte Reload
 ; LINUX-NEXT:    ld %f10, 176(%r15) # 8-byte Reload

@@ -927,22 +927,27 @@ define void @swifterror_isel(ptr) {
 ; CHECK-APPLE-NEXT:    .cfi_def_cfa_offset 16
 ; CHECK-APPLE-NEXT:    pushq %r12
 ; CHECK-APPLE-NEXT:    .cfi_def_cfa_offset 24
-; CHECK-APPLE-NEXT:    pushq %rax
+; CHECK-APPLE-NEXT:    pushq %rbx
 ; CHECK-APPLE-NEXT:    .cfi_def_cfa_offset 32
+; CHECK-APPLE-NEXT:    subq $16, %rsp
+; CHECK-APPLE-NEXT:    .cfi_def_cfa_offset 48
+; CHECK-APPLE-NEXT:    .cfi_offset %rbx, -32
 ; CHECK-APPLE-NEXT:    .cfi_offset %r12, -24
 ; CHECK-APPLE-NEXT:    .cfi_offset %r13, -16
 ; CHECK-APPLE-NEXT:    testb %al, %al
 ; CHECK-APPLE-NEXT:    jne LBB8_3
 ; CHECK-APPLE-NEXT:  ## %bb.1: ## %.preheader
-; CHECK-APPLE-NEXT:    movq %rdi, %r13
+; CHECK-APPLE-NEXT:    movq %rdi, %rbx
 ; CHECK-APPLE-NEXT:    ## implicit-def: $di
 ; CHECK-APPLE-NEXT:    ## implicit-def: $r12
 ; CHECK-APPLE-NEXT:  LBB8_2: ## =>This Inner Loop Header: Depth=1
+; CHECK-APPLE-NEXT:    movq %rbx, %r13
 ; CHECK-APPLE-NEXT:    callq *%rax
 ; CHECK-APPLE-NEXT:    movzwl (%rax), %edi
 ; CHECK-APPLE-NEXT:    jmp LBB8_2
 ; CHECK-APPLE-NEXT:  LBB8_3:
-; CHECK-APPLE-NEXT:    addq $8, %rsp
+; CHECK-APPLE-NEXT:    addq $16, %rsp
+; CHECK-APPLE-NEXT:    popq %rbx
 ; CHECK-APPLE-NEXT:    popq %r12
 ; CHECK-APPLE-NEXT:    popq %r13
 ; CHECK-APPLE-NEXT:    retq

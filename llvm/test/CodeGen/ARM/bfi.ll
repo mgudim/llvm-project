@@ -245,15 +245,15 @@ define void @bfi1_use(i32 %a, i32 %b) {
 ; CHECK-LABEL: bfi1_use:
 ; CHECK:       @ %bb.0:
 ; CHECK-NEXT:    push {r11, lr}
-; CHECK-NEXT:    mov r2, r1
+; CHECK-NEXT:    bfi r1, r0, #0, #1
 ; CHECK-NEXT:    lsr r3, r0, #4
-; CHECK-NEXT:    bfi r2, r0, #0, #1
 ; CHECK-NEXT:    lsr r0, r0, #1
-; CHECK-NEXT:    mov r1, r2
-; CHECK-NEXT:    bfi r1, r3, #4, #1
-; CHECK-NEXT:    mov r3, r1
+; CHECK-NEXT:    mov r2, r1
+; CHECK-NEXT:    bfi r2, r3, #4, #1
+; CHECK-NEXT:    mov r3, r2
 ; CHECK-NEXT:    bfi r3, r0, #1, #1
-; CHECK-NEXT:    mov r0, r2
+; CHECK-NEXT:    mov r0, r1
+; CHECK-NEXT:    mov r1, r2
 ; CHECK-NEXT:    mov r2, r3
 ; CHECK-NEXT:    bl use
 ; CHECK-NEXT:    pop {r11, pc}
@@ -365,18 +365,18 @@ define void @bfi3_uses(i32 %a, i32 %b) {
 ; CHECK-LABEL: bfi3_uses:
 ; CHECK:       @ %bb.0:
 ; CHECK-NEXT:    push {r11, lr}
-; CHECK-NEXT:    mov r12, r1
+; CHECK-NEXT:    bfi r1, r0, #0, #1
 ; CHECK-NEXT:    lsr r2, r0, #7
-; CHECK-NEXT:    bfi r12, r0, #0, #1
 ; CHECK-NEXT:    lsr r3, r0, #1
 ; CHECK-NEXT:    lsr r0, r0, #8
-; CHECK-NEXT:    mov r1, r12
-; CHECK-NEXT:    bfi r1, r2, #7, #1
-; CHECK-NEXT:    mov r2, r1
+; CHECK-NEXT:    mov r12, r1
+; CHECK-NEXT:    bfi r12, r2, #7, #1
+; CHECK-NEXT:    mov r2, r12
 ; CHECK-NEXT:    bfi r2, r3, #1, #1
 ; CHECK-NEXT:    mov r3, r2
 ; CHECK-NEXT:    bfi r3, r0, #8, #1
-; CHECK-NEXT:    mov r0, r12
+; CHECK-NEXT:    mov r0, r1
+; CHECK-NEXT:    mov r1, r12
 ; CHECK-NEXT:    bl use
 ; CHECK-NEXT:    pop {r11, pc}
   %x1 = and i32 %a, 1

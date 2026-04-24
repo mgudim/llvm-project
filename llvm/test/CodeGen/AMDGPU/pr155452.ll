@@ -9,29 +9,29 @@ define amdgpu_kernel void @my_kernel(i64 %foo, i32 %bar) {
 ; CHECK-NEXT:    s_mov_b32 flat_scratch_lo, s13
 ; CHECK-NEXT:    s_add_i32 s12, s12, s17
 ; CHECK-NEXT:    s_lshr_b32 flat_scratch_hi, s12, 8
-; CHECK-NEXT:    s_load_dword s0, s[8:9], 0x2
-; CHECK-NEXT:    s_load_dwordx2 s[2:3], s[8:9], 0x0
+; CHECK-NEXT:    s_load_dword s2, s[8:9], 0x2
+; CHECK-NEXT:    s_load_dwordx2 s[0:1], s[8:9], 0x0
 ; CHECK-NEXT:    s_mov_b64 s[4:5], 1
 ; CHECK-NEXT:    v_mov_b32_e32 v0, 0
 ; CHECK-NEXT:    v_mov_b32_e32 v1, 0
 ; CHECK-NEXT:    s_waitcnt lgkmcnt(0)
-; CHECK-NEXT:    s_ashr_i32 s6, s0, 31
-; CHECK-NEXT:    s_abs_i32 s7, s0
+; CHECK-NEXT:    s_ashr_i32 s6, s2, 31
+; CHECK-NEXT:    s_abs_i32 s7, s2
 ; CHECK-NEXT:    v_cvt_f32_u32_e32 v2, s7
-; CHECK-NEXT:    s_sub_i32 s0, 0, s7
+; CHECK-NEXT:    s_sub_i32 s2, 0, s7
 ; CHECK-NEXT:    v_rcp_iflag_f32_e32 v2, v2
 ; CHECK-NEXT:    v_mul_f32_e32 v2, 0x4f7ffffe, v2
 ; CHECK-NEXT:    v_cvt_u32_f32_e32 v2, v2
-; CHECK-NEXT:    v_mul_lo_u32 v3, s0, v2
+; CHECK-NEXT:    v_mul_lo_u32 v3, s2, v2
 ; CHECK-NEXT:    v_mul_hi_u32 v3, v2, v3
 ; CHECK-NEXT:    v_add_i32_e32 v2, vcc, v2, v3
-; CHECK-NEXT:    s_and_b64 s[0:1], exec, -1
+; CHECK-NEXT:    s_and_b64 s[2:3], exec, -1
 ; CHECK-NEXT:  .LBB0_1: ; %loop
 ; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
 ; CHECK-NEXT:    v_mov_b32_e32 v3, s4
-; CHECK-NEXT:    v_mad_u64_u32 v[3:4], s[8:9], s2, v3, 1
-; CHECK-NEXT:    s_mul_i32 s4, s3, s4
-; CHECK-NEXT:    s_mul_i32 s5, s2, s5
+; CHECK-NEXT:    v_mad_u64_u32 v[3:4], s[8:9], s0, v3, 1
+; CHECK-NEXT:    s_mul_i32 s4, s1, s4
+; CHECK-NEXT:    s_mul_i32 s5, s0, s5
 ; CHECK-NEXT:    v_add_i32_e32 v4, vcc, s4, v4
 ; CHECK-NEXT:    v_readfirstlane_b32 s4, v3
 ; CHECK-NEXT:    v_add_i32_e32 v4, vcc, s5, v4
@@ -61,7 +61,7 @@ define amdgpu_kernel void @my_kernel(i64 %foo, i32 %bar) {
 ; CHECK-NEXT:    s_waitcnt vmcnt(0)
 ; CHECK-NEXT:    flat_store_dwordx2 v[0:1], v[3:4]
 ; CHECK-NEXT:    s_mov_b64 s[4:5], 0
-; CHECK-NEXT:    s_mov_b64 vcc, s[0:1]
+; CHECK-NEXT:    s_mov_b64 vcc, s[2:3]
 ; CHECK-NEXT:    s_cbranch_vccnz .LBB0_1
 ; CHECK-NEXT:  ; %bb.2: ; %DummyReturnBlock
 ; CHECK-NEXT:    s_endpgm

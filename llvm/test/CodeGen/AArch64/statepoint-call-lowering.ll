@@ -163,20 +163,20 @@ define i1 @test_cross_bb(ptr addrspace(1) %a, i1 %external_cond) gc "statepoint-
 ; CHECK-NEXT:    .cfi_offset w19, -8
 ; CHECK-NEXT:    .cfi_offset w20, -16
 ; CHECK-NEXT:    .cfi_offset w30, -32
-; CHECK-NEXT:    mov w20, w1
+; CHECK-NEXT:    mov w19, w1
 ; CHECK-NEXT:    str x0, [sp, #8]
 ; CHECK-NEXT:    bl return_i1
 ; CHECK-NEXT:  .Ltmp8:
-; CHECK-NEXT:    tbz w20, #0, .LBB8_2
+; CHECK-NEXT:    tbz w19, #0, .LBB8_2
 ; CHECK-NEXT:  // %bb.1: // %left
-; CHECK-NEXT:    mov w19, w0
+; CHECK-NEXT:    mov w20, w0
 ; CHECK-NEXT:    ldr x0, [sp, #8]
 ; CHECK-NEXT:    bl consume
 ; CHECK-NEXT:    b .LBB8_3
 ; CHECK-NEXT:  .LBB8_2:
-; CHECK-NEXT:    mov w19, #1 // =0x1
+; CHECK-NEXT:    mov w20, #1 // =0x1
 ; CHECK-NEXT:  .LBB8_3: // %common.ret
-; CHECK-NEXT:    and w0, w19, #0x1
+; CHECK-NEXT:    and w0, w20, #0x1
 ; CHECK-NEXT:    ldp x20, x19, [sp, #16] // 16-byte Folded Reload
 ; CHECK-NEXT:    ldr x30, [sp], #32 // 8-byte Folded Reload
 ; CHECK-NEXT:    ret

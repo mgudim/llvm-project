@@ -1956,15 +1956,15 @@ declare <2 x double> @test_v2f64_f128_helper(fp128 %p)
 define void @test_v2f64_f128(ptr %p, ptr %q) {
 ; SOFT-LABEL: test_v2f64_f128:
 ; SOFT:       @ %bb.0:
-; SOFT-NEXT:    .save {r4, r5, r11, lr}
-; SOFT-NEXT:    push {r4, r5, r11, lr}
+; SOFT-NEXT:    .save {r4, lr}
+; SOFT-NEXT:    push {r4, lr}
 ; SOFT-NEXT:    .pad #16
 ; SOFT-NEXT:    sub sp, sp, #16
-; SOFT-NEXT:    ldr r4, [r0]
-; SOFT-NEXT:    mov r5, r1
+; SOFT-NEXT:    ldr r12, [r0]
+; SOFT-NEXT:    mov r4, r1
 ; SOFT-NEXT:    ldmib r0, {r1, r2, r3}
-; SOFT-NEXT:    mov r0, r4
-; SOFT-NEXT:    str r4, [sp]
+; SOFT-NEXT:    mov r0, r12
+; SOFT-NEXT:    str r12, [sp]
 ; SOFT-NEXT:    stmib sp, {r1, r2, r3}
 ; SOFT-NEXT:    bl __addtf3
 ; SOFT-NEXT:    bl test_v2f64_f128_helper
@@ -1972,29 +1972,29 @@ define void @test_v2f64_f128(ptr %p, ptr %q) {
 ; SOFT-NEXT:    vmov d17, r1, r0
 ; SOFT-NEXT:    vadd.f64 d19, d16, d16
 ; SOFT-NEXT:    vadd.f64 d18, d17, d17
-; SOFT-NEXT:    vst1.64 {d18, d19}, [r5]
+; SOFT-NEXT:    vst1.64 {d18, d19}, [r4]
 ; SOFT-NEXT:    add sp, sp, #16
-; SOFT-NEXT:    pop {r4, r5, r11, pc}
+; SOFT-NEXT:    pop {r4, pc}
 ;
 ; HARD-LABEL: test_v2f64_f128:
 ; HARD:       @ %bb.0:
-; HARD-NEXT:    .save {r4, r5, r11, lr}
-; HARD-NEXT:    push {r4, r5, r11, lr}
+; HARD-NEXT:    .save {r4, lr}
+; HARD-NEXT:    push {r4, lr}
 ; HARD-NEXT:    .pad #16
 ; HARD-NEXT:    sub sp, sp, #16
-; HARD-NEXT:    ldr r4, [r0]
-; HARD-NEXT:    mov r5, r1
+; HARD-NEXT:    ldr r12, [r0]
+; HARD-NEXT:    mov r4, r1
 ; HARD-NEXT:    ldmib r0, {r1, r2, r3}
-; HARD-NEXT:    mov r0, r4
-; HARD-NEXT:    str r4, [sp]
+; HARD-NEXT:    mov r0, r12
+; HARD-NEXT:    str r12, [sp]
 ; HARD-NEXT:    stmib sp, {r1, r2, r3}
 ; HARD-NEXT:    bl __addtf3
 ; HARD-NEXT:    bl test_v2f64_f128_helper
 ; HARD-NEXT:    vadd.f64 d17, d1, d1
 ; HARD-NEXT:    vadd.f64 d16, d0, d0
-; HARD-NEXT:    vst1.64 {d16, d17}, [r5]
+; HARD-NEXT:    vst1.64 {d16, d17}, [r4]
 ; HARD-NEXT:    add sp, sp, #16
-; HARD-NEXT:    pop {r4, r5, r11, pc}
+; HARD-NEXT:    pop {r4, pc}
     %1 = load fp128, ptr %p
     %2 = fadd fp128 %1, %1
     %3 = call <2 x double> @test_v2f64_f128_helper(fp128 %2)
@@ -2219,43 +2219,43 @@ declare <2 x i64> @test_v2i64_f128_helper(fp128 %p)
 define void @test_v2i64_f128(ptr %p, ptr %q) {
 ; SOFT-LABEL: test_v2i64_f128:
 ; SOFT:       @ %bb.0:
-; SOFT-NEXT:    .save {r4, r5, r11, lr}
-; SOFT-NEXT:    push {r4, r5, r11, lr}
+; SOFT-NEXT:    .save {r4, lr}
+; SOFT-NEXT:    push {r4, lr}
 ; SOFT-NEXT:    .pad #16
 ; SOFT-NEXT:    sub sp, sp, #16
-; SOFT-NEXT:    ldr r4, [r0]
-; SOFT-NEXT:    mov r5, r1
+; SOFT-NEXT:    ldr r12, [r0]
+; SOFT-NEXT:    mov r4, r1
 ; SOFT-NEXT:    ldmib r0, {r1, r2, r3}
-; SOFT-NEXT:    mov r0, r4
-; SOFT-NEXT:    str r4, [sp]
+; SOFT-NEXT:    mov r0, r12
+; SOFT-NEXT:    str r12, [sp]
 ; SOFT-NEXT:    stmib sp, {r1, r2, r3}
 ; SOFT-NEXT:    bl __addtf3
 ; SOFT-NEXT:    bl test_v2i64_f128_helper
 ; SOFT-NEXT:    vmov d17, r3, r2
 ; SOFT-NEXT:    vmov d16, r1, r0
 ; SOFT-NEXT:    vadd.i64 q8, q8, q8
-; SOFT-NEXT:    vst1.64 {d16, d17}, [r5]
+; SOFT-NEXT:    vst1.64 {d16, d17}, [r4]
 ; SOFT-NEXT:    add sp, sp, #16
-; SOFT-NEXT:    pop {r4, r5, r11, pc}
+; SOFT-NEXT:    pop {r4, pc}
 ;
 ; HARD-LABEL: test_v2i64_f128:
 ; HARD:       @ %bb.0:
-; HARD-NEXT:    .save {r4, r5, r11, lr}
-; HARD-NEXT:    push {r4, r5, r11, lr}
+; HARD-NEXT:    .save {r4, lr}
+; HARD-NEXT:    push {r4, lr}
 ; HARD-NEXT:    .pad #16
 ; HARD-NEXT:    sub sp, sp, #16
-; HARD-NEXT:    ldr r4, [r0]
-; HARD-NEXT:    mov r5, r1
+; HARD-NEXT:    ldr r12, [r0]
+; HARD-NEXT:    mov r4, r1
 ; HARD-NEXT:    ldmib r0, {r1, r2, r3}
-; HARD-NEXT:    mov r0, r4
-; HARD-NEXT:    str r4, [sp]
+; HARD-NEXT:    mov r0, r12
+; HARD-NEXT:    str r12, [sp]
 ; HARD-NEXT:    stmib sp, {r1, r2, r3}
 ; HARD-NEXT:    bl __addtf3
 ; HARD-NEXT:    bl test_v2i64_f128_helper
 ; HARD-NEXT:    vadd.i64 q8, q0, q0
-; HARD-NEXT:    vst1.64 {d16, d17}, [r5]
+; HARD-NEXT:    vst1.64 {d16, d17}, [r4]
 ; HARD-NEXT:    add sp, sp, #16
-; HARD-NEXT:    pop {r4, r5, r11, pc}
+; HARD-NEXT:    pop {r4, pc}
     %1 = load fp128, ptr %p
     %2 = fadd fp128 %1, %1
     %3 = call <2 x i64> @test_v2i64_f128_helper(fp128 %2)
@@ -2471,15 +2471,15 @@ declare <4 x float> @test_v4f32_f128_helper(fp128 %p)
 define void @test_v4f32_f128(ptr %p, ptr %q) {
 ; SOFT-LABEL: test_v4f32_f128:
 ; SOFT:       @ %bb.0:
-; SOFT-NEXT:    .save {r4, r5, r11, lr}
-; SOFT-NEXT:    push {r4, r5, r11, lr}
+; SOFT-NEXT:    .save {r4, lr}
+; SOFT-NEXT:    push {r4, lr}
 ; SOFT-NEXT:    .pad #16
 ; SOFT-NEXT:    sub sp, sp, #16
-; SOFT-NEXT:    ldr r4, [r0]
-; SOFT-NEXT:    mov r5, r1
+; SOFT-NEXT:    ldr r12, [r0]
+; SOFT-NEXT:    mov r4, r1
 ; SOFT-NEXT:    ldmib r0, {r1, r2, r3}
-; SOFT-NEXT:    mov r0, r4
-; SOFT-NEXT:    str r4, [sp]
+; SOFT-NEXT:    mov r0, r12
+; SOFT-NEXT:    str r12, [sp]
 ; SOFT-NEXT:    stmib sp, {r1, r2, r3}
 ; SOFT-NEXT:    bl __addtf3
 ; SOFT-NEXT:    bl test_v4f32_f128_helper
@@ -2488,30 +2488,30 @@ define void @test_v4f32_f128(ptr %p, ptr %q) {
 ; SOFT-NEXT:    vrev64.32 q8, q8
 ; SOFT-NEXT:    vadd.f32 q8, q8, q8
 ; SOFT-NEXT:    vrev64.32 q8, q8
-; SOFT-NEXT:    vst1.64 {d16, d17}, [r5]
+; SOFT-NEXT:    vst1.64 {d16, d17}, [r4]
 ; SOFT-NEXT:    add sp, sp, #16
-; SOFT-NEXT:    pop {r4, r5, r11, pc}
+; SOFT-NEXT:    pop {r4, pc}
 ;
 ; HARD-LABEL: test_v4f32_f128:
 ; HARD:       @ %bb.0:
-; HARD-NEXT:    .save {r4, r5, r11, lr}
-; HARD-NEXT:    push {r4, r5, r11, lr}
+; HARD-NEXT:    .save {r4, lr}
+; HARD-NEXT:    push {r4, lr}
 ; HARD-NEXT:    .pad #16
 ; HARD-NEXT:    sub sp, sp, #16
-; HARD-NEXT:    ldr r4, [r0]
-; HARD-NEXT:    mov r5, r1
+; HARD-NEXT:    ldr r12, [r0]
+; HARD-NEXT:    mov r4, r1
 ; HARD-NEXT:    ldmib r0, {r1, r2, r3}
-; HARD-NEXT:    mov r0, r4
-; HARD-NEXT:    str r4, [sp]
+; HARD-NEXT:    mov r0, r12
+; HARD-NEXT:    str r12, [sp]
 ; HARD-NEXT:    stmib sp, {r1, r2, r3}
 ; HARD-NEXT:    bl __addtf3
 ; HARD-NEXT:    bl test_v4f32_f128_helper
 ; HARD-NEXT:    vrev64.32 q8, q0
 ; HARD-NEXT:    vadd.f32 q8, q8, q8
 ; HARD-NEXT:    vrev64.32 q8, q8
-; HARD-NEXT:    vst1.64 {d16, d17}, [r5]
+; HARD-NEXT:    vst1.64 {d16, d17}, [r4]
 ; HARD-NEXT:    add sp, sp, #16
-; HARD-NEXT:    pop {r4, r5, r11, pc}
+; HARD-NEXT:    pop {r4, pc}
     %1 = load fp128, ptr %p
     %2 = fadd fp128 %1, %1
     %3 = call <4 x float> @test_v4f32_f128_helper(fp128 %2)
@@ -2743,15 +2743,15 @@ declare <4 x i32> @test_v4i32_f128_helper(fp128 %p)
 define void @test_v4i32_f128(ptr %p, ptr %q) {
 ; SOFT-LABEL: test_v4i32_f128:
 ; SOFT:       @ %bb.0:
-; SOFT-NEXT:    .save {r4, r5, r11, lr}
-; SOFT-NEXT:    push {r4, r5, r11, lr}
+; SOFT-NEXT:    .save {r4, lr}
+; SOFT-NEXT:    push {r4, lr}
 ; SOFT-NEXT:    .pad #16
 ; SOFT-NEXT:    sub sp, sp, #16
-; SOFT-NEXT:    ldr r4, [r0]
-; SOFT-NEXT:    mov r5, r1
+; SOFT-NEXT:    ldr r12, [r0]
+; SOFT-NEXT:    mov r4, r1
 ; SOFT-NEXT:    ldmib r0, {r1, r2, r3}
-; SOFT-NEXT:    mov r0, r4
-; SOFT-NEXT:    str r4, [sp]
+; SOFT-NEXT:    mov r0, r12
+; SOFT-NEXT:    str r12, [sp]
 ; SOFT-NEXT:    stmib sp, {r1, r2, r3}
 ; SOFT-NEXT:    bl __addtf3
 ; SOFT-NEXT:    bl test_v4i32_f128_helper
@@ -2760,30 +2760,30 @@ define void @test_v4i32_f128(ptr %p, ptr %q) {
 ; SOFT-NEXT:    vrev64.32 q8, q8
 ; SOFT-NEXT:    vadd.i32 q8, q8, q8
 ; SOFT-NEXT:    vrev64.32 q8, q8
-; SOFT-NEXT:    vst1.64 {d16, d17}, [r5]
+; SOFT-NEXT:    vst1.64 {d16, d17}, [r4]
 ; SOFT-NEXT:    add sp, sp, #16
-; SOFT-NEXT:    pop {r4, r5, r11, pc}
+; SOFT-NEXT:    pop {r4, pc}
 ;
 ; HARD-LABEL: test_v4i32_f128:
 ; HARD:       @ %bb.0:
-; HARD-NEXT:    .save {r4, r5, r11, lr}
-; HARD-NEXT:    push {r4, r5, r11, lr}
+; HARD-NEXT:    .save {r4, lr}
+; HARD-NEXT:    push {r4, lr}
 ; HARD-NEXT:    .pad #16
 ; HARD-NEXT:    sub sp, sp, #16
-; HARD-NEXT:    ldr r4, [r0]
-; HARD-NEXT:    mov r5, r1
+; HARD-NEXT:    ldr r12, [r0]
+; HARD-NEXT:    mov r4, r1
 ; HARD-NEXT:    ldmib r0, {r1, r2, r3}
-; HARD-NEXT:    mov r0, r4
-; HARD-NEXT:    str r4, [sp]
+; HARD-NEXT:    mov r0, r12
+; HARD-NEXT:    str r12, [sp]
 ; HARD-NEXT:    stmib sp, {r1, r2, r3}
 ; HARD-NEXT:    bl __addtf3
 ; HARD-NEXT:    bl test_v4i32_f128_helper
 ; HARD-NEXT:    vrev64.32 q8, q0
 ; HARD-NEXT:    vadd.i32 q8, q8, q8
 ; HARD-NEXT:    vrev64.32 q8, q8
-; HARD-NEXT:    vst1.64 {d16, d17}, [r5]
+; HARD-NEXT:    vst1.64 {d16, d17}, [r4]
 ; HARD-NEXT:    add sp, sp, #16
-; HARD-NEXT:    pop {r4, r5, r11, pc}
+; HARD-NEXT:    pop {r4, pc}
     %1 = load fp128, ptr %p
     %2 = fadd fp128 %1, %1
     %3 = call <4 x i32> @test_v4i32_f128_helper(fp128 %2)
@@ -3015,15 +3015,15 @@ declare <8 x i16> @test_v8i16_f128_helper(fp128 %p)
 define void @test_v8i16_f128(ptr %p, ptr %q) {
 ; SOFT-LABEL: test_v8i16_f128:
 ; SOFT:       @ %bb.0:
-; SOFT-NEXT:    .save {r4, r5, r11, lr}
-; SOFT-NEXT:    push {r4, r5, r11, lr}
+; SOFT-NEXT:    .save {r4, lr}
+; SOFT-NEXT:    push {r4, lr}
 ; SOFT-NEXT:    .pad #16
 ; SOFT-NEXT:    sub sp, sp, #16
-; SOFT-NEXT:    ldr r4, [r0]
-; SOFT-NEXT:    mov r5, r1
+; SOFT-NEXT:    ldr r12, [r0]
+; SOFT-NEXT:    mov r4, r1
 ; SOFT-NEXT:    ldmib r0, {r1, r2, r3}
-; SOFT-NEXT:    mov r0, r4
-; SOFT-NEXT:    str r4, [sp]
+; SOFT-NEXT:    mov r0, r12
+; SOFT-NEXT:    str r12, [sp]
 ; SOFT-NEXT:    stmib sp, {r1, r2, r3}
 ; SOFT-NEXT:    bl __addtf3
 ; SOFT-NEXT:    bl test_v8i16_f128_helper
@@ -3032,30 +3032,30 @@ define void @test_v8i16_f128(ptr %p, ptr %q) {
 ; SOFT-NEXT:    vrev64.16 q8, q8
 ; SOFT-NEXT:    vadd.i16 q8, q8, q8
 ; SOFT-NEXT:    vrev64.16 q8, q8
-; SOFT-NEXT:    vst1.64 {d16, d17}, [r5]
+; SOFT-NEXT:    vst1.64 {d16, d17}, [r4]
 ; SOFT-NEXT:    add sp, sp, #16
-; SOFT-NEXT:    pop {r4, r5, r11, pc}
+; SOFT-NEXT:    pop {r4, pc}
 ;
 ; HARD-LABEL: test_v8i16_f128:
 ; HARD:       @ %bb.0:
-; HARD-NEXT:    .save {r4, r5, r11, lr}
-; HARD-NEXT:    push {r4, r5, r11, lr}
+; HARD-NEXT:    .save {r4, lr}
+; HARD-NEXT:    push {r4, lr}
 ; HARD-NEXT:    .pad #16
 ; HARD-NEXT:    sub sp, sp, #16
-; HARD-NEXT:    ldr r4, [r0]
-; HARD-NEXT:    mov r5, r1
+; HARD-NEXT:    ldr r12, [r0]
+; HARD-NEXT:    mov r4, r1
 ; HARD-NEXT:    ldmib r0, {r1, r2, r3}
-; HARD-NEXT:    mov r0, r4
-; HARD-NEXT:    str r4, [sp]
+; HARD-NEXT:    mov r0, r12
+; HARD-NEXT:    str r12, [sp]
 ; HARD-NEXT:    stmib sp, {r1, r2, r3}
 ; HARD-NEXT:    bl __addtf3
 ; HARD-NEXT:    bl test_v8i16_f128_helper
 ; HARD-NEXT:    vrev64.16 q8, q0
 ; HARD-NEXT:    vadd.i16 q8, q8, q8
 ; HARD-NEXT:    vrev64.16 q8, q8
-; HARD-NEXT:    vst1.64 {d16, d17}, [r5]
+; HARD-NEXT:    vst1.64 {d16, d17}, [r4]
 ; HARD-NEXT:    add sp, sp, #16
-; HARD-NEXT:    pop {r4, r5, r11, pc}
+; HARD-NEXT:    pop {r4, pc}
     %1 = load fp128, ptr %p
     %2 = fadd fp128 %1, %1
     %3 = call <8 x i16> @test_v8i16_f128_helper(fp128 %2)
@@ -3287,15 +3287,15 @@ declare <16 x i8> @test_v16i8_f128_helper(fp128 %p)
 define void @test_v16i8_f128(ptr %p, ptr %q) {
 ; SOFT-LABEL: test_v16i8_f128:
 ; SOFT:       @ %bb.0:
-; SOFT-NEXT:    .save {r4, r5, r11, lr}
-; SOFT-NEXT:    push {r4, r5, r11, lr}
+; SOFT-NEXT:    .save {r4, lr}
+; SOFT-NEXT:    push {r4, lr}
 ; SOFT-NEXT:    .pad #16
 ; SOFT-NEXT:    sub sp, sp, #16
-; SOFT-NEXT:    ldr r4, [r0]
-; SOFT-NEXT:    mov r5, r1
+; SOFT-NEXT:    ldr r12, [r0]
+; SOFT-NEXT:    mov r4, r1
 ; SOFT-NEXT:    ldmib r0, {r1, r2, r3}
-; SOFT-NEXT:    mov r0, r4
-; SOFT-NEXT:    str r4, [sp]
+; SOFT-NEXT:    mov r0, r12
+; SOFT-NEXT:    str r12, [sp]
 ; SOFT-NEXT:    stmib sp, {r1, r2, r3}
 ; SOFT-NEXT:    bl __addtf3
 ; SOFT-NEXT:    bl test_v16i8_f128_helper
@@ -3304,30 +3304,30 @@ define void @test_v16i8_f128(ptr %p, ptr %q) {
 ; SOFT-NEXT:    vrev64.8 q8, q8
 ; SOFT-NEXT:    vadd.i8 q8, q8, q8
 ; SOFT-NEXT:    vrev64.8 q8, q8
-; SOFT-NEXT:    vst1.64 {d16, d17}, [r5]
+; SOFT-NEXT:    vst1.64 {d16, d17}, [r4]
 ; SOFT-NEXT:    add sp, sp, #16
-; SOFT-NEXT:    pop {r4, r5, r11, pc}
+; SOFT-NEXT:    pop {r4, pc}
 ;
 ; HARD-LABEL: test_v16i8_f128:
 ; HARD:       @ %bb.0:
-; HARD-NEXT:    .save {r4, r5, r11, lr}
-; HARD-NEXT:    push {r4, r5, r11, lr}
+; HARD-NEXT:    .save {r4, lr}
+; HARD-NEXT:    push {r4, lr}
 ; HARD-NEXT:    .pad #16
 ; HARD-NEXT:    sub sp, sp, #16
-; HARD-NEXT:    ldr r4, [r0]
-; HARD-NEXT:    mov r5, r1
+; HARD-NEXT:    ldr r12, [r0]
+; HARD-NEXT:    mov r4, r1
 ; HARD-NEXT:    ldmib r0, {r1, r2, r3}
-; HARD-NEXT:    mov r0, r4
-; HARD-NEXT:    str r4, [sp]
+; HARD-NEXT:    mov r0, r12
+; HARD-NEXT:    str r12, [sp]
 ; HARD-NEXT:    stmib sp, {r1, r2, r3}
 ; HARD-NEXT:    bl __addtf3
 ; HARD-NEXT:    bl test_v16i8_f128_helper
 ; HARD-NEXT:    vrev64.8 q8, q0
 ; HARD-NEXT:    vadd.i8 q8, q8, q8
 ; HARD-NEXT:    vrev64.8 q8, q8
-; HARD-NEXT:    vst1.64 {d16, d17}, [r5]
+; HARD-NEXT:    vst1.64 {d16, d17}, [r4]
 ; HARD-NEXT:    add sp, sp, #16
-; HARD-NEXT:    pop {r4, r5, r11, pc}
+; HARD-NEXT:    pop {r4, pc}
     %1 = load fp128, ptr %p
     %2 = fadd fp128 %1, %1
     %3 = call <16 x i8> @test_v16i8_f128_helper(fp128 %2)

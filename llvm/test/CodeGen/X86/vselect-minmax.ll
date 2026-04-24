@@ -10330,21 +10330,21 @@ define <8 x i64> @concat_smin_smax(<4 x i64> %a0, <4 x i64> %a1) {
 ; SSE4:       # %bb.0:
 ; SSE4-NEXT:    movdqa %xmm1, %xmm4
 ; SSE4-NEXT:    movdqa %xmm0, %xmm5
-; SSE4-NEXT:    movdqa %xmm2, %xmm8
-; SSE4-NEXT:    pcmpgtq %xmm0, %xmm8
 ; SSE4-NEXT:    movdqa %xmm2, %xmm6
-; SSE4-NEXT:    movdqa %xmm8, %xmm0
-; SSE4-NEXT:    blendvpd %xmm0, %xmm5, %xmm6
-; SSE4-NEXT:    movdqa %xmm3, %xmm7
-; SSE4-NEXT:    pcmpgtq %xmm1, %xmm7
+; SSE4-NEXT:    pcmpgtq %xmm0, %xmm6
+; SSE4-NEXT:    movdqa %xmm2, %xmm7
+; SSE4-NEXT:    movdqa %xmm6, %xmm0
+; SSE4-NEXT:    blendvpd %xmm0, %xmm5, %xmm7
+; SSE4-NEXT:    movdqa %xmm3, %xmm8
+; SSE4-NEXT:    pcmpgtq %xmm1, %xmm8
 ; SSE4-NEXT:    movdqa %xmm3, %xmm1
-; SSE4-NEXT:    movdqa %xmm7, %xmm0
-; SSE4-NEXT:    blendvpd %xmm0, %xmm4, %xmm1
 ; SSE4-NEXT:    movdqa %xmm8, %xmm0
+; SSE4-NEXT:    blendvpd %xmm0, %xmm4, %xmm1
+; SSE4-NEXT:    movdqa %xmm6, %xmm0
 ; SSE4-NEXT:    blendvpd %xmm0, %xmm2, %xmm5
-; SSE4-NEXT:    movdqa %xmm7, %xmm0
+; SSE4-NEXT:    movdqa %xmm8, %xmm0
 ; SSE4-NEXT:    blendvpd %xmm0, %xmm3, %xmm4
-; SSE4-NEXT:    movapd %xmm6, %xmm0
+; SSE4-NEXT:    movapd %xmm7, %xmm0
 ; SSE4-NEXT:    movapd %xmm5, %xmm2
 ; SSE4-NEXT:    movapd %xmm4, %xmm3
 ; SSE4-NEXT:    retq

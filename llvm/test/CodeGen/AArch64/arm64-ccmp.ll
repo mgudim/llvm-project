@@ -955,15 +955,15 @@ define i32 @f128_select_and_olt_oge(fp128 %v0, fp128 %v1, fp128 %v2, fp128 %v3, 
 ; CHECK-GI-NEXT:    stp x20, x19, [sp, #48] ; 16-byte Folded Spill
 ; CHECK-GI-NEXT:    stp x29, x30, [sp, #64] ; 16-byte Folded Spill
 ; CHECK-GI-NEXT:    stp q3, q2, [sp] ; 32-byte Folded Spill
-; CHECK-GI-NEXT:    mov x19, x0
-; CHECK-GI-NEXT:    mov x20, x1
+; CHECK-GI-NEXT:    mov x20, x0
+; CHECK-GI-NEXT:    mov x19, x1
 ; CHECK-GI-NEXT:    bl ___lttf2
 ; CHECK-GI-NEXT:    mov x21, x0
 ; CHECK-GI-NEXT:    ldp q1, q0, [sp] ; 32-byte Folded Reload
 ; CHECK-GI-NEXT:    bl ___getf2
 ; CHECK-GI-NEXT:    cmp w21, #0
 ; CHECK-GI-NEXT:    ccmp w0, #0, #8, mi
-; CHECK-GI-NEXT:    csel w0, w19, w20, pl
+; CHECK-GI-NEXT:    csel w0, w20, w19, pl
 ; CHECK-GI-NEXT:    ldp x29, x30, [sp, #64] ; 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x20, x19, [sp, #48] ; 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x22, x21, [sp, #32] ; 16-byte Folded Reload
@@ -1124,9 +1124,9 @@ define i32 @multiccmp2(i32 %s0, i32 %s1, i32 %s2, i32 %s3, i32 %x, i32 %y) #0 {
 ; CHECK-GI-NEXT:    stp x22, x21, [sp, #-48]! ; 16-byte Folded Spill
 ; CHECK-GI-NEXT:    stp x20, x19, [sp, #16] ; 16-byte Folded Spill
 ; CHECK-GI-NEXT:    stp x29, x30, [sp, #32] ; 16-byte Folded Spill
-; CHECK-GI-NEXT:    mov x19, x0
-; CHECK-GI-NEXT:    mov x20, x3
-; CHECK-GI-NEXT:    mov x21, x5
+; CHECK-GI-NEXT:    mov x21, x0
+; CHECK-GI-NEXT:    mov x19, x3
+; CHECK-GI-NEXT:    mov x20, x5
 ; CHECK-GI-NEXT:    cmp w0, w1
 ; CHECK-GI-NEXT:    cset w8, gt
 ; CHECK-GI-NEXT:    cmp w2, w3
@@ -1135,11 +1135,11 @@ define i32 @multiccmp2(i32 %s0, i32 %s1, i32 %s2, i32 %s3, i32 %x, i32 %y) #0 {
 ; CHECK-GI-NEXT:    tst w8, #0x1
 ; CHECK-GI-NEXT:    csel w0, w5, w4, ne
 ; CHECK-GI-NEXT:    bl _callee
-; CHECK-GI-NEXT:    cmp w19, w20
+; CHECK-GI-NEXT:    cmp w21, w19
 ; CHECK-GI-NEXT:    cset w8, eq
 ; CHECK-GI-NEXT:    and w8, w22, w8
 ; CHECK-GI-NEXT:    tst w8, #0x1
-; CHECK-GI-NEXT:    csel w0, w0, w21, ne
+; CHECK-GI-NEXT:    csel w0, w0, w20, ne
 ; CHECK-GI-NEXT:    bl _callee
 ; CHECK-GI-NEXT:    ldp x29, x30, [sp, #32] ; 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x20, x19, [sp, #16] ; 16-byte Folded Reload

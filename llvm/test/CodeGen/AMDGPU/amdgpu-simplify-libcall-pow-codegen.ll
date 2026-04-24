@@ -145,8 +145,8 @@ define double @test_pow_fast_f64__integral_y(double %x, i32 %y.i) {
 ; CHECK-NEXT:    v_and_b32_e32 v1, 0x7fffffff, v42
 ; CHECK-NEXT:    s_mov_b64 s[4:5], s[48:49]
 ; CHECK-NEXT:    v_writelane_b32 v43, s53, 13
-; CHECK-NEXT:    v_mov_b32_e32 v40, v31
-; CHECK-NEXT:    v_mov_b32_e32 v41, v2
+; CHECK-NEXT:    v_mov_b32_e32 v41, v31
+; CHECK-NEXT:    v_mov_b32_e32 v40, v2
 ; CHECK-NEXT:    s_mov_b32 s50, s15
 ; CHECK-NEXT:    s_mov_b32 s51, s14
 ; CHECK-NEXT:    s_mov_b32 s52, s13
@@ -156,7 +156,7 @@ define double @test_pow_fast_f64__integral_y(double %x, i32 %y.i) {
 ; CHECK-NEXT:    s_mov_b64 s[38:39], s[6:7]
 ; CHECK-NEXT:    s_waitcnt lgkmcnt(0)
 ; CHECK-NEXT:    s_swappc_b64 s[30:31], s[16:17]
-; CHECK-NEXT:    v_cvt_f64_i32_e32 v[2:3], v41
+; CHECK-NEXT:    v_cvt_f64_i32_e32 v[2:3], v40
 ; CHECK-NEXT:    s_getpc_b64 s[4:5]
 ; CHECK-NEXT:    s_add_u32 s4, s4, _Z4exp2d@gotpcrel32@lo+4
 ; CHECK-NEXT:    s_addc_u32 s5, s5, _Z4exp2d@gotpcrel32@hi+12
@@ -170,10 +170,10 @@ define double @test_pow_fast_f64__integral_y(double %x, i32 %y.i) {
 ; CHECK-NEXT:    s_mov_b32 s13, s52
 ; CHECK-NEXT:    s_mov_b32 s14, s51
 ; CHECK-NEXT:    s_mov_b32 s15, s50
-; CHECK-NEXT:    v_mov_b32_e32 v31, v40
+; CHECK-NEXT:    v_mov_b32_e32 v31, v41
 ; CHECK-NEXT:    s_waitcnt lgkmcnt(0)
 ; CHECK-NEXT:    s_swappc_b64 s[30:31], s[16:17]
-; CHECK-NEXT:    v_lshlrev_b32_e32 v2, 31, v41
+; CHECK-NEXT:    v_lshlrev_b32_e32 v2, 31, v40
 ; CHECK-NEXT:    v_and_b32_e32 v2, v2, v42
 ; CHECK-NEXT:    buffer_load_dword v42, off, s[0:3], s33 ; 4-byte Folded Reload
 ; CHECK-NEXT:    buffer_load_dword v41, off, s[0:3], s33 offset:4 ; 4-byte Folded Reload
@@ -427,8 +427,8 @@ define double @test_pown_fast_f64(double %x, i32 %y) {
 ; CHECK-NEXT:    v_and_b32_e32 v1, 0x7fffffff, v42
 ; CHECK-NEXT:    s_mov_b64 s[4:5], s[48:49]
 ; CHECK-NEXT:    v_writelane_b32 v43, s53, 13
-; CHECK-NEXT:    v_mov_b32_e32 v40, v31
-; CHECK-NEXT:    v_mov_b32_e32 v41, v2
+; CHECK-NEXT:    v_mov_b32_e32 v41, v31
+; CHECK-NEXT:    v_mov_b32_e32 v40, v2
 ; CHECK-NEXT:    s_mov_b32 s50, s15
 ; CHECK-NEXT:    s_mov_b32 s51, s14
 ; CHECK-NEXT:    s_mov_b32 s52, s13
@@ -438,7 +438,7 @@ define double @test_pown_fast_f64(double %x, i32 %y) {
 ; CHECK-NEXT:    s_mov_b64 s[38:39], s[6:7]
 ; CHECK-NEXT:    s_waitcnt lgkmcnt(0)
 ; CHECK-NEXT:    s_swappc_b64 s[30:31], s[16:17]
-; CHECK-NEXT:    v_cvt_f64_i32_e32 v[2:3], v41
+; CHECK-NEXT:    v_cvt_f64_i32_e32 v[2:3], v40
 ; CHECK-NEXT:    s_getpc_b64 s[4:5]
 ; CHECK-NEXT:    s_add_u32 s4, s4, _Z4exp2d@gotpcrel32@lo+4
 ; CHECK-NEXT:    s_addc_u32 s5, s5, _Z4exp2d@gotpcrel32@hi+12
@@ -452,10 +452,10 @@ define double @test_pown_fast_f64(double %x, i32 %y) {
 ; CHECK-NEXT:    s_mov_b32 s13, s52
 ; CHECK-NEXT:    s_mov_b32 s14, s51
 ; CHECK-NEXT:    s_mov_b32 s15, s50
-; CHECK-NEXT:    v_mov_b32_e32 v31, v40
+; CHECK-NEXT:    v_mov_b32_e32 v31, v41
 ; CHECK-NEXT:    s_waitcnt lgkmcnt(0)
 ; CHECK-NEXT:    s_swappc_b64 s[30:31], s[16:17]
-; CHECK-NEXT:    v_lshlrev_b32_e32 v2, 31, v41
+; CHECK-NEXT:    v_lshlrev_b32_e32 v2, 31, v40
 ; CHECK-NEXT:    v_and_b32_e32 v2, v2, v42
 ; CHECK-NEXT:    buffer_load_dword v42, off, s[0:3], s33 ; 4-byte Folded Reload
 ; CHECK-NEXT:    buffer_load_dword v41, off, s[0:3], s33 offset:4 ; 4-byte Folded Reload

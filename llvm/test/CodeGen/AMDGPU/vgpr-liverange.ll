@@ -161,12 +161,14 @@ for.end:
 define amdgpu_ps float @loop(i32 %z, float %v, i32 inreg %bound, ptr %extern_func, ptr %extern_func2) #0 {
 ; SI-LABEL: loop:
 ; SI:       ; %bb.0: ; %main_body
-; SI-NEXT:    v_mov_b32_e32 v6, v0
+; SI-NEXT:    v_mov_b32_e32 v7, v5
+; SI-NEXT:    v_mov_b32_e32 v5, v0
 ; SI-NEXT:    s_mov_b32 s12, SCRATCH_RSRC_DWORD0
 ; SI-NEXT:    s_mov_b32 s13, SCRATCH_RSRC_DWORD1
 ; SI-NEXT:    s_mov_b32 s14, -1
+; SI-NEXT:    v_mov_b32_e32 v6, v4
 ; SI-NEXT:    v_mov_b32_e32 v0, v1
-; SI-NEXT:    v_cmp_gt_i32_e32 vcc_lo, 6, v6
+; SI-NEXT:    v_cmp_gt_i32_e32 vcc_lo, 6, v5
 ; SI-NEXT:    s_mov_b32 s15, 0x31c16000
 ; SI-NEXT:    s_add_u32 s12, s12, s1
 ; SI-NEXT:    s_addc_u32 s13, s13, 0
@@ -178,15 +180,15 @@ define amdgpu_ps float @loop(i32 %z, float %v, i32 inreg %bound, ptr %extern_fun
 ; SI-NEXT:  ; %bb.1: ; %else
 ; SI-NEXT:    s_mov_b32 s7, exec_lo
 ; SI-NEXT:  .LBB3_2: ; =>This Inner Loop Header: Depth=1
-; SI-NEXT:    v_readfirstlane_b32 s4, v4
-; SI-NEXT:    v_readfirstlane_b32 s5, v5
-; SI-NEXT:    v_cmp_eq_u64_e32 vcc_lo, s[4:5], v[4:5]
+; SI-NEXT:    v_readfirstlane_b32 s4, v6
+; SI-NEXT:    v_readfirstlane_b32 s5, v7
+; SI-NEXT:    v_cmp_eq_u64_e32 vcc_lo, s[4:5], v[6:7]
 ; SI-NEXT:    s_and_saveexec_b32 s8, vcc_lo
 ; SI-NEXT:    s_mov_b64 s[0:1], s[12:13]
 ; SI-NEXT:    s_mov_b64 s[2:3], s[14:15]
 ; SI-NEXT:    s_swappc_b64 s[30:31], s[4:5]
 ; SI-NEXT:    v_mov_b32_e32 v1, v0
-; SI-NEXT:    ; implicit-def: $vgpr4_vgpr5
+; SI-NEXT:    ; implicit-def: $vgpr6_vgpr7
 ; SI-NEXT:    ; implicit-def: $vgpr0
 ; SI-NEXT:    s_xor_b32 exec_lo, exec_lo, s8
 ; SI-NEXT:    s_cbranch_execnz .LBB3_2

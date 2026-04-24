@@ -430,15 +430,15 @@ define <vscale x 2 x i32> @vwop_vscale_zext_i1i32_multiple_users(ptr %x, ptr %y,
 ; NO_FOLDING-NEXT:    vlm.v v0, (a0)
 ; NO_FOLDING-NEXT:    vlm.v v8, (a2)
 ; NO_FOLDING-NEXT:    vmv.v.i v9, 0
-; NO_FOLDING-NEXT:    vmerge.vim v10, v9, 1, v0
-; NO_FOLDING-NEXT:    vlm.v v9, (a1)
-; NO_FOLDING-NEXT:    vmv.v.v v11, v10
+; NO_FOLDING-NEXT:    vmerge.vim v9, v9, 1, v0
+; NO_FOLDING-NEXT:    vlm.v v10, (a1)
+; NO_FOLDING-NEXT:    vmv.v.v v11, v9
 ; NO_FOLDING-NEXT:    vmv.v.v v0, v8
-; NO_FOLDING-NEXT:    vadd.vi v11, v10, 1, v0.t
-; NO_FOLDING-NEXT:    vmv.v.v v12, v10
-; NO_FOLDING-NEXT:    vadd.vi v12, v10, -1, v0.t
-; NO_FOLDING-NEXT:    vmv.v.v v0, v9
-; NO_FOLDING-NEXT:    vor.vv v11, v11, v10, v0.t
+; NO_FOLDING-NEXT:    vadd.vi v11, v9, 1, v0.t
+; NO_FOLDING-NEXT:    vmv.v.v v12, v9
+; NO_FOLDING-NEXT:    vadd.vi v12, v9, -1, v0.t
+; NO_FOLDING-NEXT:    vmv.v.v v0, v10
+; NO_FOLDING-NEXT:    vor.vv v11, v11, v9, v0.t
 ; NO_FOLDING-NEXT:    vor.vv v8, v11, v12
 ; NO_FOLDING-NEXT:    ret
 ;
@@ -448,15 +448,15 @@ define <vscale x 2 x i32> @vwop_vscale_zext_i1i32_multiple_users(ptr %x, ptr %y,
 ; FOLDING-NEXT:    vlm.v v0, (a0)
 ; FOLDING-NEXT:    vlm.v v8, (a2)
 ; FOLDING-NEXT:    vmv.v.i v9, 0
-; FOLDING-NEXT:    vmerge.vim v10, v9, 1, v0
-; FOLDING-NEXT:    vlm.v v9, (a1)
-; FOLDING-NEXT:    vmv.v.v v11, v10
+; FOLDING-NEXT:    vmerge.vim v9, v9, 1, v0
+; FOLDING-NEXT:    vlm.v v10, (a1)
+; FOLDING-NEXT:    vmv.v.v v11, v9
 ; FOLDING-NEXT:    vmv.v.v v0, v8
-; FOLDING-NEXT:    vadd.vi v11, v10, 1, v0.t
-; FOLDING-NEXT:    vmv.v.v v12, v10
-; FOLDING-NEXT:    vadd.vi v12, v10, -1, v0.t
-; FOLDING-NEXT:    vmv.v.v v0, v9
-; FOLDING-NEXT:    vor.vv v11, v11, v10, v0.t
+; FOLDING-NEXT:    vadd.vi v11, v9, 1, v0.t
+; FOLDING-NEXT:    vmv.v.v v12, v9
+; FOLDING-NEXT:    vadd.vi v12, v9, -1, v0.t
+; FOLDING-NEXT:    vmv.v.v v0, v10
+; FOLDING-NEXT:    vor.vv v11, v11, v9, v0.t
 ; FOLDING-NEXT:    vor.vv v8, v11, v12
 ; FOLDING-NEXT:    ret
   %a = load <vscale x 2 x i1>, ptr %x
@@ -480,15 +480,15 @@ define <vscale x 2 x i8> @vwop_vscale_zext_i1i8_multiple_users(ptr %x, ptr %y, p
 ; NO_FOLDING-NEXT:    vlm.v v0, (a0)
 ; NO_FOLDING-NEXT:    vlm.v v8, (a2)
 ; NO_FOLDING-NEXT:    vmv.v.i v9, 0
-; NO_FOLDING-NEXT:    vmerge.vim v10, v9, 1, v0
-; NO_FOLDING-NEXT:    vlm.v v9, (a1)
-; NO_FOLDING-NEXT:    vmv1r.v v11, v10
+; NO_FOLDING-NEXT:    vmerge.vim v9, v9, 1, v0
+; NO_FOLDING-NEXT:    vlm.v v10, (a1)
+; NO_FOLDING-NEXT:    vmv1r.v v11, v9
 ; NO_FOLDING-NEXT:    vmv1r.v v0, v8
-; NO_FOLDING-NEXT:    vadd.vi v11, v10, 1, v0.t
-; NO_FOLDING-NEXT:    vmv1r.v v12, v10
-; NO_FOLDING-NEXT:    vadd.vi v12, v10, -1, v0.t
-; NO_FOLDING-NEXT:    vmv1r.v v0, v9
-; NO_FOLDING-NEXT:    vor.vv v11, v11, v10, v0.t
+; NO_FOLDING-NEXT:    vadd.vi v11, v9, 1, v0.t
+; NO_FOLDING-NEXT:    vmv1r.v v12, v9
+; NO_FOLDING-NEXT:    vadd.vi v12, v9, -1, v0.t
+; NO_FOLDING-NEXT:    vmv1r.v v0, v10
+; NO_FOLDING-NEXT:    vor.vv v11, v11, v9, v0.t
 ; NO_FOLDING-NEXT:    vor.vv v8, v11, v12
 ; NO_FOLDING-NEXT:    ret
 ;
@@ -498,15 +498,15 @@ define <vscale x 2 x i8> @vwop_vscale_zext_i1i8_multiple_users(ptr %x, ptr %y, p
 ; FOLDING-NEXT:    vlm.v v0, (a0)
 ; FOLDING-NEXT:    vlm.v v8, (a2)
 ; FOLDING-NEXT:    vmv.v.i v9, 0
-; FOLDING-NEXT:    vmerge.vim v10, v9, 1, v0
-; FOLDING-NEXT:    vlm.v v9, (a1)
-; FOLDING-NEXT:    vmv1r.v v11, v10
+; FOLDING-NEXT:    vmerge.vim v9, v9, 1, v0
+; FOLDING-NEXT:    vlm.v v10, (a1)
+; FOLDING-NEXT:    vmv1r.v v11, v9
 ; FOLDING-NEXT:    vmv1r.v v0, v8
-; FOLDING-NEXT:    vadd.vi v11, v10, 1, v0.t
-; FOLDING-NEXT:    vmv1r.v v12, v10
-; FOLDING-NEXT:    vadd.vi v12, v10, -1, v0.t
-; FOLDING-NEXT:    vmv1r.v v0, v9
-; FOLDING-NEXT:    vor.vv v11, v11, v10, v0.t
+; FOLDING-NEXT:    vadd.vi v11, v9, 1, v0.t
+; FOLDING-NEXT:    vmv1r.v v12, v9
+; FOLDING-NEXT:    vadd.vi v12, v9, -1, v0.t
+; FOLDING-NEXT:    vmv1r.v v0, v10
+; FOLDING-NEXT:    vor.vv v11, v11, v9, v0.t
 ; FOLDING-NEXT:    vor.vv v8, v11, v12
 ; FOLDING-NEXT:    ret
   %a = load <vscale x 2 x i1>, ptr %x

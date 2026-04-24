@@ -141,28 +141,28 @@ define { <2 x half>, <2 x half> } @test_modf_v2f16(<2 x half> %a) {
 ; THUMB:       @ %bb.0:
 ; THUMB-NEXT:    push {r4, r5, r6, lr}
 ; THUMB-NEXT:    sub sp, #8
-; THUMB-NEXT:    mov r5, r1
+; THUMB-NEXT:    mov r4, r1
 ; THUMB-NEXT:    uxth r0, r0
 ; THUMB-NEXT:    bl __gnu_h2f_ieee
 ; THUMB-NEXT:    mov r1, sp
 ; THUMB-NEXT:    bl modff
 ; THUMB-NEXT:    bl __gnu_f2h_ieee
-; THUMB-NEXT:    mov r4, r0
-; THUMB-NEXT:    uxth r0, r5
+; THUMB-NEXT:    mov r6, r0
+; THUMB-NEXT:    uxth r0, r4
 ; THUMB-NEXT:    bl __gnu_h2f_ieee
 ; THUMB-NEXT:    add r1, sp, #4
 ; THUMB-NEXT:    bl modff
 ; THUMB-NEXT:    bl __gnu_f2h_ieee
-; THUMB-NEXT:    mov r5, r0
+; THUMB-NEXT:    mov r4, r0
 ; THUMB-NEXT:    ldr r0, [sp]
 ; THUMB-NEXT:    bl __gnu_f2h_ieee
-; THUMB-NEXT:    mov r6, r0
+; THUMB-NEXT:    mov r5, r0
 ; THUMB-NEXT:    ldr r0, [sp, #4]
 ; THUMB-NEXT:    bl __gnu_f2h_ieee
 ; THUMB-NEXT:    mov r3, r0
-; THUMB-NEXT:    mov r0, r4
-; THUMB-NEXT:    mov r1, r5
-; THUMB-NEXT:    mov r2, r6
+; THUMB-NEXT:    mov r0, r6
+; THUMB-NEXT:    mov r1, r4
+; THUMB-NEXT:    mov r2, r5
 ; THUMB-NEXT:    add sp, #8
 ; THUMB-NEXT:    pop {r4, r5, r6, pc}
   %result = call { <2 x half>, <2 x half> } @llvm.modf.v2f16(<2 x half> %a)
@@ -200,26 +200,26 @@ define { <3 x float>, <3 x float> } @test_modf_v3f32(<3 x float> %a) {
 ; CHECK-NEXT:    vpush {d8, d9}
 ; CHECK-NEXT:    sub sp, #8
 ; CHECK-NEXT:    vldr d9, [sp, #40]
-; CHECK-NEXT:    mov r4, r0
+; CHECK-NEXT:    mov r5, r0
 ; CHECK-NEXT:    mov r1, sp
 ; CHECK-NEXT:    mov r0, r2
-; CHECK-NEXT:    mov r5, r3
+; CHECK-NEXT:    mov r4, r3
 ; CHECK-NEXT:    vmov d8, r2, r3
 ; CHECK-NEXT:    bl modff
 ; CHECK-NEXT:    add r1, sp, #4
 ; CHECK-NEXT:    mov r6, r0
-; CHECK-NEXT:    mov r0, r5
+; CHECK-NEXT:    mov r0, r4
 ; CHECK-NEXT:    bl modff
-; CHECK-NEXT:    mov r5, r0
+; CHECK-NEXT:    mov r4, r0
 ; CHECK-NEXT:    vmov r0, s18
 ; CHECK-NEXT:    vldmia sp, {s0, s1}
-; CHECK-NEXT:    add.w r1, r4, #16
+; CHECK-NEXT:    add.w r1, r5, #16
 ; CHECK-NEXT:    vst1.32 {d0}, [r1:64]!
 ; CHECK-NEXT:    bl modff
-; CHECK-NEXT:    vmov s1, r5
+; CHECK-NEXT:    vmov s1, r4
 ; CHECK-NEXT:    vmov s0, r6
-; CHECK-NEXT:    vst1.32 {d0}, [r4:64]!
-; CHECK-NEXT:    str r0, [r4]
+; CHECK-NEXT:    vst1.32 {d0}, [r5:64]!
+; CHECK-NEXT:    str r0, [r5]
 ; CHECK-NEXT:    add sp, #8
 ; CHECK-NEXT:    vpop {d8, d9}
 ; CHECK-NEXT:    pop {r4, r5, r6, pc}
@@ -228,28 +228,27 @@ define { <3 x float>, <3 x float> } @test_modf_v3f32(<3 x float> %a) {
 ; THUMB:       @ %bb.0:
 ; THUMB-NEXT:    push {r4, r5, r6, r7, lr}
 ; THUMB-NEXT:    sub sp, #12
-; THUMB-NEXT:    mov r7, r3
-; THUMB-NEXT:    mov r5, r2
-; THUMB-NEXT:    mov r4, r0
+; THUMB-NEXT:    mov r5, r3
+; THUMB-NEXT:    mov r4, r2
+; THUMB-NEXT:    mov r6, r0
 ; THUMB-NEXT:    ldr r0, [sp, #32]
 ; THUMB-NEXT:    add r1, sp, #8
 ; THUMB-NEXT:    bl modff
-; THUMB-NEXT:    mov r6, r0
-; THUMB-NEXT:    ldr r0, [sp, #8]
-; THUMB-NEXT:    str r0, [r4, #24]
-; THUMB-NEXT:    add r1, sp, #4
-; THUMB-NEXT:    mov r0, r7
-; THUMB-NEXT:    bl modff
 ; THUMB-NEXT:    mov r7, r0
-; THUMB-NEXT:    ldr r0, [sp, #4]
-; THUMB-NEXT:    str r0, [r4, #20]
-; THUMB-NEXT:    mov r1, sp
+; THUMB-NEXT:    ldr r0, [sp, #8]
+; THUMB-NEXT:    str r0, [r6, #24]
+; THUMB-NEXT:    add r1, sp, #4
 ; THUMB-NEXT:    mov r0, r5
 ; THUMB-NEXT:    bl modff
+; THUMB-NEXT:    mov r5, r0
+; THUMB-NEXT:    ldr r0, [sp, #4]
+; THUMB-NEXT:    str r0, [r6, #20]
+; THUMB-NEXT:    mov r1, sp
+; THUMB-NEXT:    mov r0, r4
+; THUMB-NEXT:    bl modff
 ; THUMB-NEXT:    ldr r1, [sp]
-; THUMB-NEXT:    str r1, [r4, #16]
-; THUMB-NEXT:    stm r4!, {r0, r7}
-; THUMB-NEXT:    str r6, [r4]
+; THUMB-NEXT:    str r1, [r6, #16]
+; THUMB-NEXT:    stm r6!, {r0, r5, r7}
 ; THUMB-NEXT:    add sp, #12
 ; THUMB-NEXT:    pop {r4, r5, r6, r7, pc}
   %result = call { <3 x float>, <3 x float> } @llvm.modf.v3f32(<3 x float> %a)
@@ -306,10 +305,10 @@ define { <2 x double>, <2 x double> } @test_modf_v2f64(<2 x double> %a) {
 ; CHECK-NEXT:    vpush {d8, d9}
 ; CHECK-NEXT:    sub sp, #16
 ; CHECK-NEXT:    mov r1, r3
-; CHECK-NEXT:    mov r3, r2
-; CHECK-NEXT:    add r2, sp, #8
+; CHECK-NEXT:    add r3, sp, #8
 ; CHECK-NEXT:    mov r4, r0
-; CHECK-NEXT:    mov r0, r3
+; CHECK-NEXT:    mov r0, r2
+; CHECK-NEXT:    mov r2, r3
 ; CHECK-NEXT:    bl modf
 ; CHECK-NEXT:    ldrd r12, r3, [sp, #40]
 ; CHECK-NEXT:    vmov d8, r0, r1
@@ -332,27 +331,27 @@ define { <2 x double>, <2 x double> } @test_modf_v2f64(<2 x double> %a) {
 ; THUMB-NEXT:    sub sp, #28
 ; THUMB-NEXT:    str r3, [sp, #4] @ 4-byte Spill
 ; THUMB-NEXT:    mov r7, r2
-; THUMB-NEXT:    mov r4, r0
+; THUMB-NEXT:    mov r5, r0
 ; THUMB-NEXT:    ldr r0, [sp, #48]
 ; THUMB-NEXT:    ldr r1, [sp, #52]
 ; THUMB-NEXT:    add r2, sp, #16
 ; THUMB-NEXT:    bl modf
 ; THUMB-NEXT:    mov r6, r0
-; THUMB-NEXT:    mov r5, r1
+; THUMB-NEXT:    mov r4, r1
 ; THUMB-NEXT:    ldr r0, [sp, #20]
-; THUMB-NEXT:    str r0, [r4, #28]
+; THUMB-NEXT:    str r0, [r5, #28]
 ; THUMB-NEXT:    ldr r0, [sp, #16]
-; THUMB-NEXT:    str r0, [r4, #24]
+; THUMB-NEXT:    str r0, [r5, #24]
 ; THUMB-NEXT:    add r2, sp, #8
 ; THUMB-NEXT:    mov r0, r7
 ; THUMB-NEXT:    ldr r1, [sp, #4] @ 4-byte Reload
 ; THUMB-NEXT:    bl modf
 ; THUMB-NEXT:    ldr r2, [sp, #12]
-; THUMB-NEXT:    str r2, [r4, #20]
+; THUMB-NEXT:    str r2, [r5, #20]
 ; THUMB-NEXT:    ldr r2, [sp, #8]
-; THUMB-NEXT:    str r2, [r4, #16]
-; THUMB-NEXT:    str r5, [r4, #12]
-; THUMB-NEXT:    stm r4!, {r0, r1, r6}
+; THUMB-NEXT:    str r2, [r5, #16]
+; THUMB-NEXT:    str r4, [r5, #12]
+; THUMB-NEXT:    stm r5!, {r0, r1, r6}
 ; THUMB-NEXT:    add sp, #28
 ; THUMB-NEXT:    pop {r4, r5, r6, r7, pc}
   %result = call { <2 x double>, <2 x double> } @llvm.modf.v2f64(<2 x double> %a)

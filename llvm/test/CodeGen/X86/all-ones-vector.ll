@@ -260,8 +260,8 @@ define <64 x i8> @allones_v64i8() nounwind {
 ; AVX1-LABEL: allones_v64i8:
 ; AVX1:       # %bb.0:
 ; AVX1-NEXT:    vxorps %xmm0, %xmm0, %xmm0
-; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm0
-; AVX1-NEXT:    vmovaps %ymm0, %ymm1
+; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm1
+; AVX1-NEXT:    vmovaps %ymm1, %ymm0
 ; AVX1-NEXT:    ret{{[l|q]}}
 ;
 ; AVX2-LABEL: allones_v64i8:
@@ -272,7 +272,7 @@ define <64 x i8> @allones_v64i8() nounwind {
 ;
 ; AVX512-LABEL: allones_v64i8:
 ; AVX512:       # %bb.0:
-; AVX512-NEXT:    vpternlogd $255, %zmm0, %zmm0, %zmm0
+; AVX512-NEXT:    vpternlogd {{.*#+}} zmm0 = -1
 ; AVX512-NEXT:    ret{{[l|q]}}
   ret <64 x i8> <i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1>
 }
@@ -289,8 +289,8 @@ define <32 x i16> @allones_v32i16() nounwind {
 ; AVX1-LABEL: allones_v32i16:
 ; AVX1:       # %bb.0:
 ; AVX1-NEXT:    vxorps %xmm0, %xmm0, %xmm0
-; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm0
-; AVX1-NEXT:    vmovaps %ymm0, %ymm1
+; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm1
+; AVX1-NEXT:    vmovaps %ymm1, %ymm0
 ; AVX1-NEXT:    ret{{[l|q]}}
 ;
 ; AVX2-LABEL: allones_v32i16:
@@ -301,7 +301,7 @@ define <32 x i16> @allones_v32i16() nounwind {
 ;
 ; AVX512-LABEL: allones_v32i16:
 ; AVX512:       # %bb.0:
-; AVX512-NEXT:    vpternlogd $255, %zmm0, %zmm0, %zmm0
+; AVX512-NEXT:    vpternlogd {{.*#+}} zmm0 = -1
 ; AVX512-NEXT:    ret{{[l|q]}}
   ret <32 x i16> <i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1, i16 -1>
 }
@@ -318,8 +318,8 @@ define <16 x i32> @allones_v16i32() nounwind {
 ; AVX1-LABEL: allones_v16i32:
 ; AVX1:       # %bb.0:
 ; AVX1-NEXT:    vxorps %xmm0, %xmm0, %xmm0
-; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm0
-; AVX1-NEXT:    vmovaps %ymm0, %ymm1
+; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm1
+; AVX1-NEXT:    vmovaps %ymm1, %ymm0
 ; AVX1-NEXT:    ret{{[l|q]}}
 ;
 ; AVX2-LABEL: allones_v16i32:
@@ -330,7 +330,7 @@ define <16 x i32> @allones_v16i32() nounwind {
 ;
 ; AVX512-LABEL: allones_v16i32:
 ; AVX512:       # %bb.0:
-; AVX512-NEXT:    vpternlogd $255, %zmm0, %zmm0, %zmm0
+; AVX512-NEXT:    vpternlogd {{.*#+}} zmm0 = -1
 ; AVX512-NEXT:    ret{{[l|q]}}
   ret <16 x i32> <i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1, i32 -1>
 }
@@ -347,8 +347,8 @@ define <8 x i64> @allones_v8i64() nounwind {
 ; AVX1-LABEL: allones_v8i64:
 ; AVX1:       # %bb.0:
 ; AVX1-NEXT:    vxorps %xmm0, %xmm0, %xmm0
-; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm0
-; AVX1-NEXT:    vmovaps %ymm0, %ymm1
+; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm1
+; AVX1-NEXT:    vmovaps %ymm1, %ymm0
 ; AVX1-NEXT:    ret{{[l|q]}}
 ;
 ; AVX2-LABEL: allones_v8i64:
@@ -359,7 +359,7 @@ define <8 x i64> @allones_v8i64() nounwind {
 ;
 ; AVX512-LABEL: allones_v8i64:
 ; AVX512:       # %bb.0:
-; AVX512-NEXT:    vpternlogd $255, %zmm0, %zmm0, %zmm0
+; AVX512-NEXT:    vpternlogd {{.*#+}} zmm0 = -1
 ; AVX512-NEXT:    ret{{[l|q]}}
   ret <8 x i64> <i64 -1, i64 -1, i64 -1, i64 -1, i64 -1, i64 -1, i64 -1, i64 -1>
 }
@@ -376,8 +376,8 @@ define <8 x double> @allones_v8f64() nounwind {
 ; AVX1-LABEL: allones_v8f64:
 ; AVX1:       # %bb.0:
 ; AVX1-NEXT:    vxorps %xmm0, %xmm0, %xmm0
-; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm0
-; AVX1-NEXT:    vmovaps %ymm0, %ymm1
+; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm1
+; AVX1-NEXT:    vmovaps %ymm1, %ymm0
 ; AVX1-NEXT:    ret{{[l|q]}}
 ;
 ; AVX2-LABEL: allones_v8f64:
@@ -388,7 +388,7 @@ define <8 x double> @allones_v8f64() nounwind {
 ;
 ; AVX512-LABEL: allones_v8f64:
 ; AVX512:       # %bb.0:
-; AVX512-NEXT:    vpternlogd $255, %zmm0, %zmm0, %zmm0
+; AVX512-NEXT:    vpternlogd {{.*#+}} zmm0 = -1
 ; AVX512-NEXT:    ret{{[l|q]}}
   ret <8 x double> <double 0xffffffffffffffff, double 0xffffffffffffffff, double 0xffffffffffffffff, double 0xffffffffffffffff, double 0xffffffffffffffff, double 0xffffffffffffffff, double 0xffffffffffffffff, double 0xffffffffffffffff>
 }
@@ -405,8 +405,8 @@ define <16 x float> @allones_v16f32() nounwind {
 ; AVX1-LABEL: allones_v16f32:
 ; AVX1:       # %bb.0:
 ; AVX1-NEXT:    vxorps %xmm0, %xmm0, %xmm0
-; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm0
-; AVX1-NEXT:    vmovaps %ymm0, %ymm1
+; AVX1-NEXT:    vcmptrueps %ymm0, %ymm0, %ymm1
+; AVX1-NEXT:    vmovaps %ymm1, %ymm0
 ; AVX1-NEXT:    ret{{[l|q]}}
 ;
 ; AVX2-LABEL: allones_v16f32:
@@ -417,7 +417,7 @@ define <16 x float> @allones_v16f32() nounwind {
 ;
 ; AVX512-LABEL: allones_v16f32:
 ; AVX512:       # %bb.0:
-; AVX512-NEXT:    vpternlogd $255, %zmm0, %zmm0, %zmm0
+; AVX512-NEXT:    vpternlogd {{.*#+}} zmm0 = -1
 ; AVX512-NEXT:    ret{{[l|q]}}
   ret <16 x float> <float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000, float 0xffffffffe0000000>
 }

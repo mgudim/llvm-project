@@ -34,8 +34,8 @@ define i128 @avgflooru_i128_multi_use(i128 %x, i128 %y) nounwind {
 ; CHECK-NEXT:    pushq %rax
 ; CHECK-NEXT:    movq %rcx, %rbx
 ; CHECK-NEXT:    movq %rdx, %r14
-; CHECK-NEXT:    movq %rsi, %r15
-; CHECK-NEXT:    movq %rdi, %r12
+; CHECK-NEXT:    movq %rsi, %r12
+; CHECK-NEXT:    movq %rdi, %r15
 ; CHECK-NEXT:    movq %rdx, %r13
 ; CHECK-NEXT:    xorq %rdi, %r13
 ; CHECK-NEXT:    movq %rcx, %rbp
@@ -48,13 +48,13 @@ define i128 @avgflooru_i128_multi_use(i128 %x, i128 %y) nounwind {
 ; CHECK-NEXT:    movq %r13, %rdi
 ; CHECK-NEXT:    movq %rbp, %rsi
 ; CHECK-NEXT:    callq use@PLT
-; CHECK-NEXT:    addq %r14, %r12
-; CHECK-NEXT:    adcq %rbx, %r15
+; CHECK-NEXT:    addq %r14, %r15
+; CHECK-NEXT:    adcq %rbx, %r12
 ; CHECK-NEXT:    setb %al
-; CHECK-NEXT:    shrdq $1, %r15, %r12
+; CHECK-NEXT:    shrdq $1, %r12, %r15
 ; CHECK-NEXT:    movzbl %al, %edx
-; CHECK-NEXT:    shldq $63, %r15, %rdx
-; CHECK-NEXT:    movq %r12, %rax
+; CHECK-NEXT:    shldq $63, %r12, %rdx
+; CHECK-NEXT:    movq %r15, %rax
 ; CHECK-NEXT:    addq $8, %rsp
 ; CHECK-NEXT:    popq %rbx
 ; CHECK-NEXT:    popq %r12

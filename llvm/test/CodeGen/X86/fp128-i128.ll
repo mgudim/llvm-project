@@ -441,8 +441,8 @@ define dso_local void @TestCopySign(ptr noalias nocapture sret({ fp128, fp128 })
 ; SSE-NEXT:    movaps %xmm0, (%rsp) # 16-byte Spill
 ; SSE-NEXT:    callq __gttf2@PLT
 ; SSE-NEXT:    movl %eax, %ebp
-; SSE-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
-; SSE-NEXT:    movaps %xmm0, %xmm1
+; SSE-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
+; SSE-NEXT:    movaps %xmm1, %xmm0
 ; SSE-NEXT:    callq __subtf3@PLT
 ; SSE-NEXT:    testl %ebp, %ebp
 ; SSE-NEXT:    jle .LBB10_1
@@ -478,8 +478,8 @@ define dso_local void @TestCopySign(ptr noalias nocapture sret({ fp128, fp128 })
 ; AVX-NEXT:    vmovaps %xmm0, (%rsp) # 16-byte Spill
 ; AVX-NEXT:    callq __gttf2@PLT
 ; AVX-NEXT:    movl %eax, %ebp
-; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
-; AVX-NEXT:    vmovaps %xmm0, %xmm1
+; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
+; AVX-NEXT:    vmovaps %xmm1, %xmm0
 ; AVX-NEXT:    callq __subtf3@PLT
 ; AVX-NEXT:    testl %ebp, %ebp
 ; AVX-NEXT:    jle .LBB10_1

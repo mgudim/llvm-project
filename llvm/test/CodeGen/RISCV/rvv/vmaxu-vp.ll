@@ -982,6 +982,7 @@ define <vscale x 32 x i32> @vmaxu_vx_nxv32i32_unmasked(<vscale x 32 x i32> %va, 
 define <vscale x 32 x i32> @vmaxu_vx_nxv32i32_evl_nx8(<vscale x 32 x i32> %va, i32 %b, <vscale x 32 x i1> %m) {
 ; RV32-LABEL: vmaxu_vx_nxv32i32_evl_nx8:
 ; RV32:       # %bb.0:
+; RV32-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; RV32-NEXT:    csrr a1, vlenb
 ; RV32-NEXT:    srli a2, a1, 2
 ; RV32-NEXT:    vsetvli zero, a1, e32, m8, ta, ma

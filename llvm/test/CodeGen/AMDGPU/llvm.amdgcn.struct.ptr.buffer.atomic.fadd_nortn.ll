@@ -9,7 +9,11 @@ define void @struct_ptr_buffer_atomic_add_f32_noret__vgpr_val__sgpr_rsrc__vgpr_v
 ; GFX908-LABEL: struct_ptr_buffer_atomic_add_f32_noret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset:
 ; GFX908:       ; %bb.0:
 ; GFX908-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX908-NEXT:    buffer_atomic_add_f32 v0, v[1:2], s[16:19], s20 idxen offen
+; GFX908-NEXT:    s_mov_b32 s7, s19
+; GFX908-NEXT:    s_mov_b32 s6, s18
+; GFX908-NEXT:    s_mov_b32 s5, s17
+; GFX908-NEXT:    s_mov_b32 s4, s16
+; GFX908-NEXT:    buffer_atomic_add_f32 v0, v[1:2], s[4:7], s20 idxen offen
 ; GFX908-NEXT:    s_waitcnt vmcnt(0)
 ; GFX908-NEXT:    s_setpc_b64 s[30:31]
 ;
@@ -18,7 +22,11 @@ define void @struct_ptr_buffer_atomic_add_f32_noret__vgpr_val__sgpr_rsrc__vgpr_v
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; GFX90A-NEXT:    v_mov_b32_e32 v3, v2
 ; GFX90A-NEXT:    v_mov_b32_e32 v2, v1
-; GFX90A-NEXT:    buffer_atomic_add_f32 v0, v[2:3], s[16:19], s20 idxen offen
+; GFX90A-NEXT:    s_mov_b32 s7, s19
+; GFX90A-NEXT:    s_mov_b32 s6, s18
+; GFX90A-NEXT:    s_mov_b32 s5, s17
+; GFX90A-NEXT:    s_mov_b32 s4, s16
+; GFX90A-NEXT:    buffer_atomic_add_f32 v0, v[2:3], s[4:7], s20 idxen offen
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0)
 ; GFX90A-NEXT:    s_setpc_b64 s[30:31]
 ;
@@ -57,14 +65,22 @@ define void @struct_ptr_buffer_atomic_add_f32_noret__vgpr_val__sgpr_rsrc__0_voff
 ; GFX908-LABEL: struct_ptr_buffer_atomic_add_f32_noret__vgpr_val__sgpr_rsrc__0_voffset__sgpr_soffset:
 ; GFX908:       ; %bb.0:
 ; GFX908-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX908-NEXT:    buffer_atomic_add_f32 v0, v1, s[16:19], s20 idxen
+; GFX908-NEXT:    s_mov_b32 s7, s19
+; GFX908-NEXT:    s_mov_b32 s6, s18
+; GFX908-NEXT:    s_mov_b32 s5, s17
+; GFX908-NEXT:    s_mov_b32 s4, s16
+; GFX908-NEXT:    buffer_atomic_add_f32 v0, v1, s[4:7], s20 idxen
 ; GFX908-NEXT:    s_waitcnt vmcnt(0)
 ; GFX908-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX90A-LABEL: struct_ptr_buffer_atomic_add_f32_noret__vgpr_val__sgpr_rsrc__0_voffset__sgpr_soffset:
 ; GFX90A:       ; %bb.0:
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX90A-NEXT:    buffer_atomic_add_f32 v0, v1, s[16:19], s20 idxen
+; GFX90A-NEXT:    s_mov_b32 s7, s19
+; GFX90A-NEXT:    s_mov_b32 s6, s18
+; GFX90A-NEXT:    s_mov_b32 s5, s17
+; GFX90A-NEXT:    s_mov_b32 s4, s16
+; GFX90A-NEXT:    buffer_atomic_add_f32 v0, v1, s[4:7], s20 idxen
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0)
 ; GFX90A-NEXT:    s_setpc_b64 s[30:31]
 ;
@@ -99,7 +115,11 @@ define void @struct_ptr_buffer_atomic_add_f32_noret__vgpr_val__sgpr_rsrc__vgpr_v
 ; GFX908-LABEL: struct_ptr_buffer_atomic_add_f32_noret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset_slc:
 ; GFX908:       ; %bb.0:
 ; GFX908-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX908-NEXT:    buffer_atomic_add_f32 v0, v[1:2], s[16:19], s20 idxen offen slc
+; GFX908-NEXT:    s_mov_b32 s7, s19
+; GFX908-NEXT:    s_mov_b32 s6, s18
+; GFX908-NEXT:    s_mov_b32 s5, s17
+; GFX908-NEXT:    s_mov_b32 s4, s16
+; GFX908-NEXT:    buffer_atomic_add_f32 v0, v[1:2], s[4:7], s20 idxen offen slc
 ; GFX908-NEXT:    s_waitcnt vmcnt(0)
 ; GFX908-NEXT:    s_setpc_b64 s[30:31]
 ;
@@ -108,7 +128,11 @@ define void @struct_ptr_buffer_atomic_add_f32_noret__vgpr_val__sgpr_rsrc__vgpr_v
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; GFX90A-NEXT:    v_mov_b32_e32 v3, v2
 ; GFX90A-NEXT:    v_mov_b32_e32 v2, v1
-; GFX90A-NEXT:    buffer_atomic_add_f32 v0, v[2:3], s[16:19], s20 idxen offen slc
+; GFX90A-NEXT:    s_mov_b32 s7, s19
+; GFX90A-NEXT:    s_mov_b32 s6, s18
+; GFX90A-NEXT:    s_mov_b32 s5, s17
+; GFX90A-NEXT:    s_mov_b32 s4, s16
+; GFX90A-NEXT:    buffer_atomic_add_f32 v0, v[2:3], s[4:7], s20 idxen offen slc
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0)
 ; GFX90A-NEXT:    s_setpc_b64 s[30:31]
 ;
@@ -146,7 +170,11 @@ define void @struct_ptr_buffer_atomic_add_v2f16_noret__vgpr_val__sgpr_rsrc__vgpr
 ; GFX908-LABEL: struct_ptr_buffer_atomic_add_v2f16_noret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset:
 ; GFX908:       ; %bb.0:
 ; GFX908-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX908-NEXT:    buffer_atomic_pk_add_f16 v0, v[1:2], s[16:19], s20 idxen offen
+; GFX908-NEXT:    s_mov_b32 s7, s19
+; GFX908-NEXT:    s_mov_b32 s6, s18
+; GFX908-NEXT:    s_mov_b32 s5, s17
+; GFX908-NEXT:    s_mov_b32 s4, s16
+; GFX908-NEXT:    buffer_atomic_pk_add_f16 v0, v[1:2], s[4:7], s20 idxen offen
 ; GFX908-NEXT:    s_waitcnt vmcnt(0)
 ; GFX908-NEXT:    s_setpc_b64 s[30:31]
 ;
@@ -155,7 +183,11 @@ define void @struct_ptr_buffer_atomic_add_v2f16_noret__vgpr_val__sgpr_rsrc__vgpr
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; GFX90A-NEXT:    v_mov_b32_e32 v3, v2
 ; GFX90A-NEXT:    v_mov_b32_e32 v2, v1
-; GFX90A-NEXT:    buffer_atomic_pk_add_f16 v0, v[2:3], s[16:19], s20 idxen offen
+; GFX90A-NEXT:    s_mov_b32 s7, s19
+; GFX90A-NEXT:    s_mov_b32 s6, s18
+; GFX90A-NEXT:    s_mov_b32 s5, s17
+; GFX90A-NEXT:    s_mov_b32 s4, s16
+; GFX90A-NEXT:    buffer_atomic_pk_add_f16 v0, v[2:3], s[4:7], s20 idxen offen
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0)
 ; GFX90A-NEXT:    s_setpc_b64 s[30:31]
 ;

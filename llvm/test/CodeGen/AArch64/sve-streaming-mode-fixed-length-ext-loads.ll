@@ -272,13 +272,13 @@ define <2 x i256> @load_sext_v2i64i256(ptr %ap) {
 ; CHECK-LABEL: load_sext_v2i64i256:
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    ldp x8, x4, [x0]
-; CHECK-NEXT:    asr x1, x8, #63
-; CHECK-NEXT:    asr x5, x4, #63
+; CHECK-NEXT:    asr x3, x8, #63
+; CHECK-NEXT:    asr x7, x4, #63
 ; CHECK-NEXT:    mov x0, x8
-; CHECK-NEXT:    mov x2, x1
-; CHECK-NEXT:    mov x3, x1
-; CHECK-NEXT:    mov x6, x5
-; CHECK-NEXT:    mov x7, x5
+; CHECK-NEXT:    mov x1, x3
+; CHECK-NEXT:    mov x2, x3
+; CHECK-NEXT:    mov x5, x7
+; CHECK-NEXT:    mov x6, x7
 ; CHECK-NEXT:    ret
 ;
 ; NONEON-NOSVE-LABEL: load_sext_v2i64i256:
@@ -287,12 +287,12 @@ define <2 x i256> @load_sext_v2i64i256(ptr %ap) {
 ; NONEON-NOSVE-NEXT:    str q0, [sp, #-16]!
 ; NONEON-NOSVE-NEXT:    .cfi_def_cfa_offset 16
 ; NONEON-NOSVE-NEXT:    ldp x0, x4, [sp], #16
-; NONEON-NOSVE-NEXT:    asr x1, x0, #63
-; NONEON-NOSVE-NEXT:    asr x5, x4, #63
-; NONEON-NOSVE-NEXT:    mov x2, x1
-; NONEON-NOSVE-NEXT:    mov x3, x1
-; NONEON-NOSVE-NEXT:    mov x6, x5
-; NONEON-NOSVE-NEXT:    mov x7, x5
+; NONEON-NOSVE-NEXT:    asr x3, x0, #63
+; NONEON-NOSVE-NEXT:    asr x7, x4, #63
+; NONEON-NOSVE-NEXT:    mov x1, x3
+; NONEON-NOSVE-NEXT:    mov x2, x3
+; NONEON-NOSVE-NEXT:    mov x5, x7
+; NONEON-NOSVE-NEXT:    mov x6, x7
 ; NONEON-NOSVE-NEXT:    ret
   %a = load <2 x i64>, ptr %ap
   %val = sext <2 x i64> %a to <2 x i256>

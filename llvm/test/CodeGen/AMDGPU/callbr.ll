@@ -5,20 +5,24 @@ define void @callbr_inline_asm(ptr %src, ptr %dst1, ptr %dst2, i32 %c) {
 ; CHECK-LABEL: callbr_inline_asm:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    flat_load_dword v0, v[0:1]
+; CHECK-NEXT:    v_mov_b32_e32 v9, v1
+; CHECK-NEXT:    v_mov_b32_e32 v8, v0
+; CHECK-NEXT:    v_mov_b32_e32 v0, v2
+; CHECK-NEXT:    flat_load_dword v2, v[8:9]
 ; CHECK-NEXT:    ;;#ASMSTART
 ; CHECK-NEXT:    v_cmp_gt_i32 vcc v6, 42; s_cbranch_vccnz .LBB0_2
 ; CHECK-NEXT:    ;;#ASMEND
 ; CHECK-NEXT:  ; %bb.1: ; %fallthrough
+; CHECK-NEXT:    v_mov_b32_e32 v1, v3
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    flat_store_dword v[2:3], v0
+; CHECK-NEXT:    flat_store_dword v[0:1], v2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
 ; CHECK-NEXT:  .LBB0_2: ; Inline asm indirect target
 ; CHECK-NEXT:    ; %indirect
 ; CHECK-NEXT:    ; Label of block must be emitted
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; CHECK-NEXT:    flat_store_dword v[4:5], v0
+; CHECK-NEXT:    flat_store_dword v[4:5], v2
 ; CHECK-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
 ; CHECK-NEXT:    s_setpc_b64 s[30:31]
 	%a = load i32, ptr %src, align 4

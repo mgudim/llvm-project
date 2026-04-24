@@ -187,8 +187,7 @@ define preserve_nonecc i64 @callee_with_many_param(i64 %a1, i64 %a2, i64 %a3, i6
 ; CHECK-NEXT:    str x30, [sp, #-16]! // 8-byte Folded Spill
 ; CHECK-NEXT:    .cfi_def_cfa_offset 16
 ; CHECK-NEXT:    .cfi_offset w30, -16
-; CHECK-NEXT:    mov x8, x15
-; CHECK-NEXT:    mov x15, x20
+; CHECK-NEXT:    mov x8, x20
 ; CHECK-NEXT:    mov x20, x21
 ; CHECK-NEXT:    mov x21, x22
 ; CHECK-NEXT:    mov x22, x23
@@ -211,7 +210,8 @@ define preserve_nonecc i64 @callee_with_many_param(i64 %a1, i64 %a2, i64 %a3, i6
 ; CHECK-NEXT:    mov x12, x13
 ; CHECK-NEXT:    mov x13, x14
 ; CHECK-NEXT:    mov x14, x9
-; CHECK-NEXT:    mov x9, x8
+; CHECK-NEXT:    mov x9, x15
+; CHECK-NEXT:    mov x15, x8
 ; CHECK-NEXT:    bl callee_with_many_param2
 ; CHECK-NEXT:    ldr x30, [sp], #16 // 8-byte Folded Reload
 ; CHECK-NEXT:    ret
@@ -222,8 +222,7 @@ define preserve_nonecc i64 @callee_with_many_param(i64 %a1, i64 %a2, i64 %a3, i6
 ; DARWIN-NEXT:    .cfi_def_cfa_offset 16
 ; DARWIN-NEXT:    .cfi_offset w30, -8
 ; DARWIN-NEXT:    .cfi_offset w29, -16
-; DARWIN-NEXT:    mov x8, x15
-; DARWIN-NEXT:    mov x15, x20
+; DARWIN-NEXT:    mov x8, x20
 ; DARWIN-NEXT:    mov x20, x21
 ; DARWIN-NEXT:    mov x21, x22
 ; DARWIN-NEXT:    mov x22, x23
@@ -246,7 +245,8 @@ define preserve_nonecc i64 @callee_with_many_param(i64 %a1, i64 %a2, i64 %a3, i6
 ; DARWIN-NEXT:    mov x12, x13
 ; DARWIN-NEXT:    mov x13, x14
 ; DARWIN-NEXT:    mov x14, x9
-; DARWIN-NEXT:    mov x9, x8
+; DARWIN-NEXT:    mov x9, x15
+; DARWIN-NEXT:    mov x15, x8
 ; DARWIN-NEXT:    bl _callee_with_many_param2
 ; DARWIN-NEXT:    ldp x29, x30, [sp], #16 ; 16-byte Folded Reload
 ; DARWIN-NEXT:    ret

@@ -209,13 +209,13 @@ define void @test_simple_arg8_call(i32 %in0) {
 ; X64:       # %bb.0:
 ; X64-NEXT:    subq $24, %rsp
 ; X64-NEXT:    .cfi_def_cfa_offset 32
+; X64-NEXT:    movl %edi, %r9d
 ; X64-NEXT:    movl %edi, (%rsp)
 ; X64-NEXT:    movl %edi, {{[0-9]+}}(%rsp)
 ; X64-NEXT:    movl %edi, %esi
 ; X64-NEXT:    movl %edi, %edx
 ; X64-NEXT:    movl %edi, %ecx
 ; X64-NEXT:    movl %edi, %r8d
-; X64-NEXT:    movl %edi, %r9d
 ; X64-NEXT:    callq simple_arg8_callee
 ; X64-NEXT:    addq $24, %rsp
 ; X64-NEXT:    .cfi_def_cfa_offset 8

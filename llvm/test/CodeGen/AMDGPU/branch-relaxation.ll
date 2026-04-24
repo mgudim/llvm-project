@@ -746,33 +746,35 @@ bb4:
 define amdgpu_kernel void @uniform_unconditional_min_long_backward_branch(ptr addrspace(1) %arg, i32 %arg1) {
 ; GCN-LABEL: uniform_unconditional_min_long_backward_branch:
 ; GCN:       ; %bb.0: ; %entry
-; GCN-NEXT:    s_and_b64 vcc, exec, -1
+; GCN-NEXT:    s_and_b64 s[0:1], exec, -1
 ; GCN-NEXT:  .LBB6_1: ; %loop
 ; GCN-NEXT:    ; =>This Inner Loop Header: Depth=1
+; GCN-NEXT:    s_mov_b64 vcc, s[0:1]
 ; GCN-NEXT:    ;;#ASMSTART
 ; GCN-NEXT:    v_nop_e64
 ; GCN-NEXT:    v_nop_e64
 ; GCN-NEXT:    v_nop_e64
 ; GCN-NEXT:    v_nop_e64
 ; GCN-NEXT:    ;;#ASMEND
-; GCN-NEXT:    s_mov_b64 vcc, vcc
 ; GCN-NEXT:    s_cbranch_vccz .LBB6_2
 ; GCN-NEXT:  ; %bb.3: ; %loop
 ; GCN-NEXT:    ; in Loop: Header=BB6_1 Depth=1
-; GCN-NEXT:    s_getpc_b64 s[0:1]
+; GCN-NEXT:    s_getpc_b64 s[2:3]
 ; GCN-NEXT:  .Lpost_getpc7:
-; GCN-NEXT:    s_add_u32 s0, s0, (.LBB6_1-.Lpost_getpc7)&4294967295
-; GCN-NEXT:    s_addc_u32 s1, s1, (.LBB6_1-.Lpost_getpc7)>>32
-; GCN-NEXT:    s_setpc_b64 s[0:1]
+; GCN-NEXT:    s_add_u32 s2, s2, (.LBB6_1-.Lpost_getpc7)&4294967295
+; GCN-NEXT:    s_addc_u32 s3, s3, (.LBB6_1-.Lpost_getpc7)>>32
+; GCN-NEXT:    s_setpc_b64 s[2:3]
 ; GCN-NEXT:  .LBB6_2: ; %DummyReturnBlock
 ; GCN-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: uniform_unconditional_min_long_backward_branch:
 ; GFX11:       ; %bb.0: ; %entry
-; GFX11-NEXT:    s_and_b64 vcc, exec, -1
+; GFX11-NEXT:    s_and_b64 s[0:1], exec, -1
 ; GFX11-NEXT:    .p2align 6
 ; GFX11-NEXT:  .LBB6_1: ; %loop
 ; GFX11-NEXT:    ; =>This Inner Loop Header: Depth=1
+; GFX11-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
+; GFX11-NEXT:    s_mov_b64 vcc, s[0:1]
 ; GFX11-NEXT:    ;;#ASMSTART
 ; GFX11-NEXT:    v_nop_e64
 ; GFX11-NEXT:    v_nop_e64
@@ -782,13 +784,13 @@ define amdgpu_kernel void @uniform_unconditional_min_long_backward_branch(ptr ad
 ; GFX11-NEXT:    s_cbranch_vccz .LBB6_2
 ; GFX11-NEXT:  ; %bb.3: ; %loop
 ; GFX11-NEXT:    ; in Loop: Header=BB6_1 Depth=1
-; GFX11-NEXT:    s_getpc_b64 s[0:1]
+; GFX11-NEXT:    s_getpc_b64 s[2:3]
 ; GFX11-NEXT:  .Lpost_getpc7:
 ; GFX11-NEXT:    s_waitcnt_depctr depctr_sa_sdst(0)
-; GFX11-NEXT:    s_add_u32 s0, s0, (.LBB6_1-.Lpost_getpc7)&4294967295
-; GFX11-NEXT:    s_addc_u32 s1, s1, (.LBB6_1-.Lpost_getpc7)>>32
+; GFX11-NEXT:    s_add_u32 s2, s2, (.LBB6_1-.Lpost_getpc7)&4294967295
+; GFX11-NEXT:    s_addc_u32 s3, s3, (.LBB6_1-.Lpost_getpc7)>>32
 ; GFX11-NEXT:    s_waitcnt_depctr depctr_sa_sdst(0)
-; GFX11-NEXT:    s_setpc_b64 s[0:1]
+; GFX11-NEXT:    s_setpc_b64 s[2:3]
 ; GFX11-NEXT:  .LBB6_2: ; %DummyReturnBlock
 ; GFX11-NEXT:    s_endpgm
 ;

@@ -498,11 +498,11 @@ define i32 @not_shld_i32(i32, i32, i32) {
 ;
 ; X64-LABEL: not_shld_i32:
 ; X64:       # %bb.0:
-; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    movl %esi, %eax
+; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    shll %cl, %edi
-; X64-NEXT:    negb %cl
-; X64-NEXT:    # kill: def $cl killed $cl killed $ecx
+; X64-NEXT:    negb %dl
+; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    shrl %cl, %eax
 ; X64-NEXT:    orl %edi, %eax
 ; X64-NEXT:    retq
@@ -529,11 +529,11 @@ define i32 @not_shrd_i32(i32, i32, i32) {
 ;
 ; X64-LABEL: not_shrd_i32:
 ; X64:       # %bb.0:
-; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    movl %esi, %eax
+; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    shrl %cl, %edi
-; X64-NEXT:    negb %cl
-; X64-NEXT:    # kill: def $cl killed $cl killed $ecx
+; X64-NEXT:    negb %dl
+; X64-NEXT:    movl %edx, %ecx
 ; X64-NEXT:    shll %cl, %eax
 ; X64-NEXT:    orl %edi, %eax
 ; X64-NEXT:    retq

@@ -72,6 +72,7 @@ define <vscale x 2 x i64> @test_vp_splice_nxv2i64_masked(<vscale x 2 x i64> %va,
 ;
 ; VLDEP-LABEL: test_vp_splice_nxv2i64_masked:
 ; VLDEP:       # %bb.0:
+; VLDEP-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; VLDEP-NEXT:    addi a0, a0, -3
 ; VLDEP-NEXT:    vsetvli zero, a0, e64, m2, ta, ma
 ; VLDEP-NEXT:    vslidedown.vi v8, v8, 3, v0.t
@@ -136,6 +137,7 @@ define <vscale x 1 x i64> @test_vp_splice_nxv1i64_masked(<vscale x 1 x i64> %va,
 ;
 ; VLDEP-LABEL: test_vp_splice_nxv1i64_masked:
 ; VLDEP:       # %bb.0:
+; VLDEP-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; VLDEP-NEXT:    addi a0, a0, -1
 ; VLDEP-NEXT:    vsetvli zero, a0, e64, m1, ta, ma
 ; VLDEP-NEXT:    vslidedown.vi v8, v8, 1, v0.t
@@ -200,6 +202,7 @@ define <vscale x 2 x i32> @test_vp_splice_nxv2i32_masked(<vscale x 2 x i32> %va,
 ;
 ; VLDEP-LABEL: test_vp_splice_nxv2i32_masked:
 ; VLDEP:       # %bb.0:
+; VLDEP-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; VLDEP-NEXT:    addi a0, a0, -3
 ; VLDEP-NEXT:    vsetvli zero, a0, e32, m1, ta, ma
 ; VLDEP-NEXT:    vslidedown.vi v8, v8, 3, v0.t
@@ -264,6 +267,7 @@ define <vscale x 4 x i16> @test_vp_splice_nxv4i16_masked(<vscale x 4 x i16> %va,
 ;
 ; VLDEP-LABEL: test_vp_splice_nxv4i16_masked:
 ; VLDEP:       # %bb.0:
+; VLDEP-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; VLDEP-NEXT:    addi a0, a0, -5
 ; VLDEP-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
 ; VLDEP-NEXT:    vslidedown.vi v8, v8, 5, v0.t
@@ -328,6 +332,7 @@ define <vscale x 8 x i8> @test_vp_splice_nxv8i8_masked(<vscale x 8 x i8> %va, <v
 ;
 ; VLDEP-LABEL: test_vp_splice_nxv8i8_masked:
 ; VLDEP:       # %bb.0:
+; VLDEP-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; VLDEP-NEXT:    addi a0, a0, -5
 ; VLDEP-NEXT:    vsetvli zero, a0, e8, m1, ta, ma
 ; VLDEP-NEXT:    vslidedown.vi v8, v8, 5, v0.t
@@ -392,6 +397,7 @@ define <vscale x 1 x double> @test_vp_splice_nxv1f64_masked(<vscale x 1 x double
 ;
 ; VLDEP-LABEL: test_vp_splice_nxv1f64_masked:
 ; VLDEP:       # %bb.0:
+; VLDEP-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; VLDEP-NEXT:    addi a0, a0, -1
 ; VLDEP-NEXT:    vsetvli zero, a0, e64, m1, ta, ma
 ; VLDEP-NEXT:    vslidedown.vi v8, v8, 1, v0.t
@@ -456,6 +462,7 @@ define <vscale x 2 x float> @test_vp_splice_nxv2f32_masked(<vscale x 2 x float> 
 ;
 ; VLDEP-LABEL: test_vp_splice_nxv2f32_masked:
 ; VLDEP:       # %bb.0:
+; VLDEP-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; VLDEP-NEXT:    addi a0, a0, -3
 ; VLDEP-NEXT:    vsetvli zero, a0, e32, m1, ta, ma
 ; VLDEP-NEXT:    vslidedown.vi v8, v8, 3, v0.t
@@ -661,6 +668,7 @@ define <vscale x 2 x half> @test_vp_splice_nxv2f16_masked(<vscale x 2 x half> %v
 ;
 ; VLDEP-LABEL: test_vp_splice_nxv2f16_masked:
 ; VLDEP:       # %bb.0:
+; VLDEP-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; VLDEP-NEXT:    addi a0, a0, -3
 ; VLDEP-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
 ; VLDEP-NEXT:    vslidedown.vi v8, v8, 3, v0.t
@@ -725,6 +733,7 @@ define <vscale x 2 x bfloat> @test_vp_splice_nxv2bf16_masked(<vscale x 2 x bfloa
 ;
 ; VLDEP-LABEL: test_vp_splice_nxv2bf16_masked:
 ; VLDEP:       # %bb.0:
+; VLDEP-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; VLDEP-NEXT:    addi a0, a0, -3
 ; VLDEP-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
 ; VLDEP-NEXT:    vslidedown.vi v8, v8, 3, v0.t

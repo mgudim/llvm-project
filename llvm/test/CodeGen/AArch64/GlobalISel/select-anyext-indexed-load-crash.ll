@@ -11,11 +11,11 @@ define void @test() {
 ; CHECK-NEXT:    .cfi_def_cfa_offset 32
 ; CHECK-NEXT:    .cfi_offset w30, -8
 ; CHECK-NEXT:    .cfi_offset w29, -16
-; CHECK-NEXT:    mov x0, xzr
 ; CHECK-NEXT:    mov x1, xzr
-; CHECK-NEXT:    ldr x8, [x0]
+; CHECK-NEXT:    mov x0, xzr
+; CHECK-NEXT:    ldr x8, [x1]
 ; CHECK-NEXT:    ldr w9, [x8], #8
-; CHECK-NEXT:    str x8, [x0]
+; CHECK-NEXT:    str x8, [x1]
 ; CHECK-NEXT:    str x9, [sp]
 ; CHECK-NEXT:    bl _sprintf
 ; CHECK-NEXT:    ldp x29, x30, [sp, #16] ; 16-byte Folded Reload

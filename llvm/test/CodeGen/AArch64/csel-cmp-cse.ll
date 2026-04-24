@@ -321,8 +321,9 @@ define i32 @test_eq0_multi_use_sub_i32(i32 %x0, i32 %x1) {
 ; CHECK-NEXT:    .cfi_offset w19, -8
 ; CHECK-NEXT:    .cfi_offset w30, -16
 ; CHECK-NEXT:    subs w8, w1, #1
-; CHECK-NEXT:    add w0, w8, w0
-; CHECK-NEXT:    csel w19, wzr, w0, lo
+; CHECK-NEXT:    add w8, w8, w0
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    csel w19, wzr, w8, lo
 ; CHECK-NEXT:    bl use_i32
 ; CHECK-NEXT:    mov w0, w19
 ; CHECK-NEXT:    ldp x30, x19, [sp], #16 // 16-byte Folded Reload

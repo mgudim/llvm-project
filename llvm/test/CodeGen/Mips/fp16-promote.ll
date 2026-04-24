@@ -207,29 +207,29 @@ define <4 x float> @test_vec_fpext_float(ptr %p) nounwind {
 ; MIPS64-NEXT:    sd $18, 16($sp) # 8-byte Folded Spill
 ; MIPS64-NEXT:    sd $17, 8($sp) # 8-byte Folded Spill
 ; MIPS64-NEXT:    sd $16, 0($sp) # 8-byte Folded Spill
-; MIPS64-NEXT:    move $16, $4
+; MIPS64-NEXT:    move $17, $4
 ; MIPS64-NEXT:    lhu $4, 2($4)
 ; MIPS64-NEXT:    jal __extendhfsf2
 ; MIPS64-NEXT:    nop
-; MIPS64-NEXT:    lhu $4, 6($16)
+; MIPS64-NEXT:    lhu $4, 6($17)
 ; MIPS64-NEXT:    jal __extendhfsf2
-; MIPS64-NEXT:    mfc1 $17, $f0
+; MIPS64-NEXT:    mfc1 $16, $f0
 ; MIPS64-NEXT:    mfc1 $18, $f0
-; MIPS64-NEXT:    lhu $4, 0($16)
+; MIPS64-NEXT:    lhu $4, 0($17)
 ; MIPS64-NEXT:    jal __extendhfsf2
-; MIPS64-NEXT:    dsll $17, $17, 32
+; MIPS64-NEXT:    dsll $16, $16, 32
 ; MIPS64-NEXT:    mfc1 $1, $f0
 ; MIPS64-NEXT:    dsll $1, $1, 32
 ; MIPS64-NEXT:    dsrl $1, $1, 32
-; MIPS64-NEXT:    or $17, $1, $17
-; MIPS64-NEXT:    lhu $4, 4($16)
+; MIPS64-NEXT:    or $16, $1, $16
+; MIPS64-NEXT:    lhu $4, 4($17)
 ; MIPS64-NEXT:    jal __extendhfsf2
 ; MIPS64-NEXT:    dsll $18, $18, 32
 ; MIPS64-NEXT:    mfc1 $1, $f0
 ; MIPS64-NEXT:    dsll $1, $1, 32
 ; MIPS64-NEXT:    dsrl $1, $1, 32
 ; MIPS64-NEXT:    or $3, $1, $18
-; MIPS64-NEXT:    move $2, $17
+; MIPS64-NEXT:    move $2, $16
 ; MIPS64-NEXT:    ld $16, 0($sp) # 8-byte Folded Reload
 ; MIPS64-NEXT:    ld $17, 8($sp) # 8-byte Folded Reload
 ; MIPS64-NEXT:    ld $18, 16($sp) # 8-byte Folded Reload

@@ -298,13 +298,14 @@ define i1 @scalar_i32_bitsinmiddle_eq(i32 %x, i32 %y) nounwind {
 define i1 @scalar_i64_signbit_eq(i64 %x, i64 %y) nounwind {
 ; X86-BMI1-LABEL: scalar_i64_signbit_eq:
 ; X86-BMI1:       # %bb.0:
-; X86-BMI1-NEXT:    movzbl {{[0-9]+}}(%esp), %ecx
-; X86-BMI1-NEXT:    movl {{[0-9]+}}(%esp), %eax
-; X86-BMI1-NEXT:    shrl %cl, %eax
-; X86-BMI1-NEXT:    xorl %edx, %edx
-; X86-BMI1-NEXT:    testb $32, %cl
-; X86-BMI1-NEXT:    cmovel %eax, %edx
-; X86-BMI1-NEXT:    testl $-2147483648, %edx # imm = 0x80000000
+; X86-BMI1-NEXT:    movzbl {{[0-9]+}}(%esp), %eax
+; X86-BMI1-NEXT:    movl {{[0-9]+}}(%esp), %edx
+; X86-BMI1-NEXT:    movl %eax, %ecx
+; X86-BMI1-NEXT:    shrl %cl, %edx
+; X86-BMI1-NEXT:    xorl %ecx, %ecx
+; X86-BMI1-NEXT:    testb $32, %al
+; X86-BMI1-NEXT:    cmovel %edx, %ecx
+; X86-BMI1-NEXT:    testl $-2147483648, %ecx # imm = 0x80000000
 ; X86-BMI1-NEXT:    sete %al
 ; X86-BMI1-NEXT:    retl
 ;
@@ -469,8 +470,9 @@ define i1 @scalar_i128_lowestbit_eq(i128 %x, i128 %y) nounwind {
 ;
 ; X64-BMI1-LABEL: scalar_i128_lowestbit_eq:
 ; X64-BMI1:       # %bb.0:
-; X64-BMI1-NEXT:    movl %edx, %ecx
-; X64-BMI1-NEXT:    andb $32, %cl
+; X64-BMI1-NEXT:    movl %edx, %eax
+; X64-BMI1-NEXT:    andb $32, %al
+; X64-BMI1-NEXT:    movl %eax, %ecx
 ; X64-BMI1-NEXT:    shrq %cl, %rsi
 ; X64-BMI1-NEXT:    shrq %cl, %rdi
 ; X64-BMI1-NEXT:    testb $64, %dl

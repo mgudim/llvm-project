@@ -9,12 +9,6 @@
 define ptr @foo(ptr %ptr, i64 %p2, i64 %p3, i64 %p4, i64 %p5, i64 %p6) {
 ; CHECK-LABEL: foo:
 ; CHECK:       # %bb.0: # %entry
-; CHECK-NEXT:    testq %rdi, %rdi
-; CHECK-NEXT:    je .LBB0_1
-; CHECK-NEXT:  # %bb.2: # %if.end
-; CHECK-NEXT:    incq %rdi
-; CHECK-NEXT:    jmp qux@PLT # TAILCALL
-; CHECK-NEXT:  .LBB0_1: # %if.then
 ; CHECK-NEXT:    pushq %r15
 ; CHECK-NEXT:    .cfi_def_cfa_offset 16
 ; CHECK-NEXT:    pushq %r14
@@ -30,18 +24,20 @@ define ptr @foo(ptr %ptr, i64 %p2, i64 %p3, i64 %p4, i64 %p5, i64 %p6) {
 ; CHECK-NEXT:    .cfi_offset %r13, -32
 ; CHECK-NEXT:    .cfi_offset %r14, -24
 ; CHECK-NEXT:    .cfi_offset %r15, -16
-; CHECK-NEXT:    movq %rsi, %rbx
-; CHECK-NEXT:    movq %rdx, %r14
+; CHECK-NEXT:    movq %r9, %rbx
+; CHECK-NEXT:    movq %r8, %r14
 ; CHECK-NEXT:    movq %rcx, %r15
-; CHECK-NEXT:    movq %r8, %r12
-; CHECK-NEXT:    movq %r9, %r13
-; CHECK-NEXT:    callq bar@PLT
-; CHECK-NEXT:    movq %rbx, %rsi
-; CHECK-NEXT:    movq %r14, %rdx
+; CHECK-NEXT:    movq %rdx, %r12
+; CHECK-NEXT:    movq %rsi, %r13
+; CHECK-NEXT:    testq %rdi, %rdi
+; CHECK-NEXT:    je .LBB0_1
+; CHECK-NEXT:  .LBB0_2: # %if.end
+; CHECK-NEXT:    incq %rdi
+; CHECK-NEXT:    movq %r13, %rsi
+; CHECK-NEXT:    movq %r12, %rdx
 ; CHECK-NEXT:    movq %r15, %rcx
-; CHECK-NEXT:    movq %r12, %r8
-; CHECK-NEXT:    movq %r13, %r9
-; CHECK-NEXT:    movq %rax, %rdi
+; CHECK-NEXT:    movq %r14, %r8
+; CHECK-NEXT:    movq %rbx, %r9
 ; CHECK-NEXT:    popq %rbx
 ; CHECK-NEXT:    .cfi_def_cfa_offset 40
 ; CHECK-NEXT:    popq %r12
@@ -52,13 +48,17 @@ define ptr @foo(ptr %ptr, i64 %p2, i64 %p3, i64 %p4, i64 %p5, i64 %p6) {
 ; CHECK-NEXT:    .cfi_def_cfa_offset 16
 ; CHECK-NEXT:    popq %r15
 ; CHECK-NEXT:    .cfi_def_cfa_offset 8
-; CHECK-NEXT:    .cfi_restore %rbx
-; CHECK-NEXT:    .cfi_restore %r12
-; CHECK-NEXT:    .cfi_restore %r13
-; CHECK-NEXT:    .cfi_restore %r14
-; CHECK-NEXT:    .cfi_restore %r15
-; CHECK-NEXT:    incq %rdi
 ; CHECK-NEXT:    jmp qux@PLT # TAILCALL
+; CHECK-NEXT:  .LBB0_1: # %if.then
+; CHECK-NEXT:    .cfi_def_cfa_offset 48
+; CHECK-NEXT:    movq %r13, %rsi
+; CHECK-NEXT:    movq %r12, %rdx
+; CHECK-NEXT:    movq %r15, %rcx
+; CHECK-NEXT:    movq %r14, %r8
+; CHECK-NEXT:    movq %rbx, %r9
+; CHECK-NEXT:    callq bar@PLT
+; CHECK-NEXT:    movq %rax, %rdi
+; CHECK-NEXT:    jmp .LBB0_2
 entry:
   %tobool.not = icmp eq ptr %ptr, null
   br i1 %tobool.not, label %if.then, label %if.end, !prof !5

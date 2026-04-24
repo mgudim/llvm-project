@@ -299,14 +299,15 @@ define <4 x double> @hadd_v4f64_scalar_broadcast(<4 x double> %a) {
 ; SSE_SLOW-NEXT:    movapd %xmm0, %xmm1
 ; SSE_SLOW-NEXT:    unpckhpd {{.*#+}} xmm1 = xmm1[1],xmm0[1]
 ; SSE_SLOW-NEXT:    addsd %xmm0, %xmm1
-; SSE_SLOW-NEXT:    movddup {{.*#+}} xmm0 = xmm1[0,0]
-; SSE_SLOW-NEXT:    movapd %xmm0, %xmm1
+; SSE_SLOW-NEXT:    movddup {{.*#+}} xmm1 = xmm1[0,0]
+; SSE_SLOW-NEXT:    movapd %xmm1, %xmm0
 ; SSE_SLOW-NEXT:    retq
 ;
 ; SSE_FAST-LABEL: hadd_v4f64_scalar_broadcast:
 ; SSE_FAST:       # %bb.0:
-; SSE_FAST-NEXT:    haddpd %xmm0, %xmm0
 ; SSE_FAST-NEXT:    movapd %xmm0, %xmm1
+; SSE_FAST-NEXT:    haddpd %xmm0, %xmm1
+; SSE_FAST-NEXT:    movapd %xmm1, %xmm0
 ; SSE_FAST-NEXT:    retq
 ;
 ; AVX1_SLOW-LABEL: hadd_v4f64_scalar_broadcast:

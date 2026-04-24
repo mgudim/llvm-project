@@ -519,26 +519,28 @@ define <4 x i64> @dont_fold_urem_i64(<4 x i64> %x) {
 ; AVX512-LABEL: dont_fold_urem_i64:
 ; AVX512:       # %bb.0:
 ; AVX512-NEXT:    vextracti128 $1, %ymm0, %xmm1
-; AVX512-NEXT:    vmovq %xmm1, %rdx
-; AVX512-NEXT:    movabsq $7218291159277650633, %rax # imm = 0x642C8590B21642C9
-; AVX512-NEXT:    mulxq %rax, %rax, %rax
-; AVX512-NEXT:    movq %rdx, %rcx
-; AVX512-NEXT:    subq %rax, %rcx
-; AVX512-NEXT:    shrq %rcx
-; AVX512-NEXT:    addq %rax, %rcx
-; AVX512-NEXT:    shrq $4, %rcx
-; AVX512-NEXT:    leaq (%rcx,%rcx,2), %rax
-; AVX512-NEXT:    shlq $3, %rax
-; AVX512-NEXT:    subq %rax, %rcx
-; AVX512-NEXT:    addq %rdx, %rcx
-; AVX512-NEXT:    vpextrq $1, %xmm1, %rdx
-; AVX512-NEXT:    movabsq $-4513890722074972339, %rax # imm = 0xC15B704DCBCA2F4D
-; AVX512-NEXT:    mulxq %rax, %rax, %rax
-; AVX512-NEXT:    vmovq %rcx, %xmm1
-; AVX512-NEXT:    shrq $12, %rax
-; AVX512-NEXT:    imulq $5423, %rax, %rax # imm = 0x152F
-; AVX512-NEXT:    subq %rax, %rdx
-; AVX512-NEXT:    vmovq %rdx, %xmm2
+; AVX512-NEXT:    vmovq %xmm1, %rax
+; AVX512-NEXT:    movabsq $7218291159277650633, %rcx # imm = 0x642C8590B21642C9
+; AVX512-NEXT:    movq %rax, %rdx
+; AVX512-NEXT:    mulxq %rcx, %rcx, %rcx
+; AVX512-NEXT:    movq %rax, %rsi
+; AVX512-NEXT:    subq %rcx, %rsi
+; AVX512-NEXT:    shrq %rsi
+; AVX512-NEXT:    addq %rcx, %rsi
+; AVX512-NEXT:    shrq $4, %rsi
+; AVX512-NEXT:    leaq (%rsi,%rsi,2), %rcx
+; AVX512-NEXT:    shlq $3, %rcx
+; AVX512-NEXT:    subq %rcx, %rsi
+; AVX512-NEXT:    addq %rax, %rsi
+; AVX512-NEXT:    vpextrq $1, %xmm1, %rax
+; AVX512-NEXT:    movabsq $-4513890722074972339, %rcx # imm = 0xC15B704DCBCA2F4D
+; AVX512-NEXT:    movq %rax, %rdx
+; AVX512-NEXT:    mulxq %rcx, %rcx, %rcx
+; AVX512-NEXT:    vmovq %rsi, %xmm1
+; AVX512-NEXT:    shrq $12, %rcx
+; AVX512-NEXT:    imulq $5423, %rcx, %rcx # imm = 0x152F
+; AVX512-NEXT:    subq %rcx, %rax
+; AVX512-NEXT:    vmovq %rax, %xmm2
 ; AVX512-NEXT:    vpunpcklqdq {{.*#+}} xmm1 = xmm1[0],xmm2[0]
 ; AVX512-NEXT:    vpextrq $1, %xmm0, %rax
 ; AVX512-NEXT:    movq %rax, %rdx

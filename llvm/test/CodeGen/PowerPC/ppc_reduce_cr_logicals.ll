@@ -7,16 +7,17 @@ define i32 @xe_migrate_copy(ptr %m, ptr %dst, ptr %tile, ptr %0, ptr %primary_gt
 ; CHECK:       # %bb.0: # %entry
 ; CHECK-NEXT:    mflr 0
 ; CHECK-NEXT:    stdu 1, -128(1)
-; CHECK-NEXT:    lbz 4, 255(1)
-; CHECK-NEXT:    andi. 4, 4, 1
+; CHECK-NEXT:    mr 4, 3
+; CHECK-NEXT:    lbz 3, 255(1)
+; CHECK-NEXT:    andi. 3, 3, 1
 ; CHECK-NEXT:    std 0, 144(1)
 ; CHECK-NEXT:    crmove 20, 1
-; CHECK-NEXT:    andi. 4, 9, 1
+; CHECK-NEXT:    andi. 3, 9, 1
 ; CHECK-NEXT:    lwz 9, 244(1)
 ; CHECK-NEXT:    crmove 21, 1
-; CHECK-NEXT:    andi. 4, 8, 1
-; CHECK-NEXT:    li 4, 0
-; CHECK-NEXT:    std 4, 112(1)
+; CHECK-NEXT:    andi. 3, 8, 1
+; CHECK-NEXT:    li 3, 0
+; CHECK-NEXT:    std 3, 112(1)
 ; CHECK-NEXT:    crandc 21, 21, 20
 ; CHECK-NEXT:    bc 12, 21, .LBB0_2
 ; CHECK-NEXT:  # %bb.1: # %while.body
@@ -28,7 +29,7 @@ define i32 @xe_migrate_copy(ptr %m, ptr %dst, ptr %tile, ptr %0, ptr %primary_gt
 ; CHECK-NEXT:  .LBB0_3: # %while.body
 ; CHECK-NEXT:    li 5, 0
 ; CHECK-NEXT:    li 6, 0
-; CHECK-NEXT:    mr 4, 3
+; CHECK-NEXT:    mr 3, 4
 ; CHECK-NEXT:    li 7, 0
 ; CHECK-NEXT:    li 10, 0
 ; CHECK-NEXT:    bl xe_migrate_ccs_copy
@@ -42,20 +43,21 @@ define i32 @xe_migrate_copy(ptr %m, ptr %dst, ptr %tile, ptr %0, ptr %primary_gt
 ; CHECKBE:       # %bb.0: # %entry
 ; CHECKBE-NEXT:    mflr 0
 ; CHECKBE-NEXT:    stwu 1, -32(1)
-; CHECKBE-NEXT:    lbz 4, 55(1)
+; CHECKBE-NEXT:    mr 4, 3
+; CHECKBE-NEXT:    lbz 3, 55(1)
 ; CHECKBE-NEXT:    li 5, 0
 ; CHECKBE-NEXT:    stw 0, 36(1)
-; CHECKBE-NEXT:    andi. 4, 4, 1
+; CHECKBE-NEXT:    andi. 3, 3, 1
 ; CHECKBE-NEXT:    crmove 20, 1
-; CHECKBE-NEXT:    andi. 4, 9, 1
+; CHECKBE-NEXT:    andi. 3, 9, 1
 ; CHECKBE-NEXT:    crmove 21, 1
-; CHECKBE-NEXT:    andi. 4, 8, 1
-; CHECKBE-NEXT:    lwz 4, 48(1)
+; CHECKBE-NEXT:    andi. 3, 8, 1
+; CHECKBE-NEXT:    lwz 3, 48(1)
 ; CHECKBE-NEXT:    crandc 21, 21, 20
 ; CHECKBE-NEXT:    stw 5, 24(1)
 ; CHECKBE-NEXT:    stw 5, 20(1)
 ; CHECKBE-NEXT:    stw 5, 16(1)
-; CHECKBE-NEXT:    stw 4, 12(1)
+; CHECKBE-NEXT:    stw 3, 12(1)
 ; CHECKBE-NEXT:    bc 12, 21, .LBB0_2
 ; CHECKBE-NEXT:  # %bb.1: # %while.body
 ; CHECKBE-NEXT:    crand 20, 20, 1
@@ -64,7 +66,7 @@ define i32 @xe_migrate_copy(ptr %m, ptr %dst, ptr %tile, ptr %0, ptr %primary_gt
 ; CHECKBE-NEXT:  .LBB0_2: # %while.body
 ; CHECKBE-NEXT:    li 8, 1
 ; CHECKBE-NEXT:  .LBB0_3: # %while.body
-; CHECKBE-NEXT:    mr 4, 3
+; CHECKBE-NEXT:    mr 3, 4
 ; CHECKBE-NEXT:    li 6, 0
 ; CHECKBE-NEXT:    li 7, 0
 ; CHECKBE-NEXT:    li 9, 0

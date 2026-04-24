@@ -646,12 +646,13 @@ define void @test_d8(ptr %P, ptr %S) nounwind {
 ; LA32F-NEXT:    ld.w $s7, $a0, 8
 ; LA32F-NEXT:    ld.w $s0, $a0, 12
 ; LA32F-NEXT:    ld.w $a2, $a0, 0
-; LA32F-NEXT:    ld.w $a4, $a0, 4
+; LA32F-NEXT:    ld.w $a3, $a0, 4
 ; LA32F-NEXT:    move $fp, $a1
-; LA32F-NEXT:    lu12i.w $a3, 261888
+; LA32F-NEXT:    lu12i.w $a4, 261888
 ; LA32F-NEXT:    move $a0, $a2
-; LA32F-NEXT:    move $a1, $a4
+; LA32F-NEXT:    move $a1, $a3
 ; LA32F-NEXT:    move $a2, $zero
+; LA32F-NEXT:    move $a3, $a4
 ; LA32F-NEXT:    bl __adddf3
 ; LA32F-NEXT:    st.w $a0, $sp, 40 # 4-byte Folded Spill
 ; LA32F-NEXT:    st.w $a1, $sp, 36 # 4-byte Folded Spill

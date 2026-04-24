@@ -167,8 +167,7 @@ define i37 @fshl_i37(i37 %x, i37 %y, i37 %z) nounwind {
 ; X86-SSE2-NEXT:    pushl {{[0-9]+}}(%esp)
 ; X86-SSE2-NEXT:    calll __umoddi3
 ; X86-SSE2-NEXT:    addl $16, %esp
-; X86-SSE2-NEXT:    movl %eax, %ecx
-; X86-SSE2-NEXT:    testb $32, %cl
+; X86-SSE2-NEXT:    testb $32, %al
 ; X86-SSE2-NEXT:    jne .LBB3_1
 ; X86-SSE2-NEXT:  # %bb.2:
 ; X86-SSE2-NEXT:    movl %edi, %ebx
@@ -178,10 +177,11 @@ define i37 @fshl_i37(i37 %x, i37 %y, i37 %z) nounwind {
 ; X86-SSE2-NEXT:  .LBB3_1:
 ; X86-SSE2-NEXT:    shll $27, %ebx
 ; X86-SSE2-NEXT:  .LBB3_3:
-; X86-SSE2-NEXT:    movl %edi, %eax
-; X86-SSE2-NEXT:    shldl %cl, %ebx, %eax
-; X86-SSE2-NEXT:    # kill: def $cl killed $cl killed $ecx
+; X86-SSE2-NEXT:    movl %edi, %edx
+; X86-SSE2-NEXT:    movl %eax, %ecx
+; X86-SSE2-NEXT:    shldl %cl, %ebx, %edx
 ; X86-SSE2-NEXT:    shldl %cl, %edi, %esi
+; X86-SSE2-NEXT:    movl %edx, %eax
 ; X86-SSE2-NEXT:    movl %esi, %edx
 ; X86-SSE2-NEXT:    popl %esi
 ; X86-SSE2-NEXT:    popl %edi
@@ -333,9 +333,8 @@ define i37 @fshr_i37(i37 %x, i37 %y, i37 %z) nounwind {
 ; X86-SSE2-NEXT:    pushl {{[0-9]+}}(%esp)
 ; X86-SSE2-NEXT:    calll __umoddi3
 ; X86-SSE2-NEXT:    addl $16, %esp
-; X86-SSE2-NEXT:    movl %eax, %ecx
-; X86-SSE2-NEXT:    addl $27, %ecx
-; X86-SSE2-NEXT:    testb $32, %cl
+; X86-SSE2-NEXT:    addl $27, %eax
+; X86-SSE2-NEXT:    testb $32, %al
 ; X86-SSE2-NEXT:    je .LBB10_1
 ; X86-SSE2-NEXT:  # %bb.2:
 ; X86-SSE2-NEXT:    movl %edi, %edx
@@ -346,8 +345,8 @@ define i37 @fshr_i37(i37 %x, i37 %y, i37 %z) nounwind {
 ; X86-SSE2-NEXT:    movl %esi, %edx
 ; X86-SSE2-NEXT:    movl %ebx, %esi
 ; X86-SSE2-NEXT:  .LBB10_3:
+; X86-SSE2-NEXT:    movl %eax, %ecx
 ; X86-SSE2-NEXT:    shrdl %cl, %edx, %esi
-; X86-SSE2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X86-SSE2-NEXT:    shrdl %cl, %edi, %edx
 ; X86-SSE2-NEXT:    movl %esi, %eax
 ; X86-SSE2-NEXT:    popl %esi
@@ -1184,10 +1183,9 @@ define i32 @or_shl_rotl(i32 %x, i32 %y, i32 %s) nounwind {
 ;
 ; X64-AVX-LABEL: or_shl_rotl:
 ; X64-AVX:       # %bb.0:
-; X64-AVX-NEXT:    movl %edx, %ecx
 ; X64-AVX-NEXT:    movl %esi, %eax
+; X64-AVX-NEXT:    movl %edx, %ecx
 ; X64-AVX-NEXT:    shll %cl, %edi
-; X64-AVX-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-AVX-NEXT:    roll %cl, %eax
 ; X64-AVX-NEXT:    orl %edi, %eax
 ; X64-AVX-NEXT:    retq
@@ -1234,10 +1232,9 @@ define i32 @or_shl_rotl_commute(i32 %x, i32 %y, i32 %s) nounwind {
 ;
 ; X64-AVX-LABEL: or_shl_rotl_commute:
 ; X64-AVX:       # %bb.0:
-; X64-AVX-NEXT:    movl %edx, %ecx
 ; X64-AVX-NEXT:    movl %esi, %eax
+; X64-AVX-NEXT:    movl %edx, %ecx
 ; X64-AVX-NEXT:    shll %cl, %edi
-; X64-AVX-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-AVX-NEXT:    roll %cl, %eax
 ; X64-AVX-NEXT:    orl %edi, %eax
 ; X64-AVX-NEXT:    retq
@@ -1284,10 +1281,9 @@ define i32 @or_lshr_rotr(i32 %x, i32 %y, i32 %s) nounwind {
 ;
 ; X64-AVX-LABEL: or_lshr_rotr:
 ; X64-AVX:       # %bb.0:
-; X64-AVX-NEXT:    movl %edx, %ecx
 ; X64-AVX-NEXT:    movl %esi, %eax
+; X64-AVX-NEXT:    movl %edx, %ecx
 ; X64-AVX-NEXT:    shrl %cl, %edi
-; X64-AVX-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-AVX-NEXT:    rorl %cl, %eax
 ; X64-AVX-NEXT:    orl %edi, %eax
 ; X64-AVX-NEXT:    retq
@@ -1334,10 +1330,9 @@ define i32 @or_lshr_rotr_commute(i32 %x, i32 %y, i32 %s) nounwind {
 ;
 ; X64-AVX-LABEL: or_lshr_rotr_commute:
 ; X64-AVX:       # %bb.0:
-; X64-AVX-NEXT:    movl %edx, %ecx
 ; X64-AVX-NEXT:    movl %esi, %eax
+; X64-AVX-NEXT:    movl %edx, %ecx
 ; X64-AVX-NEXT:    shrl %cl, %edi
-; X64-AVX-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-AVX-NEXT:    rorl %cl, %eax
 ; X64-AVX-NEXT:    orl %edi, %eax
 ; X64-AVX-NEXT:    retq

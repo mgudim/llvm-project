@@ -271,10 +271,10 @@ define <4 x i32> @addmuladd_vec(<4 x i32> %a) {
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    mov w8, #324 // =0x144
 ; CHECK-NEXT:    mov w9, #1300 // =0x514
-; CHECK-NEXT:    dup v2.4s, w8
-; CHECK-NEXT:    dup v1.4s, w9
-; CHECK-NEXT:    mla v1.4s, v0.4s, v2.4s
-; CHECK-NEXT:    mov v0.16b, v1.16b
+; CHECK-NEXT:    dup v1.4s, w8
+; CHECK-NEXT:    dup v2.4s, w9
+; CHECK-NEXT:    mla v2.4s, v0.4s, v1.4s
+; CHECK-NEXT:    mov v0.16b, v2.16b
 ; CHECK-NEXT:    ret
   %tmp0 = add <4 x i32> %a, <i32 4, i32 4, i32 4, i32 4>
   %tmp1 = mul <4 x i32> %tmp0, <i32 324, i32 324, i32 324, i32 324>

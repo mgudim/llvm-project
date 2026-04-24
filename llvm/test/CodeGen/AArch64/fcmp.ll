@@ -94,14 +94,14 @@ define i128 @f128_i128(fp128 %a, fp128 %b, i128 %d, i128 %e) {
 ; CHECK-GI-NEXT:    .cfi_offset w21, -24
 ; CHECK-GI-NEXT:    .cfi_offset w22, -32
 ; CHECK-GI-NEXT:    .cfi_offset w30, -48
-; CHECK-GI-NEXT:    mov x19, x0
-; CHECK-GI-NEXT:    mov x20, x1
-; CHECK-GI-NEXT:    mov x21, x2
-; CHECK-GI-NEXT:    mov x22, x3
+; CHECK-GI-NEXT:    mov x22, x0
+; CHECK-GI-NEXT:    mov x19, x1
+; CHECK-GI-NEXT:    mov x20, x2
+; CHECK-GI-NEXT:    mov x21, x3
 ; CHECK-GI-NEXT:    bl __lttf2
 ; CHECK-GI-NEXT:    cmp w0, #0
-; CHECK-GI-NEXT:    csel x0, x19, x21, mi
-; CHECK-GI-NEXT:    csel x1, x20, x22, mi
+; CHECK-GI-NEXT:    csel x0, x22, x20, mi
+; CHECK-GI-NEXT:    csel x1, x19, x21, mi
 ; CHECK-GI-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldp x22, x21, [sp, #16] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldr x30, [sp], #48 // 8-byte Folded Reload
@@ -218,11 +218,11 @@ define i32 @f128_i32(fp128 %a, fp128 %b, i32 %d, i32 %e) {
 ; CHECK-GI-NEXT:    .cfi_offset w19, -8
 ; CHECK-GI-NEXT:    .cfi_offset w20, -16
 ; CHECK-GI-NEXT:    .cfi_offset w30, -32
-; CHECK-GI-NEXT:    mov w19, w0
-; CHECK-GI-NEXT:    mov w20, w1
+; CHECK-GI-NEXT:    mov w20, w0
+; CHECK-GI-NEXT:    mov w19, w1
 ; CHECK-GI-NEXT:    bl __lttf2
 ; CHECK-GI-NEXT:    cmp w0, #0
-; CHECK-GI-NEXT:    csel w0, w19, w20, mi
+; CHECK-GI-NEXT:    csel w0, w20, w19, mi
 ; CHECK-GI-NEXT:    ldp x20, x19, [sp, #16] // 16-byte Folded Reload
 ; CHECK-GI-NEXT:    ldr x30, [sp], #32 // 8-byte Folded Reload
 ; CHECK-GI-NEXT:    ret

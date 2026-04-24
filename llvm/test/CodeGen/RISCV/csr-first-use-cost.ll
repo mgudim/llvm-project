@@ -11,17 +11,17 @@ define fastcc void @Perl_sv_setnv(i8 %c, ptr %.str.54.3682) nounwind {
 ; ZERO-COST-NEXT:    sd s1, 8(sp) # 8-byte Folded Spill
 ; ZERO-COST-NEXT:    zext.b a0, a0
 ; ZERO-COST-NEXT:    li a2, 2
+; ZERO-COST-NEXT:    mv s0, a1
 ; ZERO-COST-NEXT:    blt a2, a0, .LBB0_3
 ; ZERO-COST-NEXT:  # %bb.1: # %entry
 ; ZERO-COST-NEXT:    beqz a0, .LBB0_4
 ; ZERO-COST-NEXT:  # %bb.2: # %entry
-; ZERO-COST-NEXT:    mv s0, a1
 ; ZERO-COST-NEXT:    li a1, 1
 ; ZERO-COST-NEXT:    beq a0, a1, .LBB0_6
 ; ZERO-COST-NEXT:    j .LBB0_7
 ; ZERO-COST-NEXT:  .LBB0_3: # %entry
-; ZERO-COST-NEXT:    li a2, 3
-; ZERO-COST-NEXT:    bne a0, a2, .LBB0_5
+; ZERO-COST-NEXT:    li a1, 3
+; ZERO-COST-NEXT:    bne a0, a1, .LBB0_5
 ; ZERO-COST-NEXT:  .LBB0_4: # %sw.bb3
 ; ZERO-COST-NEXT:    ld ra, 24(sp) # 8-byte Folded Reload
 ; ZERO-COST-NEXT:    ld s0, 16(sp) # 8-byte Folded Reload
@@ -29,7 +29,6 @@ define fastcc void @Perl_sv_setnv(i8 %c, ptr %.str.54.3682) nounwind {
 ; ZERO-COST-NEXT:    addi sp, sp, 32
 ; ZERO-COST-NEXT:    ret
 ; ZERO-COST-NEXT:  .LBB0_5: # %entry
-; ZERO-COST-NEXT:    mv s0, a1
 ; ZERO-COST-NEXT:    li a1, 12
 ; ZERO-COST-NEXT:    bne a0, a1, .LBB0_7
 ; ZERO-COST-NEXT:  .LBB0_6: # %sw.bb34.i

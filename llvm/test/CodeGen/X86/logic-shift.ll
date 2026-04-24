@@ -230,9 +230,8 @@ define i64 @or_mix_shr(i64 %x0, i64 %x1, i64 %y, i64 %z) {
 ; CHECK-LABEL: or_mix_shr:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    movq %rcx, %rax
-; CHECK-NEXT:    movq %rdx, %rcx
+; CHECK-NEXT:    movl %edx, %ecx
 ; CHECK-NEXT:    sarq %cl, %rdi
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; CHECK-NEXT:    shrq %cl, %rsi
 ; CHECK-NEXT:    orq %rdi, %rax
 ; CHECK-NEXT:    orq %rsi, %rax
@@ -271,9 +270,8 @@ define i64 @mix_logic_lshr(i64 %x0, i64 %x1, i64 %y, i64 %z) {
 ; CHECK-LABEL: mix_logic_lshr:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    movq %rcx, %rax
-; CHECK-NEXT:    movq %rdx, %rcx
+; CHECK-NEXT:    movl %edx, %ecx
 ; CHECK-NEXT:    shrq %cl, %rdi
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; CHECK-NEXT:    shrq %cl, %rsi
 ; CHECK-NEXT:    xorq %rdi, %rax
 ; CHECK-NEXT:    orq %rsi, %rax
@@ -514,9 +512,8 @@ define i64 @xor_mix_shr(i64 %x0, i64 %x1, i64 %y, i64 %z) {
 ; CHECK-LABEL: xor_mix_shr:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    movq %rcx, %rax
-; CHECK-NEXT:    movq %rdx, %rcx
+; CHECK-NEXT:    movl %edx, %ecx
 ; CHECK-NEXT:    sarq %cl, %rdi
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; CHECK-NEXT:    shrq %cl, %rsi
 ; CHECK-NEXT:    xorq %rdi, %rax
 ; CHECK-NEXT:    xorq %rsi, %rax
@@ -555,9 +552,8 @@ define i64 @mix_logic_ashr(i64 %x0, i64 %x1, i64 %y, i64 %z) {
 ; CHECK-LABEL: mix_logic_ashr:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    movq %rcx, %rax
-; CHECK-NEXT:    movq %rdx, %rcx
+; CHECK-NEXT:    movl %edx, %ecx
 ; CHECK-NEXT:    sarq %cl, %rdi
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; CHECK-NEXT:    sarq %cl, %rsi
 ; CHECK-NEXT:    orq %rdi, %rax
 ; CHECK-NEXT:    xorq %rsi, %rax
@@ -798,9 +794,8 @@ define i64 @and_mix_shr(i64 %x0, i64 %x1, i64 %y, i64 %z) {
 ; CHECK-LABEL: and_mix_shr:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    movq %rcx, %rax
-; CHECK-NEXT:    movq %rdx, %rcx
+; CHECK-NEXT:    movl %edx, %ecx
 ; CHECK-NEXT:    shrq %cl, %rdi
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; CHECK-NEXT:    sarq %cl, %rsi
 ; CHECK-NEXT:    andq %rdi, %rax
 ; CHECK-NEXT:    andq %rsi, %rax
@@ -839,9 +834,8 @@ define i64 @mix_logic_shl(i64 %x0, i64 %x1, i64 %y, i64 %z) {
 ; CHECK-LABEL: mix_logic_shl:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    movq %rcx, %rax
-; CHECK-NEXT:    movq %rdx, %rcx
+; CHECK-NEXT:    movl %edx, %ecx
 ; CHECK-NEXT:    shlq %cl, %rdi
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; CHECK-NEXT:    shlq %cl, %rsi
 ; CHECK-NEXT:    xorq %rdi, %rax
 ; CHECK-NEXT:    andq %rsi, %rax

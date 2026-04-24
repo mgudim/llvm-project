@@ -350,9 +350,9 @@ define { <2 x float>, <2 x float> } @test_sincos_v2f32(<2 x float> %a) #0 {
 ; LA64-NEXT:    addi.d $sp, $sp, -80
 ; LA64-NEXT:    st.d $ra, $sp, 72 # 8-byte Folded Spill
 ; LA64-NEXT:    vst $vr0, $sp, 16 # 16-byte Folded Spill
-; LA64-NEXT:    vreplvei.w $vr0, $vr0, 1
-; LA64-NEXT:    vst $vr0, $sp, 48 # 16-byte Folded Spill
-; LA64-NEXT:    # kill: def $f0 killed $f0 killed $vr0
+; LA64-NEXT:    vreplvei.w $vr1, $vr0, 1
+; LA64-NEXT:    vst $vr1, $sp, 48 # 16-byte Folded Spill
+; LA64-NEXT:    fmov.s $fa0, $fa1
 ; LA64-NEXT:    pcaddu18i $ra, %call36(sinf)
 ; LA64-NEXT:    jirl $ra, $ra, 0
 ; LA64-NEXT:    # kill: def $f0 killed $f0 def $vr0
@@ -442,9 +442,9 @@ define { <3 x float>, <3 x float> } @test_sincos_v3f32(<3 x float> %a) #0 {
 ; LA64-NEXT:    addi.d $sp, $sp, -96
 ; LA64-NEXT:    st.d $ra, $sp, 88 # 8-byte Folded Spill
 ; LA64-NEXT:    vst $vr0, $sp, 48 # 16-byte Folded Spill
-; LA64-NEXT:    vreplvei.w $vr0, $vr0, 1
-; LA64-NEXT:    vst $vr0, $sp, 32 # 16-byte Folded Spill
-; LA64-NEXT:    # kill: def $f0 killed $f0 killed $vr0
+; LA64-NEXT:    vreplvei.w $vr1, $vr0, 1
+; LA64-NEXT:    vst $vr1, $sp, 32 # 16-byte Folded Spill
+; LA64-NEXT:    fmov.s $fa0, $fa1
 ; LA64-NEXT:    pcaddu18i $ra, %call36(sinf)
 ; LA64-NEXT:    jirl $ra, $ra, 0
 ; LA64-NEXT:    # kill: def $f0 killed $f0 def $vr0
@@ -583,9 +583,9 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) #0 {
 ; LA64-NEXT:    addi.d $sp, $sp, -80
 ; LA64-NEXT:    st.d $ra, $sp, 72 # 8-byte Folded Spill
 ; LA64-NEXT:    vst $vr0, $sp, 16 # 16-byte Folded Spill
-; LA64-NEXT:    vreplvei.d $vr0, $vr0, 1
-; LA64-NEXT:    vst $vr0, $sp, 48 # 16-byte Folded Spill
-; LA64-NEXT:    # kill: def $f0_64 killed $f0_64 killed $vr0
+; LA64-NEXT:    vreplvei.d $vr1, $vr0, 1
+; LA64-NEXT:    vst $vr1, $sp, 48 # 16-byte Folded Spill
+; LA64-NEXT:    fmov.d $fa0, $fa1
 ; LA64-NEXT:    pcaddu18i $ra, %call36(sin)
 ; LA64-NEXT:    jirl $ra, $ra, 0
 ; LA64-NEXT:    # kill: def $f0_64 killed $f0_64 def $vr0
@@ -631,24 +631,24 @@ define { fp128, fp128 } @test_sincos_f128(fp128 %a) #0 {
 ; LA32-NEXT:    st.w $s1, $sp, 80 # 4-byte Folded Spill
 ; LA32-NEXT:    st.w $s2, $sp, 76 # 4-byte Folded Spill
 ; LA32-NEXT:    st.w $s3, $sp, 72 # 4-byte Folded Spill
-; LA32-NEXT:    ld.w $s0, $a1, 0
-; LA32-NEXT:    ld.w $s1, $a1, 4
-; LA32-NEXT:    ld.w $s2, $a1, 8
-; LA32-NEXT:    ld.w $s3, $a1, 12
-; LA32-NEXT:    move $fp, $a0
-; LA32-NEXT:    st.w $s3, $sp, 52
-; LA32-NEXT:    st.w $s2, $sp, 48
-; LA32-NEXT:    st.w $s1, $sp, 44
+; LA32-NEXT:    ld.w $fp, $a1, 0
+; LA32-NEXT:    ld.w $s0, $a1, 4
+; LA32-NEXT:    ld.w $s1, $a1, 8
+; LA32-NEXT:    ld.w $s2, $a1, 12
+; LA32-NEXT:    move $s3, $a0
+; LA32-NEXT:    st.w $s2, $sp, 52
+; LA32-NEXT:    st.w $s1, $sp, 48
+; LA32-NEXT:    st.w $s0, $sp, 44
 ; LA32-NEXT:    addi.w $a0, $sp, 56
 ; LA32-NEXT:    addi.w $a1, $sp, 40
-; LA32-NEXT:    st.w $s0, $sp, 40
+; LA32-NEXT:    st.w $fp, $sp, 40
 ; LA32-NEXT:    bl sinl
-; LA32-NEXT:    st.w $s3, $sp, 20
-; LA32-NEXT:    st.w $s2, $sp, 16
-; LA32-NEXT:    st.w $s1, $sp, 12
+; LA32-NEXT:    st.w $s2, $sp, 20
+; LA32-NEXT:    st.w $s1, $sp, 16
+; LA32-NEXT:    st.w $s0, $sp, 12
 ; LA32-NEXT:    addi.w $a0, $sp, 24
 ; LA32-NEXT:    addi.w $a1, $sp, 8
-; LA32-NEXT:    st.w $s0, $sp, 8
+; LA32-NEXT:    st.w $fp, $sp, 8
 ; LA32-NEXT:    bl cosl
 ; LA32-NEXT:    ld.w $a0, $sp, 56
 ; LA32-NEXT:    ld.w $a1, $sp, 60
@@ -658,14 +658,14 @@ define { fp128, fp128 } @test_sincos_f128(fp128 %a) #0 {
 ; LA32-NEXT:    ld.w $a5, $sp, 32
 ; LA32-NEXT:    ld.w $a6, $sp, 28
 ; LA32-NEXT:    ld.w $a7, $sp, 24
-; LA32-NEXT:    st.w $a4, $fp, 28
-; LA32-NEXT:    st.w $a5, $fp, 24
-; LA32-NEXT:    st.w $a6, $fp, 20
-; LA32-NEXT:    st.w $a7, $fp, 16
-; LA32-NEXT:    st.w $a3, $fp, 12
-; LA32-NEXT:    st.w $a2, $fp, 8
-; LA32-NEXT:    st.w $a1, $fp, 4
-; LA32-NEXT:    st.w $a0, $fp, 0
+; LA32-NEXT:    st.w $a4, $s3, 28
+; LA32-NEXT:    st.w $a5, $s3, 24
+; LA32-NEXT:    st.w $a6, $s3, 20
+; LA32-NEXT:    st.w $a7, $s3, 16
+; LA32-NEXT:    st.w $a3, $s3, 12
+; LA32-NEXT:    st.w $a2, $s3, 8
+; LA32-NEXT:    st.w $a1, $s3, 4
+; LA32-NEXT:    st.w $a0, $s3, 0
 ; LA32-NEXT:    ld.w $s3, $sp, 72 # 4-byte Folded Reload
 ; LA32-NEXT:    ld.w $s2, $sp, 76 # 4-byte Folded Reload
 ; LA32-NEXT:    ld.w $s1, $sp, 80 # 4-byte Folded Reload

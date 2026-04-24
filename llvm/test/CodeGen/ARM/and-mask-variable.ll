@@ -78,8 +78,8 @@ define i64 @mask_pair_64(i64 %x, i64 %y) {
 ; V6M-NEXT:    mov r4, r1
 ; V6M-NEXT:    mov r5, r0
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mvns r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsl
 ; V6M-NEXT:    ands r0, r5
 ; V6M-NEXT:    ands r1, r4

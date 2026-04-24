@@ -409,7 +409,6 @@ define i32 @PR10602() nounwind ssp {
 ; CHECK:       ## %bb.0: ## %entry
 ; CHECK-NEXT:    flds {{\.?LCPI[0-9]+_[0-9]+}}
 ; CHECK-NEXT:    fld %st(0)
-; CHECK-NEXT:    fxch %st(1)
 ; CHECK-NEXT:    ## InlineAsm Start
 ; CHECK-NEXT:    fcomi %st(1), %st; pushf; pop %eax
 ; CHECK-NEXT:    ## InlineAsm End

@@ -524,13 +524,13 @@ define void @fun10(half %Arg0) {
 ; NOVEC-NEXT:    .cfi_offset %r15, -40
 ; NOVEC-NEXT:    aghi %r15, -168
 ; NOVEC-NEXT:    .cfi_def_cfa_offset 328
-; NOVEC-NEXT:    # kill: def $f0h killed $f0h def $f0d
-; NOVEC-NEXT:    lgdr %r0, %f0
+; NOVEC-NEXT:    ler %f6, %f0
+; NOVEC-NEXT:    lgdr %r0, %f6
 ; NOVEC-NEXT:    srlg %r0, %r0, 48
 ; NOVEC-NEXT:    ler %f2, %f0
 ; NOVEC-NEXT:    ler %f4, %f0
-; NOVEC-NEXT:    ler %f6, %f0
 ; NOVEC-NEXT:    sth %r0, 166(%r15)
+; NOVEC-NEXT:    # kill: def $f6h killed $f6h killed $f6d
 ; NOVEC-NEXT:    brasl %r14, fun9@PLT
 ; NOVEC-NEXT:    lmg %r14, %r15, 280(%r15)
 ; NOVEC-NEXT:    br %r14
@@ -542,9 +542,9 @@ define void @fun10(half %Arg0) {
 ; VECTOR-NEXT:    .cfi_offset %r15, -40
 ; VECTOR-NEXT:    aghi %r15, -168
 ; VECTOR-NEXT:    .cfi_def_cfa_offset 328
+; VECTOR-NEXT:    ldr %f6, %f0
 ; VECTOR-NEXT:    ldr %f2, %f0
 ; VECTOR-NEXT:    ldr %f4, %f0
-; VECTOR-NEXT:    ldr %f6, %f0
 ; VECTOR-NEXT:    vsteh %v0, 166(%r15), 0
 ; VECTOR-NEXT:    brasl %r14, fun9@PLT
 ; VECTOR-NEXT:    lmg %r14, %r15, 280(%r15)

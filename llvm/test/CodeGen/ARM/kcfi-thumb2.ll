@@ -5,57 +5,37 @@
 
 ; MIR checks for all functions (grouped here to prevent update_llc_test_checks.py from removing them)
 
-; MIR-LABEL: name: f1
-; MIR: body:
 
-; ISEL:     tBLXr 14 /* CC::al */, $noreg, %0, csr_aapcs,{{.*}} cfi-type 12345678
 
-; KCFI:       BUNDLE{{.*}} {
-; KCFI-NEXT:    KCFI_CHECK_Thumb2 $r0, 12345678
-; KCFI-NEXT:    tBLXr 14 /* CC::al */, $noreg, {{(killed )?}}$r0, csr_aapcs,{{.*}}
-; KCFI-NEXT:  }
 
-; MIR-LABEL: name: f2
-; MIR: body:
 
-; ISEL:     TCRETURNri %0, 0, csr_aapcs, implicit $sp, cfi-type 12345678
 
-; KCFI:       BUNDLE{{.*}} {
-; KCFI-NEXT:    KCFI_CHECK_Thumb2 $r0, 12345678
-; KCFI-NEXT:    tTAILJMPr {{(killed )?}}$r0, csr_aapcs, implicit $sp, implicit $sp
-; KCFI-NEXT:  }
 
 ; Test function without KCFI annotation
-; ASM-LABEL: .globl nosan
-; ASM-NEXT:  .p2align 1
-; ASM-NEXT:  .type nosan,%function
-; ASM-NEXT:  .code 16
-; ASM-NEXT:  .thumb_func
 define dso_local void @nosan() nounwind {
 ; ASM-LABEL: nosan:
 ; ASM:       @ %bb.0:
 ; ASM-NEXT:    bx lr
+; MIR-LABEL: name: nosan
+; MIR: bb.0 (%ir-block.0):
+; MIR-NEXT:   tBX_RET 14 /* CC::al */, $noreg
   ret void
 }
 
 ; Test function with KCFI annotation - verifies type hash emission
 ;; The alignment is at least 4 to avoid unaligned type hash loads when this
 ;; instrumented function is indirectly called.
-; ASM-LABEL: .globl target_func
-; ASM-NEXT:  .p2align 2
-; ASM-NEXT:  .type target_func,%function
-; ASM-NEXT:  .long 12345678
-; ASM-NEXT:  .code 16
-; ASM-NEXT:  .thumb_func
 define void @target_func() !kcfi_type !1 {
 ; ASM-LABEL: target_func:
 ; ASM:       @ %bb.0:
 ; ASM-NEXT:    bx lr
+; MIR-LABEL: name: target_func
+; MIR: bb.0 (%ir-block.0):
+; MIR-NEXT:   tBX_RET 14 /* CC::al */, $noreg
   ret void
 }
 
 ; Test indirect call with KCFI check
-; ASM:       .long 12345678
 define void @f1(ptr noundef %x) !kcfi_type !1 {
 ; ASM-LABEL: f1:
 ; ASM:       @ %bb.0:
@@ -72,6 +52,29 @@ define void @f1(ptr noundef %x) !kcfi_type !1 {
 ; ASM-NEXT:  .Ltmp0:
 ; ASM-NEXT:    blx r0
 ; ASM-NEXT:    pop {r7, pc}
+; ISEL-LABEL: name: f1
+; ISEL: bb.0 (%ir-block.0):
+; ISEL-NEXT:   liveins: $r0
+; ISEL-NEXT: {{  $}}
+; ISEL-NEXT:   [[COPY:%[0-9]+]]:gpr = COPY $r0
+; ISEL-NEXT:   ADJCALLSTACKDOWN 0, 0, 14 /* CC::al */, $noreg, implicit-def dead $sp, implicit $sp
+; ISEL-NEXT:   tBLXr 14 /* CC::al */, $noreg, [[COPY]], csr_aapcs, implicit-def dead $lr, implicit $sp, implicit-def $sp, cfi-type 12345678
+; ISEL-NEXT:   ADJCALLSTACKUP 0, -1, 14 /* CC::al */, $noreg, implicit-def dead $sp, implicit $sp
+; ISEL-NEXT:   tBX_RET 14 /* CC::al */, $noreg
+;
+; KCFI-LABEL: name: f1
+; KCFI: bb.0 (%ir-block.0):
+; KCFI-NEXT:   liveins: $r0, $r7, $lr
+; KCFI-NEXT: {{  $}}
+; KCFI-NEXT:   $sp = frame-setup t2STMDB_UPD $sp, 14 /* CC::al */, $noreg, killed $r7, killed $lr
+; KCFI-NEXT:   frame-setup CFI_INSTRUCTION def_cfa_offset 8
+; KCFI-NEXT:   frame-setup CFI_INSTRUCTION offset $lr, -4
+; KCFI-NEXT:   frame-setup CFI_INSTRUCTION offset $r7, -8
+; KCFI-NEXT:   BUNDLE implicit-def dead $lr, implicit-def $sp, implicit killed $r0, implicit $sp {
+; KCFI-NEXT:     KCFI_CHECK_Thumb2 $r0, 12345678
+; KCFI-NEXT:     tBLXr 14 /* CC::al */, $noreg, killed $r0, csr_aapcs, implicit-def dead $lr, implicit $sp, implicit-def $sp
+; KCFI-NEXT:   }
+; KCFI-NEXT:   $sp = frame-destroy t2LDMIA_RET $sp, 14 /* CC::al */, $noreg, def $r7, def $pc
 
   call void %x() [ "kcfi"(i32 12345678) ]
   ret void
@@ -91,6 +94,21 @@ define void @f2(ptr noundef %x) !kcfi_type !1 {
 ; ASM-NEXT:    udf #128
 ; ASM-NEXT:  .Ltmp1:
 ; ASM-NEXT:    bx r0
+; ISEL-LABEL: name: f2
+; ISEL: bb.0 (%ir-block.0):
+; ISEL-NEXT:   liveins: $r0
+; ISEL-NEXT: {{  $}}
+; ISEL-NEXT:   [[COPY:%[0-9]+]]:tcgpr = COPY $r0
+; ISEL-NEXT:   TCRETURNri [[COPY]], 0, csr_aapcs, implicit $sp, cfi-type 12345678
+;
+; KCFI-LABEL: name: f2
+; KCFI: bb.0 (%ir-block.0):
+; KCFI-NEXT:   liveins: $r0
+; KCFI-NEXT: {{  $}}
+; KCFI-NEXT:   BUNDLE implicit killed $r0, implicit $sp {
+; KCFI-NEXT:     KCFI_CHECK_Thumb2 $r0, 12345678
+; KCFI-NEXT:     tTAILJMPr killed $r0, csr_aapcs, implicit $sp, implicit $sp
+; KCFI-NEXT:   }
 
   tail call void %x() [ "kcfi"(i32 12345678) ]
   ret void
@@ -102,25 +120,60 @@ define void @f3_r3_spill(ptr noundef %target, i32 %a, i32 %b, i32 %c, i32 %d) !k
 ; ASM:       @ %bb.0:
 ; ASM-NEXT:    .save {r7, lr}
 ; ASM-NEXT:    push {r7, lr}
-; ASM-NEXT:    mov lr, r3
-; ASM-NEXT:    ldr r3, [sp, #8]
-; ASM-NEXT:    mov r12, r0
+; ASM-NEXT:    ldr.w r12, [sp, #8]
+; ASM-NEXT:    mov lr, r0
 ; ASM-NEXT:    mov r0, r1
 ; ASM-NEXT:    mov r1, r2
-; ASM-NEXT:    mov r2, lr
-; ASM-NEXT:    push {r3}
-; ASM-NEXT:    bic r3, r12, #1
-; ASM-NEXT:    ldr r3, [r3, #-4]
-; ASM-NEXT:    eor r3, r3, #78
-; ASM-NEXT:    eor r3, r3, #24832
-; ASM-NEXT:    eor r3, r3, #12320768
-; ASM-NEXT:    eors r3, r3, #0
-; ASM-NEXT:    pop {r3}
+; ASM-NEXT:    mov r2, r3
+; ASM-NEXT:    mov r3, r12
+; ASM-NEXT:    bic r12, lr, #1
+; ASM-NEXT:    ldr r12, [r12, #-4]
+; ASM-NEXT:    eor r12, r12, #78
+; ASM-NEXT:    eor r12, r12, #24832
+; ASM-NEXT:    eor r12, r12, #12320768
+; ASM-NEXT:    eors r12, r12, #0
 ; ASM-NEXT:    beq.w .Ltmp2
-; ASM-NEXT:    udf #140
+; ASM-NEXT:    udf #142
 ; ASM-NEXT:  .Ltmp2:
-; ASM-NEXT:    blx r12
+; ASM-NEXT:    blx lr
 ; ASM-NEXT:    pop {r7, pc}
+; ISEL-LABEL: name: f3_r3_spill
+; ISEL: bb.0 (%ir-block.0):
+; ISEL-NEXT:   liveins: $r0, $r1, $r2, $r3
+; ISEL-NEXT: {{  $}}
+; ISEL-NEXT:   [[COPY:%[0-9]+]]:gpr = COPY $r3
+; ISEL-NEXT:   [[COPY1:%[0-9]+]]:gpr = COPY $r2
+; ISEL-NEXT:   [[COPY2:%[0-9]+]]:gpr = COPY $r1
+; ISEL-NEXT:   [[COPY3:%[0-9]+]]:gpr = COPY $r0
+; ISEL-NEXT:   [[t2LDRi12_:%[0-9]+]]:gpr = t2LDRi12 %fixed-stack.0, 0, 14 /* CC::al */, $noreg :: (load (s32) from %fixed-stack.0, align 8)
+; ISEL-NEXT:   ADJCALLSTACKDOWN 0, 0, 14 /* CC::al */, $noreg, implicit-def dead $sp, implicit $sp
+; ISEL-NEXT:   $r0 = COPY [[COPY2]]
+; ISEL-NEXT:   $r1 = COPY [[COPY1]]
+; ISEL-NEXT:   $r2 = COPY [[COPY]]
+; ISEL-NEXT:   $r3 = COPY [[t2LDRi12_]]
+; ISEL-NEXT:   tBLXr 14 /* CC::al */, $noreg, [[COPY3]], csr_aapcs, implicit-def dead $lr, implicit $sp, implicit $r0, implicit $r1, implicit $r2, implicit $r3, implicit-def $sp, cfi-type 12345678
+; ISEL-NEXT:   ADJCALLSTACKUP 0, -1, 14 /* CC::al */, $noreg, implicit-def dead $sp, implicit $sp
+; ISEL-NEXT:   tBX_RET 14 /* CC::al */, $noreg
+;
+; KCFI-LABEL: name: f3_r3_spill
+; KCFI: bb.0 (%ir-block.0):
+; KCFI-NEXT:   liveins: $r0, $r1, $r2, $r3, $r7, $lr
+; KCFI-NEXT: {{  $}}
+; KCFI-NEXT:   $sp = frame-setup t2STMDB_UPD $sp, 14 /* CC::al */, $noreg, killed $r7, killed $lr
+; KCFI-NEXT:   frame-setup CFI_INSTRUCTION def_cfa_offset 8
+; KCFI-NEXT:   frame-setup CFI_INSTRUCTION offset $lr, -4
+; KCFI-NEXT:   frame-setup CFI_INSTRUCTION offset $r7, -8
+; KCFI-NEXT:   $lr = tMOVr $r0, 14 /* CC::al */, $noreg
+; KCFI-NEXT:   renamable $r12 = t2LDRi12 $sp, 8, 14 /* CC::al */, $noreg :: (load (s32) from %fixed-stack.0, align 8)
+; KCFI-NEXT:   $r0 = tMOVr killed $r1, 14 /* CC::al */, $noreg
+; KCFI-NEXT:   $r1 = tMOVr killed $r2, 14 /* CC::al */, $noreg
+; KCFI-NEXT:   $r2 = tMOVr killed $r3, 14 /* CC::al */, $noreg
+; KCFI-NEXT:   $r3 = tMOVr killed $r12, 14 /* CC::al */, $noreg
+; KCFI-NEXT:   BUNDLE implicit-def dead $lr, implicit-def $sp, implicit killed $lr, implicit $sp, implicit $r0, implicit $r1, implicit $r2, implicit $r3 {
+; KCFI-NEXT:     KCFI_CHECK_Thumb2 $lr, 12345678
+; KCFI-NEXT:     tBLXr 14 /* CC::al */, $noreg, killed $lr, csr_aapcs, implicit-def dead $lr, implicit $sp, implicit $r0, implicit $r1, implicit $r2, implicit $r3, implicit-def $sp
+; KCFI-NEXT:   }
+; KCFI-NEXT:   $sp = frame-destroy t2LDMIA_RET $sp, 14 /* CC::al */, $noreg, def $r7, def $pc
 ; Arguments: r0=%target, r1=%a, r2=%b, r3=%c, [sp+8]=%d
 ; Call needs: r0=%a, r1=%b, r2=%c, r3=%d, target in r12
 ; r3 is live as 4th argument, so push it before KCFI check
@@ -148,6 +201,36 @@ define void @f4_r3_unused(ptr noundef %target, i32 %a, i32 %b) !kcfi_type !1 {
 ; ASM-NEXT:  .Ltmp3:
 ; ASM-NEXT:    blx r3
 ; ASM-NEXT:    pop {r7, pc}
+; ISEL-LABEL: name: f4_r3_unused
+; ISEL: bb.0 (%ir-block.0):
+; ISEL-NEXT:   liveins: $r0, $r1, $r2
+; ISEL-NEXT: {{  $}}
+; ISEL-NEXT:   [[COPY:%[0-9]+]]:gpr = COPY $r2
+; ISEL-NEXT:   [[COPY1:%[0-9]+]]:gpr = COPY $r1
+; ISEL-NEXT:   [[COPY2:%[0-9]+]]:gpr = COPY $r0
+; ISEL-NEXT:   ADJCALLSTACKDOWN 0, 0, 14 /* CC::al */, $noreg, implicit-def dead $sp, implicit $sp
+; ISEL-NEXT:   $r0 = COPY [[COPY1]]
+; ISEL-NEXT:   $r1 = COPY [[COPY]]
+; ISEL-NEXT:   tBLXr 14 /* CC::al */, $noreg, [[COPY2]], csr_aapcs, implicit-def dead $lr, implicit $sp, implicit $r0, implicit $r1, implicit-def $sp, cfi-type 12345678
+; ISEL-NEXT:   ADJCALLSTACKUP 0, -1, 14 /* CC::al */, $noreg, implicit-def dead $sp, implicit $sp
+; ISEL-NEXT:   tBX_RET 14 /* CC::al */, $noreg
+;
+; KCFI-LABEL: name: f4_r3_unused
+; KCFI: bb.0 (%ir-block.0):
+; KCFI-NEXT:   liveins: $r0, $r1, $r2, $r7, $lr
+; KCFI-NEXT: {{  $}}
+; KCFI-NEXT:   $sp = frame-setup t2STMDB_UPD $sp, 14 /* CC::al */, $noreg, killed $r7, killed $lr
+; KCFI-NEXT:   frame-setup CFI_INSTRUCTION def_cfa_offset 8
+; KCFI-NEXT:   frame-setup CFI_INSTRUCTION offset $lr, -4
+; KCFI-NEXT:   frame-setup CFI_INSTRUCTION offset $r7, -8
+; KCFI-NEXT:   $r3 = tMOVr $r0, 14 /* CC::al */, $noreg
+; KCFI-NEXT:   $r0 = tMOVr killed $r1, 14 /* CC::al */, $noreg
+; KCFI-NEXT:   $r1 = tMOVr killed $r2, 14 /* CC::al */, $noreg
+; KCFI-NEXT:   BUNDLE implicit-def dead $lr, implicit-def $sp, implicit killed $r3, implicit $sp, implicit $r0, implicit $r1 {
+; KCFI-NEXT:     KCFI_CHECK_Thumb2 $r3, 12345678
+; KCFI-NEXT:     tBLXr 14 /* CC::al */, $noreg, killed $r3, csr_aapcs, implicit-def dead $lr, implicit $sp, implicit $r0, implicit $r1, implicit-def $sp
+; KCFI-NEXT:   }
+; KCFI-NEXT:   $sp = frame-destroy t2LDMIA_RET $sp, 14 /* CC::al */, $noreg, def $r7, def $pc
 ; Only 3 arguments total, so r3 is not used as call argument
 ; Target might be in r3, using r12 as scratch (no spill needed)
   call void %target(i32 %a, i32 %b) [ "kcfi"(i32 12345678) ]
@@ -157,7 +240,3 @@ define void @f4_r3_unused(ptr noundef %target, i32 %a, i32 %b) !kcfi_type !1 {
 !llvm.module.flags = !{!0}
 !0 = !{i32 4, !"kcfi", i32 1}
 !1 = !{i32 12345678}
-;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
-; ISEL: {{.*}}
-; KCFI: {{.*}}
-; MIR: {{.*}}

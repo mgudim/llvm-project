@@ -67,10 +67,14 @@ bb:
 define amdgpu_ps void @test_wmma_f16_16x16x16_f16_untied(<16 x half> %A.0, <16 x half> %B.0, <16 x half> %A.1, <16 x half> %B.1, <8 x half> %C, ptr addrspace(1) %out.0, ptr addrspace(1) %out.1) {
 ; W64-LABEL: test_wmma_f16_16x16x16_f16_untied:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_wmma_f16_16x16x16_f16 v[40:43], v[0:7], v[8:15], v[32:35]
+; W64-NEXT:    v_mov_b32_e32 v40, v36
+; W64-NEXT:    v_mov_b32_e32 v41, v37
+; W64-NEXT:    v_mov_b32_e32 v42, v38
+; W64-NEXT:    v_mov_b32_e32 v43, v39
+; W64-NEXT:    v_wmma_f16_16x16x16_f16 v[36:39], v[0:7], v[8:15], v[32:35]
 ; W64-NEXT:    v_wmma_f16_16x16x16_f16 v[32:35], v[16:23], v[24:31], v[32:35]
-; W64-NEXT:    global_store_b128 v[36:37], v[40:43], off
-; W64-NEXT:    global_store_b128 v[38:39], v[32:35], off
+; W64-NEXT:    global_store_b128 v[40:41], v[36:39], off
+; W64-NEXT:    global_store_b128 v[42:43], v[32:35], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res.0 = call <8 x half> @llvm.amdgcn.wmma.f16.16x16x16.f16(<16 x half> %A.0, <16 x half> %B.0, <8 x half> %C, i1 0)
@@ -83,15 +87,19 @@ bb:
 define amdgpu_ps void @test_wmma_f16_16x16x16_f16_tied(<16 x half> %A.0, <16 x half> %B.0, <16 x half> %A.1, <16 x half> %B.1, <8 x half> %C, ptr addrspace(1) %out.0, ptr addrspace(1) %out.1) {
 ; W64-LABEL: test_wmma_f16_16x16x16_f16_tied:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_mov_b32_e32 v43, v35
-; W64-NEXT:    v_mov_b32_e32 v42, v34
-; W64-NEXT:    v_mov_b32_e32 v41, v33
-; W64-NEXT:    v_mov_b32_e32 v40, v32
+; W64-NEXT:    v_mov_b32_e32 v40, v36
+; W64-NEXT:    v_mov_b32_e32 v41, v37
+; W64-NEXT:    v_mov_b32_e32 v42, v38
+; W64-NEXT:    v_mov_b32_e32 v43, v39
+; W64-NEXT:    v_mov_b32_e32 v39, v35
+; W64-NEXT:    v_mov_b32_e32 v38, v34
+; W64-NEXT:    v_mov_b32_e32 v37, v33
+; W64-NEXT:    v_mov_b32_e32 v36, v32
 ; W64-NEXT:    v_wmma_f16_16x16x16_f16 v[32:35], v[16:23], v[24:31], v[32:35]
 ; W64-NEXT:    s_delay_alu instid0(VALU_DEP_2)
-; W64-NEXT:    v_wmma_f16_16x16x16_f16 v[40:43], v[0:7], v[8:15], v[40:43]
-; W64-NEXT:    global_store_b128 v[36:37], v[40:43], off
-; W64-NEXT:    global_store_b128 v[38:39], v[32:35], off
+; W64-NEXT:    v_wmma_f16_16x16x16_f16 v[36:39], v[0:7], v[8:15], v[36:39]
+; W64-NEXT:    global_store_b128 v[40:41], v[36:39], off
+; W64-NEXT:    global_store_b128 v[42:43], v[32:35], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res.0 = call <8 x half> @llvm.amdgcn.wmma.f16.16x16x16.f16.tied(<16 x half> %A.0, <16 x half> %B.0, <8 x half> %C, i1 0)
@@ -130,10 +138,14 @@ bb:
 define amdgpu_ps void @test_wmma_bf16_16x16x16_bf16_untied(<16 x i16> %A.0, <16 x i16> %B.0, <16 x i16> %A.1, <16 x i16> %B.1, <8 x i16> %C, ptr addrspace(1) %out.0, ptr addrspace(1) %out.1) {
 ; W64-LABEL: test_wmma_bf16_16x16x16_bf16_untied:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_wmma_bf16_16x16x16_bf16 v[40:43], v[0:7], v[8:15], v[32:35]
+; W64-NEXT:    v_mov_b32_e32 v40, v36
+; W64-NEXT:    v_mov_b32_e32 v41, v37
+; W64-NEXT:    v_mov_b32_e32 v42, v38
+; W64-NEXT:    v_mov_b32_e32 v43, v39
+; W64-NEXT:    v_wmma_bf16_16x16x16_bf16 v[36:39], v[0:7], v[8:15], v[32:35]
 ; W64-NEXT:    v_wmma_bf16_16x16x16_bf16 v[32:35], v[16:23], v[24:31], v[32:35]
-; W64-NEXT:    global_store_b128 v[36:37], v[40:43], off
-; W64-NEXT:    global_store_b128 v[38:39], v[32:35], off
+; W64-NEXT:    global_store_b128 v[40:41], v[36:39], off
+; W64-NEXT:    global_store_b128 v[42:43], v[32:35], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res.0 = call <8 x i16> @llvm.amdgcn.wmma.bf16.16x16x16.bf16(<16 x i16> %A.0, <16 x i16> %B.0, <8 x i16> %C, i1 0)
@@ -146,15 +158,19 @@ bb:
 define amdgpu_ps void @test_wmma_bf16_16x16x16_bf16_tied(<16 x i16> %A.0, <16 x i16> %B.0, <16 x i16> %A.1, <16 x i16> %B.1, <8 x i16> %C, ptr addrspace(1) %out.0, ptr addrspace(1) %out.1) {
 ; W64-LABEL: test_wmma_bf16_16x16x16_bf16_tied:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_mov_b32_e32 v43, v35
-; W64-NEXT:    v_mov_b32_e32 v42, v34
-; W64-NEXT:    v_mov_b32_e32 v41, v33
-; W64-NEXT:    v_mov_b32_e32 v40, v32
+; W64-NEXT:    v_mov_b32_e32 v40, v36
+; W64-NEXT:    v_mov_b32_e32 v41, v37
+; W64-NEXT:    v_mov_b32_e32 v42, v38
+; W64-NEXT:    v_mov_b32_e32 v43, v39
+; W64-NEXT:    v_mov_b32_e32 v39, v35
+; W64-NEXT:    v_mov_b32_e32 v38, v34
+; W64-NEXT:    v_mov_b32_e32 v37, v33
+; W64-NEXT:    v_mov_b32_e32 v36, v32
 ; W64-NEXT:    v_wmma_bf16_16x16x16_bf16 v[32:35], v[16:23], v[24:31], v[32:35]
 ; W64-NEXT:    s_delay_alu instid0(VALU_DEP_2)
-; W64-NEXT:    v_wmma_bf16_16x16x16_bf16 v[40:43], v[0:7], v[8:15], v[40:43]
-; W64-NEXT:    global_store_b128 v[36:37], v[40:43], off
-; W64-NEXT:    global_store_b128 v[38:39], v[32:35], off
+; W64-NEXT:    v_wmma_bf16_16x16x16_bf16 v[36:39], v[0:7], v[8:15], v[36:39]
+; W64-NEXT:    global_store_b128 v[40:41], v[36:39], off
+; W64-NEXT:    global_store_b128 v[42:43], v[32:35], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res.0 = call <8 x i16> @llvm.amdgcn.wmma.bf16.16x16x16.bf16.tied(<16 x i16> %A.0, <16 x i16> %B.0, <8 x i16> %C, i1 0)
@@ -268,8 +284,19 @@ bb:
 define amdgpu_ps void @test_wmma_i32_16x16x16_ui4_unsigned_unsigned(<2 x i32> %A, <2 x i32> %B, <4 x i32> %C, ptr addrspace(1) %out) {
 ; W64-LABEL: test_wmma_i32_16x16x16_ui4_unsigned_unsigned:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[4:7], v[0:1], v[2:3], v[4:7]
-; W64-NEXT:    global_store_b128 v[8:9], v[4:7], off
+; W64-NEXT:    v_mov_b32_e32 v10, v0
+; W64-NEXT:    v_mov_b32_e32 v11, v1
+; W64-NEXT:    v_mov_b32_e32 v12, v2
+; W64-NEXT:    v_mov_b32_e32 v13, v3
+; W64-NEXT:    v_mov_b32_e32 v0, v4
+; W64-NEXT:    v_mov_b32_e32 v1, v5
+; W64-NEXT:    v_mov_b32_e32 v2, v6
+; W64-NEXT:    v_mov_b32_e32 v3, v7
+; W64-NEXT:    v_mov_b32_e32 v4, v8
+; W64-NEXT:    v_mov_b32_e32 v5, v9
+; W64-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[0:3], v[10:11], v[12:13], v[0:3]
+; W64-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.wmma.i32.16x16x16.iu4(i1 0, <2 x i32> %A, i1 0, <2 x i32> %B, <4 x i32> %C, i1 0)
@@ -280,8 +307,19 @@ bb:
 define amdgpu_ps void @test_wmma_i32_16x16x16_ui4_unsigned_signed(<2 x i32> %A, <2 x i32> %B, <4 x i32> %C, ptr addrspace(1) %out) {
 ; W64-LABEL: test_wmma_i32_16x16x16_ui4_unsigned_signed:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[4:7], v[0:1], v[2:3], v[4:7] neg_lo:[0,1,0]
-; W64-NEXT:    global_store_b128 v[8:9], v[4:7], off
+; W64-NEXT:    v_mov_b32_e32 v10, v0
+; W64-NEXT:    v_mov_b32_e32 v11, v1
+; W64-NEXT:    v_mov_b32_e32 v12, v2
+; W64-NEXT:    v_mov_b32_e32 v13, v3
+; W64-NEXT:    v_mov_b32_e32 v0, v4
+; W64-NEXT:    v_mov_b32_e32 v1, v5
+; W64-NEXT:    v_mov_b32_e32 v2, v6
+; W64-NEXT:    v_mov_b32_e32 v3, v7
+; W64-NEXT:    v_mov_b32_e32 v4, v8
+; W64-NEXT:    v_mov_b32_e32 v5, v9
+; W64-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[0:3], v[10:11], v[12:13], v[0:3] neg_lo:[0,1,0]
+; W64-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.wmma.i32.16x16x16.iu4(i1 0, <2 x i32> %A, i1 1, <2 x i32> %B, <4 x i32> %C, i1 0)
@@ -292,8 +330,19 @@ bb:
 define amdgpu_ps void @test_wmma_i32_16x16x16_ui4_signed_unsigned(<2 x i32> %A, <2 x i32> %B, <4 x i32> %C, ptr addrspace(1) %out) {
 ; W64-LABEL: test_wmma_i32_16x16x16_ui4_signed_unsigned:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[4:7], v[0:1], v[2:3], v[4:7] neg_lo:[1,0,0]
-; W64-NEXT:    global_store_b128 v[8:9], v[4:7], off
+; W64-NEXT:    v_mov_b32_e32 v10, v0
+; W64-NEXT:    v_mov_b32_e32 v11, v1
+; W64-NEXT:    v_mov_b32_e32 v12, v2
+; W64-NEXT:    v_mov_b32_e32 v13, v3
+; W64-NEXT:    v_mov_b32_e32 v0, v4
+; W64-NEXT:    v_mov_b32_e32 v1, v5
+; W64-NEXT:    v_mov_b32_e32 v2, v6
+; W64-NEXT:    v_mov_b32_e32 v3, v7
+; W64-NEXT:    v_mov_b32_e32 v4, v8
+; W64-NEXT:    v_mov_b32_e32 v5, v9
+; W64-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[0:3], v[10:11], v[12:13], v[0:3] neg_lo:[1,0,0]
+; W64-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.wmma.i32.16x16x16.iu4(i1 1, <2 x i32> %A, i1 0, <2 x i32> %B, <4 x i32> %C, i1 0)
@@ -304,8 +353,19 @@ bb:
 define amdgpu_ps void @test_wmma_i32_16x16x16_ui4_signed_signed(<2 x i32> %A, <2 x i32> %B, <4 x i32> %C, ptr addrspace(1) %out) {
 ; W64-LABEL: test_wmma_i32_16x16x16_ui4_signed_signed:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[4:7], v[0:1], v[2:3], v[4:7] neg_lo:[1,1,0]
-; W64-NEXT:    global_store_b128 v[8:9], v[4:7], off
+; W64-NEXT:    v_mov_b32_e32 v10, v0
+; W64-NEXT:    v_mov_b32_e32 v11, v1
+; W64-NEXT:    v_mov_b32_e32 v12, v2
+; W64-NEXT:    v_mov_b32_e32 v13, v3
+; W64-NEXT:    v_mov_b32_e32 v0, v4
+; W64-NEXT:    v_mov_b32_e32 v1, v5
+; W64-NEXT:    v_mov_b32_e32 v2, v6
+; W64-NEXT:    v_mov_b32_e32 v3, v7
+; W64-NEXT:    v_mov_b32_e32 v4, v8
+; W64-NEXT:    v_mov_b32_e32 v5, v9
+; W64-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[0:3], v[10:11], v[12:13], v[0:3] neg_lo:[1,1,0]
+; W64-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.wmma.i32.16x16x16.iu4(i1 1, <2 x i32> %A, i1 1, <2 x i32> %B, <4 x i32> %C, i1 0)
@@ -316,8 +376,19 @@ bb:
 define amdgpu_ps void @test_wmma_i32_16x16x16_ui4_unsigned_unsigned_clamp(<2 x i32> %A, <2 x i32> %B, <4 x i32> %C, ptr addrspace(1) %out) {
 ; W64-LABEL: test_wmma_i32_16x16x16_ui4_unsigned_unsigned_clamp:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[4:7], v[0:1], v[2:3], v[4:7] clamp
-; W64-NEXT:    global_store_b128 v[8:9], v[4:7], off
+; W64-NEXT:    v_mov_b32_e32 v10, v0
+; W64-NEXT:    v_mov_b32_e32 v11, v1
+; W64-NEXT:    v_mov_b32_e32 v12, v2
+; W64-NEXT:    v_mov_b32_e32 v13, v3
+; W64-NEXT:    v_mov_b32_e32 v0, v4
+; W64-NEXT:    v_mov_b32_e32 v1, v5
+; W64-NEXT:    v_mov_b32_e32 v2, v6
+; W64-NEXT:    v_mov_b32_e32 v3, v7
+; W64-NEXT:    v_mov_b32_e32 v4, v8
+; W64-NEXT:    v_mov_b32_e32 v5, v9
+; W64-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[0:3], v[10:11], v[12:13], v[0:3] clamp
+; W64-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.wmma.i32.16x16x16.iu4(i1 0, <2 x i32> %A, i1 0, <2 x i32> %B, <4 x i32> %C, i1 1)
@@ -328,8 +399,19 @@ bb:
 define amdgpu_ps void @test_wmma_i32_16x16x16_ui4_unsigned_signed_clamp(<2 x i32> %A, <2 x i32> %B, <4 x i32> %C, ptr addrspace(1) %out) {
 ; W64-LABEL: test_wmma_i32_16x16x16_ui4_unsigned_signed_clamp:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[4:7], v[0:1], v[2:3], v[4:7] neg_lo:[0,1,0] clamp
-; W64-NEXT:    global_store_b128 v[8:9], v[4:7], off
+; W64-NEXT:    v_mov_b32_e32 v10, v0
+; W64-NEXT:    v_mov_b32_e32 v11, v1
+; W64-NEXT:    v_mov_b32_e32 v12, v2
+; W64-NEXT:    v_mov_b32_e32 v13, v3
+; W64-NEXT:    v_mov_b32_e32 v0, v4
+; W64-NEXT:    v_mov_b32_e32 v1, v5
+; W64-NEXT:    v_mov_b32_e32 v2, v6
+; W64-NEXT:    v_mov_b32_e32 v3, v7
+; W64-NEXT:    v_mov_b32_e32 v4, v8
+; W64-NEXT:    v_mov_b32_e32 v5, v9
+; W64-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[0:3], v[10:11], v[12:13], v[0:3] neg_lo:[0,1,0] clamp
+; W64-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.wmma.i32.16x16x16.iu4(i1 0, <2 x i32> %A, i1 1, <2 x i32> %B, <4 x i32> %C, i1 1)
@@ -340,8 +422,19 @@ bb:
 define amdgpu_ps void @test_wmma_i32_16x16x16_ui4_signed_unsigned_clamp(<2 x i32> %A, <2 x i32> %B, <4 x i32> %C, ptr addrspace(1) %out) {
 ; W64-LABEL: test_wmma_i32_16x16x16_ui4_signed_unsigned_clamp:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[4:7], v[0:1], v[2:3], v[4:7] neg_lo:[1,0,0] clamp
-; W64-NEXT:    global_store_b128 v[8:9], v[4:7], off
+; W64-NEXT:    v_mov_b32_e32 v10, v0
+; W64-NEXT:    v_mov_b32_e32 v11, v1
+; W64-NEXT:    v_mov_b32_e32 v12, v2
+; W64-NEXT:    v_mov_b32_e32 v13, v3
+; W64-NEXT:    v_mov_b32_e32 v0, v4
+; W64-NEXT:    v_mov_b32_e32 v1, v5
+; W64-NEXT:    v_mov_b32_e32 v2, v6
+; W64-NEXT:    v_mov_b32_e32 v3, v7
+; W64-NEXT:    v_mov_b32_e32 v4, v8
+; W64-NEXT:    v_mov_b32_e32 v5, v9
+; W64-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[0:3], v[10:11], v[12:13], v[0:3] neg_lo:[1,0,0] clamp
+; W64-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.wmma.i32.16x16x16.iu4(i1 1, <2 x i32> %A, i1 0, <2 x i32> %B, <4 x i32> %C, i1 1)
@@ -352,8 +445,19 @@ bb:
 define amdgpu_ps void @test_wmma_i32_16x16x16_ui4_signed_signed_clamp(<2 x i32> %A, <2 x i32> %B, <4 x i32> %C, ptr addrspace(1) %out) {
 ; W64-LABEL: test_wmma_i32_16x16x16_ui4_signed_signed_clamp:
 ; W64:       ; %bb.0: ; %bb
-; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[4:7], v[0:1], v[2:3], v[4:7] neg_lo:[1,1,0] clamp
-; W64-NEXT:    global_store_b128 v[8:9], v[4:7], off
+; W64-NEXT:    v_mov_b32_e32 v10, v0
+; W64-NEXT:    v_mov_b32_e32 v11, v1
+; W64-NEXT:    v_mov_b32_e32 v12, v2
+; W64-NEXT:    v_mov_b32_e32 v13, v3
+; W64-NEXT:    v_mov_b32_e32 v0, v4
+; W64-NEXT:    v_mov_b32_e32 v1, v5
+; W64-NEXT:    v_mov_b32_e32 v2, v6
+; W64-NEXT:    v_mov_b32_e32 v3, v7
+; W64-NEXT:    v_mov_b32_e32 v4, v8
+; W64-NEXT:    v_mov_b32_e32 v5, v9
+; W64-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; W64-NEXT:    v_wmma_i32_16x16x16_iu4 v[0:3], v[10:11], v[12:13], v[0:3] neg_lo:[1,1,0] clamp
+; W64-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; W64-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.wmma.i32.16x16x16.iu4(i1 1, <2 x i32> %A, i1 1, <2 x i32> %B, <4 x i32> %C, i1 1)

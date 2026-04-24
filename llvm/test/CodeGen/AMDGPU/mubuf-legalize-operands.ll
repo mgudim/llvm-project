@@ -12,43 +12,50 @@ define float @mubuf_vgpr(ptr addrspace(8) %i, i32 %c) #0 {
 ; GFX9_W64-LABEL: mubuf_vgpr:
 ; GFX9_W64:       ; %bb.0:
 ; GFX9_W64-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX9_W64-NEXT:    v_mov_b32_e32 v8, v3
+; GFX9_W64-NEXT:    v_mov_b32_e32 v7, v2
+; GFX9_W64-NEXT:    v_mov_b32_e32 v6, v1
+; GFX9_W64-NEXT:    v_mov_b32_e32 v5, v0
 ; GFX9_W64-NEXT:    s_mov_b64 s[6:7], exec
 ; GFX9_W64-NEXT:  .LBB0_1: ; =>This Inner Loop Header: Depth=1
-; GFX9_W64-NEXT:    v_readfirstlane_b32 s8, v0
-; GFX9_W64-NEXT:    v_readfirstlane_b32 s9, v1
-; GFX9_W64-NEXT:    v_readfirstlane_b32 s10, v2
-; GFX9_W64-NEXT:    v_readfirstlane_b32 s11, v3
-; GFX9_W64-NEXT:    v_cmp_eq_u64_e32 vcc, s[8:9], v[0:1]
-; GFX9_W64-NEXT:    v_cmp_eq_u64_e64 s[4:5], s[10:11], v[2:3]
+; GFX9_W64-NEXT:    v_readfirstlane_b32 s8, v5
+; GFX9_W64-NEXT:    v_readfirstlane_b32 s9, v6
+; GFX9_W64-NEXT:    v_readfirstlane_b32 s10, v7
+; GFX9_W64-NEXT:    v_readfirstlane_b32 s11, v8
+; GFX9_W64-NEXT:    v_cmp_eq_u64_e32 vcc, s[8:9], v[5:6]
+; GFX9_W64-NEXT:    v_cmp_eq_u64_e64 s[4:5], s[10:11], v[7:8]
 ; GFX9_W64-NEXT:    s_and_b64 s[4:5], vcc, s[4:5]
 ; GFX9_W64-NEXT:    s_and_saveexec_b64 s[4:5], s[4:5]
 ; GFX9_W64-NEXT:    s_nop 0
-; GFX9_W64-NEXT:    buffer_load_format_x v5, v4, s[8:11], 0 idxen
-; GFX9_W64-NEXT:    ; implicit-def: $vgpr0_vgpr1_vgpr2_vgpr3
+; GFX9_W64-NEXT:    buffer_load_format_x v0, v4, s[8:11], 0 idxen
+; GFX9_W64-NEXT:    ; implicit-def: $vgpr5_vgpr6_vgpr7_vgpr8
 ; GFX9_W64-NEXT:    ; implicit-def: $vgpr4
 ; GFX9_W64-NEXT:    s_xor_b64 exec, exec, s[4:5]
 ; GFX9_W64-NEXT:    s_cbranch_execnz .LBB0_1
 ; GFX9_W64-NEXT:  ; %bb.2:
 ; GFX9_W64-NEXT:    s_mov_b64 exec, s[6:7]
 ; GFX9_W64-NEXT:    s_waitcnt vmcnt(0)
-; GFX9_W64-NEXT:    v_mov_b32_e32 v0, v5
 ; GFX9_W64-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX1010_W32-LABEL: mubuf_vgpr:
 ; GFX1010_W32:       ; %bb.0:
 ; GFX1010_W32-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX1010_W32-NEXT:    v_mov_b32_e32 v8, v3
+; GFX1010_W32-NEXT:    v_mov_b32_e32 v7, v2
+; GFX1010_W32-NEXT:    v_mov_b32_e32 v6, v1
+; GFX1010_W32-NEXT:    v_mov_b32_e32 v5, v0
 ; GFX1010_W32-NEXT:    s_mov_b32 s5, exec_lo
 ; GFX1010_W32-NEXT:  .LBB0_1: ; =>This Inner Loop Header: Depth=1
-; GFX1010_W32-NEXT:    v_readfirstlane_b32 s8, v0
-; GFX1010_W32-NEXT:    v_readfirstlane_b32 s9, v1
-; GFX1010_W32-NEXT:    v_readfirstlane_b32 s10, v2
-; GFX1010_W32-NEXT:    v_readfirstlane_b32 s11, v3
-; GFX1010_W32-NEXT:    v_cmp_eq_u64_e32 vcc_lo, s[8:9], v[0:1]
-; GFX1010_W32-NEXT:    v_cmp_eq_u64_e64 s4, s[10:11], v[2:3]
+; GFX1010_W32-NEXT:    v_readfirstlane_b32 s8, v5
+; GFX1010_W32-NEXT:    v_readfirstlane_b32 s9, v6
+; GFX1010_W32-NEXT:    v_readfirstlane_b32 s10, v7
+; GFX1010_W32-NEXT:    v_readfirstlane_b32 s11, v8
+; GFX1010_W32-NEXT:    v_cmp_eq_u64_e32 vcc_lo, s[8:9], v[5:6]
+; GFX1010_W32-NEXT:    v_cmp_eq_u64_e64 s4, s[10:11], v[7:8]
 ; GFX1010_W32-NEXT:    s_and_b32 s4, vcc_lo, s4
 ; GFX1010_W32-NEXT:    s_and_saveexec_b32 s4, s4
-; GFX1010_W32-NEXT:    buffer_load_format_x v5, v4, s[8:11], 0 idxen
-; GFX1010_W32-NEXT:    ; implicit-def: $vgpr0_vgpr1_vgpr2_vgpr3
+; GFX1010_W32-NEXT:    buffer_load_format_x v0, v4, s[8:11], 0 idxen
+; GFX1010_W32-NEXT:    ; implicit-def: $vgpr5_vgpr6_vgpr7_vgpr8
 ; GFX1010_W32-NEXT:    ; implicit-def: $vgpr4
 ; GFX1010_W32-NEXT:    s_waitcnt_depctr depctr_vm_vsrc(0)
 ; GFX1010_W32-NEXT:    s_xor_b32 exec_lo, exec_lo, s4
@@ -56,24 +63,27 @@ define float @mubuf_vgpr(ptr addrspace(8) %i, i32 %c) #0 {
 ; GFX1010_W32-NEXT:  ; %bb.2:
 ; GFX1010_W32-NEXT:    s_mov_b32 exec_lo, s5
 ; GFX1010_W32-NEXT:    s_waitcnt vmcnt(0)
-; GFX1010_W32-NEXT:    v_mov_b32_e32 v0, v5
 ; GFX1010_W32-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX1010_W64-LABEL: mubuf_vgpr:
 ; GFX1010_W64:       ; %bb.0:
 ; GFX1010_W64-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX1010_W64-NEXT:    v_mov_b32_e32 v8, v3
+; GFX1010_W64-NEXT:    v_mov_b32_e32 v7, v2
+; GFX1010_W64-NEXT:    v_mov_b32_e32 v6, v1
+; GFX1010_W64-NEXT:    v_mov_b32_e32 v5, v0
 ; GFX1010_W64-NEXT:    s_mov_b64 s[6:7], exec
 ; GFX1010_W64-NEXT:  .LBB0_1: ; =>This Inner Loop Header: Depth=1
-; GFX1010_W64-NEXT:    v_readfirstlane_b32 s8, v0
-; GFX1010_W64-NEXT:    v_readfirstlane_b32 s9, v1
-; GFX1010_W64-NEXT:    v_readfirstlane_b32 s10, v2
-; GFX1010_W64-NEXT:    v_readfirstlane_b32 s11, v3
-; GFX1010_W64-NEXT:    v_cmp_eq_u64_e32 vcc, s[8:9], v[0:1]
-; GFX1010_W64-NEXT:    v_cmp_eq_u64_e64 s[4:5], s[10:11], v[2:3]
+; GFX1010_W64-NEXT:    v_readfirstlane_b32 s8, v5
+; GFX1010_W64-NEXT:    v_readfirstlane_b32 s9, v6
+; GFX1010_W64-NEXT:    v_readfirstlane_b32 s10, v7
+; GFX1010_W64-NEXT:    v_readfirstlane_b32 s11, v8
+; GFX1010_W64-NEXT:    v_cmp_eq_u64_e32 vcc, s[8:9], v[5:6]
+; GFX1010_W64-NEXT:    v_cmp_eq_u64_e64 s[4:5], s[10:11], v[7:8]
 ; GFX1010_W64-NEXT:    s_and_b64 s[4:5], vcc, s[4:5]
 ; GFX1010_W64-NEXT:    s_and_saveexec_b64 s[4:5], s[4:5]
-; GFX1010_W64-NEXT:    buffer_load_format_x v5, v4, s[8:11], 0 idxen
-; GFX1010_W64-NEXT:    ; implicit-def: $vgpr0_vgpr1_vgpr2_vgpr3
+; GFX1010_W64-NEXT:    buffer_load_format_x v0, v4, s[8:11], 0 idxen
+; GFX1010_W64-NEXT:    ; implicit-def: $vgpr5_vgpr6_vgpr7_vgpr8
 ; GFX1010_W64-NEXT:    ; implicit-def: $vgpr4
 ; GFX1010_W64-NEXT:    s_waitcnt_depctr depctr_vm_vsrc(0)
 ; GFX1010_W64-NEXT:    s_xor_b64 exec, exec, s[4:5]
@@ -81,59 +91,64 @@ define float @mubuf_vgpr(ptr addrspace(8) %i, i32 %c) #0 {
 ; GFX1010_W64-NEXT:  ; %bb.2:
 ; GFX1010_W64-NEXT:    s_mov_b64 exec, s[6:7]
 ; GFX1010_W64-NEXT:    s_waitcnt vmcnt(0)
-; GFX1010_W64-NEXT:    v_mov_b32_e32 v0, v5
 ; GFX1010_W64-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX1100_W32-LABEL: mubuf_vgpr:
 ; GFX1100_W32:       ; %bb.0:
 ; GFX1100_W32-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX1100_W32-NEXT:    v_dual_mov_b32 v8, v3 :: v_dual_mov_b32 v7, v2
+; GFX1100_W32-NEXT:    v_dual_mov_b32 v6, v1 :: v_dual_mov_b32 v5, v0
 ; GFX1100_W32-NEXT:    s_mov_b32 s1, exec_lo
 ; GFX1100_W32-NEXT:  .LBB0_1: ; =>This Inner Loop Header: Depth=1
-; GFX1100_W32-NEXT:    v_readfirstlane_b32 s4, v0
-; GFX1100_W32-NEXT:    v_readfirstlane_b32 s5, v1
-; GFX1100_W32-NEXT:    v_readfirstlane_b32 s6, v2
-; GFX1100_W32-NEXT:    v_readfirstlane_b32 s7, v3
+; GFX1100_W32-NEXT:    s_delay_alu instid0(VALU_DEP_1) | instskip(NEXT) | instid1(VALU_DEP_2)
+; GFX1100_W32-NEXT:    v_readfirstlane_b32 s4, v5
+; GFX1100_W32-NEXT:    v_readfirstlane_b32 s5, v6
+; GFX1100_W32-NEXT:    v_readfirstlane_b32 s6, v7
+; GFX1100_W32-NEXT:    v_readfirstlane_b32 s7, v8
 ; GFX1100_W32-NEXT:    s_delay_alu instid0(VALU_DEP_3) | instskip(NEXT) | instid1(VALU_DEP_2)
-; GFX1100_W32-NEXT:    v_cmp_eq_u64_e32 vcc_lo, s[4:5], v[0:1]
-; GFX1100_W32-NEXT:    v_cmp_eq_u64_e64 s0, s[6:7], v[2:3]
+; GFX1100_W32-NEXT:    v_cmp_eq_u64_e32 vcc_lo, s[4:5], v[5:6]
+; GFX1100_W32-NEXT:    v_cmp_eq_u64_e64 s0, s[6:7], v[7:8]
 ; GFX1100_W32-NEXT:    s_and_b32 s0, vcc_lo, s0
 ; GFX1100_W32-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
 ; GFX1100_W32-NEXT:    s_and_saveexec_b32 s0, s0
-; GFX1100_W32-NEXT:    buffer_load_format_x v5, v4, s[4:7], 0 idxen
-; GFX1100_W32-NEXT:    ; implicit-def: $vgpr0_vgpr1_vgpr2_vgpr3
+; GFX1100_W32-NEXT:    buffer_load_format_x v0, v4, s[4:7], 0 idxen
+; GFX1100_W32-NEXT:    ; implicit-def: $vgpr5_vgpr6_vgpr7_vgpr8
 ; GFX1100_W32-NEXT:    ; implicit-def: $vgpr4
 ; GFX1100_W32-NEXT:    s_xor_b32 exec_lo, exec_lo, s0
 ; GFX1100_W32-NEXT:    s_cbranch_execnz .LBB0_1
 ; GFX1100_W32-NEXT:  ; %bb.2:
 ; GFX1100_W32-NEXT:    s_mov_b32 exec_lo, s1
 ; GFX1100_W32-NEXT:    s_waitcnt vmcnt(0)
-; GFX1100_W32-NEXT:    v_mov_b32_e32 v0, v5
 ; GFX1100_W32-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX1100_W64-LABEL: mubuf_vgpr:
 ; GFX1100_W64:       ; %bb.0:
 ; GFX1100_W64-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX1100_W64-NEXT:    v_mov_b32_e32 v8, v3
+; GFX1100_W64-NEXT:    v_mov_b32_e32 v7, v2
+; GFX1100_W64-NEXT:    v_mov_b32_e32 v6, v1
+; GFX1100_W64-NEXT:    v_mov_b32_e32 v5, v0
 ; GFX1100_W64-NEXT:    s_mov_b64 s[2:3], exec
 ; GFX1100_W64-NEXT:  .LBB0_1: ; =>This Inner Loop Header: Depth=1
-; GFX1100_W64-NEXT:    v_readfirstlane_b32 s4, v0
-; GFX1100_W64-NEXT:    v_readfirstlane_b32 s5, v1
-; GFX1100_W64-NEXT:    v_readfirstlane_b32 s6, v2
-; GFX1100_W64-NEXT:    v_readfirstlane_b32 s7, v3
+; GFX1100_W64-NEXT:    s_delay_alu instid0(VALU_DEP_1) | instskip(NEXT) | instid1(VALU_DEP_3)
+; GFX1100_W64-NEXT:    v_readfirstlane_b32 s4, v5
+; GFX1100_W64-NEXT:    v_readfirstlane_b32 s5, v6
+; GFX1100_W64-NEXT:    v_readfirstlane_b32 s6, v7
+; GFX1100_W64-NEXT:    v_readfirstlane_b32 s7, v8
 ; GFX1100_W64-NEXT:    s_delay_alu instid0(VALU_DEP_3) | instskip(NEXT) | instid1(VALU_DEP_2)
-; GFX1100_W64-NEXT:    v_cmp_eq_u64_e32 vcc, s[4:5], v[0:1]
-; GFX1100_W64-NEXT:    v_cmp_eq_u64_e64 s[0:1], s[6:7], v[2:3]
+; GFX1100_W64-NEXT:    v_cmp_eq_u64_e32 vcc, s[4:5], v[5:6]
+; GFX1100_W64-NEXT:    v_cmp_eq_u64_e64 s[0:1], s[6:7], v[7:8]
 ; GFX1100_W64-NEXT:    s_and_b64 s[0:1], vcc, s[0:1]
 ; GFX1100_W64-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
 ; GFX1100_W64-NEXT:    s_and_saveexec_b64 s[0:1], s[0:1]
-; GFX1100_W64-NEXT:    buffer_load_format_x v5, v4, s[4:7], 0 idxen
-; GFX1100_W64-NEXT:    ; implicit-def: $vgpr0_vgpr1_vgpr2_vgpr3
+; GFX1100_W64-NEXT:    buffer_load_format_x v0, v4, s[4:7], 0 idxen
+; GFX1100_W64-NEXT:    ; implicit-def: $vgpr5_vgpr6_vgpr7_vgpr8
 ; GFX1100_W64-NEXT:    ; implicit-def: $vgpr4
 ; GFX1100_W64-NEXT:    s_xor_b64 exec, exec, s[0:1]
 ; GFX1100_W64-NEXT:    s_cbranch_execnz .LBB0_1
 ; GFX1100_W64-NEXT:  ; %bb.2:
 ; GFX1100_W64-NEXT:    s_mov_b64 exec, s[2:3]
 ; GFX1100_W64-NEXT:    s_waitcnt vmcnt(0)
-; GFX1100_W64-NEXT:    v_mov_b32_e32 v0, v5
 ; GFX1100_W64-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; W64-O0-LABEL: mubuf_vgpr:
@@ -728,10 +743,12 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX9_W64-LABEL: mubuf_vgpr_outside_entry:
 ; GFX9_W64:       ; %bb.0: ; %entry
 ; GFX9_W64-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX9_W64-NEXT:    v_mov_b32_e32 v9, v12
+; GFX9_W64-NEXT:    v_mov_b32_e32 v8, v11
 ; GFX9_W64-NEXT:    ;;#ASMSTART
 ; GFX9_W64-NEXT:    s_mov_b32 s4, 17
 ; GFX9_W64-NEXT:    ;;#ASMEND
-; GFX9_W64-NEXT:    v_mov_b32_e32 v8, s4
+; GFX9_W64-NEXT:    v_mov_b32_e32 v10, s4
 ; GFX9_W64-NEXT:    s_mov_b64 s[12:13], exec
 ; GFX9_W64-NEXT:  .LBB2_1: ; =>This Inner Loop Header: Depth=1
 ; GFX9_W64-NEXT:    v_readfirstlane_b32 s8, v0
@@ -743,9 +760,9 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX9_W64-NEXT:    s_and_b64 s[6:7], vcc, s[6:7]
 ; GFX9_W64-NEXT:    s_and_saveexec_b64 s[6:7], s[6:7]
 ; GFX9_W64-NEXT:    s_nop 0
-; GFX9_W64-NEXT:    buffer_load_format_x v9, v8, s[8:11], 0 idxen
+; GFX9_W64-NEXT:    buffer_load_format_x v11, v10, s[8:11], 0 idxen
 ; GFX9_W64-NEXT:    ; implicit-def: $vgpr0_vgpr1_vgpr2_vgpr3
-; GFX9_W64-NEXT:    ; implicit-def: $vgpr8
+; GFX9_W64-NEXT:    ; implicit-def: $vgpr10
 ; GFX9_W64-NEXT:    s_xor_b64 exec, exec, s[6:7]
 ; GFX9_W64-NEXT:    s_cbranch_execnz .LBB2_1
 ; GFX9_W64-NEXT:  ; %bb.2:
@@ -767,7 +784,7 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX9_W64-NEXT:    s_and_b64 s[4:5], vcc, s[4:5]
 ; GFX9_W64-NEXT:    s_and_saveexec_b64 s[4:5], s[4:5]
 ; GFX9_W64-NEXT:    s_nop 0
-; GFX9_W64-NEXT:    buffer_load_format_x v9, v0, s[8:11], 0 idxen
+; GFX9_W64-NEXT:    buffer_load_format_x v11, v0, s[8:11], 0 idxen
 ; GFX9_W64-NEXT:    ; implicit-def: $vgpr4_vgpr5_vgpr6_vgpr7
 ; GFX9_W64-NEXT:    ; implicit-def: $vgpr0
 ; GFX9_W64-NEXT:    s_xor_b64 exec, exec, s[4:5]
@@ -777,17 +794,19 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX9_W64-NEXT:  .LBB2_6: ; %bb2
 ; GFX9_W64-NEXT:    s_or_b64 exec, exec, s[6:7]
 ; GFX9_W64-NEXT:    s_waitcnt vmcnt(0)
-; GFX9_W64-NEXT:    global_store_dword v[11:12], v9, off
+; GFX9_W64-NEXT:    global_store_dword v[8:9], v11, off
 ; GFX9_W64-NEXT:    s_waitcnt vmcnt(0)
 ; GFX9_W64-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX1010_W32-LABEL: mubuf_vgpr_outside_entry:
 ; GFX1010_W32:       ; %bb.0: ; %entry
 ; GFX1010_W32-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX1010_W32-NEXT:    v_mov_b32_e32 v9, v12
+; GFX1010_W32-NEXT:    v_mov_b32_e32 v8, v11
 ; GFX1010_W32-NEXT:    ;;#ASMSTART
 ; GFX1010_W32-NEXT:    s_mov_b32 s4, 17
 ; GFX1010_W32-NEXT:    ;;#ASMEND
-; GFX1010_W32-NEXT:    v_mov_b32_e32 v8, s4
+; GFX1010_W32-NEXT:    v_mov_b32_e32 v10, s4
 ; GFX1010_W32-NEXT:    s_mov_b32 s6, exec_lo
 ; GFX1010_W32-NEXT:  .LBB2_1: ; =>This Inner Loop Header: Depth=1
 ; GFX1010_W32-NEXT:    v_readfirstlane_b32 s8, v0
@@ -798,9 +817,9 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1010_W32-NEXT:    v_cmp_eq_u64_e64 s5, s[10:11], v[2:3]
 ; GFX1010_W32-NEXT:    s_and_b32 s5, vcc_lo, s5
 ; GFX1010_W32-NEXT:    s_and_saveexec_b32 s5, s5
-; GFX1010_W32-NEXT:    buffer_load_format_x v9, v8, s[8:11], 0 idxen
+; GFX1010_W32-NEXT:    buffer_load_format_x v11, v10, s[8:11], 0 idxen
 ; GFX1010_W32-NEXT:    ; implicit-def: $vgpr0_vgpr1_vgpr2_vgpr3
-; GFX1010_W32-NEXT:    ; implicit-def: $vgpr8
+; GFX1010_W32-NEXT:    ; implicit-def: $vgpr10
 ; GFX1010_W32-NEXT:    s_waitcnt_depctr depctr_vm_vsrc(0)
 ; GFX1010_W32-NEXT:    s_xor_b32 exec_lo, exec_lo, s5
 ; GFX1010_W32-NEXT:    s_cbranch_execnz .LBB2_1
@@ -822,7 +841,7 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1010_W32-NEXT:    v_cmp_eq_u64_e64 s4, s[10:11], v[6:7]
 ; GFX1010_W32-NEXT:    s_and_b32 s4, vcc_lo, s4
 ; GFX1010_W32-NEXT:    s_and_saveexec_b32 s4, s4
-; GFX1010_W32-NEXT:    buffer_load_format_x v9, v0, s[8:11], 0 idxen
+; GFX1010_W32-NEXT:    buffer_load_format_x v11, v0, s[8:11], 0 idxen
 ; GFX1010_W32-NEXT:    ; implicit-def: $vgpr4_vgpr5_vgpr6_vgpr7
 ; GFX1010_W32-NEXT:    ; implicit-def: $vgpr0
 ; GFX1010_W32-NEXT:    s_waitcnt_depctr depctr_vm_vsrc(0)
@@ -833,17 +852,19 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1010_W32-NEXT:  .LBB2_6: ; %bb2
 ; GFX1010_W32-NEXT:    s_or_b32 exec_lo, exec_lo, s5
 ; GFX1010_W32-NEXT:    s_waitcnt vmcnt(0)
-; GFX1010_W32-NEXT:    global_store_dword v[11:12], v9, off
+; GFX1010_W32-NEXT:    global_store_dword v[8:9], v11, off
 ; GFX1010_W32-NEXT:    s_waitcnt_vscnt null, 0x0
 ; GFX1010_W32-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX1010_W64-LABEL: mubuf_vgpr_outside_entry:
 ; GFX1010_W64:       ; %bb.0: ; %entry
 ; GFX1010_W64-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX1010_W64-NEXT:    v_mov_b32_e32 v9, v12
+; GFX1010_W64-NEXT:    v_mov_b32_e32 v8, v11
 ; GFX1010_W64-NEXT:    ;;#ASMSTART
 ; GFX1010_W64-NEXT:    s_mov_b32 s4, 17
 ; GFX1010_W64-NEXT:    ;;#ASMEND
-; GFX1010_W64-NEXT:    v_mov_b32_e32 v8, s4
+; GFX1010_W64-NEXT:    v_mov_b32_e32 v10, s4
 ; GFX1010_W64-NEXT:    s_mov_b64 s[12:13], exec
 ; GFX1010_W64-NEXT:  .LBB2_1: ; =>This Inner Loop Header: Depth=1
 ; GFX1010_W64-NEXT:    v_readfirstlane_b32 s8, v0
@@ -854,9 +875,9 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1010_W64-NEXT:    v_cmp_eq_u64_e64 s[6:7], s[10:11], v[2:3]
 ; GFX1010_W64-NEXT:    s_and_b64 s[6:7], vcc, s[6:7]
 ; GFX1010_W64-NEXT:    s_and_saveexec_b64 s[6:7], s[6:7]
-; GFX1010_W64-NEXT:    buffer_load_format_x v9, v8, s[8:11], 0 idxen
+; GFX1010_W64-NEXT:    buffer_load_format_x v11, v10, s[8:11], 0 idxen
 ; GFX1010_W64-NEXT:    ; implicit-def: $vgpr0_vgpr1_vgpr2_vgpr3
-; GFX1010_W64-NEXT:    ; implicit-def: $vgpr8
+; GFX1010_W64-NEXT:    ; implicit-def: $vgpr10
 ; GFX1010_W64-NEXT:    s_waitcnt_depctr depctr_vm_vsrc(0)
 ; GFX1010_W64-NEXT:    s_xor_b64 exec, exec, s[6:7]
 ; GFX1010_W64-NEXT:    s_cbranch_execnz .LBB2_1
@@ -878,7 +899,7 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1010_W64-NEXT:    v_cmp_eq_u64_e64 s[4:5], s[10:11], v[6:7]
 ; GFX1010_W64-NEXT:    s_and_b64 s[4:5], vcc, s[4:5]
 ; GFX1010_W64-NEXT:    s_and_saveexec_b64 s[4:5], s[4:5]
-; GFX1010_W64-NEXT:    buffer_load_format_x v9, v0, s[8:11], 0 idxen
+; GFX1010_W64-NEXT:    buffer_load_format_x v11, v0, s[8:11], 0 idxen
 ; GFX1010_W64-NEXT:    ; implicit-def: $vgpr4_vgpr5_vgpr6_vgpr7
 ; GFX1010_W64-NEXT:    ; implicit-def: $vgpr0
 ; GFX1010_W64-NEXT:    s_waitcnt_depctr depctr_vm_vsrc(0)
@@ -889,17 +910,18 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1010_W64-NEXT:  .LBB2_6: ; %bb2
 ; GFX1010_W64-NEXT:    s_or_b64 exec, exec, s[6:7]
 ; GFX1010_W64-NEXT:    s_waitcnt vmcnt(0)
-; GFX1010_W64-NEXT:    global_store_dword v[11:12], v9, off
+; GFX1010_W64-NEXT:    global_store_dword v[8:9], v11, off
 ; GFX1010_W64-NEXT:    s_waitcnt_vscnt null, 0x0
 ; GFX1010_W64-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX1100_W32-LABEL: mubuf_vgpr_outside_entry:
 ; GFX1100_W32:       ; %bb.0: ; %entry
 ; GFX1100_W32-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX1100_W32-NEXT:    v_dual_mov_b32 v9, v12 :: v_dual_mov_b32 v8, v11
 ; GFX1100_W32-NEXT:    ;;#ASMSTART
 ; GFX1100_W32-NEXT:    s_mov_b32 s4, 17
 ; GFX1100_W32-NEXT:    ;;#ASMEND
-; GFX1100_W32-NEXT:    v_mov_b32_e32 v8, s4
+; GFX1100_W32-NEXT:    v_mov_b32_e32 v10, s4
 ; GFX1100_W32-NEXT:    s_mov_b32 s1, exec_lo
 ; GFX1100_W32-NEXT:  .LBB2_1: ; =>This Inner Loop Header: Depth=1
 ; GFX1100_W32-NEXT:    v_readfirstlane_b32 s8, v0
@@ -912,9 +934,9 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1100_W32-NEXT:    s_and_b32 s0, vcc_lo, s0
 ; GFX1100_W32-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
 ; GFX1100_W32-NEXT:    s_and_saveexec_b32 s0, s0
-; GFX1100_W32-NEXT:    buffer_load_format_x v9, v8, s[8:11], 0 idxen
+; GFX1100_W32-NEXT:    buffer_load_format_x v11, v10, s[8:11], 0 idxen
 ; GFX1100_W32-NEXT:    ; implicit-def: $vgpr0_vgpr1_vgpr2_vgpr3
-; GFX1100_W32-NEXT:    ; implicit-def: $vgpr8
+; GFX1100_W32-NEXT:    ; implicit-def: $vgpr10
 ; GFX1100_W32-NEXT:    s_xor_b32 exec_lo, exec_lo, s0
 ; GFX1100_W32-NEXT:    s_cbranch_execnz .LBB2_1
 ; GFX1100_W32-NEXT:  ; %bb.2:
@@ -938,7 +960,7 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1100_W32-NEXT:    s_and_b32 s0, vcc_lo, s0
 ; GFX1100_W32-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
 ; GFX1100_W32-NEXT:    s_and_saveexec_b32 s0, s0
-; GFX1100_W32-NEXT:    buffer_load_format_x v9, v0, s[4:7], 0 idxen
+; GFX1100_W32-NEXT:    buffer_load_format_x v11, v0, s[4:7], 0 idxen
 ; GFX1100_W32-NEXT:    ; implicit-def: $vgpr4_vgpr5_vgpr6_vgpr7
 ; GFX1100_W32-NEXT:    ; implicit-def: $vgpr0
 ; GFX1100_W32-NEXT:    s_xor_b32 exec_lo, exec_lo, s0
@@ -949,17 +971,19 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1100_W32-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
 ; GFX1100_W32-NEXT:    s_or_b32 exec_lo, exec_lo, s1
 ; GFX1100_W32-NEXT:    s_waitcnt vmcnt(0)
-; GFX1100_W32-NEXT:    global_store_b32 v[11:12], v9, off dlc
+; GFX1100_W32-NEXT:    global_store_b32 v[8:9], v11, off dlc
 ; GFX1100_W32-NEXT:    s_waitcnt_vscnt null, 0x0
 ; GFX1100_W32-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX1100_W64-LABEL: mubuf_vgpr_outside_entry:
 ; GFX1100_W64:       ; %bb.0: ; %entry
 ; GFX1100_W64-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GFX1100_W64-NEXT:    v_mov_b32_e32 v9, v12
+; GFX1100_W64-NEXT:    v_mov_b32_e32 v8, v11
 ; GFX1100_W64-NEXT:    ;;#ASMSTART
 ; GFX1100_W64-NEXT:    s_mov_b32 s4, 17
 ; GFX1100_W64-NEXT:    ;;#ASMEND
-; GFX1100_W64-NEXT:    v_mov_b32_e32 v8, s4
+; GFX1100_W64-NEXT:    v_mov_b32_e32 v10, s4
 ; GFX1100_W64-NEXT:    s_mov_b64 s[2:3], exec
 ; GFX1100_W64-NEXT:  .LBB2_1: ; =>This Inner Loop Header: Depth=1
 ; GFX1100_W64-NEXT:    v_readfirstlane_b32 s8, v0
@@ -972,9 +996,9 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1100_W64-NEXT:    s_and_b64 s[0:1], vcc, s[0:1]
 ; GFX1100_W64-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
 ; GFX1100_W64-NEXT:    s_and_saveexec_b64 s[0:1], s[0:1]
-; GFX1100_W64-NEXT:    buffer_load_format_x v9, v8, s[8:11], 0 idxen
+; GFX1100_W64-NEXT:    buffer_load_format_x v11, v10, s[8:11], 0 idxen
 ; GFX1100_W64-NEXT:    ; implicit-def: $vgpr0_vgpr1_vgpr2_vgpr3
-; GFX1100_W64-NEXT:    ; implicit-def: $vgpr8
+; GFX1100_W64-NEXT:    ; implicit-def: $vgpr10
 ; GFX1100_W64-NEXT:    s_xor_b64 exec, exec, s[0:1]
 ; GFX1100_W64-NEXT:    s_cbranch_execnz .LBB2_1
 ; GFX1100_W64-NEXT:  ; %bb.2:
@@ -998,7 +1022,7 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1100_W64-NEXT:    s_and_b64 s[0:1], vcc, s[0:1]
 ; GFX1100_W64-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
 ; GFX1100_W64-NEXT:    s_and_saveexec_b64 s[0:1], s[0:1]
-; GFX1100_W64-NEXT:    buffer_load_format_x v9, v0, s[4:7], 0 idxen
+; GFX1100_W64-NEXT:    buffer_load_format_x v11, v0, s[4:7], 0 idxen
 ; GFX1100_W64-NEXT:    ; implicit-def: $vgpr4_vgpr5_vgpr6_vgpr7
 ; GFX1100_W64-NEXT:    ; implicit-def: $vgpr0
 ; GFX1100_W64-NEXT:    s_xor_b64 exec, exec, s[0:1]
@@ -1009,7 +1033,7 @@ define void @mubuf_vgpr_outside_entry(ptr addrspace(8) %i, ptr addrspace(8) %j, 
 ; GFX1100_W64-NEXT:    s_delay_alu instid0(SALU_CYCLE_1)
 ; GFX1100_W64-NEXT:    s_or_b64 exec, exec, s[2:3]
 ; GFX1100_W64-NEXT:    s_waitcnt vmcnt(0)
-; GFX1100_W64-NEXT:    global_store_b32 v[11:12], v9, off dlc
+; GFX1100_W64-NEXT:    global_store_b32 v[8:9], v11, off dlc
 ; GFX1100_W64-NEXT:    s_waitcnt_vscnt null, 0x0
 ; GFX1100_W64-NEXT:    s_setpc_b64 s[30:31]
 ;

@@ -35,21 +35,23 @@ define amdgpu_ps void @test_scalef32_sr_pk8_fp8_bf16_sl(<8 x bfloat> inreg %src,
 ; GFX1250-SDAG-LABEL: test_scalef32_sr_pk8_fp8_bf16_sl:
 ; GFX1250-SDAG:       ; %bb.0:
 ; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
 ; GFX1250-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp8_bf16 v[6:7], v[2:5], s4, 0x42c80000
-; GFX1250-SDAG-NEXT:    global_store_b64 v[0:1], v[6:7], off
+; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp8_bf16 v[6:7], v[0:3], s4, 0x42c80000
+; GFX1250-SDAG-NEXT:    global_store_b64 v[4:5], v[6:7], off
 ; GFX1250-SDAG-NEXT:    s_endpgm
 ;
 ; GFX1250-GISEL-LABEL: test_scalef32_sr_pk8_fp8_bf16_sl:
 ; GFX1250-GISEL:       ; %bb.0:
 ; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
 ; GFX1250-GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp8_bf16 v[6:7], v[2:5], s4, 0x42c80000
-; GFX1250-GISEL-NEXT:    global_store_b64 v[0:1], v[6:7], off
+; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp8_bf16 v[6:7], v[0:3], s4, 0x42c80000
+; GFX1250-GISEL-NEXT:    global_store_b64 v[4:5], v[6:7], off
 ; GFX1250-GISEL-NEXT:    s_endpgm
   %cvt = tail call <2 x i32> @llvm.amdgcn.cvt.scalef32.sr.pk8.fp8.bf16(<8 x bfloat> %src, i32 %sr, float 100.0)
   store <2 x i32> %cvt, ptr addrspace(1) %out, align 8
@@ -79,21 +81,23 @@ define amdgpu_ps void @test_scalef32_sr_pk8_bf8_bf16_sl(<8 x bfloat> inreg %src,
 ; GFX1250-SDAG-LABEL: test_scalef32_sr_pk8_bf8_bf16_sl:
 ; GFX1250-SDAG:       ; %bb.0:
 ; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
 ; GFX1250-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_bf8_bf16 v[6:7], v[2:5], s4, 0x42c80000
-; GFX1250-SDAG-NEXT:    global_store_b64 v[0:1], v[6:7], off
+; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_bf8_bf16 v[6:7], v[0:3], s4, 0x42c80000
+; GFX1250-SDAG-NEXT:    global_store_b64 v[4:5], v[6:7], off
 ; GFX1250-SDAG-NEXT:    s_endpgm
 ;
 ; GFX1250-GISEL-LABEL: test_scalef32_sr_pk8_bf8_bf16_sl:
 ; GFX1250-GISEL:       ; %bb.0:
 ; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
 ; GFX1250-GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_bf8_bf16 v[6:7], v[2:5], s4, 0x42c80000
-; GFX1250-GISEL-NEXT:    global_store_b64 v[0:1], v[6:7], off
+; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_bf8_bf16 v[6:7], v[0:3], s4, 0x42c80000
+; GFX1250-GISEL-NEXT:    global_store_b64 v[4:5], v[6:7], off
 ; GFX1250-GISEL-NEXT:    s_endpgm
   %cvt = tail call <2 x i32> @llvm.amdgcn.cvt.scalef32.sr.pk8.bf8.bf16(<8 x bfloat> %src, i32 %sr, float 100.0)
   store <2 x i32> %cvt, ptr addrspace(1) %out, align 8
@@ -123,21 +127,23 @@ define amdgpu_ps void @test_scalef32_sr_pk8_fp8_f16_sl(<8 x half> inreg %src, i3
 ; GFX1250-SDAG-LABEL: test_scalef32_sr_pk8_fp8_f16_sl:
 ; GFX1250-SDAG:       ; %bb.0:
 ; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
 ; GFX1250-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp8_f16 v[6:7], v[2:5], s4, 0x42c80000
-; GFX1250-SDAG-NEXT:    global_store_b64 v[0:1], v[6:7], off
+; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp8_f16 v[6:7], v[0:3], s4, 0x42c80000
+; GFX1250-SDAG-NEXT:    global_store_b64 v[4:5], v[6:7], off
 ; GFX1250-SDAG-NEXT:    s_endpgm
 ;
 ; GFX1250-GISEL-LABEL: test_scalef32_sr_pk8_fp8_f16_sl:
 ; GFX1250-GISEL:       ; %bb.0:
 ; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[2:3]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[0:1]
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v4, v0 :: v_dual_mov_b32 v5, v1
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
 ; GFX1250-GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp8_f16 v[6:7], v[2:5], s4, 0x42c80000
-; GFX1250-GISEL-NEXT:    global_store_b64 v[0:1], v[6:7], off
+; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp8_f16 v[6:7], v[0:3], s4, 0x42c80000
+; GFX1250-GISEL-NEXT:    global_store_b64 v[4:5], v[6:7], off
 ; GFX1250-GISEL-NEXT:    s_endpgm
   %cvt = tail call <2 x i32> @llvm.amdgcn.cvt.scalef32.sr.pk8.fp8.f16(<8 x half> %src, i32 %sr, float 100.0)
   store <2 x i32> %cvt, ptr addrspace(1) %out, align 8
@@ -167,21 +173,23 @@ define amdgpu_ps void @test_scalef32_sr_pk8_bf8_f16_sl(<8 x half> inreg %src, i3
 ; GFX1250-SDAG-LABEL: test_scalef32_sr_pk8_bf8_f16_sl:
 ; GFX1250-SDAG:       ; %bb.0:
 ; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
 ; GFX1250-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_bf8_f16 v[6:7], v[2:5], s4, 0x42c80000
-; GFX1250-SDAG-NEXT:    global_store_b64 v[0:1], v[6:7], off
+; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_bf8_f16 v[6:7], v[0:3], s4, 0x42c80000
+; GFX1250-SDAG-NEXT:    global_store_b64 v[4:5], v[6:7], off
 ; GFX1250-SDAG-NEXT:    s_endpgm
 ;
 ; GFX1250-GISEL-LABEL: test_scalef32_sr_pk8_bf8_f16_sl:
 ; GFX1250-GISEL:       ; %bb.0:
 ; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[2:3]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[0:1]
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v4, v0 :: v_dual_mov_b32 v5, v1
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
 ; GFX1250-GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_bf8_f16 v[6:7], v[2:5], s4, 0x42c80000
-; GFX1250-GISEL-NEXT:    global_store_b64 v[0:1], v[6:7], off
+; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_bf8_f16 v[6:7], v[0:3], s4, 0x42c80000
+; GFX1250-GISEL-NEXT:    global_store_b64 v[4:5], v[6:7], off
 ; GFX1250-GISEL-NEXT:    s_endpgm
   %cvt = tail call <2 x i32> @llvm.amdgcn.cvt.scalef32.sr.pk8.bf8.f16(<8 x half> %src, i32 %sr, float 100.0)
   store <2 x i32> %cvt, ptr addrspace(1) %out, align 8
@@ -211,25 +219,27 @@ define amdgpu_ps void @test_scalef32_sr_pk8_bf8_f32_sl(<8 x float> inreg %src, i
 ; GFX1250-SDAG-LABEL: test_scalef32_sr_pk8_bf8_f32_sl:
 ; GFX1250-SDAG:       ; %bb.0:
 ; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v6, s4 :: v_dual_mov_b32 v7, s5
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v8, s6 :: v_dual_mov_b32 v9, s7
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v9, v1 :: v_dual_mov_b32 v8, v0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s4 :: v_dual_mov_b32 v5, s5
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v6, s6 :: v_dual_mov_b32 v7, s7
 ; GFX1250-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_bf8_f32 v[10:11], v[2:9], s8, 0x42c80000
-; GFX1250-SDAG-NEXT:    global_store_b64 v[0:1], v[10:11], off
+; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_bf8_f32 v[10:11], v[0:7], s8, 0x42c80000
+; GFX1250-SDAG-NEXT:    global_store_b64 v[8:9], v[10:11], off
 ; GFX1250-SDAG-NEXT:    s_endpgm
 ;
 ; GFX1250-GISEL-LABEL: test_scalef32_sr_pk8_bf8_f32_sl:
 ; GFX1250-GISEL:       ; %bb.0:
 ; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[8:9], s[6:7]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[4:5]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[2:3]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[0:1]
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v8, v0 :: v_dual_mov_b32 v9, v1
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[4:5]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[6:7]
 ; GFX1250-GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_bf8_f32 v[10:11], v[2:9], s8, 0x42c80000
-; GFX1250-GISEL-NEXT:    global_store_b64 v[0:1], v[10:11], off
+; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_bf8_f32 v[10:11], v[0:7], s8, 0x42c80000
+; GFX1250-GISEL-NEXT:    global_store_b64 v[8:9], v[10:11], off
 ; GFX1250-GISEL-NEXT:    s_endpgm
   %cvt = tail call <2 x i32> @llvm.amdgcn.cvt.scalef32.sr.pk8.bf8.f32(<8 x float> %src, i32 %sr, float 100.0)
   store <2 x i32> %cvt, ptr addrspace(1) %out, align 8
@@ -259,25 +269,27 @@ define amdgpu_ps void @test_scalef32_sr_pk8_fp8_f32_sl(<8 x float> inreg %src, i
 ; GFX1250-SDAG-LABEL: test_scalef32_sr_pk8_fp8_f32_sl:
 ; GFX1250-SDAG:       ; %bb.0:
 ; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v6, s4 :: v_dual_mov_b32 v7, s5
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v8, s6 :: v_dual_mov_b32 v9, s7
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v9, v1 :: v_dual_mov_b32 v8, v0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s4 :: v_dual_mov_b32 v5, s5
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v6, s6 :: v_dual_mov_b32 v7, s7
 ; GFX1250-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp8_f32 v[10:11], v[2:9], s8, 0x42c80000
-; GFX1250-SDAG-NEXT:    global_store_b64 v[0:1], v[10:11], off
+; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp8_f32 v[10:11], v[0:7], s8, 0x42c80000
+; GFX1250-SDAG-NEXT:    global_store_b64 v[8:9], v[10:11], off
 ; GFX1250-SDAG-NEXT:    s_endpgm
 ;
 ; GFX1250-GISEL-LABEL: test_scalef32_sr_pk8_fp8_f32_sl:
 ; GFX1250-GISEL:       ; %bb.0:
 ; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[8:9], s[6:7]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[4:5]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[2:3]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[0:1]
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v8, v0 :: v_dual_mov_b32 v9, v1
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[4:5]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[6:7]
 ; GFX1250-GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp8_f32 v[10:11], v[2:9], s8, 0x42c80000
-; GFX1250-GISEL-NEXT:    global_store_b64 v[0:1], v[10:11], off
+; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp8_f32 v[10:11], v[0:7], s8, 0x42c80000
+; GFX1250-GISEL-NEXT:    global_store_b64 v[8:9], v[10:11], off
 ; GFX1250-GISEL-NEXT:    s_endpgm
   %cvt = tail call <2 x i32> @llvm.amdgcn.cvt.scalef32.sr.pk8.fp8.f32(<8 x float> %src, i32 %sr, float 100.0)
   store <2 x i32> %cvt, ptr addrspace(1) %out, align 8
@@ -307,25 +319,27 @@ define amdgpu_ps void @test_scalef32_sr_pk8_fp4_f32_sl(<8 x float> inreg %src, i
 ; GFX1250-SDAG-LABEL: test_scalef32_sr_pk8_fp4_f32_sl:
 ; GFX1250-SDAG:       ; %bb.0:
 ; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v6, s4 :: v_dual_mov_b32 v7, s5
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v8, s6 :: v_dual_mov_b32 v9, s7
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v9, v1 :: v_dual_mov_b32 v8, v0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s4 :: v_dual_mov_b32 v5, s5
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v6, s6 :: v_dual_mov_b32 v7, s7
 ; GFX1250-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp4_f32 v10, v[2:9], s8, 0x42c80000
-; GFX1250-SDAG-NEXT:    global_store_b32 v[0:1], v10, off
+; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp4_f32 v10, v[0:7], s8, 0x42c80000
+; GFX1250-SDAG-NEXT:    global_store_b32 v[8:9], v10, off
 ; GFX1250-SDAG-NEXT:    s_endpgm
 ;
 ; GFX1250-GISEL-LABEL: test_scalef32_sr_pk8_fp4_f32_sl:
 ; GFX1250-GISEL:       ; %bb.0:
 ; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[8:9], s[6:7]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[4:5]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[2:3]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[0:1]
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v8, v0 :: v_dual_mov_b32 v9, v1
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[4:5]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[6:7]
 ; GFX1250-GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp4_f32 v10, v[2:9], s8, 0x42c80000
-; GFX1250-GISEL-NEXT:    global_store_b32 v[0:1], v10, off
+; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp4_f32 v10, v[0:7], s8, 0x42c80000
+; GFX1250-GISEL-NEXT:    global_store_b32 v[8:9], v10, off
 ; GFX1250-GISEL-NEXT:    s_endpgm
   %cvt = tail call i32 @llvm.amdgcn.cvt.scalef32.sr.pk8.fp4.f32(<8 x float> %src, i32 %sr, float 100.0)
   store i32 %cvt, ptr addrspace(1) %out, align 4
@@ -355,21 +369,23 @@ define amdgpu_ps void @test_scalef32_sr_pk8_fp4_f16_sl(<8 x half> inreg %src, i3
 ; GFX1250-SDAG-LABEL: test_scalef32_sr_pk8_fp4_f16_sl:
 ; GFX1250-SDAG:       ; %bb.0:
 ; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
 ; GFX1250-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp4_f16 v6, v[2:5], s4, 0x42c80000
-; GFX1250-SDAG-NEXT:    global_store_b32 v[0:1], v6, off
+; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp4_f16 v6, v[0:3], s4, 0x42c80000
+; GFX1250-SDAG-NEXT:    global_store_b32 v[4:5], v6, off
 ; GFX1250-SDAG-NEXT:    s_endpgm
 ;
 ; GFX1250-GISEL-LABEL: test_scalef32_sr_pk8_fp4_f16_sl:
 ; GFX1250-GISEL:       ; %bb.0:
 ; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[2:3]
-; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[0:1]
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v4, v0 :: v_dual_mov_b32 v5, v1
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GFX1250-GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
 ; GFX1250-GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp4_f16 v6, v[2:5], s4, 0x42c80000
-; GFX1250-GISEL-NEXT:    global_store_b32 v[0:1], v6, off
+; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp4_f16 v6, v[0:3], s4, 0x42c80000
+; GFX1250-GISEL-NEXT:    global_store_b32 v[4:5], v6, off
 ; GFX1250-GISEL-NEXT:    s_endpgm
   %cvt = tail call i32 @llvm.amdgcn.cvt.scalef32.sr.pk8.fp4.f16(<8 x half> %src, i32 %sr, float 100.0)
   store i32 %cvt, ptr addrspace(1) %out, align 4
@@ -399,21 +415,23 @@ define amdgpu_ps void @test_scalef32_sr_pk8_fp4_bf16_sl(<8 x bfloat> inreg %src,
 ; GFX1250-SDAG-LABEL: test_scalef32_sr_pk8_fp4_bf16_sl:
 ; GFX1250-SDAG:       ; %bb.0:
 ; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
 ; GFX1250-SDAG-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp4_bf16 v6, v[2:5], s4, 0x42c80000
-; GFX1250-SDAG-NEXT:    global_store_b32 v[0:1], v6, off
+; GFX1250-SDAG-NEXT:    v_cvt_scalef32_sr_pk8_fp4_bf16 v6, v[0:3], s4, 0x42c80000
+; GFX1250-SDAG-NEXT:    global_store_b32 v[4:5], v6, off
 ; GFX1250-SDAG-NEXT:    s_endpgm
 ;
 ; GFX1250-GISEL-LABEL: test_scalef32_sr_pk8_fp4_bf16_sl:
 ; GFX1250-GISEL:       ; %bb.0:
 ; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v2, s0 :: v_dual_mov_b32 v3, s1
-; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v5, s3
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v3, s3
 ; GFX1250-GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_1)
-; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp4_bf16 v6, v[2:5], s4, 0x42c80000
-; GFX1250-GISEL-NEXT:    global_store_b32 v[0:1], v6, off
+; GFX1250-GISEL-NEXT:    v_cvt_scalef32_sr_pk8_fp4_bf16 v6, v[0:3], s4, 0x42c80000
+; GFX1250-GISEL-NEXT:    global_store_b32 v[4:5], v6, off
 ; GFX1250-GISEL-NEXT:    s_endpgm
   %cvt = tail call i32 @llvm.amdgcn.cvt.scalef32.sr.pk8.fp4.bf16(<8 x bfloat> %src, i32 %sr, float 100.0)
   store i32 %cvt, ptr addrspace(1) %out, align 4

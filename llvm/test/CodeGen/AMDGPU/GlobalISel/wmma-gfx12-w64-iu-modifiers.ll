@@ -122,8 +122,17 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x32_iu8_zext_src0(i32 %A, <2 x i32> %B, <4 x i32> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x32_iu8_zext_src0:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x32_iu8 v[3:6], v0, v[1:2], v7 neg_lo:[1,0,0]
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_i32_16x16x32_iu8 v[1:4], v0, v[10:11], v7 neg_lo:[1,0,0]
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.swmmac.i32.16x16x32.iu8.v4i32.i32.v2i32.v4i32.i8(i1 1, i32 %A, i1 0, <2 x i32> %B, <4 x i32> %C, i8 %Index, i1 0)
@@ -134,8 +143,17 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x32_iu8_zext_src1(i32 %A, <2 x i32> %B, <4 x i32> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x32_iu8_zext_src1:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x32_iu8 v[3:6], v0, v[1:2], v7 neg_lo:[0,1,0]
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_i32_16x16x32_iu8 v[1:4], v0, v[10:11], v7 neg_lo:[0,1,0]
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.swmmac.i32.16x16x32.iu8.v4i32.i32.v2i32.v4i32.i8(i1 0, i32 %A, i1 1, <2 x i32> %B, <4 x i32> %C, i8 %Index, i1 0)
@@ -146,8 +164,17 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x32_iu8_clamp(i32 %A, <2 x i32> %B, <4 x i32> %C, i8 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x32_iu8_clamp:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x32_iu8 v[3:6], v0, v[1:2], v7 clamp
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_i32_16x16x32_iu8 v[1:4], v0, v[10:11], v7 clamp
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.swmmac.i32.16x16x32.iu8.v4i32.i32.v2i32.v4i32.i8(i1 0, i32 %A, i1 0, <2 x i32> %B, <4 x i32> %C, i8 %Index, i1 1)
@@ -198,8 +225,17 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x64_iu4_zext_src0(i32 %A, <2 x i32> %B, <4 x i32> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x64_iu4_zext_src0:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x64_iu4 v[3:6], v0, v[1:2], v7 neg_lo:[1,0,0]
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_i32_16x16x64_iu4 v[1:4], v0, v[10:11], v7 neg_lo:[1,0,0]
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.swmmac.i32.16x16x64.iu4.v4i32.i32.v2i32.v4i32.i16(i1 1, i32 %A, i1 0, <2 x i32> %B, <4 x i32> %C, i16 %Index, i1 0)
@@ -210,8 +246,17 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x64_iu4_zext_src1(i32 %A, <2 x i32> %B, <4 x i32> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x64_iu4_zext_src1:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x64_iu4 v[3:6], v0, v[1:2], v7 neg_lo:[0,1,0]
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_i32_16x16x64_iu4 v[1:4], v0, v[10:11], v7 neg_lo:[0,1,0]
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.swmmac.i32.16x16x64.iu4.v4i32.i32.v2i32.v4i32.i16(i1 0, i32 %A, i1 1, <2 x i32> %B, <4 x i32> %C, i16 %Index, i1 0)
@@ -222,8 +267,17 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x64_iu4_clamp(i32 %A, <2 x i32> %B, <4 x i32> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x64_iu4_clamp:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x64_iu4 v[3:6], v0, v[1:2], v7 clamp
-; GCN-NEXT:    global_store_b128 v[8:9], v[3:6], off
+; GCN-NEXT:    v_mov_b32_e32 v10, v1
+; GCN-NEXT:    v_mov_b32_e32 v11, v2
+; GCN-NEXT:    v_mov_b32_e32 v1, v3
+; GCN-NEXT:    v_mov_b32_e32 v2, v4
+; GCN-NEXT:    v_mov_b32_e32 v3, v5
+; GCN-NEXT:    v_mov_b32_e32 v4, v6
+; GCN-NEXT:    v_mov_b32_e32 v5, v8
+; GCN-NEXT:    v_mov_b32_e32 v6, v9
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GCN-NEXT:    v_swmmac_i32_16x16x64_iu4 v[1:4], v0, v[10:11], v7 clamp
+; GCN-NEXT:    global_store_b128 v[5:6], v[1:4], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <4 x i32> @llvm.amdgcn.swmmac.i32.16x16x64.iu4.v4i32.i32.v2i32.v4i32.i16(i1 0, i32 %A, i1 0, <2 x i32> %B, <4 x i32> %C, i16 %Index, i1 1)

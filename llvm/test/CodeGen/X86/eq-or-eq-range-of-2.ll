@@ -153,9 +153,11 @@ define <4 x i32> @eq_or_eq_ult_2_fail_multiuse(<4 x i32> %x) {
 ; SSE41:       # %bb.0:
 ; SSE41-NEXT:    subq $24, %rsp
 ; SSE41-NEXT:    .cfi_def_cfa_offset 32
-; SSE41-NEXT:    pcmpeqd %xmm1, %xmm1
-; SSE41-NEXT:    paddd %xmm1, %xmm0
-; SSE41-NEXT:    movdqa %xmm0, (%rsp) # 16-byte Spill
+; SSE41-NEXT:    movdqa %xmm0, %xmm1
+; SSE41-NEXT:    pcmpeqd %xmm0, %xmm0
+; SSE41-NEXT:    paddd %xmm0, %xmm1
+; SSE41-NEXT:    movdqa %xmm1, (%rsp) # 16-byte Spill
+; SSE41-NEXT:    movdqa %xmm1, %xmm0
 ; SSE41-NEXT:    callq use.v4.i32@PLT
 ; SSE41-NEXT:    pmovsxbd {{.*#+}} xmm0 = [1,1,1,1]
 ; SSE41-NEXT:    movdqa (%rsp), %xmm1 # 16-byte Reload

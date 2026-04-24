@@ -255,17 +255,17 @@ define <8 x float> @test_intrinsic_fmax_v8f32(<8 x float> %x, <8 x float> %y) {
 ;
 ; SSE4-LABEL: test_intrinsic_fmax_v8f32:
 ; SSE4:       # %bb.0:
-; SSE4-NEXT:    movaps %xmm1, %xmm5
 ; SSE4-NEXT:    movaps %xmm2, %xmm4
 ; SSE4-NEXT:    maxps %xmm0, %xmm4
 ; SSE4-NEXT:    cmpunordps %xmm0, %xmm0
 ; SSE4-NEXT:    blendvps %xmm0, %xmm2, %xmm4
-; SSE4-NEXT:    movaps %xmm3, %xmm1
-; SSE4-NEXT:    maxps %xmm5, %xmm1
-; SSE4-NEXT:    cmpunordps %xmm5, %xmm5
-; SSE4-NEXT:    movaps %xmm5, %xmm0
-; SSE4-NEXT:    blendvps %xmm0, %xmm3, %xmm1
+; SSE4-NEXT:    movaps %xmm3, %xmm2
+; SSE4-NEXT:    maxps %xmm1, %xmm2
+; SSE4-NEXT:    cmpunordps %xmm1, %xmm1
+; SSE4-NEXT:    movaps %xmm1, %xmm0
+; SSE4-NEXT:    blendvps %xmm0, %xmm3, %xmm2
 ; SSE4-NEXT:    movaps %xmm4, %xmm0
+; SSE4-NEXT:    movaps %xmm2, %xmm1
 ; SSE4-NEXT:    retq
 ;
 ; AVX-LABEL: test_intrinsic_fmax_v8f32:
@@ -309,29 +309,29 @@ define <16 x float> @test_intrinsic_fmax_v16f32(<16 x float> %x, <16 x float> %y
 ;
 ; SSE4-LABEL: test_intrinsic_fmax_v16f32:
 ; SSE4:       # %bb.0:
-; SSE4-NEXT:    movaps %xmm3, %xmm11
-; SSE4-NEXT:    movaps %xmm2, %xmm10
-; SSE4-NEXT:    movaps %xmm1, %xmm9
 ; SSE4-NEXT:    movaps %xmm4, %xmm8
 ; SSE4-NEXT:    maxps %xmm0, %xmm8
 ; SSE4-NEXT:    cmpunordps %xmm0, %xmm0
 ; SSE4-NEXT:    blendvps %xmm0, %xmm4, %xmm8
-; SSE4-NEXT:    movaps %xmm5, %xmm1
-; SSE4-NEXT:    maxps %xmm9, %xmm1
-; SSE4-NEXT:    cmpunordps %xmm9, %xmm9
-; SSE4-NEXT:    movaps %xmm9, %xmm0
-; SSE4-NEXT:    blendvps %xmm0, %xmm5, %xmm1
-; SSE4-NEXT:    movaps %xmm6, %xmm2
-; SSE4-NEXT:    maxps %xmm10, %xmm2
-; SSE4-NEXT:    cmpunordps %xmm10, %xmm10
-; SSE4-NEXT:    movaps %xmm10, %xmm0
-; SSE4-NEXT:    blendvps %xmm0, %xmm6, %xmm2
-; SSE4-NEXT:    movaps %xmm7, %xmm3
-; SSE4-NEXT:    maxps %xmm11, %xmm3
-; SSE4-NEXT:    cmpunordps %xmm11, %xmm11
-; SSE4-NEXT:    movaps %xmm11, %xmm0
-; SSE4-NEXT:    blendvps %xmm0, %xmm7, %xmm3
+; SSE4-NEXT:    movaps %xmm5, %xmm4
+; SSE4-NEXT:    maxps %xmm1, %xmm4
+; SSE4-NEXT:    cmpunordps %xmm1, %xmm1
+; SSE4-NEXT:    movaps %xmm1, %xmm0
+; SSE4-NEXT:    blendvps %xmm0, %xmm5, %xmm4
+; SSE4-NEXT:    movaps %xmm6, %xmm5
+; SSE4-NEXT:    maxps %xmm2, %xmm5
+; SSE4-NEXT:    cmpunordps %xmm2, %xmm2
+; SSE4-NEXT:    movaps %xmm2, %xmm0
+; SSE4-NEXT:    blendvps %xmm0, %xmm6, %xmm5
+; SSE4-NEXT:    movaps %xmm7, %xmm6
+; SSE4-NEXT:    maxps %xmm3, %xmm6
+; SSE4-NEXT:    cmpunordps %xmm3, %xmm3
+; SSE4-NEXT:    movaps %xmm3, %xmm0
+; SSE4-NEXT:    blendvps %xmm0, %xmm7, %xmm6
 ; SSE4-NEXT:    movaps %xmm8, %xmm0
+; SSE4-NEXT:    movaps %xmm4, %xmm1
+; SSE4-NEXT:    movaps %xmm5, %xmm2
+; SSE4-NEXT:    movaps %xmm6, %xmm3
 ; SSE4-NEXT:    retq
 ;
 ; AVX1-LABEL: test_intrinsic_fmax_v16f32:
@@ -404,17 +404,17 @@ define <4 x double> @test_intrinsic_fmax_v4f64(<4 x double> %x, <4 x double> %y)
 ;
 ; SSE4-LABEL: test_intrinsic_fmax_v4f64:
 ; SSE4:       # %bb.0:
-; SSE4-NEXT:    movapd %xmm1, %xmm5
 ; SSE4-NEXT:    movapd %xmm2, %xmm4
 ; SSE4-NEXT:    maxpd %xmm0, %xmm4
 ; SSE4-NEXT:    cmpunordpd %xmm0, %xmm0
 ; SSE4-NEXT:    blendvpd %xmm0, %xmm2, %xmm4
-; SSE4-NEXT:    movapd %xmm3, %xmm1
-; SSE4-NEXT:    maxpd %xmm5, %xmm1
-; SSE4-NEXT:    cmpunordpd %xmm5, %xmm5
-; SSE4-NEXT:    movapd %xmm5, %xmm0
-; SSE4-NEXT:    blendvpd %xmm0, %xmm3, %xmm1
+; SSE4-NEXT:    movapd %xmm3, %xmm2
+; SSE4-NEXT:    maxpd %xmm1, %xmm2
+; SSE4-NEXT:    cmpunordpd %xmm1, %xmm1
+; SSE4-NEXT:    movapd %xmm1, %xmm0
+; SSE4-NEXT:    blendvpd %xmm0, %xmm3, %xmm2
 ; SSE4-NEXT:    movapd %xmm4, %xmm0
+; SSE4-NEXT:    movapd %xmm2, %xmm1
 ; SSE4-NEXT:    retq
 ;
 ; AVX-LABEL: test_intrinsic_fmax_v4f64:
@@ -458,29 +458,29 @@ define <8 x double> @test_intrinsic_fmax_v8f64(<8 x double> %x, <8 x double> %y)
 ;
 ; SSE4-LABEL: test_intrinsic_fmax_v8f64:
 ; SSE4:       # %bb.0:
-; SSE4-NEXT:    movapd %xmm3, %xmm11
-; SSE4-NEXT:    movapd %xmm2, %xmm10
-; SSE4-NEXT:    movapd %xmm1, %xmm9
 ; SSE4-NEXT:    movapd %xmm4, %xmm8
 ; SSE4-NEXT:    maxpd %xmm0, %xmm8
 ; SSE4-NEXT:    cmpunordpd %xmm0, %xmm0
 ; SSE4-NEXT:    blendvpd %xmm0, %xmm4, %xmm8
-; SSE4-NEXT:    movapd %xmm5, %xmm1
-; SSE4-NEXT:    maxpd %xmm9, %xmm1
-; SSE4-NEXT:    cmpunordpd %xmm9, %xmm9
-; SSE4-NEXT:    movapd %xmm9, %xmm0
-; SSE4-NEXT:    blendvpd %xmm0, %xmm5, %xmm1
-; SSE4-NEXT:    movapd %xmm6, %xmm2
-; SSE4-NEXT:    maxpd %xmm10, %xmm2
-; SSE4-NEXT:    cmpunordpd %xmm10, %xmm10
-; SSE4-NEXT:    movapd %xmm10, %xmm0
-; SSE4-NEXT:    blendvpd %xmm0, %xmm6, %xmm2
-; SSE4-NEXT:    movapd %xmm7, %xmm3
-; SSE4-NEXT:    maxpd %xmm11, %xmm3
-; SSE4-NEXT:    cmpunordpd %xmm11, %xmm11
-; SSE4-NEXT:    movapd %xmm11, %xmm0
-; SSE4-NEXT:    blendvpd %xmm0, %xmm7, %xmm3
+; SSE4-NEXT:    movapd %xmm5, %xmm4
+; SSE4-NEXT:    maxpd %xmm1, %xmm4
+; SSE4-NEXT:    cmpunordpd %xmm1, %xmm1
+; SSE4-NEXT:    movapd %xmm1, %xmm0
+; SSE4-NEXT:    blendvpd %xmm0, %xmm5, %xmm4
+; SSE4-NEXT:    movapd %xmm6, %xmm5
+; SSE4-NEXT:    maxpd %xmm2, %xmm5
+; SSE4-NEXT:    cmpunordpd %xmm2, %xmm2
+; SSE4-NEXT:    movapd %xmm2, %xmm0
+; SSE4-NEXT:    blendvpd %xmm0, %xmm6, %xmm5
+; SSE4-NEXT:    movapd %xmm7, %xmm6
+; SSE4-NEXT:    maxpd %xmm3, %xmm6
+; SSE4-NEXT:    cmpunordpd %xmm3, %xmm3
+; SSE4-NEXT:    movapd %xmm3, %xmm0
+; SSE4-NEXT:    blendvpd %xmm0, %xmm7, %xmm6
 ; SSE4-NEXT:    movapd %xmm8, %xmm0
+; SSE4-NEXT:    movapd %xmm4, %xmm1
+; SSE4-NEXT:    movapd %xmm5, %xmm2
+; SSE4-NEXT:    movapd %xmm6, %xmm3
 ; SSE4-NEXT:    retq
 ;
 ; AVX1-LABEL: test_intrinsic_fmax_v8f64:

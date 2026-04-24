@@ -114,15 +114,15 @@ define i32 @adc_merge_sub(i32 %a0) nounwind {
 ; X64-NEXT:    pushq %rbp
 ; X64-NEXT:    pushq %rbx
 ; X64-NEXT:    pushq %rax
-; X64-NEXT:    movl %edi, %ebx
+; X64-NEXT:    movl %edi, %ebp
 ; X64-NEXT:    xorl %edi, %edi
-; X64-NEXT:    addl $42, %ebx
+; X64-NEXT:    addl $42, %ebp
 ; X64-NEXT:    setb %dil
-; X64-NEXT:    movl %ebx, %ebp
-; X64-NEXT:    negl %ebp
+; X64-NEXT:    movl %ebp, %ebx
+; X64-NEXT:    negl %ebx
 ; X64-NEXT:    callq use@PLT
-; X64-NEXT:    xorl %ebx, %ebp
-; X64-NEXT:    movl %ebp, %eax
+; X64-NEXT:    xorl %ebp, %ebx
+; X64-NEXT:    movl %ebx, %eax
 ; X64-NEXT:    addq $8, %rsp
 ; X64-NEXT:    popq %rbx
 ; X64-NEXT:    popq %rbp

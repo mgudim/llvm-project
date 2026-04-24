@@ -118,8 +118,8 @@ define void @test_regalloc_hint(i32 noundef signext %0, i32 noundef signext %1) 
 ;
 ; FUSION-GENERIC-LABEL: test_regalloc_hint:
 ; FUSION-GENERIC:       # %bb.0:
-; FUSION-GENERIC-NEXT:    lui a2, 3014
-; FUSION-GENERIC-NEXT:    addi a2, a2, 334
+; FUSION-GENERIC-NEXT:    lui a0, 3014
+; FUSION-GENERIC-NEXT:    addi a2, a0, 334
 ; FUSION-GENERIC-NEXT:    mv a0, a1
 ; FUSION-GENERIC-NEXT:    mv a1, a2
 ; FUSION-GENERIC-NEXT:    tail bar

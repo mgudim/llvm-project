@@ -151,8 +151,10 @@ define void @test_trunc64(double %in, ptr %addr) nounwind {
 ; SPARC32-NEXT:    std %i0, [%fp+-8]
 ; SPARC32-NEXT:    ldd [%fp+-8], %f0
 ; SPARC32-NEXT:    std %f0, [%fp+-16]
+; SPARC32-NEXT:    ldd [%fp+-16], %i0
+; SPARC32-NEXT:    mov %i0, %o0
 ; SPARC32-NEXT:    call __truncdfhf2
-; SPARC32-NEXT:    ldd [%fp+-16], %o0
+; SPARC32-NEXT:    mov %i1, %o1
 ; SPARC32-NEXT:    sth %o0, [%i2]
 ; SPARC32-NEXT:    ret
 ; SPARC32-NEXT:    restore
@@ -483,7 +485,7 @@ define void @test_trunc64_vec4(<4 x double> %a, ptr %p) nounwind {
 ; SPARC32-NEXT:    std %i2, [%fp+-16]
 ; SPARC32-NEXT:    ! kill: def $i0 killed $i0 killed $i0_i1 def $i0_i1
 ; SPARC32-NEXT:    std %i0, [%fp+-8]
-; SPARC32-NEXT:    ld [%fp+100], %i3
+; SPARC32-NEXT:    ld [%fp+100], %i0
 ; SPARC32-NEXT:    ldd [%fp+-8], %f0
 ; SPARC32-NEXT:    ldd [%fp+-16], %f2
 ; SPARC32-NEXT:    ldd [%fp+-24], %f4
@@ -492,21 +494,29 @@ define void @test_trunc64_vec4(<4 x double> %a, ptr %p) nounwind {
 ; SPARC32-NEXT:    std %f2, [%fp+-48]
 ; SPARC32-NEXT:    std %f4, [%fp+-56]
 ; SPARC32-NEXT:    std %f6, [%fp+-64]
+; SPARC32-NEXT:    ldd [%fp+-40], %i2
+; SPARC32-NEXT:    mov %i2, %o0
 ; SPARC32-NEXT:    call __truncdfhf2
-; SPARC32-NEXT:    ldd [%fp+-40], %o0
-; SPARC32-NEXT:    mov %o0, %i0
-; SPARC32-NEXT:    call __truncdfhf2
-; SPARC32-NEXT:    ldd [%fp+-48], %o0
+; SPARC32-NEXT:    mov %i3, %o1
 ; SPARC32-NEXT:    mov %o0, %i1
+; SPARC32-NEXT:    ldd [%fp+-48], %i2
+; SPARC32-NEXT:    mov %i2, %o0
 ; SPARC32-NEXT:    call __truncdfhf2
-; SPARC32-NEXT:    ldd [%fp+-56], %o0
+; SPARC32-NEXT:    mov %i3, %o1
 ; SPARC32-NEXT:    mov %o0, %i2
+; SPARC32-NEXT:    ldd [%fp+-56], %i4
+; SPARC32-NEXT:    mov %i4, %o0
 ; SPARC32-NEXT:    call __truncdfhf2
-; SPARC32-NEXT:    ldd [%fp+-64], %o0
-; SPARC32-NEXT:    sth %o0, [%i3+6]
-; SPARC32-NEXT:    sth %i2, [%i3+4]
-; SPARC32-NEXT:    sth %i1, [%i3+2]
-; SPARC32-NEXT:    sth %i0, [%i3]
+; SPARC32-NEXT:    mov %i5, %o1
+; SPARC32-NEXT:    mov %o0, %i3
+; SPARC32-NEXT:    ldd [%fp+-64], %i4
+; SPARC32-NEXT:    mov %i4, %o0
+; SPARC32-NEXT:    call __truncdfhf2
+; SPARC32-NEXT:    mov %i5, %o1
+; SPARC32-NEXT:    sth %o0, [%i0+6]
+; SPARC32-NEXT:    sth %i3, [%i0+4]
+; SPARC32-NEXT:    sth %i2, [%i0+2]
+; SPARC32-NEXT:    sth %i1, [%i0]
 ; SPARC32-NEXT:    ret
 ; SPARC32-NEXT:    restore
 ;

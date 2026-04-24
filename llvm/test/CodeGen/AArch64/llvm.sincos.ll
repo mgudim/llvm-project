@@ -653,36 +653,36 @@ define { <3 x double>, <3 x double> } @test_sincos_v3f64(<3 x double> %a) nounwi
 ; NO-LIBCALL:       // %bb.0:
 ; NO-LIBCALL-NEXT:    stp d13, d12, [sp, #-64]! // 16-byte Folded Spill
 ; NO-LIBCALL-NEXT:    stp d11, d10, [sp, #16] // 16-byte Folded Spill
-; NO-LIBCALL-NEXT:    fmov d10, d0
+; NO-LIBCALL-NEXT:    fmov d12, d0
 ; NO-LIBCALL-NEXT:    stp d9, d8, [sp, #32] // 16-byte Folded Spill
 ; NO-LIBCALL-NEXT:    fmov d8, d2
 ; NO-LIBCALL-NEXT:    fmov d9, d1
 ; NO-LIBCALL-NEXT:    str x30, [sp, #48] // 8-byte Spill
 ; NO-LIBCALL-NEXT:    bl sin
-; NO-LIBCALL-NEXT:    fmov d11, d0
+; NO-LIBCALL-NEXT:    fmov d13, d0
 ; NO-LIBCALL-NEXT:    fmov d0, d9
 ; NO-LIBCALL-NEXT:    bl sin
-; NO-LIBCALL-NEXT:    fmov d12, d0
+; NO-LIBCALL-NEXT:    fmov d10, d0
 ; NO-LIBCALL-NEXT:    fmov d0, d8
 ; NO-LIBCALL-NEXT:    bl sin
-; NO-LIBCALL-NEXT:    fmov d13, d0
-; NO-LIBCALL-NEXT:    fmov d0, d10
+; NO-LIBCALL-NEXT:    fmov d11, d0
+; NO-LIBCALL-NEXT:    fmov d0, d12
 ; NO-LIBCALL-NEXT:    bl cos
-; NO-LIBCALL-NEXT:    fmov d10, d0
+; NO-LIBCALL-NEXT:    fmov d12, d0
 ; NO-LIBCALL-NEXT:    fmov d0, d9
 ; NO-LIBCALL-NEXT:    bl cos
 ; NO-LIBCALL-NEXT:    fmov d9, d0
 ; NO-LIBCALL-NEXT:    fmov d0, d8
 ; NO-LIBCALL-NEXT:    bl cos
-; NO-LIBCALL-NEXT:    fmov d5, d0
-; NO-LIBCALL-NEXT:    fmov d0, d11
+; NO-LIBCALL-NEXT:    fmov d1, d10
+; NO-LIBCALL-NEXT:    fmov d2, d11
 ; NO-LIBCALL-NEXT:    ldr x30, [sp, #48] // 8-byte Reload
-; NO-LIBCALL-NEXT:    fmov d3, d10
 ; NO-LIBCALL-NEXT:    fmov d4, d9
-; NO-LIBCALL-NEXT:    fmov d1, d12
 ; NO-LIBCALL-NEXT:    ldp d9, d8, [sp, #32] // 16-byte Folded Reload
-; NO-LIBCALL-NEXT:    fmov d2, d13
 ; NO-LIBCALL-NEXT:    ldp d11, d10, [sp, #16] // 16-byte Folded Reload
+; NO-LIBCALL-NEXT:    fmov d5, d0
+; NO-LIBCALL-NEXT:    fmov d0, d13
+; NO-LIBCALL-NEXT:    fmov d3, d12
 ; NO-LIBCALL-NEXT:    ldp d13, d12, [sp], #64 // 16-byte Folded Reload
 ; NO-LIBCALL-NEXT:    ret
   %result = call { <3 x double>, <3 x double> } @llvm.sincos.v3f64(<3 x double> %a)

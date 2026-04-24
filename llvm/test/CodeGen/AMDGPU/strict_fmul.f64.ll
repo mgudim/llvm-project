@@ -180,16 +180,20 @@ define <3 x double> @v_constained_fmul_v3f64_fpexcept_strict(<3 x double> %x, <3
 define amdgpu_ps <2 x float> @s_constained_fmul_f64_fpexcept_strict(double inreg %x, double inreg %y) #0 {
 ; GCN-SDAG-LABEL: s_constained_fmul_f64_fpexcept_strict:
 ; GCN-SDAG:       ; %bb.0:
+; GCN-SDAG-NEXT:    s_mov_b32 s1, s3
+; GCN-SDAG-NEXT:    s_mov_b32 s0, s2
 ; GCN-SDAG-NEXT:    v_mov_b32_e32 v0, s4
 ; GCN-SDAG-NEXT:    v_mov_b32_e32 v1, s5
-; GCN-SDAG-NEXT:    v_mul_f64 v[0:1], s[2:3], v[0:1]
+; GCN-SDAG-NEXT:    v_mul_f64 v[0:1], s[0:1], v[0:1]
 ; GCN-SDAG-NEXT:    ; return to shader part epilog
 ;
 ; GCN-GISEL-LABEL: s_constained_fmul_f64_fpexcept_strict:
 ; GCN-GISEL:       ; %bb.0:
 ; GCN-GISEL-NEXT:    v_mov_b32_e32 v0, s4
+; GCN-GISEL-NEXT:    s_mov_b32 s0, s2
+; GCN-GISEL-NEXT:    s_mov_b32 s1, s3
 ; GCN-GISEL-NEXT:    v_mov_b32_e32 v1, s5
-; GCN-GISEL-NEXT:    v_mul_f64 v[0:1], s[2:3], v[0:1]
+; GCN-GISEL-NEXT:    v_mul_f64 v[0:1], s[0:1], v[0:1]
 ; GCN-GISEL-NEXT:    v_readfirstlane_b32 s0, v0
 ; GCN-GISEL-NEXT:    v_readfirstlane_b32 s1, v1
 ; GCN-GISEL-NEXT:    v_mov_b32_e32 v0, s0
@@ -198,12 +202,18 @@ define amdgpu_ps <2 x float> @s_constained_fmul_f64_fpexcept_strict(double inreg
 ;
 ; GFX10-SDAG-LABEL: s_constained_fmul_f64_fpexcept_strict:
 ; GFX10-SDAG:       ; %bb.0:
-; GFX10-SDAG-NEXT:    v_mul_f64 v[0:1], s[2:3], s[4:5]
+; GFX10-SDAG-NEXT:    s_mov_b32 s1, s5
+; GFX10-SDAG-NEXT:    s_mov_b32 s0, s4
+; GFX10-SDAG-NEXT:    v_mul_f64 v[0:1], s[2:3], s[0:1]
 ; GFX10-SDAG-NEXT:    ; return to shader part epilog
 ;
 ; GFX10-GISEL-LABEL: s_constained_fmul_f64_fpexcept_strict:
 ; GFX10-GISEL:       ; %bb.0:
-; GFX10-GISEL-NEXT:    v_mul_f64 v[0:1], s[2:3], s[4:5]
+; GFX10-GISEL-NEXT:    s_mov_b32 s0, s2
+; GFX10-GISEL-NEXT:    s_mov_b32 s1, s3
+; GFX10-GISEL-NEXT:    s_mov_b32 s2, s4
+; GFX10-GISEL-NEXT:    s_mov_b32 s3, s5
+; GFX10-GISEL-NEXT:    v_mul_f64 v[0:1], s[0:1], s[2:3]
 ; GFX10-GISEL-NEXT:    v_readfirstlane_b32 s0, v0
 ; GFX10-GISEL-NEXT:    v_readfirstlane_b32 s1, v1
 ; GFX10-GISEL-NEXT:    v_mov_b32_e32 v0, s0
@@ -212,12 +222,18 @@ define amdgpu_ps <2 x float> @s_constained_fmul_f64_fpexcept_strict(double inreg
 ;
 ; GFX11-SDAG-LABEL: s_constained_fmul_f64_fpexcept_strict:
 ; GFX11-SDAG:       ; %bb.0:
-; GFX11-SDAG-NEXT:    v_mul_f64 v[0:1], s[2:3], s[4:5]
+; GFX11-SDAG-NEXT:    s_mov_b32 s1, s5
+; GFX11-SDAG-NEXT:    s_mov_b32 s0, s4
+; GFX11-SDAG-NEXT:    v_mul_f64 v[0:1], s[2:3], s[0:1]
 ; GFX11-SDAG-NEXT:    ; return to shader part epilog
 ;
 ; GFX11-GISEL-LABEL: s_constained_fmul_f64_fpexcept_strict:
 ; GFX11-GISEL:       ; %bb.0:
-; GFX11-GISEL-NEXT:    v_mul_f64 v[0:1], s[2:3], s[4:5]
+; GFX11-GISEL-NEXT:    s_mov_b32 s0, s2
+; GFX11-GISEL-NEXT:    s_mov_b32 s1, s3
+; GFX11-GISEL-NEXT:    s_mov_b32 s2, s4
+; GFX11-GISEL-NEXT:    s_mov_b32 s3, s5
+; GFX11-GISEL-NEXT:    v_mul_f64 v[0:1], s[0:1], s[2:3]
 ; GFX11-GISEL-NEXT:    v_readfirstlane_b32 s0, v0
 ; GFX11-GISEL-NEXT:    v_readfirstlane_b32 s1, v1
 ; GFX11-GISEL-NEXT:    v_dual_mov_b32 v0, s0 :: v_dual_mov_b32 v1, s1

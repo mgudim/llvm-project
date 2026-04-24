@@ -21,8 +21,6 @@ define i32 @func_1(ptr %l_3253) {
 ; CHECK-NEXT:    mov x8, xzr
 ; CHECK-NEXT:    str wzr, [x9]
 ; CHECK-NEXT:    mov w9, #80 // =0x50
-; CHECK-NEXT:    adrp x1, .L_MergedGlobals
-; CHECK-NEXT:    add x1, x1, :lo12:.L_MergedGlobals
 ; CHECK-NEXT:    strh wzr, [x8]
 ; CHECK-NEXT:    str q0, [x9]
 ; CHECK-NEXT:    mov w9, #48 // =0x30
@@ -34,6 +32,8 @@ define i32 @func_1(ptr %l_3253) {
 ; CHECK-NEXT:    mov w9, #16 // =0x10
 ; CHECK-NEXT:    str q0, [x10]
 ; CHECK-NEXT:    str q0, [x9]
+; CHECK-NEXT:    adrp x9, .L_MergedGlobals
+; CHECK-NEXT:    add x9, x9, :lo12:.L_MergedGlobals
 ; CHECK-NEXT:    str q0, [x8]
 ; CHECK-NEXT:    adrp x8, .L_MergedGlobals
 ; CHECK-NEXT:    strb wzr, [x0, #8]
@@ -42,9 +42,10 @@ define i32 @func_1(ptr %l_3253) {
 ; CHECK-NEXT:    strb wzr, [x0, #20]
 ; CHECK-NEXT:    mov w0, wzr
 ; CHECK-NEXT:    ldrh wzr, [x8, :lo12:.L_MergedGlobals]
-; CHECK-NEXT:    ldrh w8, [x1, #4]!
+; CHECK-NEXT:    ldrh w8, [x9, #4]!
+; CHECK-NEXT:    mov x1, x9
 ; CHECK-NEXT:    sub w8, w8, #1
-; CHECK-NEXT:    strh w8, [x1]
+; CHECK-NEXT:    strh w8, [x9]
 ; CHECK-NEXT:    add sp, sp, #128
 ; CHECK-NEXT:    b use
 entry:

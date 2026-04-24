@@ -148,32 +148,32 @@ define <4 x float> @fmuladd_contract_v4f32(<4 x float> %a, <4 x float> %b, <4 x 
 ; SOFT-FLOAT-NEXT:    mov r7, r1
 ; SOFT-FLOAT-NEXT:    ldr r1, [sp, #24]
 ; SOFT-FLOAT-NEXT:    mov r4, r3
-; SOFT-FLOAT-NEXT:    mov r6, r2
+; SOFT-FLOAT-NEXT:    mov r5, r2
 ; SOFT-FLOAT-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-NEXT:    ldr r1, [sp, #40]
 ; SOFT-FLOAT-NEXT:    bl __addsf3
 ; SOFT-FLOAT-NEXT:    ldr r1, [sp, #28]
-; SOFT-FLOAT-NEXT:    mov r5, r0
+; SOFT-FLOAT-NEXT:    mov r6, r0
 ; SOFT-FLOAT-NEXT:    mov r0, r7
 ; SOFT-FLOAT-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-NEXT:    ldr r1, [sp, #44]
 ; SOFT-FLOAT-NEXT:    bl __addsf3
 ; SOFT-FLOAT-NEXT:    ldr r1, [sp, #32]
 ; SOFT-FLOAT-NEXT:    mov r7, r0
-; SOFT-FLOAT-NEXT:    mov r0, r6
+; SOFT-FLOAT-NEXT:    mov r0, r5
 ; SOFT-FLOAT-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-NEXT:    ldr r1, [sp, #48]
 ; SOFT-FLOAT-NEXT:    bl __addsf3
 ; SOFT-FLOAT-NEXT:    ldr r1, [sp, #36]
-; SOFT-FLOAT-NEXT:    mov r6, r0
+; SOFT-FLOAT-NEXT:    mov r5, r0
 ; SOFT-FLOAT-NEXT:    mov r0, r4
 ; SOFT-FLOAT-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-NEXT:    ldr r1, [sp, #52]
 ; SOFT-FLOAT-NEXT:    bl __addsf3
 ; SOFT-FLOAT-NEXT:    mov r3, r0
-; SOFT-FLOAT-NEXT:    mov r0, r5
+; SOFT-FLOAT-NEXT:    mov r0, r6
 ; SOFT-FLOAT-NEXT:    mov r1, r7
-; SOFT-FLOAT-NEXT:    mov r2, r6
+; SOFT-FLOAT-NEXT:    mov r2, r5
 ; SOFT-FLOAT-NEXT:    pop {r4, r5, r6, r7, r11, lr}
 ; SOFT-FLOAT-NEXT:    mov pc, lr
 ;
@@ -183,32 +183,32 @@ define <4 x float> @fmuladd_contract_v4f32(<4 x float> %a, <4 x float> %b, <4 x 
 ; SOFT-FLOAT-VFP32-NEXT:    mov r7, r1
 ; SOFT-FLOAT-VFP32-NEXT:    ldr r1, [sp, #24]
 ; SOFT-FLOAT-VFP32-NEXT:    mov r4, r3
-; SOFT-FLOAT-VFP32-NEXT:    mov r6, r2
+; SOFT-FLOAT-VFP32-NEXT:    mov r5, r2
 ; SOFT-FLOAT-VFP32-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-VFP32-NEXT:    ldr r1, [sp, #40]
 ; SOFT-FLOAT-VFP32-NEXT:    bl __addsf3
 ; SOFT-FLOAT-VFP32-NEXT:    ldr r1, [sp, #28]
-; SOFT-FLOAT-VFP32-NEXT:    mov r5, r0
+; SOFT-FLOAT-VFP32-NEXT:    mov r6, r0
 ; SOFT-FLOAT-VFP32-NEXT:    mov r0, r7
 ; SOFT-FLOAT-VFP32-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-VFP32-NEXT:    ldr r1, [sp, #44]
 ; SOFT-FLOAT-VFP32-NEXT:    bl __addsf3
 ; SOFT-FLOAT-VFP32-NEXT:    ldr r1, [sp, #32]
 ; SOFT-FLOAT-VFP32-NEXT:    mov r7, r0
-; SOFT-FLOAT-VFP32-NEXT:    mov r0, r6
+; SOFT-FLOAT-VFP32-NEXT:    mov r0, r5
 ; SOFT-FLOAT-VFP32-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-VFP32-NEXT:    ldr r1, [sp, #48]
 ; SOFT-FLOAT-VFP32-NEXT:    bl __addsf3
 ; SOFT-FLOAT-VFP32-NEXT:    ldr r1, [sp, #36]
-; SOFT-FLOAT-VFP32-NEXT:    mov r6, r0
+; SOFT-FLOAT-VFP32-NEXT:    mov r5, r0
 ; SOFT-FLOAT-VFP32-NEXT:    mov r0, r4
 ; SOFT-FLOAT-VFP32-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-VFP32-NEXT:    ldr r1, [sp, #52]
 ; SOFT-FLOAT-VFP32-NEXT:    bl __addsf3
 ; SOFT-FLOAT-VFP32-NEXT:    mov r3, r0
-; SOFT-FLOAT-VFP32-NEXT:    mov r0, r5
+; SOFT-FLOAT-VFP32-NEXT:    mov r0, r6
 ; SOFT-FLOAT-VFP32-NEXT:    mov r1, r7
-; SOFT-FLOAT-VFP32-NEXT:    mov r2, r6
+; SOFT-FLOAT-VFP32-NEXT:    mov r2, r5
 ; SOFT-FLOAT-VFP32-NEXT:    pop {r4, r5, r6, r7, r11, lr}
 ; SOFT-FLOAT-VFP32-NEXT:    mov pc, lr
 ;
@@ -218,32 +218,32 @@ define <4 x float> @fmuladd_contract_v4f32(<4 x float> %a, <4 x float> %b, <4 x 
 ; SOFT-FLOAT-VFP64-NEXT:    mov r7, r1
 ; SOFT-FLOAT-VFP64-NEXT:    ldr r1, [sp, #24]
 ; SOFT-FLOAT-VFP64-NEXT:    mov r4, r3
-; SOFT-FLOAT-VFP64-NEXT:    mov r6, r2
+; SOFT-FLOAT-VFP64-NEXT:    mov r5, r2
 ; SOFT-FLOAT-VFP64-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-VFP64-NEXT:    ldr r1, [sp, #40]
 ; SOFT-FLOAT-VFP64-NEXT:    bl __addsf3
 ; SOFT-FLOAT-VFP64-NEXT:    ldr r1, [sp, #28]
-; SOFT-FLOAT-VFP64-NEXT:    mov r5, r0
+; SOFT-FLOAT-VFP64-NEXT:    mov r6, r0
 ; SOFT-FLOAT-VFP64-NEXT:    mov r0, r7
 ; SOFT-FLOAT-VFP64-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-VFP64-NEXT:    ldr r1, [sp, #44]
 ; SOFT-FLOAT-VFP64-NEXT:    bl __addsf3
 ; SOFT-FLOAT-VFP64-NEXT:    ldr r1, [sp, #32]
 ; SOFT-FLOAT-VFP64-NEXT:    mov r7, r0
-; SOFT-FLOAT-VFP64-NEXT:    mov r0, r6
+; SOFT-FLOAT-VFP64-NEXT:    mov r0, r5
 ; SOFT-FLOAT-VFP64-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-VFP64-NEXT:    ldr r1, [sp, #48]
 ; SOFT-FLOAT-VFP64-NEXT:    bl __addsf3
 ; SOFT-FLOAT-VFP64-NEXT:    ldr r1, [sp, #36]
-; SOFT-FLOAT-VFP64-NEXT:    mov r6, r0
+; SOFT-FLOAT-VFP64-NEXT:    mov r5, r0
 ; SOFT-FLOAT-VFP64-NEXT:    mov r0, r4
 ; SOFT-FLOAT-VFP64-NEXT:    bl __mulsf3
 ; SOFT-FLOAT-VFP64-NEXT:    ldr r1, [sp, #52]
 ; SOFT-FLOAT-VFP64-NEXT:    bl __addsf3
 ; SOFT-FLOAT-VFP64-NEXT:    mov r3, r0
-; SOFT-FLOAT-VFP64-NEXT:    mov r0, r5
+; SOFT-FLOAT-VFP64-NEXT:    mov r0, r6
 ; SOFT-FLOAT-VFP64-NEXT:    mov r1, r7
-; SOFT-FLOAT-VFP64-NEXT:    mov r2, r6
+; SOFT-FLOAT-VFP64-NEXT:    mov r2, r5
 ; SOFT-FLOAT-VFP64-NEXT:    pop {r4, r5, r6, r7, r11, lr}
 ; SOFT-FLOAT-VFP64-NEXT:    mov pc, lr
   %product = fmul contract <4 x float> %a, %b

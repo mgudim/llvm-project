@@ -76,6 +76,7 @@ define bfloat @vpreduce_fminimum_nxv4bf16(bfloat %start, <vscale x 4 x bfloat> %
 ; CHECK-LABEL: vpreduce_fminimum_nxv4bf16:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
+; CHECK-NEXT:    vmv1r.v v9, v0
 ; CHECK-NEXT:    vfwcvtbf16.f.f.v v10, v8
 ; CHECK-NEXT:    fcvt.s.bf16 fa5, fa0
 ; CHECK-NEXT:    vsetvli zero, zero, e32, m2, ta, ma
@@ -93,6 +94,7 @@ define bfloat @vpreduce_fminimum_nxv4bf16(bfloat %start, <vscale x 4 x bfloat> %
 ; CHECK-NEXT:  .LBB4_2:
 ; CHECK-NEXT:    vsetivli zero, 1, e32, m2, ta, ma
 ; CHECK-NEXT:    vfmv.s.f v8, fa5
+; CHECK-NEXT:    vmv1r.v v0, v9
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m2, ta, ma
 ; CHECK-NEXT:    vfredmin.vs v8, v10, v8, v0.t
 ; CHECK-NEXT:    vfmv.f.s fa5, v8
@@ -106,6 +108,7 @@ define bfloat @vpreduce_fmaximum_nxv4bf16(bfloat %start, <vscale x 4 x bfloat> %
 ; CHECK-LABEL: vpreduce_fmaximum_nxv4bf16:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    vsetvli zero, a0, e16, m1, ta, ma
+; CHECK-NEXT:    vmv1r.v v9, v0
 ; CHECK-NEXT:    vfwcvtbf16.f.f.v v10, v8
 ; CHECK-NEXT:    fcvt.s.bf16 fa5, fa0
 ; CHECK-NEXT:    vsetvli zero, zero, e32, m2, ta, ma
@@ -123,6 +126,7 @@ define bfloat @vpreduce_fmaximum_nxv4bf16(bfloat %start, <vscale x 4 x bfloat> %
 ; CHECK-NEXT:  .LBB5_2:
 ; CHECK-NEXT:    vsetivli zero, 1, e32, m2, ta, ma
 ; CHECK-NEXT:    vfmv.s.f v8, fa5
+; CHECK-NEXT:    vmv1r.v v0, v9
 ; CHECK-NEXT:    vsetvli zero, a0, e32, m2, ta, ma
 ; CHECK-NEXT:    vfredmax.vs v8, v10, v8, v0.t
 ; CHECK-NEXT:    vfmv.f.s fa5, v8

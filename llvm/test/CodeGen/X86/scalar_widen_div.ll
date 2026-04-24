@@ -13,20 +13,20 @@ define void @vectorDiv (ptr addrspace(1) %nsource, ptr addrspace(1) %dsource, pt
 ; CHECK-NEXT:    movq %rdx, -{{[0-9]+}}(%rsp)
 ; CHECK-NEXT:    movslq -{{[0-9]+}}(%rsp), %r8
 ; CHECK-NEXT:    movq (%rdi,%r8,8), %rdi
-; CHECK-NEXT:    movq (%rsi,%r8,8), %r9
+; CHECK-NEXT:    movq (%rsi,%r8,8), %rsi
 ; CHECK-NEXT:    movq %rdi, %rax
 ; CHECK-NEXT:    shrq $32, %rax
-; CHECK-NEXT:    movq %r9, %rsi
-; CHECK-NEXT:    shrq $32, %rsi
+; CHECK-NEXT:    movq %rsi, %r9
+; CHECK-NEXT:    shrq $32, %r9
 ; CHECK-NEXT:    # kill: def $eax killed $eax killed $rax
 ; CHECK-NEXT:    cltd
-; CHECK-NEXT:    idivl %esi
-; CHECK-NEXT:    movl %eax, %esi
+; CHECK-NEXT:    idivl %r9d
+; CHECK-NEXT:    movl %eax, %r9d
 ; CHECK-NEXT:    movl %edi, %eax
 ; CHECK-NEXT:    cltd
-; CHECK-NEXT:    idivl %r9d
+; CHECK-NEXT:    idivl %esi
 ; CHECK-NEXT:    movd %eax, %xmm0
-; CHECK-NEXT:    pinsrd $1, %esi, %xmm0
+; CHECK-NEXT:    pinsrd $1, %r9d, %xmm0
 ; CHECK-NEXT:    movq %xmm0, (%rcx,%r8,8)
 ; CHECK-NEXT:    retq
 entry:
@@ -58,16 +58,15 @@ define <3 x i8> @test_char_div(<3 x i8> %num, <3 x i8> %div) {
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    movsbl %dil, %eax
 ; CHECK-NEXT:    idivb %cl
-; CHECK-NEXT:    movl %eax, %ecx
+; CHECK-NEXT:    movl %eax, %edi
 ; CHECK-NEXT:    movsbl %sil, %eax
 ; CHECK-NEXT:    idivb %r8b
 ; CHECK-NEXT:    movl %eax, %esi
 ; CHECK-NEXT:    movsbl %dl, %eax
 ; CHECK-NEXT:    idivb %r9b
-; CHECK-NEXT:    movl %eax, %edi
-; CHECK-NEXT:    movl %ecx, %eax
+; CHECK-NEXT:    movl %eax, %ecx
+; CHECK-NEXT:    movl %edi, %eax
 ; CHECK-NEXT:    movl %esi, %edx
-; CHECK-NEXT:    movl %edi, %ecx
 ; CHECK-NEXT:    retq
   %div.r = sdiv <3 x i8> %num, %div
   ret <3 x i8>  %div.r
@@ -78,16 +77,15 @@ define <3 x i8> @test_uchar_div(<3 x i8> %num, <3 x i8> %div) {
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    movzbl %dil, %eax
 ; CHECK-NEXT:    divb %cl
-; CHECK-NEXT:    movl %eax, %ecx
+; CHECK-NEXT:    movl %eax, %edi
 ; CHECK-NEXT:    movzbl %sil, %eax
 ; CHECK-NEXT:    divb %r8b
 ; CHECK-NEXT:    movl %eax, %esi
 ; CHECK-NEXT:    movzbl %dl, %eax
 ; CHECK-NEXT:    divb %r9b
-; CHECK-NEXT:    movl %eax, %edi
-; CHECK-NEXT:    movl %ecx, %eax
+; CHECK-NEXT:    movl %eax, %ecx
+; CHECK-NEXT:    movl %edi, %eax
 ; CHECK-NEXT:    movl %esi, %edx
-; CHECK-NEXT:    movl %edi, %ecx
 ; CHECK-NEXT:    retq
   %div.r = udiv <3 x i8> %num, %div
   ret <3 x i8>  %div.r
@@ -205,7 +203,7 @@ define <3 x i64> @test_long_div(<3 x i64> %num, <3 x i64> %div) {
 ; CHECK-NEXT:    movq %rdi, %rax
 ; CHECK-NEXT:    cqto
 ; CHECK-NEXT:    idivq %rcx
-; CHECK-NEXT:    movq %rax, %rcx
+; CHECK-NEXT:    movq %rax, %rdi
 ; CHECK-NEXT:    movq %rsi, %rax
 ; CHECK-NEXT:    cqto
 ; CHECK-NEXT:    idivq %r8
@@ -213,10 +211,9 @@ define <3 x i64> @test_long_div(<3 x i64> %num, <3 x i64> %div) {
 ; CHECK-NEXT:    movq %r10, %rax
 ; CHECK-NEXT:    cqto
 ; CHECK-NEXT:    idivq %r9
-; CHECK-NEXT:    movq %rax, %rdi
-; CHECK-NEXT:    movq %rcx, %rax
+; CHECK-NEXT:    movq %rax, %rcx
+; CHECK-NEXT:    movq %rdi, %rax
 ; CHECK-NEXT:    movq %rsi, %rdx
-; CHECK-NEXT:    movq %rdi, %rcx
 ; CHECK-NEXT:    retq
   %div.r = sdiv <3 x i64> %num, %div
   ret <3 x i64>  %div.r
@@ -229,7 +226,7 @@ define <3 x i64> @test_ulong_div(<3 x i64> %num, <3 x i64> %div) {
 ; CHECK-NEXT:    movq %rdi, %rax
 ; CHECK-NEXT:    xorl %edx, %edx
 ; CHECK-NEXT:    divq %rcx
-; CHECK-NEXT:    movq %rax, %rcx
+; CHECK-NEXT:    movq %rax, %rdi
 ; CHECK-NEXT:    movq %rsi, %rax
 ; CHECK-NEXT:    xorl %edx, %edx
 ; CHECK-NEXT:    divq %r8
@@ -237,10 +234,9 @@ define <3 x i64> @test_ulong_div(<3 x i64> %num, <3 x i64> %div) {
 ; CHECK-NEXT:    movq %r10, %rax
 ; CHECK-NEXT:    xorl %edx, %edx
 ; CHECK-NEXT:    divq %r9
-; CHECK-NEXT:    movq %rax, %rdi
-; CHECK-NEXT:    movq %rcx, %rax
+; CHECK-NEXT:    movq %rax, %rcx
+; CHECK-NEXT:    movq %rdi, %rax
 ; CHECK-NEXT:    movq %rsi, %rdx
-; CHECK-NEXT:    movq %rdi, %rcx
 ; CHECK-NEXT:    retq
   %div.r = udiv <3 x i64> %num, %div
   ret <3 x i64>  %div.r
@@ -393,26 +389,26 @@ define void @test_int_div(ptr %dest, ptr %old, i32 %n) {
 ; CHECK-NEXT:    jle .LBB12_3
 ; CHECK-NEXT:  # %bb.1: # %bb.nph
 ; CHECK-NEXT:    movl %edx, %ecx
-; CHECK-NEXT:    xorl %r10d, %r10d
+; CHECK-NEXT:    xorl %r8d, %r8d
 ; CHECK-NEXT:    .p2align 4
 ; CHECK-NEXT:  .LBB12_2: # %for.body
 ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
-; CHECK-NEXT:    movl (%rdi,%r10), %r8d
-; CHECK-NEXT:    movl 4(%rdi,%r10), %eax
+; CHECK-NEXT:    movl (%rdi,%r8), %r9d
+; CHECK-NEXT:    movl 4(%rdi,%r8), %eax
 ; CHECK-NEXT:    cltd
-; CHECK-NEXT:    idivl 4(%rsi,%r10)
-; CHECK-NEXT:    movl %eax, %r9d
-; CHECK-NEXT:    movl %r8d, %eax
+; CHECK-NEXT:    idivl 4(%rsi,%r8)
+; CHECK-NEXT:    movl %eax, %r10d
+; CHECK-NEXT:    movl %r9d, %eax
 ; CHECK-NEXT:    cltd
-; CHECK-NEXT:    idivl (%rsi,%r10)
+; CHECK-NEXT:    idivl (%rsi,%r8)
 ; CHECK-NEXT:    movd %eax, %xmm0
-; CHECK-NEXT:    pinsrd $1, %r9d, %xmm0
-; CHECK-NEXT:    movl 8(%rdi,%r10), %eax
+; CHECK-NEXT:    pinsrd $1, %r10d, %xmm0
+; CHECK-NEXT:    movl 8(%rdi,%r8), %eax
 ; CHECK-NEXT:    cltd
-; CHECK-NEXT:    idivl 8(%rsi,%r10)
-; CHECK-NEXT:    movl %eax, 8(%rdi,%r10)
-; CHECK-NEXT:    movq %xmm0, (%rdi,%r10)
-; CHECK-NEXT:    addq $16, %r10
+; CHECK-NEXT:    idivl 8(%rsi,%r8)
+; CHECK-NEXT:    movl %eax, 8(%rdi,%r8)
+; CHECK-NEXT:    movq %xmm0, (%rdi,%r8)
+; CHECK-NEXT:    addq $16, %r8
 ; CHECK-NEXT:    decl %ecx
 ; CHECK-NEXT:    jne .LBB12_2
 ; CHECK-NEXT:  .LBB12_3: # %for.end

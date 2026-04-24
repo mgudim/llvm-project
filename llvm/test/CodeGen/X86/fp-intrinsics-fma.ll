@@ -451,9 +451,9 @@ define float @f17() #0 {
 ; NOFMA:       # %bb.0: # %entry
 ; NOFMA-NEXT:    pushq %rax
 ; NOFMA-NEXT:    .cfi_def_cfa_offset 16
-; NOFMA-NEXT:    movss {{.*#+}} xmm0 = [3.5E+0,0.0E+0,0.0E+0,0.0E+0]
-; NOFMA-NEXT:    movaps %xmm0, %xmm1
-; NOFMA-NEXT:    movaps %xmm0, %xmm2
+; NOFMA-NEXT:    movss {{.*#+}} xmm2 = [3.5E+0,0.0E+0,0.0E+0,0.0E+0]
+; NOFMA-NEXT:    movaps %xmm2, %xmm0
+; NOFMA-NEXT:    movaps %xmm2, %xmm1
 ; NOFMA-NEXT:    callq fmaf@PLT
 ; NOFMA-NEXT:    popq %rax
 ; NOFMA-NEXT:    .cfi_def_cfa_offset 8
@@ -487,9 +487,9 @@ define double @f18() #0 {
 ; NOFMA:       # %bb.0: # %entry
 ; NOFMA-NEXT:    pushq %rax
 ; NOFMA-NEXT:    .cfi_def_cfa_offset 16
-; NOFMA-NEXT:    movsd {{.*#+}} xmm0 = [4.2100000000000001E+1,0.0E+0]
-; NOFMA-NEXT:    movaps %xmm0, %xmm1
-; NOFMA-NEXT:    movaps %xmm0, %xmm2
+; NOFMA-NEXT:    movsd {{.*#+}} xmm2 = [4.2100000000000001E+1,0.0E+0]
+; NOFMA-NEXT:    movaps %xmm2, %xmm0
+; NOFMA-NEXT:    movaps %xmm2, %xmm1
 ; NOFMA-NEXT:    callq fma@PLT
 ; NOFMA-NEXT:    popq %rax
 ; NOFMA-NEXT:    .cfi_def_cfa_offset 8
@@ -795,11 +795,13 @@ define <2 x double> @f24(<2 x double> %0, <2 x double> %1, <2 x double> %2) #0 {
 ; NOFMA-NEXT:    subq $72, %rsp
 ; NOFMA-NEXT:    .cfi_def_cfa_offset 80
 ; NOFMA-NEXT:    movaps %xmm1, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; NOFMA-NEXT:    movaps {{.*#+}} xmm3 = [-0.0E+0,-0.0E+0]
-; NOFMA-NEXT:    xorps %xmm3, %xmm0
-; NOFMA-NEXT:    movaps %xmm0, (%rsp) # 16-byte Spill
-; NOFMA-NEXT:    xorps %xmm3, %xmm2
+; NOFMA-NEXT:    movaps %xmm0, %xmm3
+; NOFMA-NEXT:    movaps {{.*#+}} xmm0 = [-0.0E+0,-0.0E+0]
+; NOFMA-NEXT:    xorps %xmm0, %xmm3
+; NOFMA-NEXT:    movaps %xmm3, (%rsp) # 16-byte Spill
+; NOFMA-NEXT:    xorps %xmm0, %xmm2
 ; NOFMA-NEXT:    movaps %xmm2, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; NOFMA-NEXT:    movaps %xmm3, %xmm0
 ; NOFMA-NEXT:    callq fma@PLT
 ; NOFMA-NEXT:    movaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; NOFMA-NEXT:    pshufd $238, (%rsp), %xmm0 # 16-byte Folded Reload
@@ -1031,11 +1033,13 @@ define <2 x double> @f28(<2 x double> %0, <2 x double> %1, <2 x double> %2) #0 {
 ; NOFMA-NEXT:    subq $72, %rsp
 ; NOFMA-NEXT:    .cfi_def_cfa_offset 80
 ; NOFMA-NEXT:    movaps %xmm1, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; NOFMA-NEXT:    movaps {{.*#+}} xmm3 = [-0.0E+0,-0.0E+0]
-; NOFMA-NEXT:    xorps %xmm3, %xmm0
-; NOFMA-NEXT:    movaps %xmm0, (%rsp) # 16-byte Spill
-; NOFMA-NEXT:    xorps %xmm3, %xmm2
+; NOFMA-NEXT:    movaps %xmm0, %xmm3
+; NOFMA-NEXT:    movaps {{.*#+}} xmm0 = [-0.0E+0,-0.0E+0]
+; NOFMA-NEXT:    xorps %xmm0, %xmm3
+; NOFMA-NEXT:    movaps %xmm3, (%rsp) # 16-byte Spill
+; NOFMA-NEXT:    xorps %xmm0, %xmm2
 ; NOFMA-NEXT:    movaps %xmm2, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; NOFMA-NEXT:    movaps %xmm3, %xmm0
 ; NOFMA-NEXT:    callq fma@PLT
 ; NOFMA-NEXT:    movaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; NOFMA-NEXT:    pshufd $238, (%rsp), %xmm0 # 16-byte Folded Reload

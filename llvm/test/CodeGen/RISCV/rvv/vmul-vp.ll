@@ -1369,9 +1369,9 @@ define <vscale x 8 x i64> @vmul_vshl_vv_nxv8i64_unmasked(<vscale x 8 x i64> %va,
 define <vscale x 8 x i64> @vmul_vadd_vx_nxv8i64(<vscale x 8 x i64> %va, <vscale x 8 x i1> %m, i32 zeroext %evl) {
 ; CHECK-LABEL: vmul_vadd_vx_nxv8i64:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    li a1, 7
 ; CHECK-NEXT:    vsetvli zero, a0, e64, m8, ta, ma
-; CHECK-NEXT:    vmul.vx v8, v8, a1, v0.t
+; CHECK-NEXT:    li a0, 7
+; CHECK-NEXT:    vmul.vx v8, v8, a0, v0.t
 ; CHECK-NEXT:    li a0, 21
 ; CHECK-NEXT:    vadd.vx v8, v8, a0, v0.t
 ; CHECK-NEXT:    ret

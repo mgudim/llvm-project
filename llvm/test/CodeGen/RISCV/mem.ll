@@ -188,10 +188,10 @@ define dso_local i32 @lw_sw_global(i32 %a) nounwind {
 define dso_local i32 @lw_sw_constant(i32 %a) nounwind {
 ; RV32I-LABEL: lw_sw_constant:
 ; RV32I:       # %bb.0:
-; RV32I-NEXT:    lui a2, 912092
-; RV32I-NEXT:    lw a1, -273(a2)
-; RV32I-NEXT:    sw a0, -273(a2)
-; RV32I-NEXT:    mv a0, a1
+; RV32I-NEXT:    lui a1, 912092
+; RV32I-NEXT:    lw a2, -273(a1)
+; RV32I-NEXT:    sw a0, -273(a1)
+; RV32I-NEXT:    mv a0, a2
 ; RV32I-NEXT:    ret
   %1 = inttoptr i32 3735928559 to ptr
   %2 = load volatile i32, ptr %1

@@ -50,33 +50,33 @@ define i32 @test_musttail_variadic_spill(i32 %arg0, ...) {
 ; CHECK-NEXT:    .cfi_offset w26, -80
 ; CHECK-NEXT:    .cfi_offset w27, -88
 ; CHECK-NEXT:    .cfi_offset w28, -96
-; CHECK-NEXT:    mov w19, w0
+; CHECK-NEXT:    mov w27, w0
 ; CHECK-NEXT:  Lloh0:
 ; CHECK-NEXT:    adrp x0, _asdf@PAGE
 ; CHECK-NEXT:  Lloh1:
 ; CHECK-NEXT:    add x0, x0, _asdf@PAGEOFF
-; CHECK-NEXT:    mov x20, x1
-; CHECK-NEXT:    mov x21, x2
-; CHECK-NEXT:    mov x22, x3
-; CHECK-NEXT:    mov x23, x4
-; CHECK-NEXT:    mov x24, x5
-; CHECK-NEXT:    mov x25, x6
-; CHECK-NEXT:    mov x26, x7
+; CHECK-NEXT:    mov x19, x1
+; CHECK-NEXT:    mov x20, x2
+; CHECK-NEXT:    mov x21, x3
+; CHECK-NEXT:    mov x22, x4
+; CHECK-NEXT:    mov x23, x5
+; CHECK-NEXT:    mov x24, x6
+; CHECK-NEXT:    mov x25, x7
 ; CHECK-NEXT:    stp q7, q6, [sp] ; 32-byte Folded Spill
-; CHECK-NEXT:    mov x27, x8
+; CHECK-NEXT:    mov x26, x8
 ; CHECK-NEXT:    stp q5, q4, [sp, #32] ; 32-byte Folded Spill
 ; CHECK-NEXT:    stp q3, q2, [sp, #64] ; 32-byte Folded Spill
 ; CHECK-NEXT:    stp q1, q0, [sp, #96] ; 32-byte Folded Spill
 ; CHECK-NEXT:    bl _puts
-; CHECK-NEXT:    mov w0, w19
-; CHECK-NEXT:    mov x1, x20
-; CHECK-NEXT:    mov x2, x21
-; CHECK-NEXT:    mov x3, x22
-; CHECK-NEXT:    mov x4, x23
-; CHECK-NEXT:    mov x5, x24
-; CHECK-NEXT:    mov x6, x25
-; CHECK-NEXT:    mov x7, x26
-; CHECK-NEXT:    mov x8, x27
+; CHECK-NEXT:    mov w0, w27
+; CHECK-NEXT:    mov x1, x19
+; CHECK-NEXT:    mov x2, x20
+; CHECK-NEXT:    mov x3, x21
+; CHECK-NEXT:    mov x4, x22
+; CHECK-NEXT:    mov x5, x23
+; CHECK-NEXT:    mov x6, x24
+; CHECK-NEXT:    mov x7, x25
+; CHECK-NEXT:    mov x8, x26
 ; CHECK-NEXT:    ldp q1, q0, [sp, #96] ; 32-byte Folded Reload
 ; CHECK-NEXT:    ldp q3, q2, [sp, #64] ; 32-byte Folded Reload
 ; CHECK-NEXT:    ldp q5, q4, [sp, #32] ; 32-byte Folded Reload
@@ -122,17 +122,17 @@ define void @f_thunk(ptr %this, ...) {
 ; CHECK-NEXT:    .cfi_offset w26, -80
 ; CHECK-NEXT:    .cfi_offset w27, -88
 ; CHECK-NEXT:    .cfi_offset w28, -96
-; CHECK-NEXT:    mov x27, x8
+; CHECK-NEXT:    mov x26, x8
 ; CHECK-NEXT:    add x8, sp, #128
 ; CHECK-NEXT:    add x9, sp, #256
-; CHECK-NEXT:    mov x19, x0
-; CHECK-NEXT:    mov x20, x1
-; CHECK-NEXT:    mov x21, x2
-; CHECK-NEXT:    mov x22, x3
-; CHECK-NEXT:    mov x23, x4
-; CHECK-NEXT:    mov x24, x5
-; CHECK-NEXT:    mov x25, x6
-; CHECK-NEXT:    mov x26, x7
+; CHECK-NEXT:    mov x27, x0
+; CHECK-NEXT:    mov x19, x1
+; CHECK-NEXT:    mov x20, x2
+; CHECK-NEXT:    mov x21, x3
+; CHECK-NEXT:    mov x22, x4
+; CHECK-NEXT:    mov x23, x5
+; CHECK-NEXT:    mov x24, x6
+; CHECK-NEXT:    mov x25, x7
 ; CHECK-NEXT:    stp q7, q6, [sp] ; 32-byte Folded Spill
 ; CHECK-NEXT:    stp q5, q4, [sp, #32] ; 32-byte Folded Spill
 ; CHECK-NEXT:    stp q3, q2, [sp, #64] ; 32-byte Folded Spill
@@ -140,16 +140,16 @@ define void @f_thunk(ptr %this, ...) {
 ; CHECK-NEXT:    str x9, [x8]
 ; CHECK-NEXT:    bl _get_f
 ; CHECK-NEXT:    mov x9, x0
-; CHECK-NEXT:    mov x0, x19
-; CHECK-NEXT:    mov x1, x20
-; CHECK-NEXT:    mov x2, x21
-; CHECK-NEXT:    mov x3, x22
-; CHECK-NEXT:    mov x4, x23
-; CHECK-NEXT:    mov x5, x24
-; CHECK-NEXT:    mov x6, x25
-; CHECK-NEXT:    mov x7, x26
+; CHECK-NEXT:    mov x0, x27
+; CHECK-NEXT:    mov x1, x19
+; CHECK-NEXT:    mov x2, x20
+; CHECK-NEXT:    mov x3, x21
+; CHECK-NEXT:    mov x4, x22
+; CHECK-NEXT:    mov x5, x23
+; CHECK-NEXT:    mov x6, x24
+; CHECK-NEXT:    mov x7, x25
 ; CHECK-NEXT:    ldp q1, q0, [sp, #96] ; 32-byte Folded Reload
-; CHECK-NEXT:    mov x8, x27
+; CHECK-NEXT:    mov x8, x26
 ; CHECK-NEXT:    ldp q3, q2, [sp, #64] ; 32-byte Folded Reload
 ; CHECK-NEXT:    ldp q5, q4, [sp, #32] ; 32-byte Folded Reload
 ; CHECK-NEXT:    ldp q7, q6, [sp] ; 32-byte Folded Reload

@@ -849,18 +849,18 @@ define <4 x float> @test_extend32_vec4(ptr %p) nounwind {
 ; PPC32-NEXT:    stfd f31, 40(r1) # 8-byte Folded Spill
 ; PPC32-NEXT:    bl __extendhfsf2
 ; PPC32-NEXT:    lhz r3, 2(r30)
-; PPC32-NEXT:    fmr f31, f1
-; PPC32-NEXT:    bl __extendhfsf2
-; PPC32-NEXT:    lhz r3, 4(r30)
-; PPC32-NEXT:    fmr f30, f1
-; PPC32-NEXT:    bl __extendhfsf2
-; PPC32-NEXT:    lhz r3, 6(r30)
 ; PPC32-NEXT:    fmr f29, f1
 ; PPC32-NEXT:    bl __extendhfsf2
+; PPC32-NEXT:    lhz r3, 4(r30)
+; PPC32-NEXT:    fmr f31, f1
+; PPC32-NEXT:    bl __extendhfsf2
+; PPC32-NEXT:    lhz r3, 6(r30)
+; PPC32-NEXT:    fmr f30, f1
+; PPC32-NEXT:    bl __extendhfsf2
 ; PPC32-NEXT:    fmr f4, f1
-; PPC32-NEXT:    fmr f1, f31
-; PPC32-NEXT:    fmr f2, f30
-; PPC32-NEXT:    fmr f3, f29
+; PPC32-NEXT:    fmr f1, f29
+; PPC32-NEXT:    fmr f2, f31
+; PPC32-NEXT:    fmr f3, f30
 ; PPC32-NEXT:    lfd f31, 40(r1) # 8-byte Folded Reload
 ; PPC32-NEXT:    lfd f30, 32(r1) # 8-byte Folded Reload
 ; PPC32-NEXT:    lfd f29, 24(r1) # 8-byte Folded Reload
@@ -886,7 +886,7 @@ define <4 x float> @test_extend32_vec4(ptr %p) nounwind {
 ; P8-NEXT:    lwz r3, 0(r3)
 ; P8-NEXT:    stw r3, 48(r1)
 ; P8-NEXT:    addi r3, r1, 64
-; P8-NEXT:    lxvd2x vs62, 0, r3
+; P8-NEXT:    lxvd2x vs63, 0, r3
 ; P8-NEXT:    addi r3, r1, 48
 ; P8-NEXT:    lxvd2x vs0, 0, r3
 ; P8-NEXT:    mffprd r30, f0
@@ -894,31 +894,31 @@ define <4 x float> @test_extend32_vec4(ptr %p) nounwind {
 ; P8-NEXT:    clrlwi r3, r3, 16
 ; P8-NEXT:    bl __extendhfsf2
 ; P8-NEXT:    nop
-; P8-NEXT:    mfvsrd r29, vs62
-; P8-NEXT:    xxlor vs63, f1, f1
+; P8-NEXT:    mfvsrd r29, vs63
+; P8-NEXT:    xxlor vs62, f1, f1
 ; P8-NEXT:    clrldi r3, r29, 48
 ; P8-NEXT:    clrlwi r3, r3, 16
 ; P8-NEXT:    bl __extendhfsf2
 ; P8-NEXT:    nop
 ; P8-NEXT:    rldicl r3, r30, 48, 48
-; P8-NEXT:    xxmrghd vs0, vs1, vs63
+; P8-NEXT:    xxmrghd vs0, vs1, vs62
 ; P8-NEXT:    clrlwi r3, r3, 16
-; P8-NEXT:    xvcvdpsp vs62, vs0
+; P8-NEXT:    xvcvdpsp vs63, vs0
 ; P8-NEXT:    bl __extendhfsf2
 ; P8-NEXT:    nop
 ; P8-NEXT:    rldicl r3, r29, 48, 48
-; P8-NEXT:    xxlor vs63, f1, f1
+; P8-NEXT:    xxlor vs62, f1, f1
 ; P8-NEXT:    clrlwi r3, r3, 16
 ; P8-NEXT:    bl __extendhfsf2
 ; P8-NEXT:    nop
-; P8-NEXT:    xxmrghd vs0, vs1, vs63
+; P8-NEXT:    xxmrghd vs0, vs1, vs62
 ; P8-NEXT:    li r3, 96
 ; P8-NEXT:    ld r30, 128(r1) # 8-byte Folded Reload
 ; P8-NEXT:    ld r29, 120(r1) # 8-byte Folded Reload
 ; P8-NEXT:    xvcvdpsp vs34, vs0
+; P8-NEXT:    vmrgew v2, v2, v31
 ; P8-NEXT:    lxvd2x vs63, r1, r3 # 16-byte Folded Reload
 ; P8-NEXT:    li r3, 80
-; P8-NEXT:    vmrgew v2, v2, v30
 ; P8-NEXT:    lxvd2x vs62, r1, r3 # 16-byte Folded Reload
 ; P8-NEXT:    addi r1, r1, 144
 ; P8-NEXT:    ld r0, 16(r1)
@@ -967,26 +967,26 @@ define <4 x float> @test_extend32_vec4(ptr %p) nounwind {
 ; SOFT-NEXT:    std r30, -16(r1) # 8-byte Folded Spill
 ; SOFT-NEXT:    stdu r1, -80(r1)
 ; SOFT-NEXT:    std r0, 96(r1)
-; SOFT-NEXT:    mr r30, r3
+; SOFT-NEXT:    mr r28, r3
 ; SOFT-NEXT:    lhz r3, 0(r3)
 ; SOFT-NEXT:    bl __extendhfsf2
 ; SOFT-NEXT:    nop
-; SOFT-NEXT:    mr r29, r3
-; SOFT-NEXT:    lhz r3, 2(r30)
-; SOFT-NEXT:    bl __extendhfsf2
-; SOFT-NEXT:    nop
-; SOFT-NEXT:    mr r28, r3
-; SOFT-NEXT:    lhz r3, 4(r30)
-; SOFT-NEXT:    bl __extendhfsf2
-; SOFT-NEXT:    nop
 ; SOFT-NEXT:    mr r27, r3
-; SOFT-NEXT:    lhz r3, 6(r30)
+; SOFT-NEXT:    lhz r3, 2(r28)
+; SOFT-NEXT:    bl __extendhfsf2
+; SOFT-NEXT:    nop
+; SOFT-NEXT:    mr r30, r3
+; SOFT-NEXT:    lhz r3, 4(r28)
+; SOFT-NEXT:    bl __extendhfsf2
+; SOFT-NEXT:    nop
+; SOFT-NEXT:    mr r29, r3
+; SOFT-NEXT:    lhz r3, 6(r28)
 ; SOFT-NEXT:    bl __extendhfsf2
 ; SOFT-NEXT:    nop
 ; SOFT-NEXT:    mr r6, r3
-; SOFT-NEXT:    mr r3, r29
-; SOFT-NEXT:    mr r4, r28
-; SOFT-NEXT:    mr r5, r27
+; SOFT-NEXT:    mr r3, r27
+; SOFT-NEXT:    mr r4, r30
+; SOFT-NEXT:    mr r5, r29
 ; SOFT-NEXT:    addi r1, r1, 80
 ; SOFT-NEXT:    ld r0, 16(r1)
 ; SOFT-NEXT:    ld r30, -16(r1) # 8-byte Folded Reload
@@ -1053,18 +1053,18 @@ define <4 x double> @test_extend64_vec4(ptr %p) nounwind {
 ; PPC32-NEXT:    stfd f31, 40(r1) # 8-byte Folded Spill
 ; PPC32-NEXT:    bl __extendhfsf2
 ; PPC32-NEXT:    lhz r3, 2(r30)
-; PPC32-NEXT:    fmr f31, f1
-; PPC32-NEXT:    bl __extendhfsf2
-; PPC32-NEXT:    lhz r3, 4(r30)
-; PPC32-NEXT:    fmr f30, f1
-; PPC32-NEXT:    bl __extendhfsf2
-; PPC32-NEXT:    lhz r3, 6(r30)
 ; PPC32-NEXT:    fmr f29, f1
 ; PPC32-NEXT:    bl __extendhfsf2
+; PPC32-NEXT:    lhz r3, 4(r30)
+; PPC32-NEXT:    fmr f31, f1
+; PPC32-NEXT:    bl __extendhfsf2
+; PPC32-NEXT:    lhz r3, 6(r30)
+; PPC32-NEXT:    fmr f30, f1
+; PPC32-NEXT:    bl __extendhfsf2
 ; PPC32-NEXT:    fmr f4, f1
-; PPC32-NEXT:    fmr f1, f31
-; PPC32-NEXT:    fmr f2, f30
-; PPC32-NEXT:    fmr f3, f29
+; PPC32-NEXT:    fmr f1, f29
+; PPC32-NEXT:    fmr f2, f31
+; PPC32-NEXT:    fmr f3, f30
 ; PPC32-NEXT:    lfd f31, 40(r1) # 8-byte Folded Reload
 ; PPC32-NEXT:    lfd f30, 32(r1) # 8-byte Folded Reload
 ; PPC32-NEXT:    lfd f29, 24(r1) # 8-byte Folded Reload
@@ -1145,34 +1145,34 @@ define <4 x double> @test_extend64_vec4(ptr %p) nounwind {
 ; SOFT-NEXT:    std r30, -16(r1) # 8-byte Folded Spill
 ; SOFT-NEXT:    stdu r1, -80(r1)
 ; SOFT-NEXT:    std r0, 96(r1)
-; SOFT-NEXT:    mr r30, r3
+; SOFT-NEXT:    mr r28, r3
 ; SOFT-NEXT:    lhz r3, 0(r3)
 ; SOFT-NEXT:    bl __extendhfsf2
 ; SOFT-NEXT:    nop
 ; SOFT-NEXT:    bl __extendsfdf2
 ; SOFT-NEXT:    nop
-; SOFT-NEXT:    mr r29, r3
-; SOFT-NEXT:    lhz r3, 2(r30)
-; SOFT-NEXT:    bl __extendhfsf2
-; SOFT-NEXT:    nop
-; SOFT-NEXT:    bl __extendsfdf2
-; SOFT-NEXT:    nop
-; SOFT-NEXT:    mr r28, r3
-; SOFT-NEXT:    lhz r3, 4(r30)
-; SOFT-NEXT:    bl __extendhfsf2
-; SOFT-NEXT:    nop
-; SOFT-NEXT:    bl __extendsfdf2
-; SOFT-NEXT:    nop
 ; SOFT-NEXT:    mr r27, r3
-; SOFT-NEXT:    lhz r3, 6(r30)
+; SOFT-NEXT:    lhz r3, 2(r28)
+; SOFT-NEXT:    bl __extendhfsf2
+; SOFT-NEXT:    nop
+; SOFT-NEXT:    bl __extendsfdf2
+; SOFT-NEXT:    nop
+; SOFT-NEXT:    mr r30, r3
+; SOFT-NEXT:    lhz r3, 4(r28)
+; SOFT-NEXT:    bl __extendhfsf2
+; SOFT-NEXT:    nop
+; SOFT-NEXT:    bl __extendsfdf2
+; SOFT-NEXT:    nop
+; SOFT-NEXT:    mr r29, r3
+; SOFT-NEXT:    lhz r3, 6(r28)
 ; SOFT-NEXT:    bl __extendhfsf2
 ; SOFT-NEXT:    nop
 ; SOFT-NEXT:    bl __extendsfdf2
 ; SOFT-NEXT:    nop
 ; SOFT-NEXT:    mr r6, r3
-; SOFT-NEXT:    mr r3, r29
-; SOFT-NEXT:    mr r4, r28
-; SOFT-NEXT:    mr r5, r27
+; SOFT-NEXT:    mr r3, r27
+; SOFT-NEXT:    mr r4, r30
+; SOFT-NEXT:    mr r5, r29
 ; SOFT-NEXT:    addi r1, r1, 80
 ; SOFT-NEXT:    ld r0, 16(r1)
 ; SOFT-NEXT:    ld r30, -16(r1) # 8-byte Folded Reload
@@ -1200,25 +1200,25 @@ define <4 x double> @test_extend64_vec4(ptr %p) nounwind {
 ; BE-NEXT:    bl __extendhfsf2
 ; BE-NEXT:    nop
 ; BE-NEXT:    mr r3, r28
-; BE-NEXT:    fmr f31, f1
-; BE-NEXT:    bl __extendhfsf2
-; BE-NEXT:    nop
-; BE-NEXT:    mr r3, r29
-; BE-NEXT:    fmr f30, f1
-; BE-NEXT:    bl __extendhfsf2
-; BE-NEXT:    nop
-; BE-NEXT:    mr r3, r30
 ; BE-NEXT:    fmr f29, f1
 ; BE-NEXT:    bl __extendhfsf2
 ; BE-NEXT:    nop
+; BE-NEXT:    mr r3, r29
+; BE-NEXT:    fmr f31, f1
+; BE-NEXT:    bl __extendhfsf2
+; BE-NEXT:    nop
+; BE-NEXT:    mr r3, r30
+; BE-NEXT:    fmr f30, f1
+; BE-NEXT:    bl __extendhfsf2
+; BE-NEXT:    nop
 ; BE-NEXT:    fmr f4, f1
-; BE-NEXT:    fmr f1, f31
-; BE-NEXT:    lfd f31, 168(r1) # 8-byte Folded Reload
-; BE-NEXT:    ld r30, 136(r1) # 8-byte Folded Reload
-; BE-NEXT:    fmr f2, f30
-; BE-NEXT:    fmr f3, f29
-; BE-NEXT:    lfd f30, 160(r1) # 8-byte Folded Reload
+; BE-NEXT:    fmr f1, f29
 ; BE-NEXT:    lfd f29, 152(r1) # 8-byte Folded Reload
+; BE-NEXT:    ld r30, 136(r1) # 8-byte Folded Reload
+; BE-NEXT:    fmr f2, f31
+; BE-NEXT:    fmr f3, f30
+; BE-NEXT:    lfd f31, 168(r1) # 8-byte Folded Reload
+; BE-NEXT:    lfd f30, 160(r1) # 8-byte Folded Reload
 ; BE-NEXT:    ld r29, 128(r1) # 8-byte Folded Reload
 ; BE-NEXT:    ld r28, 120(r1) # 8-byte Folded Reload
 ; BE-NEXT:    addi r1, r1, 176

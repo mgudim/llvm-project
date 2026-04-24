@@ -173,18 +173,18 @@ define <8 x double> @concat_sitofp_v8f64_v4i32(<4 x i32> %a0, <4 x i32> %a1, <4 
 ; SSE-LABEL: concat_sitofp_v8f64_v4i32:
 ; SSE:       # %bb.0:
 ; SSE-NEXT:    pshufd {{.*#+}} xmm6 = xmm0[2,3,2,3]
-; SSE-NEXT:    cvtdq2pd %xmm6, %xmm6
+; SSE-NEXT:    cvtdq2pd %xmm6, %xmm8
 ; SSE-NEXT:    cvtdq2pd %xmm0, %xmm0
-; SSE-NEXT:    pshufd {{.*#+}} xmm7 = xmm1[2,3,2,3]
-; SSE-NEXT:    cvtdq2pd %xmm7, %xmm7
-; SSE-NEXT:    cvtdq2pd %xmm1, %xmm8
+; SSE-NEXT:    pshufd {{.*#+}} xmm6 = xmm1[2,3,2,3]
+; SSE-NEXT:    cvtdq2pd %xmm6, %xmm6
+; SSE-NEXT:    cvtdq2pd %xmm1, %xmm7
 ; SSE-NEXT:    addpd %xmm2, %xmm0
-; SSE-NEXT:    addpd %xmm3, %xmm6
-; SSE-NEXT:    addpd %xmm4, %xmm8
-; SSE-NEXT:    addpd %xmm5, %xmm7
-; SSE-NEXT:    movapd %xmm6, %xmm1
-; SSE-NEXT:    movapd %xmm8, %xmm2
-; SSE-NEXT:    movapd %xmm7, %xmm3
+; SSE-NEXT:    addpd %xmm3, %xmm8
+; SSE-NEXT:    addpd %xmm4, %xmm7
+; SSE-NEXT:    addpd %xmm5, %xmm6
+; SSE-NEXT:    movapd %xmm8, %xmm1
+; SSE-NEXT:    movapd %xmm7, %xmm2
+; SSE-NEXT:    movapd %xmm6, %xmm3
 ; SSE-NEXT:    retq
 ;
 ; AVX1OR2-LABEL: concat_sitofp_v8f64_v4i32:

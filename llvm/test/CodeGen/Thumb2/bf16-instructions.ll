@@ -1029,18 +1029,18 @@ define bfloat @test_phi(ptr %p1) {
 ; CHECK-NOFP:       @ %bb.0: @ %entry
 ; CHECK-NOFP-NEXT:    .save {r4, r5, r6, lr}
 ; CHECK-NOFP-NEXT:    push {r4, r5, r6, lr}
-; CHECK-NOFP-NEXT:    ldrh r6, [r0]
+; CHECK-NOFP-NEXT:    ldrh r5, [r0]
 ; CHECK-NOFP-NEXT:    mov r4, r0
 ; CHECK-NOFP-NEXT:  .LBB36_1: @ %loop
 ; CHECK-NOFP-NEXT:    @ =>This Inner Loop Header: Depth=1
 ; CHECK-NOFP-NEXT:    mov r0, r4
-; CHECK-NOFP-NEXT:    mov r5, r6
-; CHECK-NOFP-NEXT:    ldrh r6, [r4]
+; CHECK-NOFP-NEXT:    mov r6, r5
+; CHECK-NOFP-NEXT:    ldrh r5, [r4]
 ; CHECK-NOFP-NEXT:    bl test_dummy
 ; CHECK-NOFP-NEXT:    lsls r0, r0, #31
 ; CHECK-NOFP-NEXT:    bne .LBB36_1
 ; CHECK-NOFP-NEXT:  @ %bb.2: @ %return
-; CHECK-NOFP-NEXT:    mov r0, r5
+; CHECK-NOFP-NEXT:    mov r0, r6
 ; CHECK-NOFP-NEXT:    pop {r4, r5, r6, pc}
 ;
 ; CHECK-FP-LABEL: test_phi:

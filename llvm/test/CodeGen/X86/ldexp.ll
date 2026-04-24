@@ -92,38 +92,38 @@ define <2 x float> @ldexp_v2f32(<2 x float> %val, <2 x i32> %exp) nounwind {
 ; WIN64-NEXT:    movaps %xmm7, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; WIN64-NEXT:    movaps %xmm6, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; WIN64-NEXT:    movq %rdx, %rsi
-; WIN64-NEXT:    movaps (%rcx), %xmm7
+; WIN64-NEXT:    movaps (%rcx), %xmm6
 ; WIN64-NEXT:    movl 12(%rdx), %edx
-; WIN64-NEXT:    movaps %xmm7, %xmm0
-; WIN64-NEXT:    shufps {{.*#+}} xmm0 = xmm0[3,3],xmm7[3,3]
+; WIN64-NEXT:    movaps %xmm6, %xmm0
+; WIN64-NEXT:    shufps {{.*#+}} xmm0 = xmm0[3,3],xmm6[3,3]
 ; WIN64-NEXT:    cvtss2sd %xmm0, %xmm0
 ; WIN64-NEXT:    callq ldexp
-; WIN64-NEXT:    xorps %xmm6, %xmm6
-; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm6
+; WIN64-NEXT:    xorps %xmm7, %xmm7
+; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm7
 ; WIN64-NEXT:    movl 8(%rsi), %edx
-; WIN64-NEXT:    movaps %xmm7, %xmm0
-; WIN64-NEXT:    unpckhpd {{.*#+}} xmm0 = xmm0[1],xmm7[1]
+; WIN64-NEXT:    movaps %xmm6, %xmm0
+; WIN64-NEXT:    unpckhpd {{.*#+}} xmm0 = xmm0[1],xmm6[1]
 ; WIN64-NEXT:    cvtss2sd %xmm0, %xmm0
 ; WIN64-NEXT:    callq ldexp
 ; WIN64-NEXT:    xorps %xmm8, %xmm8
 ; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm8
-; WIN64-NEXT:    unpcklps {{.*#+}} xmm8 = xmm8[0],xmm6[0],xmm8[1],xmm6[1]
+; WIN64-NEXT:    unpcklps {{.*#+}} xmm8 = xmm8[0],xmm7[0],xmm8[1],xmm7[1]
 ; WIN64-NEXT:    movl (%rsi), %edx
 ; WIN64-NEXT:    movl 4(%rsi), %esi
 ; WIN64-NEXT:    xorps %xmm0, %xmm0
-; WIN64-NEXT:    cvtss2sd %xmm7, %xmm0
+; WIN64-NEXT:    cvtss2sd %xmm6, %xmm0
 ; WIN64-NEXT:    callq ldexp
-; WIN64-NEXT:    xorps %xmm6, %xmm6
-; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm6
-; WIN64-NEXT:    shufps {{.*#+}} xmm7 = xmm7[1,1,1,1]
+; WIN64-NEXT:    xorps %xmm7, %xmm7
+; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm7
+; WIN64-NEXT:    shufps {{.*#+}} xmm6 = xmm6[1,1,1,1]
 ; WIN64-NEXT:    xorps %xmm0, %xmm0
-; WIN64-NEXT:    cvtss2sd %xmm7, %xmm0
+; WIN64-NEXT:    cvtss2sd %xmm6, %xmm0
 ; WIN64-NEXT:    movl %esi, %edx
 ; WIN64-NEXT:    callq ldexp
 ; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm0
-; WIN64-NEXT:    unpcklps {{.*#+}} xmm6 = xmm6[0],xmm0[0],xmm6[1],xmm0[1]
-; WIN64-NEXT:    movlhps {{.*#+}} xmm6 = xmm6[0],xmm8[0]
-; WIN64-NEXT:    movaps %xmm6, %xmm0
+; WIN64-NEXT:    unpcklps {{.*#+}} xmm7 = xmm7[0],xmm0[0],xmm7[1],xmm0[1]
+; WIN64-NEXT:    movlhps {{.*#+}} xmm7 = xmm7[0],xmm8[0]
+; WIN64-NEXT:    movaps %xmm7, %xmm0
 ; WIN64-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm6 # 16-byte Reload
 ; WIN64-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm7 # 16-byte Reload
 ; WIN64-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm8 # 16-byte Reload
@@ -203,38 +203,38 @@ define <4 x float> @ldexp_v4f32(<4 x float> %val, <4 x i32> %exp) nounwind {
 ; WIN64-NEXT:    movaps %xmm7, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; WIN64-NEXT:    movaps %xmm6, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; WIN64-NEXT:    movq %rdx, %rsi
-; WIN64-NEXT:    movaps (%rcx), %xmm7
+; WIN64-NEXT:    movaps (%rcx), %xmm6
 ; WIN64-NEXT:    movl 12(%rdx), %edx
-; WIN64-NEXT:    movaps %xmm7, %xmm0
-; WIN64-NEXT:    shufps {{.*#+}} xmm0 = xmm0[3,3],xmm7[3,3]
+; WIN64-NEXT:    movaps %xmm6, %xmm0
+; WIN64-NEXT:    shufps {{.*#+}} xmm0 = xmm0[3,3],xmm6[3,3]
 ; WIN64-NEXT:    cvtss2sd %xmm0, %xmm0
 ; WIN64-NEXT:    callq ldexp
-; WIN64-NEXT:    xorps %xmm6, %xmm6
-; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm6
+; WIN64-NEXT:    xorps %xmm7, %xmm7
+; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm7
 ; WIN64-NEXT:    movl 8(%rsi), %edx
-; WIN64-NEXT:    movaps %xmm7, %xmm0
-; WIN64-NEXT:    unpckhpd {{.*#+}} xmm0 = xmm0[1],xmm7[1]
+; WIN64-NEXT:    movaps %xmm6, %xmm0
+; WIN64-NEXT:    unpckhpd {{.*#+}} xmm0 = xmm0[1],xmm6[1]
 ; WIN64-NEXT:    cvtss2sd %xmm0, %xmm0
 ; WIN64-NEXT:    callq ldexp
 ; WIN64-NEXT:    xorps %xmm8, %xmm8
 ; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm8
-; WIN64-NEXT:    unpcklps {{.*#+}} xmm8 = xmm8[0],xmm6[0],xmm8[1],xmm6[1]
+; WIN64-NEXT:    unpcklps {{.*#+}} xmm8 = xmm8[0],xmm7[0],xmm8[1],xmm7[1]
 ; WIN64-NEXT:    movl (%rsi), %edx
 ; WIN64-NEXT:    movl 4(%rsi), %esi
 ; WIN64-NEXT:    xorps %xmm0, %xmm0
-; WIN64-NEXT:    cvtss2sd %xmm7, %xmm0
+; WIN64-NEXT:    cvtss2sd %xmm6, %xmm0
 ; WIN64-NEXT:    callq ldexp
-; WIN64-NEXT:    xorps %xmm6, %xmm6
-; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm6
-; WIN64-NEXT:    shufps {{.*#+}} xmm7 = xmm7[1,1,1,1]
+; WIN64-NEXT:    xorps %xmm7, %xmm7
+; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm7
+; WIN64-NEXT:    shufps {{.*#+}} xmm6 = xmm6[1,1,1,1]
 ; WIN64-NEXT:    xorps %xmm0, %xmm0
-; WIN64-NEXT:    cvtss2sd %xmm7, %xmm0
+; WIN64-NEXT:    cvtss2sd %xmm6, %xmm0
 ; WIN64-NEXT:    movl %esi, %edx
 ; WIN64-NEXT:    callq ldexp
 ; WIN64-NEXT:    cvtsd2ss %xmm0, %xmm0
-; WIN64-NEXT:    unpcklps {{.*#+}} xmm6 = xmm6[0],xmm0[0],xmm6[1],xmm0[1]
-; WIN64-NEXT:    movlhps {{.*#+}} xmm6 = xmm6[0],xmm8[0]
-; WIN64-NEXT:    movaps %xmm6, %xmm0
+; WIN64-NEXT:    unpcklps {{.*#+}} xmm7 = xmm7[0],xmm0[0],xmm7[1],xmm0[1]
+; WIN64-NEXT:    movlhps {{.*#+}} xmm7 = xmm7[0],xmm8[0]
+; WIN64-NEXT:    movaps %xmm7, %xmm0
 ; WIN64-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm6 # 16-byte Reload
 ; WIN64-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm7 # 16-byte Reload
 ; WIN64-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm8 # 16-byte Reload
@@ -376,13 +376,15 @@ define <4 x double> @ldexp_v4f64(<4 x double> %val, <4 x i32> %exp) nounwind {
 ; X64-NEXT:    pushq %rbx
 ; X64-NEXT:    subq $72, %rsp
 ; X64-NEXT:    movaps %xmm1, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; X64-NEXT:    movaps %xmm0, %xmm1
 ; X64-NEXT:    movaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; X64-NEXT:    movdqa %xmm2, (%rsp) # 16-byte Spill
-; X64-NEXT:    pshufd {{.*#+}} xmm1 = xmm2[2,3,2,3]
-; X64-NEXT:    movd %xmm1, %ebx
-; X64-NEXT:    pshufd {{.*#+}} xmm1 = xmm2[3,3,3,3]
-; X64-NEXT:    movd %xmm1, %ebp
+; X64-NEXT:    pshufd {{.*#+}} xmm0 = xmm2[2,3,2,3]
+; X64-NEXT:    movd %xmm0, %ebx
+; X64-NEXT:    pshufd {{.*#+}} xmm0 = xmm2[3,3,3,3]
+; X64-NEXT:    movd %xmm0, %ebp
 ; X64-NEXT:    movd %xmm2, %edi
+; X64-NEXT:    movaps %xmm1, %xmm0
 ; X64-NEXT:    callq ldexp@PLT
 ; X64-NEXT:    movaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; X64-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
@@ -422,29 +424,29 @@ define <4 x double> @ldexp_v4f64(<4 x double> %val, <4 x i32> %exp) nounwind {
 ; WIN64-NEXT:    movaps %xmm6, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
 ; WIN64-NEXT:    movl 12(%r8), %esi
 ; WIN64-NEXT:    movl 8(%r8), %edi
-; WIN64-NEXT:    movaps (%rdx), %xmm6
-; WIN64-NEXT:    movaps (%rcx), %xmm7
+; WIN64-NEXT:    movaps (%rdx), %xmm7
+; WIN64-NEXT:    movaps (%rcx), %xmm6
 ; WIN64-NEXT:    movl (%r8), %edx
 ; WIN64-NEXT:    movl 4(%r8), %ebx
-; WIN64-NEXT:    movaps %xmm7, %xmm0
+; WIN64-NEXT:    movaps %xmm6, %xmm0
 ; WIN64-NEXT:    callq ldexp
 ; WIN64-NEXT:    movaps %xmm0, %xmm8
-; WIN64-NEXT:    movhlps {{.*#+}} xmm7 = xmm7[1,1]
-; WIN64-NEXT:    movaps %xmm7, %xmm0
+; WIN64-NEXT:    movhlps {{.*#+}} xmm6 = xmm6[1,1]
+; WIN64-NEXT:    movaps %xmm6, %xmm0
 ; WIN64-NEXT:    movl %ebx, %edx
 ; WIN64-NEXT:    callq ldexp
 ; WIN64-NEXT:    movlhps {{.*#+}} xmm8 = xmm8[0],xmm0[0]
-; WIN64-NEXT:    movaps %xmm6, %xmm0
+; WIN64-NEXT:    movaps %xmm7, %xmm0
 ; WIN64-NEXT:    movl %edi, %edx
 ; WIN64-NEXT:    callq ldexp
-; WIN64-NEXT:    movaps %xmm0, %xmm7
-; WIN64-NEXT:    movhlps {{.*#+}} xmm6 = xmm6[1,1]
-; WIN64-NEXT:    movaps %xmm6, %xmm0
+; WIN64-NEXT:    movaps %xmm0, %xmm6
+; WIN64-NEXT:    movhlps {{.*#+}} xmm7 = xmm7[1,1]
+; WIN64-NEXT:    movaps %xmm7, %xmm0
 ; WIN64-NEXT:    movl %esi, %edx
 ; WIN64-NEXT:    callq ldexp
-; WIN64-NEXT:    movlhps {{.*#+}} xmm7 = xmm7[0],xmm0[0]
+; WIN64-NEXT:    movlhps {{.*#+}} xmm6 = xmm6[0],xmm0[0]
 ; WIN64-NEXT:    movaps %xmm8, %xmm0
-; WIN64-NEXT:    movaps %xmm7, %xmm1
+; WIN64-NEXT:    movaps %xmm6, %xmm1
 ; WIN64-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm6 # 16-byte Reload
 ; WIN64-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm7 # 16-byte Reload
 ; WIN64-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm8 # 16-byte Reload

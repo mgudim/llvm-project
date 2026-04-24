@@ -17,26 +17,26 @@ define weak arm_aapcs_vfpcc i32 @_ZNKSs7compareERKSs(ptr %this, ptr %__str) {
 ; P01-NEXT:    .save {r4, r5, r6, r7, r8, lr}
 ; P01-NEXT:    push.w {r4, r5, r6, r7, r8, lr}
 ; P01-NEXT:    mov r8, r1
-; P01-NEXT:    mov r5, r0
+; P01-NEXT:    mov r6, r0
 ; P01-NEXT:    bl _ZNKSs4sizeEv
-; P01-NEXT:    mov r4, r0
+; P01-NEXT:    mov r7, r0
 ; P01-NEXT:    mov r0, r8
 ; P01-NEXT:    bl _ZNKSs4sizeEv
-; P01-NEXT:    mov r6, r4
-; P01-NEXT:    cmp r4, r0
-; P01-NEXT:    mov r7, r0
+; P01-NEXT:    mov r5, r7
+; P01-NEXT:    cmp r7, r0
+; P01-NEXT:    mov r4, r0
 ; P01-NEXT:    it hi
-; P01-NEXT:    movhi r6, r0
-; P01-NEXT:    mov r0, r5
+; P01-NEXT:    movhi r5, r0
+; P01-NEXT:    mov r0, r6
 ; P01-NEXT:    bl _ZNKSs7_M_dataEv
-; P01-NEXT:    mov r5, r0
+; P01-NEXT:    mov r6, r0
 ; P01-NEXT:    mov r0, r8
 ; P01-NEXT:    bl _ZNKSs4dataEv
 ; P01-NEXT:    mov r1, r0
-; P01-NEXT:    mov r0, r5
-; P01-NEXT:    mov r2, r6
+; P01-NEXT:    mov r0, r6
+; P01-NEXT:    mov r2, r5
 ; P01-NEXT:    bl memcmp
-; P01-NEXT:    subs r1, r4, r7
+; P01-NEXT:    subs r1, r7, r4
 ; P01-NEXT:    cmp r0, #0
 ; P01-NEXT:    it eq
 ; P01-NEXT:    moveq r0, r1

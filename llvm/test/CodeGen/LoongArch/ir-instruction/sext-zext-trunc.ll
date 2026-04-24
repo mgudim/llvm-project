@@ -75,15 +75,15 @@ define i64 @sext_i1_to_i64(i1 %a) {
 ; LA32R-LABEL: sext_i1_to_i64:
 ; LA32R:       # %bb.0:
 ; LA32R-NEXT:    andi $a0, $a0, 1
-; LA32R-NEXT:    sub.w $a0, $zero, $a0
-; LA32R-NEXT:    move $a1, $a0
+; LA32R-NEXT:    sub.w $a1, $zero, $a0
+; LA32R-NEXT:    move $a0, $a1
 ; LA32R-NEXT:    ret
 ;
 ; LA32S-LABEL: sext_i1_to_i64:
 ; LA32S:       # %bb.0:
 ; LA32S-NEXT:    andi $a0, $a0, 1
-; LA32S-NEXT:    sub.w $a0, $zero, $a0
-; LA32S-NEXT:    move $a1, $a0
+; LA32S-NEXT:    sub.w $a1, $zero, $a0
+; LA32S-NEXT:    move $a0, $a1
 ; LA32S-NEXT:    ret
 ;
 ; LA64-LABEL: sext_i1_to_i64:

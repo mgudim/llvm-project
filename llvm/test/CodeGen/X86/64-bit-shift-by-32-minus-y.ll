@@ -338,19 +338,20 @@ define i64 @t5_cse(i64 %val, i64 %shamt, ptr%dst) nounwind {
 ; X86-BMI2-NEXT:    pushl %esi
 ; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %eax
 ; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %edx
-; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %ecx
-; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %ebx
 ; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %esi
-; X86-BMI2-NEXT:    movl %ebx, %edi
-; X86-BMI2-NEXT:    addl $32, %edi
-; X86-BMI2-NEXT:    adcl $0, %esi
-; X86-BMI2-NEXT:    movl %edi, (%ecx)
-; X86-BMI2-NEXT:    movl %esi, 4(%ecx)
-; X86-BMI2-NEXT:    movb $32, %cl
-; X86-BMI2-NEXT:    subb %bl, %cl
+; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %ecx
+; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %edi
+; X86-BMI2-NEXT:    movl %ecx, %ebx
+; X86-BMI2-NEXT:    addl $32, %ebx
+; X86-BMI2-NEXT:    adcl $0, %edi
+; X86-BMI2-NEXT:    movl %ebx, (%esi)
+; X86-BMI2-NEXT:    movl %edi, 4(%esi)
+; X86-BMI2-NEXT:    movb $32, %bl
+; X86-BMI2-NEXT:    subb %cl, %bl
+; X86-BMI2-NEXT:    movl %ebx, %ecx
 ; X86-BMI2-NEXT:    shldl %cl, %eax, %edx
-; X86-BMI2-NEXT:    shlxl %ecx, %eax, %eax
-; X86-BMI2-NEXT:    testb $32, %cl
+; X86-BMI2-NEXT:    shlxl %ebx, %eax, %eax
+; X86-BMI2-NEXT:    testb $32, %bl
 ; X86-BMI2-NEXT:    je .LBB5_2
 ; X86-BMI2-NEXT:  # %bb.1:
 ; X86-BMI2-NEXT:    movl %eax, %edx

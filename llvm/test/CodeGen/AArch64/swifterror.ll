@@ -669,14 +669,14 @@ define void @foo_sret(ptr sret(%struct.S) %agg.result, i32 %val1, ptr swifterror
 ; CHECK-APPLE-NEXT:    .cfi_offset w29, -16
 ; CHECK-APPLE-NEXT:    .cfi_offset w19, -24
 ; CHECK-APPLE-NEXT:    .cfi_offset w20, -32
-; CHECK-APPLE-NEXT:    mov w19, w0
-; CHECK-APPLE-NEXT:    mov x20, x8
+; CHECK-APPLE-NEXT:    mov w20, w0
+; CHECK-APPLE-NEXT:    mov x19, x8
 ; CHECK-APPLE-NEXT:    mov w0, #16 ; =0x10
 ; CHECK-APPLE-NEXT:    bl _malloc
 ; CHECK-APPLE-NEXT:    mov w8, #1 ; =0x1
 ; CHECK-APPLE-NEXT:    strb w8, [x0, #8]
 ; CHECK-APPLE-NEXT:    mov x21, x0
-; CHECK-APPLE-NEXT:    str w19, [x20, #4]
+; CHECK-APPLE-NEXT:    str w20, [x19, #4]
 ; CHECK-APPLE-NEXT:    ldp x29, x30, [sp, #16] ; 16-byte Folded Reload
 ; CHECK-APPLE-NEXT:    ldp x20, x19, [sp], #32 ; 16-byte Folded Reload
 ; CHECK-APPLE-NEXT:    ret

@@ -9,8 +9,9 @@ define i32 @and_signbit_select_shl(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    and w8, w0, #0xff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsl w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsl w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = and i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -24,8 +25,9 @@ define i32 @and_nosignbit_select_shl(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    and w8, w0, #0xff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsl w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsl w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = and i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -40,8 +42,9 @@ define i32 @or_signbit_select_shl(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    orr w8, w0, #0xff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsl w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsl w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = or i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -55,8 +58,9 @@ define i32 @or_nosignbit_select_shl(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    orr w8, w0, #0xff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsl w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsl w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = or i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -71,8 +75,9 @@ define i32 @xor_signbit_select_shl(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    eor w8, w0, #0xff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsl w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsl w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = xor i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -86,8 +91,9 @@ define i32 @xor_nosignbit_select_shl(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    eor w8, w0, #0xff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsl w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsl w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = xor i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -102,8 +108,9 @@ define i32 @add_signbit_select_shl(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    sub w8, w0, #16, lsl #12 // =65536
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsl w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsl w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = add i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -114,12 +121,13 @@ define i32 @add_signbit_select_shl(i32 %x, i1 %cond, ptr %dst) {
 define i32 @add_nosignbit_select_shl(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-LABEL: add_nosignbit_select_shl:
 ; CHECK:       // %bb.0:
-; CHECK-NEXT:    mov w8, #2147418112
+; CHECK-NEXT:    mov w8, #2147418112 // =0x7fff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    add w8, w0, w8
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsl w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsl w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = add i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -136,8 +144,9 @@ define i32 @and_signbit_select_lshr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    and w8, w0, #0xffff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = and i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -151,8 +160,9 @@ define i32 @and_nosignbit_select_lshr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    and w8, w0, #0x7fff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = and i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -167,8 +177,9 @@ define i32 @or_signbit_select_lshr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    orr w8, w0, #0xffff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = or i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -182,8 +193,9 @@ define i32 @or_nosignbit_select_lshr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    orr w8, w0, #0x7fff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = or i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -198,8 +210,9 @@ define i32 @xor_signbit_select_lshr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    eor w8, w0, #0xffff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = xor i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -213,8 +226,9 @@ define i32 @xor_nosignbit_select_lshr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    eor w8, w0, #0x7fff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = xor i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -229,8 +243,9 @@ define i32 @add_signbit_select_lshr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    sub w8, w0, #16, lsl #12 // =65536
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = add i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -241,12 +256,13 @@ define i32 @add_signbit_select_lshr(i32 %x, i1 %cond, ptr %dst) {
 define i32 @add_nosignbit_select_lshr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-LABEL: add_nosignbit_select_lshr:
 ; CHECK:       // %bb.0:
-; CHECK-NEXT:    mov w8, #2147418112
+; CHECK-NEXT:    mov w8, #2147418112 // =0x7fff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    add w8, w0, w8
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    lsr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    lsr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = add i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -263,8 +279,9 @@ define i32 @and_signbit_select_ashr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    and w8, w0, #0xffff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    asr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    asr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = and i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -278,8 +295,9 @@ define i32 @and_nosignbit_select_ashr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    and w8, w0, #0x7fff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    asr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    asr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = and i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -294,8 +312,9 @@ define i32 @or_signbit_select_ashr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    orr w8, w0, #0xffff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    asr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    asr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = or i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -309,8 +328,9 @@ define i32 @or_nosignbit_select_ashr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    orr w8, w0, #0x7fff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    asr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    asr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = or i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -325,8 +345,9 @@ define i32 @xor_signbit_select_ashr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    eor w8, w0, #0xffff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    asr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    asr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = xor i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -340,8 +361,9 @@ define i32 @xor_nosignbit_select_ashr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    eor w8, w0, #0x7fff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    asr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    asr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = xor i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -356,8 +378,9 @@ define i32 @add_signbit_select_ashr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-NEXT:    sub w8, w0, #16, lsl #12 // =65536
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    asr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    asr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = add i32 %x, 4294901760 ; 0xFFFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x
@@ -368,12 +391,13 @@ define i32 @add_signbit_select_ashr(i32 %x, i1 %cond, ptr %dst) {
 define i32 @add_nosignbit_select_ashr(i32 %x, i1 %cond, ptr %dst) {
 ; CHECK-LABEL: add_nosignbit_select_ashr:
 ; CHECK:       // %bb.0:
-; CHECK-NEXT:    mov w8, #2147418112
+; CHECK-NEXT:    mov w8, #2147418112 // =0x7fff0000
 ; CHECK-NEXT:    tst w1, #0x1
 ; CHECK-NEXT:    add w8, w0, w8
 ; CHECK-NEXT:    csel w8, w8, w0, ne
-; CHECK-NEXT:    asr w0, w8, #8
-; CHECK-NEXT:    str w0, [x2]
+; CHECK-NEXT:    asr w8, w8, #8
+; CHECK-NEXT:    mov w0, w8
+; CHECK-NEXT:    str w8, [x2]
 ; CHECK-NEXT:    ret
   %t0 = add i32 %x, 2147418112 ; 0x7FFF0000
   %t1 = select i1 %cond, i32 %t0, i32 %x

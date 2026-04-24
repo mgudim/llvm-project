@@ -181,14 +181,14 @@ define void @v4f16_arg(<4 x half> %arg, ptr %ptr) #0 {
 ; NOFP16-NEXT:    vmov r0, s16
 ; NOFP16-NEXT:    bl __gnu_f2h_ieee
 ; NOFP16-NEXT:    vmov r1, s19
-; NOFP16-NEXT:    pkhbt r5, r0, r4, lsl #16
+; NOFP16-NEXT:    pkhbt r4, r0, r4, lsl #16
 ; NOFP16-NEXT:    mov r0, r1
 ; NOFP16-NEXT:    bl __gnu_f2h_ieee
-; NOFP16-NEXT:    mov r4, r0
+; NOFP16-NEXT:    mov r5, r0
 ; NOFP16-NEXT:    vmov r0, s18
 ; NOFP16-NEXT:    bl __gnu_f2h_ieee
-; NOFP16-NEXT:    pkhbt r0, r0, r4, lsl #16
-; NOFP16-NEXT:    vmov d16, r0, r5
+; NOFP16-NEXT:    pkhbt r0, r0, r5, lsl #16
+; NOFP16-NEXT:    vmov d16, r0, r4
 ; NOFP16-NEXT:    vmov.u16 r0, d16[0]
 ; NOFP16-NEXT:    vmov.u16 r1, d16[1]
 ; NOFP16-NEXT:    vmov.u16 r2, d16[2]

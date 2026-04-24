@@ -83,8 +83,8 @@ define i32 @test2(ptr %ptr) {
 ; THUMBONE-LABEL: test2:
 ; THUMBONE:       @ %bb.0:
 ; THUMBONE-NEXT:    push {r7, lr}
-; THUMBONE-NEXT:    movs r1, #0
-; THUMBONE-NEXT:    mov r2, r1
+; THUMBONE-NEXT:    movs r2, #0
+; THUMBONE-NEXT:    mov r1, r2
 ; THUMBONE-NEXT:    bl __sync_val_compare_and_swap_4
 ; THUMBONE-NEXT:    pop {r7, pc}
 ;
@@ -200,8 +200,8 @@ define void @test4(ptr %ptr1, ptr %ptr2) {
 ; THUMBONE:       @ %bb.0:
 ; THUMBONE-NEXT:    push {r4, lr}
 ; THUMBONE-NEXT:    mov r4, r1
-; THUMBONE-NEXT:    movs r1, #0
-; THUMBONE-NEXT:    mov r2, r1
+; THUMBONE-NEXT:    movs r2, #0
+; THUMBONE-NEXT:    mov r1, r2
 ; THUMBONE-NEXT:    bl __sync_val_compare_and_swap_1
 ; THUMBONE-NEXT:    mov r1, r0
 ; THUMBONE-NEXT:    mov r0, r4
@@ -272,10 +272,10 @@ define i64 @test_old_load_64bit(ptr %p) {
 ; THUMBONE:       @ %bb.0:
 ; THUMBONE-NEXT:    push {r7, lr}
 ; THUMBONE-NEXT:    sub sp, #8
-; THUMBONE-NEXT:    movs r2, #0
-; THUMBONE-NEXT:    str r2, [sp]
-; THUMBONE-NEXT:    str r2, [sp, #4]
-; THUMBONE-NEXT:    mov r3, r2
+; THUMBONE-NEXT:    movs r3, #0
+; THUMBONE-NEXT:    str r3, [sp]
+; THUMBONE-NEXT:    str r3, [sp, #4]
+; THUMBONE-NEXT:    mov r2, r3
 ; THUMBONE-NEXT:    bl __sync_val_compare_and_swap_8
 ; THUMBONE-NEXT:    add sp, #8
 ; THUMBONE-NEXT:    pop {r7, pc}
@@ -324,17 +324,17 @@ define void @test_old_store_64bit(ptr %p, i64 %v) {
 ;
 ; ARMOPTNONE-LABEL: test_old_store_64bit:
 ; ARMOPTNONE:       @ %bb.0:
-; ARMOPTNONE-NEXT:    push	{r4, r5, r7, r8, r10, r11, lr}
-; ARMOPTNONE-NEXT:    add	r7, sp, #20
-; ARMOPTNONE-NEXT:    sub	sp, sp, #24
-; ARMOPTNONE-NEXT:    str	r0, [sp, #4] @ 4-byte Spill
-; ARMOPTNONE-NEXT:    str	r2, [sp, #8] @ 4-byte Spill
-; ARMOPTNONE-NEXT:    str	r1, [sp, #12] @ 4-byte Spill
-; ARMOPTNONE-NEXT:    dmb	ish
-; ARMOPTNONE-NEXT:    ldr	r1, [r0]
-; ARMOPTNONE-NEXT:    ldr	r0, [r0, #4]
-; ARMOPTNONE-NEXT:    str	r1, [sp, #16] @ 4-byte Spill
-; ARMOPTNONE-NEXT:    str	r0, [sp, #20] @ 4-byte Spill
+; ARMOPTNONE-NEXT:    push {r4, r5, r7, r8, r10, r11, lr}
+; ARMOPTNONE-NEXT:    add r7, sp, #20
+; ARMOPTNONE-NEXT:    sub sp, sp, #24
+; ARMOPTNONE-NEXT:    str r0, [sp, #4] @ 4-byte Spill
+; ARMOPTNONE-NEXT:    str r2, [sp, #8] @ 4-byte Spill
+; ARMOPTNONE-NEXT:    str r1, [sp, #12] @ 4-byte Spill
+; ARMOPTNONE-NEXT:    dmb ish
+; ARMOPTNONE-NEXT:    ldr r1, [r0]
+; ARMOPTNONE-NEXT:    ldr r0, [r0, #4]
+; ARMOPTNONE-NEXT:    str r1, [sp, #16] @ 4-byte Spill
+; ARMOPTNONE-NEXT:    str r0, [sp, #20] @ 4-byte Spill
 ; ARMOPTNONE-NEXT:    b LBB5_1
 ; ARMOPTNONE-NEXT:  LBB5_1: @ %atomicrmw.start
 ; ARMOPTNONE-NEXT:    @ =>This Loop Header: Depth=1
@@ -381,7 +381,7 @@ define void @test_old_store_64bit(ptr %p, i64 %v) {
 ; ARMOPTNONE-NEXT:  LBB5_5: @ %atomicrmw.end
 ; ARMOPTNONE-NEXT:    dmb ish
 ; ARMOPTNONE-NEXT:    sub sp, r7, #20
-; ARMOPTNONE-NEXT:    pop	{r4, r5, r7, r8, r10, r11, pc}
+; ARMOPTNONE-NEXT:    pop {r4, r5, r7, r8, r10, r11, pc}
 ;
 ; THUMBTWO-LABEL: test_old_store_64bit:
 ; THUMBTWO:       @ %bb.0:
@@ -466,8 +466,8 @@ define half @load_atomic_f16__seq_cst(ptr %ptr) {
 ; THUMBONE-LABEL: load_atomic_f16__seq_cst:
 ; THUMBONE:       @ %bb.0:
 ; THUMBONE-NEXT:    push {r7, lr}
-; THUMBONE-NEXT:    movs r1, #0
-; THUMBONE-NEXT:    mov r2, r1
+; THUMBONE-NEXT:    movs r2, #0
+; THUMBONE-NEXT:    mov r1, r2
 ; THUMBONE-NEXT:    bl __sync_val_compare_and_swap_2
 ; THUMBONE-NEXT:    pop {r7, pc}
 ;
@@ -517,8 +517,8 @@ define bfloat @load_atomic_bf16__seq_cst(ptr %ptr) {
 ; THUMBONE-LABEL: load_atomic_bf16__seq_cst:
 ; THUMBONE:       @ %bb.0:
 ; THUMBONE-NEXT:    push {r7, lr}
-; THUMBONE-NEXT:    movs r1, #0
-; THUMBONE-NEXT:    mov r2, r1
+; THUMBONE-NEXT:    movs r2, #0
+; THUMBONE-NEXT:    mov r1, r2
 ; THUMBONE-NEXT:    bl __sync_val_compare_and_swap_2
 ; THUMBONE-NEXT:    pop {r7, pc}
 ;
@@ -569,8 +569,8 @@ define float @load_atomic_f32__seq_cst(ptr %ptr) {
 ; THUMBONE-LABEL: load_atomic_f32__seq_cst:
 ; THUMBONE:       @ %bb.0:
 ; THUMBONE-NEXT:    push {r7, lr}
-; THUMBONE-NEXT:    movs r1, #0
-; THUMBONE-NEXT:    mov r2, r1
+; THUMBONE-NEXT:    movs r2, #0
+; THUMBONE-NEXT:    mov r1, r2
 ; THUMBONE-NEXT:    bl __sync_val_compare_and_swap_4
 ; THUMBONE-NEXT:    pop {r7, pc}
 ;
@@ -627,10 +627,10 @@ define double @load_atomic_f64__seq_cst(ptr %ptr) {
 ; THUMBONE:       @ %bb.0:
 ; THUMBONE-NEXT:    push {r7, lr}
 ; THUMBONE-NEXT:    sub sp, #8
-; THUMBONE-NEXT:    movs r2, #0
-; THUMBONE-NEXT:    str r2, [sp]
-; THUMBONE-NEXT:    str r2, [sp, #4]
-; THUMBONE-NEXT:    mov r3, r2
+; THUMBONE-NEXT:    movs r3, #0
+; THUMBONE-NEXT:    str r3, [sp]
+; THUMBONE-NEXT:    str r3, [sp, #4]
+; THUMBONE-NEXT:    mov r2, r3
 ; THUMBONE-NEXT:    bl __sync_val_compare_and_swap_8
 ; THUMBONE-NEXT:    add sp, #8
 ; THUMBONE-NEXT:    pop {r7, pc}
@@ -862,19 +862,19 @@ define void @store_atomic_f64__seq_cst(ptr %ptr, double %val1) {
 ;
 ; ARMOPTNONE-LABEL: store_atomic_f64__seq_cst:
 ; ARMOPTNONE:       @ %bb.0:
-; ARMOPTNONE-NEXT:    push	{r4, r5, r7, r8, r10, r11, lr}
-; ARMOPTNONE-NEXT:    add	r7, sp, #20
-; ARMOPTNONE-NEXT:    sub	sp, sp, #24
-; ARMOPTNONE-NEXT:    str	r0, [sp, #4] @ 4-byte Spill
-; ARMOPTNONE-NEXT:    vmov	d16, r1, r2
-; ARMOPTNONE-NEXT:    vmov	r1, r2, d16
-; ARMOPTNONE-NEXT:    str	r2, [sp, #8] @ 4-byte Spill
-; ARMOPTNONE-NEXT:    str	r1, [sp, #12] @ 4-byte Spill
-; ARMOPTNONE-NEXT:    dmb	ish
-; ARMOPTNONE-NEXT:    ldr	r1, [r0]
-; ARMOPTNONE-NEXT:    ldr	r0, [r0, #4]
-; ARMOPTNONE-NEXT:    str	r1, [sp, #16] @ 4-byte Spill
-; ARMOPTNONE-NEXT:    str	r0, [sp, #20] @ 4-byte Spill
+; ARMOPTNONE-NEXT:    push {r4, r5, r7, r8, r10, r11, lr}
+; ARMOPTNONE-NEXT:    add r7, sp, #20
+; ARMOPTNONE-NEXT:    sub sp, sp, #24
+; ARMOPTNONE-NEXT:    str r0, [sp, #4] @ 4-byte Spill
+; ARMOPTNONE-NEXT:    vmov d16, r1, r2
+; ARMOPTNONE-NEXT:    vmov r1, r2, d16
+; ARMOPTNONE-NEXT:    str r2, [sp, #8] @ 4-byte Spill
+; ARMOPTNONE-NEXT:    str r1, [sp, #12] @ 4-byte Spill
+; ARMOPTNONE-NEXT:    dmb ish
+; ARMOPTNONE-NEXT:    ldr r1, [r0]
+; ARMOPTNONE-NEXT:    ldr r0, [r0, #4]
+; ARMOPTNONE-NEXT:    str r1, [sp, #16] @ 4-byte Spill
+; ARMOPTNONE-NEXT:    str r0, [sp, #20] @ 4-byte Spill
 ; ARMOPTNONE-NEXT:    b LBB13_1
 ; ARMOPTNONE-NEXT:  LBB13_1: @ %atomicrmw.start
 ; ARMOPTNONE-NEXT:    @ =>This Loop Header: Depth=1
@@ -921,7 +921,7 @@ define void @store_atomic_f64__seq_cst(ptr %ptr, double %val1) {
 ; ARMOPTNONE-NEXT:  LBB13_5: @ %atomicrmw.end
 ; ARMOPTNONE-NEXT:    dmb ish
 ; ARMOPTNONE-NEXT:    sub sp, r7, #20
-; ARMOPTNONE-NEXT:    pop	{r4, r5, r7, r8, r10, r11, pc}
+; ARMOPTNONE-NEXT:    pop {r4, r5, r7, r8, r10, r11, pc}
 ;
 ; THUMBTWO-LABEL: store_atomic_f64__seq_cst:
 ; THUMBTWO:       @ %bb.0:

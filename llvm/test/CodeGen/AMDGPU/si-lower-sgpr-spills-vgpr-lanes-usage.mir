@@ -51,7 +51,7 @@ body:             |
     ; SGPR_SPILLED-NEXT: $vgpr0 = COPY [[FLAT_LOAD_DWORD]]
     ; SGPR_SPILLED-NEXT: $sgpr4 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 3, implicit-def $sgpr4_sgpr5
     ; SGPR_SPILLED-NEXT: $sgpr5 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 4
-    ; SGPR_SPILLED-NEXT: dead $sgpr30_sgpr31 = SI_CALL killed renamable $sgpr4_sgpr5, 0, csr_amdgpu, implicit killed $vgpr0
+    ; SGPR_SPILLED-NEXT: dead $sgpr30_sgpr31 = SI_CALL killed renamable $sgpr4_sgpr5, 0, csr_amdgpu, implicit $vgpr0
     ; SGPR_SPILLED-NEXT: $sgpr32 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 0
     ; SGPR_SPILLED-NEXT: $sgpr2 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 1, implicit-def $sgpr2_sgpr3
     ; SGPR_SPILLED-NEXT: $sgpr3 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 2
@@ -115,7 +115,7 @@ body:             |
     ; SGPR_SPILLED-NEXT: $vgpr0 = COPY [[FLAT_LOAD_DWORD]]
     ; SGPR_SPILLED-NEXT: $sgpr4 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 3, implicit-def $sgpr4_sgpr5
     ; SGPR_SPILLED-NEXT: $sgpr5 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 4
-    ; SGPR_SPILLED-NEXT: dead $sgpr30_sgpr31 = SI_CALL killed renamable $sgpr4_sgpr5, 0, csr_amdgpu, implicit killed $vgpr0
+    ; SGPR_SPILLED-NEXT: dead $sgpr30_sgpr31 = SI_CALL killed renamable $sgpr4_sgpr5, 0, csr_amdgpu, implicit $vgpr0
     ; SGPR_SPILLED-NEXT: $sgpr32 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 0
     ; SGPR_SPILLED-NEXT: $sgpr2 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 1
     ; SGPR_SPILLED-NEXT: ADJCALLSTACKDOWN 0, 0, implicit-def $scc, implicit-def $sgpr32, implicit $sgpr32, implicit $sgpr32
@@ -177,7 +177,7 @@ body:             |
     ; SGPR_SPILLED-NEXT: $vgpr0 = COPY [[FLAT_LOAD_DWORD]]
     ; SGPR_SPILLED-NEXT: $sgpr4 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 3, implicit-def $sgpr4_sgpr5
     ; SGPR_SPILLED-NEXT: $sgpr5 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 4
-    ; SGPR_SPILLED-NEXT: dead $sgpr30_sgpr31 = SI_CALL killed renamable $sgpr4_sgpr5, 0, csr_amdgpu, implicit killed $vgpr0
+    ; SGPR_SPILLED-NEXT: dead $sgpr30_sgpr31 = SI_CALL killed renamable $sgpr4_sgpr5, 0, csr_amdgpu, implicit $vgpr0
     ; SGPR_SPILLED-NEXT: $sgpr32 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 0
     ; SGPR_SPILLED-NEXT: $sgpr2 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 1, implicit-def $sgpr2_sgpr3
     ; SGPR_SPILLED-NEXT: $sgpr3 = SI_RESTORE_S32_FROM_VGPR [[DEF]], 2

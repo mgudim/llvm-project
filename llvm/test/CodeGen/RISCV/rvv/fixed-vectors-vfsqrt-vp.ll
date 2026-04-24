@@ -18,11 +18,11 @@ define <2 x half> @vfsqrt_vv_v2f16(<2 x half> %va, <2 x i1> %m, i32 zeroext %evl
 ; ZVFHMIN-LABEL: vfsqrt_vv_v2f16:
 ; ZVFHMIN:       # %bb.0:
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e16, mf4, ta, ma
-; ZVFHMIN-NEXT:    vfwcvt.f.f.v v9, v8, v0.t
+; ZVFHMIN-NEXT:    vfwcvt.f.f.v v10, v8, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e32, mf2, ta, ma
-; ZVFHMIN-NEXT:    vfsqrt.v v9, v9, v0.t
+; ZVFHMIN-NEXT:    vfsqrt.v v10, v10, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e16, mf4, ta, ma
-; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v9, v0.t
+; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v10, v0.t
 ; ZVFHMIN-NEXT:    ret
   %v = call <2 x half> @llvm.vp.sqrt.v2f16(<2 x half> %va, <2 x i1> %m, i32 %evl)
   ret <2 x half> %v
@@ -58,11 +58,11 @@ define <4 x half> @vfsqrt_vv_v4f16(<4 x half> %va, <4 x i1> %m, i32 zeroext %evl
 ; ZVFHMIN-LABEL: vfsqrt_vv_v4f16:
 ; ZVFHMIN:       # %bb.0:
 ; ZVFHMIN-NEXT:    vsetvli zero, a0, e16, mf2, ta, ma
-; ZVFHMIN-NEXT:    vfwcvt.f.f.v v9, v8, v0.t
+; ZVFHMIN-NEXT:    vfwcvt.f.f.v v10, v8, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e32, m1, ta, ma
-; ZVFHMIN-NEXT:    vfsqrt.v v9, v9, v0.t
+; ZVFHMIN-NEXT:    vfsqrt.v v10, v10, v0.t
 ; ZVFHMIN-NEXT:    vsetvli zero, zero, e16, mf2, ta, ma
-; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v9, v0.t
+; ZVFHMIN-NEXT:    vfncvt.f.f.w v8, v10, v0.t
 ; ZVFHMIN-NEXT:    ret
   %v = call <4 x half> @llvm.vp.sqrt.v4f16(<4 x half> %va, <4 x i1> %m, i32 %evl)
   ret <4 x half> %v

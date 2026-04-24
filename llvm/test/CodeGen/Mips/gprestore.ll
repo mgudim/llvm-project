@@ -52,28 +52,30 @@ define void @f0() nounwind {
 ; N64-NEXT:    daddiu $sp, $sp, -32
 ; N64-NEXT:    sd $ra, 24($sp) # 8-byte Folded Spill
 ; N64-NEXT:    sd $gp, 16($sp) # 8-byte Folded Spill
-; N64-NEXT:    sd $16, 8($sp) # 8-byte Folded Spill
+; N64-NEXT:    sd $17, 8($sp) # 8-byte Folded Spill
+; N64-NEXT:    sd $16, 0($sp) # 8-byte Folded Spill
 ; N64-NEXT:    lui $1, %hi(%neg(%gp_rel(f0)))
 ; N64-NEXT:    daddu $1, $1, $25
-; N64-NEXT:    daddiu $gp, $1, %lo(%neg(%gp_rel(f0)))
-; N64-NEXT:    ld $25, %call16(f1)($gp)
+; N64-NEXT:    daddiu $16, $1, %lo(%neg(%gp_rel(f0)))
+; N64-NEXT:    ld $25, %call16(f1)($16)
 ; N64-NEXT:    jalr $25
-; N64-NEXT:    nop
-; N64-NEXT:    ld $1, %got_disp(p)($gp)
-; N64-NEXT:    ld $25, %call16(f2)($gp)
+; N64-NEXT:    move $gp, $16
+; N64-NEXT:    ld $1, %got_disp(p)($16)
+; N64-NEXT:    ld $25, %call16(f2)($16)
 ; N64-NEXT:    jalr $25
 ; N64-NEXT:    lw $4, 0($1)
-; N64-NEXT:    ld $1, %got_disp(q)($gp)
-; N64-NEXT:    lw $16, 0($1)
-; N64-NEXT:    ld $25, %call16(f2)($gp)
+; N64-NEXT:    ld $1, %got_disp(q)($16)
+; N64-NEXT:    lw $17, 0($1)
+; N64-NEXT:    ld $25, %call16(f2)($16)
 ; N64-NEXT:    jalr $25
-; N64-NEXT:    move $4, $16
-; N64-NEXT:    ld $1, %got_disp(r)($gp)
+; N64-NEXT:    move $4, $17
+; N64-NEXT:    ld $1, %got_disp(r)($16)
 ; N64-NEXT:    lw $5, 0($1)
-; N64-NEXT:    ld $25, %call16(f3)($gp)
+; N64-NEXT:    ld $25, %call16(f3)($16)
 ; N64-NEXT:    jalr $25
-; N64-NEXT:    move $4, $16
-; N64-NEXT:    ld $16, 8($sp) # 8-byte Folded Reload
+; N64-NEXT:    move $4, $17
+; N64-NEXT:    ld $16, 0($sp) # 8-byte Folded Reload
+; N64-NEXT:    ld $17, 8($sp) # 8-byte Folded Reload
 ; N64-NEXT:    ld $gp, 16($sp) # 8-byte Folded Reload
 ; N64-NEXT:    ld $ra, 24($sp) # 8-byte Folded Reload
 ; N64-NEXT:    jr $ra
@@ -84,28 +86,30 @@ define void @f0() nounwind {
 ; N32-NEXT:    addiu $sp, $sp, -32
 ; N32-NEXT:    sd $ra, 24($sp) # 8-byte Folded Spill
 ; N32-NEXT:    sd $gp, 16($sp) # 8-byte Folded Spill
-; N32-NEXT:    sd $16, 8($sp) # 8-byte Folded Spill
+; N32-NEXT:    sd $17, 8($sp) # 8-byte Folded Spill
+; N32-NEXT:    sd $16, 0($sp) # 8-byte Folded Spill
 ; N32-NEXT:    lui $1, %hi(%neg(%gp_rel(f0)))
 ; N32-NEXT:    addu $1, $1, $25
-; N32-NEXT:    addiu $gp, $1, %lo(%neg(%gp_rel(f0)))
-; N32-NEXT:    lw $25, %call16(f1)($gp)
+; N32-NEXT:    addiu $16, $1, %lo(%neg(%gp_rel(f0)))
+; N32-NEXT:    lw $25, %call16(f1)($16)
 ; N32-NEXT:    jalr $25
-; N32-NEXT:    nop
-; N32-NEXT:    lw $1, %got_disp(p)($gp)
-; N32-NEXT:    lw $25, %call16(f2)($gp)
+; N32-NEXT:    move $gp, $16
+; N32-NEXT:    lw $1, %got_disp(p)($16)
+; N32-NEXT:    lw $25, %call16(f2)($16)
 ; N32-NEXT:    jalr $25
 ; N32-NEXT:    lw $4, 0($1)
-; N32-NEXT:    lw $1, %got_disp(q)($gp)
-; N32-NEXT:    lw $16, 0($1)
-; N32-NEXT:    lw $25, %call16(f2)($gp)
+; N32-NEXT:    lw $1, %got_disp(q)($16)
+; N32-NEXT:    lw $17, 0($1)
+; N32-NEXT:    lw $25, %call16(f2)($16)
 ; N32-NEXT:    jalr $25
-; N32-NEXT:    move $4, $16
-; N32-NEXT:    lw $1, %got_disp(r)($gp)
+; N32-NEXT:    move $4, $17
+; N32-NEXT:    lw $1, %got_disp(r)($16)
 ; N32-NEXT:    lw $5, 0($1)
-; N32-NEXT:    lw $25, %call16(f3)($gp)
+; N32-NEXT:    lw $25, %call16(f3)($16)
 ; N32-NEXT:    jalr $25
-; N32-NEXT:    move $4, $16
-; N32-NEXT:    ld $16, 8($sp) # 8-byte Folded Reload
+; N32-NEXT:    move $4, $17
+; N32-NEXT:    ld $16, 0($sp) # 8-byte Folded Reload
+; N32-NEXT:    ld $17, 8($sp) # 8-byte Folded Reload
 ; N32-NEXT:    ld $gp, 16($sp) # 8-byte Folded Reload
 ; N32-NEXT:    ld $ra, 24($sp) # 8-byte Folded Reload
 ; N32-NEXT:    jr $ra
@@ -150,28 +154,30 @@ define void @f0() nounwind {
 ; O3N64-NEXT:    daddiu $sp, $sp, -32
 ; O3N64-NEXT:    sd $ra, 24($sp) # 8-byte Folded Spill
 ; O3N64-NEXT:    sd $gp, 16($sp) # 8-byte Folded Spill
-; O3N64-NEXT:    sd $16, 8($sp) # 8-byte Folded Spill
+; O3N64-NEXT:    sd $17, 8($sp) # 8-byte Folded Spill
+; O3N64-NEXT:    sd $16, 0($sp) # 8-byte Folded Spill
 ; O3N64-NEXT:    lui $1, %hi(%neg(%gp_rel(f0)))
 ; O3N64-NEXT:    daddu $1, $1, $25
-; O3N64-NEXT:    daddiu $gp, $1, %lo(%neg(%gp_rel(f0)))
-; O3N64-NEXT:    ld $25, %call16(f1)($gp)
+; O3N64-NEXT:    daddiu $16, $1, %lo(%neg(%gp_rel(f0)))
+; O3N64-NEXT:    ld $25, %call16(f1)($16)
 ; O3N64-NEXT:    jalr $25
-; O3N64-NEXT:    nop
-; O3N64-NEXT:    ld $1, %got_disp(p)($gp)
-; O3N64-NEXT:    ld $25, %call16(f2)($gp)
+; O3N64-NEXT:    move $gp, $16
+; O3N64-NEXT:    ld $1, %got_disp(p)($16)
+; O3N64-NEXT:    ld $25, %call16(f2)($16)
 ; O3N64-NEXT:    jalr $25
 ; O3N64-NEXT:    lw $4, 0($1)
-; O3N64-NEXT:    ld $1, %got_disp(q)($gp)
-; O3N64-NEXT:    ld $25, %call16(f2)($gp)
-; O3N64-NEXT:    lw $16, 0($1)
+; O3N64-NEXT:    ld $1, %got_disp(q)($16)
+; O3N64-NEXT:    ld $25, %call16(f2)($16)
+; O3N64-NEXT:    lw $17, 0($1)
 ; O3N64-NEXT:    jalr $25
-; O3N64-NEXT:    move $4, $16
-; O3N64-NEXT:    ld $1, %got_disp(r)($gp)
-; O3N64-NEXT:    ld $25, %call16(f3)($gp)
-; O3N64-NEXT:    move $4, $16
+; O3N64-NEXT:    move $4, $17
+; O3N64-NEXT:    ld $1, %got_disp(r)($16)
+; O3N64-NEXT:    ld $25, %call16(f3)($16)
+; O3N64-NEXT:    move $4, $17
 ; O3N64-NEXT:    jalr $25
 ; O3N64-NEXT:    lw $5, 0($1)
-; O3N64-NEXT:    ld $16, 8($sp) # 8-byte Folded Reload
+; O3N64-NEXT:    ld $16, 0($sp) # 8-byte Folded Reload
+; O3N64-NEXT:    ld $17, 8($sp) # 8-byte Folded Reload
 ; O3N64-NEXT:    ld $gp, 16($sp) # 8-byte Folded Reload
 ; O3N64-NEXT:    ld $ra, 24($sp) # 8-byte Folded Reload
 ; O3N64-NEXT:    jr $ra
@@ -182,28 +188,30 @@ define void @f0() nounwind {
 ; O3N32-NEXT:    addiu $sp, $sp, -32
 ; O3N32-NEXT:    sd $ra, 24($sp) # 8-byte Folded Spill
 ; O3N32-NEXT:    sd $gp, 16($sp) # 8-byte Folded Spill
-; O3N32-NEXT:    sd $16, 8($sp) # 8-byte Folded Spill
+; O3N32-NEXT:    sd $17, 8($sp) # 8-byte Folded Spill
+; O3N32-NEXT:    sd $16, 0($sp) # 8-byte Folded Spill
 ; O3N32-NEXT:    lui $1, %hi(%neg(%gp_rel(f0)))
 ; O3N32-NEXT:    addu $1, $1, $25
-; O3N32-NEXT:    addiu $gp, $1, %lo(%neg(%gp_rel(f0)))
-; O3N32-NEXT:    lw $25, %call16(f1)($gp)
+; O3N32-NEXT:    addiu $16, $1, %lo(%neg(%gp_rel(f0)))
+; O3N32-NEXT:    lw $25, %call16(f1)($16)
 ; O3N32-NEXT:    jalr $25
-; O3N32-NEXT:    nop
-; O3N32-NEXT:    lw $1, %got_disp(p)($gp)
-; O3N32-NEXT:    lw $25, %call16(f2)($gp)
+; O3N32-NEXT:    move $gp, $16
+; O3N32-NEXT:    lw $1, %got_disp(p)($16)
+; O3N32-NEXT:    lw $25, %call16(f2)($16)
 ; O3N32-NEXT:    jalr $25
 ; O3N32-NEXT:    lw $4, 0($1)
-; O3N32-NEXT:    lw $1, %got_disp(q)($gp)
-; O3N32-NEXT:    lw $25, %call16(f2)($gp)
-; O3N32-NEXT:    lw $16, 0($1)
+; O3N32-NEXT:    lw $1, %got_disp(q)($16)
+; O3N32-NEXT:    lw $25, %call16(f2)($16)
+; O3N32-NEXT:    lw $17, 0($1)
 ; O3N32-NEXT:    jalr $25
-; O3N32-NEXT:    move $4, $16
-; O3N32-NEXT:    lw $1, %got_disp(r)($gp)
-; O3N32-NEXT:    lw $25, %call16(f3)($gp)
-; O3N32-NEXT:    move $4, $16
+; O3N32-NEXT:    move $4, $17
+; O3N32-NEXT:    lw $1, %got_disp(r)($16)
+; O3N32-NEXT:    lw $25, %call16(f3)($16)
+; O3N32-NEXT:    move $4, $17
 ; O3N32-NEXT:    jalr $25
 ; O3N32-NEXT:    lw $5, 0($1)
-; O3N32-NEXT:    ld $16, 8($sp) # 8-byte Folded Reload
+; O3N32-NEXT:    ld $16, 0($sp) # 8-byte Folded Reload
+; O3N32-NEXT:    ld $17, 8($sp) # 8-byte Folded Reload
 ; O3N32-NEXT:    ld $gp, 16($sp) # 8-byte Folded Reload
 ; O3N32-NEXT:    ld $ra, 24($sp) # 8-byte Folded Reload
 ; O3N32-NEXT:    jr $ra

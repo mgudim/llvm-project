@@ -321,7 +321,7 @@ define i16 @test_reduce_v8i16(<8 x i16> %a0) {
 ;
 ; X64-AVX512-LABEL: test_reduce_v8i16:
 ; X64-AVX512:       ## %bb.0:
-; X64-AVX512-NEXT:    vpternlogq $15, %xmm0, %xmm0, %xmm0
+; X64-AVX512-NEXT:    vpternlogq {{.*#+}} xmm0 = ~xmm0
 ; X64-AVX512-NEXT:    vphminposuw %xmm0, %xmm0
 ; X64-AVX512-NEXT:    vmovd %xmm0, %eax
 ; X64-AVX512-NEXT:    notl %eax
@@ -437,7 +437,7 @@ define i8 @test_reduce_v16i8(<16 x i8> %a0) {
 ;
 ; X64-AVX512-LABEL: test_reduce_v16i8:
 ; X64-AVX512:       ## %bb.0:
-; X64-AVX512-NEXT:    vpternlogq $15, %xmm0, %xmm0, %xmm0
+; X64-AVX512-NEXT:    vpternlogq {{.*#+}} xmm0 = ~xmm0
 ; X64-AVX512-NEXT:    vpsrlw $8, %xmm0, %xmm1
 ; X64-AVX512-NEXT:    vpminub %xmm1, %xmm0, %xmm0
 ; X64-AVX512-NEXT:    vphminposuw %xmm0, %xmm0
@@ -938,7 +938,7 @@ define i16 @test_reduce_v16i16(<16 x i16> %a0) {
 ; X64-AVX512:       ## %bb.0:
 ; X64-AVX512-NEXT:    vextracti128 $1, %ymm0, %xmm1
 ; X64-AVX512-NEXT:    vpmaxuw %xmm1, %xmm0, %xmm0
-; X64-AVX512-NEXT:    vpternlogq $15, %xmm0, %xmm0, %xmm0
+; X64-AVX512-NEXT:    vpternlogq {{.*#+}} xmm0 = ~xmm0
 ; X64-AVX512-NEXT:    vphminposuw %xmm0, %xmm0
 ; X64-AVX512-NEXT:    vmovd %xmm0, %eax
 ; X64-AVX512-NEXT:    notl %eax
@@ -1088,7 +1088,7 @@ define i8 @test_reduce_v32i8(<32 x i8> %a0) {
 ; X64-AVX512:       ## %bb.0:
 ; X64-AVX512-NEXT:    vextracti128 $1, %ymm0, %xmm1
 ; X64-AVX512-NEXT:    vpmaxub %xmm1, %xmm0, %xmm0
-; X64-AVX512-NEXT:    vpternlogq $15, %xmm0, %xmm0, %xmm0
+; X64-AVX512-NEXT:    vpternlogq {{.*#+}} xmm0 = ~xmm0
 ; X64-AVX512-NEXT:    vpsrlw $8, %xmm0, %xmm1
 ; X64-AVX512-NEXT:    vpminub %xmm1, %xmm0, %xmm0
 ; X64-AVX512-NEXT:    vphminposuw %xmm0, %xmm0
@@ -1191,30 +1191,30 @@ define i64 @test_reduce_v8i64(<8 x i64> %a0) {
 ;
 ; X86-SSE42-LABEL: test_reduce_v8i64:
 ; X86-SSE42:       ## %bb.0:
-; X86-SSE42-NEXT:    movdqa %xmm0, %xmm4
-; X86-SSE42-NEXT:    movdqa {{.*#+}} xmm5 = [0,2147483648,0,2147483648]
+; X86-SSE42-NEXT:    movdqa %xmm0, %xmm5
+; X86-SSE42-NEXT:    movdqa {{.*#+}} xmm4 = [0,2147483648,0,2147483648]
 ; X86-SSE42-NEXT:    movdqa %xmm2, %xmm6
-; X86-SSE42-NEXT:    pxor %xmm5, %xmm6
-; X86-SSE42-NEXT:    pxor %xmm5, %xmm0
+; X86-SSE42-NEXT:    pxor %xmm4, %xmm6
+; X86-SSE42-NEXT:    pxor %xmm4, %xmm0
 ; X86-SSE42-NEXT:    pcmpgtq %xmm6, %xmm0
-; X86-SSE42-NEXT:    blendvpd %xmm0, %xmm4, %xmm2
-; X86-SSE42-NEXT:    movdqa %xmm3, %xmm4
-; X86-SSE42-NEXT:    pxor %xmm5, %xmm4
+; X86-SSE42-NEXT:    blendvpd %xmm0, %xmm5, %xmm2
+; X86-SSE42-NEXT:    movdqa %xmm3, %xmm5
+; X86-SSE42-NEXT:    pxor %xmm4, %xmm5
 ; X86-SSE42-NEXT:    movdqa %xmm1, %xmm0
-; X86-SSE42-NEXT:    pxor %xmm5, %xmm0
-; X86-SSE42-NEXT:    pcmpgtq %xmm4, %xmm0
+; X86-SSE42-NEXT:    pxor %xmm4, %xmm0
+; X86-SSE42-NEXT:    pcmpgtq %xmm5, %xmm0
 ; X86-SSE42-NEXT:    blendvpd %xmm0, %xmm1, %xmm3
 ; X86-SSE42-NEXT:    movapd %xmm3, %xmm1
-; X86-SSE42-NEXT:    xorpd %xmm5, %xmm1
+; X86-SSE42-NEXT:    xorpd %xmm4, %xmm1
 ; X86-SSE42-NEXT:    movapd %xmm2, %xmm0
-; X86-SSE42-NEXT:    xorpd %xmm5, %xmm0
+; X86-SSE42-NEXT:    xorpd %xmm4, %xmm0
 ; X86-SSE42-NEXT:    pcmpgtq %xmm1, %xmm0
 ; X86-SSE42-NEXT:    blendvpd %xmm0, %xmm2, %xmm3
 ; X86-SSE42-NEXT:    pshufd {{.*#+}} xmm1 = xmm3[2,3,2,3]
 ; X86-SSE42-NEXT:    movdqa %xmm3, %xmm0
-; X86-SSE42-NEXT:    pxor %xmm5, %xmm0
-; X86-SSE42-NEXT:    pxor %xmm1, %xmm5
-; X86-SSE42-NEXT:    pcmpgtq %xmm5, %xmm0
+; X86-SSE42-NEXT:    pxor %xmm4, %xmm0
+; X86-SSE42-NEXT:    pxor %xmm1, %xmm4
+; X86-SSE42-NEXT:    pcmpgtq %xmm4, %xmm0
 ; X86-SSE42-NEXT:    blendvpd %xmm0, %xmm3, %xmm1
 ; X86-SSE42-NEXT:    movd %xmm1, %eax
 ; X86-SSE42-NEXT:    pextrd $1, %xmm1, %edx
@@ -1338,30 +1338,30 @@ define i64 @test_reduce_v8i64(<8 x i64> %a0) {
 ;
 ; X64-SSE42-LABEL: test_reduce_v8i64:
 ; X64-SSE42:       ## %bb.0:
-; X64-SSE42-NEXT:    movdqa %xmm0, %xmm4
-; X64-SSE42-NEXT:    movdqa {{.*#+}} xmm5 = [9223372036854775808,9223372036854775808]
+; X64-SSE42-NEXT:    movdqa %xmm0, %xmm5
+; X64-SSE42-NEXT:    movdqa {{.*#+}} xmm4 = [9223372036854775808,9223372036854775808]
 ; X64-SSE42-NEXT:    movdqa %xmm2, %xmm6
-; X64-SSE42-NEXT:    pxor %xmm5, %xmm6
-; X64-SSE42-NEXT:    pxor %xmm5, %xmm0
+; X64-SSE42-NEXT:    pxor %xmm4, %xmm6
+; X64-SSE42-NEXT:    pxor %xmm4, %xmm0
 ; X64-SSE42-NEXT:    pcmpgtq %xmm6, %xmm0
-; X64-SSE42-NEXT:    blendvpd %xmm0, %xmm4, %xmm2
-; X64-SSE42-NEXT:    movdqa %xmm3, %xmm4
-; X64-SSE42-NEXT:    pxor %xmm5, %xmm4
+; X64-SSE42-NEXT:    blendvpd %xmm0, %xmm5, %xmm2
+; X64-SSE42-NEXT:    movdqa %xmm3, %xmm5
+; X64-SSE42-NEXT:    pxor %xmm4, %xmm5
 ; X64-SSE42-NEXT:    movdqa %xmm1, %xmm0
-; X64-SSE42-NEXT:    pxor %xmm5, %xmm0
-; X64-SSE42-NEXT:    pcmpgtq %xmm4, %xmm0
+; X64-SSE42-NEXT:    pxor %xmm4, %xmm0
+; X64-SSE42-NEXT:    pcmpgtq %xmm5, %xmm0
 ; X64-SSE42-NEXT:    blendvpd %xmm0, %xmm1, %xmm3
 ; X64-SSE42-NEXT:    movapd %xmm3, %xmm1
-; X64-SSE42-NEXT:    xorpd %xmm5, %xmm1
+; X64-SSE42-NEXT:    xorpd %xmm4, %xmm1
 ; X64-SSE42-NEXT:    movapd %xmm2, %xmm0
-; X64-SSE42-NEXT:    xorpd %xmm5, %xmm0
+; X64-SSE42-NEXT:    xorpd %xmm4, %xmm0
 ; X64-SSE42-NEXT:    pcmpgtq %xmm1, %xmm0
 ; X64-SSE42-NEXT:    blendvpd %xmm0, %xmm2, %xmm3
 ; X64-SSE42-NEXT:    pshufd {{.*#+}} xmm1 = xmm3[2,3,2,3]
 ; X64-SSE42-NEXT:    movdqa %xmm3, %xmm0
-; X64-SSE42-NEXT:    pxor %xmm5, %xmm0
-; X64-SSE42-NEXT:    pxor %xmm1, %xmm5
-; X64-SSE42-NEXT:    pcmpgtq %xmm5, %xmm0
+; X64-SSE42-NEXT:    pxor %xmm4, %xmm0
+; X64-SSE42-NEXT:    pxor %xmm1, %xmm4
+; X64-SSE42-NEXT:    pcmpgtq %xmm4, %xmm0
 ; X64-SSE42-NEXT:    blendvpd %xmm0, %xmm3, %xmm1
 ; X64-SSE42-NEXT:    movq %xmm1, %rax
 ; X64-SSE42-NEXT:    retq
@@ -1779,7 +1779,7 @@ define i16 @test_reduce_v32i16(<32 x i16> %a0) {
 ; X64-AVX512-NEXT:    vpmaxuw %ymm1, %ymm0, %ymm0
 ; X64-AVX512-NEXT:    vextracti128 $1, %ymm0, %xmm1
 ; X64-AVX512-NEXT:    vpmaxuw %xmm1, %xmm0, %xmm0
-; X64-AVX512-NEXT:    vpternlogq $15, %xmm0, %xmm0, %xmm0
+; X64-AVX512-NEXT:    vpternlogq {{.*#+}} xmm0 = ~xmm0
 ; X64-AVX512-NEXT:    vphminposuw %xmm0, %xmm0
 ; X64-AVX512-NEXT:    vmovd %xmm0, %eax
 ; X64-AVX512-NEXT:    notl %eax
@@ -1950,7 +1950,7 @@ define i8 @test_reduce_v64i8(<64 x i8> %a0) {
 ; X64-AVX512-NEXT:    vpmaxub %ymm1, %ymm0, %ymm0
 ; X64-AVX512-NEXT:    vextracti128 $1, %ymm0, %xmm1
 ; X64-AVX512-NEXT:    vpmaxub %xmm1, %xmm0, %xmm0
-; X64-AVX512-NEXT:    vpternlogq $15, %xmm0, %xmm0, %xmm0
+; X64-AVX512-NEXT:    vpternlogq {{.*#+}} xmm0 = ~xmm0
 ; X64-AVX512-NEXT:    vpsrlw $8, %xmm0, %xmm1
 ; X64-AVX512-NEXT:    vpminub %xmm1, %xmm0, %xmm0
 ; X64-AVX512-NEXT:    vphminposuw %xmm0, %xmm0
@@ -2073,7 +2073,7 @@ define i16 @test_reduce_v16i16_v8i16(<16 x i16> %a0) {
 ;
 ; X64-AVX512-LABEL: test_reduce_v16i16_v8i16:
 ; X64-AVX512:       ## %bb.0:
-; X64-AVX512-NEXT:    vpternlogq $15, %xmm0, %xmm0, %xmm0
+; X64-AVX512-NEXT:    vpternlogq {{.*#+}} xmm0 = ~xmm0
 ; X64-AVX512-NEXT:    vphminposuw %xmm0, %xmm0
 ; X64-AVX512-NEXT:    vmovd %xmm0, %eax
 ; X64-AVX512-NEXT:    notl %eax
@@ -2181,7 +2181,7 @@ define i16 @test_reduce_v32i16_v8i16(<32 x i16> %a0) {
 ;
 ; X64-AVX512-LABEL: test_reduce_v32i16_v8i16:
 ; X64-AVX512:       ## %bb.0:
-; X64-AVX512-NEXT:    vpternlogq $15, %xmm0, %xmm0, %xmm0
+; X64-AVX512-NEXT:    vpternlogq {{.*#+}} xmm0 = ~xmm0
 ; X64-AVX512-NEXT:    vphminposuw %xmm0, %xmm0
 ; X64-AVX512-NEXT:    vmovd %xmm0, %eax
 ; X64-AVX512-NEXT:    notl %eax
@@ -2301,7 +2301,7 @@ define i8 @test_reduce_v32i8_v16i8(<32 x i8> %a0) {
 ;
 ; X64-AVX512-LABEL: test_reduce_v32i8_v16i8:
 ; X64-AVX512:       ## %bb.0:
-; X64-AVX512-NEXT:    vpternlogq $15, %xmm0, %xmm0, %xmm0
+; X64-AVX512-NEXT:    vpternlogq {{.*#+}} xmm0 = ~xmm0
 ; X64-AVX512-NEXT:    vpsrlw $8, %xmm0, %xmm1
 ; X64-AVX512-NEXT:    vpminub %xmm1, %xmm0, %xmm0
 ; X64-AVX512-NEXT:    vphminposuw %xmm0, %xmm0
@@ -2426,7 +2426,7 @@ define i8 @test_reduce_v64i8_v16i8(<64 x i8> %a0) {
 ;
 ; X64-AVX512-LABEL: test_reduce_v64i8_v16i8:
 ; X64-AVX512:       ## %bb.0:
-; X64-AVX512-NEXT:    vpternlogq $15, %xmm0, %xmm0, %xmm0
+; X64-AVX512-NEXT:    vpternlogq {{.*#+}} xmm0 = ~xmm0
 ; X64-AVX512-NEXT:    vpsrlw $8, %xmm0, %xmm1
 ; X64-AVX512-NEXT:    vpminub %xmm1, %xmm0, %xmm0
 ; X64-AVX512-NEXT:    vphminposuw %xmm0, %xmm0

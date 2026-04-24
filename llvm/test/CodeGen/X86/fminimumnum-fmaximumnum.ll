@@ -3166,18 +3166,18 @@ define fp128 @test_fmaximumnum_fp128(fp128 %x, fp128 %y) nounwind {
 ; SSE2:       # %bb.0: # %start
 ; SSE2-NEXT:    subq $40, %rsp
 ; SSE2-NEXT:    movaps %xmm1, (%rsp) # 16-byte Spill
+; SSE2-NEXT:    movaps %xmm0, %xmm1
 ; SSE2-NEXT:    movaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; SSE2-NEXT:    movaps %xmm0, %xmm1
 ; SSE2-NEXT:    callq __unordtf2@PLT
-; SSE2-NEXT:    movaps (%rsp), %xmm0 # 16-byte Reload
+; SSE2-NEXT:    movaps (%rsp), %xmm1 # 16-byte Reload
 ; SSE2-NEXT:    testl %eax, %eax
-; SSE2-NEXT:    movaps %xmm0, %xmm1
+; SSE2-NEXT:    movaps %xmm1, %xmm0
 ; SSE2-NEXT:    jne .LBB41_2
 ; SSE2-NEXT:  # %bb.1: # %start
-; SSE2-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
+; SSE2-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; SSE2-NEXT:  .LBB41_2: # %start
-; SSE2-NEXT:    movaps %xmm1, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; SSE2-NEXT:    movaps %xmm0, %xmm1
+; SSE2-NEXT:    movaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; SSE2-NEXT:    movaps %xmm1, %xmm0
 ; SSE2-NEXT:    callq __unordtf2@PLT
 ; SSE2-NEXT:    testl %eax, %eax
 ; SSE2-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
@@ -3220,18 +3220,18 @@ define fp128 @test_fmaximumnum_fp128(fp128 %x, fp128 %y) nounwind {
 ; AVX:       # %bb.0: # %start
 ; AVX-NEXT:    subq $40, %rsp
 ; AVX-NEXT:    vmovaps %xmm1, (%rsp) # 16-byte Spill
+; AVX-NEXT:    vmovaps %xmm0, %xmm1
 ; AVX-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; AVX-NEXT:    vmovaps %xmm0, %xmm1
 ; AVX-NEXT:    callq __unordtf2@PLT
-; AVX-NEXT:    vmovaps (%rsp), %xmm0 # 16-byte Reload
+; AVX-NEXT:    vmovaps (%rsp), %xmm1 # 16-byte Reload
 ; AVX-NEXT:    testl %eax, %eax
-; AVX-NEXT:    vmovaps %xmm0, %xmm1
+; AVX-NEXT:    vmovaps %xmm1, %xmm0
 ; AVX-NEXT:    jne .LBB41_2
 ; AVX-NEXT:  # %bb.1: # %start
-; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
+; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX-NEXT:  .LBB41_2: # %start
-; AVX-NEXT:    vmovaps %xmm1, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; AVX-NEXT:    vmovaps %xmm0, %xmm1
+; AVX-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; AVX-NEXT:    vmovaps %xmm1, %xmm0
 ; AVX-NEXT:    callq __unordtf2@PLT
 ; AVX-NEXT:    testl %eax, %eax
 ; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
@@ -3274,18 +3274,18 @@ define fp128 @test_fmaximumnum_fp128(fp128 %x, fp128 %y) nounwind {
 ; AVX10_2:       # %bb.0: # %start
 ; AVX10_2-NEXT:    subq $40, %rsp
 ; AVX10_2-NEXT:    vmovaps %xmm1, (%rsp) # 16-byte Spill
+; AVX10_2-NEXT:    vmovaps %xmm0, %xmm1
 ; AVX10_2-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; AVX10_2-NEXT:    vmovaps %xmm0, %xmm1
 ; AVX10_2-NEXT:    callq __unordtf2@PLT
-; AVX10_2-NEXT:    vmovaps (%rsp), %xmm0 # 16-byte Reload
+; AVX10_2-NEXT:    vmovaps (%rsp), %xmm1 # 16-byte Reload
 ; AVX10_2-NEXT:    testl %eax, %eax
-; AVX10_2-NEXT:    vmovaps %xmm0, %xmm1
+; AVX10_2-NEXT:    vmovaps %xmm1, %xmm0
 ; AVX10_2-NEXT:    jne .LBB41_2
 ; AVX10_2-NEXT:  # %bb.1: # %start
-; AVX10_2-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
+; AVX10_2-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX10_2-NEXT:  .LBB41_2: # %start
-; AVX10_2-NEXT:    vmovaps %xmm1, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; AVX10_2-NEXT:    vmovaps %xmm0, %xmm1
+; AVX10_2-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; AVX10_2-NEXT:    vmovaps %xmm1, %xmm0
 ; AVX10_2-NEXT:    callq __unordtf2@PLT
 ; AVX10_2-NEXT:    testl %eax, %eax
 ; AVX10_2-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
@@ -3356,18 +3356,18 @@ define fp128 @test_fminimumnum_fp128(fp128 %x, fp128 %y) nounwind {
 ; SSE2:       # %bb.0: # %start
 ; SSE2-NEXT:    subq $40, %rsp
 ; SSE2-NEXT:    movaps %xmm1, (%rsp) # 16-byte Spill
+; SSE2-NEXT:    movaps %xmm0, %xmm1
 ; SSE2-NEXT:    movaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; SSE2-NEXT:    movaps %xmm0, %xmm1
 ; SSE2-NEXT:    callq __unordtf2@PLT
-; SSE2-NEXT:    movaps (%rsp), %xmm0 # 16-byte Reload
+; SSE2-NEXT:    movaps (%rsp), %xmm1 # 16-byte Reload
 ; SSE2-NEXT:    testl %eax, %eax
-; SSE2-NEXT:    movaps %xmm0, %xmm1
+; SSE2-NEXT:    movaps %xmm1, %xmm0
 ; SSE2-NEXT:    jne .LBB42_2
 ; SSE2-NEXT:  # %bb.1: # %start
-; SSE2-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
+; SSE2-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; SSE2-NEXT:  .LBB42_2: # %start
-; SSE2-NEXT:    movaps %xmm1, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; SSE2-NEXT:    movaps %xmm0, %xmm1
+; SSE2-NEXT:    movaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; SSE2-NEXT:    movaps %xmm1, %xmm0
 ; SSE2-NEXT:    callq __unordtf2@PLT
 ; SSE2-NEXT:    testl %eax, %eax
 ; SSE2-NEXT:    movaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
@@ -3410,18 +3410,18 @@ define fp128 @test_fminimumnum_fp128(fp128 %x, fp128 %y) nounwind {
 ; AVX:       # %bb.0: # %start
 ; AVX-NEXT:    subq $40, %rsp
 ; AVX-NEXT:    vmovaps %xmm1, (%rsp) # 16-byte Spill
+; AVX-NEXT:    vmovaps %xmm0, %xmm1
 ; AVX-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; AVX-NEXT:    vmovaps %xmm0, %xmm1
 ; AVX-NEXT:    callq __unordtf2@PLT
-; AVX-NEXT:    vmovaps (%rsp), %xmm0 # 16-byte Reload
+; AVX-NEXT:    vmovaps (%rsp), %xmm1 # 16-byte Reload
 ; AVX-NEXT:    testl %eax, %eax
-; AVX-NEXT:    vmovaps %xmm0, %xmm1
+; AVX-NEXT:    vmovaps %xmm1, %xmm0
 ; AVX-NEXT:    jne .LBB42_2
 ; AVX-NEXT:  # %bb.1: # %start
-; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
+; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX-NEXT:  .LBB42_2: # %start
-; AVX-NEXT:    vmovaps %xmm1, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; AVX-NEXT:    vmovaps %xmm0, %xmm1
+; AVX-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; AVX-NEXT:    vmovaps %xmm1, %xmm0
 ; AVX-NEXT:    callq __unordtf2@PLT
 ; AVX-NEXT:    testl %eax, %eax
 ; AVX-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
@@ -3464,18 +3464,18 @@ define fp128 @test_fminimumnum_fp128(fp128 %x, fp128 %y) nounwind {
 ; AVX10_2:       # %bb.0: # %start
 ; AVX10_2-NEXT:    subq $40, %rsp
 ; AVX10_2-NEXT:    vmovaps %xmm1, (%rsp) # 16-byte Spill
+; AVX10_2-NEXT:    vmovaps %xmm0, %xmm1
 ; AVX10_2-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; AVX10_2-NEXT:    vmovaps %xmm0, %xmm1
 ; AVX10_2-NEXT:    callq __unordtf2@PLT
-; AVX10_2-NEXT:    vmovaps (%rsp), %xmm0 # 16-byte Reload
+; AVX10_2-NEXT:    vmovaps (%rsp), %xmm1 # 16-byte Reload
 ; AVX10_2-NEXT:    testl %eax, %eax
-; AVX10_2-NEXT:    vmovaps %xmm0, %xmm1
+; AVX10_2-NEXT:    vmovaps %xmm1, %xmm0
 ; AVX10_2-NEXT:    jne .LBB42_2
 ; AVX10_2-NEXT:  # %bb.1: # %start
-; AVX10_2-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload
+; AVX10_2-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm0 # 16-byte Reload
 ; AVX10_2-NEXT:  .LBB42_2: # %start
-; AVX10_2-NEXT:    vmovaps %xmm1, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
-; AVX10_2-NEXT:    vmovaps %xmm0, %xmm1
+; AVX10_2-NEXT:    vmovaps %xmm0, {{[-0-9]+}}(%r{{[sb]}}p) # 16-byte Spill
+; AVX10_2-NEXT:    vmovaps %xmm1, %xmm0
 ; AVX10_2-NEXT:    callq __unordtf2@PLT
 ; AVX10_2-NEXT:    testl %eax, %eax
 ; AVX10_2-NEXT:    vmovaps {{[-0-9]+}}(%r{{[sb]}}p), %xmm1 # 16-byte Reload

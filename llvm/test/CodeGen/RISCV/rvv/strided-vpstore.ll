@@ -483,12 +483,15 @@ define void @strided_vpstore_nxv3f32_allones_mask(<vscale x 3 x float> %v, ptr %
 define void @strided_store_nxv16f64(<vscale x 16 x double> %v, ptr %ptr, i32 signext %stride, <vscale x 16 x i1> %mask, i32 zeroext %evl) {
 ; CHECK-LABEL: strided_store_nxv16f64:
 ; CHECK:       # %bb.0:
+; CHECK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
+; CHECK-NEXT:    vmv1r.v v24, v0
 ; CHECK-NEXT:    csrr a3, vlenb
 ; CHECK-NEXT:    mv a4, a2
 ; CHECK-NEXT:    bltu a2, a3, .LBB46_2
 ; CHECK-NEXT:  # %bb.1:
 ; CHECK-NEXT:    mv a4, a3
 ; CHECK-NEXT:  .LBB46_2:
+; CHECK-NEXT:    vmv1r.v v0, v24
 ; CHECK-NEXT:    vsetvli zero, a4, e64, m8, ta, ma
 ; CHECK-NEXT:    vsse64.v v8, (a0), a1, v0.t
 ; CHECK-NEXT:    sub a5, a2, a3
@@ -496,7 +499,7 @@ define void @strided_store_nxv16f64(<vscale x 16 x double> %v, ptr %ptr, i32 sig
 ; CHECK-NEXT:    srli a3, a3, 3
 ; CHECK-NEXT:    sltu a2, a2, a5
 ; CHECK-NEXT:    vsetvli a6, zero, e8, mf4, ta, ma
-; CHECK-NEXT:    vslidedown.vx v0, v0, a3
+; CHECK-NEXT:    vslidedown.vx v0, v24, a3
 ; CHECK-NEXT:    addi a2, a2, -1
 ; CHECK-NEXT:    and a2, a2, a5
 ; CHECK-NEXT:    add a0, a0, a4

@@ -290,9 +290,9 @@ define i32 @cas_acq(ptr %0, i32 %1, i32 %2) nounwind {
 ; SPARC32-NEXT:    mov %i0, %o0
 ; SPARC32-NEXT:    st %i1, [%fp+-4]
 ; SPARC32-NEXT:    add %fp, -4, %o1
-; SPARC32-NEXT:    mov 2, %o3
+; SPARC32-NEXT:    mov 2, %o4
 ; SPARC32-NEXT:    call __atomic_compare_exchange_4
-; SPARC32-NEXT:    mov %o3, %o4
+; SPARC32-NEXT:    mov %o4, %o3
 ; SPARC32-NEXT:    ld [%fp+-4], %i0
 ; SPARC32-NEXT:    ret
 ; SPARC32-NEXT:    restore
@@ -411,9 +411,9 @@ define i32 @cas_sc(ptr %0, i32 %1, i32 %2) nounwind {
 ; SPARC32-NEXT:    mov %i0, %o0
 ; SPARC32-NEXT:    st %i1, [%fp+-4]
 ; SPARC32-NEXT:    add %fp, -4, %o1
-; SPARC32-NEXT:    mov 5, %o3
+; SPARC32-NEXT:    mov 5, %o4
 ; SPARC32-NEXT:    call __atomic_compare_exchange_4
-; SPARC32-NEXT:    mov %o3, %o4
+; SPARC32-NEXT:    mov %o4, %o3
 ; SPARC32-NEXT:    ld [%fp+-4], %i0
 ; SPARC32-NEXT:    ret
 ; SPARC32-NEXT:    restore

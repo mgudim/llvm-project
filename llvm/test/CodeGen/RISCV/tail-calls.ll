@@ -29,12 +29,11 @@ entry:
 define void @caller_extern(ptr %src) optsize {
 ; CHECK-LABEL: caller_extern:
 ; CHECK:       # %bb.0: # %entry
-; CHECK-NEXT:    lui a1, %hi(dest)
-; CHECK-NEXT:    addi a1, a1, %lo(dest)
+; CHECK-NEXT:    lui a3, %hi(dest)
+; CHECK-NEXT:    addi a3, a3, %lo(dest)
 ; CHECK-NEXT:    li a2, 7
-; CHECK-NEXT:    mv a3, a0
-; CHECK-NEXT:    mv a0, a1
-; CHECK-NEXT:    mv a1, a3
+; CHECK-NEXT:    mv a1, a0
+; CHECK-NEXT:    mv a0, a3
 ; CHECK-NEXT:    tail memcpy
 ;
 ; CHECK-LARGE-ZICFILP-LABEL: caller_extern:
@@ -44,12 +43,11 @@ define void @caller_extern(ptr %src) optsize {
 ; CHECK-LARGE-ZICFILP-NEXT:    auipc a1, %pcrel_hi(.LCPI1_0)
 ; CHECK-LARGE-ZICFILP-NEXT:  .Lpcrel_hi2:
 ; CHECK-LARGE-ZICFILP-NEXT:    auipc a2, %pcrel_hi(.LCPI1_1)
-; CHECK-LARGE-ZICFILP-NEXT:    lw a1, %pcrel_lo(.Lpcrel_hi1)(a1)
+; CHECK-LARGE-ZICFILP-NEXT:    lw a3, %pcrel_lo(.Lpcrel_hi1)(a1)
 ; CHECK-LARGE-ZICFILP-NEXT:    lw t2, %pcrel_lo(.Lpcrel_hi2)(a2)
 ; CHECK-LARGE-ZICFILP-NEXT:    li a2, 7
-; CHECK-LARGE-ZICFILP-NEXT:    mv a3, a0
-; CHECK-LARGE-ZICFILP-NEXT:    mv a0, a1
-; CHECK-LARGE-ZICFILP-NEXT:    mv a1, a3
+; CHECK-LARGE-ZICFILP-NEXT:    mv a1, a0
+; CHECK-LARGE-ZICFILP-NEXT:    mv a0, a3
 ; CHECK-LARGE-ZICFILP-NEXT:    jr t2
 entry:
   tail call void @llvm.memcpy.p0.p0.i32(ptr @dest, ptr %src, i32 7, i1 false)
@@ -61,12 +59,11 @@ entry:
 define void @caller_extern_pgso(ptr %src) !prof !14 {
 ; CHECK-LABEL: caller_extern_pgso:
 ; CHECK:       # %bb.0: # %entry
-; CHECK-NEXT:    lui a1, %hi(dest_pgso)
-; CHECK-NEXT:    addi a1, a1, %lo(dest_pgso)
+; CHECK-NEXT:    lui a3, %hi(dest_pgso)
+; CHECK-NEXT:    addi a3, a3, %lo(dest_pgso)
 ; CHECK-NEXT:    li a2, 7
-; CHECK-NEXT:    mv a3, a0
-; CHECK-NEXT:    mv a0, a1
-; CHECK-NEXT:    mv a1, a3
+; CHECK-NEXT:    mv a1, a0
+; CHECK-NEXT:    mv a0, a3
 ; CHECK-NEXT:    tail memcpy
 ;
 ; CHECK-LARGE-ZICFILP-LABEL: caller_extern_pgso:
@@ -76,12 +73,11 @@ define void @caller_extern_pgso(ptr %src) !prof !14 {
 ; CHECK-LARGE-ZICFILP-NEXT:    auipc a1, %pcrel_hi(.LCPI2_0)
 ; CHECK-LARGE-ZICFILP-NEXT:  .Lpcrel_hi4:
 ; CHECK-LARGE-ZICFILP-NEXT:    auipc a2, %pcrel_hi(.LCPI2_1)
-; CHECK-LARGE-ZICFILP-NEXT:    lw a1, %pcrel_lo(.Lpcrel_hi3)(a1)
+; CHECK-LARGE-ZICFILP-NEXT:    lw a3, %pcrel_lo(.Lpcrel_hi3)(a1)
 ; CHECK-LARGE-ZICFILP-NEXT:    lw t2, %pcrel_lo(.Lpcrel_hi4)(a2)
 ; CHECK-LARGE-ZICFILP-NEXT:    li a2, 7
-; CHECK-LARGE-ZICFILP-NEXT:    mv a3, a0
-; CHECK-LARGE-ZICFILP-NEXT:    mv a0, a1
-; CHECK-LARGE-ZICFILP-NEXT:    mv a1, a3
+; CHECK-LARGE-ZICFILP-NEXT:    mv a1, a0
+; CHECK-LARGE-ZICFILP-NEXT:    mv a0, a3
 ; CHECK-LARGE-ZICFILP-NEXT:    jr t2
 entry:
   tail call void @llvm.memcpy.p0.p0.i32(ptr @dest_pgso, ptr %src, i32 7, i1 false)
@@ -163,13 +159,13 @@ define void @caller_varargs(i32 %a, i32 %b) nounwind {
 ; CHECK:       # %bb.0: # %entry
 ; CHECK-NEXT:    addi sp, sp, -16
 ; CHECK-NEXT:    sw ra, 12(sp) # 4-byte Folded Spill
+; CHECK-NEXT:    mv a6, a1
+; CHECK-NEXT:    mv a7, a0
 ; CHECK-NEXT:    sw a0, 0(sp)
 ; CHECK-NEXT:    mv a2, a1
 ; CHECK-NEXT:    mv a3, a0
 ; CHECK-NEXT:    mv a4, a0
 ; CHECK-NEXT:    mv a5, a1
-; CHECK-NEXT:    mv a6, a1
-; CHECK-NEXT:    mv a7, a0
 ; CHECK-NEXT:    call callee_varargs
 ; CHECK-NEXT:    lw ra, 12(sp) # 4-byte Folded Reload
 ; CHECK-NEXT:    addi sp, sp, 16
@@ -180,16 +176,17 @@ define void @caller_varargs(i32 %a, i32 %b) nounwind {
 ; CHECK-LARGE-ZICFILP-NEXT:    lpad 0
 ; CHECK-LARGE-ZICFILP-NEXT:    addi sp, sp, -16
 ; CHECK-LARGE-ZICFILP-NEXT:    sw ra, 12(sp) # 4-byte Folded Spill
-; CHECK-LARGE-ZICFILP-NEXT:  .Lpcrel_hi7:
-; CHECK-LARGE-ZICFILP-NEXT:    auipc a2, %pcrel_hi(.LCPI5_0)
-; CHECK-LARGE-ZICFILP-NEXT:    lw t2, %pcrel_lo(.Lpcrel_hi7)(a2)
-; CHECK-LARGE-ZICFILP-NEXT:    sw a0, 0(sp)
-; CHECK-LARGE-ZICFILP-NEXT:    mv a2, a1
-; CHECK-LARGE-ZICFILP-NEXT:    mv a3, a0
-; CHECK-LARGE-ZICFILP-NEXT:    mv a4, a0
-; CHECK-LARGE-ZICFILP-NEXT:    mv a5, a1
 ; CHECK-LARGE-ZICFILP-NEXT:    mv a6, a1
 ; CHECK-LARGE-ZICFILP-NEXT:    mv a7, a0
+; CHECK-LARGE-ZICFILP-NEXT:  .Lpcrel_hi7:
+; CHECK-LARGE-ZICFILP-NEXT:    auipc a0, %pcrel_hi(.LCPI5_0)
+; CHECK-LARGE-ZICFILP-NEXT:    lw t2, %pcrel_lo(.Lpcrel_hi7)(a0)
+; CHECK-LARGE-ZICFILP-NEXT:    sw a7, 0(sp)
+; CHECK-LARGE-ZICFILP-NEXT:    mv a0, a7
+; CHECK-LARGE-ZICFILP-NEXT:    mv a2, a1
+; CHECK-LARGE-ZICFILP-NEXT:    mv a3, a7
+; CHECK-LARGE-ZICFILP-NEXT:    mv a4, a7
+; CHECK-LARGE-ZICFILP-NEXT:    mv a5, a1
 ; CHECK-LARGE-ZICFILP-NEXT:    jalr t2
 ; CHECK-LARGE-ZICFILP-NEXT:    lw ra, 12(sp) # 4-byte Folded Reload
 ; CHECK-LARGE-ZICFILP-NEXT:    addi sp, sp, 16

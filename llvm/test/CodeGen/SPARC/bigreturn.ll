@@ -135,11 +135,13 @@ define { i64, i64 } @ret_i64_pair(i32 %a0, i32 %a1, ptr %p, ptr %q) {
 ; SPARC-NEXT:    .cfi_def_cfa_register %fp
 ; SPARC-NEXT:    .cfi_window_save
 ; SPARC-NEXT:    .cfi_register %o7, %i7
-; SPARC-NEXT:    mov %g0, %i4
-; SPARC-NEXT:    ldd [%i2], %i0
-; SPARC-NEXT:    mov %g0, %i5
-; SPARC-NEXT:    std %i4, [%i2]
+; SPARC-NEXT:    mov %g0, %i0
+; SPARC-NEXT:    ldd [%i2], %i4
+; SPARC-NEXT:    mov %g0, %i1
+; SPARC-NEXT:    std %i0, [%i2]
 ; SPARC-NEXT:    ldd [%i3], %i2
+; SPARC-NEXT:    mov %i4, %i0
+; SPARC-NEXT:    mov %i5, %i1
 ; SPARC-NEXT:    restore
 ; SPARC-NEXT:    retl
 ; SPARC-NEXT:    nop
@@ -175,12 +177,12 @@ define void @call_ret_i64_pair(ptr %i0) {
 ; SPARC-NEXT:    .cfi_register %o7, %i7
 ; SPARC-NEXT:    call ret_i64_pair
 ; SPARC-NEXT:    nop
-; SPARC-NEXT:    ! kill: def $o0 killed $o0 killed $o0_o1 def $o0_o1
-; SPARC-NEXT:    ! kill: def $o2 killed $o2 killed $o2_o3 def $o2_o3
-; SPARC-NEXT:    ! kill: def $o1 killed $o1 killed $o0_o1 def $o0_o1
-; SPARC-NEXT:    std %o0, [%i0]
-; SPARC-NEXT:    ! kill: def $o3 killed $o3 killed $o2_o3 def $o2_o3
-; SPARC-NEXT:    std %o2, [%i0]
+; SPARC-NEXT:    mov %o0, %i2
+; SPARC-NEXT:    mov %o2, %i4
+; SPARC-NEXT:    mov %o1, %i3
+; SPARC-NEXT:    std %i2, [%i0]
+; SPARC-NEXT:    mov %o3, %i5
+; SPARC-NEXT:    std %i4, [%i0]
 ; SPARC-NEXT:    restore
 ; SPARC-NEXT:    retl
 ; SPARC-NEXT:    nop

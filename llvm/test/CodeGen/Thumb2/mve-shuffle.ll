@@ -1724,42 +1724,42 @@ define arm_aapcs_vfpcc <8 x double> @shuffle9_f64(<4 x double> %src1, <4 x doubl
 ; CHECK-LV:       @ %bb.0: @ %entry
 ; CHECK-LV-NEXT:    .vsave {d8, d9, d10, d11}
 ; CHECK-LV-NEXT:    vpush {d8, d9, d10, d11}
-; CHECK-LV-NEXT:    vmov q5, q2
+; CHECK-LV-NEXT:    vmov.f32 s18, s8
+; CHECK-LV-NEXT:    vmov.f32 s22, s12
 ; CHECK-LV-NEXT:    vmov.f32 s16, s0
-; CHECK-LV-NEXT:    vmov.f32 s18, s20
-; CHECK-LV-NEXT:    vmov.f32 s20, s2
-; CHECK-LV-NEXT:    vmov.f32 s10, s12
-; CHECK-LV-NEXT:    vmov.f32 s19, s21
-; CHECK-LV-NEXT:    vmov.f32 s8, s4
+; CHECK-LV-NEXT:    vmov.f32 s20, s4
+; CHECK-LV-NEXT:    vmov.f32 s8, s2
+; CHECK-LV-NEXT:    vmov.f32 s19, s9
 ; CHECK-LV-NEXT:    vmov.f32 s17, s1
-; CHECK-LV-NEXT:    vmov.f32 s21, s3
+; CHECK-LV-NEXT:    vmov.f32 s9, s3
 ; CHECK-LV-NEXT:    vmov q0, q4
+; CHECK-LV-NEXT:    vmov.f32 s21, s5
+; CHECK-LV-NEXT:    vmov.f32 s23, s13
 ; CHECK-LV-NEXT:    vmov.f32 s12, s6
-; CHECK-LV-NEXT:    vmov.f32 s11, s13
-; CHECK-LV-NEXT:    vmov.f32 s9, s5
 ; CHECK-LV-NEXT:    vmov.f32 s13, s7
-; CHECK-LV-NEXT:    vmov q1, q5
+; CHECK-LV-NEXT:    vmov q1, q2
+; CHECK-LV-NEXT:    vmov q2, q5
 ; CHECK-LV-NEXT:    vpop {d8, d9, d10, d11}
 ; CHECK-LV-NEXT:    bx lr
 ;
 ; CHECK-LIS-LABEL: shuffle9_f64:
 ; CHECK-LIS:       @ %bb.0: @ %entry
-; CHECK-LIS-NEXT:    .vsave {d8, d9, d10, d11}
-; CHECK-LIS-NEXT:    vpush {d8, d9, d10, d11}
-; CHECK-LIS-NEXT:    vmov q5, q2
+; CHECK-LIS-NEXT:    .vsave {d8, d9}
+; CHECK-LIS-NEXT:    vpush {d8, d9}
 ; CHECK-LIS-NEXT:    vmov q4, q0
-; CHECK-LIS-NEXT:    vmov.f32 s2, s20
-; CHECK-LIS-NEXT:    vmov.f32 s20, s18
-; CHECK-LIS-NEXT:    vmov.f32 s10, s12
-; CHECK-LIS-NEXT:    vmov.f32 s3, s21
-; CHECK-LIS-NEXT:    vmov.f32 s8, s4
-; CHECK-LIS-NEXT:    vmov.f32 s21, s19
+; CHECK-LIS-NEXT:    vmov.f32 s2, s8
+; CHECK-LIS-NEXT:    vmov.f32 s8, s18
+; CHECK-LIS-NEXT:    vmov.f32 s16, s4
+; CHECK-LIS-NEXT:    vmov.f32 s18, s12
+; CHECK-LIS-NEXT:    vmov.f32 s3, s9
+; CHECK-LIS-NEXT:    vmov.f32 s9, s19
+; CHECK-LIS-NEXT:    vmov.f32 s17, s5
+; CHECK-LIS-NEXT:    vmov.f32 s19, s13
 ; CHECK-LIS-NEXT:    vmov.f32 s12, s6
-; CHECK-LIS-NEXT:    vmov.f32 s11, s13
-; CHECK-LIS-NEXT:    vmov.f32 s9, s5
 ; CHECK-LIS-NEXT:    vmov.f32 s13, s7
-; CHECK-LIS-NEXT:    vmov q1, q5
-; CHECK-LIS-NEXT:    vpop {d8, d9, d10, d11}
+; CHECK-LIS-NEXT:    vmov q1, q2
+; CHECK-LIS-NEXT:    vmov q2, q4
+; CHECK-LIS-NEXT:    vpop {d8, d9}
 ; CHECK-LIS-NEXT:    bx lr
 
 entry:
@@ -1838,42 +1838,42 @@ define arm_aapcs_vfpcc <8 x i64> @shuffle9_i64(<4 x i64> %src1, <4 x i64> %src2)
 ; CHECK-LV:       @ %bb.0: @ %entry
 ; CHECK-LV-NEXT:    .vsave {d8, d9, d10, d11}
 ; CHECK-LV-NEXT:    vpush {d8, d9, d10, d11}
-; CHECK-LV-NEXT:    vmov q5, q2
+; CHECK-LV-NEXT:    vmov.f32 s18, s8
+; CHECK-LV-NEXT:    vmov.f32 s22, s12
 ; CHECK-LV-NEXT:    vmov.f32 s16, s0
-; CHECK-LV-NEXT:    vmov.f32 s18, s20
-; CHECK-LV-NEXT:    vmov.f32 s20, s2
-; CHECK-LV-NEXT:    vmov.f32 s10, s12
-; CHECK-LV-NEXT:    vmov.f32 s19, s21
-; CHECK-LV-NEXT:    vmov.f32 s8, s4
+; CHECK-LV-NEXT:    vmov.f32 s20, s4
+; CHECK-LV-NEXT:    vmov.f32 s8, s2
+; CHECK-LV-NEXT:    vmov.f32 s19, s9
 ; CHECK-LV-NEXT:    vmov.f32 s17, s1
-; CHECK-LV-NEXT:    vmov.f32 s21, s3
+; CHECK-LV-NEXT:    vmov.f32 s9, s3
 ; CHECK-LV-NEXT:    vmov q0, q4
+; CHECK-LV-NEXT:    vmov.f32 s21, s5
+; CHECK-LV-NEXT:    vmov.f32 s23, s13
 ; CHECK-LV-NEXT:    vmov.f32 s12, s6
-; CHECK-LV-NEXT:    vmov.f32 s11, s13
-; CHECK-LV-NEXT:    vmov.f32 s9, s5
 ; CHECK-LV-NEXT:    vmov.f32 s13, s7
-; CHECK-LV-NEXT:    vmov q1, q5
+; CHECK-LV-NEXT:    vmov q1, q2
+; CHECK-LV-NEXT:    vmov q2, q5
 ; CHECK-LV-NEXT:    vpop {d8, d9, d10, d11}
 ; CHECK-LV-NEXT:    bx lr
 ;
 ; CHECK-LIS-LABEL: shuffle9_i64:
 ; CHECK-LIS:       @ %bb.0: @ %entry
-; CHECK-LIS-NEXT:    .vsave {d8, d9, d10, d11}
-; CHECK-LIS-NEXT:    vpush {d8, d9, d10, d11}
-; CHECK-LIS-NEXT:    vmov q5, q2
+; CHECK-LIS-NEXT:    .vsave {d8, d9}
+; CHECK-LIS-NEXT:    vpush {d8, d9}
 ; CHECK-LIS-NEXT:    vmov q4, q0
-; CHECK-LIS-NEXT:    vmov.f32 s2, s20
-; CHECK-LIS-NEXT:    vmov.f32 s20, s18
-; CHECK-LIS-NEXT:    vmov.f32 s10, s12
-; CHECK-LIS-NEXT:    vmov.f32 s3, s21
-; CHECK-LIS-NEXT:    vmov.f32 s8, s4
-; CHECK-LIS-NEXT:    vmov.f32 s21, s19
+; CHECK-LIS-NEXT:    vmov.f32 s2, s8
+; CHECK-LIS-NEXT:    vmov.f32 s8, s18
+; CHECK-LIS-NEXT:    vmov.f32 s16, s4
+; CHECK-LIS-NEXT:    vmov.f32 s18, s12
+; CHECK-LIS-NEXT:    vmov.f32 s3, s9
+; CHECK-LIS-NEXT:    vmov.f32 s9, s19
+; CHECK-LIS-NEXT:    vmov.f32 s17, s5
+; CHECK-LIS-NEXT:    vmov.f32 s19, s13
 ; CHECK-LIS-NEXT:    vmov.f32 s12, s6
-; CHECK-LIS-NEXT:    vmov.f32 s11, s13
-; CHECK-LIS-NEXT:    vmov.f32 s9, s5
 ; CHECK-LIS-NEXT:    vmov.f32 s13, s7
-; CHECK-LIS-NEXT:    vmov q1, q5
-; CHECK-LIS-NEXT:    vpop {d8, d9, d10, d11}
+; CHECK-LIS-NEXT:    vmov q1, q2
+; CHECK-LIS-NEXT:    vmov q2, q4
+; CHECK-LIS-NEXT:    vpop {d8, d9}
 ; CHECK-LIS-NEXT:    bx lr
 
 entry:

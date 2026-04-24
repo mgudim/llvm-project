@@ -110,7 +110,7 @@ define <4 x float> @ldexp_v4f32(<4 x float> %val, <4 x i32> %exp) nounwind {
 ; CHECK-NEXT:    xxmrghd vs0, vs1, v29
 ; CHECK-NEXT:    li r3, 0
 ; CHECK-NEXT:    vextuwrx r3, r3, v31
-; CHECK-NEXT:    xvcvdpsp v28, vs0
+; CHECK-NEXT:    xvcvdpsp v29, vs0
 ; CHECK-NEXT:    xxsldwi vs0, v30, v30, 3
 ; CHECK-NEXT:    extsw r4, r3
 ; CHECK-NEXT:    xscvspdpn f1, vs0
@@ -118,18 +118,18 @@ define <4 x float> @ldexp_v4f32(<4 x float> %val, <4 x i32> %exp) nounwind {
 ; CHECK-NEXT:    nop
 ; CHECK-NEXT:    xxsldwi vs0, v30, v30, 1
 ; CHECK-NEXT:    mfvsrwz r3, v31
-; CHECK-NEXT:    xscpsgndp v29, f1, f1
+; CHECK-NEXT:    xscpsgndp v28, f1, f1
 ; CHECK-NEXT:    extsw r4, r3
 ; CHECK-NEXT:    xscvspdpn f1, vs0
 ; CHECK-NEXT:    bl ldexpf
 ; CHECK-NEXT:    nop
-; CHECK-NEXT:    xxmrghd vs0, vs1, v29
+; CHECK-NEXT:    xxmrghd vs0, vs1, v28
 ; CHECK-NEXT:    lxv v31, 80(r1) # 16-byte Folded Reload
 ; CHECK-NEXT:    lxv v30, 64(r1) # 16-byte Folded Reload
-; CHECK-NEXT:    lxv v29, 48(r1) # 16-byte Folded Reload
-; CHECK-NEXT:    xvcvdpsp v2, vs0
-; CHECK-NEXT:    vmrgew v2, v28, v2
 ; CHECK-NEXT:    lxv v28, 32(r1) # 16-byte Folded Reload
+; CHECK-NEXT:    xvcvdpsp v2, vs0
+; CHECK-NEXT:    vmrgew v2, v29, v2
+; CHECK-NEXT:    lxv v29, 48(r1) # 16-byte Folded Reload
 ; CHECK-NEXT:    addi r1, r1, 96
 ; CHECK-NEXT:    ld r0, 16(r1)
 ; CHECK-NEXT:    mtlr r0

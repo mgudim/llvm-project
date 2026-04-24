@@ -277,6 +277,7 @@ define <64 x half> @masked_load_v64f16(ptr %a, <64 x i1> %mask) {
 define <64 x float> @masked_load_v64f32(ptr %a, <64 x i1> %mask) {
 ; CHECK-LABEL: masked_load_v64f32:
 ; CHECK:       # %bb.0:
+; CHECK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; CHECK-NEXT:    li a1, 32
 ; CHECK-NEXT:    vsetvli zero, a1, e32, m8, ta, ma
 ; CHECK-NEXT:    vle32.v v8, (a0), v0.t
@@ -293,6 +294,7 @@ define <64 x float> @masked_load_v64f32(ptr %a, <64 x i1> %mask) {
 define <128 x bfloat> @masked_load_v128bf16(ptr %a, <128 x i1> %mask) {
 ; CHECK-LABEL: masked_load_v128bf16:
 ; CHECK:       # %bb.0:
+; CHECK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; CHECK-NEXT:    li a1, 64
 ; CHECK-NEXT:    vsetvli zero, a1, e16, m8, ta, ma
 ; CHECK-NEXT:    vle16.v v8, (a0), v0.t
@@ -309,6 +311,7 @@ define <128 x bfloat> @masked_load_v128bf16(ptr %a, <128 x i1> %mask) {
 define <128 x half> @masked_load_v128f16(ptr %a, <128 x i1> %mask) {
 ; CHECK-LABEL: masked_load_v128f16:
 ; CHECK:       # %bb.0:
+; CHECK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; CHECK-NEXT:    li a1, 64
 ; CHECK-NEXT:    vsetvli zero, a1, e16, m8, ta, ma
 ; CHECK-NEXT:    vle16.v v8, (a0), v0.t

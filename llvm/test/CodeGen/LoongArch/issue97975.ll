@@ -28,21 +28,21 @@ define half @f(half %a, half %b, half %c) {
 ; LA32S-NEXT:    move $fp, $a2
 ; LA32S-NEXT:    move $s0, $a1
 ; LA32S-NEXT:    lu12i.w $a1, 15
-; LA32S-NEXT:    ori $s2, $a1, 4095
-; LA32S-NEXT:    and $a0, $a0, $s2
+; LA32S-NEXT:    ori $s1, $a1, 4095
+; LA32S-NEXT:    and $a0, $a0, $s1
 ; LA32S-NEXT:    bl __extendhfsf2
-; LA32S-NEXT:    move $s1, $a0
-; LA32S-NEXT:    and $a0, $s0, $s2
+; LA32S-NEXT:    move $s2, $a0
+; LA32S-NEXT:    and $a0, $s0, $s1
 ; LA32S-NEXT:    bl __extendhfsf2
 ; LA32S-NEXT:    move $a1, $a0
-; LA32S-NEXT:    move $a0, $s1
+; LA32S-NEXT:    move $a0, $s2
 ; LA32S-NEXT:    bl __addsf3
 ; LA32S-NEXT:    bl __truncsfhf2
 ; LA32S-NEXT:    move $s0, $a0
-; LA32S-NEXT:    and $a0, $fp, $s2
+; LA32S-NEXT:    and $a0, $fp, $s1
 ; LA32S-NEXT:    bl __extendhfsf2
 ; LA32S-NEXT:    move $fp, $a0
-; LA32S-NEXT:    and $a0, $s0, $s2
+; LA32S-NEXT:    and $a0, $s0, $s1
 ; LA32S-NEXT:    bl __extendhfsf2
 ; LA32S-NEXT:    move $a1, $fp
 ; LA32S-NEXT:    bl __addsf3

@@ -29,6 +29,13 @@ define i32 @ldp_aligned_int32_t(ptr %0) #0 {
 ; CHECK-DISABLE-LDP-NEXT:    ldr w8, [x8, #4]
 ; CHECK-DISABLE-LDP-NEXT:    add w0, w8, w9
 ; CHECK-DISABLE-LDP-NEXT:    ret
+;
+; CHECK-DISABLE-STP-LABEL: ldp_aligned_int32_t:
+; CHECK-DISABLE-STP:       // %bb.0:
+; CHECK-DISABLE-STP-NEXT:    and x8, x0, #0xffffffffffffffc0
+; CHECK-DISABLE-STP-NEXT:    ldp w9, w8, [x8]
+; CHECK-DISABLE-STP-NEXT:    add w0, w8, w9
+; CHECK-DISABLE-STP-NEXT:    ret
   %2 = ptrtoint ptr %0 to i64
   %3 = and i64 %2, -64
   %4 = inttoptr i64 %3 to ptr
@@ -61,6 +68,13 @@ define i64 @ldp_aligned_int64_t(ptr %0) #0 {
 ; CHECK-DISABLE-LDP-NEXT:    ldr x8, [x8, #8]
 ; CHECK-DISABLE-LDP-NEXT:    add x0, x8, x9
 ; CHECK-DISABLE-LDP-NEXT:    ret
+;
+; CHECK-DISABLE-STP-LABEL: ldp_aligned_int64_t:
+; CHECK-DISABLE-STP:       // %bb.0:
+; CHECK-DISABLE-STP-NEXT:    and x8, x0, #0xffffffffffffff80
+; CHECK-DISABLE-STP-NEXT:    ldp x9, x8, [x8]
+; CHECK-DISABLE-STP-NEXT:    add x0, x8, x9
+; CHECK-DISABLE-STP-NEXT:    ret
   %2 = ptrtoint ptr %0 to i64
   %3 = and i64 %2, -128
   %4 = inttoptr i64 %3 to ptr
@@ -93,6 +107,13 @@ define <4 x i32> @ldp_aligned_v4si(ptr %0) #0 {
 ; CHECK-DISABLE-LDP-NEXT:    ldr q1, [x8, #16]
 ; CHECK-DISABLE-LDP-NEXT:    add v0.4s, v1.4s, v0.4s
 ; CHECK-DISABLE-LDP-NEXT:    ret
+;
+; CHECK-DISABLE-STP-LABEL: ldp_aligned_v4si:
+; CHECK-DISABLE-STP:       // %bb.0:
+; CHECK-DISABLE-STP-NEXT:    and x8, x0, #0xffffffffffffff00
+; CHECK-DISABLE-STP-NEXT:    ldp q0, q1, [x8]
+; CHECK-DISABLE-STP-NEXT:    add v0.4s, v1.4s, v0.4s
+; CHECK-DISABLE-STP-NEXT:    ret
   %2 = ptrtoint ptr %0 to i64
   %3 = and i64 %2, -256
   %4 = inttoptr i64 %3 to ptr
@@ -126,6 +147,14 @@ define i32 @ldp_unaligned_int32_t(ptr %0) #0 {
 ; CHECK-DISABLE-LDP-NEXT:    ldr w8, [x8, #8]
 ; CHECK-DISABLE-LDP-NEXT:    add w0, w8, w9
 ; CHECK-DISABLE-LDP-NEXT:    ret
+;
+; CHECK-DISABLE-STP-LABEL: ldp_unaligned_int32_t:
+; CHECK-DISABLE-STP:       // %bb.0:
+; CHECK-DISABLE-STP-NEXT:    and x8, x0, #0xffffffffffffffc0
+; CHECK-DISABLE-STP-NEXT:    ldr w9, [x8, #4]
+; CHECK-DISABLE-STP-NEXT:    ldr w8, [x8, #8]
+; CHECK-DISABLE-STP-NEXT:    add w0, w8, w9
+; CHECK-DISABLE-STP-NEXT:    ret
   %2 = ptrtoint ptr %0 to i64
   %3 = and i64 %2, -64
   %4 = inttoptr i64 %3 to ptr
@@ -160,6 +189,14 @@ define i64 @ldp_unaligned_int64_t(ptr %0) #0 {
 ; CHECK-DISABLE-LDP-NEXT:    ldr x8, [x8, #16]
 ; CHECK-DISABLE-LDP-NEXT:    add x0, x8, x9
 ; CHECK-DISABLE-LDP-NEXT:    ret
+;
+; CHECK-DISABLE-STP-LABEL: ldp_unaligned_int64_t:
+; CHECK-DISABLE-STP:       // %bb.0:
+; CHECK-DISABLE-STP-NEXT:    and x8, x0, #0xffffffffffffff80
+; CHECK-DISABLE-STP-NEXT:    ldr x9, [x8, #8]
+; CHECK-DISABLE-STP-NEXT:    ldr x8, [x8, #16]
+; CHECK-DISABLE-STP-NEXT:    add x0, x8, x9
+; CHECK-DISABLE-STP-NEXT:    ret
   %2 = ptrtoint ptr %0 to i64
   %3 = and i64 %2, -128
   %4 = inttoptr i64 %3 to ptr
@@ -194,6 +231,14 @@ define <4 x i32> @ldp_unaligned_v4si(ptr %0) #0 {
 ; CHECK-DISABLE-LDP-NEXT:    ldr q1, [x8, #32]
 ; CHECK-DISABLE-LDP-NEXT:    add v0.4s, v1.4s, v0.4s
 ; CHECK-DISABLE-LDP-NEXT:    ret
+;
+; CHECK-DISABLE-STP-LABEL: ldp_unaligned_v4si:
+; CHECK-DISABLE-STP:       // %bb.0:
+; CHECK-DISABLE-STP-NEXT:    and x8, x0, #0xffffffffffffff00
+; CHECK-DISABLE-STP-NEXT:    ldr q0, [x8, #16]
+; CHECK-DISABLE-STP-NEXT:    ldr q1, [x8, #32]
+; CHECK-DISABLE-STP-NEXT:    add v0.4s, v1.4s, v0.4s
+; CHECK-DISABLE-STP-NEXT:    ret
   %2 = ptrtoint ptr %0 to i64
   %3 = and i64 %2, -256
   %4 = inttoptr i64 %3 to ptr
@@ -214,9 +259,16 @@ define ptr @stp_aligned_int32_t(ptr %0, i32 %1) #0 {
 ;
 ; CHECK-DEFAULT-LABEL: stp_aligned_int32_t:
 ; CHECK-DEFAULT:       // %bb.0:
-; CHECK-DEFAULT-NEXT:    and x0, x0, #0xffffffffffffffc0
-; CHECK-DEFAULT-NEXT:    stp w1, w1, [x0]
+; CHECK-DEFAULT-NEXT:    and x8, x0, #0xffffffffffffffc0
+; CHECK-DEFAULT-NEXT:    mov x0, x8
+; CHECK-DEFAULT-NEXT:    stp w1, w1, [x8]
 ; CHECK-DEFAULT-NEXT:    ret
+;
+; CHECK-DISABLE-LDP-LABEL: stp_aligned_int32_t:
+; CHECK-DISABLE-LDP:       // %bb.0:
+; CHECK-DISABLE-LDP-NEXT:    and x0, x0, #0xffffffffffffffc0
+; CHECK-DISABLE-LDP-NEXT:    stp w1, w1, [x0]
+; CHECK-DISABLE-LDP-NEXT:    ret
 ;
 ; CHECK-DISABLE-STP-LABEL: stp_aligned_int32_t:
 ; CHECK-DISABLE-STP:       // %bb.0:
@@ -242,9 +294,16 @@ define dso_local ptr @stp_aligned_int64_t(ptr %0, i64 %1) #0 {
 ;
 ; CHECK-DEFAULT-LABEL: stp_aligned_int64_t:
 ; CHECK-DEFAULT:       // %bb.0:
-; CHECK-DEFAULT-NEXT:    and x0, x0, #0xffffffffffffff80
-; CHECK-DEFAULT-NEXT:    stp x1, x1, [x0]
+; CHECK-DEFAULT-NEXT:    and x8, x0, #0xffffffffffffff80
+; CHECK-DEFAULT-NEXT:    mov x0, x8
+; CHECK-DEFAULT-NEXT:    stp x1, x1, [x8]
 ; CHECK-DEFAULT-NEXT:    ret
+;
+; CHECK-DISABLE-LDP-LABEL: stp_aligned_int64_t:
+; CHECK-DISABLE-LDP:       // %bb.0:
+; CHECK-DISABLE-LDP-NEXT:    and x0, x0, #0xffffffffffffff80
+; CHECK-DISABLE-LDP-NEXT:    stp x1, x1, [x0]
+; CHECK-DISABLE-LDP-NEXT:    ret
 ;
 ; CHECK-DISABLE-STP-LABEL: stp_aligned_int64_t:
 ; CHECK-DISABLE-STP:       // %bb.0:
@@ -270,9 +329,16 @@ define ptr @stp_aligned_v4si(ptr %0, <4 x i32> %1) #0 {
 ;
 ; CHECK-DEFAULT-LABEL: stp_aligned_v4si:
 ; CHECK-DEFAULT:       // %bb.0:
-; CHECK-DEFAULT-NEXT:    and x0, x0, #0xffffffffffffff00
-; CHECK-DEFAULT-NEXT:    stp q0, q0, [x0]
+; CHECK-DEFAULT-NEXT:    and x8, x0, #0xffffffffffffff00
+; CHECK-DEFAULT-NEXT:    mov x0, x8
+; CHECK-DEFAULT-NEXT:    stp q0, q0, [x8]
 ; CHECK-DEFAULT-NEXT:    ret
+;
+; CHECK-DISABLE-LDP-LABEL: stp_aligned_v4si:
+; CHECK-DISABLE-LDP:       // %bb.0:
+; CHECK-DISABLE-LDP-NEXT:    and x0, x0, #0xffffffffffffff00
+; CHECK-DISABLE-LDP-NEXT:    stp q0, q0, [x0]
+; CHECK-DISABLE-LDP-NEXT:    ret
 ;
 ; CHECK-DISABLE-STP-LABEL: stp_aligned_v4si:
 ; CHECK-DISABLE-STP:       // %bb.0:
@@ -304,6 +370,14 @@ define ptr @stp_unaligned_int32_t(ptr %0, i32 %1) #0 {
 ; CHECK-DEFAULT-NEXT:    orr x0, x8, #0x4
 ; CHECK-DEFAULT-NEXT:    stp w1, w1, [x8, #4]
 ; CHECK-DEFAULT-NEXT:    ret
+;
+; CHECK-DISABLE-LDP-LABEL: stp_unaligned_int32_t:
+; CHECK-DISABLE-LDP:       // %bb.0:
+; CHECK-DISABLE-LDP-NEXT:    and x8, x0, #0xffffffffffffffc0
+; CHECK-DISABLE-LDP-NEXT:    orr x0, x8, #0x4
+; CHECK-DISABLE-LDP-NEXT:    str w1, [x8, #4]
+; CHECK-DISABLE-LDP-NEXT:    str w1, [x8, #8]
+; CHECK-DISABLE-LDP-NEXT:    ret
 ;
 ; CHECK-DISABLE-STP-LABEL: stp_unaligned_int32_t:
 ; CHECK-DISABLE-STP:       // %bb.0:
@@ -338,6 +412,14 @@ define ptr @stp_unaligned_int64_t(ptr %0, i64 %1) #0 {
 ; CHECK-DEFAULT-NEXT:    stp x1, x1, [x8, #8]
 ; CHECK-DEFAULT-NEXT:    ret
 ;
+; CHECK-DISABLE-LDP-LABEL: stp_unaligned_int64_t:
+; CHECK-DISABLE-LDP:       // %bb.0:
+; CHECK-DISABLE-LDP-NEXT:    and x8, x0, #0xffffffffffffff80
+; CHECK-DISABLE-LDP-NEXT:    orr x0, x8, #0x8
+; CHECK-DISABLE-LDP-NEXT:    str x1, [x8, #8]
+; CHECK-DISABLE-LDP-NEXT:    str x1, [x8, #16]
+; CHECK-DISABLE-LDP-NEXT:    ret
+;
 ; CHECK-DISABLE-STP-LABEL: stp_unaligned_int64_t:
 ; CHECK-DISABLE-STP:       // %bb.0:
 ; CHECK-DISABLE-STP-NEXT:    and x8, x0, #0xffffffffffffff80
@@ -370,6 +452,14 @@ define ptr @stp_unaligned_v4si(ptr %0, <4 x i32> %1) #0 {
 ; CHECK-DEFAULT-NEXT:    orr x0, x8, #0x10
 ; CHECK-DEFAULT-NEXT:    stp q0, q0, [x8, #16]
 ; CHECK-DEFAULT-NEXT:    ret
+;
+; CHECK-DISABLE-LDP-LABEL: stp_unaligned_v4si:
+; CHECK-DISABLE-LDP:       // %bb.0:
+; CHECK-DISABLE-LDP-NEXT:    and x8, x0, #0xffffffffffffff00
+; CHECK-DISABLE-LDP-NEXT:    orr x0, x8, #0x10
+; CHECK-DISABLE-LDP-NEXT:    str q0, [x8, #16]
+; CHECK-DISABLE-LDP-NEXT:    str q0, [x8, #32]
+; CHECK-DISABLE-LDP-NEXT:    ret
 ;
 ; CHECK-DISABLE-STP-LABEL: stp_unaligned_v4si:
 ; CHECK-DISABLE-STP:       // %bb.0:

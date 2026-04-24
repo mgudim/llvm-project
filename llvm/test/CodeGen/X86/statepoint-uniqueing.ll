@@ -18,8 +18,8 @@ define void @test_gcrelocate_uniqueing(ptr addrspace(1) %ptr) gc "statepoint-exa
 ; CHECK-NEXT:    movq %rdi, (%rsp)
 ; CHECK-NEXT:    callq f@PLT
 ; CHECK-NEXT:  .Ltmp0:
-; CHECK-NEXT:    movq (%rsp), %rdi
-; CHECK-NEXT:    movq %rdi, %rsi
+; CHECK-NEXT:    movq (%rsp), %rsi
+; CHECK-NEXT:    movq %rsi, %rdi
 ; CHECK-NEXT:    xorl %eax, %eax
 ; CHECK-NEXT:    callq use@PLT
 ; CHECK-NEXT:    popq %rax
@@ -42,8 +42,8 @@ define void @test_gcptr_uniqueing(ptr addrspace(1) %ptr) gc "statepoint-example"
 ; CHECK-NEXT:    movq %rdi, (%rsp)
 ; CHECK-NEXT:    callq f@PLT
 ; CHECK-NEXT:  .Ltmp1:
-; CHECK-NEXT:    movq (%rsp), %rdi
-; CHECK-NEXT:    movq %rdi, %rsi
+; CHECK-NEXT:    movq (%rsp), %rsi
+; CHECK-NEXT:    movq %rsi, %rdi
 ; CHECK-NEXT:    xorl %eax, %eax
 ; CHECK-NEXT:    callq use@PLT
 ; CHECK-NEXT:    popq %rax

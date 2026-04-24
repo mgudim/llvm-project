@@ -34,10 +34,9 @@ define i8 @clear_lowbits8_c0(i8 %val, i8 %numlowbits) nounwind {
 ;
 ; X64-LABEL: clear_lowbits8_c0:
 ; X64:       # %bb.0:
-; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    movl %edi, %eax
+; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    shrb %cl, %al
-; X64-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NEXT:    shlb %cl, %al
 ; X64-NEXT:    # kill: def $al killed $al killed $eax
 ; X64-NEXT:    retq
@@ -58,10 +57,9 @@ define i8 @clear_lowbits8_c2_load(ptr %w, i8 %numlowbits) nounwind {
 ;
 ; X64-LABEL: clear_lowbits8_c2_load:
 ; X64:       # %bb.0:
-; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    movzbl (%rdi), %eax
+; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    shrb %cl, %al
-; X64-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NEXT:    shlb %cl, %al
 ; X64-NEXT:    retq
   %val = load i8, ptr %w
@@ -81,10 +79,9 @@ define i8 @clear_lowbits8_c4_commutative(i8 %val, i8 %numlowbits) nounwind {
 ;
 ; X64-LABEL: clear_lowbits8_c4_commutative:
 ; X64:       # %bb.0:
-; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    movl %edi, %eax
+; X64-NEXT:    movl %esi, %ecx
 ; X64-NEXT:    shrb %cl, %al
-; X64-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NEXT:    shlb %cl, %al
 ; X64-NEXT:    # kill: def $al killed $al killed $eax
 ; X64-NEXT:    retq
@@ -116,10 +113,9 @@ define i16 @clear_lowbits16_c0(i16 %val, i16 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits16_c0:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movzwl %di, %eax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    # kill: def $ax killed $ax killed $eax
 ; X64-NOBMI2-NEXT:    retq
@@ -157,10 +153,9 @@ define i16 @clear_lowbits16_c1_indexzext(i16 %val, i8 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits16_c1_indexzext:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movzwl %di, %eax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    # kill: def $ax killed $ax killed $eax
 ; X64-NOBMI2-NEXT:    retq
@@ -201,10 +196,9 @@ define i16 @clear_lowbits16_c2_load(ptr %w, i16 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits16_c2_load:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movzwl (%rdi), %eax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    # kill: def $ax killed $ax killed $eax
 ; X64-NOBMI2-NEXT:    retq
@@ -245,10 +239,9 @@ define i16 @clear_lowbits16_c3_load_indexzext(ptr %w, i8 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits16_c3_load_indexzext:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movzwl (%rdi), %eax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    # kill: def $ax killed $ax killed $eax
 ; X64-NOBMI2-NEXT:    retq
@@ -288,10 +281,9 @@ define i16 @clear_lowbits16_c4_commutative(i16 %val, i16 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits16_c4_commutative:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movzwl %di, %eax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    # kill: def $ax killed $ax killed $eax
 ; X64-NOBMI2-NEXT:    retq
@@ -328,10 +320,9 @@ define i32 @clear_lowbits32_c0(i32 %val, i32 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits32_c0:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movl %edi, %eax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -363,10 +354,9 @@ define i32 @clear_lowbits32_c1_indexzext(i32 %val, i8 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits32_c1_indexzext:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movl %edi, %eax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -401,10 +391,9 @@ define i32 @clear_lowbits32_c2_load(ptr %w, i32 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits32_c2_load:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movl (%rdi), %eax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -439,10 +428,9 @@ define i32 @clear_lowbits32_c3_load_indexzext(ptr %w, i8 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits32_c3_load_indexzext:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movl (%rdi), %eax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -476,10 +464,9 @@ define i32 @clear_lowbits32_c4_commutative(i32 %val, i32 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits32_c4_commutative:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movl %edi, %eax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -529,10 +516,9 @@ define i64 @clear_lowbits64_c0(i64 %val, i64 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits64_c0:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movq %rsi, %rcx
 ; X64-NOBMI2-NEXT:    movq %rdi, %rax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrq %cl, %rax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; X64-NOBMI2-NEXT:    shlq %cl, %rax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -580,10 +566,9 @@ define i64 @clear_lowbits64_c1_indexzext(i64 %val, i8 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits64_c1_indexzext:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movq %rdi, %rax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrq %cl, %rax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shlq %cl, %rax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -639,10 +624,9 @@ define i64 @clear_lowbits64_c2_load(ptr %w, i64 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits64_c2_load:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movq %rsi, %rcx
 ; X64-NOBMI2-NEXT:    movq (%rdi), %rax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrq %cl, %rax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; X64-NOBMI2-NEXT:    shlq %cl, %rax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -697,10 +681,9 @@ define i64 @clear_lowbits64_c3_load_indexzext(ptr %w, i8 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits64_c3_load_indexzext:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movq (%rdi), %rax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrq %cl, %rax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shlq %cl, %rax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -751,10 +734,9 @@ define i64 @clear_lowbits64_c4_commutative(i64 %val, i64 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits64_c4_commutative:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movq %rsi, %rcx
 ; X64-NOBMI2-NEXT:    movq %rdi, %rax
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrq %cl, %rax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; X64-NOBMI2-NEXT:    shlq %cl, %rax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -1113,11 +1095,10 @@ define i32 @clear_lowbits32_ic0(i32 %val, i32 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits32_ic0:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movl %edi, %eax
-; X64-NOBMI2-NEXT:    negb %cl
+; X64-NOBMI2-NEXT:    negb %sil
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -1154,11 +1135,10 @@ define i32 @clear_lowbits32_ic1_indexzext(i32 %val, i8 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits32_ic1_indexzext:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movl %edi, %eax
-; X64-NOBMI2-NEXT:    negb %cl
+; X64-NOBMI2-NEXT:    negb %sil
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -1198,11 +1178,10 @@ define i32 @clear_lowbits32_ic2_load(ptr %w, i32 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits32_ic2_load:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movl (%rdi), %eax
-; X64-NOBMI2-NEXT:    negb %cl
+; X64-NOBMI2-NEXT:    negb %sil
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -1242,11 +1221,10 @@ define i32 @clear_lowbits32_ic3_load_indexzext(ptr %w, i8 %numlowbits) nounwind 
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits32_ic3_load_indexzext:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movl (%rdi), %eax
-; X64-NOBMI2-NEXT:    negb %cl
+; X64-NOBMI2-NEXT:    negb %sil
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -1285,11 +1263,10 @@ define i32 @clear_lowbits32_ic4_commutative(i32 %val, i32 %numlowbits) nounwind 
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits32_ic4_commutative:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movl %edi, %eax
-; X64-NOBMI2-NEXT:    negb %cl
+; X64-NOBMI2-NEXT:    negb %sil
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrl %cl, %eax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shll %cl, %eax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -1343,11 +1320,10 @@ define i64 @clear_lowbits64_ic0(i64 %val, i64 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits64_ic0:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movq %rsi, %rcx
 ; X64-NOBMI2-NEXT:    movq %rdi, %rax
-; X64-NOBMI2-NEXT:    negb %cl
+; X64-NOBMI2-NEXT:    negb %sil
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrq %cl, %rax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; X64-NOBMI2-NEXT:    shlq %cl, %rax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -1399,11 +1375,10 @@ define i64 @clear_lowbits64_ic1_indexzext(i64 %val, i8 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits64_ic1_indexzext:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movq %rdi, %rax
-; X64-NOBMI2-NEXT:    negb %cl
+; X64-NOBMI2-NEXT:    negb %sil
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrq %cl, %rax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shlq %cl, %rax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -1463,11 +1438,10 @@ define i64 @clear_lowbits64_ic2_load(ptr %w, i64 %numlowbits) nounwind {
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits64_ic2_load:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movq %rsi, %rcx
 ; X64-NOBMI2-NEXT:    movq (%rdi), %rax
-; X64-NOBMI2-NEXT:    negb %cl
+; X64-NOBMI2-NEXT:    negb %sil
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrq %cl, %rax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; X64-NOBMI2-NEXT:    shlq %cl, %rax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -1526,11 +1500,10 @@ define i64 @clear_lowbits64_ic3_load_indexzext(ptr %w, i8 %numlowbits) nounwind 
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits64_ic3_load_indexzext:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    movq (%rdi), %rax
-; X64-NOBMI2-NEXT:    negb %cl
+; X64-NOBMI2-NEXT:    negb %sil
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrq %cl, %rax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $ecx
 ; X64-NOBMI2-NEXT:    shlq %cl, %rax
 ; X64-NOBMI2-NEXT:    retq
 ;
@@ -1585,11 +1558,10 @@ define i64 @clear_lowbits64_ic4_commutative(i64 %val, i64 %numlowbits) nounwind 
 ;
 ; X64-NOBMI2-LABEL: clear_lowbits64_ic4_commutative:
 ; X64-NOBMI2:       # %bb.0:
-; X64-NOBMI2-NEXT:    movq %rsi, %rcx
 ; X64-NOBMI2-NEXT:    movq %rdi, %rax
-; X64-NOBMI2-NEXT:    negb %cl
+; X64-NOBMI2-NEXT:    negb %sil
+; X64-NOBMI2-NEXT:    movl %esi, %ecx
 ; X64-NOBMI2-NEXT:    shrq %cl, %rax
-; X64-NOBMI2-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; X64-NOBMI2-NEXT:    shlq %cl, %rax
 ; X64-NOBMI2-NEXT:    retq
 ;

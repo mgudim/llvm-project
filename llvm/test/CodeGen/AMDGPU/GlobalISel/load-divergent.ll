@@ -62,9 +62,10 @@ define amdgpu_ps void @load_divergent_P0_v2i32(ptr addrspace(0) %ptra, ptr addrs
 define amdgpu_ps void @load_divergent_P0_v3i32(ptr addrspace(0) %ptra, ptr addrspace(0) %out) {
 ; GFX12-LABEL: load_divergent_P0_v3i32:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    flat_load_b96 v[4:6], v[0:1]
+; GFX12-NEXT:    v_dual_mov_b32 v4, v2 :: v_dual_mov_b32 v5, v3
+; GFX12-NEXT:    flat_load_b96 v[0:2], v[0:1]
 ; GFX12-NEXT:    s_wait_loadcnt_dscnt 0x0
-; GFX12-NEXT:    flat_store_b96 v[2:3], v[4:6]
+; GFX12-NEXT:    flat_store_b96 v[4:5], v[0:2]
 ; GFX12-NEXT:    s_endpgm
   %a = load <3 x i32>, ptr addrspace(0) %ptra
   store <3 x i32> %a, ptr addrspace(0) %out
@@ -74,9 +75,10 @@ define amdgpu_ps void @load_divergent_P0_v3i32(ptr addrspace(0) %ptra, ptr addrs
 define amdgpu_ps void @load_divergent_P0_v4i32(ptr addrspace(0) %ptra, ptr addrspace(0) %out) {
 ; GFX12-LABEL: load_divergent_P0_v4i32:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    flat_load_b128 v[4:7], v[0:1]
+; GFX12-NEXT:    v_dual_mov_b32 v4, v2 :: v_dual_mov_b32 v5, v3
+; GFX12-NEXT:    flat_load_b128 v[0:3], v[0:1]
 ; GFX12-NEXT:    s_wait_loadcnt_dscnt 0x0
-; GFX12-NEXT:    flat_store_b128 v[2:3], v[4:7]
+; GFX12-NEXT:    flat_store_b128 v[4:5], v[0:3]
 ; GFX12-NEXT:    s_endpgm
   %a = load <4 x i32>, ptr addrspace(0) %ptra
   store <4 x i32> %a, ptr addrspace(0) %out
@@ -145,9 +147,10 @@ define amdgpu_ps void @load_divergent_P1_v2i32(ptr addrspace(1) %ptra, ptr addrs
 define amdgpu_ps void @load_divergent_P1_v3i32(ptr addrspace(1) %ptra, ptr addrspace(1) %out) {
 ; GFX12-LABEL: load_divergent_P1_v3i32:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_load_b96 v[4:6], v[0:1], off
+; GFX12-NEXT:    v_dual_mov_b32 v4, v2 :: v_dual_mov_b32 v5, v3
+; GFX12-NEXT:    global_load_b96 v[0:2], v[0:1], off
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b96 v[2:3], v[4:6], off
+; GFX12-NEXT:    global_store_b96 v[4:5], v[0:2], off
 ; GFX12-NEXT:    s_endpgm
   %a = load <3 x i32>, ptr addrspace(1) %ptra
   store <3 x i32> %a, ptr addrspace(1) %out
@@ -157,9 +160,10 @@ define amdgpu_ps void @load_divergent_P1_v3i32(ptr addrspace(1) %ptra, ptr addrs
 define amdgpu_ps void @load_divergent_P1_v4i32(ptr addrspace(1) %ptra, ptr addrspace(1) %out) {
 ; GFX12-LABEL: load_divergent_P1_v4i32:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_load_b128 v[4:7], v[0:1], off
+; GFX12-NEXT:    v_dual_mov_b32 v4, v2 :: v_dual_mov_b32 v5, v3
+; GFX12-NEXT:    global_load_b128 v[0:3], v[0:1], off
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b128 v[2:3], v[4:7], off
+; GFX12-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; GFX12-NEXT:    s_endpgm
   %a = load <4 x i32>, ptr addrspace(1) %ptra
   store <4 x i32> %a, ptr addrspace(1) %out
@@ -169,13 +173,15 @@ define amdgpu_ps void @load_divergent_P1_v4i32(ptr addrspace(1) %ptra, ptr addrs
 define amdgpu_ps void @load_divergent_P1_v8i32(ptr addrspace(1) %ptra, ptr addrspace(1) %out) {
 ; GFX12-LABEL: load_divergent_P1_v8i32:
 ; GFX12:       ; %bb.0:
+; GFX12-NEXT:    v_dual_mov_b32 v4, v0 :: v_dual_mov_b32 v5, v1
+; GFX12-NEXT:    v_dual_mov_b32 v8, v2 :: v_dual_mov_b32 v9, v3
 ; GFX12-NEXT:    s_clause 0x1
-; GFX12-NEXT:    global_load_b128 v[4:7], v[0:1], off
-; GFX12-NEXT:    global_load_b128 v[8:11], v[0:1], off offset:16
+; GFX12-NEXT:    global_load_b128 v[0:3], v[4:5], off
+; GFX12-NEXT:    global_load_b128 v[4:7], v[4:5], off offset:16
 ; GFX12-NEXT:    s_wait_loadcnt 0x1
-; GFX12-NEXT:    global_store_b128 v[2:3], v[4:7], off
+; GFX12-NEXT:    global_store_b128 v[8:9], v[0:3], off
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b128 v[2:3], v[8:11], off offset:16
+; GFX12-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GFX12-NEXT:    s_endpgm
   %a = load <8 x i32>, ptr addrspace(1) %ptra
   store <8 x i32> %a, ptr addrspace(1) %out
@@ -185,19 +191,21 @@ define amdgpu_ps void @load_divergent_P1_v8i32(ptr addrspace(1) %ptra, ptr addrs
 define amdgpu_ps void @load_divergent_P1_v16i32(ptr addrspace(1) %ptra, ptr addrspace(1) %out) {
 ; GFX12-LABEL: load_divergent_P1_v16i32:
 ; GFX12:       ; %bb.0:
+; GFX12-NEXT:    v_dual_mov_b32 v12, v0 :: v_dual_mov_b32 v13, v1
+; GFX12-NEXT:    v_dual_mov_b32 v16, v2 :: v_dual_mov_b32 v17, v3
 ; GFX12-NEXT:    s_clause 0x3
-; GFX12-NEXT:    global_load_b128 v[4:7], v[0:1], off
-; GFX12-NEXT:    global_load_b128 v[8:11], v[0:1], off offset:16
-; GFX12-NEXT:    global_load_b128 v[12:15], v[0:1], off offset:32
-; GFX12-NEXT:    global_load_b128 v[16:19], v[0:1], off offset:48
+; GFX12-NEXT:    global_load_b128 v[0:3], v[12:13], off
+; GFX12-NEXT:    global_load_b128 v[4:7], v[12:13], off offset:16
+; GFX12-NEXT:    global_load_b128 v[8:11], v[12:13], off offset:32
+; GFX12-NEXT:    global_load_b128 v[12:15], v[12:13], off offset:48
 ; GFX12-NEXT:    s_wait_loadcnt 0x3
-; GFX12-NEXT:    global_store_b128 v[2:3], v[4:7], off
+; GFX12-NEXT:    global_store_b128 v[16:17], v[0:3], off
 ; GFX12-NEXT:    s_wait_loadcnt 0x2
-; GFX12-NEXT:    global_store_b128 v[2:3], v[8:11], off offset:16
+; GFX12-NEXT:    global_store_b128 v[16:17], v[4:7], off offset:16
 ; GFX12-NEXT:    s_wait_loadcnt 0x1
-; GFX12-NEXT:    global_store_b128 v[2:3], v[12:15], off offset:32
+; GFX12-NEXT:    global_store_b128 v[16:17], v[8:11], off offset:32
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b128 v[2:3], v[16:19], off offset:48
+; GFX12-NEXT:    global_store_b128 v[16:17], v[12:15], off offset:48
 ; GFX12-NEXT:    s_endpgm
   %a = load <16 x i32>, ptr addrspace(1) %ptra
   store <16 x i32> %a, ptr addrspace(1) %out
@@ -349,9 +357,10 @@ define amdgpu_ps void @load_divergent_P4_v2i32(ptr addrspace(4) %ptra, ptr addrs
 define amdgpu_ps void @load_divergent_P4_v3i32(ptr addrspace(4) %ptra, ptr addrspace(1) %out) {
 ; GFX12-LABEL: load_divergent_P4_v3i32:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_load_b96 v[4:6], v[0:1], off
+; GFX12-NEXT:    v_dual_mov_b32 v4, v2 :: v_dual_mov_b32 v5, v3
+; GFX12-NEXT:    global_load_b96 v[0:2], v[0:1], off
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b96 v[2:3], v[4:6], off
+; GFX12-NEXT:    global_store_b96 v[4:5], v[0:2], off
 ; GFX12-NEXT:    s_endpgm
   %a = load <3 x i32>, ptr addrspace(4) %ptra
   store <3 x i32> %a, ptr addrspace(1) %out
@@ -361,9 +370,10 @@ define amdgpu_ps void @load_divergent_P4_v3i32(ptr addrspace(4) %ptra, ptr addrs
 define amdgpu_ps void @load_divergent_P4_v4i32(ptr addrspace(4) %ptra, ptr addrspace(1) %out) {
 ; GFX12-LABEL: load_divergent_P4_v4i32:
 ; GFX12:       ; %bb.0:
-; GFX12-NEXT:    global_load_b128 v[4:7], v[0:1], off
+; GFX12-NEXT:    v_dual_mov_b32 v4, v2 :: v_dual_mov_b32 v5, v3
+; GFX12-NEXT:    global_load_b128 v[0:3], v[0:1], off
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b128 v[2:3], v[4:7], off
+; GFX12-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; GFX12-NEXT:    s_endpgm
   %a = load <4 x i32>, ptr addrspace(4) %ptra
   store <4 x i32> %a, ptr addrspace(1) %out
@@ -373,13 +383,15 @@ define amdgpu_ps void @load_divergent_P4_v4i32(ptr addrspace(4) %ptra, ptr addrs
 define amdgpu_ps void @load_divergent_P4_v8i32(ptr addrspace(4) %ptra, ptr addrspace(1) %out) {
 ; GFX12-LABEL: load_divergent_P4_v8i32:
 ; GFX12:       ; %bb.0:
+; GFX12-NEXT:    v_dual_mov_b32 v4, v0 :: v_dual_mov_b32 v5, v1
+; GFX12-NEXT:    v_dual_mov_b32 v8, v2 :: v_dual_mov_b32 v9, v3
 ; GFX12-NEXT:    s_clause 0x1
-; GFX12-NEXT:    global_load_b128 v[4:7], v[0:1], off
-; GFX12-NEXT:    global_load_b128 v[8:11], v[0:1], off offset:16
+; GFX12-NEXT:    global_load_b128 v[0:3], v[4:5], off
+; GFX12-NEXT:    global_load_b128 v[4:7], v[4:5], off offset:16
 ; GFX12-NEXT:    s_wait_loadcnt 0x1
-; GFX12-NEXT:    global_store_b128 v[2:3], v[4:7], off
+; GFX12-NEXT:    global_store_b128 v[8:9], v[0:3], off
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b128 v[2:3], v[8:11], off offset:16
+; GFX12-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GFX12-NEXT:    s_endpgm
   %a = load <8 x i32>, ptr addrspace(4) %ptra
   store <8 x i32> %a, ptr addrspace(1) %out
@@ -389,19 +401,21 @@ define amdgpu_ps void @load_divergent_P4_v8i32(ptr addrspace(4) %ptra, ptr addrs
 define amdgpu_ps void @load_divergent_P4_v16i32(ptr addrspace(4) %ptra, ptr addrspace(1) %out) {
 ; GFX12-LABEL: load_divergent_P4_v16i32:
 ; GFX12:       ; %bb.0:
+; GFX12-NEXT:    v_dual_mov_b32 v12, v0 :: v_dual_mov_b32 v13, v1
+; GFX12-NEXT:    v_dual_mov_b32 v16, v2 :: v_dual_mov_b32 v17, v3
 ; GFX12-NEXT:    s_clause 0x3
-; GFX12-NEXT:    global_load_b128 v[4:7], v[0:1], off
-; GFX12-NEXT:    global_load_b128 v[8:11], v[0:1], off offset:16
-; GFX12-NEXT:    global_load_b128 v[12:15], v[0:1], off offset:32
-; GFX12-NEXT:    global_load_b128 v[16:19], v[0:1], off offset:48
+; GFX12-NEXT:    global_load_b128 v[0:3], v[12:13], off
+; GFX12-NEXT:    global_load_b128 v[4:7], v[12:13], off offset:16
+; GFX12-NEXT:    global_load_b128 v[8:11], v[12:13], off offset:32
+; GFX12-NEXT:    global_load_b128 v[12:15], v[12:13], off offset:48
 ; GFX12-NEXT:    s_wait_loadcnt 0x3
-; GFX12-NEXT:    global_store_b128 v[2:3], v[4:7], off
+; GFX12-NEXT:    global_store_b128 v[16:17], v[0:3], off
 ; GFX12-NEXT:    s_wait_loadcnt 0x2
-; GFX12-NEXT:    global_store_b128 v[2:3], v[8:11], off offset:16
+; GFX12-NEXT:    global_store_b128 v[16:17], v[4:7], off offset:16
 ; GFX12-NEXT:    s_wait_loadcnt 0x1
-; GFX12-NEXT:    global_store_b128 v[2:3], v[12:15], off offset:32
+; GFX12-NEXT:    global_store_b128 v[16:17], v[8:11], off offset:32
 ; GFX12-NEXT:    s_wait_loadcnt 0x0
-; GFX12-NEXT:    global_store_b128 v[2:3], v[16:19], off offset:48
+; GFX12-NEXT:    global_store_b128 v[16:17], v[12:15], off offset:48
 ; GFX12-NEXT:    s_endpgm
   %a = load <16 x i32>, ptr addrspace(4) %ptra
   store <16 x i32> %a, ptr addrspace(1) %out

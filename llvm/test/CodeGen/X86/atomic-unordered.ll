@@ -1615,30 +1615,18 @@ define void @rmw_fold_srem2(ptr %p, i64 %v) {
 
 ; Legal, as expected
 define void @rmw_fold_urem1(ptr %p, i64 %v) {
-; CHECK-O0-LABEL: rmw_fold_urem1:
-; CHECK-O0:       # %bb.0:
-; CHECK-O0-NEXT:    movq (%rdi), %rax
-; CHECK-O0-NEXT:    movabsq $-8608480567731124087, %rcx # imm = 0x8888888888888889
-; CHECK-O0-NEXT:    movq %rax, %rdx
-; CHECK-O0-NEXT:    mulxq %rcx, %rcx, %rcx
-; CHECK-O0-NEXT:    shrq $3, %rcx
-; CHECK-O0-NEXT:    leaq (%rcx,%rcx,4), %rcx
-; CHECK-O0-NEXT:    leaq (%rcx,%rcx,2), %rcx
-; CHECK-O0-NEXT:    subq %rcx, %rax
-; CHECK-O0-NEXT:    movq %rax, (%rdi)
-; CHECK-O0-NEXT:    retq
-;
-; CHECK-O3-LABEL: rmw_fold_urem1:
-; CHECK-O3:       # %bb.0:
-; CHECK-O3-NEXT:    movq (%rdi), %rdx
-; CHECK-O3-NEXT:    movabsq $-8608480567731124087, %rax # imm = 0x8888888888888889
-; CHECK-O3-NEXT:    mulxq %rax, %rax, %rax
-; CHECK-O3-NEXT:    shrq $3, %rax
-; CHECK-O3-NEXT:    leaq (%rax,%rax,4), %rax
-; CHECK-O3-NEXT:    leaq (%rax,%rax,2), %rax
-; CHECK-O3-NEXT:    subq %rax, %rdx
-; CHECK-O3-NEXT:    movq %rdx, (%rdi)
-; CHECK-O3-NEXT:    retq
+; CHECK-LABEL: rmw_fold_urem1:
+; CHECK:       # %bb.0:
+; CHECK-NEXT:    movq (%rdi), %rax
+; CHECK-NEXT:    movabsq $-8608480567731124087, %rcx # imm = 0x8888888888888889
+; CHECK-NEXT:    movq %rax, %rdx
+; CHECK-NEXT:    mulxq %rcx, %rcx, %rcx
+; CHECK-NEXT:    shrq $3, %rcx
+; CHECK-NEXT:    leaq (%rcx,%rcx,4), %rcx
+; CHECK-NEXT:    leaq (%rcx,%rcx,2), %rcx
+; CHECK-NEXT:    subq %rcx, %rax
+; CHECK-NEXT:    movq %rax, (%rdi)
+; CHECK-NEXT:    retq
   %prev = load atomic i64, ptr %p unordered, align 8
   %val = urem i64 %prev, 15
   store atomic i64 %val, ptr %p unordered, align 8

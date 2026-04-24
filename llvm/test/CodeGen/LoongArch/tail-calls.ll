@@ -21,11 +21,10 @@ define void @caller_extern(ptr %src) optsize {
 ; CHECK-LABEL: caller_extern:
 ; CHECK:       # %bb.0: # %entry
 ; CHECK-NEXT:    pcalau12i $a1, %got_pc_hi20(dest)
-; CHECK-NEXT:    ld.d $a1, $a1, %got_pc_lo12(dest)
+; CHECK-NEXT:    ld.d $a3, $a1, %got_pc_lo12(dest)
 ; CHECK-NEXT:    ori $a2, $zero, 33
-; CHECK-NEXT:    move $a3, $a0
-; CHECK-NEXT:    move $a0, $a1
-; CHECK-NEXT:    move $a1, $a3
+; CHECK-NEXT:    move $a1, $a0
+; CHECK-NEXT:    move $a0, $a3
 ; CHECK-NEXT:    pcaddu18i $t8, %call36(memcpy)
 ; CHECK-NEXT:    jr $t8
 entry:
@@ -63,13 +62,13 @@ define void @caller_varargs(i32 %a, i32 %b) nounwind {
 ; CHECK:       # %bb.0: # %entry
 ; CHECK-NEXT:    addi.d $sp, $sp, -16
 ; CHECK-NEXT:    st.d $ra, $sp, 8 # 8-byte Folded Spill
+; CHECK-NEXT:    move $a6, $a1
+; CHECK-NEXT:    move $a7, $a0
 ; CHECK-NEXT:    st.d $a0, $sp, 0
 ; CHECK-NEXT:    move $a2, $a1
 ; CHECK-NEXT:    move $a3, $a0
 ; CHECK-NEXT:    move $a4, $a0
 ; CHECK-NEXT:    move $a5, $a1
-; CHECK-NEXT:    move $a6, $a1
-; CHECK-NEXT:    move $a7, $a0
 ; CHECK-NEXT:    pcaddu18i $ra, %call36(callee_varargs)
 ; CHECK-NEXT:    jirl $ra, $ra, 0
 ; CHECK-NEXT:    ld.d $ra, $sp, 8 # 8-byte Folded Reload

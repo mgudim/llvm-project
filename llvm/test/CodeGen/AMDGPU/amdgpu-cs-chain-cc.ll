@@ -736,10 +736,10 @@ define amdgpu_cs_chain void @chain_to_chain_wwm(<3 x i32> inreg %a, <3 x i32> %b
 ; DAGISEL-GFX11-LABEL: chain_to_chain_wwm:
 ; DAGISEL-GFX11:       ; %bb.0:
 ; DAGISEL-GFX11-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; DAGISEL-GFX11-NEXT:    s_or_saveexec_b32 s4, -1
-; DAGISEL-GFX11-NEXT:    s_mov_b32 s3, s0
-; DAGISEL-GFX11-NEXT:    v_cndmask_b32_e64 v1, 4, 3, s4
-; DAGISEL-GFX11-NEXT:    s_mov_b32 exec_lo, s4
+; DAGISEL-GFX11-NEXT:    s_or_saveexec_b32 s3, -1
+; DAGISEL-GFX11-NEXT:    s_mov_b32 s6, s0
+; DAGISEL-GFX11-NEXT:    v_cndmask_b32_e64 v1, 4, 3, s3
+; DAGISEL-GFX11-NEXT:    s_mov_b32 exec_lo, s3
 ; DAGISEL-GFX11-NEXT:    s_delay_alu instid0(VALU_DEP_1)
 ; DAGISEL-GFX11-NEXT:    v_mov_b32_e32 v2, v1
 ; DAGISEL-GFX11-NEXT:    ;;#ASMSTART
@@ -747,7 +747,7 @@ define amdgpu_cs_chain void @chain_to_chain_wwm(<3 x i32> inreg %a, <3 x i32> %b
 ; DAGISEL-GFX11-NEXT:    ;;#ASMEND
 ; DAGISEL-GFX11-NEXT:    s_mov_b32 s5, chain_callee@abs32@hi
 ; DAGISEL-GFX11-NEXT:    s_mov_b32 s4, chain_callee@abs32@lo
-; DAGISEL-GFX11-NEXT:    s_mov_b32 s0, s3
+; DAGISEL-GFX11-NEXT:    s_mov_b32 s0, s6
 ; DAGISEL-GFX11-NEXT:    v_mov_b32_e32 v8, v2
 ; DAGISEL-GFX11-NEXT:    s_mov_b32 exec_lo, -1
 ; DAGISEL-GFX11-NEXT:    s_setpc_b64 s[4:5]
@@ -755,17 +755,17 @@ define amdgpu_cs_chain void @chain_to_chain_wwm(<3 x i32> inreg %a, <3 x i32> %b
 ; DAGISEL-GFX10-LABEL: chain_to_chain_wwm:
 ; DAGISEL-GFX10:       ; %bb.0:
 ; DAGISEL-GFX10-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; DAGISEL-GFX10-NEXT:    s_or_saveexec_b32 s4, -1
-; DAGISEL-GFX10-NEXT:    s_mov_b32 s3, s0
-; DAGISEL-GFX10-NEXT:    v_cndmask_b32_e64 v1, 4, 3, s4
-; DAGISEL-GFX10-NEXT:    s_mov_b32 exec_lo, s4
+; DAGISEL-GFX10-NEXT:    s_or_saveexec_b32 s3, -1
+; DAGISEL-GFX10-NEXT:    s_mov_b32 s6, s0
+; DAGISEL-GFX10-NEXT:    v_cndmask_b32_e64 v1, 4, 3, s3
+; DAGISEL-GFX10-NEXT:    s_mov_b32 exec_lo, s3
 ; DAGISEL-GFX10-NEXT:    v_mov_b32_e32 v2, v1
 ; DAGISEL-GFX10-NEXT:    ;;#ASMSTART
 ; DAGISEL-GFX10-NEXT:    s_nop
 ; DAGISEL-GFX10-NEXT:    ;;#ASMEND
 ; DAGISEL-GFX10-NEXT:    s_mov_b32 s5, chain_callee@abs32@hi
 ; DAGISEL-GFX10-NEXT:    s_mov_b32 s4, chain_callee@abs32@lo
-; DAGISEL-GFX10-NEXT:    s_mov_b32 s0, s3
+; DAGISEL-GFX10-NEXT:    s_mov_b32 s0, s6
 ; DAGISEL-GFX10-NEXT:    v_mov_b32_e32 v8, v2
 ; DAGISEL-GFX10-NEXT:    s_mov_b32 exec_lo, -1
 ; DAGISEL-GFX10-NEXT:    s_setpc_b64 s[4:5]
@@ -847,61 +847,61 @@ define amdgpu_cs_chain void @chain_to_chain_fewer_args(<3 x i32> inreg %a, <3 x 
 ; GISEL-GFX11:       ; %bb.0:
 ; GISEL-GFX11-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; GISEL-GFX11-NEXT:    v_mov_b32_e32 v1, v8
-; GISEL-GFX11-NEXT:    s_mov_b32 s2, s0
+; GISEL-GFX11-NEXT:    s_mov_b32 s4, s0
 ; GISEL-GFX11-NEXT:    ;;#ASMSTART
 ; GISEL-GFX11-NEXT:    s_nop
 ; GISEL-GFX11-NEXT:    ;;#ASMEND
-; GISEL-GFX11-NEXT:    s_mov_b32 s4, chain_callee_2@abs32@lo
-; GISEL-GFX11-NEXT:    s_mov_b32 s5, chain_callee_2@abs32@hi
+; GISEL-GFX11-NEXT:    s_mov_b32 s2, chain_callee_2@abs32@lo
+; GISEL-GFX11-NEXT:    s_mov_b32 s3, chain_callee_2@abs32@hi
 ; GISEL-GFX11-NEXT:    v_mov_b32_e32 v8, v1
-; GISEL-GFX11-NEXT:    s_mov_b32 s0, s2
+; GISEL-GFX11-NEXT:    s_mov_b32 s0, s4
 ; GISEL-GFX11-NEXT:    s_mov_b32 exec_lo, -1
-; GISEL-GFX11-NEXT:    s_setpc_b64 s[4:5]
+; GISEL-GFX11-NEXT:    s_setpc_b64 s[2:3]
 ;
 ; GISEL-GFX10-LABEL: chain_to_chain_fewer_args:
 ; GISEL-GFX10:       ; %bb.0:
 ; GISEL-GFX10-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; GISEL-GFX10-NEXT:    v_mov_b32_e32 v1, v8
-; GISEL-GFX10-NEXT:    s_mov_b32 s2, s0
+; GISEL-GFX10-NEXT:    s_mov_b32 s4, s0
 ; GISEL-GFX10-NEXT:    ;;#ASMSTART
 ; GISEL-GFX10-NEXT:    s_nop
 ; GISEL-GFX10-NEXT:    ;;#ASMEND
-; GISEL-GFX10-NEXT:    s_mov_b32 s4, chain_callee_2@abs32@lo
-; GISEL-GFX10-NEXT:    s_mov_b32 s5, chain_callee_2@abs32@hi
+; GISEL-GFX10-NEXT:    s_mov_b32 s2, chain_callee_2@abs32@lo
+; GISEL-GFX10-NEXT:    s_mov_b32 s3, chain_callee_2@abs32@hi
 ; GISEL-GFX10-NEXT:    v_mov_b32_e32 v8, v1
-; GISEL-GFX10-NEXT:    s_mov_b32 s0, s2
+; GISEL-GFX10-NEXT:    s_mov_b32 s0, s4
 ; GISEL-GFX10-NEXT:    s_mov_b32 exec_lo, -1
-; GISEL-GFX10-NEXT:    s_setpc_b64 s[4:5]
+; GISEL-GFX10-NEXT:    s_setpc_b64 s[2:3]
 ;
 ; DAGISEL-GFX11-LABEL: chain_to_chain_fewer_args:
 ; DAGISEL-GFX11:       ; %bb.0:
 ; DAGISEL-GFX11-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; DAGISEL-GFX11-NEXT:    v_mov_b32_e32 v1, v8
-; DAGISEL-GFX11-NEXT:    s_mov_b32 s2, s0
+; DAGISEL-GFX11-NEXT:    s_mov_b32 s4, s0
 ; DAGISEL-GFX11-NEXT:    ;;#ASMSTART
 ; DAGISEL-GFX11-NEXT:    s_nop
 ; DAGISEL-GFX11-NEXT:    ;;#ASMEND
-; DAGISEL-GFX11-NEXT:    s_mov_b32 s5, chain_callee_2@abs32@hi
-; DAGISEL-GFX11-NEXT:    s_mov_b32 s4, chain_callee_2@abs32@lo
+; DAGISEL-GFX11-NEXT:    s_mov_b32 s3, chain_callee_2@abs32@hi
+; DAGISEL-GFX11-NEXT:    s_mov_b32 s2, chain_callee_2@abs32@lo
 ; DAGISEL-GFX11-NEXT:    v_mov_b32_e32 v8, v1
-; DAGISEL-GFX11-NEXT:    s_mov_b32 s0, s2
+; DAGISEL-GFX11-NEXT:    s_mov_b32 s0, s4
 ; DAGISEL-GFX11-NEXT:    s_mov_b32 exec_lo, -1
-; DAGISEL-GFX11-NEXT:    s_setpc_b64 s[4:5]
+; DAGISEL-GFX11-NEXT:    s_setpc_b64 s[2:3]
 ;
 ; DAGISEL-GFX10-LABEL: chain_to_chain_fewer_args:
 ; DAGISEL-GFX10:       ; %bb.0:
 ; DAGISEL-GFX10-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; DAGISEL-GFX10-NEXT:    v_mov_b32_e32 v1, v8
-; DAGISEL-GFX10-NEXT:    s_mov_b32 s2, s0
+; DAGISEL-GFX10-NEXT:    s_mov_b32 s4, s0
 ; DAGISEL-GFX10-NEXT:    ;;#ASMSTART
 ; DAGISEL-GFX10-NEXT:    s_nop
 ; DAGISEL-GFX10-NEXT:    ;;#ASMEND
-; DAGISEL-GFX10-NEXT:    s_mov_b32 s5, chain_callee_2@abs32@hi
-; DAGISEL-GFX10-NEXT:    s_mov_b32 s4, chain_callee_2@abs32@lo
+; DAGISEL-GFX10-NEXT:    s_mov_b32 s3, chain_callee_2@abs32@hi
+; DAGISEL-GFX10-NEXT:    s_mov_b32 s2, chain_callee_2@abs32@lo
 ; DAGISEL-GFX10-NEXT:    v_mov_b32_e32 v8, v1
-; DAGISEL-GFX10-NEXT:    s_mov_b32 s0, s2
+; DAGISEL-GFX10-NEXT:    s_mov_b32 s0, s4
 ; DAGISEL-GFX10-NEXT:    s_mov_b32 exec_lo, -1
-; DAGISEL-GFX10-NEXT:    s_setpc_b64 s[4:5]
+; DAGISEL-GFX10-NEXT:    s_setpc_b64 s[2:3]
   %s = shufflevector <3 x i32> %a, <3 x i32> zeroinitializer, <2 x i32> <i32 0, i32 1>
   %v = shufflevector <3 x i32> %b, <3 x i32> zeroinitializer, <2 x i32> <i32 0, i32 1>
   call void asm "s_nop", "~{v0},~{v8},~{v16},~{s0}"()

@@ -334,31 +334,37 @@ define i1 @scalar_i32_bitsinmiddle_eq(i32 %x, i32 %y) nounwind {
 define i1 @scalar_i64_signbit_eq(i64 %x, i64 %y) nounwind {
 ; X86-BMI1-LABEL: scalar_i64_signbit_eq:
 ; X86-BMI1:       # %bb.0:
+; X86-BMI1-NEXT:    pushl %edi
 ; X86-BMI1-NEXT:    pushl %esi
-; X86-BMI1-NEXT:    movzbl {{[0-9]+}}(%esp), %ecx
-; X86-BMI1-NEXT:    movl {{[0-9]+}}(%esp), %eax
+; X86-BMI1-NEXT:    movzbl {{[0-9]+}}(%esp), %eax
 ; X86-BMI1-NEXT:    movl {{[0-9]+}}(%esp), %edx
-; X86-BMI1-NEXT:    movl %eax, %esi
-; X86-BMI1-NEXT:    shll %cl, %esi
-; X86-BMI1-NEXT:    shldl %cl, %eax, %edx
-; X86-BMI1-NEXT:    testb $32, %cl
-; X86-BMI1-NEXT:    cmovnel %esi, %edx
-; X86-BMI1-NEXT:    testl $-2147483648, %edx # imm = 0x80000000
+; X86-BMI1-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X86-BMI1-NEXT:    movl %edx, %edi
+; X86-BMI1-NEXT:    movl %eax, %ecx
+; X86-BMI1-NEXT:    shll %cl, %edi
+; X86-BMI1-NEXT:    shldl %cl, %edx, %esi
+; X86-BMI1-NEXT:    testb $32, %al
+; X86-BMI1-NEXT:    cmovnel %edi, %esi
+; X86-BMI1-NEXT:    testl $-2147483648, %esi # imm = 0x80000000
 ; X86-BMI1-NEXT:    sete %al
 ; X86-BMI1-NEXT:    popl %esi
+; X86-BMI1-NEXT:    popl %edi
 ; X86-BMI1-NEXT:    retl
 ;
 ; X86-BMI2-LABEL: scalar_i64_signbit_eq:
 ; X86-BMI2:       # %bb.0:
-; X86-BMI2-NEXT:    movzbl {{[0-9]+}}(%esp), %ecx
-; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %eax
+; X86-BMI2-NEXT:    pushl %esi
+; X86-BMI2-NEXT:    movzbl {{[0-9]+}}(%esp), %eax
 ; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %edx
-; X86-BMI2-NEXT:    shldl %cl, %eax, %edx
-; X86-BMI2-NEXT:    shlxl %ecx, %eax, %eax
-; X86-BMI2-NEXT:    testb $32, %cl
-; X86-BMI2-NEXT:    cmovel %edx, %eax
-; X86-BMI2-NEXT:    testl $-2147483648, %eax # imm = 0x80000000
+; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X86-BMI2-NEXT:    movl %eax, %ecx
+; X86-BMI2-NEXT:    shldl %cl, %edx, %esi
+; X86-BMI2-NEXT:    shlxl %eax, %edx, %ecx
+; X86-BMI2-NEXT:    testb $32, %al
+; X86-BMI2-NEXT:    cmovel %esi, %ecx
+; X86-BMI2-NEXT:    testl $-2147483648, %ecx # imm = 0x80000000
 ; X86-BMI2-NEXT:    sete %al
+; X86-BMI2-NEXT:    popl %esi
 ; X86-BMI2-NEXT:    retl
 ;
 ; X64-BMI1-LABEL: scalar_i64_signbit_eq:
@@ -385,13 +391,14 @@ define i1 @scalar_i64_signbit_eq(i64 %x, i64 %y) nounwind {
 define i1 @scalar_i64_lowestbit_eq(i64 %x, i64 %y) nounwind {
 ; X86-BMI1-LABEL: scalar_i64_lowestbit_eq:
 ; X86-BMI1:       # %bb.0:
-; X86-BMI1-NEXT:    movzbl {{[0-9]+}}(%esp), %ecx
-; X86-BMI1-NEXT:    movl {{[0-9]+}}(%esp), %eax
-; X86-BMI1-NEXT:    shll %cl, %eax
-; X86-BMI1-NEXT:    xorl %edx, %edx
-; X86-BMI1-NEXT:    testb $32, %cl
-; X86-BMI1-NEXT:    cmovel %eax, %edx
-; X86-BMI1-NEXT:    testb $1, %dl
+; X86-BMI1-NEXT:    movzbl {{[0-9]+}}(%esp), %eax
+; X86-BMI1-NEXT:    movl {{[0-9]+}}(%esp), %edx
+; X86-BMI1-NEXT:    movl %eax, %ecx
+; X86-BMI1-NEXT:    shll %cl, %edx
+; X86-BMI1-NEXT:    xorl %ecx, %ecx
+; X86-BMI1-NEXT:    testb $32, %al
+; X86-BMI1-NEXT:    cmovel %edx, %ecx
+; X86-BMI1-NEXT:    testb $1, %cl
 ; X86-BMI1-NEXT:    sete %al
 ; X86-BMI1-NEXT:    retl
 ;
@@ -430,39 +437,43 @@ define i1 @scalar_i64_lowestbit_eq(i64 %x, i64 %y) nounwind {
 define i1 @scalar_i64_bitsinmiddle_eq(i64 %x, i64 %y) nounwind {
 ; X86-BMI1-LABEL: scalar_i64_bitsinmiddle_eq:
 ; X86-BMI1:       # %bb.0:
+; X86-BMI1-NEXT:    pushl %edi
 ; X86-BMI1-NEXT:    pushl %esi
-; X86-BMI1-NEXT:    movzbl {{[0-9]+}}(%esp), %ecx
-; X86-BMI1-NEXT:    movl {{[0-9]+}}(%esp), %eax
+; X86-BMI1-NEXT:    movzbl {{[0-9]+}}(%esp), %eax
 ; X86-BMI1-NEXT:    movl {{[0-9]+}}(%esp), %edx
-; X86-BMI1-NEXT:    movl %eax, %esi
-; X86-BMI1-NEXT:    shll %cl, %esi
-; X86-BMI1-NEXT:    shldl %cl, %eax, %edx
-; X86-BMI1-NEXT:    xorl %eax, %eax
-; X86-BMI1-NEXT:    testb $32, %cl
-; X86-BMI1-NEXT:    cmovnel %esi, %edx
-; X86-BMI1-NEXT:    movzwl %dx, %ecx
-; X86-BMI1-NEXT:    cmovel %esi, %eax
-; X86-BMI1-NEXT:    andl $-65536, %eax # imm = 0xFFFF0000
-; X86-BMI1-NEXT:    orl %ecx, %eax
+; X86-BMI1-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X86-BMI1-NEXT:    movl %edx, %edi
+; X86-BMI1-NEXT:    movl %eax, %ecx
+; X86-BMI1-NEXT:    shll %cl, %edi
+; X86-BMI1-NEXT:    shldl %cl, %edx, %esi
+; X86-BMI1-NEXT:    xorl %ecx, %ecx
+; X86-BMI1-NEXT:    testb $32, %al
+; X86-BMI1-NEXT:    cmovnel %edi, %esi
+; X86-BMI1-NEXT:    movzwl %si, %eax
+; X86-BMI1-NEXT:    cmovel %edi, %ecx
+; X86-BMI1-NEXT:    andl $-65536, %ecx # imm = 0xFFFF0000
+; X86-BMI1-NEXT:    orl %eax, %ecx
 ; X86-BMI1-NEXT:    sete %al
 ; X86-BMI1-NEXT:    popl %esi
+; X86-BMI1-NEXT:    popl %edi
 ; X86-BMI1-NEXT:    retl
 ;
 ; X86-BMI2-LABEL: scalar_i64_bitsinmiddle_eq:
 ; X86-BMI2:       # %bb.0:
 ; X86-BMI2-NEXT:    pushl %esi
-; X86-BMI2-NEXT:    movzbl {{[0-9]+}}(%esp), %ecx
-; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %eax
+; X86-BMI2-NEXT:    movzbl {{[0-9]+}}(%esp), %eax
 ; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %edx
-; X86-BMI2-NEXT:    shldl %cl, %eax, %edx
-; X86-BMI2-NEXT:    shlxl %ecx, %eax, %eax
-; X86-BMI2-NEXT:    xorl %esi, %esi
-; X86-BMI2-NEXT:    testb $32, %cl
-; X86-BMI2-NEXT:    cmovnel %eax, %edx
-; X86-BMI2-NEXT:    movzwl %dx, %ecx
-; X86-BMI2-NEXT:    cmovel %eax, %esi
-; X86-BMI2-NEXT:    andl $-65536, %esi # imm = 0xFFFF0000
-; X86-BMI2-NEXT:    orl %ecx, %esi
+; X86-BMI2-NEXT:    movl {{[0-9]+}}(%esp), %esi
+; X86-BMI2-NEXT:    movl %eax, %ecx
+; X86-BMI2-NEXT:    shldl %cl, %edx, %esi
+; X86-BMI2-NEXT:    shlxl %eax, %edx, %ecx
+; X86-BMI2-NEXT:    xorl %edx, %edx
+; X86-BMI2-NEXT:    testb $32, %al
+; X86-BMI2-NEXT:    cmovnel %ecx, %esi
+; X86-BMI2-NEXT:    movzwl %si, %eax
+; X86-BMI2-NEXT:    cmovel %ecx, %edx
+; X86-BMI2-NEXT:    andl $-65536, %edx # imm = 0xFFFF0000
+; X86-BMI2-NEXT:    orl %eax, %edx
 ; X86-BMI2-NEXT:    sete %al
 ; X86-BMI2-NEXT:    popl %esi
 ; X86-BMI2-NEXT:    retl

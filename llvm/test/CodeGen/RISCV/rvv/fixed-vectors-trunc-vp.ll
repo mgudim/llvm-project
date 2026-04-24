@@ -343,7 +343,7 @@ define <128 x i32> @vtrunc_v128i32_v128i64(<128 x i64> %a, <128 x i1> %m, i32 ze
 ; RV32-NEXT:    addi a1, sp, 16
 ; RV32-NEXT:    vs8r.v v8, (a1) # vscale x 64-byte Folded Spill
 ; RV32-NEXT:    vsetivli zero, 2, e8, mf4, ta, ma
-; RV32-NEXT:    vslidedown.vi v30, v7, 2
+; RV32-NEXT:    vslidedown.vi v6, v7, 2
 ; RV32-NEXT:    vmv1r.v v0, v4
 ; RV32-NEXT:    csrr a1, vlenb
 ; RV32-NEXT:    li t0, 48
@@ -364,9 +364,9 @@ define <128 x i32> @vtrunc_v128i32_v128i64(<128 x i64> %a, <128 x i1> %m, i32 ze
 ; RV32-NEXT:    slli a1, a1, 3
 ; RV32-NEXT:    add a1, sp, a1
 ; RV32-NEXT:    addi a1, a1, 16
-; RV32-NEXT:    vl8r.v v8, (a1) # vscale x 64-byte Folded Reload
+; RV32-NEXT:    vl8r.v v24, (a1) # vscale x 64-byte Folded Reload
 ; RV32-NEXT:    vsetvli zero, a5, e32, m4, ta, ma
-; RV32-NEXT:    vnsrl.wi v16, v8, 0, v0.t
+; RV32-NEXT:    vnsrl.wi v16, v24, 0, v0.t
 ; RV32-NEXT:    bltu a4, a2, .LBB16_10
 ; RV32-NEXT:  # %bb.9:
 ; RV32-NEXT:    li a4, 16
@@ -387,7 +387,7 @@ define <128 x i32> @vtrunc_v128i32_v128i64(<128 x i64> %a, <128 x i1> %m, i32 ze
 ; RV32-NEXT:  # %bb.11:
 ; RV32-NEXT:    li a1, 32
 ; RV32-NEXT:  .LBB16_12:
-; RV32-NEXT:    vmv1r.v v0, v30
+; RV32-NEXT:    vmv1r.v v0, v6
 ; RV32-NEXT:    csrr a4, vlenb
 ; RV32-NEXT:    li a5, 24
 ; RV32-NEXT:    mul a4, a4, a5
@@ -653,7 +653,7 @@ define <128 x i32> @vtrunc_v128i32_v128i64(<128 x i64> %a, <128 x i1> %m, i32 ze
 ; RV64-NEXT:    addi a1, sp, 32
 ; RV64-NEXT:    vs8r.v v8, (a1) # vscale x 64-byte Folded Spill
 ; RV64-NEXT:    vsetivli zero, 2, e8, mf4, ta, ma
-; RV64-NEXT:    vslidedown.vi v30, v7, 2
+; RV64-NEXT:    vslidedown.vi v6, v7, 2
 ; RV64-NEXT:    vmv1r.v v0, v4
 ; RV64-NEXT:    csrr a1, vlenb
 ; RV64-NEXT:    li t0, 48
@@ -674,9 +674,9 @@ define <128 x i32> @vtrunc_v128i32_v128i64(<128 x i64> %a, <128 x i1> %m, i32 ze
 ; RV64-NEXT:    slli a1, a1, 3
 ; RV64-NEXT:    add a1, sp, a1
 ; RV64-NEXT:    addi a1, a1, 32
-; RV64-NEXT:    vl8r.v v8, (a1) # vscale x 64-byte Folded Reload
+; RV64-NEXT:    vl8r.v v24, (a1) # vscale x 64-byte Folded Reload
 ; RV64-NEXT:    vsetvli zero, a5, e32, m4, ta, ma
-; RV64-NEXT:    vnsrl.wi v16, v8, 0, v0.t
+; RV64-NEXT:    vnsrl.wi v16, v24, 0, v0.t
 ; RV64-NEXT:    bltu a4, a2, .LBB16_10
 ; RV64-NEXT:  # %bb.9:
 ; RV64-NEXT:    li a4, 16
@@ -697,7 +697,7 @@ define <128 x i32> @vtrunc_v128i32_v128i64(<128 x i64> %a, <128 x i1> %m, i32 ze
 ; RV64-NEXT:  # %bb.11:
 ; RV64-NEXT:    li a1, 32
 ; RV64-NEXT:  .LBB16_12:
-; RV64-NEXT:    vmv1r.v v0, v30
+; RV64-NEXT:    vmv1r.v v0, v6
 ; RV64-NEXT:    csrr a4, vlenb
 ; RV64-NEXT:    li a5, 24
 ; RV64-NEXT:    mul a4, a4, a5

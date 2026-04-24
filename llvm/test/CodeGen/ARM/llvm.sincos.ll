@@ -589,14 +589,14 @@ define { <2 x float>, <2 x float> } @test_sincos_v2f32(<2 x float> %a) {
 ; IOS-NO-STRET-NEXT:    push {r4, r5, r6, r7, lr}
 ; IOS-NO-STRET-NEXT:    vpush {d8}
 ; IOS-NO-STRET-NEXT:    vmov d8, r0, r1
-; IOS-NO-STRET-NEXT:    vmov r4, s17
-; IOS-NO-STRET-NEXT:    mov r0, r4
+; IOS-NO-STRET-NEXT:    vmov r5, s17
+; IOS-NO-STRET-NEXT:    mov r0, r5
 ; IOS-NO-STRET-NEXT:    bl _sinf
-; IOS-NO-STRET-NEXT:    mov r5, r0
-; IOS-NO-STRET-NEXT:    mov r0, r4
+; IOS-NO-STRET-NEXT:    mov r4, r0
+; IOS-NO-STRET-NEXT:    mov r0, r5
 ; IOS-NO-STRET-NEXT:    bl _cosf
 ; IOS-NO-STRET-NEXT:    vmov r6, s16
-; IOS-NO-STRET-NEXT:    mov r4, r0
+; IOS-NO-STRET-NEXT:    mov r5, r0
 ; IOS-NO-STRET-NEXT:    mov r0, r6
 ; IOS-NO-STRET-NEXT:    bl _sinf
 ; IOS-NO-STRET-NEXT:    mov r7, r0
@@ -604,8 +604,8 @@ define { <2 x float>, <2 x float> } @test_sincos_v2f32(<2 x float> %a) {
 ; IOS-NO-STRET-NEXT:    bl _cosf
 ; IOS-NO-STRET-NEXT:    mov r2, r0
 ; IOS-NO-STRET-NEXT:    mov r0, r7
-; IOS-NO-STRET-NEXT:    mov r1, r5
-; IOS-NO-STRET-NEXT:    mov r3, r4
+; IOS-NO-STRET-NEXT:    mov r1, r4
+; IOS-NO-STRET-NEXT:    mov r3, r5
 ; IOS-NO-STRET-NEXT:    vpop {d8}
 ; IOS-NO-STRET-NEXT:    pop {r4, r5, r6, r7, pc}
 ;
@@ -644,17 +644,17 @@ define { <2 x float>, <2 x float> } @test_sincos_v2f32(<2 x float> %a) {
 ; WATCHABI-NEXT:    .cfi_offset d10, -16
 ; WATCHABI-NEXT:    .cfi_offset d9, -24
 ; WATCHABI-NEXT:    .cfi_offset d8, -32
-; WATCHABI-NEXT:    vmov.f64 d8, d0
-; WATCHABI-NEXT:    vmov.f32 s0, s17
+; WATCHABI-NEXT:    vmov.f64 d9, d0
+; WATCHABI-NEXT:    vmov.f32 s0, s19
 ; WATCHABI-NEXT:    bl ___sincosf_stret
-; WATCHABI-NEXT:    vmov.f32 s19, s0
-; WATCHABI-NEXT:    vmov.f32 s0, s16
-; WATCHABI-NEXT:    vmov.f32 s21, s1
+; WATCHABI-NEXT:    vmov.f32 s21, s0
+; WATCHABI-NEXT:    vmov.f32 s0, s18
+; WATCHABI-NEXT:    vmov.f32 s17, s1
 ; WATCHABI-NEXT:    bl ___sincosf_stret
-; WATCHABI-NEXT:    vmov.f32 s20, s1
-; WATCHABI-NEXT:    vmov.f32 s18, s0
-; WATCHABI-NEXT:    vmov.f64 d1, d10
-; WATCHABI-NEXT:    vmov.f64 d0, d9
+; WATCHABI-NEXT:    vmov.f32 s16, s1
+; WATCHABI-NEXT:    vmov.f32 s20, s0
+; WATCHABI-NEXT:    vmov.f64 d1, d8
+; WATCHABI-NEXT:    vmov.f64 d0, d10
 ; WATCHABI-NEXT:    vpop {d8, d9, d10}
 ; WATCHABI-NEXT:    pop {r7, pc}
 ; WATCHABI-NEXT:    .cfi_endproc
@@ -743,12 +743,12 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) {
 ; GNU:       @ %bb.0:
 ; GNU-NEXT:    push {r4, lr}
 ; GNU-NEXT:    sub sp, #32
+; GNU-NEXT:    add.w r12, sp, #24
 ; GNU-NEXT:    mov r1, r3
-; GNU-NEXT:    mov r12, r2
-; GNU-NEXT:    add r2, sp, #24
 ; GNU-NEXT:    add r3, sp, #16
 ; GNU-NEXT:    mov r4, r0
-; GNU-NEXT:    mov r0, r12
+; GNU-NEXT:    mov r0, r2
+; GNU-NEXT:    mov r2, r12
 ; GNU-NEXT:    bl sincos
 ; GNU-NEXT:    ldrd r0, r1, [sp, #40]
 ; GNU-NEXT:    add r2, sp, #8
@@ -769,12 +769,12 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) {
 ; GNUEABI-NEXT:    push {r4, lr}
 ; GNUEABI-NEXT:    .pad #32
 ; GNUEABI-NEXT:    sub sp, sp, #32
+; GNUEABI-NEXT:    add r12, sp, #24
 ; GNUEABI-NEXT:    mov r1, r3
-; GNUEABI-NEXT:    mov r12, r2
-; GNUEABI-NEXT:    add r2, sp, #24
 ; GNUEABI-NEXT:    add r3, sp, #16
 ; GNUEABI-NEXT:    mov r4, r0
-; GNUEABI-NEXT:    mov r0, r12
+; GNUEABI-NEXT:    mov r0, r2
+; GNUEABI-NEXT:    mov r2, r12
 ; GNUEABI-NEXT:    bl sincos
 ; GNUEABI-NEXT:    ldr r0, [sp, #40]
 ; GNUEABI-NEXT:    add r2, sp, #8
@@ -796,29 +796,29 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) {
 ; IOS-NO-STRET-NEXT:    vpush {d8, d9, d10, d11}
 ; IOS-NO-STRET-NEXT:    ldr r8, [sp, #64]
 ; IOS-NO-STRET-NEXT:    mov r7, r1
-; IOS-NO-STRET-NEXT:    mov r4, r0
+; IOS-NO-STRET-NEXT:    mov r6, r0
 ; IOS-NO-STRET-NEXT:    mov r0, r3
-; IOS-NO-STRET-NEXT:    mov r6, r3
+; IOS-NO-STRET-NEXT:    mov r5, r3
 ; IOS-NO-STRET-NEXT:    mov r10, r2
 ; IOS-NO-STRET-NEXT:    mov r1, r8
 ; IOS-NO-STRET-NEXT:    bl _sin
 ; IOS-NO-STRET-NEXT:    mov r11, r0
-; IOS-NO-STRET-NEXT:    mov r5, r1
-; IOS-NO-STRET-NEXT:    mov r0, r6
+; IOS-NO-STRET-NEXT:    mov r4, r1
+; IOS-NO-STRET-NEXT:    mov r0, r5
 ; IOS-NO-STRET-NEXT:    mov r1, r8
 ; IOS-NO-STRET-NEXT:    bl _cos
 ; IOS-NO-STRET-NEXT:    vmov d9, r0, r1
 ; IOS-NO-STRET-NEXT:    mov r0, r7
 ; IOS-NO-STRET-NEXT:    mov r1, r10
-; IOS-NO-STRET-NEXT:    vmov d11, r11, r5
+; IOS-NO-STRET-NEXT:    vmov d11, r11, r4
 ; IOS-NO-STRET-NEXT:    bl _sin
 ; IOS-NO-STRET-NEXT:    vmov d10, r0, r1
 ; IOS-NO-STRET-NEXT:    mov r0, r7
 ; IOS-NO-STRET-NEXT:    mov r1, r10
 ; IOS-NO-STRET-NEXT:    bl _cos
 ; IOS-NO-STRET-NEXT:    vmov d8, r0, r1
-; IOS-NO-STRET-NEXT:    vst1.32 {d10, d11}, [r4]!
-; IOS-NO-STRET-NEXT:    vst1.32 {d8, d9}, [r4]
+; IOS-NO-STRET-NEXT:    vst1.32 {d10, d11}, [r6]!
+; IOS-NO-STRET-NEXT:    vst1.32 {d8, d9}, [r6]
 ; IOS-NO-STRET-NEXT:    vpop {d8, d9, d10, d11}
 ; IOS-NO-STRET-NEXT:    pop {r4, r5, r6, r7, r8, r10, r11, pc}
 ;
@@ -863,17 +863,17 @@ define { <2 x double>, <2 x double> } @test_sincos_v2f64(<2 x double> %a) {
 ; WATCHABI-NEXT:    .cfi_offset d8, -56
 ; WATCHABI-NEXT:    sub sp, #8
 ; WATCHABI-NEXT:    .cfi_def_cfa_offset 64
-; WATCHABI-NEXT:    vorr q4, q0, q0
-; WATCHABI-NEXT:    vorr d0, d9, d9
+; WATCHABI-NEXT:    vorr q5, q0, q0
+; WATCHABI-NEXT:    vorr d0, d11, d11
 ; WATCHABI-NEXT:    bl ___sincos_stret
-; WATCHABI-NEXT:    vorr d11, d0, d0
-; WATCHABI-NEXT:    vorr d0, d8, d8
-; WATCHABI-NEXT:    vorr d13, d1, d1
+; WATCHABI-NEXT:    vorr d13, d0, d0
+; WATCHABI-NEXT:    vorr d0, d10, d10
+; WATCHABI-NEXT:    vorr d9, d1, d1
 ; WATCHABI-NEXT:    bl ___sincos_stret
-; WATCHABI-NEXT:    vorr d12, d1, d1
-; WATCHABI-NEXT:    vorr d10, d0, d0
-; WATCHABI-NEXT:    vorr q1, q6, q6
-; WATCHABI-NEXT:    vorr q0, q5, q5
+; WATCHABI-NEXT:    vorr d8, d1, d1
+; WATCHABI-NEXT:    vorr d12, d0, d0
+; WATCHABI-NEXT:    vorr q1, q4, q4
+; WATCHABI-NEXT:    vorr q0, q6, q6
 ; WATCHABI-NEXT:    add sp, #8
 ; WATCHABI-NEXT:    vpop {d8, d9, d10, d11, d12, d13}
 ; WATCHABI-NEXT:    pop {r7, pc}
@@ -887,15 +887,15 @@ define { fp128, fp128 } @test_sincos_f128(fp128 %a) {
 ; GNU:       @ %bb.0:
 ; GNU-NEXT:    push {r4, r5, r7, lr}
 ; GNU-NEXT:    sub sp, #40
-; GNU-NEXT:    mov r12, r3
-; GNU-NEXT:    ldr r3, [sp, #56]
+; GNU-NEXT:    ldr.w r12, [sp, #56]
 ; GNU-NEXT:    add.w lr, sp, #8
 ; GNU-NEXT:    mov r4, r0
 ; GNU-NEXT:    add r0, sp, #24
 ; GNU-NEXT:    strd r0, lr, [sp]
 ; GNU-NEXT:    mov r0, r1
 ; GNU-NEXT:    mov r1, r2
-; GNU-NEXT:    mov r2, r12
+; GNU-NEXT:    mov r2, r3
+; GNU-NEXT:    mov r3, r12
 ; GNU-NEXT:    bl sincosl
 ; GNU-NEXT:    ldrd r2, r3, [sp, #16]
 ; GNU-NEXT:    ldrd r12, r1, [sp, #8]
@@ -915,15 +915,15 @@ define { fp128, fp128 } @test_sincos_f128(fp128 %a) {
 ; GNUEABI-NEXT:    push {r4, r5, r11, lr}
 ; GNUEABI-NEXT:    .pad #40
 ; GNUEABI-NEXT:    sub sp, sp, #40
-; GNUEABI-NEXT:    mov r12, r3
-; GNUEABI-NEXT:    ldr r3, [sp, #56]
+; GNUEABI-NEXT:    ldr r12, [sp, #56]
 ; GNUEABI-NEXT:    mov r4, r0
 ; GNUEABI-NEXT:    add r0, sp, #24
 ; GNUEABI-NEXT:    add r5, sp, #8
 ; GNUEABI-NEXT:    stm sp, {r0, r5}
 ; GNUEABI-NEXT:    mov r0, r1
 ; GNUEABI-NEXT:    mov r1, r2
-; GNUEABI-NEXT:    mov r2, r12
+; GNUEABI-NEXT:    mov r2, r3
+; GNUEABI-NEXT:    mov r3, r12
 ; GNUEABI-NEXT:    bl sincosl
 ; GNUEABI-NEXT:    add r3, sp, #12
 ; GNUEABI-NEXT:    ldr r12, [sp, #8]

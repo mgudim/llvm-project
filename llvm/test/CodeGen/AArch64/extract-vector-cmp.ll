@@ -61,8 +61,8 @@ define i128 @extract_icmp_v1i128(ptr %p) {
 ; CHECK-NEXT:    orr x8, x9, x8
 ; CHECK-NEXT:    cmp x8, #0
 ; CHECK-NEXT:    cset w8, eq
-; CHECK-NEXT:    sbfx x0, x8, #0, #1
-; CHECK-NEXT:    mov x1, x0
+; CHECK-NEXT:    sbfx x1, x8, #0, #1
+; CHECK-NEXT:    mov x0, x1
 ; CHECK-NEXT:    ret
   %load = load <1 x i128>, ptr %p, align 16
   %cmp = icmp eq <1 x i128> %load, zeroinitializer
@@ -181,15 +181,15 @@ define i1 @extract_icmp_v4i32_splat_rhs_mul_use(<4 x i32> %a, ptr %p) {
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    movi v1.4s, #235
 ; CHECK-NEXT:    adrp x8, .LCPI8_0
+; CHECK-NEXT:    mov x9, x0
 ; CHECK-NEXT:    ldr q2, [x8, :lo12:.LCPI8_0]
-; CHECK-NEXT:    mov x8, x0
 ; CHECK-NEXT:    cmhi v0.4s, v1.4s, v0.4s
 ; CHECK-NEXT:    xtn v1.4h, v0.4s
 ; CHECK-NEXT:    and v0.16b, v0.16b, v2.16b
 ; CHECK-NEXT:    addv s0, v0.4s
-; CHECK-NEXT:    umov w9, v1.h[1]
-; CHECK-NEXT:    str b0, [x8]
-; CHECK-NEXT:    and w0, w9, #0x1
+; CHECK-NEXT:    umov w8, v1.h[1]
+; CHECK-NEXT:    str b0, [x9]
+; CHECK-NEXT:    and w0, w8, #0x1
 ; CHECK-NEXT:    ret
   %icmp = icmp ult <4 x i32> %a, splat(i32 235)
   %ext = extractelement <4 x i1> %icmp, i32 1

@@ -9,9 +9,10 @@ define i32 @foo(i32 noundef signext %x) {
 ; CHECK-NEXT:    stwu r1, -64(r1)
 ; CHECK-NEXT:    stw r0, 72(r1)
 ; CHECK-NEXT:    cmpwi r3, 8
+; CHECK-NEXT:    stw r30, 56(r1) # 4-byte Folded Spill
+; CHECK-NEXT:    li r30, 0
 ; CHECK-NEXT:    stw r31, 60(r1) # 4-byte Folded Spill
 ; CHECK-NEXT:    mr r31, r3
-; CHECK-NEXT:    li r3, 0
 ; CHECK-NEXT:    ble cr0, L..BB0_4
 ; CHECK-NEXT:  # %bb.1: # %entry
 ; CHECK-NEXT:    cmpwi r31, 11
@@ -42,27 +43,29 @@ define i32 @foo(i32 noundef signext %x) {
 ; CHECK-NEXT:    mr r3, r31
 ; CHECK-NEXT:    bl .foo3[PR]
 ; CHECK-NEXT:    nop
-; CHECK-NEXT:    mr r3, r31
+; CHECK-NEXT:    mr r30, r31
 ; CHECK-NEXT:    b L..BB0_13
 ; CHECK-NEXT:  L..BB0_10: # %sw.bb1
 ; CHECK-NEXT:    mr r3, r31
 ; CHECK-NEXT:    bl .foo2[PR]
 ; CHECK-NEXT:    nop
-; CHECK-NEXT:    mr r3, r31
+; CHECK-NEXT:    mr r30, r31
 ; CHECK-NEXT:    b L..BB0_13
 ; CHECK-NEXT:  L..BB0_11: # %sw.bb
 ; CHECK-NEXT:    mr r3, r31
 ; CHECK-NEXT:    bl .foo1[PR]
 ; CHECK-NEXT:    nop
-; CHECK-NEXT:    mr r3, r31
+; CHECK-NEXT:    mr r30, r31
 ; CHECK-NEXT:    b L..BB0_13
 ; CHECK-NEXT:  L..BB0_12: # %sw.bb3
 ; CHECK-NEXT:    li r3, 4
+; CHECK-NEXT:    li r30, 4
 ; CHECK-NEXT:    bl .foo4[PR]
 ; CHECK-NEXT:    nop
-; CHECK-NEXT:    li r3, 4
 ; CHECK-NEXT:  L..BB0_13: # %return
+; CHECK-NEXT:    mr r3, r30
 ; CHECK-NEXT:    lwz r31, 60(r1) # 4-byte Folded Reload
+; CHECK-NEXT:    lwz r30, 56(r1) # 4-byte Folded Reload
 ; CHECK-NEXT:    addi r1, r1, 64
 ; CHECK-NEXT:    lwz r0, 8(r1)
 ; CHECK-NEXT:    mtlr r0

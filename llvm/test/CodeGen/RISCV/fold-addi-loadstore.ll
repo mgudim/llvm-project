@@ -1056,8 +1056,8 @@ define i64 @fold_addi_from_different_bb(i64 %k, i64 %n, ptr %a) nounwind {
 ; RV32I-NEXT:    srli a1, s1, 31
 ; RV32I-NEXT:    beqz a1, .LBB20_4
 ; RV32I-NEXT:  .LBB20_2:
-; RV32I-NEXT:    li s3, 0
 ; RV32I-NEXT:    li s4, 0
+; RV32I-NEXT:    li s3, 0
 ; RV32I-NEXT:    j .LBB20_6
 ; RV32I-NEXT:  .LBB20_3:
 ; RV32I-NEXT:    seqz a1, s2
@@ -1065,8 +1065,8 @@ define i64 @fold_addi_from_different_bb(i64 %k, i64 %n, ptr %a) nounwind {
 ; RV32I-NEXT:  .LBB20_4: # %for.body.lr.ph
 ; RV32I-NEXT:    li s5, 0
 ; RV32I-NEXT:    li s6, 0
-; RV32I-NEXT:    li s3, 0
 ; RV32I-NEXT:    li s4, 0
+; RV32I-NEXT:    li s3, 0
 ; RV32I-NEXT:    slli a0, a0, 4
 ; RV32I-NEXT:    add s7, s0, a0
 ; RV32I-NEXT:  .LBB20_5: # %for.body
@@ -1079,16 +1079,16 @@ define i64 @fold_addi_from_different_bb(i64 %k, i64 %n, ptr %a) nounwind {
 ; RV32I-NEXT:    seqz a2, s5
 ; RV32I-NEXT:    add s6, s6, a2
 ; RV32I-NEXT:    xor a2, s5, s2
-; RV32I-NEXT:    add a1, a1, s4
+; RV32I-NEXT:    add a1, a1, s3
 ; RV32I-NEXT:    xor a3, s6, s1
 ; RV32I-NEXT:    or a2, a2, a3
-; RV32I-NEXT:    add s3, a0, s3
-; RV32I-NEXT:    sltu s4, s3, a0
-; RV32I-NEXT:    add s4, a1, s4
+; RV32I-NEXT:    add s4, a0, s4
+; RV32I-NEXT:    sltu s3, s4, a0
+; RV32I-NEXT:    add s3, a1, s3
 ; RV32I-NEXT:    bnez a2, .LBB20_5
 ; RV32I-NEXT:  .LBB20_6: # %for.cond.cleanup
-; RV32I-NEXT:    mv a0, s3
-; RV32I-NEXT:    mv a1, s4
+; RV32I-NEXT:    mv a0, s4
+; RV32I-NEXT:    mv a1, s3
 ; RV32I-NEXT:    lw ra, 44(sp) # 4-byte Folded Reload
 ; RV32I-NEXT:    lw s0, 40(sp) # 4-byte Folded Reload
 ; RV32I-NEXT:    lw s1, 36(sp) # 4-byte Folded Reload
@@ -1128,8 +1128,8 @@ define i64 @fold_addi_from_different_bb(i64 %k, i64 %n, ptr %a) nounwind {
 ; RV32IXQCILI-NEXT:    seqz a1, s3
 ; RV32IXQCILI-NEXT:    bnez a1, .LBB20_2
 ; RV32IXQCILI-NEXT:  .LBB20_4: # %for.body.lr.ph
-; RV32IXQCILI-NEXT:    li s1, 0
 ; RV32IXQCILI-NEXT:    li s0, 0
+; RV32IXQCILI-NEXT:    li s1, 0
 ; RV32IXQCILI-NEXT:    li s6, 0
 ; RV32IXQCILI-NEXT:    li s5, 0
 ; RV32IXQCILI-NEXT:    slli a0, a0, 4
@@ -1140,12 +1140,12 @@ define i64 @fold_addi_from_different_bb(i64 %k, i64 %n, ptr %a) nounwind {
 ; RV32IXQCILI-NEXT:    call f
 ; RV32IXQCILI-NEXT:    lw a0, 8(s7)
 ; RV32IXQCILI-NEXT:    lw a1, 12(s7)
-; RV32IXQCILI-NEXT:    addi s1, s1, 1
-; RV32IXQCILI-NEXT:    seqz a2, s1
-; RV32IXQCILI-NEXT:    add s0, s0, a2
-; RV32IXQCILI-NEXT:    xor a2, s1, s3
+; RV32IXQCILI-NEXT:    addi s0, s0, 1
+; RV32IXQCILI-NEXT:    seqz a2, s0
+; RV32IXQCILI-NEXT:    add s1, s1, a2
+; RV32IXQCILI-NEXT:    xor a2, s0, s3
 ; RV32IXQCILI-NEXT:    add a1, a1, s5
-; RV32IXQCILI-NEXT:    xor a3, s0, s4
+; RV32IXQCILI-NEXT:    xor a3, s1, s4
 ; RV32IXQCILI-NEXT:    or a2, a2, a3
 ; RV32IXQCILI-NEXT:    add s6, s6, a0
 ; RV32IXQCILI-NEXT:    sltu s5, s6, a0
@@ -1186,8 +1186,8 @@ define i64 @fold_addi_from_different_bb(i64 %k, i64 %n, ptr %a) nounwind {
 ; RV32I-MEDIUM-NEXT:    srli a1, s1, 31
 ; RV32I-MEDIUM-NEXT:    beqz a1, .LBB20_4
 ; RV32I-MEDIUM-NEXT:  .LBB20_2:
-; RV32I-MEDIUM-NEXT:    li s3, 0
 ; RV32I-MEDIUM-NEXT:    li s4, 0
+; RV32I-MEDIUM-NEXT:    li s3, 0
 ; RV32I-MEDIUM-NEXT:    j .LBB20_6
 ; RV32I-MEDIUM-NEXT:  .LBB20_3:
 ; RV32I-MEDIUM-NEXT:    seqz a1, s2
@@ -1195,8 +1195,8 @@ define i64 @fold_addi_from_different_bb(i64 %k, i64 %n, ptr %a) nounwind {
 ; RV32I-MEDIUM-NEXT:  .LBB20_4: # %for.body.lr.ph
 ; RV32I-MEDIUM-NEXT:    li s5, 0
 ; RV32I-MEDIUM-NEXT:    li s6, 0
-; RV32I-MEDIUM-NEXT:    li s3, 0
 ; RV32I-MEDIUM-NEXT:    li s4, 0
+; RV32I-MEDIUM-NEXT:    li s3, 0
 ; RV32I-MEDIUM-NEXT:    slli a0, a0, 4
 ; RV32I-MEDIUM-NEXT:    add s7, s0, a0
 ; RV32I-MEDIUM-NEXT:  .LBB20_5: # %for.body
@@ -1209,16 +1209,16 @@ define i64 @fold_addi_from_different_bb(i64 %k, i64 %n, ptr %a) nounwind {
 ; RV32I-MEDIUM-NEXT:    seqz a2, s5
 ; RV32I-MEDIUM-NEXT:    add s6, s6, a2
 ; RV32I-MEDIUM-NEXT:    xor a2, s5, s2
-; RV32I-MEDIUM-NEXT:    add a1, a1, s4
+; RV32I-MEDIUM-NEXT:    add a1, a1, s3
 ; RV32I-MEDIUM-NEXT:    xor a3, s6, s1
 ; RV32I-MEDIUM-NEXT:    or a2, a2, a3
-; RV32I-MEDIUM-NEXT:    add s3, a0, s3
-; RV32I-MEDIUM-NEXT:    sltu s4, s3, a0
-; RV32I-MEDIUM-NEXT:    add s4, a1, s4
+; RV32I-MEDIUM-NEXT:    add s4, a0, s4
+; RV32I-MEDIUM-NEXT:    sltu s3, s4, a0
+; RV32I-MEDIUM-NEXT:    add s3, a1, s3
 ; RV32I-MEDIUM-NEXT:    bnez a2, .LBB20_5
 ; RV32I-MEDIUM-NEXT:  .LBB20_6: # %for.cond.cleanup
-; RV32I-MEDIUM-NEXT:    mv a0, s3
-; RV32I-MEDIUM-NEXT:    mv a1, s4
+; RV32I-MEDIUM-NEXT:    mv a0, s4
+; RV32I-MEDIUM-NEXT:    mv a1, s3
 ; RV32I-MEDIUM-NEXT:    lw ra, 44(sp) # 4-byte Folded Reload
 ; RV32I-MEDIUM-NEXT:    lw s0, 40(sp) # 4-byte Folded Reload
 ; RV32I-MEDIUM-NEXT:    lw s1, 36(sp) # 4-byte Folded Reload

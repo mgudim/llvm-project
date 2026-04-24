@@ -28,14 +28,11 @@ define ptr @ubyte_divmod(ptr %a, ptr %b) {
 ; CHECK-NEXT:    .cfi_def_cfa_offset 24
 ; CHECK-NEXT:    pushq %r14
 ; CHECK-NEXT:    .cfi_def_cfa_offset 32
-; CHECK-NEXT:    pushq %r12
-; CHECK-NEXT:    .cfi_def_cfa_offset 40
 ; CHECK-NEXT:    pushq %rbx
-; CHECK-NEXT:    .cfi_def_cfa_offset 48
-; CHECK-NEXT:    subq $32, %rsp
+; CHECK-NEXT:    .cfi_def_cfa_offset 40
+; CHECK-NEXT:    subq $40, %rsp
 ; CHECK-NEXT:    .cfi_def_cfa_offset 80
-; CHECK-NEXT:    .cfi_offset %rbx, -48
-; CHECK-NEXT:    .cfi_offset %r12, -40
+; CHECK-NEXT:    .cfi_offset %rbx, -40
 ; CHECK-NEXT:    .cfi_offset %r14, -32
 ; CHECK-NEXT:    .cfi_offset %r15, -24
 ; CHECK-NEXT:    .cfi_offset %rbp, -16
@@ -72,16 +69,16 @@ define ptr @ubyte_divmod(ptr %a, ptr %b) {
 ; CHECK-NEXT:    movq _PyUFunc_API@GOTPCREL(%rip), %r14
 ; CHECK-NEXT:    movq (%r14), %rax
 ; CHECK-NEXT:    callq *216(%rax)
-; CHECK-NEXT:    movzbl {{[0-9]+}}(%rsp), %edx
-; CHECK-NEXT:    testb %dl, %dl
+; CHECK-NEXT:    movzbl {{[0-9]+}}(%rsp), %ecx
+; CHECK-NEXT:    testb %cl, %cl
 ; CHECK-NEXT:    je LBB0_11
 ; CHECK-NEXT:  ## %bb.7: ## %cond_false.i
-; CHECK-NEXT:    movzbl {{[0-9]+}}(%rsp), %esi
-; CHECK-NEXT:    movzbl %sil, %ecx
-; CHECK-NEXT:    movl %ecx, %eax
-; CHECK-NEXT:    divb %dl
-; CHECK-NEXT:    movl %eax, %r15d
-; CHECK-NEXT:    testb %cl, %cl
+; CHECK-NEXT:    movzbl {{[0-9]+}}(%rsp), %edx
+; CHECK-NEXT:    movzbl %dl, %esi
+; CHECK-NEXT:    movl %esi, %eax
+; CHECK-NEXT:    divb %cl
+; CHECK-NEXT:    movl %eax, %ebx
+; CHECK-NEXT:    testb %sil, %sil
 ; CHECK-NEXT:    jne LBB0_12
 ; CHECK-NEXT:    jmp LBB0_14
 ; CHECK-NEXT:  LBB0_8: ## %bb17
@@ -101,34 +98,34 @@ define ptr @ubyte_divmod(ptr %a, ptr %b) {
 ; CHECK-NEXT:  LBB0_11: ## %cond_true.i
 ; CHECK-NEXT:    movl $4, %edi
 ; CHECK-NEXT:    callq _feraiseexcept
+; CHECK-NEXT:    movzbl {{[0-9]+}}(%rsp), %ecx
 ; CHECK-NEXT:    movzbl {{[0-9]+}}(%rsp), %edx
-; CHECK-NEXT:    movzbl {{[0-9]+}}(%rsp), %esi
-; CHECK-NEXT:    xorl %r15d, %r15d
-; CHECK-NEXT:    testb %sil, %sil
+; CHECK-NEXT:    xorl %ebx, %ebx
+; CHECK-NEXT:    testb %dl, %dl
 ; CHECK-NEXT:    je LBB0_14
 ; CHECK-NEXT:  LBB0_12: ## %cond_false.i
-; CHECK-NEXT:    testb %dl, %dl
+; CHECK-NEXT:    testb %cl, %cl
 ; CHECK-NEXT:    je LBB0_14
 ; CHECK-NEXT:  ## %bb.13: ## %cond_next17.i
-; CHECK-NEXT:    movzbl %sil, %eax
-; CHECK-NEXT:    divb %dl
-; CHECK-NEXT:    movzbl %ah, %ebx
+; CHECK-NEXT:    movzbl %dl, %eax
+; CHECK-NEXT:    divb %cl
+; CHECK-NEXT:    movzbl %ah, %ebp
 ; CHECK-NEXT:    jmp LBB0_18
 ; CHECK-NEXT:  LBB0_14: ## %cond_true.i200
-; CHECK-NEXT:    testb %dl, %dl
+; CHECK-NEXT:    testb %cl, %cl
 ; CHECK-NEXT:    jne LBB0_17
 ; CHECK-NEXT:  ## %bb.16: ## %cond_true14.i
 ; CHECK-NEXT:    movl $4, %edi
 ; CHECK-NEXT:    callq _feraiseexcept
 ; CHECK-NEXT:  LBB0_17: ## %ubyte_ctype_remainder.exit
-; CHECK-NEXT:    xorl %ebx, %ebx
+; CHECK-NEXT:    xorl %ebp, %ebp
 ; CHECK-NEXT:  LBB0_18: ## %ubyte_ctype_remainder.exit
 ; CHECK-NEXT:    movq (%r14), %rax
 ; CHECK-NEXT:    callq *224(%rax)
 ; CHECK-NEXT:    testl %eax, %eax
 ; CHECK-NEXT:    je LBB0_21
 ; CHECK-NEXT:  ## %bb.19: ## %cond_true61
-; CHECK-NEXT:    movl %eax, %ebp
+; CHECK-NEXT:    movl %eax, %r15d
 ; CHECK-NEXT:    movq (%r14), %rax
 ; CHECK-NEXT:    movq _.str5@GOTPCREL(%rip), %rdi
 ; CHECK-NEXT:    leaq {{[0-9]+}}(%rsp), %rsi
@@ -143,7 +140,7 @@ define ptr @ubyte_divmod(ptr %a, ptr %b) {
 ; CHECK-NEXT:    movq {{[0-9]+}}(%rsp), %rsi
 ; CHECK-NEXT:    movl {{[0-9]+}}(%rsp), %edi
 ; CHECK-NEXT:    leaq {{[0-9]+}}(%rsp), %rcx
-; CHECK-NEXT:    movl %ebp, %edx
+; CHECK-NEXT:    movl %r15d, %edx
 ; CHECK-NEXT:    callq *232(%rax)
 ; CHECK-NEXT:    testl %eax, %eax
 ; CHECK-NEXT:    jne LBB0_27
@@ -154,24 +151,26 @@ define ptr @ubyte_divmod(ptr %a, ptr %b) {
 ; CHECK-NEXT:    je LBB0_27
 ; CHECK-NEXT:  ## %bb.22: ## %cond_next97
 ; CHECK-NEXT:    movq %rax, %r14
-; CHECK-NEXT:    movq _PyArray_API@GOTPCREL(%rip), %r12
-; CHECK-NEXT:    movq (%r12), %rax
-; CHECK-NEXT:    movq 200(%rax), %rdi
+; CHECK-NEXT:    movq _PyArray_API@GOTPCREL(%rip), %r15
+; CHECK-NEXT:    movq (%r15), %rax
+; CHECK-NEXT:    movq 200(%rax), %rax
+; CHECK-NEXT:    movq %rax, %rdi
 ; CHECK-NEXT:    xorl %esi, %esi
-; CHECK-NEXT:    callq *304(%rdi)
+; CHECK-NEXT:    callq *304(%rax)
 ; CHECK-NEXT:    testq %rax, %rax
 ; CHECK-NEXT:    je LBB0_25
 ; CHECK-NEXT:  ## %bb.23: ## %cond_next135
-; CHECK-NEXT:    movb %r15b, 16(%rax)
+; CHECK-NEXT:    movb %bl, 16(%rax)
 ; CHECK-NEXT:    movq %rax, 24(%r14)
-; CHECK-NEXT:    movq (%r12), %rax
-; CHECK-NEXT:    movq 200(%rax), %rdi
+; CHECK-NEXT:    movq (%r15), %rax
+; CHECK-NEXT:    movq 200(%rax), %rax
+; CHECK-NEXT:    movq %rax, %rdi
 ; CHECK-NEXT:    xorl %esi, %esi
-; CHECK-NEXT:    callq *304(%rdi)
+; CHECK-NEXT:    callq *304(%rax)
 ; CHECK-NEXT:    testq %rax, %rax
 ; CHECK-NEXT:    je LBB0_25
 ; CHECK-NEXT:  ## %bb.24: ## %cond_next182
-; CHECK-NEXT:    movb %bl, 16(%rax)
+; CHECK-NEXT:    movb %bpl, 16(%rax)
 ; CHECK-NEXT:    movq %rax, 32(%r14)
 ; CHECK-NEXT:    movq %r14, %rax
 ; CHECK-NEXT:    jmp LBB0_28
@@ -185,9 +184,8 @@ define ptr @ubyte_divmod(ptr %a, ptr %b) {
 ; CHECK-NEXT:  LBB0_27: ## %UnifiedReturnBlock
 ; CHECK-NEXT:    xorl %eax, %eax
 ; CHECK-NEXT:  LBB0_28: ## %UnifiedReturnBlock
-; CHECK-NEXT:    addq $32, %rsp
+; CHECK-NEXT:    addq $40, %rsp
 ; CHECK-NEXT:    popq %rbx
-; CHECK-NEXT:    popq %r12
 ; CHECK-NEXT:    popq %r14
 ; CHECK-NEXT:    popq %r15
 ; CHECK-NEXT:    popq %rbp

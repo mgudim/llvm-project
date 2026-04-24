@@ -241,11 +241,11 @@ define ptr @strcpy_legal_and_baz_illegal(ptr %arg, i64 %sz, ptr %2) nounwind {
 ; CHECK-NEXT:    pushq %r14
 ; CHECK-NEXT:    pushq %rbx
 ; CHECK-NEXT:    movq %rdx, %rbx
-; CHECK-NEXT:    movq %rsi, %r15
-; CHECK-NEXT:    movq %rdi, %r14
+; CHECK-NEXT:    movq %rsi, %r14
+; CHECK-NEXT:    movq %rdi, %r15
 ; CHECK-NEXT:    movq %rsi, %rdi
 ; CHECK-NEXT:    callq _malloc
-; CHECK-NEXT:    testq %r15, %r15
+; CHECK-NEXT:    testq %r14, %r14
 ; CHECK-NEXT:    je LBB6_1
 ; CHECK-NEXT:  ## %bb.2: ## %if.then
 ; CHECK-NEXT:    movq %rax, %rdi
@@ -255,10 +255,10 @@ define ptr @strcpy_legal_and_baz_illegal(ptr %arg, i64 %sz, ptr %2) nounwind {
 ; CHECK-NEXT:    popq %r15
 ; CHECK-NEXT:    jmp _strcpy ## TAILCALL
 ; CHECK-NEXT:  LBB6_1: ## %if.else
-; CHECK-NEXT:    movq %r14, %rdi
+; CHECK-NEXT:    movq %r15, %rdi
 ; CHECK-NEXT:    movq %rbx, %rsi
 ; CHECK-NEXT:    callq _baz
-; CHECK-NEXT:    movq %r14, %rax
+; CHECK-NEXT:    movq %r15, %rax
 ; CHECK-NEXT:    popq %rbx
 ; CHECK-NEXT:    popq %r14
 ; CHECK-NEXT:    popq %r15

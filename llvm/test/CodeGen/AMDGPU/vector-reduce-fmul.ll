@@ -2135,27 +2135,55 @@ define double @test_vector_reduce_fmul_v16double(double %sp, <16 x double> %v) {
 ; GFX9-SDAG-LABEL: test_vector_reduce_fmul_v16double:
 ; GFX9-SDAG:       ; %bb.0: ; %entry
 ; GFX9-SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX9-SDAG-NEXT:    scratch_load_dword v33, off, s32 offset:8
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v33, v13
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v32, v12
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v13, v17
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v12, v16
+; GFX9-SDAG-NEXT:    scratch_load_dword v17, off, s32 offset:8
 ; GFX9-SDAG-NEXT:    scratch_load_dword v31, off, s32
-; GFX9-SDAG-NEXT:    scratch_load_dword v32, off, s32 offset:4
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[2:3]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[4:5]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[6:7]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[8:9]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[10:11]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[12:13]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[14:15]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[16:17]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[18:19]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[20:21]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[22:23]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[24:25]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[26:27]
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[28:29]
+; GFX9-SDAG-NEXT:    scratch_load_dword v16, off, s32 offset:4
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v39, v3
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v38, v2
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v53, v1
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v52, v0
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v51, v5
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v50, v4
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v35, v11
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v34, v10
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v11, v19
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v10, v18
+; GFX9-SDAG-NEXT:    v_mul_f64 v[18:19], v[52:53], v[38:39]
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v49, v7
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v48, v6
+; GFX9-SDAG-NEXT:    v_mul_f64 v[18:19], v[18:19], v[50:51]
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v37, v9
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v36, v8
+; GFX9-SDAG-NEXT:    v_mul_f64 v[18:19], v[18:19], v[48:49]
+; GFX9-SDAG-NEXT:    v_mul_f64 v[18:19], v[18:19], v[36:37]
+; GFX9-SDAG-NEXT:    v_mul_f64 v[18:19], v[18:19], v[34:35]
+; GFX9-SDAG-NEXT:    v_mul_f64 v[18:19], v[18:19], v[32:33]
+; GFX9-SDAG-NEXT:    v_mul_f64 v[14:15], v[18:19], v[14:15]
+; GFX9-SDAG-NEXT:    v_mul_f64 v[12:13], v[14:15], v[12:13]
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v9, v21
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v8, v20
+; GFX9-SDAG-NEXT:    v_mul_f64 v[10:11], v[12:13], v[10:11]
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v7, v23
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v6, v22
+; GFX9-SDAG-NEXT:    v_mul_f64 v[8:9], v[10:11], v[8:9]
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v5, v25
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v4, v24
+; GFX9-SDAG-NEXT:    v_mul_f64 v[6:7], v[8:9], v[6:7]
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v3, v27
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v2, v26
+; GFX9-SDAG-NEXT:    v_mul_f64 v[4:5], v[6:7], v[4:5]
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v1, v29
+; GFX9-SDAG-NEXT:    v_mov_b32_e32 v0, v28
+; GFX9-SDAG-NEXT:    v_mul_f64 v[2:3], v[4:5], v[2:3]
+; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[2:3], v[0:1]
 ; GFX9-SDAG-NEXT:    s_waitcnt vmcnt(1)
 ; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[30:31]
 ; GFX9-SDAG-NEXT:    s_waitcnt vmcnt(0)
-; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[32:33]
+; GFX9-SDAG-NEXT:    v_mul_f64 v[0:1], v[0:1], v[16:17]
 ; GFX9-SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX9-GISEL-LABEL: test_vector_reduce_fmul_v16double:

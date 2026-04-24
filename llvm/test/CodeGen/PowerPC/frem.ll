@@ -73,23 +73,23 @@ define <4 x float> @frem4x32(<4 x float> %a, <4 x float> %b) {
 ; CHECK-NEXT:    xxmrghd 0, 1, 61
 ; CHECK-NEXT:    xscvspdpn 1, 62
 ; CHECK-NEXT:    xscvspdpn 2, 63
-; CHECK-NEXT:    xvcvdpsp 60, 0
+; CHECK-NEXT:    xvcvdpsp 61, 0
 ; CHECK-NEXT:    bl fmodf
 ; CHECK-NEXT:    nop
 ; CHECK-NEXT:    xxswapd 0, 62
-; CHECK-NEXT:    xscpsgndp 61, 1, 1
+; CHECK-NEXT:    xscpsgndp 60, 1, 1
 ; CHECK-NEXT:    xscvspdpn 1, 0
 ; CHECK-NEXT:    xxswapd 0, 63
 ; CHECK-NEXT:    xscvspdpn 2, 0
 ; CHECK-NEXT:    bl fmodf
 ; CHECK-NEXT:    nop
-; CHECK-NEXT:    xxmrghd 0, 61, 1
+; CHECK-NEXT:    xxmrghd 0, 60, 1
 ; CHECK-NEXT:    lxv 63, 80(1) # 16-byte Folded Reload
 ; CHECK-NEXT:    lxv 62, 64(1) # 16-byte Folded Reload
-; CHECK-NEXT:    lxv 61, 48(1) # 16-byte Folded Reload
-; CHECK-NEXT:    xvcvdpsp 34, 0
-; CHECK-NEXT:    vmrgew 2, 2, 28
 ; CHECK-NEXT:    lxv 60, 32(1) # 16-byte Folded Reload
+; CHECK-NEXT:    xvcvdpsp 34, 0
+; CHECK-NEXT:    vmrgew 2, 2, 29
+; CHECK-NEXT:    lxv 61, 48(1) # 16-byte Folded Reload
 ; CHECK-NEXT:    addi 1, 1, 96
 ; CHECK-NEXT:    ld 0, 16(1)
 ; CHECK-NEXT:    mtlr 0

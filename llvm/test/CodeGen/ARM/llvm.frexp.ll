@@ -149,28 +149,28 @@ define { <3 x float>, <3 x i32> } @test_frexp_v3f32_v3i32(<3 x float> %a) {
 ; CHECK-NEXT:    sub sp, #8
 ; CHECK-NEXT:    mov r8, sp
 ; CHECK-NEXT:    vldr d9, [sp, #48]
-; CHECK-NEXT:    mov r4, r0
+; CHECK-NEXT:    mov r5, r0
 ; CHECK-NEXT:    mov r0, r2
 ; CHECK-NEXT:    mov r1, r8
-; CHECK-NEXT:    mov r5, r3
+; CHECK-NEXT:    mov r4, r3
 ; CHECK-NEXT:    vmov d8, r2, r3
 ; CHECK-NEXT:    bl frexpf
 ; CHECK-NEXT:    add r6, sp, #4
 ; CHECK-NEXT:    mov r7, r0
-; CHECK-NEXT:    mov r0, r5
+; CHECK-NEXT:    mov r0, r4
 ; CHECK-NEXT:    mov r1, r6
 ; CHECK-NEXT:    bl frexpf
-; CHECK-NEXT:    mov r5, r0
+; CHECK-NEXT:    mov r4, r0
 ; CHECK-NEXT:    vmov r0, s18
 ; CHECK-NEXT:    vld1.32 {d16[0]}, [r8:32]
-; CHECK-NEXT:    add.w r1, r4, #16
+; CHECK-NEXT:    add.w r1, r5, #16
 ; CHECK-NEXT:    vld1.32 {d16[1]}, [r6:32]
 ; CHECK-NEXT:    vst1.32 {d16}, [r1:64]!
 ; CHECK-NEXT:    bl frexpf
-; CHECK-NEXT:    vmov s1, r5
+; CHECK-NEXT:    vmov s1, r4
 ; CHECK-NEXT:    vmov s0, r7
-; CHECK-NEXT:    vst1.32 {d0}, [r4:64]!
-; CHECK-NEXT:    str r0, [r4]
+; CHECK-NEXT:    vst1.32 {d0}, [r5:64]!
+; CHECK-NEXT:    str r0, [r5]
 ; CHECK-NEXT:    add sp, #8
 ; CHECK-NEXT:    vpop {d8, d9}
 ; CHECK-NEXT:    pop.w {r4, r5, r6, r7, r8, pc}
@@ -320,18 +320,18 @@ define { <4 x float>, <4 x i32> } @test_frexp_v4f32_v4i32(<4 x float> %a) {
 ; CHECK-NEXT:    vpush {d8, d9, d10, d11}
 ; CHECK-NEXT:    sub sp, #16
 ; CHECK-NEXT:    add.w r8, sp, #12
-; CHECK-NEXT:    mov r4, r0
+; CHECK-NEXT:    mov r5, r0
 ; CHECK-NEXT:    mov r0, r2
-; CHECK-NEXT:    mov r5, r3
+; CHECK-NEXT:    mov r4, r3
 ; CHECK-NEXT:    mov r1, r8
 ; CHECK-NEXT:    bl frexpf
 ; CHECK-NEXT:    add r6, sp, #8
 ; CHECK-NEXT:    mov r9, r0
-; CHECK-NEXT:    mov r0, r5
+; CHECK-NEXT:    mov r0, r4
 ; CHECK-NEXT:    mov r1, r6
 ; CHECK-NEXT:    bl frexpf
 ; CHECK-NEXT:    vldr d16, [sp, #80]
-; CHECK-NEXT:    mov r5, r0
+; CHECK-NEXT:    mov r4, r0
 ; CHECK-NEXT:    vld1.32 {d8[0]}, [r8:32]
 ; CHECK-NEXT:    add.w r8, sp, #4
 ; CHECK-NEXT:    vmov r0, r7, d16
@@ -339,18 +339,18 @@ define { <4 x float>, <4 x i32> } @test_frexp_v4f32_v4i32(<4 x float> %a) {
 ; CHECK-NEXT:    vld1.32 {d8[1]}, [r6:32]
 ; CHECK-NEXT:    bl frexpf
 ; CHECK-NEXT:    vld1.32 {d9[0]}, [r8:32]
-; CHECK-NEXT:    vmov s21, r5
-; CHECK-NEXT:    mov r5, sp
+; CHECK-NEXT:    vmov s21, r4
+; CHECK-NEXT:    mov r4, sp
 ; CHECK-NEXT:    mov r6, r0
 ; CHECK-NEXT:    mov r0, r7
-; CHECK-NEXT:    mov r1, r5
+; CHECK-NEXT:    mov r1, r4
 ; CHECK-NEXT:    vmov s20, r9
 ; CHECK-NEXT:    bl frexpf
 ; CHECK-NEXT:    vmov s23, r0
-; CHECK-NEXT:    vld1.32 {d9[1]}, [r5:32]
+; CHECK-NEXT:    vld1.32 {d9[1]}, [r4:32]
 ; CHECK-NEXT:    vmov s22, r6
-; CHECK-NEXT:    vst1.32 {d10, d11}, [r4]!
-; CHECK-NEXT:    vst1.64 {d8, d9}, [r4]
+; CHECK-NEXT:    vst1.32 {d10, d11}, [r5]!
+; CHECK-NEXT:    vst1.64 {d8, d9}, [r5]
 ; CHECK-NEXT:    add sp, #16
 ; CHECK-NEXT:    vpop {d8, d9, d10, d11}
 ; CHECK-NEXT:    add sp, #4
@@ -547,14 +547,14 @@ define { fp128, i32 } @test_frexp_f128_i32(fp128 %a) nounwind {
 ; CHECK:       @ %bb.0:
 ; CHECK-NEXT:    push {r4, lr}
 ; CHECK-NEXT:    sub sp, #8
-; CHECK-NEXT:    mov r12, r3
-; CHECK-NEXT:    ldr r3, [sp, #16]
+; CHECK-NEXT:    ldr.w r12, [sp, #16]
 ; CHECK-NEXT:    mov r4, r0
 ; CHECK-NEXT:    add r0, sp, #4
 ; CHECK-NEXT:    str r0, [sp]
 ; CHECK-NEXT:    mov r0, r1
 ; CHECK-NEXT:    mov r1, r2
-; CHECK-NEXT:    mov r2, r12
+; CHECK-NEXT:    mov r2, r3
+; CHECK-NEXT:    mov r3, r12
 ; CHECK-NEXT:    bl frexpl
 ; CHECK-NEXT:    ldr.w r12, [sp, #4]
 ; CHECK-NEXT:    stm.w r4, {r0, r1, r2, r3, r12}

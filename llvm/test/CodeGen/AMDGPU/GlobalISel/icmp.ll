@@ -1091,44 +1091,48 @@ define void @icmp_p0_uniform(ptr inreg %a, ptr inreg %b, ptr addrspace(1) %p) {
 ; HAWAII-LABEL: icmp_p0_uniform:
 ; HAWAII:       ; %bb.0:
 ; HAWAII-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; HAWAII-NEXT:    v_mov_b32_e32 v2, s18
-; HAWAII-NEXT:    v_mov_b32_e32 v3, s19
-; HAWAII-NEXT:    v_cmp_eq_u64_e32 vcc, s[16:17], v[2:3]
-; HAWAII-NEXT:    s_mov_b32 s6, 0
-; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
-; HAWAII-NEXT:    v_cmp_ne_u64_e32 vcc, s[16:17], v[2:3]
-; HAWAII-NEXT:    s_cselect_b32 s7, 1, 0
-; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
-; HAWAII-NEXT:    v_cmp_lt_u64_e32 vcc, s[16:17], v[2:3]
+; HAWAII-NEXT:    s_mov_b32 s6, s18
+; HAWAII-NEXT:    s_mov_b32 s7, s19
+; HAWAII-NEXT:    v_mov_b32_e32 v2, s6
+; HAWAII-NEXT:    s_mov_b32 s4, s16
+; HAWAII-NEXT:    s_mov_b32 s5, s17
+; HAWAII-NEXT:    v_mov_b32_e32 v3, s7
+; HAWAII-NEXT:    v_cmp_eq_u64_e32 vcc, s[4:5], v[2:3]
+; HAWAII-NEXT:    s_or_b64 s[6:7], vcc, vcc
+; HAWAII-NEXT:    v_cmp_ne_u64_e32 vcc, s[4:5], v[2:3]
 ; HAWAII-NEXT:    s_cselect_b32 s8, 1, 0
-; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
-; HAWAII-NEXT:    v_cmp_gt_u64_e32 vcc, s[16:17], v[2:3]
+; HAWAII-NEXT:    s_or_b64 s[6:7], vcc, vcc
+; HAWAII-NEXT:    v_cmp_lt_u64_e32 vcc, s[4:5], v[2:3]
 ; HAWAII-NEXT:    s_cselect_b32 s9, 1, 0
-; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
-; HAWAII-NEXT:    v_cmp_le_u64_e32 vcc, s[16:17], v[2:3]
+; HAWAII-NEXT:    s_or_b64 s[6:7], vcc, vcc
+; HAWAII-NEXT:    v_cmp_gt_u64_e32 vcc, s[4:5], v[2:3]
 ; HAWAII-NEXT:    s_cselect_b32 s10, 1, 0
-; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
-; HAWAII-NEXT:    v_cmp_ge_u64_e32 vcc, s[16:17], v[2:3]
+; HAWAII-NEXT:    s_or_b64 s[6:7], vcc, vcc
+; HAWAII-NEXT:    v_cmp_le_u64_e32 vcc, s[4:5], v[2:3]
 ; HAWAII-NEXT:    s_cselect_b32 s11, 1, 0
+; HAWAII-NEXT:    s_or_b64 s[6:7], vcc, vcc
+; HAWAII-NEXT:    v_cmp_ge_u64_e32 vcc, s[4:5], v[2:3]
+; HAWAII-NEXT:    s_cselect_b32 s7, 1, 0
 ; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
 ; HAWAII-NEXT:    s_cselect_b32 s4, 1, 0
-; HAWAII-NEXT:    s_cmp_lg_u32 s7, 0
-; HAWAII-NEXT:    s_cselect_b32 s5, 1, 0
 ; HAWAII-NEXT:    s_cmp_lg_u32 s8, 0
-; HAWAII-NEXT:    s_cselect_b32 s7, 1, 0
+; HAWAII-NEXT:    s_cselect_b32 s5, 1, 0
 ; HAWAII-NEXT:    s_cmp_lg_u32 s9, 0
 ; HAWAII-NEXT:    s_cselect_b32 s8, 1, 0
 ; HAWAII-NEXT:    s_cmp_lg_u32 s10, 0
 ; HAWAII-NEXT:    s_cselect_b32 s9, 1, 0
 ; HAWAII-NEXT:    s_cmp_lg_u32 s11, 0
 ; HAWAII-NEXT:    s_cselect_b32 s10, 1, 0
+; HAWAII-NEXT:    s_cmp_lg_u32 s7, 0
+; HAWAII-NEXT:    s_cselect_b32 s7, 1, 0
 ; HAWAII-NEXT:    s_cmp_lg_u32 s4, 0
 ; HAWAII-NEXT:    s_cselect_b32 s4, 1, 0
-; HAWAII-NEXT:    s_add_i32 s5, s5, s7
 ; HAWAII-NEXT:    s_add_i32 s5, s5, s8
 ; HAWAII-NEXT:    s_add_i32 s5, s5, s9
 ; HAWAII-NEXT:    s_add_i32 s5, s5, s10
+; HAWAII-NEXT:    s_add_i32 s5, s5, s7
 ; HAWAII-NEXT:    s_add_i32 s4, s5, s4
+; HAWAII-NEXT:    s_mov_b32 s6, 0
 ; HAWAII-NEXT:    v_mov_b32_e32 v2, s4
 ; HAWAII-NEXT:    s_mov_b32 s7, 0xf000
 ; HAWAII-NEXT:    s_mov_b64 s[4:5], 0
@@ -1292,44 +1296,48 @@ define void @icmp_p1_uniform(ptr addrspace(1) inreg %a, ptr addrspace(1) inreg %
 ; HAWAII-LABEL: icmp_p1_uniform:
 ; HAWAII:       ; %bb.0:
 ; HAWAII-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; HAWAII-NEXT:    v_mov_b32_e32 v2, s18
-; HAWAII-NEXT:    v_mov_b32_e32 v3, s19
-; HAWAII-NEXT:    v_cmp_eq_u64_e32 vcc, s[16:17], v[2:3]
-; HAWAII-NEXT:    s_mov_b32 s6, 0
-; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
-; HAWAII-NEXT:    v_cmp_ne_u64_e32 vcc, s[16:17], v[2:3]
-; HAWAII-NEXT:    s_cselect_b32 s7, 1, 0
-; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
-; HAWAII-NEXT:    v_cmp_lt_u64_e32 vcc, s[16:17], v[2:3]
+; HAWAII-NEXT:    s_mov_b32 s6, s18
+; HAWAII-NEXT:    s_mov_b32 s7, s19
+; HAWAII-NEXT:    v_mov_b32_e32 v2, s6
+; HAWAII-NEXT:    s_mov_b32 s4, s16
+; HAWAII-NEXT:    s_mov_b32 s5, s17
+; HAWAII-NEXT:    v_mov_b32_e32 v3, s7
+; HAWAII-NEXT:    v_cmp_eq_u64_e32 vcc, s[4:5], v[2:3]
+; HAWAII-NEXT:    s_or_b64 s[6:7], vcc, vcc
+; HAWAII-NEXT:    v_cmp_ne_u64_e32 vcc, s[4:5], v[2:3]
 ; HAWAII-NEXT:    s_cselect_b32 s8, 1, 0
-; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
-; HAWAII-NEXT:    v_cmp_gt_u64_e32 vcc, s[16:17], v[2:3]
+; HAWAII-NEXT:    s_or_b64 s[6:7], vcc, vcc
+; HAWAII-NEXT:    v_cmp_lt_u64_e32 vcc, s[4:5], v[2:3]
 ; HAWAII-NEXT:    s_cselect_b32 s9, 1, 0
-; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
-; HAWAII-NEXT:    v_cmp_le_u64_e32 vcc, s[16:17], v[2:3]
+; HAWAII-NEXT:    s_or_b64 s[6:7], vcc, vcc
+; HAWAII-NEXT:    v_cmp_gt_u64_e32 vcc, s[4:5], v[2:3]
 ; HAWAII-NEXT:    s_cselect_b32 s10, 1, 0
-; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
-; HAWAII-NEXT:    v_cmp_ge_u64_e32 vcc, s[16:17], v[2:3]
+; HAWAII-NEXT:    s_or_b64 s[6:7], vcc, vcc
+; HAWAII-NEXT:    v_cmp_le_u64_e32 vcc, s[4:5], v[2:3]
 ; HAWAII-NEXT:    s_cselect_b32 s11, 1, 0
+; HAWAII-NEXT:    s_or_b64 s[6:7], vcc, vcc
+; HAWAII-NEXT:    v_cmp_ge_u64_e32 vcc, s[4:5], v[2:3]
+; HAWAII-NEXT:    s_cselect_b32 s7, 1, 0
 ; HAWAII-NEXT:    s_or_b64 s[4:5], vcc, vcc
 ; HAWAII-NEXT:    s_cselect_b32 s4, 1, 0
-; HAWAII-NEXT:    s_cmp_lg_u32 s7, 0
-; HAWAII-NEXT:    s_cselect_b32 s5, 1, 0
 ; HAWAII-NEXT:    s_cmp_lg_u32 s8, 0
-; HAWAII-NEXT:    s_cselect_b32 s7, 1, 0
+; HAWAII-NEXT:    s_cselect_b32 s5, 1, 0
 ; HAWAII-NEXT:    s_cmp_lg_u32 s9, 0
 ; HAWAII-NEXT:    s_cselect_b32 s8, 1, 0
 ; HAWAII-NEXT:    s_cmp_lg_u32 s10, 0
 ; HAWAII-NEXT:    s_cselect_b32 s9, 1, 0
 ; HAWAII-NEXT:    s_cmp_lg_u32 s11, 0
 ; HAWAII-NEXT:    s_cselect_b32 s10, 1, 0
+; HAWAII-NEXT:    s_cmp_lg_u32 s7, 0
+; HAWAII-NEXT:    s_cselect_b32 s7, 1, 0
 ; HAWAII-NEXT:    s_cmp_lg_u32 s4, 0
 ; HAWAII-NEXT:    s_cselect_b32 s4, 1, 0
-; HAWAII-NEXT:    s_add_i32 s5, s5, s7
 ; HAWAII-NEXT:    s_add_i32 s5, s5, s8
 ; HAWAII-NEXT:    s_add_i32 s5, s5, s9
 ; HAWAII-NEXT:    s_add_i32 s5, s5, s10
+; HAWAII-NEXT:    s_add_i32 s5, s5, s7
 ; HAWAII-NEXT:    s_add_i32 s4, s5, s4
+; HAWAII-NEXT:    s_mov_b32 s6, 0
 ; HAWAII-NEXT:    v_mov_b32_e32 v2, s4
 ; HAWAII-NEXT:    s_mov_b32 s7, 0xf000
 ; HAWAII-NEXT:    s_mov_b64 s[4:5], 0

@@ -458,9 +458,9 @@ define swiftcc { i8, i8, i8, i8 } @gen9(i8 %key) {
 ; CHECK-LABEL: gen9:
 ; CHECK:       # %bb.0:
 ; CHECK-NEXT:    movl %edi, %eax
-; CHECK-NEXT:    movl %eax, %edx
-; CHECK-NEXT:    movl %eax, %ecx
-; CHECK-NEXT:    movl %eax, %r8d
+; CHECK-NEXT:    movl %edi, %edx
+; CHECK-NEXT:    movl %edi, %ecx
+; CHECK-NEXT:    movl %edi, %r8d
 ; CHECK-NEXT:    retq
 ;
 ; CHECK-O0-LABEL: gen9:
@@ -479,10 +479,10 @@ define swiftcc { i8, i8, i8, i8 } @gen9(i8 %key) {
 define swiftcc { double, double, double, double, i64, i64, i64, i64 } @gen10(double %keyd, i64 %keyi) {
 ; CHECK-LABEL: gen10:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    movq %rdi, %rax
+; CHECK-NEXT:    movaps %xmm0, %xmm3
 ; CHECK-NEXT:    movaps %xmm0, %xmm1
 ; CHECK-NEXT:    movaps %xmm0, %xmm2
-; CHECK-NEXT:    movaps %xmm0, %xmm3
+; CHECK-NEXT:    movq %rdi, %rax
 ; CHECK-NEXT:    movq %rdi, %rdx
 ; CHECK-NEXT:    movq %rdi, %rcx
 ; CHECK-NEXT:    movq %rdi, %r8

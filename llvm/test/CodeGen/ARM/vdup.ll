@@ -100,9 +100,9 @@ define <8 x i16> @v_dupQ16(i16 %A) nounwind {
 define <4 x i32> @v_dupQ32(i32 %A) nounwind {
 ; CHECK-LABEL: v_dupQ32:
 ; CHECK:       @ %bb.0:
+; CHECK-NEXT:    mov r3, r0
 ; CHECK-NEXT:    mov r1, r0
 ; CHECK-NEXT:    mov r2, r0
-; CHECK-NEXT:    mov r3, r0
 ; CHECK-NEXT:    mov pc, lr
 	%tmp1 = insertelement <4 x i32> zeroinitializer, i32 %A, i32 0
 	%tmp2 = insertelement <4 x i32> %tmp1, i32 %A, i32 1
@@ -305,8 +305,8 @@ entry:
 define <2 x i64> @bar(<2 x i64> %arg0_int64x1_t) nounwind readnone {
 ; CHECK-LABEL: bar:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    mov r2, r0
 ; CHECK-NEXT:    mov r3, r1
+; CHECK-NEXT:    mov r2, r0
 ; CHECK-NEXT:    mov pc, lr
 entry:
   %0 = shufflevector <2 x i64> %arg0_int64x1_t, <2 x i64> undef, <2 x i32> <i32 0, i32 0>
@@ -327,8 +327,8 @@ entry:
 define <2 x double> @qux(<2 x double> %arg0_int64x1_t) nounwind readnone {
 ; CHECK-LABEL: qux:
 ; CHECK:       @ %bb.0: @ %entry
-; CHECK-NEXT:    mov r2, r0
 ; CHECK-NEXT:    mov r3, r1
+; CHECK-NEXT:    mov r2, r0
 ; CHECK-NEXT:    mov pc, lr
 entry:
   %0 = shufflevector <2 x double> %arg0_int64x1_t, <2 x double> undef, <2 x i32> <i32 0, i32 0>
@@ -352,8 +352,8 @@ define <4 x i32> @tdupi(i32 %x, i32 %y) {
 ; CHECK-LABEL: tdupi:
 ; CHECK:       @ %bb.0:
 ; CHECK-NEXT:    mov r3, r1
-; CHECK-NEXT:    mov r1, r0
 ; CHECK-NEXT:    mov r2, r0
+; CHECK-NEXT:    mov r1, r0
 ; CHECK-NEXT:    mov pc, lr
   %1 = insertelement <4 x i32> undef, i32 %x, i32 0
   %2 = insertelement <4 x i32> %1, i32 %x, i32 1
@@ -384,9 +384,9 @@ define <4 x i32> @tduplane(<4 x i32> %invec) {
 ; CHECK:       @ %bb.0:
 ; CHECK-NEXT:    vmov d16, r0, r1
 ; CHECK-NEXT:    mov r3, #255
-; CHECK-NEXT:    vmov.32 r0, d16[1]
-; CHECK-NEXT:    mov r1, r0
-; CHECK-NEXT:    mov r2, r0
+; CHECK-NEXT:    vmov.32 r2, d16[1]
+; CHECK-NEXT:    mov r0, r2
+; CHECK-NEXT:    mov r1, r2
 ; CHECK-NEXT:    mov pc, lr
   %in = extractelement <4 x i32> %invec, i32 1
   %1 = insertelement <4 x i32> undef, i32 %in, i32 0

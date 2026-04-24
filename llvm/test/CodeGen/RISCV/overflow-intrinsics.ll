@@ -449,8 +449,8 @@ define i64 @uaddo6_xor_multi_use(i64 %a, i64 %b) {
 ; RV32-NEXT:  .LBB10_3:
 ; RV32-NEXT:    li s0, 42
 ; RV32-NEXT:  .LBB10_4:
-; RV32-NEXT:    neg s1, a2
-; RV32-NEXT:    and s1, s1, a3
+; RV32-NEXT:    neg a2, a2
+; RV32-NEXT:    and s1, a2, a3
 ; RV32-NEXT:    call use
 ; RV32-NEXT:    mv a0, s0
 ; RV32-NEXT:    mv a1, s1

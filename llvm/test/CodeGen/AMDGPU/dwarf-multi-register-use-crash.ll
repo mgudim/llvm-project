@@ -31,13 +31,9 @@ define weak_odr void @test(i32 %0) !dbg !34 {
 ; CHECK-NEXT:    v_writelane_b32 v41, s38, 6
 ; CHECK-NEXT:    v_writelane_b32 v41, s39, 7
 ; CHECK-NEXT:    v_writelane_b32 v41, s48, 8
+; CHECK-NEXT:    s_addk_i32 s32, 0x400
 ; CHECK-NEXT:    v_writelane_b32 v41, s49, 9
 ; CHECK-NEXT:    v_writelane_b32 v41, s50, 10
-; CHECK-NEXT:    v_writelane_b32 v41, s51, 11
-; CHECK-NEXT:    v_writelane_b32 v41, s52, 12
-; CHECK-NEXT:    s_addk_i32 s32, 0x400
-; CHECK-NEXT:    v_writelane_b32 v41, s53, 13
-; CHECK-NEXT:    v_writelane_b32 v41, s54, 14
 ; CHECK-NEXT:    s_mov_b64 s[48:49], s[4:5]
 ; CHECK-NEXT:    ;DEBUG_VALUE: dummy:dummy <- undef
 ; CHECK-NEXT:  .Ltmp0:
@@ -45,30 +41,34 @@ define weak_odr void @test(i32 %0) !dbg !34 {
 ; CHECK-NEXT:    s_getpc_b64 s[4:5]
 ; CHECK-NEXT:    s_add_u32 s4, s4, __kmpc_alloc_shared@gotpcrel32@lo+4
 ; CHECK-NEXT:    s_addc_u32 s5, s5, __kmpc_alloc_shared@gotpcrel32@hi+12
-; CHECK-NEXT:    v_writelane_b32 v41, s55, 15
-; CHECK-NEXT:    s_load_dwordx2 s[54:55], s[4:5], 0x0
+; CHECK-NEXT:    v_writelane_b32 v41, s51, 11
+; CHECK-NEXT:    s_load_dwordx2 s[50:51], s[4:5], 0x0
+; CHECK-NEXT:    v_writelane_b32 v41, s52, 12
+; CHECK-NEXT:    v_writelane_b32 v41, s53, 13
+; CHECK-NEXT:    v_writelane_b32 v41, s54, 14
 ; CHECK-NEXT:    s_mov_b64 s[4:5], s[48:49]
 ; CHECK-NEXT:    buffer_store_dword v40, off, s[0:3], s33 ; 4-byte Folded Spill
+; CHECK-NEXT:    v_writelane_b32 v41, s55, 15
 ; CHECK-NEXT:    v_mov_b32_e32 v40, v31
-; CHECK-NEXT:    s_mov_b32 s50, s15
-; CHECK-NEXT:    s_mov_b32 s51, s14
-; CHECK-NEXT:    s_mov_b32 s52, s13
-; CHECK-NEXT:    s_mov_b32 s53, s12
+; CHECK-NEXT:    s_mov_b32 s52, s15
+; CHECK-NEXT:    s_mov_b32 s53, s14
+; CHECK-NEXT:    s_mov_b32 s54, s13
+; CHECK-NEXT:    s_mov_b32 s55, s12
 ; CHECK-NEXT:    s_mov_b64 s[34:35], s[10:11]
 ; CHECK-NEXT:    s_mov_b64 s[36:37], s[8:9]
 ; CHECK-NEXT:    s_mov_b64 s[38:39], s[6:7]
 ; CHECK-NEXT:    s_waitcnt lgkmcnt(0)
-; CHECK-NEXT:    s_swappc_b64 s[30:31], s[54:55]
+; CHECK-NEXT:    s_swappc_b64 s[30:31], s[50:51]
 ; CHECK-NEXT:    s_mov_b64 s[4:5], s[48:49]
 ; CHECK-NEXT:    s_mov_b64 s[6:7], s[38:39]
 ; CHECK-NEXT:    s_mov_b64 s[8:9], s[36:37]
 ; CHECK-NEXT:    s_mov_b64 s[10:11], s[34:35]
-; CHECK-NEXT:    s_mov_b32 s12, s53
-; CHECK-NEXT:    s_mov_b32 s13, s52
-; CHECK-NEXT:    s_mov_b32 s14, s51
-; CHECK-NEXT:    s_mov_b32 s15, s50
+; CHECK-NEXT:    s_mov_b32 s12, s55
+; CHECK-NEXT:    s_mov_b32 s13, s54
+; CHECK-NEXT:    s_mov_b32 s14, s53
+; CHECK-NEXT:    s_mov_b32 s15, s52
 ; CHECK-NEXT:    v_mov_b32_e32 v31, v40
-; CHECK-NEXT:    s_swappc_b64 s[30:31], s[54:55]
+; CHECK-NEXT:    s_swappc_b64 s[30:31], s[50:51]
 ; CHECK-NEXT:  .Ltmp1:
 ; CHECK-NEXT:    ;DEBUG_VALUE: dummy:dummy <- [$vgpr0_vgpr1+0]
 ; CHECK-NEXT:    .loc 1 0 9 is_stmt 0 ; dummy:0:9

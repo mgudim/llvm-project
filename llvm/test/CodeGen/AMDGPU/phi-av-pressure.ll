@@ -37,7 +37,7 @@ define amdgpu_kernel void @main(i1 %arg, ptr %ptr, ptr addrspace(1) %ptr1, ptr a
 ; GFX950-NEXT:    global_load_dwordx4 v[6:9], v1, s[38:39]
 ; GFX950-NEXT:    v_mov_b32_e32 v0, 0
 ; GFX950-NEXT:    v_mov_b64_e32 v[10:11], s[36:37]
-; GFX950-NEXT:    s_and_b64 vcc, exec, s[34:35]
+; GFX950-NEXT:    s_and_b64 s[0:1], exec, s[34:35]
 ; GFX950-NEXT:    v_mov_b32_e32 v12, v1
 ; GFX950-NEXT:    v_mov_b32_e32 v14, v1
 ; GFX950-NEXT:    v_mov_b32_e32 v15, v1
@@ -70,6 +70,7 @@ define amdgpu_kernel void @main(i1 %arg, ptr %ptr, ptr addrspace(1) %ptr1, ptr a
 ; GFX950-NEXT:    v_mov_b32_e32 v41, 0
 ; GFX950-NEXT:    v_mov_b32_e32 v42, 0
 ; GFX950-NEXT:    v_mov_b32_e32 v43, 0
+; GFX950-NEXT:    s_mov_b64 vcc, s[0:1]
 ; GFX950-NEXT:    s_waitcnt vmcnt(1)
 ; GFX950-NEXT:    v_or_b32_e32 v25, v25, v31
 ; GFX950-NEXT:    v_or_b32_e32 v24, v24, v30
@@ -82,7 +83,6 @@ define amdgpu_kernel void @main(i1 %arg, ptr %ptr, ptr addrspace(1) %ptr1, ptr a
 ; GFX950-NEXT:    v_or_b32_e32 v20, v28, v20
 ; GFX950-NEXT:    v_or_b32_e32 v19, v27, v19
 ; GFX950-NEXT:    v_or_b32_e32 v17, v26, v17
-; GFX950-NEXT:    s_mov_b64 vcc, vcc
 ; GFX950-NEXT:    s_cbranch_vccz .LBB0_1
 ; GFX950-NEXT:  ; %bb.2: ; %bb2
 ; GFX950-NEXT:    v_or_b32_e32 v3, v21, v18

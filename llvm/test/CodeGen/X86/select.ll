@@ -1143,22 +1143,22 @@ define i64 @test16(i64 %x) nounwind uwtable readnone ssp {
 ;
 ; ATHLON-LABEL: test16:
 ; ATHLON:       ## %bb.0: ## %entry
-; ATHLON-NEXT:    movl {{[0-9]+}}(%esp), %ecx
-; ATHLON-NEXT:    xorl %eax, %eax
-; ATHLON-NEXT:    orl {{[0-9]+}}(%esp), %ecx
-; ATHLON-NEXT:    setne %al
-; ATHLON-NEXT:    negl %eax
-; ATHLON-NEXT:    movl %eax, %edx
+; ATHLON-NEXT:    movl {{[0-9]+}}(%esp), %eax
+; ATHLON-NEXT:    xorl %edx, %edx
+; ATHLON-NEXT:    orl {{[0-9]+}}(%esp), %eax
+; ATHLON-NEXT:    setne %dl
+; ATHLON-NEXT:    negl %edx
+; ATHLON-NEXT:    movl %edx, %eax
 ; ATHLON-NEXT:    retl
 ;
 ; MCU-LABEL: test16:
 ; MCU:       # %bb.0: # %entry
-; MCU-NEXT:    movl %eax, %ecx
-; MCU-NEXT:    xorl %eax, %eax
-; MCU-NEXT:    orl %edx, %ecx
-; MCU-NEXT:    setne %al
-; MCU-NEXT:    negl %eax
-; MCU-NEXT:    movl %eax, %edx
+; MCU-NEXT:    movl %edx, %ecx
+; MCU-NEXT:    xorl %edx, %edx
+; MCU-NEXT:    orl %ecx, %eax
+; MCU-NEXT:    setne %dl
+; MCU-NEXT:    negl %edx
+; MCU-NEXT:    movl %edx, %eax
 ; MCU-NEXT:    retl
 entry:
   %cmp = icmp ne i64 %x, 0

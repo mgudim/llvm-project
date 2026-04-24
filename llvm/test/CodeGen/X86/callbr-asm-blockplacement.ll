@@ -24,27 +24,27 @@ define i32 @foo(i32 %arg, ptr %arg3) nounwind {
 ; CHECK-NEXT:    jne .LBB0_5
 ; CHECK-NEXT:  # %bb.1: # %bb5
 ; CHECK-NEXT:    movq %rsi, %rbx
-; CHECK-NEXT:    movslq %edi, %rbp
-; CHECK-NEXT:    leaq (,%rbp,8), %rax
-; CHECK-NEXT:    leaq global(%rax,%rax,2), %r14
-; CHECK-NEXT:    leaq global+4(%rax,%rax,2), %r15
-; CHECK-NEXT:    xorl %r13d, %r13d
+; CHECK-NEXT:    movslq %edi, %r15
+; CHECK-NEXT:    leaq (,%r15,8), %rax
+; CHECK-NEXT:    leaq global(%rax,%rax,2), %r12
+; CHECK-NEXT:    leaq global+4(%rax,%rax,2), %r13
+; CHECK-NEXT:    xorl %ebp, %ebp
 ; CHECK-NEXT:    .p2align 4
 ; CHECK-NEXT:  .LBB0_2: # %bb8
 ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
 ; CHECK-NEXT:    callq bar@PLT
-; CHECK-NEXT:    movq %rax, %r12
+; CHECK-NEXT:    movq %rax, %r14
 ; CHECK-NEXT:    movq %rax, %rdi
 ; CHECK-NEXT:    callq *%rbx
-; CHECK-NEXT:    movq %r14, %rdi
+; CHECK-NEXT:    movq %r12, %rdi
 ; CHECK-NEXT:    callq hoge@PLT
-; CHECK-NEXT:    movq %r15, %rdi
+; CHECK-NEXT:    movq %r13, %rdi
 ; CHECK-NEXT:    callq hoge@PLT
-; CHECK-NEXT:    testb %r13b, %r13b
+; CHECK-NEXT:    testb %bpl, %bpl
 ; CHECK-NEXT:    jne .LBB0_2
 ; CHECK-NEXT:  # %bb.3: # %bb15
-; CHECK-NEXT:    leaq (%rbp,%rbp,2), %rax
-; CHECK-NEXT:    movq %r12, global+16(,%rax,8)
+; CHECK-NEXT:    leaq (%r15,%r15,2), %rax
+; CHECK-NEXT:    movq %r14, global+16(,%rax,8)
 ; CHECK-NEXT:    movabsq $-2305847407260205056, %r14 # imm = 0xDFFFFC0000000000
 ; CHECK-NEXT:    #APP
 ; CHECK-NEXT:    #NO_APP

@@ -1511,9 +1511,9 @@ define i64 @bextr64_b0(i64 %val, i64 %numskipbits, i64 %numlowbits) nounwind {
 ; V6M-NEXT:    mov r4, r0
 ; V6M-NEXT:    mov r5, r1
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
+; V6M-NEXT:    mvns r1, r0
 ; V6M-NEXT:    ldr r2, [sp, #16]
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsl
 ; V6M-NEXT:    bics r4, r0
 ; V6M-NEXT:    bics r5, r1
@@ -1601,8 +1601,8 @@ define i64 @bextr64_b1_indexzext(i64 %val, i8 zeroext %numskipbits, i8 zeroext %
 ; V6M-NEXT:    mov r5, r0
 ; V6M-NEXT:    mov r6, r1
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mvns r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    mov r2, r4
 ; V6M-NEXT:    bl __aeabi_llsl
 ; V6M-NEXT:    bics r5, r0
@@ -1707,9 +1707,9 @@ define i64 @bextr64_b2_load(ptr %w, i64 %numskipbits, i64 %numlowbits) nounwind 
 ; V6M-NEXT:    mov r4, r0
 ; V6M-NEXT:    mov r5, r1
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
+; V6M-NEXT:    mvns r1, r0
 ; V6M-NEXT:    ldr r2, [sp, #16]
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsl
 ; V6M-NEXT:    bics r4, r0
 ; V6M-NEXT:    bics r5, r1
@@ -1809,8 +1809,8 @@ define i64 @bextr64_b3_load_indexzext(ptr %w, i8 zeroext %numskipbits, i8 zeroex
 ; V6M-NEXT:    mov r5, r0
 ; V6M-NEXT:    mov r6, r1
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mvns r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    mov r2, r4
 ; V6M-NEXT:    bl __aeabi_llsl
 ; V6M-NEXT:    bics r5, r0
@@ -1909,9 +1909,9 @@ define i64 @bextr64_b4_commutative(i64 %val, i64 %numskipbits, i64 %numlowbits) 
 ; V6M-NEXT:    mov r4, r0
 ; V6M-NEXT:    mov r5, r1
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
+; V6M-NEXT:    mvns r1, r0
 ; V6M-NEXT:    ldr r2, [sp, #16]
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsl
 ; V6M-NEXT:    bics r4, r0
 ; V6M-NEXT:    bics r5, r1
@@ -1987,10 +1987,10 @@ define i32 @bextr64_32_b0(i64 %val, i64 %numskipbits, i8 %numlowbits) nounwind {
 ; V6M-NEXT:    bl __aeabi_llsr
 ; V6M-NEXT:    mov r4, r0
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
-; V6M-NEXT:    add r1, sp, #8
-; V6M-NEXT:    ldrb r2, [r1]
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mvns r1, r0
+; V6M-NEXT:    add r0, sp, #8
+; V6M-NEXT:    ldrb r2, [r0]
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsl
 ; V6M-NEXT:    bics r4, r0
 ; V6M-NEXT:    mov r0, r4
@@ -2460,8 +2460,8 @@ define i64 @bextr64_c0(i64 %val, i64 %numskipbits, i64 %numlowbits) nounwind {
 ; V6M-NEXT:    movs r1, #64
 ; V6M-NEXT:    subs r2, r1, r0
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mvns r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsr
 ; V6M-NEXT:    ands r0, r5
 ; V6M-NEXT:    ands r1, r4
@@ -2563,20 +2563,20 @@ define i64 @bextr64_c1_indexzext(i64 %val, i8 %numskipbits, i8 %numlowbits) noun
 ; V6M:       @ %bb.0:
 ; V6M-NEXT:    .save {r4, r5, r6, lr}
 ; V6M-NEXT:    push {r4, r5, r6, lr}
-; V6M-NEXT:    mov r5, r3
+; V6M-NEXT:    mov r4, r3
 ; V6M-NEXT:    uxtb r2, r2
 ; V6M-NEXT:    bl __aeabi_llsr
 ; V6M-NEXT:    mov r6, r0
-; V6M-NEXT:    mov r4, r1
+; V6M-NEXT:    mov r5, r1
 ; V6M-NEXT:    movs r0, #64
-; V6M-NEXT:    subs r0, r0, r5
+; V6M-NEXT:    subs r0, r0, r4
 ; V6M-NEXT:    uxtb r2, r0
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mvns r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsr
 ; V6M-NEXT:    ands r0, r6
-; V6M-NEXT:    ands r1, r4
+; V6M-NEXT:    ands r1, r5
 ; V6M-NEXT:    pop {r4, r5, r6, pc}
   %skip = zext i8 %numskipbits to i64
   %shifted = lshr i64 %val, %skip
@@ -2678,8 +2678,8 @@ define i64 @bextr64_c2_load(ptr %w, i64 %numskipbits, i64 %numlowbits) nounwind 
 ; V6M-NEXT:    movs r1, #64
 ; V6M-NEXT:    subs r2, r1, r0
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mvns r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsr
 ; V6M-NEXT:    ands r0, r5
 ; V6M-NEXT:    ands r1, r4
@@ -2799,8 +2799,8 @@ define i64 @bextr64_c3_load_indexzext(ptr %w, i8 %numskipbits, i8 %numlowbits) n
 ; V6M-NEXT:    subs r0, r0, r5
 ; V6M-NEXT:    uxtb r2, r0
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mvns r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsr
 ; V6M-NEXT:    ands r0, r6
 ; V6M-NEXT:    ands r1, r4
@@ -2903,8 +2903,8 @@ define i64 @bextr64_c4_commutative(i64 %val, i64 %numskipbits, i64 %numlowbits) 
 ; V6M-NEXT:    movs r1, #64
 ; V6M-NEXT:    subs r2, r1, r0
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mvns r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsr
 ; V6M-NEXT:    ands r0, r5
 ; V6M-NEXT:    ands r1, r4
@@ -2978,8 +2978,8 @@ define i32 @bextr64_32_c0(i64 %val, i64 %numskipbits, i64 %numlowbits) nounwind 
 ; V6M-NEXT:    movs r1, #64
 ; V6M-NEXT:    subs r2, r1, r0
 ; V6M-NEXT:    movs r0, #0
-; V6M-NEXT:    mvns r0, r0
-; V6M-NEXT:    mov r1, r0
+; V6M-NEXT:    mvns r1, r0
+; V6M-NEXT:    mov r0, r1
 ; V6M-NEXT:    bl __aeabi_llsr
 ; V6M-NEXT:    ands r0, r4
 ; V6M-NEXT:    pop {r4, pc}
@@ -3818,15 +3818,15 @@ define i64 @bextr64_d3_load_indexzext(ptr %w, i8 %numskipbits, i8 %numlowbits) n
 ; V6M:       @ %bb.0:
 ; V6M-NEXT:    .save {r4, r5, r7, lr}
 ; V6M-NEXT:    push {r4, r5, r7, lr}
-; V6M-NEXT:    mov r4, r2
-; V6M-NEXT:    ldr r5, [r0]
+; V6M-NEXT:    mov r5, r2
+; V6M-NEXT:    ldr r4, [r0]
 ; V6M-NEXT:    ldr r3, [r0, #4]
 ; V6M-NEXT:    uxtb r2, r1
-; V6M-NEXT:    mov r0, r5
+; V6M-NEXT:    mov r0, r4
 ; V6M-NEXT:    mov r1, r3
 ; V6M-NEXT:    bl __aeabi_llsr
 ; V6M-NEXT:    movs r2, #64
-; V6M-NEXT:    subs r2, r2, r4
+; V6M-NEXT:    subs r2, r2, r5
 ; V6M-NEXT:    uxtb r4, r2
 ; V6M-NEXT:    mov r2, r4
 ; V6M-NEXT:    bl __aeabi_llsl

@@ -2659,54 +2659,62 @@ entry:
 define void @store_LD_float() {
 ; C_CC_FMT-LABEL: store_LD_float:
 ; C_CC_FMT:       # %bb.0: # %entry
-; C_CC_FMT-NEXT:    daddiu $sp, $sp, -16
-; C_CC_FMT-NEXT:    .cfi_def_cfa_offset 16
-; C_CC_FMT-NEXT:    sd $ra, 8($sp) # 8-byte Folded Spill
-; C_CC_FMT-NEXT:    sd $gp, 0($sp) # 8-byte Folded Spill
+; C_CC_FMT-NEXT:    daddiu $sp, $sp, -32
+; C_CC_FMT-NEXT:    .cfi_def_cfa_offset 32
+; C_CC_FMT-NEXT:    sd $ra, 24($sp) # 8-byte Folded Spill
+; C_CC_FMT-NEXT:    sd $gp, 16($sp) # 8-byte Folded Spill
+; C_CC_FMT-NEXT:    sd $16, 8($sp) # 8-byte Folded Spill
 ; C_CC_FMT-NEXT:    .cfi_offset 31, -8
 ; C_CC_FMT-NEXT:    .cfi_offset 28, -16
+; C_CC_FMT-NEXT:    .cfi_offset 16, -24
 ; C_CC_FMT-NEXT:    lui $1, %hi(%neg(%gp_rel(store_LD_float)))
 ; C_CC_FMT-NEXT:    daddu $1, $1, $25
-; C_CC_FMT-NEXT:    daddiu $gp, $1, %lo(%neg(%gp_rel(store_LD_float)))
-; C_CC_FMT-NEXT:    ld $1, %got_disp(gld1)($gp)
+; C_CC_FMT-NEXT:    daddiu $16, $1, %lo(%neg(%gp_rel(store_LD_float)))
+; C_CC_FMT-NEXT:    ld $1, %got_disp(gld1)($16)
 ; C_CC_FMT-NEXT:    ld $4, 0($1)
 ; C_CC_FMT-NEXT:    ld $5, 8($1)
-; C_CC_FMT-NEXT:    ld $25, %call16(__trunctfsf2)($gp)
+; C_CC_FMT-NEXT:    ld $25, %call16(__trunctfsf2)($16)
+; C_CC_FMT-NEXT:    move $gp, $16
 ; C_CC_FMT-NEXT:    .reloc .Ltmp48, R_MIPS_JALR, __trunctfsf2
 ; C_CC_FMT-NEXT:  .Ltmp48:
 ; C_CC_FMT-NEXT:    jalr $25
 ; C_CC_FMT-NEXT:    nop
-; C_CC_FMT-NEXT:    ld $1, %got_disp(gf1)($gp)
+; C_CC_FMT-NEXT:    ld $1, %got_disp(gf1)($16)
 ; C_CC_FMT-NEXT:    sw $2, 0($1)
-; C_CC_FMT-NEXT:    ld $gp, 0($sp) # 8-byte Folded Reload
-; C_CC_FMT-NEXT:    ld $ra, 8($sp) # 8-byte Folded Reload
-; C_CC_FMT-NEXT:    daddiu $sp, $sp, 16
+; C_CC_FMT-NEXT:    ld $16, 8($sp) # 8-byte Folded Reload
+; C_CC_FMT-NEXT:    ld $gp, 16($sp) # 8-byte Folded Reload
+; C_CC_FMT-NEXT:    ld $ra, 24($sp) # 8-byte Folded Reload
+; C_CC_FMT-NEXT:    daddiu $sp, $sp, 32
 ; C_CC_FMT-NEXT:    jr $ra
 ; C_CC_FMT-NEXT:    nop
 ;
 ; CMP_CC_FMT-LABEL: store_LD_float:
 ; CMP_CC_FMT:       # %bb.0: # %entry
-; CMP_CC_FMT-NEXT:    daddiu $sp, $sp, -16
-; CMP_CC_FMT-NEXT:    .cfi_def_cfa_offset 16
-; CMP_CC_FMT-NEXT:    sd $ra, 8($sp) # 8-byte Folded Spill
-; CMP_CC_FMT-NEXT:    sd $gp, 0($sp) # 8-byte Folded Spill
+; CMP_CC_FMT-NEXT:    daddiu $sp, $sp, -32
+; CMP_CC_FMT-NEXT:    .cfi_def_cfa_offset 32
+; CMP_CC_FMT-NEXT:    sd $ra, 24($sp) # 8-byte Folded Spill
+; CMP_CC_FMT-NEXT:    sd $gp, 16($sp) # 8-byte Folded Spill
+; CMP_CC_FMT-NEXT:    sd $16, 8($sp) # 8-byte Folded Spill
 ; CMP_CC_FMT-NEXT:    .cfi_offset 31, -8
 ; CMP_CC_FMT-NEXT:    .cfi_offset 28, -16
+; CMP_CC_FMT-NEXT:    .cfi_offset 16, -24
 ; CMP_CC_FMT-NEXT:    lui $1, %hi(%neg(%gp_rel(store_LD_float)))
 ; CMP_CC_FMT-NEXT:    daddu $1, $1, $25
-; CMP_CC_FMT-NEXT:    daddiu $gp, $1, %lo(%neg(%gp_rel(store_LD_float)))
-; CMP_CC_FMT-NEXT:    ld $1, %got_disp(gld1)($gp)
+; CMP_CC_FMT-NEXT:    daddiu $16, $1, %lo(%neg(%gp_rel(store_LD_float)))
+; CMP_CC_FMT-NEXT:    ld $1, %got_disp(gld1)($16)
 ; CMP_CC_FMT-NEXT:    ld $4, 0($1)
 ; CMP_CC_FMT-NEXT:    ld $5, 8($1)
-; CMP_CC_FMT-NEXT:    ld $25, %call16(__trunctfsf2)($gp)
+; CMP_CC_FMT-NEXT:    ld $25, %call16(__trunctfsf2)($16)
+; CMP_CC_FMT-NEXT:    move $gp, $16
 ; CMP_CC_FMT-NEXT:    .reloc .Ltmp48, R_MIPS_JALR, __trunctfsf2
 ; CMP_CC_FMT-NEXT:  .Ltmp48:
 ; CMP_CC_FMT-NEXT:    jalrc $25
-; CMP_CC_FMT-NEXT:    ld $1, %got_disp(gf1)($gp)
+; CMP_CC_FMT-NEXT:    ld $1, %got_disp(gf1)($16)
 ; CMP_CC_FMT-NEXT:    sw $2, 0($1)
-; CMP_CC_FMT-NEXT:    ld $gp, 0($sp) # 8-byte Folded Reload
-; CMP_CC_FMT-NEXT:    ld $ra, 8($sp) # 8-byte Folded Reload
-; CMP_CC_FMT-NEXT:    daddiu $sp, $sp, 16
+; CMP_CC_FMT-NEXT:    ld $16, 8($sp) # 8-byte Folded Reload
+; CMP_CC_FMT-NEXT:    ld $gp, 16($sp) # 8-byte Folded Reload
+; CMP_CC_FMT-NEXT:    ld $ra, 24($sp) # 8-byte Folded Reload
+; CMP_CC_FMT-NEXT:    daddiu $sp, $sp, 32
 ; CMP_CC_FMT-NEXT:    jrc $ra
 entry:
   %0 = load fp128, ptr @gld1, align 16
@@ -2721,54 +2729,62 @@ entry:
 define void @store_LD_double() {
 ; C_CC_FMT-LABEL: store_LD_double:
 ; C_CC_FMT:       # %bb.0: # %entry
-; C_CC_FMT-NEXT:    daddiu $sp, $sp, -16
-; C_CC_FMT-NEXT:    .cfi_def_cfa_offset 16
-; C_CC_FMT-NEXT:    sd $ra, 8($sp) # 8-byte Folded Spill
-; C_CC_FMT-NEXT:    sd $gp, 0($sp) # 8-byte Folded Spill
+; C_CC_FMT-NEXT:    daddiu $sp, $sp, -32
+; C_CC_FMT-NEXT:    .cfi_def_cfa_offset 32
+; C_CC_FMT-NEXT:    sd $ra, 24($sp) # 8-byte Folded Spill
+; C_CC_FMT-NEXT:    sd $gp, 16($sp) # 8-byte Folded Spill
+; C_CC_FMT-NEXT:    sd $16, 8($sp) # 8-byte Folded Spill
 ; C_CC_FMT-NEXT:    .cfi_offset 31, -8
 ; C_CC_FMT-NEXT:    .cfi_offset 28, -16
+; C_CC_FMT-NEXT:    .cfi_offset 16, -24
 ; C_CC_FMT-NEXT:    lui $1, %hi(%neg(%gp_rel(store_LD_double)))
 ; C_CC_FMT-NEXT:    daddu $1, $1, $25
-; C_CC_FMT-NEXT:    daddiu $gp, $1, %lo(%neg(%gp_rel(store_LD_double)))
-; C_CC_FMT-NEXT:    ld $1, %got_disp(gld1)($gp)
+; C_CC_FMT-NEXT:    daddiu $16, $1, %lo(%neg(%gp_rel(store_LD_double)))
+; C_CC_FMT-NEXT:    ld $1, %got_disp(gld1)($16)
 ; C_CC_FMT-NEXT:    ld $4, 0($1)
 ; C_CC_FMT-NEXT:    ld $5, 8($1)
-; C_CC_FMT-NEXT:    ld $25, %call16(__trunctfdf2)($gp)
+; C_CC_FMT-NEXT:    ld $25, %call16(__trunctfdf2)($16)
+; C_CC_FMT-NEXT:    move $gp, $16
 ; C_CC_FMT-NEXT:    .reloc .Ltmp49, R_MIPS_JALR, __trunctfdf2
 ; C_CC_FMT-NEXT:  .Ltmp49:
 ; C_CC_FMT-NEXT:    jalr $25
 ; C_CC_FMT-NEXT:    nop
-; C_CC_FMT-NEXT:    ld $1, %got_disp(gd1)($gp)
+; C_CC_FMT-NEXT:    ld $1, %got_disp(gd1)($16)
 ; C_CC_FMT-NEXT:    sd $2, 0($1)
-; C_CC_FMT-NEXT:    ld $gp, 0($sp) # 8-byte Folded Reload
-; C_CC_FMT-NEXT:    ld $ra, 8($sp) # 8-byte Folded Reload
-; C_CC_FMT-NEXT:    daddiu $sp, $sp, 16
+; C_CC_FMT-NEXT:    ld $16, 8($sp) # 8-byte Folded Reload
+; C_CC_FMT-NEXT:    ld $gp, 16($sp) # 8-byte Folded Reload
+; C_CC_FMT-NEXT:    ld $ra, 24($sp) # 8-byte Folded Reload
+; C_CC_FMT-NEXT:    daddiu $sp, $sp, 32
 ; C_CC_FMT-NEXT:    jr $ra
 ; C_CC_FMT-NEXT:    nop
 ;
 ; CMP_CC_FMT-LABEL: store_LD_double:
 ; CMP_CC_FMT:       # %bb.0: # %entry
-; CMP_CC_FMT-NEXT:    daddiu $sp, $sp, -16
-; CMP_CC_FMT-NEXT:    .cfi_def_cfa_offset 16
-; CMP_CC_FMT-NEXT:    sd $ra, 8($sp) # 8-byte Folded Spill
-; CMP_CC_FMT-NEXT:    sd $gp, 0($sp) # 8-byte Folded Spill
+; CMP_CC_FMT-NEXT:    daddiu $sp, $sp, -32
+; CMP_CC_FMT-NEXT:    .cfi_def_cfa_offset 32
+; CMP_CC_FMT-NEXT:    sd $ra, 24($sp) # 8-byte Folded Spill
+; CMP_CC_FMT-NEXT:    sd $gp, 16($sp) # 8-byte Folded Spill
+; CMP_CC_FMT-NEXT:    sd $16, 8($sp) # 8-byte Folded Spill
 ; CMP_CC_FMT-NEXT:    .cfi_offset 31, -8
 ; CMP_CC_FMT-NEXT:    .cfi_offset 28, -16
+; CMP_CC_FMT-NEXT:    .cfi_offset 16, -24
 ; CMP_CC_FMT-NEXT:    lui $1, %hi(%neg(%gp_rel(store_LD_double)))
 ; CMP_CC_FMT-NEXT:    daddu $1, $1, $25
-; CMP_CC_FMT-NEXT:    daddiu $gp, $1, %lo(%neg(%gp_rel(store_LD_double)))
-; CMP_CC_FMT-NEXT:    ld $1, %got_disp(gld1)($gp)
+; CMP_CC_FMT-NEXT:    daddiu $16, $1, %lo(%neg(%gp_rel(store_LD_double)))
+; CMP_CC_FMT-NEXT:    ld $1, %got_disp(gld1)($16)
 ; CMP_CC_FMT-NEXT:    ld $4, 0($1)
 ; CMP_CC_FMT-NEXT:    ld $5, 8($1)
-; CMP_CC_FMT-NEXT:    ld $25, %call16(__trunctfdf2)($gp)
+; CMP_CC_FMT-NEXT:    ld $25, %call16(__trunctfdf2)($16)
+; CMP_CC_FMT-NEXT:    move $gp, $16
 ; CMP_CC_FMT-NEXT:    .reloc .Ltmp49, R_MIPS_JALR, __trunctfdf2
 ; CMP_CC_FMT-NEXT:  .Ltmp49:
 ; CMP_CC_FMT-NEXT:    jalrc $25
-; CMP_CC_FMT-NEXT:    ld $1, %got_disp(gd1)($gp)
+; CMP_CC_FMT-NEXT:    ld $1, %got_disp(gd1)($16)
 ; CMP_CC_FMT-NEXT:    sd $2, 0($1)
-; CMP_CC_FMT-NEXT:    ld $gp, 0($sp) # 8-byte Folded Reload
-; CMP_CC_FMT-NEXT:    ld $ra, 8($sp) # 8-byte Folded Reload
-; CMP_CC_FMT-NEXT:    daddiu $sp, $sp, 16
+; CMP_CC_FMT-NEXT:    ld $16, 8($sp) # 8-byte Folded Reload
+; CMP_CC_FMT-NEXT:    ld $gp, 16($sp) # 8-byte Folded Reload
+; CMP_CC_FMT-NEXT:    ld $ra, 24($sp) # 8-byte Folded Reload
+; CMP_CC_FMT-NEXT:    daddiu $sp, $sp, 32
 ; CMP_CC_FMT-NEXT:    jrc $ra
 entry:
   %0 = load fp128, ptr @gld1, align 16

@@ -1369,10 +1369,10 @@ define void @scalar_mov_materializes_frame_index_no_live_scc_no_live_sgprs_gep_i
 ; GFX942-NEXT:    ;;#ASMSTART
 ; GFX942-NEXT:    ; def s[0:15], s[16:31], s[32:47], s[48:55], s[56:57], v[0:15], v[16:21], vcc
 ; GFX942-NEXT:    ;;#ASMEND
-; GFX942-NEXT:    s_add_i32 s58, s32, 0x4240
+; GFX942-NEXT:    s_add_i32 s60, s32, 0x4240
 ; GFX942-NEXT:    ; kill: def $sgpr48_sgpr49_sgpr50_sgpr51_sgpr52_sgpr53_sgpr54_sgpr55 killed $sgpr48_sgpr49_sgpr50_sgpr51_sgpr52_sgpr53_sgpr54_sgpr55 def $sgpr54
-; GFX942-NEXT:    s_and_b64 s[60:61], 0, exec
-; GFX942-NEXT:    s_mov_b32 s54, s58
+; GFX942-NEXT:    s_and_b64 s[58:59], 0, exec
+; GFX942-NEXT:    s_mov_b32 s54, s60
 ; GFX942-NEXT:    ;;#ASMSTART
 ; GFX942-NEXT:    ; use s[0:15], s[16:31], s[32:47], s[48:55], s[56:57], v[0:15], v[16:21], vcc, s54, scc
 ; GFX942-NEXT:    ;;#ASMEND

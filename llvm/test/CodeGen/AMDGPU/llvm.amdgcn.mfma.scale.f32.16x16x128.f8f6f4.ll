@@ -14,11 +14,38 @@
 
 ; fp8 x fp8
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp0(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 0, ; blgp
@@ -27,11 +54,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp0(<8 x 
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_1_1__cbsz1__blgp1(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_1_1__cbsz1__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[1,1,0] op_sel_hi:[0,0,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_1_1__cbsz1__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[1,1,0] op_sel_hi:[0,0,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_1_1__cbsz1__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel:[1,1,0] op_sel_hi:[0,0,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 0, ; blgp
@@ -40,11 +94,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_1_1__cbsz1__blgp1(<8 x 
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_2_2__cbsz1__blgp1(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_2_2__cbsz1__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[1,1,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_2_2__cbsz1__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[1,1,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_2_2__cbsz1__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[1,1,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 0, ; blgp
@@ -53,11 +134,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_2_2__cbsz1__blgp1(<8 x 
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_3_3__cbsz1__blgp1(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_3_3__cbsz1__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[1,1,0] op_sel_hi:[1,1,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_3_3__cbsz1__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[1,1,0] op_sel_hi:[1,1,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_3_3__cbsz1__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel:[1,1,0] op_sel_hi:[1,1,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 0, ; blgp
@@ -66,11 +174,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_3_3__cbsz1__blgp1(<8 x 
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_3__cbsz1__blgp1(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_3__cbsz1__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[0,1,0] op_sel_hi:[0,1,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_3__cbsz1__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[0,1,0] op_sel_hi:[0,1,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_3__cbsz1__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel:[0,1,0] op_sel_hi:[0,1,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 0, ; blgp
@@ -79,11 +214,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_3__cbsz1__blgp1(<8 x 
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_3_0__cbsz1__blgp1(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_3_0__cbsz1__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[1,0,0] op_sel_hi:[1,0,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_3_0__cbsz1__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[1,0,0] op_sel_hi:[1,0,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_3_0__cbsz1__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel:[1,0,0] op_sel_hi:[1,0,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 0, ; blgp
@@ -92,11 +254,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_3_0__cbsz1__blgp1(<8 x 
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_2_3__cbsz1__blgp1(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_2_3__cbsz1__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[0,1,0] op_sel_hi:[1,1,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_2_3__cbsz1__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[0,1,0] op_sel_hi:[1,1,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_2_3__cbsz1__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel:[0,1,0] op_sel_hi:[1,1,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 0, ; blgp
@@ -105,11 +294,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_2_3__cbsz1__blgp1(<8 x 
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_3_2__cbsz1__blgp1(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_3_2__cbsz1__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[1,0,0] op_sel_hi:[1,1,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_3_2__cbsz1__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel:[1,0,0] op_sel_hi:[1,1,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_3_2__cbsz1__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel:[1,0,0] op_sel_hi:[1,1,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 0, ; blgp
@@ -119,11 +335,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_3_2__cbsz1__blgp1(<8 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp0__constant_scale_0_0(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp0__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp0__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp0__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:11], v[0:3]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 0, ; blgp
@@ -133,11 +376,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp0__cons
 
 ; fp8 x bf8
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp1(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] blgp:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] blgp:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[0,0,0] blgp:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 1, ; blgp
@@ -147,11 +417,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp1(<8 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp1__constant_scale_0_0(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp1__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19] blgp:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp1__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19] blgp:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp1__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:11], v[0:3] blgp:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 1, ; blgp
@@ -161,11 +458,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp1__cons
 
 ; fp8 x fp6
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp2(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp2:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp2:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp2:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:9], v[0:3], v18, v19 op_sel_hi:[0,0,0] blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v6i32(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 2, ; blgp
@@ -175,11 +497,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp2(<8 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp2__constant_scale_0_0(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp2__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17] blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp2__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17] blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp2__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v24, v6
+; GISEL-NEXT:    v_mov_b32_e32 v25, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[18:25], v[4:9], v[0:3] blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v6i32(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 2, ; blgp
@@ -189,11 +536,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp2__cons
 
 ; fp8 x bf6
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp3(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp3:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] blgp:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp3:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] blgp:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp3:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:9], v[0:3], v18, v19 op_sel_hi:[0,0,0] blgp:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v6i32(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 3, ; blgp
@@ -203,11 +575,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp3(<8 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp3__constant_scale_0_0(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp3__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17] blgp:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp3__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17] blgp:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp3__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v24, v6
+; GISEL-NEXT:    v_mov_b32_e32 v25, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[18:25], v[4:9], v[0:3] blgp:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v6i32(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 3, ; blgp
@@ -217,11 +614,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp3__cons
 
 ; fp8 x fp4
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp4(<8 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp4:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp4:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp4:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v24, v6
+; GISEL-NEXT:    v_mov_b32_e32 v25, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:25], v[4:7], v[0:3], v16, v17 op_sel_hi:[0,0,0] blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v4i32(<8 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 4, ; blgp
@@ -231,11 +651,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp4(<8 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp4__constant_scale_0_0(<8 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp4__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:11], v[12:15] blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp4__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:11], v[12:15] blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp4__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v20, v4
+; GISEL-NEXT:    v_mov_b32_e32 v21, v5
+; GISEL-NEXT:    v_mov_b32_e32 v22, v6
+; GISEL-NEXT:    v_mov_b32_e32 v23, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[16:23], v[4:7], v[0:3] blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v4i32(<8 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 4, ; blgp
@@ -245,11 +688,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz0__blgp4__cons
 
 ; bf8 x fp8
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp0(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[0,0,0] cbsz:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 1, ; cbsz
                                                                                       i32 0, ; blgp
@@ -259,11 +729,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp0(<8 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp0__constant_scale_0_0(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp0__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19] cbsz:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp0__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19] cbsz:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp0__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:11], v[0:3] cbsz:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 1, ; cbsz
                                                                                       i32 0, ; blgp
@@ -273,11 +770,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp0__cons
 
 ; bf8 x bf8
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp1(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:1 blgp:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:1 blgp:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[0,0,0] cbsz:1 blgp:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 1, ; cbsz
                                                                                       i32 1, ; blgp
@@ -288,11 +812,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp1(<8 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp1__constant_scale_0_0(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp1__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19] cbsz:1 blgp:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp1__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19] cbsz:1 blgp:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp1__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:11], v[0:3] cbsz:1 blgp:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 1, ; cbsz
                                                                                       i32 1, ; blgp
@@ -302,11 +853,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp1__cons
 
 ; bf8 x fp6
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp2(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp2:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:1 blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp2:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:1 blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp2:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:9], v[0:3], v18, v19 op_sel_hi:[0,0,0] cbsz:1 blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v6i32(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 1, ; cbsz
                                                                                       i32 2, ; blgp
@@ -315,11 +891,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp2(<8 x 
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp2__constant_scale_0(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp2__constant_scale_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17] cbsz:1 blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp2__constant_scale_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17] cbsz:1 blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp2__constant_scale_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v24, v6
+; GISEL-NEXT:    v_mov_b32_e32 v25, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[18:25], v[4:9], v[0:3] cbsz:1 blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v6i32(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 1, ; cbsz
                                                                                       i32 2, ; blgp
@@ -329,11 +930,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp2__cons
 
 ; bf8 x bf6
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp3(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp3:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:1 blgp:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp3:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:1 blgp:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp3:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:9], v[0:3], v18, v19 op_sel_hi:[0,0,0] cbsz:1 blgp:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v6i32(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 1, ; cbsz
                                                                                       i32 3, ; blgp
@@ -343,11 +969,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp3(<8 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp3__constant_scale_0_0(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp3__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17] cbsz:1 blgp:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp3__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17] cbsz:1 blgp:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp3__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v24, v6
+; GISEL-NEXT:    v_mov_b32_e32 v25, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[18:25], v[4:9], v[0:3] cbsz:1 blgp:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v6i32(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 1, ; cbsz
                                                                                       i32 3, ; blgp
@@ -357,11 +1008,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp3__cons
 
 ; bf8 x fp4
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp4(<8 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp4:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:1 blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp4:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:1 blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp4:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v24, v6
+; GISEL-NEXT:    v_mov_b32_e32 v25, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:25], v[4:7], v[0:3], v16, v17 op_sel_hi:[0,0,0] cbsz:1 blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v4i32(<8 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 1, ; cbsz
                                                                                       i32 4, ; blgp
@@ -371,11 +1045,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp4(<8 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp4__constant_scale_0_0(<8 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp4__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:11], v[12:15] cbsz:1 blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp4__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:11], v[12:15] cbsz:1 blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp4__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v20, v4
+; GISEL-NEXT:    v_mov_b32_e32 v21, v5
+; GISEL-NEXT:    v_mov_b32_e32 v22, v6
+; GISEL-NEXT:    v_mov_b32_e32 v23, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[16:23], v[4:7], v[0:3] cbsz:1 blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v4i32(<8 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 1, ; cbsz
                                                                                       i32 4, ; blgp
@@ -385,11 +1082,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz1__blgp4__cons
 
 ; fp6 x fp8
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp0(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:25], v[4:11], v[0:3], v18, v19 op_sel_hi:[0,0,0] cbsz:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v8i32(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 0, ; blgp
@@ -399,11 +1121,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp0(<6 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp0__constant_scale_0_0(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp0__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17] cbsz:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp0__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17] cbsz:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp0__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[18:23], v[4:11], v[0:3] cbsz:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v8i32(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 0, ; blgp
@@ -413,11 +1160,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp0__cons
 
 ; fp6 x bf8
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp1(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:2 blgp:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:2 blgp:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:25], v[4:11], v[0:3], v18, v19 op_sel_hi:[0,0,0] cbsz:2 blgp:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v8i32(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 1, ; blgp
@@ -427,11 +1199,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp1(<6 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp1__constant_scale_0_0(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp1__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17] cbsz:2 blgp:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp1__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17] cbsz:2 blgp:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp1__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[18:23], v[4:11], v[0:3] cbsz:2 blgp:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v8i32(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 1, ; blgp
@@ -441,11 +1238,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp1__cons
 
 ; fp6 x fp6
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp2(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp2:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:2 blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp2:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:2 blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp2:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:23], v[4:9], v[0:3], v16, v17 op_sel_hi:[0,0,0] cbsz:2 blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v6i32(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 2, ; blgp
@@ -455,11 +1275,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp2(<6 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp2__constant_scale_0_0(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp2__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15] cbsz:2 blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp2__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15] cbsz:2 blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp2__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v20, v4
+; GISEL-NEXT:    v_mov_b32_e32 v21, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[16:21], v[4:9], v[0:3] cbsz:2 blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v6i32(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 2, ; blgp
@@ -469,11 +1312,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp2__cons
 
 ; fp6 x bf6
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp3(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp3:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:2 blgp:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp3:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:2 blgp:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp3:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:23], v[4:9], v[0:3], v16, v17 op_sel_hi:[0,0,0] cbsz:2 blgp:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v6i32(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 3, ; blgp
@@ -483,11 +1349,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp3(<6 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp3__constant_scale_0_0(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp3__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15] cbsz:2 blgp:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp3__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15] cbsz:2 blgp:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp3__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v20, v4
+; GISEL-NEXT:    v_mov_b32_e32 v21, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[16:21], v[4:9], v[0:3] cbsz:2 blgp:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v6i32(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 3, ; blgp
@@ -498,11 +1387,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp3__cons
 
 ; bf6 x fp8
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp0(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:25], v[4:11], v[0:3], v18, v19 op_sel_hi:[0,0,0] cbsz:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v8i32(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 3, ; cbsz
                                                                                       i32 0, ; blgp
@@ -512,11 +1426,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp0(<6 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp0__constant_scale_0_0(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp0__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17] cbsz:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp0__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17] cbsz:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp0__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[18:23], v[4:11], v[0:3] cbsz:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v8i32(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 3, ; cbsz
                                                                                       i32 0, ; blgp
@@ -526,11 +1465,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp0__cons
 
 ; bf6 x bf8
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp1(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:3 blgp:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:3 blgp:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:25], v[4:11], v[0:3], v18, v19 op_sel_hi:[0,0,0] cbsz:3 blgp:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v8i32(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 3, ; cbsz
                                                                                       i32 1, ; blgp
@@ -540,11 +1504,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp1(<6 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp1__constant_scale_0_0(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp1__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17] cbsz:3 blgp:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp1__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17] cbsz:3 blgp:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp1__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[18:23], v[4:11], v[0:3] cbsz:3 blgp:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v8i32(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 3, ; cbsz
                                                                                       i32 1, ; blgp
@@ -554,11 +1543,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp1__cons
 
 ; bf6 x fp6
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp2(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp2:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:3 blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp2:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:3 blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp2:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:23], v[4:9], v[0:3], v16, v17 op_sel_hi:[0,0,0] cbsz:3 blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v6i32(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 3, ; cbsz
                                                                                       i32 2, ; blgp
@@ -568,11 +1580,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp2(<6 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp2__constant_scale_0_0(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp2__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15] cbsz:3 blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp2__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15] cbsz:3 blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp2__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v20, v4
+; GISEL-NEXT:    v_mov_b32_e32 v21, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[16:21], v[4:9], v[0:3] cbsz:3 blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v6i32(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 3, ; cbsz
                                                                                       i32 2, ; blgp
@@ -582,11 +1617,32 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp2__cons
 
 ; bf6 x fp4
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp4(<6 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp4:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:9], v[10:13], v14, v15 op_sel_hi:[0,0,0] cbsz:3 blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp4:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:9], v[10:13], v14, v15 op_sel_hi:[0,0,0] cbsz:3 blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp4:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v20, v4
+; GISEL-NEXT:    v_mov_b32_e32 v21, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v0, v10
+; GISEL-NEXT:    v_mov_b32_e32 v1, v11
+; GISEL-NEXT:    v_mov_b32_e32 v2, v12
+; GISEL-NEXT:    v_mov_b32_e32 v3, v13
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[16:21], v[4:7], v[0:3], v14, v15 op_sel_hi:[0,0,0] cbsz:3 blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v4i32(<6 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 3, ; cbsz
                                                                                       i32 4, ; blgp
@@ -596,11 +1652,32 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp4(<6 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp4__constant_scale_0_0(<6 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp4__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:9], v[10:13] cbsz:3 blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp4__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:9], v[10:13] cbsz:3 blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp4__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v14, v0
+; GISEL-NEXT:    v_mov_b32_e32 v15, v1
+; GISEL-NEXT:    v_mov_b32_e32 v16, v2
+; GISEL-NEXT:    v_mov_b32_e32 v17, v3
+; GISEL-NEXT:    v_mov_b32_e32 v18, v4
+; GISEL-NEXT:    v_mov_b32_e32 v19, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v0, v10
+; GISEL-NEXT:    v_mov_b32_e32 v1, v11
+; GISEL-NEXT:    v_mov_b32_e32 v2, v12
+; GISEL-NEXT:    v_mov_b32_e32 v3, v13
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[14:19], v[4:7], v[0:3] cbsz:3 blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v4i32(<6 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 3, ; cbsz
                                                                                       i32 4, ; blgp
@@ -610,11 +1687,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp4__cons
 
 ; bf6 x bf6
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp3(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp3:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:3 blgp:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp3:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:3 blgp:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp3:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:23], v[4:9], v[0:3], v16, v17 op_sel_hi:[0,0,0] cbsz:3 blgp:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v6i32(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 3, ; cbsz
                                                                                       i32 3, ; blgp
@@ -624,11 +1724,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp3(<6 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp3__constant_scale_0_0(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp3__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15] cbsz:3 blgp:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp3__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:11], v[12:15] cbsz:3 blgp:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp3__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v20, v4
+; GISEL-NEXT:    v_mov_b32_e32 v21, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[16:21], v[4:9], v[0:3] cbsz:3 blgp:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v6i32(<6 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 3, ; cbsz
                                                                                       i32 3, ; blgp
@@ -638,11 +1761,32 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz3__blgp3__cons
 
 ; fp6 x fp4
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp4(<6 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp4:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:9], v[10:13], v14, v15 op_sel_hi:[0,0,0] cbsz:2 blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp4:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:9], v[10:13], v14, v15 op_sel_hi:[0,0,0] cbsz:2 blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp4:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v20, v4
+; GISEL-NEXT:    v_mov_b32_e32 v21, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v0, v10
+; GISEL-NEXT:    v_mov_b32_e32 v1, v11
+; GISEL-NEXT:    v_mov_b32_e32 v2, v12
+; GISEL-NEXT:    v_mov_b32_e32 v3, v13
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[16:21], v[4:7], v[0:3], v14, v15 op_sel_hi:[0,0,0] cbsz:2 blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v4i32(<6 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 4, ; blgp
@@ -652,11 +1796,32 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp4(<6 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp4__constant_scale_0_0(<6 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp4__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:9], v[10:13] cbsz:2 blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp4__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:9], v[10:13] cbsz:2 blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp4__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v14, v0
+; GISEL-NEXT:    v_mov_b32_e32 v15, v1
+; GISEL-NEXT:    v_mov_b32_e32 v16, v2
+; GISEL-NEXT:    v_mov_b32_e32 v17, v3
+; GISEL-NEXT:    v_mov_b32_e32 v18, v4
+; GISEL-NEXT:    v_mov_b32_e32 v19, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v0, v10
+; GISEL-NEXT:    v_mov_b32_e32 v1, v11
+; GISEL-NEXT:    v_mov_b32_e32 v2, v12
+; GISEL-NEXT:    v_mov_b32_e32 v3, v13
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[14:19], v[4:7], v[0:3] cbsz:2 blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v4i32(<6 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 4, ; blgp
@@ -666,11 +1831,26 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz2__blgp4__cons
 
 ; fp4 x fp8
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp0(<4 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:21], v[4:11], v[0:3], v16, v17 op_sel_hi:[0,0,0] cbsz:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v4i32.v8i32(<4 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 0, ; blgp
@@ -680,11 +1860,26 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp0(<4 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp0__constant_scale_0_0(<4 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp0__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:11], v[12:15] cbsz:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp0__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:11], v[12:15] cbsz:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp0__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[16:19], v[4:11], v[0:3] cbsz:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v4i32.v8i32(<4 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 0, ; blgp
@@ -694,11 +1889,26 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp0__cons
 
 ; fp4 x bf8
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp1(<4 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp1:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:4 blgp:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp1:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:11], v[12:15], v16, v17 op_sel_hi:[0,0,0] cbsz:4 blgp:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp1:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:21], v[4:11], v[0:3], v16, v17 op_sel_hi:[0,0,0] cbsz:4 blgp:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v4i32.v8i32(<4 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 1, ; blgp
@@ -708,11 +1918,26 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp1(<4 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp1__constant_scale_0_0(<4 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp1__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:11], v[12:15] cbsz:4 blgp:1
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp1__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:11], v[12:15] cbsz:4 blgp:1
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp1__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v0, v12
+; GISEL-NEXT:    v_mov_b32_e32 v1, v13
+; GISEL-NEXT:    v_mov_b32_e32 v2, v14
+; GISEL-NEXT:    v_mov_b32_e32 v3, v15
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[16:19], v[4:11], v[0:3] cbsz:4 blgp:1
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v4i32.v8i32(<4 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 1, ; blgp
@@ -722,11 +1947,26 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp1__cons
 
 ; fp4 x fp6
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp2(<4 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp2:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:9], v[10:13], v14, v15 op_sel_hi:[0,0,0] cbsz:4 blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp2:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:9], v[10:13], v14, v15 op_sel_hi:[0,0,0] cbsz:4 blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp2:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v0, v10
+; GISEL-NEXT:    v_mov_b32_e32 v1, v11
+; GISEL-NEXT:    v_mov_b32_e32 v2, v12
+; GISEL-NEXT:    v_mov_b32_e32 v3, v13
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[16:19], v[4:9], v[0:3], v14, v15 op_sel_hi:[0,0,0] cbsz:4 blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v4i32.v6i32(<4 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 2, ; blgp
@@ -736,11 +1976,26 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp2(<4 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp2__constant_scale_0_0(<4 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp2__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:9], v[10:13] cbsz:4 blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp2__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:9], v[10:13] cbsz:4 blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp2__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v14, v0
+; GISEL-NEXT:    v_mov_b32_e32 v15, v1
+; GISEL-NEXT:    v_mov_b32_e32 v16, v2
+; GISEL-NEXT:    v_mov_b32_e32 v17, v3
+; GISEL-NEXT:    v_mov_b32_e32 v0, v10
+; GISEL-NEXT:    v_mov_b32_e32 v1, v11
+; GISEL-NEXT:    v_mov_b32_e32 v2, v12
+; GISEL-NEXT:    v_mov_b32_e32 v3, v13
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[14:17], v[4:9], v[0:3] cbsz:4 blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v4i32.v6i32(<4 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 2, ; blgp
@@ -750,11 +2005,26 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp2__cons
 
 ; fp4 x bf6
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp3(<4 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp3:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:9], v[10:13], v14, v15 op_sel_hi:[0,0,0] cbsz:4 blgp:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp3:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:9], v[10:13], v14, v15 op_sel_hi:[0,0,0] cbsz:4 blgp:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp3:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v16, v0
+; GISEL-NEXT:    v_mov_b32_e32 v17, v1
+; GISEL-NEXT:    v_mov_b32_e32 v18, v2
+; GISEL-NEXT:    v_mov_b32_e32 v19, v3
+; GISEL-NEXT:    v_mov_b32_e32 v0, v10
+; GISEL-NEXT:    v_mov_b32_e32 v1, v11
+; GISEL-NEXT:    v_mov_b32_e32 v2, v12
+; GISEL-NEXT:    v_mov_b32_e32 v3, v13
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[16:19], v[4:9], v[0:3], v14, v15 op_sel_hi:[0,0,0] cbsz:4 blgp:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v4i32.v6i32(<4 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 3, ; blgp
@@ -764,11 +2034,26 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp3(<4 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp3__constant_scale_0_0(<4 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp3__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:9], v[10:13] cbsz:4 blgp:3
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp3__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:9], v[10:13] cbsz:4 blgp:3
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp3__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v14, v0
+; GISEL-NEXT:    v_mov_b32_e32 v15, v1
+; GISEL-NEXT:    v_mov_b32_e32 v16, v2
+; GISEL-NEXT:    v_mov_b32_e32 v17, v3
+; GISEL-NEXT:    v_mov_b32_e32 v0, v10
+; GISEL-NEXT:    v_mov_b32_e32 v1, v11
+; GISEL-NEXT:    v_mov_b32_e32 v2, v12
+; GISEL-NEXT:    v_mov_b32_e32 v3, v13
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[14:17], v[4:9], v[0:3] cbsz:4 blgp:3
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v4i32.v6i32(<4 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 3, ; blgp
@@ -778,11 +2063,26 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp3__cons
 
 ; fp4 x fp4
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp4(<4 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp4:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:7], v[8:11], v12, v13 op_sel_hi:[0,0,0] cbsz:4 blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp4:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:7], v[8:11], v12, v13 op_sel_hi:[0,0,0] cbsz:4 blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp4:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v14, v0
+; GISEL-NEXT:    v_mov_b32_e32 v15, v1
+; GISEL-NEXT:    v_mov_b32_e32 v16, v2
+; GISEL-NEXT:    v_mov_b32_e32 v17, v3
+; GISEL-NEXT:    v_mov_b32_e32 v0, v8
+; GISEL-NEXT:    v_mov_b32_e32 v1, v9
+; GISEL-NEXT:    v_mov_b32_e32 v2, v10
+; GISEL-NEXT:    v_mov_b32_e32 v3, v11
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[14:17], v[4:7], v[0:3], v12, v13 op_sel_hi:[0,0,0] cbsz:4 blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v4i32.v4i32(<4 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 4, ; blgp
@@ -792,11 +2092,26 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp4(<4 x 
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp4__constant_scale_0_0(<4 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp4__constant_scale_0_0:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:7], v[8:11] cbsz:4 blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp4__constant_scale_0_0:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:3], v[4:7], v[8:11] cbsz:4 blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp4__constant_scale_0_0:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v12, v0
+; GISEL-NEXT:    v_mov_b32_e32 v13, v1
+; GISEL-NEXT:    v_mov_b32_e32 v14, v2
+; GISEL-NEXT:    v_mov_b32_e32 v15, v3
+; GISEL-NEXT:    v_mov_b32_e32 v0, v8
+; GISEL-NEXT:    v_mov_b32_e32 v1, v9
+; GISEL-NEXT:    v_mov_b32_e32 v2, v10
+; GISEL-NEXT:    v_mov_b32_e32 v3, v11
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[12:15], v[4:7], v[0:3] cbsz:4 blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v4i32.v4i32(<4 x i32> %arg0, <4 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 4, ; blgp
@@ -809,38 +2124,147 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__cbsz4__blgp4__cons
 ; --------------------------------------------------------------------
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__sgpr_scaleA__sgpr_scaleB(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 inreg %scale0, i32 inreg %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__sgpr_scaleA__sgpr_scaleB:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mov_b32_e32 v20, s0
-; GCN-NEXT:    v_mov_b32_e32 v21, s1
-; GCN-NEXT:    s_nop 1
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__sgpr_scaleA__sgpr_scaleB:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mov_b32_e32 v27, v7
+; SDAG-NEXT:    v_mov_b32_e32 v26, v6
+; SDAG-NEXT:    v_mov_b32_e32 v25, v5
+; SDAG-NEXT:    v_mov_b32_e32 v24, v4
+; SDAG-NEXT:    v_mov_b32_e32 v23, v3
+; SDAG-NEXT:    v_mov_b32_e32 v22, v2
+; SDAG-NEXT:    v_mov_b32_e32 v21, v1
+; SDAG-NEXT:    v_mov_b32_e32 v20, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, s0
+; SDAG-NEXT:    v_mov_b32_e32 v1, s1
+; SDAG-NEXT:    s_nop 1
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[8:15], v[16:19], v0, v1 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__sgpr_scaleA__sgpr_scaleB:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v12, v14
+; GISEL-NEXT:    v_mov_b32_e32 v13, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    v_mov_b32_e32 v4, s0
+; GISEL-NEXT:    v_mov_b32_e32 v5, s1
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[6:13], v[0:3], v4, v5 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 %scale0, i32 0, i32 %scale1)
   ret <4 x float> %result
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__sgpr_scaleA__vgpr_scaleB(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 inreg %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__sgpr_scaleA__vgpr_scaleB:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mov_b32_e32 v21, s0
-; GCN-NEXT:    s_nop 1
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v21, v20 op_sel_hi:[0,0,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__sgpr_scaleA__vgpr_scaleB:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mov_b32_e32 v29, v7
+; SDAG-NEXT:    v_mov_b32_e32 v28, v6
+; SDAG-NEXT:    v_mov_b32_e32 v27, v5
+; SDAG-NEXT:    v_mov_b32_e32 v26, v4
+; SDAG-NEXT:    v_mov_b32_e32 v25, v3
+; SDAG-NEXT:    v_mov_b32_e32 v24, v2
+; SDAG-NEXT:    v_mov_b32_e32 v23, v1
+; SDAG-NEXT:    v_mov_b32_e32 v22, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, s0
+; SDAG-NEXT:    s_nop 1
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[8:15], v[16:19], v0, v20 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__sgpr_scaleA__vgpr_scaleB:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v12, v14
+; GISEL-NEXT:    v_mov_b32_e32 v13, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    v_mov_b32_e32 v4, s0
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[6:13], v[0:3], v4, v20 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 %scale0, i32 0, i32 %scale1)
   ret <4 x float> %result
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__vgpr_scaleA__sgpr_scaleB(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 inreg %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__vgpr_scaleA__sgpr_scaleB:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mov_b32_e32 v21, s0
-; GCN-NEXT:    s_nop 1
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__vgpr_scaleA__sgpr_scaleB:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mov_b32_e32 v29, v7
+; SDAG-NEXT:    v_mov_b32_e32 v28, v6
+; SDAG-NEXT:    v_mov_b32_e32 v27, v5
+; SDAG-NEXT:    v_mov_b32_e32 v26, v4
+; SDAG-NEXT:    v_mov_b32_e32 v25, v3
+; SDAG-NEXT:    v_mov_b32_e32 v24, v2
+; SDAG-NEXT:    v_mov_b32_e32 v23, v1
+; SDAG-NEXT:    v_mov_b32_e32 v22, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, s0
+; SDAG-NEXT:    s_nop 1
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[8:15], v[16:19], v20, v0 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__vgpr_scaleA__sgpr_scaleB:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v12, v14
+; GISEL-NEXT:    v_mov_b32_e32 v13, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    v_mov_b32_e32 v4, s0
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[6:13], v[0:3], v20, v4 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 %scale0, i32 0, i32 %scale1)
   ret <4 x float> %result
 }
@@ -878,34 +2302,34 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgprs(<8 x i32> inr
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgprs:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    s_xor_saveexec_b64 s[4:5], -1
-; GISEL-NEXT:    scratch_store_dword off, v24, s32 ; 4-byte Folded Spill
-; GISEL-NEXT:    s_mov_b64 exec, s[4:5]
-; GISEL-NEXT:    s_mov_b32 s12, s0
-; GISEL-NEXT:    s_mov_b32 s13, s1
-; GISEL-NEXT:    s_mov_b32 s14, s2
-; GISEL-NEXT:    s_mov_b32 s15, s3
-; GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[12:13]
-; GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[14:15]
-; GISEL-NEXT:    v_mov_b64_e32 v[8:9], s[16:17]
-; GISEL-NEXT:    v_mov_b64_e32 v[10:11], s[18:19]
-; GISEL-NEXT:    v_writelane_b32 v24, s30, 0
-; GISEL-NEXT:    v_writelane_b32 v24, s31, 1
-; GISEL-NEXT:    v_readfirstlane_b32 s30, v0
-; GISEL-NEXT:    v_readfirstlane_b32 s31, v1
-; GISEL-NEXT:    v_mov_b64_e32 v[12:13], s[20:21]
-; GISEL-NEXT:    v_mov_b64_e32 v[20:21], s[28:29]
-; GISEL-NEXT:    v_mov_b64_e32 v[14:15], s[22:23]
-; GISEL-NEXT:    v_mov_b64_e32 v[16:17], s[24:25]
-; GISEL-NEXT:    v_mov_b64_e32 v[18:19], s[26:27]
-; GISEL-NEXT:    v_mov_b64_e32 v[22:23], s[30:31]
-; GISEL-NEXT:    v_readlane_b32 s31, v24, 1
-; GISEL-NEXT:    v_readlane_b32 s30, v24, 0
+; GISEL-NEXT:    s_mov_b32 s6, s18
+; GISEL-NEXT:    s_mov_b32 s7, s19
+; GISEL-NEXT:    s_mov_b32 s4, s16
+; GISEL-NEXT:    s_mov_b32 s5, s17
+; GISEL-NEXT:    v_mov_b64_e32 v[10:11], s[6:7]
+; GISEL-NEXT:    v_mov_b64_e32 v[8:9], s[4:5]
+; GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[2:3]
+; GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[0:1]
+; GISEL-NEXT:    s_mov_b32 s14, s26
+; GISEL-NEXT:    s_mov_b32 s15, s27
+; GISEL-NEXT:    v_readfirstlane_b32 s18, v0
+; GISEL-NEXT:    v_readfirstlane_b32 s19, v1
+; GISEL-NEXT:    s_mov_b32 s8, s20
+; GISEL-NEXT:    s_mov_b32 s9, s21
+; GISEL-NEXT:    s_mov_b32 s10, s22
+; GISEL-NEXT:    s_mov_b32 s11, s23
+; GISEL-NEXT:    s_mov_b32 s12, s24
+; GISEL-NEXT:    s_mov_b32 s13, s25
+; GISEL-NEXT:    s_mov_b32 s16, s28
+; GISEL-NEXT:    s_mov_b32 s17, s29
+; GISEL-NEXT:    v_mov_b64_e32 v[18:19], s[14:15]
+; GISEL-NEXT:    v_mov_b64_e32 v[22:23], s[18:19]
+; GISEL-NEXT:    v_mov_b64_e32 v[16:17], s[12:13]
+; GISEL-NEXT:    v_mov_b64_e32 v[14:15], s[10:11]
+; GISEL-NEXT:    v_mov_b64_e32 v[12:13], s[8:9]
+; GISEL-NEXT:    v_mov_b64_e32 v[20:21], s[16:17]
+; GISEL-NEXT:    s_nop 1
 ; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[4:11], v[12:19], v[20:23], v2, v3 op_sel_hi:[0,0,0]
-; GISEL-NEXT:    s_xor_saveexec_b64 s[0:1], -1
-; GISEL-NEXT:    scratch_load_dword v24, off, s32 ; 4-byte Folded Reload
-; GISEL-NEXT:    s_mov_b64 exec, s[0:1]
-; GISEL-NEXT:    s_waitcnt vmcnt(0)
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 %scale0, i32 0, i32 %scale1)
   ret <4 x float> %result
@@ -915,33 +2339,49 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgpr_vgpr_vgpr__sgp
 ; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgpr_vgpr_vgpr__sgpr_vgpr:
 ; SDAG:       ; %bb.0:
 ; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-NEXT:    v_mov_b32_e32 v14, s0
-; SDAG-NEXT:    v_mov_b32_e32 v15, s1
-; SDAG-NEXT:    v_mov_b32_e32 v16, s2
-; SDAG-NEXT:    v_mov_b32_e32 v17, s3
-; SDAG-NEXT:    v_mov_b32_e32 v18, s16
-; SDAG-NEXT:    v_mov_b32_e32 v19, s17
-; SDAG-NEXT:    v_mov_b32_e32 v20, s18
-; SDAG-NEXT:    v_mov_b32_e32 v21, s19
-; SDAG-NEXT:    v_mov_b32_e32 v13, s20
+; SDAG-NEXT:    v_mov_b32_e32 v22, s0
+; SDAG-NEXT:    v_mov_b32_e32 v23, s1
+; SDAG-NEXT:    v_mov_b32_e32 v24, s2
+; SDAG-NEXT:    v_mov_b32_e32 v25, s3
+; SDAG-NEXT:    v_mov_b32_e32 v26, s16
+; SDAG-NEXT:    v_mov_b32_e32 v27, s17
+; SDAG-NEXT:    v_mov_b32_e32 v28, s18
+; SDAG-NEXT:    v_mov_b32_e32 v29, s19
+; SDAG-NEXT:    v_mov_b32_e32 v21, v7
+; SDAG-NEXT:    v_mov_b32_e32 v20, v6
+; SDAG-NEXT:    v_mov_b32_e32 v19, v5
+; SDAG-NEXT:    v_mov_b32_e32 v18, v4
+; SDAG-NEXT:    v_mov_b32_e32 v17, v3
+; SDAG-NEXT:    v_mov_b32_e32 v16, v2
+; SDAG-NEXT:    v_mov_b32_e32 v15, v1
+; SDAG-NEXT:    v_mov_b32_e32 v14, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, s20
 ; SDAG-NEXT:    s_nop 1
-; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[14:21], v[0:7], v[8:11], v13, v12 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[14:21], v[8:11], v0, v12 op_sel_hi:[0,0,0]
 ; SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgpr_vgpr_vgpr__sgpr_vgpr:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    s_mov_b32 s12, s0
-; GISEL-NEXT:    s_mov_b32 s13, s1
-; GISEL-NEXT:    s_mov_b32 s14, s2
-; GISEL-NEXT:    s_mov_b32 s15, s3
-; GISEL-NEXT:    v_mov_b64_e32 v[20:21], s[18:19]
-; GISEL-NEXT:    v_mov_b64_e32 v[18:19], s[16:17]
-; GISEL-NEXT:    v_mov_b64_e32 v[16:17], s[14:15]
-; GISEL-NEXT:    v_mov_b64_e32 v[14:15], s[12:13]
+; GISEL-NEXT:    s_mov_b32 s4, s16
+; GISEL-NEXT:    s_mov_b32 s5, s17
+; GISEL-NEXT:    s_mov_b32 s6, s18
+; GISEL-NEXT:    s_mov_b32 s7, s19
+; GISEL-NEXT:    v_mov_b32_e32 v14, v0
+; GISEL-NEXT:    v_mov_b32_e32 v15, v1
+; GISEL-NEXT:    v_mov_b32_e32 v16, v2
+; GISEL-NEXT:    v_mov_b32_e32 v17, v3
+; GISEL-NEXT:    v_mov_b32_e32 v18, v4
+; GISEL-NEXT:    v_mov_b32_e32 v19, v5
+; GISEL-NEXT:    v_mov_b32_e32 v20, v6
+; GISEL-NEXT:    v_mov_b32_e32 v21, v7
+; GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
+; GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[4:5]
+; GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[6:7]
 ; GISEL-NEXT:    v_mov_b32_e32 v13, s20
 ; GISEL-NEXT:    s_nop 1
-; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[14:21], v[0:7], v[8:11], v13, v12 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[14:21], v[8:11], v13, v12 op_sel_hi:[0,0,0]
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 %scale0, i32 0, i32 %scale1)
   ret <4 x float> %result
@@ -951,33 +2391,49 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgpr_vgpr_vgpr__vgp
 ; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgpr_vgpr_vgpr__vgpr_sgpr:
 ; SDAG:       ; %bb.0:
 ; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-NEXT:    v_mov_b32_e32 v14, s0
-; SDAG-NEXT:    v_mov_b32_e32 v15, s1
-; SDAG-NEXT:    v_mov_b32_e32 v16, s2
-; SDAG-NEXT:    v_mov_b32_e32 v17, s3
-; SDAG-NEXT:    v_mov_b32_e32 v18, s16
-; SDAG-NEXT:    v_mov_b32_e32 v19, s17
-; SDAG-NEXT:    v_mov_b32_e32 v20, s18
-; SDAG-NEXT:    v_mov_b32_e32 v21, s19
-; SDAG-NEXT:    v_mov_b32_e32 v13, s20
+; SDAG-NEXT:    v_mov_b32_e32 v22, s0
+; SDAG-NEXT:    v_mov_b32_e32 v23, s1
+; SDAG-NEXT:    v_mov_b32_e32 v24, s2
+; SDAG-NEXT:    v_mov_b32_e32 v25, s3
+; SDAG-NEXT:    v_mov_b32_e32 v26, s16
+; SDAG-NEXT:    v_mov_b32_e32 v27, s17
+; SDAG-NEXT:    v_mov_b32_e32 v28, s18
+; SDAG-NEXT:    v_mov_b32_e32 v29, s19
+; SDAG-NEXT:    v_mov_b32_e32 v21, v7
+; SDAG-NEXT:    v_mov_b32_e32 v20, v6
+; SDAG-NEXT:    v_mov_b32_e32 v19, v5
+; SDAG-NEXT:    v_mov_b32_e32 v18, v4
+; SDAG-NEXT:    v_mov_b32_e32 v17, v3
+; SDAG-NEXT:    v_mov_b32_e32 v16, v2
+; SDAG-NEXT:    v_mov_b32_e32 v15, v1
+; SDAG-NEXT:    v_mov_b32_e32 v14, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, s20
 ; SDAG-NEXT:    s_nop 1
-; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[14:21], v[0:7], v[8:11], v12, v13 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[14:21], v[8:11], v12, v0 op_sel_hi:[0,0,0]
 ; SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgpr_vgpr_vgpr__vgpr_sgpr:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    s_mov_b32 s12, s0
-; GISEL-NEXT:    s_mov_b32 s13, s1
-; GISEL-NEXT:    s_mov_b32 s14, s2
-; GISEL-NEXT:    s_mov_b32 s15, s3
-; GISEL-NEXT:    v_mov_b64_e32 v[20:21], s[18:19]
-; GISEL-NEXT:    v_mov_b64_e32 v[18:19], s[16:17]
-; GISEL-NEXT:    v_mov_b64_e32 v[16:17], s[14:15]
-; GISEL-NEXT:    v_mov_b64_e32 v[14:15], s[12:13]
+; GISEL-NEXT:    s_mov_b32 s4, s16
+; GISEL-NEXT:    s_mov_b32 s5, s17
+; GISEL-NEXT:    s_mov_b32 s6, s18
+; GISEL-NEXT:    s_mov_b32 s7, s19
+; GISEL-NEXT:    v_mov_b32_e32 v14, v0
+; GISEL-NEXT:    v_mov_b32_e32 v15, v1
+; GISEL-NEXT:    v_mov_b32_e32 v16, v2
+; GISEL-NEXT:    v_mov_b32_e32 v17, v3
+; GISEL-NEXT:    v_mov_b32_e32 v18, v4
+; GISEL-NEXT:    v_mov_b32_e32 v19, v5
+; GISEL-NEXT:    v_mov_b32_e32 v20, v6
+; GISEL-NEXT:    v_mov_b32_e32 v21, v7
+; GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
+; GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[4:5]
+; GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[6:7]
 ; GISEL-NEXT:    v_mov_b32_e32 v13, s20
 ; GISEL-NEXT:    s_nop 1
-; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[14:21], v[0:7], v[8:11], v12, v13 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[14:21], v[8:11], v12, v13 op_sel_hi:[0,0,0]
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 %scale0, i32 0, i32 %scale1)
   ret <4 x float> %result
@@ -987,33 +2443,49 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0_vgpr_sgpr_vgpr__vgp
 ; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_vgpr_sgpr_vgpr__vgpr_sgpr:
 ; SDAG:       ; %bb.0:
 ; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-NEXT:    v_mov_b32_e32 v14, s0
-; SDAG-NEXT:    v_mov_b32_e32 v15, s1
-; SDAG-NEXT:    v_mov_b32_e32 v16, s2
-; SDAG-NEXT:    v_mov_b32_e32 v17, s3
-; SDAG-NEXT:    v_mov_b32_e32 v18, s16
-; SDAG-NEXT:    v_mov_b32_e32 v19, s17
-; SDAG-NEXT:    v_mov_b32_e32 v20, s18
-; SDAG-NEXT:    v_mov_b32_e32 v21, s19
-; SDAG-NEXT:    v_mov_b32_e32 v13, s20
+; SDAG-NEXT:    v_mov_b32_e32 v21, v7
+; SDAG-NEXT:    v_mov_b32_e32 v20, v6
+; SDAG-NEXT:    v_mov_b32_e32 v19, v5
+; SDAG-NEXT:    v_mov_b32_e32 v18, v4
+; SDAG-NEXT:    v_mov_b32_e32 v17, v3
+; SDAG-NEXT:    v_mov_b32_e32 v16, v2
+; SDAG-NEXT:    v_mov_b32_e32 v15, v1
+; SDAG-NEXT:    v_mov_b32_e32 v14, v0
+; SDAG-NEXT:    v_mov_b32_e32 v22, s0
+; SDAG-NEXT:    v_mov_b32_e32 v23, s1
+; SDAG-NEXT:    v_mov_b32_e32 v24, s2
+; SDAG-NEXT:    v_mov_b32_e32 v25, s3
+; SDAG-NEXT:    v_mov_b32_e32 v26, s16
+; SDAG-NEXT:    v_mov_b32_e32 v27, s17
+; SDAG-NEXT:    v_mov_b32_e32 v28, s18
+; SDAG-NEXT:    v_mov_b32_e32 v29, s19
+; SDAG-NEXT:    v_mov_b32_e32 v0, s20
 ; SDAG-NEXT:    s_nop 1
-; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[14:21], v[8:11], v12, v13 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[14:21], v[22:29], v[8:11], v12, v0 op_sel_hi:[0,0,0]
 ; SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_vgpr_sgpr_vgpr__vgpr_sgpr:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    s_mov_b32 s12, s0
-; GISEL-NEXT:    s_mov_b32 s13, s1
-; GISEL-NEXT:    s_mov_b32 s14, s2
-; GISEL-NEXT:    s_mov_b32 s15, s3
-; GISEL-NEXT:    v_mov_b64_e32 v[20:21], s[18:19]
-; GISEL-NEXT:    v_mov_b64_e32 v[18:19], s[16:17]
-; GISEL-NEXT:    v_mov_b64_e32 v[16:17], s[14:15]
-; GISEL-NEXT:    v_mov_b64_e32 v[14:15], s[12:13]
+; GISEL-NEXT:    v_mov_b32_e32 v14, v0
+; GISEL-NEXT:    v_mov_b32_e32 v15, v1
+; GISEL-NEXT:    v_mov_b32_e32 v16, v2
+; GISEL-NEXT:    v_mov_b32_e32 v17, v3
+; GISEL-NEXT:    v_mov_b32_e32 v18, v4
+; GISEL-NEXT:    v_mov_b32_e32 v19, v5
+; GISEL-NEXT:    v_mov_b32_e32 v20, v6
+; GISEL-NEXT:    v_mov_b32_e32 v21, v7
+; GISEL-NEXT:    s_mov_b32 s4, s16
+; GISEL-NEXT:    s_mov_b32 s5, s17
+; GISEL-NEXT:    s_mov_b32 s6, s18
+; GISEL-NEXT:    s_mov_b32 s7, s19
+; GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
+; GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[4:5]
+; GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[6:7]
 ; GISEL-NEXT:    v_mov_b32_e32 v13, s20
 ; GISEL-NEXT:    s_nop 1
-; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[14:21], v[8:11], v12, v13 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[14:21], v[0:7], v[8:11], v12, v13 op_sel_hi:[0,0,0]
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 %scale0, i32 0, i32 %scale1)
   ret <4 x float> %result
@@ -1023,23 +2495,47 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0_vgpr_vgpr_sgpr__vgp
 ; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_vgpr_vgpr_sgpr__vgpr_sgpr:
 ; SDAG:       ; %bb.0:
 ; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-NEXT:    v_mov_b32_e32 v18, s0
-; SDAG-NEXT:    v_mov_b32_e32 v19, s1
-; SDAG-NEXT:    v_mov_b32_e32 v20, s2
-; SDAG-NEXT:    v_mov_b32_e32 v21, s3
-; SDAG-NEXT:    v_mov_b32_e32 v17, s16
+; SDAG-NEXT:    v_mov_b32_e32 v25, v7
+; SDAG-NEXT:    v_mov_b32_e32 v24, v6
+; SDAG-NEXT:    v_mov_b32_e32 v23, v5
+; SDAG-NEXT:    v_mov_b32_e32 v22, v4
+; SDAG-NEXT:    v_mov_b32_e32 v21, v3
+; SDAG-NEXT:    v_mov_b32_e32 v20, v2
+; SDAG-NEXT:    v_mov_b32_e32 v19, v1
+; SDAG-NEXT:    v_mov_b32_e32 v18, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, s0
+; SDAG-NEXT:    v_mov_b32_e32 v1, s1
+; SDAG-NEXT:    v_mov_b32_e32 v2, s2
+; SDAG-NEXT:    v_mov_b32_e32 v3, s3
+; SDAG-NEXT:    v_mov_b32_e32 v4, s16
 ; SDAG-NEXT:    s_nop 1
-; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[18:21], v16, v17 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:25], v[8:15], v[0:3], v16, v4 op_sel_hi:[0,0,0]
 ; SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_vgpr_vgpr_sgpr__vgpr_sgpr:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    v_mov_b64_e32 v[20:21], s[2:3]
-; GISEL-NEXT:    v_mov_b64_e32 v[18:19], s[0:1]
-; GISEL-NEXT:    v_mov_b32_e32 v17, s16
+; GISEL-NEXT:    v_mov_b32_e32 v18, v0
+; GISEL-NEXT:    v_mov_b32_e32 v19, v1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v2
+; GISEL-NEXT:    v_mov_b32_e32 v21, v3
+; GISEL-NEXT:    v_mov_b32_e32 v22, v4
+; GISEL-NEXT:    v_mov_b32_e32 v23, v5
+; GISEL-NEXT:    v_mov_b32_e32 v24, v6
+; GISEL-NEXT:    v_mov_b32_e32 v25, v7
+; GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v12, v14
+; GISEL-NEXT:    v_mov_b32_e32 v13, v15
+; GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
+; GISEL-NEXT:    v_mov_b32_e32 v4, s16
 ; GISEL-NEXT:    s_nop 1
-; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[18:21], v16, v17 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:25], v[6:13], v[0:3], v16, v4 op_sel_hi:[0,0,0]
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 %scale0, i32 0, i32 %scale1)
   ret <4 x float> %result
@@ -1049,39 +2545,59 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgpr_vgpr_sgpr__vgp
 ; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgpr_vgpr_sgpr__vgpr_sgpr:
 ; SDAG:       ; %bb.0:
 ; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-NEXT:    v_mov_b32_e32 v14, s0
-; SDAG-NEXT:    v_mov_b32_e32 v15, s1
-; SDAG-NEXT:    v_mov_b32_e32 v16, s2
-; SDAG-NEXT:    v_mov_b32_e32 v17, s3
-; SDAG-NEXT:    v_mov_b32_e32 v18, s16
-; SDAG-NEXT:    v_mov_b32_e32 v19, s17
-; SDAG-NEXT:    v_mov_b32_e32 v20, s18
-; SDAG-NEXT:    v_mov_b32_e32 v21, s19
-; SDAG-NEXT:    v_mov_b32_e32 v10, s20
-; SDAG-NEXT:    v_mov_b32_e32 v11, s21
-; SDAG-NEXT:    v_mov_b32_e32 v12, s22
-; SDAG-NEXT:    v_mov_b32_e32 v13, s23
-; SDAG-NEXT:    v_mov_b32_e32 v9, s24
+; SDAG-NEXT:    v_mov_b32_e32 v18, s0
+; SDAG-NEXT:    v_mov_b32_e32 v19, s1
+; SDAG-NEXT:    v_mov_b32_e32 v20, s2
+; SDAG-NEXT:    v_mov_b32_e32 v21, s3
+; SDAG-NEXT:    v_mov_b32_e32 v22, s16
+; SDAG-NEXT:    v_mov_b32_e32 v23, s17
+; SDAG-NEXT:    v_mov_b32_e32 v24, s18
+; SDAG-NEXT:    v_mov_b32_e32 v25, s19
+; SDAG-NEXT:    v_mov_b32_e32 v17, v7
+; SDAG-NEXT:    v_mov_b32_e32 v16, v6
+; SDAG-NEXT:    v_mov_b32_e32 v15, v5
+; SDAG-NEXT:    v_mov_b32_e32 v14, v4
+; SDAG-NEXT:    v_mov_b32_e32 v13, v3
+; SDAG-NEXT:    v_mov_b32_e32 v12, v2
+; SDAG-NEXT:    v_mov_b32_e32 v11, v1
+; SDAG-NEXT:    v_mov_b32_e32 v10, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, s20
+; SDAG-NEXT:    v_mov_b32_e32 v1, s21
+; SDAG-NEXT:    v_mov_b32_e32 v2, s22
+; SDAG-NEXT:    v_mov_b32_e32 v3, s23
+; SDAG-NEXT:    v_mov_b32_e32 v4, s24
 ; SDAG-NEXT:    s_nop 1
-; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[14:21], v[0:7], v[10:13], v8, v9 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[18:25], v[10:17], v[0:3], v8, v4 op_sel_hi:[0,0,0]
 ; SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0_sgpr_vgpr_sgpr__vgpr_sgpr:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    s_mov_b32 s12, s0
-; GISEL-NEXT:    s_mov_b32 s13, s1
-; GISEL-NEXT:    s_mov_b32 s14, s2
-; GISEL-NEXT:    s_mov_b32 s15, s3
-; GISEL-NEXT:    v_mov_b64_e32 v[10:11], s[12:13]
-; GISEL-NEXT:    v_mov_b64_e32 v[12:13], s[14:15]
-; GISEL-NEXT:    v_mov_b64_e32 v[14:15], s[16:17]
-; GISEL-NEXT:    v_mov_b64_e32 v[16:17], s[18:19]
-; GISEL-NEXT:    v_mov_b64_e32 v[18:19], s[20:21]
-; GISEL-NEXT:    v_mov_b64_e32 v[20:21], s[22:23]
+; GISEL-NEXT:    s_mov_b32 s4, s16
+; GISEL-NEXT:    s_mov_b32 s5, s17
+; GISEL-NEXT:    s_mov_b32 s6, s18
+; GISEL-NEXT:    s_mov_b32 s7, s19
+; GISEL-NEXT:    v_mov_b32_e32 v14, v0
+; GISEL-NEXT:    v_mov_b32_e32 v15, v1
+; GISEL-NEXT:    v_mov_b32_e32 v16, v2
+; GISEL-NEXT:    v_mov_b32_e32 v17, v3
+; GISEL-NEXT:    v_mov_b32_e32 v18, v4
+; GISEL-NEXT:    v_mov_b32_e32 v19, v5
+; GISEL-NEXT:    v_mov_b32_e32 v20, v6
+; GISEL-NEXT:    v_mov_b32_e32 v21, v7
+; GISEL-NEXT:    v_mov_b64_e32 v[0:1], s[0:1]
+; GISEL-NEXT:    v_mov_b64_e32 v[2:3], s[2:3]
+; GISEL-NEXT:    v_mov_b64_e32 v[4:5], s[4:5]
+; GISEL-NEXT:    v_mov_b64_e32 v[6:7], s[6:7]
+; GISEL-NEXT:    s_mov_b32 s10, s22
+; GISEL-NEXT:    s_mov_b32 s11, s23
+; GISEL-NEXT:    s_mov_b32 s8, s20
+; GISEL-NEXT:    s_mov_b32 s9, s21
+; GISEL-NEXT:    v_mov_b64_e32 v[12:13], s[10:11]
+; GISEL-NEXT:    v_mov_b64_e32 v[10:11], s[8:9]
 ; GISEL-NEXT:    v_mov_b32_e32 v9, s24
 ; GISEL-NEXT:    s_nop 1
-; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[10:17], v[0:7], v[18:21], v8, v9 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[14:21], v[10:13], v8, v9 op_sel_hi:[0,0,0]
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 %scale0, i32 0, i32 %scale1)
   ret <4 x float> %result
@@ -1091,19 +2607,47 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__scaleA_inlineimm__
 ; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__scaleA_inlineimm__scaleB_inlineimm:
 ; SDAG:       ; %bb.0:
 ; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-NEXT:    v_mov_b32_e32 v20, -2
-; SDAG-NEXT:    v_mov_b32_e32 v21, 33
+; SDAG-NEXT:    v_mov_b32_e32 v27, v7
+; SDAG-NEXT:    v_mov_b32_e32 v26, v6
+; SDAG-NEXT:    v_mov_b32_e32 v25, v5
+; SDAG-NEXT:    v_mov_b32_e32 v24, v4
+; SDAG-NEXT:    v_mov_b32_e32 v23, v3
+; SDAG-NEXT:    v_mov_b32_e32 v22, v2
+; SDAG-NEXT:    v_mov_b32_e32 v21, v1
+; SDAG-NEXT:    v_mov_b32_e32 v20, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, -2
+; SDAG-NEXT:    v_mov_b32_e32 v1, 33
 ; SDAG-NEXT:    s_nop 1
-; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v21, v20 op_sel_hi:[1,1,0]
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[8:15], v[16:19], v1, v0 op_sel_hi:[1,1,0]
 ; SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__scaleA_inlineimm__scaleB_inlineimm:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    v_mov_b32_e32 v20, 33
-; GISEL-NEXT:    v_mov_b32_e32 v21, -2
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v12, v14
+; GISEL-NEXT:    v_mov_b32_e32 v13, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    v_mov_b32_e32 v4, 33
+; GISEL-NEXT:    v_mov_b32_e32 v5, -2
 ; GISEL-NEXT:    s_nop 1
-; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[1,1,0]
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[6:13], v[0:3], v4, v5 op_sel_hi:[1,1,0]
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 2, i32 33, i32 2, i32 -2)
   ret <4 x float> %result
@@ -1113,19 +2657,47 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__scaleA_kimm__scale
 ; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__scaleA_kimm__scaleB_inlineimm:
 ; SDAG:       ; %bb.0:
 ; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-NEXT:    v_mov_b32_e32 v20, -2
-; SDAG-NEXT:    v_mov_b32_e32 v21, 0x41
+; SDAG-NEXT:    v_mov_b32_e32 v27, v7
+; SDAG-NEXT:    v_mov_b32_e32 v26, v6
+; SDAG-NEXT:    v_mov_b32_e32 v25, v5
+; SDAG-NEXT:    v_mov_b32_e32 v24, v4
+; SDAG-NEXT:    v_mov_b32_e32 v23, v3
+; SDAG-NEXT:    v_mov_b32_e32 v22, v2
+; SDAG-NEXT:    v_mov_b32_e32 v21, v1
+; SDAG-NEXT:    v_mov_b32_e32 v20, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, -2
+; SDAG-NEXT:    v_mov_b32_e32 v1, 0x41
 ; SDAG-NEXT:    s_nop 1
-; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v21, v20 op_sel_hi:[1,1,0]
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[8:15], v[16:19], v1, v0 op_sel_hi:[1,1,0]
 ; SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__scaleA_kimm__scaleB_inlineimm:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    v_mov_b32_e32 v20, 0x41
-; GISEL-NEXT:    v_mov_b32_e32 v21, -2
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v12, v14
+; GISEL-NEXT:    v_mov_b32_e32 v13, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    v_mov_b32_e32 v4, 0x41
+; GISEL-NEXT:    v_mov_b32_e32 v5, -2
 ; GISEL-NEXT:    s_nop 1
-; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[1,1,0]
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[6:13], v[0:3], v4, v5 op_sel_hi:[1,1,0]
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 2, i32 65, i32 2, i32 -2)
   ret <4 x float> %result
@@ -1135,19 +2707,47 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4_0_0__scaleA_kimm__scale
 ; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__scaleA_kimm__scaleB_kimm:
 ; SDAG:       ; %bb.0:
 ; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-NEXT:    v_mov_b32_e32 v20, 0x4d
-; SDAG-NEXT:    v_mov_b32_e32 v21, 0x41
+; SDAG-NEXT:    v_mov_b32_e32 v27, v7
+; SDAG-NEXT:    v_mov_b32_e32 v26, v6
+; SDAG-NEXT:    v_mov_b32_e32 v25, v5
+; SDAG-NEXT:    v_mov_b32_e32 v24, v4
+; SDAG-NEXT:    v_mov_b32_e32 v23, v3
+; SDAG-NEXT:    v_mov_b32_e32 v22, v2
+; SDAG-NEXT:    v_mov_b32_e32 v21, v1
+; SDAG-NEXT:    v_mov_b32_e32 v20, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, 0x4d
+; SDAG-NEXT:    v_mov_b32_e32 v1, 0x41
 ; SDAG-NEXT:    s_nop 1
-; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v21, v20 op_sel_hi:[1,1,0]
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[8:15], v[16:19], v1, v0 op_sel_hi:[1,1,0]
 ; SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4_0_0__scaleA_kimm__scaleB_kimm:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    v_mov_b32_e32 v20, 0x41
-; GISEL-NEXT:    v_mov_b32_e32 v21, 0x4d
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v12, v14
+; GISEL-NEXT:    v_mov_b32_e32 v13, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    v_mov_b32_e32 v4, 0x41
+; GISEL-NEXT:    v_mov_b32_e32 v5, 0x4d
 ; GISEL-NEXT:    s_nop 1
-; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[1,1,0]
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[6:13], v[0:3], v4, v5 op_sel_hi:[1,1,0]
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 2, i32 65, i32 2, i32 77)
   ret <4 x float> %result
@@ -1471,22 +3071,76 @@ define amdgpu_kernel void @test_mfma_scale_f32_16x16x128_f8f6f4__vgprcd___scaleA
 
 ; This should be optimized to avoid the scale
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_0_a(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_0_a:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_0_a:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_0_a:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:11], v[0:3]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0)
   ret <4 x float> %result
 }
 
 ; This should be optimized to avoid the scale, with non-0 op_sel arguments.
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_0_b(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_0_b:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19]
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_0_b:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19]
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_0_b:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:11], v[0:3]
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 3, i32 0, i32 1, i32 0)
   ret <4 x float> %result
 }
@@ -1495,19 +3149,47 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_1(<8
 ; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_1:
 ; SDAG:       ; %bb.0:
 ; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-NEXT:    v_mov_b32_e32 v20, 1
-; SDAG-NEXT:    v_mov_b32_e32 v21, 0
+; SDAG-NEXT:    v_mov_b32_e32 v27, v7
+; SDAG-NEXT:    v_mov_b32_e32 v26, v6
+; SDAG-NEXT:    v_mov_b32_e32 v25, v5
+; SDAG-NEXT:    v_mov_b32_e32 v24, v4
+; SDAG-NEXT:    v_mov_b32_e32 v23, v3
+; SDAG-NEXT:    v_mov_b32_e32 v22, v2
+; SDAG-NEXT:    v_mov_b32_e32 v21, v1
+; SDAG-NEXT:    v_mov_b32_e32 v20, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, 1
+; SDAG-NEXT:    v_mov_b32_e32 v1, 0
 ; SDAG-NEXT:    s_nop 1
-; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v21, v20 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[8:15], v[16:19], v1, v0 op_sel_hi:[0,0,0]
 ; SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_0_1:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    v_mov_b32_e32 v20, 0
-; GISEL-NEXT:    v_mov_b32_e32 v21, 1
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v12, v14
+; GISEL-NEXT:    v_mov_b32_e32 v13, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    v_mov_b32_e32 v4, 0
+; GISEL-NEXT:    v_mov_b32_e32 v5, 1
 ; GISEL-NEXT:    s_nop 1
-; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[6:13], v[0:3], v4, v5 op_sel_hi:[0,0,0]
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1)
   ret <4 x float> %result
@@ -1517,19 +3199,47 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_1_0_a(
 ; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_1_0_a:
 ; SDAG:       ; %bb.0:
 ; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; SDAG-NEXT:    v_mov_b32_e32 v20, 0
-; SDAG-NEXT:    v_mov_b32_e32 v21, 1
+; SDAG-NEXT:    v_mov_b32_e32 v27, v7
+; SDAG-NEXT:    v_mov_b32_e32 v26, v6
+; SDAG-NEXT:    v_mov_b32_e32 v25, v5
+; SDAG-NEXT:    v_mov_b32_e32 v24, v4
+; SDAG-NEXT:    v_mov_b32_e32 v23, v3
+; SDAG-NEXT:    v_mov_b32_e32 v22, v2
+; SDAG-NEXT:    v_mov_b32_e32 v21, v1
+; SDAG-NEXT:    v_mov_b32_e32 v20, v0
+; SDAG-NEXT:    v_mov_b32_e32 v0, 0
+; SDAG-NEXT:    v_mov_b32_e32 v1, 1
 ; SDAG-NEXT:    s_nop 1
-; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v21, v20 op_sel_hi:[0,0,0]
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[8:15], v[16:19], v1, v0 op_sel_hi:[0,0,0]
 ; SDAG-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_1_0_a:
 ; GISEL:       ; %bb.0:
 ; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GISEL-NEXT:    v_mov_b32_e32 v20, 1
-; GISEL-NEXT:    v_mov_b32_e32 v21, 0
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v12, v14
+; GISEL-NEXT:    v_mov_b32_e32 v13, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    v_mov_b32_e32 v4, 1
+; GISEL-NEXT:    v_mov_b32_e32 v5, 0
 ; GISEL-NEXT:    s_nop 1
-; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0]
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[6:13], v[0:3], v4, v5 op_sel_hi:[0,0,0]
 ; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 0, i32 0, i32 0, i32 1, i32 0, i32 0)
   ret <4 x float> %result
@@ -1540,11 +3250,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___constant_scale_1_0_a(
 ; --------------------------------------------------------------------
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v8i32_fp6(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v8i32_fp6:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v8i32_fp6:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v8i32_fp6:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[0,0,0] blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 2, ; blgp
@@ -1553,11 +3290,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v8i32_fp6(
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp8(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp8:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp8:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp8:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[0,0,0] cbsz:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 0, ; blgp
@@ -1566,11 +3330,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp8(
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp6(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp6:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:2 blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp6:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:2 blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp6:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[0,0,0] cbsz:2 blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 2, ; blgp
@@ -1579,11 +3370,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp6(
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp6__0_scale(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp6__0_scale:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19] cbsz:2 blgp:2
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp6__0_scale:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19] cbsz:2 blgp:2
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp6__0_scale:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:11], v[0:3] cbsz:2 blgp:2
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 2, ; cbsz
                                                                                       i32 2, ; blgp
@@ -1592,11 +3410,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp6__v8i32_fp6_
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v8i32_fp4(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v8i32_fp4:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v8i32_fp4:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v8i32_fp4:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[0,0,0] blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 4, ; blgp
@@ -1605,11 +3450,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v8i32_fp4(
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp8(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp8:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp8:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp8:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[0,0,0] cbsz:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 0, ; blgp
@@ -1618,11 +3490,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp8(
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v6i32_fp4(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v6i32_fp4:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v6i32_fp4:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v6i32_fp4:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:9], v[0:3], v18, v19 op_sel_hi:[0,0,0] blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v6i32(<8 x i32> %arg0, <6 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 0, ; cbsz
                                                                                       i32 4, ; blgp
@@ -1631,11 +3528,36 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp8__v6i32_fp4(
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v6i32_fp4__v8i32_fp8(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v6i32_fp4__v8i32_fp8:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v6i32_fp4__v8i32_fp8:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:5], v[6:13], v[14:17], v18, v19 op_sel_hi:[0,0,0] cbsz:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v6i32_fp4__v8i32_fp8:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v4, v6
+; GISEL-NEXT:    v_mov_b32_e32 v5, v7
+; GISEL-NEXT:    v_mov_b32_e32 v6, v8
+; GISEL-NEXT:    v_mov_b32_e32 v7, v9
+; GISEL-NEXT:    v_mov_b32_e32 v8, v10
+; GISEL-NEXT:    v_mov_b32_e32 v9, v11
+; GISEL-NEXT:    v_mov_b32_e32 v10, v12
+; GISEL-NEXT:    v_mov_b32_e32 v11, v13
+; GISEL-NEXT:    v_mov_b32_e32 v0, v14
+; GISEL-NEXT:    v_mov_b32_e32 v1, v15
+; GISEL-NEXT:    v_mov_b32_e32 v2, v16
+; GISEL-NEXT:    v_mov_b32_e32 v3, v17
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[20:25], v[4:11], v[0:3], v18, v19 op_sel_hi:[0,0,0] cbsz:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v6i32.v8i32(<6 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 0, ; blgp
@@ -1644,11 +3566,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v6i32_fp4__v8i32_fp8(
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp4(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2, i32 %scale0, i32 %scale1) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp4:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:4 blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp4:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19], v20, v21 op_sel_hi:[0,0,0] cbsz:4 blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp4:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v22, v0
+; GISEL-NEXT:    v_mov_b32_e32 v23, v1
+; GISEL-NEXT:    v_mov_b32_e32 v24, v2
+; GISEL-NEXT:    v_mov_b32_e32 v25, v3
+; GISEL-NEXT:    v_mov_b32_e32 v26, v4
+; GISEL-NEXT:    v_mov_b32_e32 v27, v5
+; GISEL-NEXT:    v_mov_b32_e32 v28, v6
+; GISEL-NEXT:    v_mov_b32_e32 v29, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_scale_f32_16x16x128_f8f6f4 v[0:3], v[22:29], v[4:11], v[0:3], v20, v21 op_sel_hi:[0,0,0] cbsz:4 blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 4, ; blgp
@@ -1657,11 +3606,38 @@ define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp4(
 }
 
 define <4 x float> @test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp4__0_scale(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2) {
-; GCN-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp4__0_scale:
-; GCN:       ; %bb.0:
-; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19] cbsz:4 blgp:4
-; GCN-NEXT:    s_setpc_b64 s[30:31]
+; SDAG-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp4__0_scale:
+; SDAG:       ; %bb.0:
+; SDAG-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; SDAG-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[0:7], v[8:15], v[16:19] cbsz:4 blgp:4
+; SDAG-NEXT:    s_setpc_b64 s[30:31]
+;
+; GISEL-LABEL: test_mfma_scale_f32_16x16x128_f8f6f4___v8i32_fp4__v8i32_fp4__0_scale:
+; GISEL:       ; %bb.0:
+; GISEL-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; GISEL-NEXT:    v_mov_b32_e32 v20, v0
+; GISEL-NEXT:    v_mov_b32_e32 v21, v1
+; GISEL-NEXT:    v_mov_b32_e32 v22, v2
+; GISEL-NEXT:    v_mov_b32_e32 v23, v3
+; GISEL-NEXT:    v_mov_b32_e32 v24, v4
+; GISEL-NEXT:    v_mov_b32_e32 v25, v5
+; GISEL-NEXT:    v_mov_b32_e32 v26, v6
+; GISEL-NEXT:    v_mov_b32_e32 v27, v7
+; GISEL-NEXT:    v_mov_b32_e32 v4, v8
+; GISEL-NEXT:    v_mov_b32_e32 v5, v9
+; GISEL-NEXT:    v_mov_b32_e32 v6, v10
+; GISEL-NEXT:    v_mov_b32_e32 v7, v11
+; GISEL-NEXT:    v_mov_b32_e32 v8, v12
+; GISEL-NEXT:    v_mov_b32_e32 v9, v13
+; GISEL-NEXT:    v_mov_b32_e32 v10, v14
+; GISEL-NEXT:    v_mov_b32_e32 v11, v15
+; GISEL-NEXT:    v_mov_b32_e32 v0, v16
+; GISEL-NEXT:    v_mov_b32_e32 v1, v17
+; GISEL-NEXT:    v_mov_b32_e32 v2, v18
+; GISEL-NEXT:    v_mov_b32_e32 v3, v19
+; GISEL-NEXT:    s_nop 1
+; GISEL-NEXT:    v_mfma_f32_16x16x128_f8f6f4 v[0:3], v[20:27], v[4:11], v[0:3] cbsz:4 blgp:4
+; GISEL-NEXT:    s_setpc_b64 s[30:31]
   %result = call <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v8i32(<8 x i32> %arg0, <8 x i32> %arg1, <4 x float> %arg2,
                                                                                       i32 4, ; cbsz
                                                                                       i32 4, ; blgp
@@ -1681,3 +3657,5 @@ declare <4 x float> @llvm.amdgcn.mfma.scale.f32.16x16x128.f8f6f4.v8i32.v6i32(<8 
 
 attributes #0 = { "amdgpu-flat-work-group-size"="512,512" "amdgpu-agpr-alloc"="0,0" }
 attributes #1 = { convergent nocallback nofree nosync nounwind willreturn memory(none) }
+;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
+; GCN: {{.*}}

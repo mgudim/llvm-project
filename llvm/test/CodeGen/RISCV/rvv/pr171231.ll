@@ -27,6 +27,7 @@ define <vscale x 1 x double> @crash_func(<vscale x 1 x double> %a, <vscale x 1 x
 ; CHECK-NEXT:    add a1, sp, a1
 ; CHECK-NEXT:    addi a1, a1, 16
 ; CHECK-NEXT:    vs1r.v v9, (a1) # vscale x 8-byte Folded Spill
+; CHECK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
 ; CHECK-NEXT:    addi a1, sp, 16
 ; CHECK-NEXT:    vs1r.v v0, (a1) # vscale x 8-byte Folded Spill
 ; CHECK-NEXT:    call foo

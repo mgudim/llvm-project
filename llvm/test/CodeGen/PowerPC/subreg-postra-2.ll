@@ -12,7 +12,7 @@ define void @jbd2_journal_commit_transaction(i32 %input1, ptr %input2, ptr %inpu
 ; CHECK-NEXT:    cmplwi 1, 3, 0
 ; CHECK-NEXT:    li 8, -5
 ; CHECK-NEXT:    lis 9, 4
-; CHECK-NEXT:    cmpld 6, 4, 5
+; CHECK-NEXT:    cmpld 5, 4, 5
 ; CHECK-NEXT:    .p2align 4
 ; CHECK-NEXT:  .LBB0_1: # %while.body392
 ; CHECK-NEXT:    #
@@ -23,7 +23,7 @@ define void @jbd2_journal_commit_transaction(i32 %input1, ptr %input2, ptr %inpu
 ; CHECK-NEXT:    mr 5, 4
 ; CHECK-NEXT:    ldu 10, -72(5)
 ; CHECK-NEXT:    andi. 10, 10, 1
-; CHECK-NEXT:    crmove 20, 1
+; CHECK-NEXT:    crmove 24, 1
 ; CHECK-NEXT:    #APP
 ; CHECK-NEXT:  .Ltmp0:
 ; CHECK-NEXT:    .long 2101356712
@@ -33,9 +33,9 @@ define void @jbd2_journal_commit_transaction(i32 %input1, ptr %input2, ptr %inpu
 ; CHECK-EMPTY:
 ; CHECK-NEXT:    #NO_APP
 ; CHECK-NEXT:    std 4, 0(6)
-; CHECK-NEXT:    bne+ 6, .LBB0_1
+; CHECK-NEXT:    bne+ 5, .LBB0_1
 ; CHECK-NEXT:  # %bb.3:
-; CHECK-NEXT:    isel 7, 3, 8, 20
+; CHECK-NEXT:    isel 7, 3, 8, 24
 ; CHECK-NEXT:  .LBB0_4: # %while.end418
 ; CHECK-NEXT:    cmplwi 7, 0
 ; CHECK-NEXT:    beq 0, .LBB0_6

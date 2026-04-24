@@ -114,19 +114,19 @@ define void @test_memmove(ptr nocapture %x, ptr nocapture readonly %y, i32 %n, i
 ; CHECK-NEXT:    push.w {r4, r5, r6, r7, r8, r9, lr}
 ; CHECK-NEXT:    .pad #4
 ; CHECK-NEXT:    sub sp, #4
-; CHECK-NEXT:    mov r8, r3
+; CHECK-NEXT:    mov r9, r3
 ; CHECK-NEXT:    mov r5, r2
-; CHECK-NEXT:    mov r9, r1
+; CHECK-NEXT:    mov r8, r1
 ; CHECK-NEXT:    mov r7, r0
-; CHECK-NEXT:    lsls r4, r3, #2
-; CHECK-NEXT:    movs r6, #0
+; CHECK-NEXT:    lsls r6, r3, #2
+; CHECK-NEXT:    movs r4, #0
 ; CHECK-NEXT:  .LBB2_2: @ %for.body
 ; CHECK-NEXT:    @ =>This Inner Loop Header: Depth=1
-; CHECK-NEXT:    adds r0, r7, r6
-; CHECK-NEXT:    add.w r1, r9, r6
-; CHECK-NEXT:    mov r2, r8
+; CHECK-NEXT:    adds r0, r7, r4
+; CHECK-NEXT:    add.w r1, r8, r4
+; CHECK-NEXT:    mov r2, r9
 ; CHECK-NEXT:    bl __aeabi_memmove4
-; CHECK-NEXT:    add r6, r4
+; CHECK-NEXT:    add r4, r6
 ; CHECK-NEXT:    subs r5, #1
 ; CHECK-NEXT:    bne .LBB2_2
 ; CHECK-NEXT:  @ %bb.3:

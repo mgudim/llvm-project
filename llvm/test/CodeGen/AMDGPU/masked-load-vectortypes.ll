@@ -216,6 +216,8 @@ define <16 x i8> @uniform_masked_load_ptr1_mask_v16i8(ptr addrspace(1) inreg noc
 ; GFX942:       ; %bb.0: ; %entry
 ; GFX942-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; GFX942-NEXT:    v_and_b32_e32 v0, 1, v0
+; GFX942-NEXT:    s_mov_b32 s3, s1
+; GFX942-NEXT:    s_mov_b32 s2, s0
 ; GFX942-NEXT:    v_cmp_eq_u32_e32 vcc, 1, v0
 ; GFX942-NEXT:    v_mov_b32_e32 v16, 0
 ; GFX942-NEXT:    v_mov_b32_e32 v1, 0
@@ -233,10 +235,10 @@ define <16 x i8> @uniform_masked_load_ptr1_mask_v16i8(ptr addrspace(1) inreg noc
 ; GFX942-NEXT:    v_mov_b32_e32 v13, 0
 ; GFX942-NEXT:    v_mov_b32_e32 v14, 0
 ; GFX942-NEXT:    v_mov_b32_e32 v15, 0
-; GFX942-NEXT:    s_and_saveexec_b64 s[2:3], vcc
+; GFX942-NEXT:    s_and_saveexec_b64 s[0:1], vcc
 ; GFX942-NEXT:    s_cbranch_execz .LBB8_2
 ; GFX942-NEXT:  ; %bb.1: ; %cond.load
-; GFX942-NEXT:    global_load_dwordx4 v[16:19], v16, s[0:1]
+; GFX942-NEXT:    global_load_dwordx4 v[16:19], v16, s[2:3]
 ; GFX942-NEXT:    s_waitcnt vmcnt(0)
 ; GFX942-NEXT:    v_lshrrev_b32_e32 v15, 24, v19
 ; GFX942-NEXT:    v_lshrrev_b32_e32 v14, 16, v19
@@ -251,7 +253,7 @@ define <16 x i8> @uniform_masked_load_ptr1_mask_v16i8(ptr addrspace(1) inreg noc
 ; GFX942-NEXT:    v_lshrrev_b32_e32 v2, 16, v16
 ; GFX942-NEXT:    v_lshrrev_b32_e32 v1, 8, v16
 ; GFX942-NEXT:  .LBB8_2:
-; GFX942-NEXT:    s_or_b64 exec, exec, s[2:3]
+; GFX942-NEXT:    s_or_b64 exec, exec, s[0:1]
 ; GFX942-NEXT:    v_mov_b32_e32 v0, v16
 ; GFX942-NEXT:    v_mov_b32_e32 v4, v17
 ; GFX942-NEXT:    v_mov_b32_e32 v8, v18

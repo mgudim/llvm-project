@@ -109,25 +109,27 @@ define <2 x double> @exp10_v2f64(<2 x double> %x) #0 {
 ; CHECK-LABEL: exp10_v2f64:
 ; CHECK:       // %bb.0:
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     r16 = r0
-; CHECK-NEXT:     r1:0 = combine(r3,r2)
+; CHECK-NEXT:     r17:16 = combine(r5,r4)
 ; CHECK-NEXT:     memd(r29+#-16) = r17:16
 ; CHECK-NEXT:     allocframe(#24)
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     call exp10
-; CHECK-NEXT:     r19:18 = combine(r5,r4)
+; CHECK-NEXT:     r18 = r0
+; CHECK-NEXT:     r1:0 = combine(r3,r2)
 ; CHECK-NEXT:     memd(r29+#8) = r19:18
 ; CHECK-NEXT:     memd(r29+#0) = r21:20
 ; CHECK-NEXT:    } // 8-byte Folded Spill
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     call exp10
-; CHECK-NEXT:     r21:20 = combine(r1,r0)
-; CHECK-NEXT:     r1:0 = combine(r19,r18)
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
-; CHECK-NEXT:     memd(r16+#8) = r1:0
-; CHECK-NEXT:     memd(r16+#0) = r21:20
+; CHECK-NEXT:     call exp10
+; CHECK-NEXT:     r21:20 = combine(r1,r0)
+; CHECK-NEXT:     r1:0 = combine(r17,r16)
+; CHECK-NEXT:    }
+; CHECK-NEXT:    {
+; CHECK-NEXT:     memd(r18+#8) = r1:0
+; CHECK-NEXT:     memd(r18+#0) = r21:20
 ; CHECK-NEXT:    }
 ; CHECK-NEXT:    {
 ; CHECK-NEXT:     r17:16 = memd(r29+#16)

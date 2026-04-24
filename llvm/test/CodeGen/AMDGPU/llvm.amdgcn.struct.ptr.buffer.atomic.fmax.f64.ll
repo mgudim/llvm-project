@@ -9,14 +9,22 @@ define double @struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__vgpr_
 ; GFX6-LABEL: struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset:
 ; GFX6:       ; %bb.0:
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen glc
+; GFX6-NEXT:    s_mov_b32 s7, s19
+; GFX6-NEXT:    s_mov_b32 s6, s18
+; GFX6-NEXT:    s_mov_b32 s5, s17
+; GFX6-NEXT:    s_mov_b32 s4, s16
+; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen glc
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; GFX6-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX7-LABEL: struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset:
 ; GFX7:       ; %bb.0:
 ; GFX7-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen glc
+; GFX7-NEXT:    s_mov_b32 s7, s19
+; GFX7-NEXT:    s_mov_b32 s6, s18
+; GFX7-NEXT:    s_mov_b32 s5, s17
+; GFX7-NEXT:    s_mov_b32 s4, s16
+; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen glc
 ; GFX7-NEXT:    s_waitcnt vmcnt(0)
 ; GFX7-NEXT:    s_setpc_b64 s[30:31]
   %ret = call double @llvm.amdgcn.struct.ptr.buffer.atomic.fmax.f64(double %val, ptr addrspace(8) %rsrc, i32 %vindex, i32 %voffset, i32 %soffset, i32 0)
@@ -27,14 +35,22 @@ define double @struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__vgpr_
 ; GFX6-LABEL: struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__vgpr_voffset_fmax__sgpr_soffset:
 ; GFX6:       ; %bb.0:
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen offset:256 glc
+; GFX6-NEXT:    s_mov_b32 s7, s19
+; GFX6-NEXT:    s_mov_b32 s6, s18
+; GFX6-NEXT:    s_mov_b32 s5, s17
+; GFX6-NEXT:    s_mov_b32 s4, s16
+; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen offset:256 glc
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; GFX6-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX7-LABEL: struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__vgpr_voffset_fmax__sgpr_soffset:
 ; GFX7:       ; %bb.0:
 ; GFX7-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen offset:256 glc
+; GFX7-NEXT:    s_mov_b32 s7, s19
+; GFX7-NEXT:    s_mov_b32 s6, s18
+; GFX7-NEXT:    s_mov_b32 s5, s17
+; GFX7-NEXT:    s_mov_b32 s4, s16
+; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen offset:256 glc
 ; GFX7-NEXT:    s_waitcnt vmcnt(0)
 ; GFX7-NEXT:    s_setpc_b64 s[30:31]
   %voffset.add = add i32 %voffset, 256
@@ -46,14 +62,22 @@ define double @struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__0_vof
 ; GFX6-LABEL: struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__0_voffset__sgpr_soffset:
 ; GFX6:       ; %bb.0:
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v2, s[16:19], s20 idxen glc
+; GFX6-NEXT:    s_mov_b32 s7, s19
+; GFX6-NEXT:    s_mov_b32 s6, s18
+; GFX6-NEXT:    s_mov_b32 s5, s17
+; GFX6-NEXT:    s_mov_b32 s4, s16
+; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v2, s[4:7], s20 idxen glc
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; GFX6-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX7-LABEL: struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__0_voffset__sgpr_soffset:
 ; GFX7:       ; %bb.0:
 ; GFX7-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v2, s[16:19], s20 idxen glc
+; GFX7-NEXT:    s_mov_b32 s7, s19
+; GFX7-NEXT:    s_mov_b32 s6, s18
+; GFX7-NEXT:    s_mov_b32 s5, s17
+; GFX7-NEXT:    s_mov_b32 s4, s16
+; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v2, s[4:7], s20 idxen glc
 ; GFX7-NEXT:    s_waitcnt vmcnt(0)
 ; GFX7-NEXT:    s_setpc_b64 s[30:31]
   %ret = call double @llvm.amdgcn.struct.ptr.buffer.atomic.fmax.f64(double %val, ptr addrspace(8) %rsrc, i32 %vindex, i32 0, i32 %soffset, i32 0)
@@ -64,14 +88,22 @@ define double @struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__vgpr_
 ; GFX6-LABEL: struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset_slc:
 ; GFX6:       ; %bb.0:
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen glc slc
+; GFX6-NEXT:    s_mov_b32 s7, s19
+; GFX6-NEXT:    s_mov_b32 s6, s18
+; GFX6-NEXT:    s_mov_b32 s5, s17
+; GFX6-NEXT:    s_mov_b32 s4, s16
+; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen glc slc
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; GFX6-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX7-LABEL: struct_ptr_buffer_atomic_fmax_f64_ret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset_slc:
 ; GFX7:       ; %bb.0:
 ; GFX7-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen glc slc
+; GFX7-NEXT:    s_mov_b32 s7, s19
+; GFX7-NEXT:    s_mov_b32 s6, s18
+; GFX7-NEXT:    s_mov_b32 s5, s17
+; GFX7-NEXT:    s_mov_b32 s4, s16
+; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen glc slc
 ; GFX7-NEXT:    s_waitcnt vmcnt(0)
 ; GFX7-NEXT:    s_setpc_b64 s[30:31]
   %ret = call double @llvm.amdgcn.struct.ptr.buffer.atomic.fmax.f64(double %val, ptr addrspace(8) %rsrc, i32 %vindex, i32 %voffset, i32 %soffset, i32 2)
@@ -82,14 +114,22 @@ define void @struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__vgpr_
 ; GFX6-LABEL: struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset:
 ; GFX6:       ; %bb.0:
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen
+; GFX6-NEXT:    s_mov_b32 s7, s19
+; GFX6-NEXT:    s_mov_b32 s6, s18
+; GFX6-NEXT:    s_mov_b32 s5, s17
+; GFX6-NEXT:    s_mov_b32 s4, s16
+; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; GFX6-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX7-LABEL: struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset:
 ; GFX7:       ; %bb.0:
 ; GFX7-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen
+; GFX7-NEXT:    s_mov_b32 s7, s19
+; GFX7-NEXT:    s_mov_b32 s6, s18
+; GFX7-NEXT:    s_mov_b32 s5, s17
+; GFX7-NEXT:    s_mov_b32 s4, s16
+; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen
 ; GFX7-NEXT:    s_waitcnt vmcnt(0)
 ; GFX7-NEXT:    s_setpc_b64 s[30:31]
   %ret = call double @llvm.amdgcn.struct.ptr.buffer.atomic.fmax.f64(double %val, ptr addrspace(8) %rsrc, i32 %vindex, i32 %voffset, i32 %soffset, i32 0)
@@ -100,14 +140,22 @@ define void @struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__vgpr_
 ; GFX6-LABEL: struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__vgpr_voffset_fmax__sgpr_soffset:
 ; GFX6:       ; %bb.0:
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen offset:256
+; GFX6-NEXT:    s_mov_b32 s7, s19
+; GFX6-NEXT:    s_mov_b32 s6, s18
+; GFX6-NEXT:    s_mov_b32 s5, s17
+; GFX6-NEXT:    s_mov_b32 s4, s16
+; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen offset:256
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; GFX6-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX7-LABEL: struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__vgpr_voffset_fmax__sgpr_soffset:
 ; GFX7:       ; %bb.0:
 ; GFX7-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen offset:256
+; GFX7-NEXT:    s_mov_b32 s7, s19
+; GFX7-NEXT:    s_mov_b32 s6, s18
+; GFX7-NEXT:    s_mov_b32 s5, s17
+; GFX7-NEXT:    s_mov_b32 s4, s16
+; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen offset:256
 ; GFX7-NEXT:    s_waitcnt vmcnt(0)
 ; GFX7-NEXT:    s_setpc_b64 s[30:31]
   %voffset.add = add i32 %voffset, 256
@@ -120,14 +168,22 @@ define void @struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__0_vof
 ; GFX6-LABEL: struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__0_voffset__sgpr_soffset:
 ; GFX6:       ; %bb.0:
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v2, s[16:19], s20 idxen
+; GFX6-NEXT:    s_mov_b32 s7, s19
+; GFX6-NEXT:    s_mov_b32 s6, s18
+; GFX6-NEXT:    s_mov_b32 s5, s17
+; GFX6-NEXT:    s_mov_b32 s4, s16
+; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v2, s[4:7], s20 idxen
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; GFX6-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX7-LABEL: struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__0_voffset__sgpr_soffset:
 ; GFX7:       ; %bb.0:
 ; GFX7-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v2, s[16:19], s20 idxen
+; GFX7-NEXT:    s_mov_b32 s7, s19
+; GFX7-NEXT:    s_mov_b32 s6, s18
+; GFX7-NEXT:    s_mov_b32 s5, s17
+; GFX7-NEXT:    s_mov_b32 s4, s16
+; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v2, s[4:7], s20 idxen
 ; GFX7-NEXT:    s_waitcnt vmcnt(0)
 ; GFX7-NEXT:    s_setpc_b64 s[30:31]
   %ret = call double @llvm.amdgcn.struct.ptr.buffer.atomic.fmax.f64(double %val, ptr addrspace(8) %rsrc, i32 %vindex, i32 0, i32 %soffset, i32 0)
@@ -138,14 +194,22 @@ define void @struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__vgpr_
 ; GFX6-LABEL: struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset_slc:
 ; GFX6:       ; %bb.0:
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen slc
+; GFX6-NEXT:    s_mov_b32 s7, s19
+; GFX6-NEXT:    s_mov_b32 s6, s18
+; GFX6-NEXT:    s_mov_b32 s5, s17
+; GFX6-NEXT:    s_mov_b32 s4, s16
+; GFX6-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen slc
 ; GFX6-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; GFX6-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX7-LABEL: struct_ptr_buffer_atomic_fmax_f64_noret__vgpr_val__sgpr_rsrc__vgpr_voffset__sgpr_soffset_slc:
 ; GFX7:       ; %bb.0:
 ; GFX7-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[16:19], s20 idxen offen slc
+; GFX7-NEXT:    s_mov_b32 s7, s19
+; GFX7-NEXT:    s_mov_b32 s6, s18
+; GFX7-NEXT:    s_mov_b32 s5, s17
+; GFX7-NEXT:    s_mov_b32 s4, s16
+; GFX7-NEXT:    buffer_atomic_fmax_x2 v[0:1], v[2:3], s[4:7], s20 idxen offen slc
 ; GFX7-NEXT:    s_waitcnt vmcnt(0)
 ; GFX7-NEXT:    s_setpc_b64 s[30:31]
   %ret = call double @llvm.amdgcn.struct.ptr.buffer.atomic.fmax.f64(double %val, ptr addrspace(8) %rsrc, i32 %vindex, i32 %voffset, i32 %soffset, i32 2)

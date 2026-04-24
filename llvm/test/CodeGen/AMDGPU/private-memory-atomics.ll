@@ -156,21 +156,22 @@ define i64 @cmpxchg_private_i64(ptr addrspace(5) %ptr) {
 ; GCN-LABEL: cmpxchg_private_i64:
 ; GCN:       ; %bb.0:
 ; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_mov_b32_e32 v2, v0
-; GCN-NEXT:    v_add_i32_e32 v3, vcc, 4, v2
-; GCN-NEXT:    buffer_load_dword v1, v3, s[0:3], 0 offen
-; GCN-NEXT:    buffer_load_dword v0, v0, s[0:3], 0 offen
+; GCN-NEXT:    v_add_i32_e32 v3, vcc, 4, v0
+; GCN-NEXT:    buffer_load_dword v2, v3, s[0:3], 0 offen
+; GCN-NEXT:    buffer_load_dword v1, v0, s[0:3], 0 offen
 ; GCN-NEXT:    s_mov_b32 s7, 0xf000
 ; GCN-NEXT:    s_mov_b32 s6, -1
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
-; GCN-NEXT:    v_cmp_eq_u64_e32 vcc, 0, v[0:1]
-; GCN-NEXT:    v_cndmask_b32_e64 v4, v1, 0, vcc
+; GCN-NEXT:    v_cmp_eq_u64_e32 vcc, 0, v[1:2]
+; GCN-NEXT:    v_cndmask_b32_e64 v4, v2, 0, vcc
 ; GCN-NEXT:    buffer_store_dword v4, v3, s[0:3], 0 offen
-; GCN-NEXT:    v_cndmask_b32_e64 v3, v0, 1, vcc
+; GCN-NEXT:    v_cndmask_b32_e64 v3, v1, 1, vcc
 ; GCN-NEXT:    s_waitcnt expcnt(0)
 ; GCN-NEXT:    v_cndmask_b32_e64 v4, 0, 1, vcc
-; GCN-NEXT:    buffer_store_dword v3, v2, s[0:3], 0 offen
+; GCN-NEXT:    buffer_store_dword v3, v0, s[0:3], 0 offen
 ; GCN-NEXT:    buffer_store_byte v4, off, s[4:7], 0
+; GCN-NEXT:    v_mov_b32_e32 v0, v1
+; GCN-NEXT:    v_mov_b32_e32 v1, v2
 ; GCN-NEXT:    s_waitcnt vmcnt(0) expcnt(0)
 ; GCN-NEXT:    s_setpc_b64 s[30:31]
   %result = cmpxchg ptr addrspace(5) %ptr, i64 0, i64 1 acq_rel monotonic

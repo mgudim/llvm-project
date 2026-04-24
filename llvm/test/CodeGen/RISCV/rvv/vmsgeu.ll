@@ -1282,11 +1282,11 @@ define <vscale x 1 x i1> @intrinsic_vmsgeu_mask_vx_nxv1i64_i64(<vscale x 1 x i1>
 ; RV32-NEXT:    sw a1, 12(sp)
 ; RV32-NEXT:    addi a0, sp, 8
 ; RV32-NEXT:    vsetvli zero, a2, e64, m1, ta, mu
-; RV32-NEXT:    vlse64.v v11, (a0), zero
-; RV32-NEXT:    vmv1r.v v10, v0
+; RV32-NEXT:    vlse64.v v10, (a0), zero
+; RV32-NEXT:    vmv1r.v v11, v0
 ; RV32-NEXT:    vmv1r.v v0, v9
-; RV32-NEXT:    vmsleu.vv v10, v11, v8, v0.t
-; RV32-NEXT:    vmv.v.v v0, v10
+; RV32-NEXT:    vmsleu.vv v11, v10, v8, v0.t
+; RV32-NEXT:    vmv.v.v v0, v11
 ; RV32-NEXT:    addi sp, sp, 16
 ; RV32-NEXT:    ret
 ;
@@ -2394,7 +2394,9 @@ define <vscale x 1 x i1> @intrinsic_vmsgeu_maskedoff_mask_vx_nxv1i64_i64(<vscale
 ; RV32-NEXT:    addi a0, sp, 8
 ; RV32-NEXT:    vsetvli zero, a2, e64, m1, ta, mu
 ; RV32-NEXT:    vlse64.v v9, (a0), zero
-; RV32-NEXT:    vmsleu.vv v0, v9, v8, v0.t
+; RV32-NEXT:    vmv1r.v v10, v0
+; RV32-NEXT:    vmsleu.vv v10, v9, v8, v0.t
+; RV32-NEXT:    vmv.v.v v0, v10
 ; RV32-NEXT:    addi sp, sp, 16
 ; RV32-NEXT:    ret
 ;

@@ -208,18 +208,18 @@ define void @test_la_tls_ld(i32 signext %n) {
 ; LA32-NEXT:    .cfi_offset 23, -12
 ; LA32-NEXT:    .cfi_offset 24, -16
 ; LA32-NEXT:    move $fp, $a0
-; LA32-NEXT:    move $s1, $zero
+; LA32-NEXT:    move $s0, $zero
 ; LA32-NEXT:  .Lpcadd_hi3:
 ; LA32-NEXT:    pcaddu12i $a0, %ld_pcadd_hi20(ld)
-; LA32-NEXT:    addi.w $s0, $a0, %ld_pcadd_lo12(.Lpcadd_hi3)
+; LA32-NEXT:    addi.w $s1, $a0, %ld_pcadd_lo12(.Lpcadd_hi3)
 ; LA32-NEXT:    .p2align 4, , 16
 ; LA32-NEXT:  .LBB3_1: # %loop
 ; LA32-NEXT:    # =>This Inner Loop Header: Depth=1
-; LA32-NEXT:    move $a0, $s0
+; LA32-NEXT:    move $a0, $s1
 ; LA32-NEXT:    bl __tls_get_addr
 ; LA32-NEXT:    ld.w $zero, $a0, 0
-; LA32-NEXT:    addi.w $s1, $s1, 1
-; LA32-NEXT:    blt $s1, $fp, .LBB3_1
+; LA32-NEXT:    addi.w $s0, $s0, 1
+; LA32-NEXT:    blt $s0, $fp, .LBB3_1
 ; LA32-NEXT:  # %bb.2: # %ret
 ; LA32-NEXT:    ld.w $s1, $sp, 0 # 4-byte Folded Reload
 ; LA32-NEXT:    ld.w $s0, $sp, 4 # 4-byte Folded Reload
@@ -241,18 +241,18 @@ define void @test_la_tls_ld(i32 signext %n) {
 ; LA64-NEXT:    .cfi_offset 23, -24
 ; LA64-NEXT:    .cfi_offset 24, -32
 ; LA64-NEXT:    move $fp, $a0
-; LA64-NEXT:    move $s1, $zero
+; LA64-NEXT:    move $s0, $zero
 ; LA64-NEXT:    pcalau12i $a0, %ld_pc_hi20(ld)
-; LA64-NEXT:    addi.d $s0, $a0, %got_pc_lo12(ld)
+; LA64-NEXT:    addi.d $s1, $a0, %got_pc_lo12(ld)
 ; LA64-NEXT:    .p2align 4, , 16
 ; LA64-NEXT:  .LBB3_1: # %loop
 ; LA64-NEXT:    # =>This Inner Loop Header: Depth=1
-; LA64-NEXT:    move $a0, $s0
+; LA64-NEXT:    move $a0, $s1
 ; LA64-NEXT:    pcaddu18i $ra, %call36(__tls_get_addr)
 ; LA64-NEXT:    jirl $ra, $ra, 0
 ; LA64-NEXT:    ld.w $zero, $a0, 0
-; LA64-NEXT:    addi.w $s1, $s1, 1
-; LA64-NEXT:    blt $s1, $fp, .LBB3_1
+; LA64-NEXT:    addi.w $s0, $s0, 1
+; LA64-NEXT:    blt $s0, $fp, .LBB3_1
 ; LA64-NEXT:  # %bb.2: # %ret
 ; LA64-NEXT:    ld.d $s1, $sp, 0 # 8-byte Folded Reload
 ; LA64-NEXT:    ld.d $s0, $sp, 8 # 8-byte Folded Reload
@@ -278,12 +278,12 @@ define void @test_la_tls_ld(i32 signext %n) {
 ; LA64LARGE-NEXT:    addi.d $a1, $zero, %got_pc_lo12(ld)
 ; LA64LARGE-NEXT:    lu32i.d $a1, %got64_pc_lo20(ld)
 ; LA64LARGE-NEXT:    lu52i.d $a1, $a1, %got64_pc_hi12(ld)
-; LA64LARGE-NEXT:    move $s1, $zero
-; LA64LARGE-NEXT:    add.d $s0, $a1, $a0
+; LA64LARGE-NEXT:    move $s0, $zero
+; LA64LARGE-NEXT:    add.d $s1, $a1, $a0
 ; LA64LARGE-NEXT:    .p2align 4, , 16
 ; LA64LARGE-NEXT:  .LBB3_1: # %loop
 ; LA64LARGE-NEXT:    # =>This Inner Loop Header: Depth=1
-; LA64LARGE-NEXT:    move $a0, $s0
+; LA64LARGE-NEXT:    move $a0, $s1
 ; LA64LARGE-NEXT:    pcalau12i $a1, %got_pc_hi20(__tls_get_addr)
 ; LA64LARGE-NEXT:    addi.d $ra, $zero, %got_pc_lo12(__tls_get_addr)
 ; LA64LARGE-NEXT:    lu32i.d $ra, %got64_pc_lo20(__tls_get_addr)
@@ -291,8 +291,8 @@ define void @test_la_tls_ld(i32 signext %n) {
 ; LA64LARGE-NEXT:    ldx.d $ra, $ra, $a1
 ; LA64LARGE-NEXT:    jirl $ra, $ra, 0
 ; LA64LARGE-NEXT:    ld.w $zero, $a0, 0
-; LA64LARGE-NEXT:    addi.w $s1, $s1, 1
-; LA64LARGE-NEXT:    blt $s1, $fp, .LBB3_1
+; LA64LARGE-NEXT:    addi.w $s0, $s0, 1
+; LA64LARGE-NEXT:    blt $s0, $fp, .LBB3_1
 ; LA64LARGE-NEXT:  # %bb.2: # %ret
 ; LA64LARGE-NEXT:    ld.d $s1, $sp, 0 # 8-byte Folded Reload
 ; LA64LARGE-NEXT:    ld.d $s0, $sp, 8 # 8-byte Folded Reload
@@ -385,18 +385,18 @@ define void @test_la_tls_gd(i32 signext %n) nounwind {
 ; LA32-NEXT:    st.w $s0, $sp, 4 # 4-byte Folded Spill
 ; LA32-NEXT:    st.w $s1, $sp, 0 # 4-byte Folded Spill
 ; LA32-NEXT:    move $fp, $a0
-; LA32-NEXT:    move $s1, $zero
+; LA32-NEXT:    move $s0, $zero
 ; LA32-NEXT:  .Lpcadd_hi4:
 ; LA32-NEXT:    pcaddu12i $a0, %gd_pcadd_hi20(gd)
-; LA32-NEXT:    addi.w $s0, $a0, %gd_pcadd_lo12(.Lpcadd_hi4)
+; LA32-NEXT:    addi.w $s1, $a0, %gd_pcadd_lo12(.Lpcadd_hi4)
 ; LA32-NEXT:    .p2align 4, , 16
 ; LA32-NEXT:  .LBB5_1: # %loop
 ; LA32-NEXT:    # =>This Inner Loop Header: Depth=1
-; LA32-NEXT:    move $a0, $s0
+; LA32-NEXT:    move $a0, $s1
 ; LA32-NEXT:    bl __tls_get_addr
 ; LA32-NEXT:    ld.w $zero, $a0, 0
-; LA32-NEXT:    addi.w $s1, $s1, 1
-; LA32-NEXT:    blt $s1, $fp, .LBB5_1
+; LA32-NEXT:    addi.w $s0, $s0, 1
+; LA32-NEXT:    blt $s0, $fp, .LBB5_1
 ; LA32-NEXT:  # %bb.2: # %ret
 ; LA32-NEXT:    ld.w $s1, $sp, 0 # 4-byte Folded Reload
 ; LA32-NEXT:    ld.w $s0, $sp, 4 # 4-byte Folded Reload
@@ -413,18 +413,18 @@ define void @test_la_tls_gd(i32 signext %n) nounwind {
 ; LA64-NEXT:    st.d $s0, $sp, 8 # 8-byte Folded Spill
 ; LA64-NEXT:    st.d $s1, $sp, 0 # 8-byte Folded Spill
 ; LA64-NEXT:    move $fp, $a0
-; LA64-NEXT:    move $s1, $zero
+; LA64-NEXT:    move $s0, $zero
 ; LA64-NEXT:    pcalau12i $a0, %gd_pc_hi20(gd)
-; LA64-NEXT:    addi.d $s0, $a0, %got_pc_lo12(gd)
+; LA64-NEXT:    addi.d $s1, $a0, %got_pc_lo12(gd)
 ; LA64-NEXT:    .p2align 4, , 16
 ; LA64-NEXT:  .LBB5_1: # %loop
 ; LA64-NEXT:    # =>This Inner Loop Header: Depth=1
-; LA64-NEXT:    move $a0, $s0
+; LA64-NEXT:    move $a0, $s1
 ; LA64-NEXT:    pcaddu18i $ra, %call36(__tls_get_addr)
 ; LA64-NEXT:    jirl $ra, $ra, 0
 ; LA64-NEXT:    ld.w $zero, $a0, 0
-; LA64-NEXT:    addi.w $s1, $s1, 1
-; LA64-NEXT:    blt $s1, $fp, .LBB5_1
+; LA64-NEXT:    addi.w $s0, $s0, 1
+; LA64-NEXT:    blt $s0, $fp, .LBB5_1
 ; LA64-NEXT:  # %bb.2: # %ret
 ; LA64-NEXT:    ld.d $s1, $sp, 0 # 8-byte Folded Reload
 ; LA64-NEXT:    ld.d $s0, $sp, 8 # 8-byte Folded Reload
@@ -445,12 +445,12 @@ define void @test_la_tls_gd(i32 signext %n) nounwind {
 ; LA64LARGE-NEXT:    addi.d $a1, $zero, %got_pc_lo12(gd)
 ; LA64LARGE-NEXT:    lu32i.d $a1, %got64_pc_lo20(gd)
 ; LA64LARGE-NEXT:    lu52i.d $a1, $a1, %got64_pc_hi12(gd)
-; LA64LARGE-NEXT:    move $s1, $zero
-; LA64LARGE-NEXT:    add.d $s0, $a1, $a0
+; LA64LARGE-NEXT:    move $s0, $zero
+; LA64LARGE-NEXT:    add.d $s1, $a1, $a0
 ; LA64LARGE-NEXT:    .p2align 4, , 16
 ; LA64LARGE-NEXT:  .LBB5_1: # %loop
 ; LA64LARGE-NEXT:    # =>This Inner Loop Header: Depth=1
-; LA64LARGE-NEXT:    move $a0, $s0
+; LA64LARGE-NEXT:    move $a0, $s1
 ; LA64LARGE-NEXT:    pcalau12i $a1, %got_pc_hi20(__tls_get_addr)
 ; LA64LARGE-NEXT:    addi.d $ra, $zero, %got_pc_lo12(__tls_get_addr)
 ; LA64LARGE-NEXT:    lu32i.d $ra, %got64_pc_lo20(__tls_get_addr)
@@ -458,8 +458,8 @@ define void @test_la_tls_gd(i32 signext %n) nounwind {
 ; LA64LARGE-NEXT:    ldx.d $ra, $ra, $a1
 ; LA64LARGE-NEXT:    jirl $ra, $ra, 0
 ; LA64LARGE-NEXT:    ld.w $zero, $a0, 0
-; LA64LARGE-NEXT:    addi.w $s1, $s1, 1
-; LA64LARGE-NEXT:    blt $s1, $fp, .LBB5_1
+; LA64LARGE-NEXT:    addi.w $s0, $s0, 1
+; LA64LARGE-NEXT:    blt $s0, $fp, .LBB5_1
 ; LA64LARGE-NEXT:  # %bb.2: # %ret
 ; LA64LARGE-NEXT:    ld.d $s1, $sp, 0 # 8-byte Folded Reload
 ; LA64LARGE-NEXT:    ld.d $s0, $sp, 8 # 8-byte Folded Reload

@@ -781,11 +781,15 @@ define <8 x i64> @test_abs_le_v8i64_fold(ptr %a.ptr) nounwind {
 ;
 ; SSE41-LABEL: test_abs_le_v8i64_fold:
 ; SSE41:       # %bb.0:
-; SSE41-NEXT:    movdqu (%rdi), %xmm1
-; SSE41-NEXT:    movdqu 16(%rdi), %xmm2
-; SSE41-NEXT:    movdqu 32(%rdi), %xmm3
-; SSE41-NEXT:    movdqu 48(%rdi), %xmm4
+; SSE41-NEXT:    movdqu (%rdi), %xmm4
+; SSE41-NEXT:    movdqu 16(%rdi), %xmm1
+; SSE41-NEXT:    movdqu 32(%rdi), %xmm2
+; SSE41-NEXT:    movdqu 48(%rdi), %xmm3
 ; SSE41-NEXT:    pxor %xmm5, %xmm5
+; SSE41-NEXT:    pxor %xmm6, %xmm6
+; SSE41-NEXT:    psubq %xmm4, %xmm6
+; SSE41-NEXT:    movdqa %xmm4, %xmm0
+; SSE41-NEXT:    blendvpd %xmm0, %xmm6, %xmm4
 ; SSE41-NEXT:    pxor %xmm6, %xmm6
 ; SSE41-NEXT:    psubq %xmm1, %xmm6
 ; SSE41-NEXT:    movdqa %xmm1, %xmm0
@@ -794,17 +798,10 @@ define <8 x i64> @test_abs_le_v8i64_fold(ptr %a.ptr) nounwind {
 ; SSE41-NEXT:    psubq %xmm2, %xmm6
 ; SSE41-NEXT:    movdqa %xmm2, %xmm0
 ; SSE41-NEXT:    blendvpd %xmm0, %xmm6, %xmm2
-; SSE41-NEXT:    pxor %xmm6, %xmm6
-; SSE41-NEXT:    psubq %xmm3, %xmm6
+; SSE41-NEXT:    psubq %xmm3, %xmm5
 ; SSE41-NEXT:    movdqa %xmm3, %xmm0
-; SSE41-NEXT:    blendvpd %xmm0, %xmm6, %xmm3
-; SSE41-NEXT:    psubq %xmm4, %xmm5
-; SSE41-NEXT:    movdqa %xmm4, %xmm0
-; SSE41-NEXT:    blendvpd %xmm0, %xmm5, %xmm4
-; SSE41-NEXT:    movapd %xmm1, %xmm0
-; SSE41-NEXT:    movapd %xmm2, %xmm1
-; SSE41-NEXT:    movapd %xmm3, %xmm2
-; SSE41-NEXT:    movapd %xmm4, %xmm3
+; SSE41-NEXT:    blendvpd %xmm0, %xmm5, %xmm3
+; SSE41-NEXT:    movapd %xmm4, %xmm0
 ; SSE41-NEXT:    retq
 ;
 ; AVX1-LABEL: test_abs_le_v8i64_fold:

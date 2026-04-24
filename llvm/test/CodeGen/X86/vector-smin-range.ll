@@ -268,23 +268,23 @@ define <4 x i64> @smin_v4i64_as_smin_v4i16(<4 x i64> %a0) nounwind {
 ;
 ; SSE42-LABEL: smin_v4i64_as_smin_v4i16:
 ; SSE42:       # %bb.0:
-; SSE42-NEXT:    pshufd {{.*#+}} xmm3 = xmm1[1,1,3,3]
+; SSE42-NEXT:    pshufd {{.*#+}} xmm2 = xmm1[1,1,3,3]
 ; SSE42-NEXT:    psrad $31, %xmm1
-; SSE42-NEXT:    psrad $18, %xmm3
-; SSE42-NEXT:    pblendw {{.*#+}} xmm3 = xmm3[0,1],xmm1[2,3],xmm3[4,5],xmm1[6,7]
+; SSE42-NEXT:    psrad $18, %xmm2
+; SSE42-NEXT:    pblendw {{.*#+}} xmm2 = xmm2[0,1],xmm1[2,3],xmm2[4,5],xmm1[6,7]
 ; SSE42-NEXT:    pshufd {{.*#+}} xmm1 = xmm0[1,1,3,3]
 ; SSE42-NEXT:    psrad $31, %xmm0
 ; SSE42-NEXT:    psrad $18, %xmm1
 ; SSE42-NEXT:    pblendw {{.*#+}} xmm1 = xmm1[0,1],xmm0[2,3],xmm1[4,5],xmm0[6,7]
 ; SSE42-NEXT:    pcmpeqd %xmm0, %xmm0
 ; SSE42-NEXT:    pcmpgtq %xmm1, %xmm0
-; SSE42-NEXT:    pcmpeqd %xmm2, %xmm2
-; SSE42-NEXT:    blendvpd %xmm0, %xmm1, %xmm2
+; SSE42-NEXT:    pcmpeqd %xmm3, %xmm3
+; SSE42-NEXT:    blendvpd %xmm0, %xmm1, %xmm3
 ; SSE42-NEXT:    pcmpeqd %xmm1, %xmm1
 ; SSE42-NEXT:    pcmpeqd %xmm0, %xmm0
-; SSE42-NEXT:    pcmpgtq %xmm3, %xmm0
-; SSE42-NEXT:    blendvpd %xmm0, %xmm3, %xmm1
-; SSE42-NEXT:    movapd %xmm2, %xmm0
+; SSE42-NEXT:    pcmpgtq %xmm2, %xmm0
+; SSE42-NEXT:    blendvpd %xmm0, %xmm2, %xmm1
+; SSE42-NEXT:    movapd %xmm3, %xmm0
 ; SSE42-NEXT:    retq
 ;
 ; AVX1-LABEL: smin_v4i64_as_smin_v4i16:

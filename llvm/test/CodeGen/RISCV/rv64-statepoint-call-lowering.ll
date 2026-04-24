@@ -194,17 +194,18 @@ define i1 @test_cross_bb(ptr addrspace(1) %a, i1 %external_cond) gc "statepoint-
 ; CHECK-NEXT:    .cfi_def_cfa_offset 32
 ; CHECK-NEXT:    sd ra, 24(sp) # 8-byte Folded Spill
 ; CHECK-NEXT:    sd s0, 16(sp) # 8-byte Folded Spill
+; CHECK-NEXT:    sd s1, 8(sp) # 8-byte Folded Spill
 ; CHECK-NEXT:    .cfi_offset ra, -8
 ; CHECK-NEXT:    .cfi_offset s0, -16
-; CHECK-NEXT:    andi s0, a1, 1
-; CHECK-NEXT:    sd a0, 8(sp)
+; CHECK-NEXT:    .cfi_offset s1, -24
+; CHECK-NEXT:    andi s1, a1, 1
+; CHECK-NEXT:    sd a0, 0(sp)
 ; CHECK-NEXT:    call return_i1
 ; CHECK-NEXT:  .Ltmp8:
-; CHECK-NEXT:    beqz s0, .LBB8_2
+; CHECK-NEXT:    beqz s1, .LBB8_2
 ; CHECK-NEXT:  # %bb.1: # %left
-; CHECK-NEXT:    ld a1, 8(sp)
 ; CHECK-NEXT:    mv s0, a0
-; CHECK-NEXT:    mv a0, a1
+; CHECK-NEXT:    ld a0, 0(sp)
 ; CHECK-NEXT:    call consume
 ; CHECK-NEXT:    mv a0, s0
 ; CHECK-NEXT:    j .LBB8_3
@@ -213,8 +214,10 @@ define i1 @test_cross_bb(ptr addrspace(1) %a, i1 %external_cond) gc "statepoint-
 ; CHECK-NEXT:  .LBB8_3: # %right
 ; CHECK-NEXT:    ld ra, 24(sp) # 8-byte Folded Reload
 ; CHECK-NEXT:    ld s0, 16(sp) # 8-byte Folded Reload
+; CHECK-NEXT:    ld s1, 8(sp) # 8-byte Folded Reload
 ; CHECK-NEXT:    .cfi_restore ra
 ; CHECK-NEXT:    .cfi_restore s0
+; CHECK-NEXT:    .cfi_restore s1
 ; CHECK-NEXT:    addi sp, sp, 32
 ; CHECK-NEXT:    .cfi_def_cfa_offset 0
 ; CHECK-NEXT:    ret

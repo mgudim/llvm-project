@@ -185,20 +185,20 @@ define i64 @sexti1_i64(i64 %a) {
 ; RV32I-LABEL: sexti1_i64:
 ; RV32I:       # %bb.0:
 ; RV32I-NEXT:    slli a0, a0, 31
-; RV32I-NEXT:    srai a0, a0, 31
-; RV32I-NEXT:    mv a1, a0
+; RV32I-NEXT:    srai a1, a0, 31
+; RV32I-NEXT:    mv a0, a1
 ; RV32I-NEXT:    ret
 ;
 ; RV32XQCIBM-LABEL: sexti1_i64:
 ; RV32XQCIBM:       # %bb.0:
-; RV32XQCIBM-NEXT:    qc.ext a0, a0, 1, 0
-; RV32XQCIBM-NEXT:    mv a1, a0
+; RV32XQCIBM-NEXT:    qc.ext a1, a0, 1, 0
+; RV32XQCIBM-NEXT:    mv a0, a1
 ; RV32XQCIBM-NEXT:    ret
 ;
 ; RV32XQCIBMZBB-LABEL: sexti1_i64:
 ; RV32XQCIBMZBB:       # %bb.0:
-; RV32XQCIBMZBB-NEXT:    qc.ext a0, a0, 1, 0
-; RV32XQCIBMZBB-NEXT:    mv a1, a0
+; RV32XQCIBMZBB-NEXT:    qc.ext a1, a0, 1, 0
+; RV32XQCIBMZBB-NEXT:    mv a0, a1
 ; RV32XQCIBMZBB-NEXT:    ret
   %shl = shl i64 %a, 63
   %shr = ashr exact i64 %shl, 63
@@ -209,20 +209,20 @@ define i64 @sexti1_i64_2(i1 %a) {
 ; RV32I-LABEL: sexti1_i64_2:
 ; RV32I:       # %bb.0:
 ; RV32I-NEXT:    slli a0, a0, 31
-; RV32I-NEXT:    srai a0, a0, 31
-; RV32I-NEXT:    mv a1, a0
+; RV32I-NEXT:    srai a1, a0, 31
+; RV32I-NEXT:    mv a0, a1
 ; RV32I-NEXT:    ret
 ;
 ; RV32XQCIBM-LABEL: sexti1_i64_2:
 ; RV32XQCIBM:       # %bb.0:
-; RV32XQCIBM-NEXT:    qc.ext a0, a0, 1, 0
-; RV32XQCIBM-NEXT:    mv a1, a0
+; RV32XQCIBM-NEXT:    qc.ext a1, a0, 1, 0
+; RV32XQCIBM-NEXT:    mv a0, a1
 ; RV32XQCIBM-NEXT:    ret
 ;
 ; RV32XQCIBMZBB-LABEL: sexti1_i64_2:
 ; RV32XQCIBMZBB:       # %bb.0:
-; RV32XQCIBMZBB-NEXT:    qc.ext a0, a0, 1, 0
-; RV32XQCIBMZBB-NEXT:    mv a1, a0
+; RV32XQCIBMZBB-NEXT:    qc.ext a1, a0, 1, 0
+; RV32XQCIBMZBB-NEXT:    mv a0, a1
 ; RV32XQCIBMZBB-NEXT:    ret
   %1 = sext i1 %a to i64
   ret i64 %1

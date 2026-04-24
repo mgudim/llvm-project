@@ -9,121 +9,51 @@
 define i128 @bext_i128(i128 %a0, i128 %idx, i128 %len) nounwind {
 ; SSE-LABEL: bext_i128:
 ; SSE:       # %bb.0:
-; SSE-NEXT:    movq %r8, %rcx
-; SSE-NEXT:    movq %rdx, %r8
 ; SSE-NEXT:    movl $1, %eax
-; SSE-NEXT:    xorl %r9d, %r9d
-; SSE-NEXT:    shldq %cl, %rax, %r9
-; SSE-NEXT:    xorl %edx, %edx
-; SSE-NEXT:    shlq %cl, %rax
-; SSE-NEXT:    testb $64, %cl
-; SSE-NEXT:    cmovneq %rax, %r9
-; SSE-NEXT:    cmovneq %rdx, %rax
-; SSE-NEXT:    addq $-1, %rax
-; SSE-NEXT:    adcq $-1, %r9
+; SSE-NEXT:    xorl %r10d, %r10d
 ; SSE-NEXT:    movl %r8d, %ecx
+; SSE-NEXT:    shldq %cl, %rax, %r10
+; SSE-NEXT:    xorl %r9d, %r9d
+; SSE-NEXT:    shlq %cl, %rax
+; SSE-NEXT:    testb $64, %r8b
+; SSE-NEXT:    cmovneq %rax, %r10
+; SSE-NEXT:    cmovneq %r9, %rax
+; SSE-NEXT:    addq $-1, %rax
+; SSE-NEXT:    adcq $-1, %r10
+; SSE-NEXT:    movl %edx, %ecx
 ; SSE-NEXT:    shrdq %cl, %rsi, %rdi
 ; SSE-NEXT:    shrq %cl, %rsi
-; SSE-NEXT:    testb $64, %r8b
+; SSE-NEXT:    testb $64, %dl
 ; SSE-NEXT:    cmovneq %rsi, %rdi
-; SSE-NEXT:    cmoveq %rsi, %rdx
+; SSE-NEXT:    cmoveq %rsi, %r9
 ; SSE-NEXT:    andq %rdi, %rax
-; SSE-NEXT:    andq %r9, %rdx
+; SSE-NEXT:    andq %r10, %r9
+; SSE-NEXT:    movq %r9, %rdx
 ; SSE-NEXT:    retq
 ;
-; AVX2-LABEL: bext_i128:
-; AVX2:       # %bb.0:
-; AVX2-NEXT:    movq %r8, %rcx
-; AVX2-NEXT:    movl $1, %eax
-; AVX2-NEXT:    xorl %r8d, %r8d
-; AVX2-NEXT:    shldq %cl, %rax, %r8
-; AVX2-NEXT:    xorl %r9d, %r9d
-; AVX2-NEXT:    shlxq %rcx, %rax, %rax
-; AVX2-NEXT:    testb $64, %cl
-; AVX2-NEXT:    cmovneq %rax, %r8
-; AVX2-NEXT:    cmovneq %r9, %rax
-; AVX2-NEXT:    movq %rdx, %rcx
-; AVX2-NEXT:    addq $-1, %rax
-; AVX2-NEXT:    adcq $-1, %r8
-; AVX2-NEXT:    shrdq %cl, %rsi, %rdi
-; AVX2-NEXT:    shrxq %rdx, %rsi, %rdx
-; AVX2-NEXT:    testb $64, %cl
-; AVX2-NEXT:    cmovneq %rdx, %rdi
-; AVX2-NEXT:    cmovneq %r9, %rdx
-; AVX2-NEXT:    andq %rdi, %rax
-; AVX2-NEXT:    andq %r8, %rdx
-; AVX2-NEXT:    retq
-;
-; AVX512F-LABEL: bext_i128:
-; AVX512F:       # %bb.0:
-; AVX512F-NEXT:    movq %r8, %rcx
-; AVX512F-NEXT:    movl $1, %eax
-; AVX512F-NEXT:    xorl %r8d, %r8d
-; AVX512F-NEXT:    shldq %cl, %rax, %r8
-; AVX512F-NEXT:    xorl %r9d, %r9d
-; AVX512F-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512F-NEXT:    testb $64, %cl
-; AVX512F-NEXT:    cmovneq %rax, %r8
-; AVX512F-NEXT:    cmovneq %r9, %rax
-; AVX512F-NEXT:    movq %rdx, %rcx
-; AVX512F-NEXT:    addq $-1, %rax
-; AVX512F-NEXT:    adcq $-1, %r8
-; AVX512F-NEXT:    shrdq %cl, %rsi, %rdi
-; AVX512F-NEXT:    shrxq %rdx, %rsi, %rdx
-; AVX512F-NEXT:    testb $64, %cl
-; AVX512F-NEXT:    cmovneq %rdx, %rdi
-; AVX512F-NEXT:    cmovneq %r9, %rdx
-; AVX512F-NEXT:    andq %rdi, %rax
-; AVX512F-NEXT:    andq %r8, %rdx
-; AVX512F-NEXT:    retq
-;
-; AVX512VL-LABEL: bext_i128:
-; AVX512VL:       # %bb.0:
-; AVX512VL-NEXT:    movq %r8, %rcx
-; AVX512VL-NEXT:    movl $1, %eax
-; AVX512VL-NEXT:    xorl %r9d, %r9d
-; AVX512VL-NEXT:    shldq %cl, %rax, %r9
-; AVX512VL-NEXT:    movq %rdx, %r8
-; AVX512VL-NEXT:    xorl %r10d, %r10d
-; AVX512VL-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512VL-NEXT:    testb $64, %cl
-; AVX512VL-NEXT:    cmovneq %rax, %r9
-; AVX512VL-NEXT:    cmovneq %r10, %rax
-; AVX512VL-NEXT:    addq $-1, %rax
-; AVX512VL-NEXT:    adcq $-1, %r9
-; AVX512VL-NEXT:    movl %r8d, %ecx
-; AVX512VL-NEXT:    shrdq %cl, %rsi, %rdi
-; AVX512VL-NEXT:    shrxq %rdx, %rsi, %rdx
-; AVX512VL-NEXT:    testb $64, %r8b
-; AVX512VL-NEXT:    cmovneq %rdx, %rdi
-; AVX512VL-NEXT:    cmovneq %r10, %rdx
-; AVX512VL-NEXT:    andq %rdi, %rax
-; AVX512VL-NEXT:    andq %r9, %rdx
-; AVX512VL-NEXT:    retq
-;
-; AVX512VBMI-LABEL: bext_i128:
-; AVX512VBMI:       # %bb.0:
-; AVX512VBMI-NEXT:    movq %r8, %rcx
-; AVX512VBMI-NEXT:    movl $1, %eax
-; AVX512VBMI-NEXT:    xorl %r9d, %r9d
-; AVX512VBMI-NEXT:    shldq %cl, %rax, %r9
-; AVX512VBMI-NEXT:    movq %rdx, %r8
-; AVX512VBMI-NEXT:    xorl %r10d, %r10d
-; AVX512VBMI-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512VBMI-NEXT:    testb $64, %cl
-; AVX512VBMI-NEXT:    cmovneq %rax, %r9
-; AVX512VBMI-NEXT:    cmovneq %r10, %rax
-; AVX512VBMI-NEXT:    addq $-1, %rax
-; AVX512VBMI-NEXT:    adcq $-1, %r9
-; AVX512VBMI-NEXT:    movl %r8d, %ecx
-; AVX512VBMI-NEXT:    shrdq %cl, %rsi, %rdi
-; AVX512VBMI-NEXT:    shrxq %rdx, %rsi, %rdx
-; AVX512VBMI-NEXT:    testb $64, %r8b
-; AVX512VBMI-NEXT:    cmovneq %rdx, %rdi
-; AVX512VBMI-NEXT:    cmovneq %r10, %rdx
-; AVX512VBMI-NEXT:    andq %rdi, %rax
-; AVX512VBMI-NEXT:    andq %r9, %rdx
-; AVX512VBMI-NEXT:    retq
+; AVX-LABEL: bext_i128:
+; AVX:       # %bb.0:
+; AVX-NEXT:    movl $1, %eax
+; AVX-NEXT:    xorl %r9d, %r9d
+; AVX-NEXT:    movl %r8d, %ecx
+; AVX-NEXT:    shldq %cl, %rax, %r9
+; AVX-NEXT:    xorl %r10d, %r10d
+; AVX-NEXT:    shlxq %r8, %rax, %rax
+; AVX-NEXT:    testb $64, %r8b
+; AVX-NEXT:    cmovneq %rax, %r9
+; AVX-NEXT:    cmovneq %r10, %rax
+; AVX-NEXT:    addq $-1, %rax
+; AVX-NEXT:    adcq $-1, %r9
+; AVX-NEXT:    movl %edx, %ecx
+; AVX-NEXT:    shrdq %cl, %rsi, %rdi
+; AVX-NEXT:    shrxq %rdx, %rsi, %rcx
+; AVX-NEXT:    testb $64, %dl
+; AVX-NEXT:    cmovneq %rcx, %rdi
+; AVX-NEXT:    cmovneq %r10, %rcx
+; AVX-NEXT:    andq %rdi, %rax
+; AVX-NEXT:    andq %r9, %rcx
+; AVX-NEXT:    movq %rcx, %rdx
+; AVX-NEXT:    retq
   %bit = shl i128 1, %len
   %msk = sub i128 %bit, 1
   %shift = lshr i128 %a0, %idx
@@ -161,127 +91,127 @@ define i128 @bext_i128_vector(<2 x i64> %v0, i128 %idx, i128 %len) nounwind {
 ; SSE42-LABEL: bext_i128_vector:
 ; SSE42:       # %bb.0:
 ; SSE42-NEXT:    pextrq $1, %xmm0, %rsi
-; SSE42-NEXT:    movq %rdx, %rcx
-; SSE42-NEXT:    movl $1, %r8d
-; SSE42-NEXT:    xorl %edx, %edx
-; SSE42-NEXT:    shldq %cl, %r8, %rdx
+; SSE42-NEXT:    movl $1, %r9d
+; SSE42-NEXT:    xorl %r8d, %r8d
+; SSE42-NEXT:    movl %edx, %ecx
+; SSE42-NEXT:    shldq %cl, %r9, %r8
 ; SSE42-NEXT:    movq %xmm0, %rax
-; SSE42-NEXT:    xorl %r9d, %r9d
-; SSE42-NEXT:    shlq %cl, %r8
-; SSE42-NEXT:    testb $64, %cl
-; SSE42-NEXT:    cmovneq %r8, %rdx
+; SSE42-NEXT:    xorl %r10d, %r10d
+; SSE42-NEXT:    shlq %cl, %r9
+; SSE42-NEXT:    testb $64, %dl
 ; SSE42-NEXT:    cmovneq %r9, %r8
-; SSE42-NEXT:    addq $-1, %r8
-; SSE42-NEXT:    adcq $-1, %rdx
+; SSE42-NEXT:    cmovneq %r10, %r9
+; SSE42-NEXT:    addq $-1, %r9
+; SSE42-NEXT:    adcq $-1, %r8
 ; SSE42-NEXT:    movl %edi, %ecx
 ; SSE42-NEXT:    shrdq %cl, %rsi, %rax
 ; SSE42-NEXT:    shrq %cl, %rsi
 ; SSE42-NEXT:    testb $64, %dil
 ; SSE42-NEXT:    cmovneq %rsi, %rax
-; SSE42-NEXT:    cmovneq %r9, %rsi
-; SSE42-NEXT:    andq %r8, %rax
-; SSE42-NEXT:    andq %rdx, %rsi
+; SSE42-NEXT:    cmovneq %r10, %rsi
+; SSE42-NEXT:    andq %r9, %rax
+; SSE42-NEXT:    andq %r8, %rsi
 ; SSE42-NEXT:    movq %rsi, %rdx
 ; SSE42-NEXT:    retq
 ;
 ; AVX2-LABEL: bext_i128_vector:
 ; AVX2:       # %bb.0:
-; AVX2-NEXT:    movq %rdx, %rcx
-; AVX2-NEXT:    vpextrq $1, %xmm0, %rdx
+; AVX2-NEXT:    vpextrq $1, %xmm0, %r8
 ; AVX2-NEXT:    movl $1, %eax
 ; AVX2-NEXT:    xorl %esi, %esi
+; AVX2-NEXT:    movl %edx, %ecx
 ; AVX2-NEXT:    shldq %cl, %rax, %rsi
-; AVX2-NEXT:    xorl %r8d, %r8d
-; AVX2-NEXT:    shlxq %rcx, %rax, %r9
-; AVX2-NEXT:    testb $64, %cl
-; AVX2-NEXT:    cmovneq %r9, %rsi
-; AVX2-NEXT:    cmovneq %r8, %r9
+; AVX2-NEXT:    xorl %r9d, %r9d
+; AVX2-NEXT:    shlxq %rdx, %rax, %r10
+; AVX2-NEXT:    testb $64, %dl
+; AVX2-NEXT:    cmovneq %r10, %rsi
+; AVX2-NEXT:    cmovneq %r9, %r10
 ; AVX2-NEXT:    vmovq %xmm0, %rax
-; AVX2-NEXT:    addq $-1, %r9
+; AVX2-NEXT:    addq $-1, %r10
 ; AVX2-NEXT:    adcq $-1, %rsi
 ; AVX2-NEXT:    movl %edi, %ecx
-; AVX2-NEXT:    shrdq %cl, %rdx, %rax
-; AVX2-NEXT:    shrxq %rdi, %rdx, %rdx
+; AVX2-NEXT:    shrdq %cl, %r8, %rax
+; AVX2-NEXT:    shrxq %rdi, %r8, %rdx
 ; AVX2-NEXT:    testb $64, %dil
 ; AVX2-NEXT:    cmovneq %rdx, %rax
-; AVX2-NEXT:    cmovneq %r8, %rdx
-; AVX2-NEXT:    andq %r9, %rax
+; AVX2-NEXT:    cmovneq %r9, %rdx
+; AVX2-NEXT:    andq %r10, %rax
 ; AVX2-NEXT:    andq %rsi, %rdx
 ; AVX2-NEXT:    retq
 ;
 ; AVX512F-LABEL: bext_i128_vector:
 ; AVX512F:       # %bb.0:
-; AVX512F-NEXT:    movq %rdx, %rcx
-; AVX512F-NEXT:    vpextrq $1, %xmm0, %rdx
+; AVX512F-NEXT:    vpextrq $1, %xmm0, %r8
 ; AVX512F-NEXT:    movl $1, %eax
 ; AVX512F-NEXT:    xorl %esi, %esi
+; AVX512F-NEXT:    movl %edx, %ecx
 ; AVX512F-NEXT:    shldq %cl, %rax, %rsi
-; AVX512F-NEXT:    xorl %r8d, %r8d
-; AVX512F-NEXT:    shlxq %rcx, %rax, %r9
-; AVX512F-NEXT:    testb $64, %cl
-; AVX512F-NEXT:    cmovneq %r9, %rsi
-; AVX512F-NEXT:    cmovneq %r8, %r9
+; AVX512F-NEXT:    xorl %r9d, %r9d
+; AVX512F-NEXT:    shlxq %rdx, %rax, %r10
+; AVX512F-NEXT:    testb $64, %dl
+; AVX512F-NEXT:    cmovneq %r10, %rsi
+; AVX512F-NEXT:    cmovneq %r9, %r10
 ; AVX512F-NEXT:    vmovq %xmm0, %rax
-; AVX512F-NEXT:    addq $-1, %r9
+; AVX512F-NEXT:    addq $-1, %r10
 ; AVX512F-NEXT:    adcq $-1, %rsi
 ; AVX512F-NEXT:    movl %edi, %ecx
-; AVX512F-NEXT:    shrdq %cl, %rdx, %rax
-; AVX512F-NEXT:    shrxq %rdi, %rdx, %rdx
+; AVX512F-NEXT:    shrdq %cl, %r8, %rax
+; AVX512F-NEXT:    shrxq %rdi, %r8, %rdx
 ; AVX512F-NEXT:    testb $64, %dil
 ; AVX512F-NEXT:    cmovneq %rdx, %rax
-; AVX512F-NEXT:    cmovneq %r8, %rdx
-; AVX512F-NEXT:    andq %r9, %rax
+; AVX512F-NEXT:    cmovneq %r9, %rdx
+; AVX512F-NEXT:    andq %r10, %rax
 ; AVX512F-NEXT:    andq %rsi, %rdx
 ; AVX512F-NEXT:    retq
 ;
 ; AVX512VL-LABEL: bext_i128_vector:
 ; AVX512VL:       # %bb.0:
-; AVX512VL-NEXT:    movq %rdx, %rcx
-; AVX512VL-NEXT:    vpextrq $1, %xmm0, %rdx
-; AVX512VL-NEXT:    movl $1, %esi
-; AVX512VL-NEXT:    xorl %r8d, %r8d
-; AVX512VL-NEXT:    shldq %cl, %rsi, %r8
-; AVX512VL-NEXT:    vmovq %xmm0, %rax
+; AVX512VL-NEXT:    vpextrq $1, %xmm0, %rsi
+; AVX512VL-NEXT:    movl $1, %r8d
 ; AVX512VL-NEXT:    xorl %r9d, %r9d
-; AVX512VL-NEXT:    shlxq %rcx, %rsi, %rsi
-; AVX512VL-NEXT:    testb $64, %cl
-; AVX512VL-NEXT:    cmovneq %rsi, %r8
-; AVX512VL-NEXT:    cmovneq %r9, %rsi
-; AVX512VL-NEXT:    addq $-1, %rsi
-; AVX512VL-NEXT:    adcq $-1, %r8
+; AVX512VL-NEXT:    movl %edx, %ecx
+; AVX512VL-NEXT:    shldq %cl, %r8, %r9
+; AVX512VL-NEXT:    vmovq %xmm0, %rax
+; AVX512VL-NEXT:    xorl %r10d, %r10d
+; AVX512VL-NEXT:    shlxq %rdx, %r8, %r8
+; AVX512VL-NEXT:    testb $64, %dl
+; AVX512VL-NEXT:    cmovneq %r8, %r9
+; AVX512VL-NEXT:    cmovneq %r10, %r8
+; AVX512VL-NEXT:    addq $-1, %r8
+; AVX512VL-NEXT:    adcq $-1, %r9
 ; AVX512VL-NEXT:    movl %edi, %ecx
-; AVX512VL-NEXT:    shrdq %cl, %rdx, %rax
-; AVX512VL-NEXT:    shrxq %rdi, %rdx, %rdx
+; AVX512VL-NEXT:    shrdq %cl, %rsi, %rax
+; AVX512VL-NEXT:    shrxq %rdi, %rsi, %rdx
 ; AVX512VL-NEXT:    testb $64, %dil
 ; AVX512VL-NEXT:    cmovneq %rdx, %rax
-; AVX512VL-NEXT:    cmovneq %r9, %rdx
-; AVX512VL-NEXT:    andq %rsi, %rax
-; AVX512VL-NEXT:    andq %r8, %rdx
+; AVX512VL-NEXT:    cmovneq %r10, %rdx
+; AVX512VL-NEXT:    andq %r8, %rax
+; AVX512VL-NEXT:    andq %r9, %rdx
 ; AVX512VL-NEXT:    retq
 ;
 ; AVX512VBMI-LABEL: bext_i128_vector:
 ; AVX512VBMI:       # %bb.0:
-; AVX512VBMI-NEXT:    movq %rdx, %rcx
-; AVX512VBMI-NEXT:    vpextrq $1, %xmm0, %rdx
-; AVX512VBMI-NEXT:    movl $1, %esi
-; AVX512VBMI-NEXT:    xorl %r8d, %r8d
-; AVX512VBMI-NEXT:    shldq %cl, %rsi, %r8
-; AVX512VBMI-NEXT:    vmovq %xmm0, %rax
+; AVX512VBMI-NEXT:    vpextrq $1, %xmm0, %rsi
+; AVX512VBMI-NEXT:    movl $1, %r8d
 ; AVX512VBMI-NEXT:    xorl %r9d, %r9d
-; AVX512VBMI-NEXT:    shlxq %rcx, %rsi, %rsi
-; AVX512VBMI-NEXT:    testb $64, %cl
-; AVX512VBMI-NEXT:    cmovneq %rsi, %r8
-; AVX512VBMI-NEXT:    cmovneq %r9, %rsi
-; AVX512VBMI-NEXT:    addq $-1, %rsi
-; AVX512VBMI-NEXT:    adcq $-1, %r8
+; AVX512VBMI-NEXT:    movl %edx, %ecx
+; AVX512VBMI-NEXT:    shldq %cl, %r8, %r9
+; AVX512VBMI-NEXT:    vmovq %xmm0, %rax
+; AVX512VBMI-NEXT:    xorl %r10d, %r10d
+; AVX512VBMI-NEXT:    shlxq %rdx, %r8, %r8
+; AVX512VBMI-NEXT:    testb $64, %dl
+; AVX512VBMI-NEXT:    cmovneq %r8, %r9
+; AVX512VBMI-NEXT:    cmovneq %r10, %r8
+; AVX512VBMI-NEXT:    addq $-1, %r8
+; AVX512VBMI-NEXT:    adcq $-1, %r9
 ; AVX512VBMI-NEXT:    movl %edi, %ecx
-; AVX512VBMI-NEXT:    shrdq %cl, %rdx, %rax
-; AVX512VBMI-NEXT:    shrxq %rdi, %rdx, %rdx
+; AVX512VBMI-NEXT:    shrdq %cl, %rsi, %rax
+; AVX512VBMI-NEXT:    shrxq %rdi, %rsi, %rdx
 ; AVX512VBMI-NEXT:    testb $64, %dil
 ; AVX512VBMI-NEXT:    cmovneq %rdx, %rax
-; AVX512VBMI-NEXT:    cmovneq %r9, %rdx
-; AVX512VBMI-NEXT:    andq %rsi, %rax
-; AVX512VBMI-NEXT:    andq %r8, %rdx
+; AVX512VBMI-NEXT:    cmovneq %r10, %rdx
+; AVX512VBMI-NEXT:    andq %r8, %rax
+; AVX512VBMI-NEXT:    andq %r9, %rdx
 ; AVX512VBMI-NEXT:    retq
   %a0 = bitcast <2 x i64> %v0 to i128
   %bit = shl i128 1, %len
@@ -294,121 +224,51 @@ define i128 @bext_i128_vector(<2 x i64> %v0, i128 %idx, i128 %len) nounwind {
 define i128 @bext_i128_load(i128 %a0, i128 %idx, i128 %len) nounwind {
 ; SSE-LABEL: bext_i128_load:
 ; SSE:       # %bb.0:
-; SSE-NEXT:    movq %r8, %rcx
-; SSE-NEXT:    movq %rdx, %r8
 ; SSE-NEXT:    movl $1, %eax
-; SSE-NEXT:    xorl %r9d, %r9d
-; SSE-NEXT:    shldq %cl, %rax, %r9
-; SSE-NEXT:    xorl %edx, %edx
-; SSE-NEXT:    shlq %cl, %rax
-; SSE-NEXT:    testb $64, %cl
-; SSE-NEXT:    cmovneq %rax, %r9
-; SSE-NEXT:    cmovneq %rdx, %rax
-; SSE-NEXT:    addq $-1, %rax
-; SSE-NEXT:    adcq $-1, %r9
+; SSE-NEXT:    xorl %r10d, %r10d
 ; SSE-NEXT:    movl %r8d, %ecx
+; SSE-NEXT:    shldq %cl, %rax, %r10
+; SSE-NEXT:    xorl %r9d, %r9d
+; SSE-NEXT:    shlq %cl, %rax
+; SSE-NEXT:    testb $64, %r8b
+; SSE-NEXT:    cmovneq %rax, %r10
+; SSE-NEXT:    cmovneq %r9, %rax
+; SSE-NEXT:    addq $-1, %rax
+; SSE-NEXT:    adcq $-1, %r10
+; SSE-NEXT:    movl %edx, %ecx
 ; SSE-NEXT:    shrdq %cl, %rsi, %rdi
 ; SSE-NEXT:    shrq %cl, %rsi
-; SSE-NEXT:    testb $64, %r8b
+; SSE-NEXT:    testb $64, %dl
 ; SSE-NEXT:    cmovneq %rsi, %rdi
-; SSE-NEXT:    cmoveq %rsi, %rdx
+; SSE-NEXT:    cmoveq %rsi, %r9
 ; SSE-NEXT:    andq %rdi, %rax
-; SSE-NEXT:    andq %r9, %rdx
+; SSE-NEXT:    andq %r10, %r9
+; SSE-NEXT:    movq %r9, %rdx
 ; SSE-NEXT:    retq
 ;
-; AVX2-LABEL: bext_i128_load:
-; AVX2:       # %bb.0:
-; AVX2-NEXT:    movq %r8, %rcx
-; AVX2-NEXT:    movl $1, %eax
-; AVX2-NEXT:    xorl %r8d, %r8d
-; AVX2-NEXT:    shldq %cl, %rax, %r8
-; AVX2-NEXT:    xorl %r9d, %r9d
-; AVX2-NEXT:    shlxq %rcx, %rax, %rax
-; AVX2-NEXT:    testb $64, %cl
-; AVX2-NEXT:    cmovneq %rax, %r8
-; AVX2-NEXT:    cmovneq %r9, %rax
-; AVX2-NEXT:    movq %rdx, %rcx
-; AVX2-NEXT:    addq $-1, %rax
-; AVX2-NEXT:    adcq $-1, %r8
-; AVX2-NEXT:    shrdq %cl, %rsi, %rdi
-; AVX2-NEXT:    shrxq %rdx, %rsi, %rdx
-; AVX2-NEXT:    testb $64, %cl
-; AVX2-NEXT:    cmovneq %rdx, %rdi
-; AVX2-NEXT:    cmovneq %r9, %rdx
-; AVX2-NEXT:    andq %rdi, %rax
-; AVX2-NEXT:    andq %r8, %rdx
-; AVX2-NEXT:    retq
-;
-; AVX512F-LABEL: bext_i128_load:
-; AVX512F:       # %bb.0:
-; AVX512F-NEXT:    movq %r8, %rcx
-; AVX512F-NEXT:    movl $1, %eax
-; AVX512F-NEXT:    xorl %r8d, %r8d
-; AVX512F-NEXT:    shldq %cl, %rax, %r8
-; AVX512F-NEXT:    xorl %r9d, %r9d
-; AVX512F-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512F-NEXT:    testb $64, %cl
-; AVX512F-NEXT:    cmovneq %rax, %r8
-; AVX512F-NEXT:    cmovneq %r9, %rax
-; AVX512F-NEXT:    movq %rdx, %rcx
-; AVX512F-NEXT:    addq $-1, %rax
-; AVX512F-NEXT:    adcq $-1, %r8
-; AVX512F-NEXT:    shrdq %cl, %rsi, %rdi
-; AVX512F-NEXT:    shrxq %rdx, %rsi, %rdx
-; AVX512F-NEXT:    testb $64, %cl
-; AVX512F-NEXT:    cmovneq %rdx, %rdi
-; AVX512F-NEXT:    cmovneq %r9, %rdx
-; AVX512F-NEXT:    andq %rdi, %rax
-; AVX512F-NEXT:    andq %r8, %rdx
-; AVX512F-NEXT:    retq
-;
-; AVX512VL-LABEL: bext_i128_load:
-; AVX512VL:       # %bb.0:
-; AVX512VL-NEXT:    movq %r8, %rcx
-; AVX512VL-NEXT:    movl $1, %eax
-; AVX512VL-NEXT:    xorl %r9d, %r9d
-; AVX512VL-NEXT:    shldq %cl, %rax, %r9
-; AVX512VL-NEXT:    movq %rdx, %r8
-; AVX512VL-NEXT:    xorl %r10d, %r10d
-; AVX512VL-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512VL-NEXT:    testb $64, %cl
-; AVX512VL-NEXT:    cmovneq %rax, %r9
-; AVX512VL-NEXT:    cmovneq %r10, %rax
-; AVX512VL-NEXT:    addq $-1, %rax
-; AVX512VL-NEXT:    adcq $-1, %r9
-; AVX512VL-NEXT:    movl %r8d, %ecx
-; AVX512VL-NEXT:    shrdq %cl, %rsi, %rdi
-; AVX512VL-NEXT:    shrxq %rdx, %rsi, %rdx
-; AVX512VL-NEXT:    testb $64, %r8b
-; AVX512VL-NEXT:    cmovneq %rdx, %rdi
-; AVX512VL-NEXT:    cmovneq %r10, %rdx
-; AVX512VL-NEXT:    andq %rdi, %rax
-; AVX512VL-NEXT:    andq %r9, %rdx
-; AVX512VL-NEXT:    retq
-;
-; AVX512VBMI-LABEL: bext_i128_load:
-; AVX512VBMI:       # %bb.0:
-; AVX512VBMI-NEXT:    movq %r8, %rcx
-; AVX512VBMI-NEXT:    movl $1, %eax
-; AVX512VBMI-NEXT:    xorl %r9d, %r9d
-; AVX512VBMI-NEXT:    shldq %cl, %rax, %r9
-; AVX512VBMI-NEXT:    movq %rdx, %r8
-; AVX512VBMI-NEXT:    xorl %r10d, %r10d
-; AVX512VBMI-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512VBMI-NEXT:    testb $64, %cl
-; AVX512VBMI-NEXT:    cmovneq %rax, %r9
-; AVX512VBMI-NEXT:    cmovneq %r10, %rax
-; AVX512VBMI-NEXT:    addq $-1, %rax
-; AVX512VBMI-NEXT:    adcq $-1, %r9
-; AVX512VBMI-NEXT:    movl %r8d, %ecx
-; AVX512VBMI-NEXT:    shrdq %cl, %rsi, %rdi
-; AVX512VBMI-NEXT:    shrxq %rdx, %rsi, %rdx
-; AVX512VBMI-NEXT:    testb $64, %r8b
-; AVX512VBMI-NEXT:    cmovneq %rdx, %rdi
-; AVX512VBMI-NEXT:    cmovneq %r10, %rdx
-; AVX512VBMI-NEXT:    andq %rdi, %rax
-; AVX512VBMI-NEXT:    andq %r9, %rdx
-; AVX512VBMI-NEXT:    retq
+; AVX-LABEL: bext_i128_load:
+; AVX:       # %bb.0:
+; AVX-NEXT:    movl $1, %eax
+; AVX-NEXT:    xorl %r9d, %r9d
+; AVX-NEXT:    movl %r8d, %ecx
+; AVX-NEXT:    shldq %cl, %rax, %r9
+; AVX-NEXT:    xorl %r10d, %r10d
+; AVX-NEXT:    shlxq %r8, %rax, %rax
+; AVX-NEXT:    testb $64, %r8b
+; AVX-NEXT:    cmovneq %rax, %r9
+; AVX-NEXT:    cmovneq %r10, %rax
+; AVX-NEXT:    addq $-1, %rax
+; AVX-NEXT:    adcq $-1, %r9
+; AVX-NEXT:    movl %edx, %ecx
+; AVX-NEXT:    shrdq %cl, %rsi, %rdi
+; AVX-NEXT:    shrxq %rdx, %rsi, %rcx
+; AVX-NEXT:    testb $64, %dl
+; AVX-NEXT:    cmovneq %rcx, %rdi
+; AVX-NEXT:    cmovneq %r10, %rcx
+; AVX-NEXT:    andq %rdi, %rax
+; AVX-NEXT:    andq %r9, %rcx
+; AVX-NEXT:    movq %rcx, %rdx
+; AVX-NEXT:    retq
   %bit = shl i128 1, %len
   %msk = sub i128 %bit, 1
   %shift = lshr i128 %a0, %idx
@@ -647,87 +507,92 @@ define i128 @blsr_i128_load(ptr %p0) nounwind {
 define i128 @bzhi_i128(i128 %a0, i128 %idx) nounwind {
 ; SSE-LABEL: bzhi_i128:
 ; SSE:       # %bb.0:
-; SSE-NEXT:    movq %rdx, %rcx
 ; SSE-NEXT:    movl $1, %eax
-; SSE-NEXT:    xorl %edx, %edx
-; SSE-NEXT:    shldq %cl, %rax, %rdx
 ; SSE-NEXT:    xorl %r8d, %r8d
+; SSE-NEXT:    movl %edx, %ecx
+; SSE-NEXT:    shldq %cl, %rax, %r8
+; SSE-NEXT:    xorl %r9d, %r9d
 ; SSE-NEXT:    shlq %cl, %rax
-; SSE-NEXT:    testb $64, %cl
-; SSE-NEXT:    cmovneq %rax, %rdx
-; SSE-NEXT:    cmovneq %r8, %rax
+; SSE-NEXT:    testb $64, %dl
+; SSE-NEXT:    cmovneq %rax, %r8
+; SSE-NEXT:    cmovneq %r9, %rax
 ; SSE-NEXT:    addq $-1, %rax
-; SSE-NEXT:    adcq $-1, %rdx
-; SSE-NEXT:    andq %rsi, %rdx
+; SSE-NEXT:    adcq $-1, %r8
+; SSE-NEXT:    andq %rsi, %r8
 ; SSE-NEXT:    andq %rdi, %rax
+; SSE-NEXT:    movq %r8, %rdx
 ; SSE-NEXT:    retq
 ;
 ; AVX2-LABEL: bzhi_i128:
 ; AVX2:       # %bb.0:
-; AVX2-NEXT:    movq %rdx, %rcx
 ; AVX2-NEXT:    movl $1, %eax
-; AVX2-NEXT:    xorl %edx, %edx
-; AVX2-NEXT:    shldq %cl, %rax, %rdx
 ; AVX2-NEXT:    xorl %r8d, %r8d
-; AVX2-NEXT:    shlxq %rcx, %rax, %rax
-; AVX2-NEXT:    testb $64, %cl
-; AVX2-NEXT:    cmovneq %rax, %rdx
-; AVX2-NEXT:    cmovneq %r8, %rax
+; AVX2-NEXT:    movl %edx, %ecx
+; AVX2-NEXT:    shldq %cl, %rax, %r8
+; AVX2-NEXT:    xorl %ecx, %ecx
+; AVX2-NEXT:    shlxq %rdx, %rax, %rax
+; AVX2-NEXT:    testb $64, %dl
+; AVX2-NEXT:    cmovneq %rax, %r8
+; AVX2-NEXT:    cmovneq %rcx, %rax
 ; AVX2-NEXT:    addq $-1, %rax
-; AVX2-NEXT:    adcq $-1, %rdx
-; AVX2-NEXT:    andq %rsi, %rdx
+; AVX2-NEXT:    adcq $-1, %r8
+; AVX2-NEXT:    andq %rsi, %r8
 ; AVX2-NEXT:    andq %rdi, %rax
+; AVX2-NEXT:    movq %r8, %rdx
 ; AVX2-NEXT:    retq
 ;
 ; AVX512F-LABEL: bzhi_i128:
 ; AVX512F:       # %bb.0:
-; AVX512F-NEXT:    movq %rdx, %rcx
 ; AVX512F-NEXT:    movl $1, %eax
-; AVX512F-NEXT:    xorl %edx, %edx
-; AVX512F-NEXT:    shldq %cl, %rax, %rdx
 ; AVX512F-NEXT:    xorl %r8d, %r8d
-; AVX512F-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512F-NEXT:    testb $64, %cl
-; AVX512F-NEXT:    cmovneq %rax, %rdx
-; AVX512F-NEXT:    cmovneq %r8, %rax
+; AVX512F-NEXT:    movl %edx, %ecx
+; AVX512F-NEXT:    shldq %cl, %rax, %r8
+; AVX512F-NEXT:    xorl %ecx, %ecx
+; AVX512F-NEXT:    shlxq %rdx, %rax, %rax
+; AVX512F-NEXT:    testb $64, %dl
+; AVX512F-NEXT:    cmovneq %rax, %r8
+; AVX512F-NEXT:    cmovneq %rcx, %rax
 ; AVX512F-NEXT:    addq $-1, %rax
-; AVX512F-NEXT:    adcq $-1, %rdx
-; AVX512F-NEXT:    andq %rsi, %rdx
+; AVX512F-NEXT:    adcq $-1, %r8
+; AVX512F-NEXT:    andq %rsi, %r8
 ; AVX512F-NEXT:    andq %rdi, %rax
+; AVX512F-NEXT:    movq %r8, %rdx
 ; AVX512F-NEXT:    retq
 ;
 ; AVX512VL-LABEL: bzhi_i128:
 ; AVX512VL:       # %bb.0:
-; AVX512VL-NEXT:    movq %rdx, %rcx
-; AVX512VL-NEXT:    xorl %r8d, %r8d
+; AVX512VL-NEXT:    xorl %r9d, %r9d
 ; AVX512VL-NEXT:    movl $1, %eax
-; AVX512VL-NEXT:    xorl %edx, %edx
-; AVX512VL-NEXT:    shldq %cl, %rax, %rdx
-; AVX512VL-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512VL-NEXT:    testb $64, %cl
-; AVX512VL-NEXT:    cmovneq %rax, %rdx
-; AVX512VL-NEXT:    cmovneq %r8, %rax
+; AVX512VL-NEXT:    xorl %r8d, %r8d
+; AVX512VL-NEXT:    movl %edx, %ecx
+; AVX512VL-NEXT:    shldq %cl, %rax, %r8
+; AVX512VL-NEXT:    shlxq %rdx, %rax, %rax
+; AVX512VL-NEXT:    testb $64, %dl
+; AVX512VL-NEXT:    cmovneq %rax, %r8
+; AVX512VL-NEXT:    cmovneq %r9, %rax
 ; AVX512VL-NEXT:    addq $-1, %rax
-; AVX512VL-NEXT:    adcq $-1, %rdx
-; AVX512VL-NEXT:    andq %rsi, %rdx
+; AVX512VL-NEXT:    adcq $-1, %r8
+; AVX512VL-NEXT:    andq %rsi, %r8
 ; AVX512VL-NEXT:    andq %rdi, %rax
+; AVX512VL-NEXT:    movq %r8, %rdx
 ; AVX512VL-NEXT:    retq
 ;
 ; AVX512VBMI-LABEL: bzhi_i128:
 ; AVX512VBMI:       # %bb.0:
-; AVX512VBMI-NEXT:    movq %rdx, %rcx
-; AVX512VBMI-NEXT:    xorl %r8d, %r8d
+; AVX512VBMI-NEXT:    xorl %r9d, %r9d
 ; AVX512VBMI-NEXT:    movl $1, %eax
-; AVX512VBMI-NEXT:    xorl %edx, %edx
-; AVX512VBMI-NEXT:    shldq %cl, %rax, %rdx
-; AVX512VBMI-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512VBMI-NEXT:    testb $64, %cl
-; AVX512VBMI-NEXT:    cmovneq %rax, %rdx
-; AVX512VBMI-NEXT:    cmovneq %r8, %rax
+; AVX512VBMI-NEXT:    xorl %r8d, %r8d
+; AVX512VBMI-NEXT:    movl %edx, %ecx
+; AVX512VBMI-NEXT:    shldq %cl, %rax, %r8
+; AVX512VBMI-NEXT:    shlxq %rdx, %rax, %rax
+; AVX512VBMI-NEXT:    testb $64, %dl
+; AVX512VBMI-NEXT:    cmovneq %rax, %r8
+; AVX512VBMI-NEXT:    cmovneq %r9, %rax
 ; AVX512VBMI-NEXT:    addq $-1, %rax
-; AVX512VBMI-NEXT:    adcq $-1, %rdx
-; AVX512VBMI-NEXT:    andq %rsi, %rdx
+; AVX512VBMI-NEXT:    adcq $-1, %r8
+; AVX512VBMI-NEXT:    andq %rsi, %r8
 ; AVX512VBMI-NEXT:    andq %rdi, %rax
+; AVX512VBMI-NEXT:    movq %r8, %rdx
 ; AVX512VBMI-NEXT:    retq
   %bit = shl i128 1, %idx
   %msk = sub i128 %bit, 1
@@ -738,17 +603,17 @@ define i128 @bzhi_i128(i128 %a0, i128 %idx) nounwind {
 define i128 @bzhi_i128_vector(<2 x i64> %v0, i128 %idx) nounwind {
 ; SSE2-LABEL: bzhi_i128_vector:
 ; SSE2:       # %bb.0:
-; SSE2-NEXT:    movq %rdi, %rcx
 ; SSE2-NEXT:    movl $1, %eax
 ; SSE2-NEXT:    xorl %edx, %edx
+; SSE2-NEXT:    movl %edi, %ecx
 ; SSE2-NEXT:    shldq %cl, %rax, %rdx
 ; SSE2-NEXT:    movq %xmm0, %rsi
 ; SSE2-NEXT:    pshufd {{.*#+}} xmm0 = xmm0[2,3,2,3]
-; SSE2-NEXT:    xorl %edi, %edi
+; SSE2-NEXT:    xorl %r8d, %r8d
 ; SSE2-NEXT:    shlq %cl, %rax
-; SSE2-NEXT:    testb $64, %cl
+; SSE2-NEXT:    testb $64, %dil
 ; SSE2-NEXT:    cmovneq %rax, %rdx
-; SSE2-NEXT:    cmovneq %rdi, %rax
+; SSE2-NEXT:    cmovneq %r8, %rax
 ; SSE2-NEXT:    movq %xmm0, %rcx
 ; SSE2-NEXT:    addq $-1, %rax
 ; SSE2-NEXT:    adcq $-1, %rdx
@@ -758,16 +623,16 @@ define i128 @bzhi_i128_vector(<2 x i64> %v0, i128 %idx) nounwind {
 ;
 ; SSE42-LABEL: bzhi_i128_vector:
 ; SSE42:       # %bb.0:
-; SSE42-NEXT:    movq %rdi, %rcx
 ; SSE42-NEXT:    movl $1, %eax
 ; SSE42-NEXT:    xorl %edx, %edx
+; SSE42-NEXT:    movl %edi, %ecx
 ; SSE42-NEXT:    shldq %cl, %rax, %rdx
 ; SSE42-NEXT:    pextrq $1, %xmm0, %rsi
-; SSE42-NEXT:    xorl %edi, %edi
+; SSE42-NEXT:    xorl %r8d, %r8d
 ; SSE42-NEXT:    shlq %cl, %rax
-; SSE42-NEXT:    testb $64, %cl
+; SSE42-NEXT:    testb $64, %dil
 ; SSE42-NEXT:    cmovneq %rax, %rdx
-; SSE42-NEXT:    cmovneq %rdi, %rax
+; SSE42-NEXT:    cmovneq %r8, %rax
 ; SSE42-NEXT:    movq %xmm0, %rcx
 ; SSE42-NEXT:    addq $-1, %rax
 ; SSE42-NEXT:    adcq $-1, %rdx
@@ -778,16 +643,16 @@ define i128 @bzhi_i128_vector(<2 x i64> %v0, i128 %idx) nounwind {
 ; AVX2-LABEL: bzhi_i128_vector:
 ; AVX2:       # %bb.0:
 ; AVX2-NEXT:    vpextrq $1, %xmm0, %rsi
-; AVX2-NEXT:    movq %rdi, %rcx
-; AVX2-NEXT:    xorl %edi, %edi
+; AVX2-NEXT:    xorl %r8d, %r8d
 ; AVX2-NEXT:    movl $1, %eax
 ; AVX2-NEXT:    xorl %edx, %edx
+; AVX2-NEXT:    movl %edi, %ecx
 ; AVX2-NEXT:    shldq %cl, %rax, %rdx
-; AVX2-NEXT:    shlxq %rcx, %rax, %rax
-; AVX2-NEXT:    testb $64, %cl
+; AVX2-NEXT:    shlxq %rdi, %rax, %rax
+; AVX2-NEXT:    testb $64, %dil
 ; AVX2-NEXT:    cmovneq %rax, %rdx
 ; AVX2-NEXT:    vmovq %xmm0, %rcx
-; AVX2-NEXT:    cmovneq %rdi, %rax
+; AVX2-NEXT:    cmovneq %r8, %rax
 ; AVX2-NEXT:    addq $-1, %rax
 ; AVX2-NEXT:    adcq $-1, %rdx
 ; AVX2-NEXT:    andq %rsi, %rdx
@@ -797,16 +662,16 @@ define i128 @bzhi_i128_vector(<2 x i64> %v0, i128 %idx) nounwind {
 ; AVX512F-LABEL: bzhi_i128_vector:
 ; AVX512F:       # %bb.0:
 ; AVX512F-NEXT:    vpextrq $1, %xmm0, %rsi
-; AVX512F-NEXT:    movq %rdi, %rcx
-; AVX512F-NEXT:    xorl %edi, %edi
+; AVX512F-NEXT:    xorl %r8d, %r8d
 ; AVX512F-NEXT:    movl $1, %eax
 ; AVX512F-NEXT:    xorl %edx, %edx
+; AVX512F-NEXT:    movl %edi, %ecx
 ; AVX512F-NEXT:    shldq %cl, %rax, %rdx
-; AVX512F-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512F-NEXT:    testb $64, %cl
+; AVX512F-NEXT:    shlxq %rdi, %rax, %rax
+; AVX512F-NEXT:    testb $64, %dil
 ; AVX512F-NEXT:    cmovneq %rax, %rdx
 ; AVX512F-NEXT:    vmovq %xmm0, %rcx
-; AVX512F-NEXT:    cmovneq %rdi, %rax
+; AVX512F-NEXT:    cmovneq %r8, %rax
 ; AVX512F-NEXT:    addq $-1, %rax
 ; AVX512F-NEXT:    adcq $-1, %rdx
 ; AVX512F-NEXT:    andq %rsi, %rdx
@@ -815,39 +680,39 @@ define i128 @bzhi_i128_vector(<2 x i64> %v0, i128 %idx) nounwind {
 ;
 ; AVX512VL-LABEL: bzhi_i128_vector:
 ; AVX512VL:       # %bb.0:
-; AVX512VL-NEXT:    movq %rdi, %rcx
 ; AVX512VL-NEXT:    vmovq %xmm0, %rsi
-; AVX512VL-NEXT:    vpextrq $1, %xmm0, %rdi
-; AVX512VL-NEXT:    xorl %r8d, %r8d
+; AVX512VL-NEXT:    vpextrq $1, %xmm0, %r8
+; AVX512VL-NEXT:    xorl %r9d, %r9d
 ; AVX512VL-NEXT:    movl $1, %eax
 ; AVX512VL-NEXT:    xorl %edx, %edx
+; AVX512VL-NEXT:    movl %edi, %ecx
 ; AVX512VL-NEXT:    shldq %cl, %rax, %rdx
-; AVX512VL-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512VL-NEXT:    testb $64, %cl
+; AVX512VL-NEXT:    shlxq %rdi, %rax, %rax
+; AVX512VL-NEXT:    testb $64, %dil
 ; AVX512VL-NEXT:    cmovneq %rax, %rdx
-; AVX512VL-NEXT:    cmovneq %r8, %rax
+; AVX512VL-NEXT:    cmovneq %r9, %rax
 ; AVX512VL-NEXT:    addq $-1, %rax
 ; AVX512VL-NEXT:    adcq $-1, %rdx
-; AVX512VL-NEXT:    andq %rdi, %rdx
+; AVX512VL-NEXT:    andq %r8, %rdx
 ; AVX512VL-NEXT:    andq %rsi, %rax
 ; AVX512VL-NEXT:    retq
 ;
 ; AVX512VBMI-LABEL: bzhi_i128_vector:
 ; AVX512VBMI:       # %bb.0:
-; AVX512VBMI-NEXT:    movq %rdi, %rcx
 ; AVX512VBMI-NEXT:    vmovq %xmm0, %rsi
-; AVX512VBMI-NEXT:    vpextrq $1, %xmm0, %rdi
-; AVX512VBMI-NEXT:    xorl %r8d, %r8d
+; AVX512VBMI-NEXT:    vpextrq $1, %xmm0, %r8
+; AVX512VBMI-NEXT:    xorl %r9d, %r9d
 ; AVX512VBMI-NEXT:    movl $1, %eax
 ; AVX512VBMI-NEXT:    xorl %edx, %edx
+; AVX512VBMI-NEXT:    movl %edi, %ecx
 ; AVX512VBMI-NEXT:    shldq %cl, %rax, %rdx
-; AVX512VBMI-NEXT:    shlxq %rcx, %rax, %rax
-; AVX512VBMI-NEXT:    testb $64, %cl
+; AVX512VBMI-NEXT:    shlxq %rdi, %rax, %rax
+; AVX512VBMI-NEXT:    testb $64, %dil
 ; AVX512VBMI-NEXT:    cmovneq %rax, %rdx
-; AVX512VBMI-NEXT:    cmovneq %r8, %rax
+; AVX512VBMI-NEXT:    cmovneq %r9, %rax
 ; AVX512VBMI-NEXT:    addq $-1, %rax
 ; AVX512VBMI-NEXT:    adcq $-1, %rdx
-; AVX512VBMI-NEXT:    andq %rdi, %rdx
+; AVX512VBMI-NEXT:    andq %r8, %rdx
 ; AVX512VBMI-NEXT:    andq %rsi, %rax
 ; AVX512VBMI-NEXT:    retq
   %a0 = bitcast <2 x i64> %v0 to i128
@@ -860,15 +725,15 @@ define i128 @bzhi_i128_vector(<2 x i64> %v0, i128 %idx) nounwind {
 define i128 @bzhi_i128_load(ptr %p0, i128 %idx) nounwind {
 ; SSE-LABEL: bzhi_i128_load:
 ; SSE:       # %bb.0:
-; SSE-NEXT:    movq %rsi, %rcx
 ; SSE-NEXT:    movl $1, %eax
 ; SSE-NEXT:    xorl %edx, %edx
+; SSE-NEXT:    movl %esi, %ecx
 ; SSE-NEXT:    shldq %cl, %rax, %rdx
 ; SSE-NEXT:    shlq %cl, %rax
-; SSE-NEXT:    xorl %esi, %esi
-; SSE-NEXT:    testb $64, %cl
+; SSE-NEXT:    xorl %ecx, %ecx
+; SSE-NEXT:    testb $64, %sil
 ; SSE-NEXT:    cmovneq %rax, %rdx
-; SSE-NEXT:    cmovneq %rsi, %rax
+; SSE-NEXT:    cmovneq %rcx, %rax
 ; SSE-NEXT:    addq $-1, %rax
 ; SSE-NEXT:    adcq $-1, %rdx
 ; SSE-NEXT:    andq 8(%rdi), %rdx
@@ -877,15 +742,15 @@ define i128 @bzhi_i128_load(ptr %p0, i128 %idx) nounwind {
 ;
 ; AVX-LABEL: bzhi_i128_load:
 ; AVX:       # %bb.0:
-; AVX-NEXT:    movq %rsi, %rcx
 ; AVX-NEXT:    movl $1, %eax
 ; AVX-NEXT:    xorl %edx, %edx
+; AVX-NEXT:    movl %esi, %ecx
 ; AVX-NEXT:    shldq %cl, %rax, %rdx
-; AVX-NEXT:    xorl %esi, %esi
-; AVX-NEXT:    shlxq %rcx, %rax, %rax
-; AVX-NEXT:    testb $64, %cl
+; AVX-NEXT:    xorl %ecx, %ecx
+; AVX-NEXT:    shlxq %rsi, %rax, %rax
+; AVX-NEXT:    testb $64, %sil
 ; AVX-NEXT:    cmovneq %rax, %rdx
-; AVX-NEXT:    cmovneq %rsi, %rax
+; AVX-NEXT:    cmovneq %rcx, %rax
 ; AVX-NEXT:    addq $-1, %rax
 ; AVX-NEXT:    adcq $-1, %rdx
 ; AVX-NEXT:    andq 8(%rdi), %rdx
@@ -926,20 +791,21 @@ define i128 @isolate_msb_i128(i128 %a0, i128 %idx) nounwind {
 ; AVX:       # %bb.0:
 ; AVX-NEXT:    lzcntq %rdi, %rax
 ; AVX-NEXT:    addb $64, %al
-; AVX-NEXT:    lzcntq %rsi, %rdx
-; AVX-NEXT:    movzbl %al, %ecx
-; AVX-NEXT:    cmovael %edx, %ecx
-; AVX-NEXT:    xorl %r8d, %r8d
+; AVX-NEXT:    lzcntq %rsi, %rcx
+; AVX-NEXT:    movzbl %al, %r8d
+; AVX-NEXT:    cmovael %ecx, %r8d
+; AVX-NEXT:    xorl %r9d, %r9d
 ; AVX-NEXT:    movabsq $-9223372036854775808, %rdx # imm = 0x8000000000000000
 ; AVX-NEXT:    xorl %eax, %eax
+; AVX-NEXT:    movl %r8d, %ecx
 ; AVX-NEXT:    shrdq %cl, %rdx, %rax
-; AVX-NEXT:    shrxq %rcx, %rdx, %rdx
-; AVX-NEXT:    testb $64, %cl
+; AVX-NEXT:    shrxq %r8, %rdx, %rdx
+; AVX-NEXT:    testb $64, %r8b
 ; AVX-NEXT:    cmovneq %rdx, %rax
-; AVX-NEXT:    cmovneq %r8, %rdx
+; AVX-NEXT:    cmovneq %r9, %rdx
 ; AVX-NEXT:    orq %rsi, %rdi
-; AVX-NEXT:    cmoveq %r8, %rax
-; AVX-NEXT:    cmoveq %r8, %rdx
+; AVX-NEXT:    cmoveq %r9, %rax
+; AVX-NEXT:    cmoveq %r9, %rdx
 ; AVX-NEXT:    retq
   %eqz = icmp eq i128 %a0, 0
   %clz = call i128 @llvm.ctlz.i128(i128 %a0, i1 -1)
@@ -1067,20 +933,21 @@ define i128 @isolate_msb_i128_load(ptr %p0, i128 %idx) nounwind {
 ; AVX-NEXT:    movq 8(%rdi), %rdi
 ; AVX-NEXT:    lzcntq %rsi, %rax
 ; AVX-NEXT:    addb $64, %al
-; AVX-NEXT:    lzcntq %rdi, %rdx
-; AVX-NEXT:    movzbl %al, %ecx
-; AVX-NEXT:    cmovael %edx, %ecx
-; AVX-NEXT:    xorl %r8d, %r8d
+; AVX-NEXT:    lzcntq %rdi, %rcx
+; AVX-NEXT:    movzbl %al, %r8d
+; AVX-NEXT:    cmovael %ecx, %r8d
+; AVX-NEXT:    xorl %r9d, %r9d
 ; AVX-NEXT:    movabsq $-9223372036854775808, %rdx # imm = 0x8000000000000000
 ; AVX-NEXT:    xorl %eax, %eax
+; AVX-NEXT:    movl %r8d, %ecx
 ; AVX-NEXT:    shrdq %cl, %rdx, %rax
-; AVX-NEXT:    shrxq %rcx, %rdx, %rdx
-; AVX-NEXT:    testb $64, %cl
+; AVX-NEXT:    shrxq %r8, %rdx, %rdx
+; AVX-NEXT:    testb $64, %r8b
 ; AVX-NEXT:    cmovneq %rdx, %rax
-; AVX-NEXT:    cmovneq %r8, %rdx
+; AVX-NEXT:    cmovneq %r9, %rdx
 ; AVX-NEXT:    orq %rdi, %rsi
-; AVX-NEXT:    cmoveq %r8, %rax
-; AVX-NEXT:    cmoveq %r8, %rdx
+; AVX-NEXT:    cmoveq %r9, %rax
+; AVX-NEXT:    cmoveq %r9, %rdx
 ; AVX-NEXT:    retq
   %a0 = load i128, ptr %p0
   %eqz = icmp eq i128 %a0, 0

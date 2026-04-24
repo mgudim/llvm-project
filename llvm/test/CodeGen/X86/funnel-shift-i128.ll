@@ -56,15 +56,15 @@ define i128 @fshr_i128(i128 %a0, i128 %a1, i128 %a2) nounwind {
 define i128 @fshl_rot_i128(i128 %a0, i128 %a1) nounwind {
 ; CHECK-LABEL: fshl_rot_i128:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    movq %rdx, %rcx
-; CHECK-NEXT:    testb $64, %cl
-; CHECK-NEXT:    movq %rsi, %rdx
-; CHECK-NEXT:    cmovneq %rdi, %rdx
+; CHECK-NEXT:    testb $64, %dl
+; CHECK-NEXT:    movq %rsi, %r8
+; CHECK-NEXT:    cmovneq %rdi, %r8
 ; CHECK-NEXT:    cmovneq %rsi, %rdi
 ; CHECK-NEXT:    movq %rdi, %rax
-; CHECK-NEXT:    shldq %cl, %rdx, %rax
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
-; CHECK-NEXT:    shldq %cl, %rdi, %rdx
+; CHECK-NEXT:    movl %edx, %ecx
+; CHECK-NEXT:    shldq %cl, %r8, %rax
+; CHECK-NEXT:    shldq %cl, %rdi, %r8
+; CHECK-NEXT:    movq %r8, %rdx
 ; CHECK-NEXT:    retq
   %r = call i128 @llvm.fshl.i128(i128 %a0, i128 %a0, i128 %a1)
   ret i128 %r
@@ -73,15 +73,15 @@ define i128 @fshl_rot_i128(i128 %a0, i128 %a1) nounwind {
 define i128 @fshr_rot_i128(i128 %a0, i128 %a1) nounwind {
 ; CHECK-LABEL: fshr_rot_i128:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    movq %rdx, %rcx
-; CHECK-NEXT:    testb $64, %cl
-; CHECK-NEXT:    movq %rdi, %rdx
-; CHECK-NEXT:    cmoveq %rsi, %rdx
+; CHECK-NEXT:    testb $64, %dl
+; CHECK-NEXT:    movq %rdi, %r8
+; CHECK-NEXT:    cmoveq %rsi, %r8
 ; CHECK-NEXT:    cmoveq %rdi, %rsi
 ; CHECK-NEXT:    movq %rsi, %rax
-; CHECK-NEXT:    shrdq %cl, %rdx, %rax
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
-; CHECK-NEXT:    shrdq %cl, %rsi, %rdx
+; CHECK-NEXT:    movl %edx, %ecx
+; CHECK-NEXT:    shrdq %cl, %r8, %rax
+; CHECK-NEXT:    shrdq %cl, %rsi, %r8
+; CHECK-NEXT:    movq %r8, %rdx
 ; CHECK-NEXT:    retq
   %r = call i128 @llvm.fshr.i128(i128 %a0, i128 %a0, i128 %a1)
   ret i128 %r
@@ -90,36 +90,36 @@ define i128 @fshr_rot_i128(i128 %a0, i128 %a1) nounwind {
 define i128 @fshl_i128_load(ptr %p0, ptr %p1, i128 %a2) nounwind {
 ; SSE-LABEL: fshl_i128_load:
 ; SSE:       # %bb.0:
-; SSE-NEXT:    movq %rdx, %rcx
 ; SSE-NEXT:    movq (%rdi), %r8
-; SSE-NEXT:    testb $64, %cl
-; SSE-NEXT:    movq 8(%rdi), %rdx
-; SSE-NEXT:    cmovneq %r8, %rdx
+; SSE-NEXT:    testb $64, %dl
+; SSE-NEXT:    movq 8(%rdi), %rdi
+; SSE-NEXT:    cmovneq %r8, %rdi
 ; SSE-NEXT:    movq 8(%rsi), %rax
 ; SSE-NEXT:    movq (%rsi), %rsi
 ; SSE-NEXT:    cmoveq %rax, %rsi
 ; SSE-NEXT:    cmovneq %rax, %r8
 ; SSE-NEXT:    movq %r8, %rax
+; SSE-NEXT:    movl %edx, %ecx
 ; SSE-NEXT:    shldq %cl, %rsi, %rax
-; SSE-NEXT:    # kill: def $cl killed $cl killed $rcx
-; SSE-NEXT:    shldq %cl, %r8, %rdx
+; SSE-NEXT:    shldq %cl, %r8, %rdi
+; SSE-NEXT:    movq %rdi, %rdx
 ; SSE-NEXT:    retq
 ;
 ; AVX-LABEL: fshl_i128_load:
 ; AVX:       # %bb.0:
-; AVX-NEXT:    movq %rdx, %rcx
 ; AVX-NEXT:    movq (%rdi), %r8
 ; AVX-NEXT:    movq 8(%rsi), %rax
-; AVX-NEXT:    testb $64, %cl
-; AVX-NEXT:    movq 8(%rdi), %rdx
-; AVX-NEXT:    cmovneq %r8, %rdx
+; AVX-NEXT:    testb $64, %dl
+; AVX-NEXT:    movq 8(%rdi), %rdi
+; AVX-NEXT:    cmovneq %r8, %rdi
 ; AVX-NEXT:    movq (%rsi), %rsi
 ; AVX-NEXT:    cmoveq %rax, %rsi
 ; AVX-NEXT:    cmovneq %rax, %r8
 ; AVX-NEXT:    movq %r8, %rax
+; AVX-NEXT:    movl %edx, %ecx
 ; AVX-NEXT:    shldq %cl, %rsi, %rax
-; AVX-NEXT:    # kill: def $cl killed $cl killed $rcx
-; AVX-NEXT:    shldq %cl, %r8, %rdx
+; AVX-NEXT:    shldq %cl, %r8, %rdi
+; AVX-NEXT:    movq %rdi, %rdx
 ; AVX-NEXT:    retq
   %a0 = load i128, ptr %p0
   %a1 = load i128, ptr %p1
@@ -130,17 +130,17 @@ define i128 @fshl_i128_load(ptr %p0, ptr %p1, i128 %a2) nounwind {
 define i128 @fshr_i128_load(ptr %p0, ptr %p1, i128 %a2) nounwind {
 ; CHECK-LABEL: fshr_i128_load:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    movq %rdx, %rcx
-; CHECK-NEXT:    movq (%rdi), %rdx
+; CHECK-NEXT:    movq (%rdi), %r8
 ; CHECK-NEXT:    movq 8(%rsi), %rax
-; CHECK-NEXT:    testb $64, %cl
+; CHECK-NEXT:    testb $64, %dl
 ; CHECK-NEXT:    movq 8(%rdi), %rdi
-; CHECK-NEXT:    cmoveq %rdx, %rdi
-; CHECK-NEXT:    cmoveq %rax, %rdx
+; CHECK-NEXT:    cmoveq %r8, %rdi
+; CHECK-NEXT:    cmoveq %rax, %r8
 ; CHECK-NEXT:    cmoveq (%rsi), %rax
-; CHECK-NEXT:    shrdq %cl, %rdx, %rax
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
-; CHECK-NEXT:    shrdq %cl, %rdi, %rdx
+; CHECK-NEXT:    movl %edx, %ecx
+; CHECK-NEXT:    shrdq %cl, %r8, %rax
+; CHECK-NEXT:    shrdq %cl, %rdi, %r8
+; CHECK-NEXT:    movq %r8, %rdx
 ; CHECK-NEXT:    retq
   %a0 = load i128, ptr %p0
   %a1 = load i128, ptr %p1
@@ -151,17 +151,16 @@ define i128 @fshr_i128_load(ptr %p0, ptr %p1, i128 %a2) nounwind {
 define i128 @fshl_rot_i128_load(ptr %p0, i128 %a2) nounwind {
 ; CHECK-LABEL: fshl_rot_i128_load:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    movq %rsi, %rcx
-; CHECK-NEXT:    movq (%rdi), %rsi
+; CHECK-NEXT:    movq (%rdi), %r8
 ; CHECK-NEXT:    movq 8(%rdi), %rax
-; CHECK-NEXT:    testb $64, %cl
+; CHECK-NEXT:    testb $64, %sil
 ; CHECK-NEXT:    movq %rax, %rdx
-; CHECK-NEXT:    cmovneq %rsi, %rdx
-; CHECK-NEXT:    cmovneq %rax, %rsi
-; CHECK-NEXT:    movq %rsi, %rax
+; CHECK-NEXT:    cmovneq %r8, %rdx
+; CHECK-NEXT:    cmovneq %rax, %r8
+; CHECK-NEXT:    movq %r8, %rax
+; CHECK-NEXT:    movl %esi, %ecx
 ; CHECK-NEXT:    shldq %cl, %rdx, %rax
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
-; CHECK-NEXT:    shldq %cl, %rsi, %rdx
+; CHECK-NEXT:    shldq %cl, %r8, %rdx
 ; CHECK-NEXT:    retq
   %a0 = load i128, ptr %p0
   %r = call i128 @llvm.fshl.i128(i128 %a0, i128 %a0, i128 %a2)
@@ -171,17 +170,16 @@ define i128 @fshl_rot_i128_load(ptr %p0, i128 %a2) nounwind {
 define i128 @fshr_rot_i128_load(ptr %p0, i128 %a2) nounwind {
 ; CHECK-LABEL: fshr_rot_i128_load:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    movq %rsi, %rcx
 ; CHECK-NEXT:    movq (%rdi), %rax
-; CHECK-NEXT:    movq 8(%rdi), %rsi
-; CHECK-NEXT:    testb $64, %cl
+; CHECK-NEXT:    movq 8(%rdi), %rdi
+; CHECK-NEXT:    testb $64, %sil
 ; CHECK-NEXT:    movq %rax, %rdx
-; CHECK-NEXT:    cmoveq %rsi, %rdx
-; CHECK-NEXT:    cmoveq %rax, %rsi
-; CHECK-NEXT:    movq %rsi, %rax
+; CHECK-NEXT:    cmoveq %rdi, %rdx
+; CHECK-NEXT:    cmoveq %rax, %rdi
+; CHECK-NEXT:    movq %rdi, %rax
+; CHECK-NEXT:    movl %esi, %ecx
 ; CHECK-NEXT:    shrdq %cl, %rdx, %rax
-; CHECK-NEXT:    # kill: def $cl killed $cl killed $rcx
-; CHECK-NEXT:    shrdq %cl, %rsi, %rdx
+; CHECK-NEXT:    shrdq %cl, %rdi, %rdx
 ; CHECK-NEXT:    retq
   %a0 = load i128, ptr %p0
   %r = call i128 @llvm.fshr.i128(i128 %a0, i128 %a0, i128 %a2)
@@ -191,105 +189,99 @@ define i128 @fshr_rot_i128_load(ptr %p0, i128 %a2) nounwind {
 define i128 @fshl_i128_vector(<2 x i64> %v0, <2 x i64> %v1, i128 %a2) nounwind {
 ; SSE2-LABEL: fshl_i128_vector:
 ; SSE2:       # %bb.0:
-; SSE2-NEXT:    movq %rdi, %rcx
 ; SSE2-NEXT:    movq %xmm0, %rsi
 ; SSE2-NEXT:    pshufd {{.*#+}} xmm0 = xmm0[2,3,2,3]
 ; SSE2-NEXT:    movq %xmm0, %rdx
-; SSE2-NEXT:    movq %xmm1, %rdi
+; SSE2-NEXT:    movq %xmm1, %r8
 ; SSE2-NEXT:    pshufd {{.*#+}} xmm0 = xmm1[2,3,2,3]
 ; SSE2-NEXT:    movq %xmm0, %rax
-; SSE2-NEXT:    testb $64, %cl
+; SSE2-NEXT:    testb $64, %dil
 ; SSE2-NEXT:    cmovneq %rsi, %rdx
-; SSE2-NEXT:    cmoveq %rax, %rdi
+; SSE2-NEXT:    cmoveq %rax, %r8
 ; SSE2-NEXT:    cmovneq %rax, %rsi
 ; SSE2-NEXT:    movq %rsi, %rax
-; SSE2-NEXT:    shldq %cl, %rdi, %rax
-; SSE2-NEXT:    # kill: def $cl killed $cl killed $rcx
+; SSE2-NEXT:    movl %edi, %ecx
+; SSE2-NEXT:    shldq %cl, %r8, %rax
 ; SSE2-NEXT:    shldq %cl, %rsi, %rdx
 ; SSE2-NEXT:    retq
 ;
 ; SSE42-LABEL: fshl_i128_vector:
 ; SSE42:       # %bb.0:
-; SSE42-NEXT:    movq %rdi, %rcx
 ; SSE42-NEXT:    movq %xmm0, %rsi
 ; SSE42-NEXT:    pextrq $1, %xmm0, %rdx
-; SSE42-NEXT:    movq %xmm1, %rdi
+; SSE42-NEXT:    movq %xmm1, %r8
 ; SSE42-NEXT:    pextrq $1, %xmm1, %rax
-; SSE42-NEXT:    testb $64, %cl
+; SSE42-NEXT:    testb $64, %dil
 ; SSE42-NEXT:    cmovneq %rsi, %rdx
-; SSE42-NEXT:    cmoveq %rax, %rdi
+; SSE42-NEXT:    cmoveq %rax, %r8
 ; SSE42-NEXT:    cmovneq %rax, %rsi
 ; SSE42-NEXT:    movq %rsi, %rax
-; SSE42-NEXT:    shldq %cl, %rdi, %rax
-; SSE42-NEXT:    # kill: def $cl killed $cl killed $rcx
+; SSE42-NEXT:    movl %edi, %ecx
+; SSE42-NEXT:    shldq %cl, %r8, %rax
 ; SSE42-NEXT:    shldq %cl, %rsi, %rdx
 ; SSE42-NEXT:    retq
 ;
 ; AVX2-LABEL: fshl_i128_vector:
 ; AVX2:       # %bb.0:
-; AVX2-NEXT:    movq %rdi, %rcx
 ; AVX2-NEXT:    vmovq %xmm0, %rsi
 ; AVX2-NEXT:    vpextrq $1, %xmm0, %rdx
 ; AVX2-NEXT:    vpextrq $1, %xmm1, %rax
-; AVX2-NEXT:    vmovq %xmm1, %rdi
-; AVX2-NEXT:    testb $64, %cl
+; AVX2-NEXT:    vmovq %xmm1, %r8
+; AVX2-NEXT:    testb $64, %dil
 ; AVX2-NEXT:    cmovneq %rsi, %rdx
-; AVX2-NEXT:    cmoveq %rax, %rdi
+; AVX2-NEXT:    cmoveq %rax, %r8
 ; AVX2-NEXT:    cmovneq %rax, %rsi
 ; AVX2-NEXT:    movq %rsi, %rax
-; AVX2-NEXT:    shldq %cl, %rdi, %rax
-; AVX2-NEXT:    # kill: def $cl killed $cl killed $rcx
+; AVX2-NEXT:    movl %edi, %ecx
+; AVX2-NEXT:    shldq %cl, %r8, %rax
 ; AVX2-NEXT:    shldq %cl, %rsi, %rdx
 ; AVX2-NEXT:    retq
 ;
 ; AVX512F-LABEL: fshl_i128_vector:
 ; AVX512F:       # %bb.0:
-; AVX512F-NEXT:    movq %rdi, %rcx
 ; AVX512F-NEXT:    vmovq %xmm0, %rsi
 ; AVX512F-NEXT:    vpextrq $1, %xmm0, %rdx
 ; AVX512F-NEXT:    vpextrq $1, %xmm1, %rax
-; AVX512F-NEXT:    vmovq %xmm1, %rdi
-; AVX512F-NEXT:    testb $64, %cl
+; AVX512F-NEXT:    vmovq %xmm1, %r8
+; AVX512F-NEXT:    testb $64, %dil
 ; AVX512F-NEXT:    cmovneq %rsi, %rdx
-; AVX512F-NEXT:    cmoveq %rax, %rdi
+; AVX512F-NEXT:    cmoveq %rax, %r8
 ; AVX512F-NEXT:    cmovneq %rax, %rsi
 ; AVX512F-NEXT:    movq %rsi, %rax
-; AVX512F-NEXT:    shldq %cl, %rdi, %rax
-; AVX512F-NEXT:    # kill: def $cl killed $cl killed $rcx
+; AVX512F-NEXT:    movl %edi, %ecx
+; AVX512F-NEXT:    shldq %cl, %r8, %rax
 ; AVX512F-NEXT:    shldq %cl, %rsi, %rdx
 ; AVX512F-NEXT:    retq
 ;
 ; AVX512VL-LABEL: fshl_i128_vector:
 ; AVX512VL:       # %bb.0:
-; AVX512VL-NEXT:    movq %rdi, %rcx
 ; AVX512VL-NEXT:    vpextrq $1, %xmm0, %rdx
 ; AVX512VL-NEXT:    vmovq %xmm0, %rsi
-; AVX512VL-NEXT:    vmovq %xmm1, %rdi
+; AVX512VL-NEXT:    vmovq %xmm1, %r8
 ; AVX512VL-NEXT:    vpextrq $1, %xmm1, %rax
-; AVX512VL-NEXT:    testb $64, %cl
+; AVX512VL-NEXT:    testb $64, %dil
 ; AVX512VL-NEXT:    cmovneq %rsi, %rdx
-; AVX512VL-NEXT:    cmoveq %rax, %rdi
+; AVX512VL-NEXT:    cmoveq %rax, %r8
 ; AVX512VL-NEXT:    cmovneq %rax, %rsi
 ; AVX512VL-NEXT:    movq %rsi, %rax
-; AVX512VL-NEXT:    shldq %cl, %rdi, %rax
-; AVX512VL-NEXT:    # kill: def $cl killed $cl killed $rcx
+; AVX512VL-NEXT:    movl %edi, %ecx
+; AVX512VL-NEXT:    shldq %cl, %r8, %rax
 ; AVX512VL-NEXT:    shldq %cl, %rsi, %rdx
 ; AVX512VL-NEXT:    retq
 ;
 ; AVX512VBMI-LABEL: fshl_i128_vector:
 ; AVX512VBMI:       # %bb.0:
-; AVX512VBMI-NEXT:    movq %rdi, %rcx
 ; AVX512VBMI-NEXT:    vpextrq $1, %xmm0, %rdx
 ; AVX512VBMI-NEXT:    vmovq %xmm0, %rsi
-; AVX512VBMI-NEXT:    vmovq %xmm1, %rdi
+; AVX512VBMI-NEXT:    vmovq %xmm1, %r8
 ; AVX512VBMI-NEXT:    vpextrq $1, %xmm1, %rax
-; AVX512VBMI-NEXT:    testb $64, %cl
+; AVX512VBMI-NEXT:    testb $64, %dil
 ; AVX512VBMI-NEXT:    cmovneq %rsi, %rdx
-; AVX512VBMI-NEXT:    cmoveq %rax, %rdi
+; AVX512VBMI-NEXT:    cmoveq %rax, %r8
 ; AVX512VBMI-NEXT:    cmovneq %rax, %rsi
 ; AVX512VBMI-NEXT:    movq %rsi, %rax
-; AVX512VBMI-NEXT:    shldq %cl, %rdi, %rax
-; AVX512VBMI-NEXT:    # kill: def $cl killed $cl killed $rcx
+; AVX512VBMI-NEXT:    movl %edi, %ecx
+; AVX512VBMI-NEXT:    shldq %cl, %r8, %rax
 ; AVX512VBMI-NEXT:    shldq %cl, %rsi, %rdx
 ; AVX512VBMI-NEXT:    retq
   %a0 = bitcast <2 x i64> %v0 to i128
@@ -301,99 +293,93 @@ define i128 @fshl_i128_vector(<2 x i64> %v0, <2 x i64> %v1, i128 %a2) nounwind {
 define i128 @fshr_i128_vector(<2 x i64> %v0, <2 x i64> %v1, i128 %a2) nounwind {
 ; SSE2-LABEL: fshr_i128_vector:
 ; SSE2:       # %bb.0:
-; SSE2-NEXT:    movq %rdi, %rcx
 ; SSE2-NEXT:    movq %xmm0, %rdx
 ; SSE2-NEXT:    pshufd {{.*#+}} xmm0 = xmm0[2,3,2,3]
 ; SSE2-NEXT:    movq %xmm0, %rsi
 ; SSE2-NEXT:    pshufd {{.*#+}} xmm0 = xmm1[2,3,2,3]
-; SSE2-NEXT:    movq %xmm0, %rdi
-; SSE2-NEXT:    testb $64, %cl
+; SSE2-NEXT:    movq %xmm0, %rcx
+; SSE2-NEXT:    testb $64, %dil
 ; SSE2-NEXT:    cmoveq %rdx, %rsi
-; SSE2-NEXT:    cmoveq %rdi, %rdx
+; SSE2-NEXT:    cmoveq %rcx, %rdx
 ; SSE2-NEXT:    movq %xmm1, %rax
-; SSE2-NEXT:    cmovneq %rdi, %rax
+; SSE2-NEXT:    cmovneq %rcx, %rax
+; SSE2-NEXT:    movl %edi, %ecx
 ; SSE2-NEXT:    shrdq %cl, %rdx, %rax
-; SSE2-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; SSE2-NEXT:    shrdq %cl, %rsi, %rdx
 ; SSE2-NEXT:    retq
 ;
 ; SSE42-LABEL: fshr_i128_vector:
 ; SSE42:       # %bb.0:
-; SSE42-NEXT:    movq %rdi, %rcx
 ; SSE42-NEXT:    pextrq $1, %xmm0, %rsi
 ; SSE42-NEXT:    movq %xmm0, %rdx
-; SSE42-NEXT:    pextrq $1, %xmm1, %rdi
-; SSE42-NEXT:    testb $64, %cl
+; SSE42-NEXT:    pextrq $1, %xmm1, %rcx
+; SSE42-NEXT:    testb $64, %dil
 ; SSE42-NEXT:    cmoveq %rdx, %rsi
-; SSE42-NEXT:    cmoveq %rdi, %rdx
+; SSE42-NEXT:    cmoveq %rcx, %rdx
 ; SSE42-NEXT:    movq %xmm1, %rax
-; SSE42-NEXT:    cmovneq %rdi, %rax
+; SSE42-NEXT:    cmovneq %rcx, %rax
+; SSE42-NEXT:    movl %edi, %ecx
 ; SSE42-NEXT:    shrdq %cl, %rdx, %rax
-; SSE42-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; SSE42-NEXT:    shrdq %cl, %rsi, %rdx
 ; SSE42-NEXT:    retq
 ;
 ; AVX2-LABEL: fshr_i128_vector:
 ; AVX2:       # %bb.0:
-; AVX2-NEXT:    movq %rdi, %rcx
 ; AVX2-NEXT:    vmovq %xmm0, %rdx
 ; AVX2-NEXT:    vpextrq $1, %xmm0, %rsi
-; AVX2-NEXT:    vpextrq $1, %xmm1, %rdi
+; AVX2-NEXT:    vpextrq $1, %xmm1, %rcx
 ; AVX2-NEXT:    vmovq %xmm1, %rax
-; AVX2-NEXT:    testb $64, %cl
+; AVX2-NEXT:    testb $64, %dil
 ; AVX2-NEXT:    cmoveq %rdx, %rsi
-; AVX2-NEXT:    cmoveq %rdi, %rdx
-; AVX2-NEXT:    cmovneq %rdi, %rax
+; AVX2-NEXT:    cmoveq %rcx, %rdx
+; AVX2-NEXT:    cmovneq %rcx, %rax
+; AVX2-NEXT:    movl %edi, %ecx
 ; AVX2-NEXT:    shrdq %cl, %rdx, %rax
-; AVX2-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; AVX2-NEXT:    shrdq %cl, %rsi, %rdx
 ; AVX2-NEXT:    retq
 ;
 ; AVX512F-LABEL: fshr_i128_vector:
 ; AVX512F:       # %bb.0:
-; AVX512F-NEXT:    movq %rdi, %rcx
 ; AVX512F-NEXT:    vmovq %xmm0, %rdx
 ; AVX512F-NEXT:    vpextrq $1, %xmm0, %rsi
-; AVX512F-NEXT:    vpextrq $1, %xmm1, %rdi
+; AVX512F-NEXT:    vpextrq $1, %xmm1, %rcx
 ; AVX512F-NEXT:    vmovq %xmm1, %rax
-; AVX512F-NEXT:    testb $64, %cl
+; AVX512F-NEXT:    testb $64, %dil
 ; AVX512F-NEXT:    cmoveq %rdx, %rsi
-; AVX512F-NEXT:    cmoveq %rdi, %rdx
-; AVX512F-NEXT:    cmovneq %rdi, %rax
+; AVX512F-NEXT:    cmoveq %rcx, %rdx
+; AVX512F-NEXT:    cmovneq %rcx, %rax
+; AVX512F-NEXT:    movl %edi, %ecx
 ; AVX512F-NEXT:    shrdq %cl, %rdx, %rax
-; AVX512F-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; AVX512F-NEXT:    shrdq %cl, %rsi, %rdx
 ; AVX512F-NEXT:    retq
 ;
 ; AVX512VL-LABEL: fshr_i128_vector:
 ; AVX512VL:       # %bb.0:
-; AVX512VL-NEXT:    movq %rdi, %rcx
 ; AVX512VL-NEXT:    vpextrq $1, %xmm0, %rsi
 ; AVX512VL-NEXT:    vmovq %xmm0, %rdx
 ; AVX512VL-NEXT:    vmovq %xmm1, %rax
-; AVX512VL-NEXT:    vpextrq $1, %xmm1, %rdi
-; AVX512VL-NEXT:    testb $64, %cl
+; AVX512VL-NEXT:    vpextrq $1, %xmm1, %rcx
+; AVX512VL-NEXT:    testb $64, %dil
 ; AVX512VL-NEXT:    cmoveq %rdx, %rsi
-; AVX512VL-NEXT:    cmoveq %rdi, %rdx
-; AVX512VL-NEXT:    cmovneq %rdi, %rax
+; AVX512VL-NEXT:    cmoveq %rcx, %rdx
+; AVX512VL-NEXT:    cmovneq %rcx, %rax
+; AVX512VL-NEXT:    movl %edi, %ecx
 ; AVX512VL-NEXT:    shrdq %cl, %rdx, %rax
-; AVX512VL-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; AVX512VL-NEXT:    shrdq %cl, %rsi, %rdx
 ; AVX512VL-NEXT:    retq
 ;
 ; AVX512VBMI-LABEL: fshr_i128_vector:
 ; AVX512VBMI:       # %bb.0:
-; AVX512VBMI-NEXT:    movq %rdi, %rcx
 ; AVX512VBMI-NEXT:    vpextrq $1, %xmm0, %rsi
 ; AVX512VBMI-NEXT:    vmovq %xmm0, %rdx
 ; AVX512VBMI-NEXT:    vmovq %xmm1, %rax
-; AVX512VBMI-NEXT:    vpextrq $1, %xmm1, %rdi
-; AVX512VBMI-NEXT:    testb $64, %cl
+; AVX512VBMI-NEXT:    vpextrq $1, %xmm1, %rcx
+; AVX512VBMI-NEXT:    testb $64, %dil
 ; AVX512VBMI-NEXT:    cmoveq %rdx, %rsi
-; AVX512VBMI-NEXT:    cmoveq %rdi, %rdx
-; AVX512VBMI-NEXT:    cmovneq %rdi, %rax
+; AVX512VBMI-NEXT:    cmoveq %rcx, %rdx
+; AVX512VBMI-NEXT:    cmovneq %rcx, %rax
+; AVX512VBMI-NEXT:    movl %edi, %ecx
 ; AVX512VBMI-NEXT:    shrdq %cl, %rdx, %rax
-; AVX512VBMI-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; AVX512VBMI-NEXT:    shrdq %cl, %rsi, %rdx
 ; AVX512VBMI-NEXT:    retq
   %a0 = bitcast <2 x i64> %v0 to i128
@@ -405,47 +391,44 @@ define i128 @fshr_i128_vector(<2 x i64> %v0, <2 x i64> %v1, i128 %a2) nounwind {
 define i128 @fshl_rot_i128_vector(<2 x i64> %v0, i128 %a2) nounwind {
 ; SSE2-LABEL: fshl_rot_i128_vector:
 ; SSE2:       # %bb.0:
-; SSE2-NEXT:    movq %rdi, %rcx
 ; SSE2-NEXT:    movq %xmm0, %rsi
 ; SSE2-NEXT:    pshufd {{.*#+}} xmm0 = xmm0[2,3,2,3]
 ; SSE2-NEXT:    movq %xmm0, %rax
-; SSE2-NEXT:    testb $64, %cl
+; SSE2-NEXT:    testb $64, %dil
 ; SSE2-NEXT:    movq %rax, %rdx
 ; SSE2-NEXT:    cmovneq %rsi, %rdx
 ; SSE2-NEXT:    cmovneq %rax, %rsi
 ; SSE2-NEXT:    movq %rsi, %rax
+; SSE2-NEXT:    movl %edi, %ecx
 ; SSE2-NEXT:    shldq %cl, %rdx, %rax
-; SSE2-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; SSE2-NEXT:    shldq %cl, %rsi, %rdx
 ; SSE2-NEXT:    retq
 ;
 ; SSE42-LABEL: fshl_rot_i128_vector:
 ; SSE42:       # %bb.0:
-; SSE42-NEXT:    movq %rdi, %rcx
 ; SSE42-NEXT:    movq %xmm0, %rsi
 ; SSE42-NEXT:    pextrq $1, %xmm0, %rax
-; SSE42-NEXT:    testb $64, %cl
+; SSE42-NEXT:    testb $64, %dil
 ; SSE42-NEXT:    movq %rax, %rdx
 ; SSE42-NEXT:    cmovneq %rsi, %rdx
 ; SSE42-NEXT:    cmovneq %rax, %rsi
 ; SSE42-NEXT:    movq %rsi, %rax
+; SSE42-NEXT:    movl %edi, %ecx
 ; SSE42-NEXT:    shldq %cl, %rdx, %rax
-; SSE42-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; SSE42-NEXT:    shldq %cl, %rsi, %rdx
 ; SSE42-NEXT:    retq
 ;
 ; AVX-LABEL: fshl_rot_i128_vector:
 ; AVX:       # %bb.0:
-; AVX-NEXT:    movq %rdi, %rcx
 ; AVX-NEXT:    vmovq %xmm0, %rsi
 ; AVX-NEXT:    vpextrq $1, %xmm0, %rax
-; AVX-NEXT:    testb $64, %cl
+; AVX-NEXT:    testb $64, %dil
 ; AVX-NEXT:    movq %rax, %rdx
 ; AVX-NEXT:    cmovneq %rsi, %rdx
 ; AVX-NEXT:    cmovneq %rax, %rsi
 ; AVX-NEXT:    movq %rsi, %rax
+; AVX-NEXT:    movl %edi, %ecx
 ; AVX-NEXT:    shldq %cl, %rdx, %rax
-; AVX-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; AVX-NEXT:    shldq %cl, %rsi, %rdx
 ; AVX-NEXT:    retq
   %a0 = bitcast <2 x i64> %v0 to i128
@@ -456,47 +439,44 @@ define i128 @fshl_rot_i128_vector(<2 x i64> %v0, i128 %a2) nounwind {
 define i128 @fshr_rot_i128_vector(<2 x i64> %v0, i128 %a2) nounwind {
 ; SSE2-LABEL: fshr_rot_i128_vector:
 ; SSE2:       # %bb.0:
-; SSE2-NEXT:    movq %rdi, %rcx
 ; SSE2-NEXT:    movq %xmm0, %rax
 ; SSE2-NEXT:    pshufd {{.*#+}} xmm0 = xmm0[2,3,2,3]
 ; SSE2-NEXT:    movq %xmm0, %rsi
-; SSE2-NEXT:    testb $64, %cl
+; SSE2-NEXT:    testb $64, %dil
 ; SSE2-NEXT:    movq %rax, %rdx
 ; SSE2-NEXT:    cmoveq %rsi, %rdx
 ; SSE2-NEXT:    cmoveq %rax, %rsi
 ; SSE2-NEXT:    movq %rsi, %rax
+; SSE2-NEXT:    movl %edi, %ecx
 ; SSE2-NEXT:    shrdq %cl, %rdx, %rax
-; SSE2-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; SSE2-NEXT:    shrdq %cl, %rsi, %rdx
 ; SSE2-NEXT:    retq
 ;
 ; SSE42-LABEL: fshr_rot_i128_vector:
 ; SSE42:       # %bb.0:
-; SSE42-NEXT:    movq %rdi, %rcx
 ; SSE42-NEXT:    pextrq $1, %xmm0, %rsi
 ; SSE42-NEXT:    movq %xmm0, %rax
-; SSE42-NEXT:    testb $64, %cl
+; SSE42-NEXT:    testb $64, %dil
 ; SSE42-NEXT:    movq %rax, %rdx
 ; SSE42-NEXT:    cmoveq %rsi, %rdx
 ; SSE42-NEXT:    cmoveq %rax, %rsi
 ; SSE42-NEXT:    movq %rsi, %rax
+; SSE42-NEXT:    movl %edi, %ecx
 ; SSE42-NEXT:    shrdq %cl, %rdx, %rax
-; SSE42-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; SSE42-NEXT:    shrdq %cl, %rsi, %rdx
 ; SSE42-NEXT:    retq
 ;
 ; AVX-LABEL: fshr_rot_i128_vector:
 ; AVX:       # %bb.0:
-; AVX-NEXT:    movq %rdi, %rcx
 ; AVX-NEXT:    vpextrq $1, %xmm0, %rsi
 ; AVX-NEXT:    vmovq %xmm0, %rax
-; AVX-NEXT:    testb $64, %cl
+; AVX-NEXT:    testb $64, %dil
 ; AVX-NEXT:    movq %rax, %rdx
 ; AVX-NEXT:    cmoveq %rsi, %rdx
 ; AVX-NEXT:    cmoveq %rax, %rsi
 ; AVX-NEXT:    movq %rsi, %rax
+; AVX-NEXT:    movl %edi, %ecx
 ; AVX-NEXT:    shrdq %cl, %rdx, %rax
-; AVX-NEXT:    # kill: def $cl killed $cl killed $rcx
 ; AVX-NEXT:    shrdq %cl, %rsi, %rdx
 ; AVX-NEXT:    retq
   %a0 = bitcast <2 x i64> %v0 to i128

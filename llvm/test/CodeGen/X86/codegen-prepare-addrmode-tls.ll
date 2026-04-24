@@ -124,24 +124,24 @@ define i32 @func_nonlocal_tls(i32 %arg0, i64 %arg1) nounwind {
 ; PIC-NEXT:    pushq %r14
 ; PIC-NEXT:    pushq %rbx
 ; PIC-NEXT:    pushq %rax
-; PIC-NEXT:    movq %rsi, %rbx
-; PIC-NEXT:    movl %edi, %ebp
+; PIC-NEXT:    movq %rsi, %r14
+; PIC-NEXT:    movl %edi, %r15d
 ; PIC-NEXT:    data16
 ; PIC-NEXT:    leaq foo_nonlocal@TLSGD(%rip), %rdi
 ; PIC-NEXT:    data16
 ; PIC-NEXT:    data16
 ; PIC-NEXT:    rex64
 ; PIC-NEXT:    callq __tls_get_addr@PLT
-; PIC-NEXT:    movq %rax, %r14
-; PIC-NEXT:    movl (%rax), %r15d
-; PIC-NEXT:    testl %ebp, %ebp
-; PIC-NEXT:    movl %r15d, %eax
+; PIC-NEXT:    movq %rax, %rbx
+; PIC-NEXT:    movl (%rax), %ebp
+; PIC-NEXT:    testl %r15d, %r15d
+; PIC-NEXT:    movl %ebp, %eax
 ; PIC-NEXT:    jne .LBB1_2
 ; PIC-NEXT:  # %bb.1: # %if.then
 ; PIC-NEXT:    callq effect@PLT
-; PIC-NEXT:    movl 168(%r14,%rbx,4), %eax
+; PIC-NEXT:    movl 168(%rbx,%r14,4), %eax
 ; PIC-NEXT:  .LBB1_2: # %if.end
-; PIC-NEXT:    addl %r15d, %eax
+; PIC-NEXT:    addl %ebp, %eax
 ; PIC-NEXT:    addq $8, %rsp
 ; PIC-NEXT:    popq %rbx
 ; PIC-NEXT:    popq %r14

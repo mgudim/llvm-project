@@ -1064,6 +1064,7 @@ if.end:                                           ; preds = %for.body, %if.else
 define i32 @callVariadicFunc(i32 %cond, i32 %N) {
 ; ENABLE-V4T-LABEL: callVariadicFunc:
 ; ENABLE-V4T:       @ %bb.0: @ %entry
+; ENABLE-V4T-NEXT:    movs r3, r1
 ; ENABLE-V4T-NEXT:    cmp r0, #0
 ; ENABLE-V4T-NEXT:    beq LBB8_2
 ; ENABLE-V4T-NEXT:  @ %bb.1: @ %if.then
@@ -1073,16 +1074,16 @@ define i32 @callVariadicFunc(i32 %cond, i32 %N) {
 ; ENABLE-V4T-NEXT:    .cfi_offset r4, -8
 ; ENABLE-V4T-NEXT:    sub sp, #16
 ; ENABLE-V4T-NEXT:    .cfi_def_cfa_offset 24
-; ENABLE-V4T-NEXT:    str r1, [sp]
-; ENABLE-V4T-NEXT:    str r1, [sp, #4]
-; ENABLE-V4T-NEXT:    str r1, [sp, #8]
+; ENABLE-V4T-NEXT:    str r3, [sp]
+; ENABLE-V4T-NEXT:    str r3, [sp, #4]
+; ENABLE-V4T-NEXT:    str r3, [sp, #8]
 ; ENABLE-V4T-NEXT:    ldr r0, LCPI8_0
 ; ENABLE-V4T-NEXT:  LPC8_0:
 ; ENABLE-V4T-NEXT:    add r0, pc
 ; ENABLE-V4T-NEXT:    ldr r4, [r0]
-; ENABLE-V4T-NEXT:    movs r0, r1
-; ENABLE-V4T-NEXT:    movs r2, r1
-; ENABLE-V4T-NEXT:    movs r3, r1
+; ENABLE-V4T-NEXT:    movs r0, r3
+; ENABLE-V4T-NEXT:    movs r1, r3
+; ENABLE-V4T-NEXT:    movs r2, r3
 ; ENABLE-V4T-NEXT:    bl Ltmp2
 ; ENABLE-V4T-NEXT:    lsls r0, r0, #3
 ; ENABLE-V4T-NEXT:    add sp, #16
@@ -1090,7 +1091,7 @@ define i32 @callVariadicFunc(i32 %cond, i32 %N) {
 ; ENABLE-V4T-NEXT:    pop {r1}
 ; ENABLE-V4T-NEXT:    bx r1
 ; ENABLE-V4T-NEXT:  LBB8_2: @ %if.else
-; ENABLE-V4T-NEXT:    lsls r0, r1, #1
+; ENABLE-V4T-NEXT:    lsls r0, r3, #1
 ; ENABLE-V4T-NEXT:    bx lr
 ; ENABLE-V4T-NEXT:    .p2align 2
 ; ENABLE-V4T-NEXT:  @ %bb.3:
@@ -1101,6 +1102,7 @@ define i32 @callVariadicFunc(i32 %cond, i32 %N) {
 ;
 ; ENABLE-V5T-LABEL: callVariadicFunc:
 ; ENABLE-V5T:       @ %bb.0: @ %entry
+; ENABLE-V5T-NEXT:    movs r3, r1
 ; ENABLE-V5T-NEXT:    cmp r0, #0
 ; ENABLE-V5T-NEXT:    beq LBB8_2
 ; ENABLE-V5T-NEXT:  @ %bb.1: @ %if.then
@@ -1110,18 +1112,18 @@ define i32 @callVariadicFunc(i32 %cond, i32 %N) {
 ; ENABLE-V5T-NEXT:    .cfi_offset r7, -8
 ; ENABLE-V5T-NEXT:    sub sp, #16
 ; ENABLE-V5T-NEXT:    .cfi_def_cfa_offset 24
-; ENABLE-V5T-NEXT:    str r1, [sp]
-; ENABLE-V5T-NEXT:    str r1, [sp, #4]
-; ENABLE-V5T-NEXT:    str r1, [sp, #8]
-; ENABLE-V5T-NEXT:    movs r0, r1
-; ENABLE-V5T-NEXT:    movs r2, r1
-; ENABLE-V5T-NEXT:    movs r3, r1
+; ENABLE-V5T-NEXT:    str r3, [sp]
+; ENABLE-V5T-NEXT:    str r3, [sp, #4]
+; ENABLE-V5T-NEXT:    str r3, [sp, #8]
+; ENABLE-V5T-NEXT:    movs r0, r3
+; ENABLE-V5T-NEXT:    movs r1, r3
+; ENABLE-V5T-NEXT:    movs r2, r3
 ; ENABLE-V5T-NEXT:    bl _someVariadicFunc
 ; ENABLE-V5T-NEXT:    lsls r0, r0, #3
 ; ENABLE-V5T-NEXT:    add sp, #16
 ; ENABLE-V5T-NEXT:    pop {r7, pc}
 ; ENABLE-V5T-NEXT:  LBB8_2: @ %if.else
-; ENABLE-V5T-NEXT:    lsls r0, r1, #1
+; ENABLE-V5T-NEXT:    lsls r0, r3, #1
 ; ENABLE-V5T-NEXT:  LBB8_3: @ %if.end
 ; ENABLE-V5T-NEXT:    bx lr
 ;
@@ -1133,24 +1135,25 @@ define i32 @callVariadicFunc(i32 %cond, i32 %N) {
 ; DISABLE-V4T-NEXT:    .cfi_offset r4, -8
 ; DISABLE-V4T-NEXT:    sub sp, #16
 ; DISABLE-V4T-NEXT:    .cfi_def_cfa_offset 24
+; DISABLE-V4T-NEXT:    movs r3, r1
 ; DISABLE-V4T-NEXT:    cmp r0, #0
 ; DISABLE-V4T-NEXT:    beq LBB8_2
 ; DISABLE-V4T-NEXT:  @ %bb.1: @ %if.then
-; DISABLE-V4T-NEXT:    str r1, [sp]
-; DISABLE-V4T-NEXT:    str r1, [sp, #4]
-; DISABLE-V4T-NEXT:    str r1, [sp, #8]
+; DISABLE-V4T-NEXT:    str r3, [sp]
+; DISABLE-V4T-NEXT:    str r3, [sp, #4]
+; DISABLE-V4T-NEXT:    str r3, [sp, #8]
 ; DISABLE-V4T-NEXT:    ldr r0, LCPI8_0
 ; DISABLE-V4T-NEXT:  LPC8_0:
 ; DISABLE-V4T-NEXT:    add r0, pc
 ; DISABLE-V4T-NEXT:    ldr r4, [r0]
-; DISABLE-V4T-NEXT:    movs r0, r1
-; DISABLE-V4T-NEXT:    movs r2, r1
-; DISABLE-V4T-NEXT:    movs r3, r1
+; DISABLE-V4T-NEXT:    movs r0, r3
+; DISABLE-V4T-NEXT:    movs r1, r3
+; DISABLE-V4T-NEXT:    movs r2, r3
 ; DISABLE-V4T-NEXT:    bl Ltmp2
 ; DISABLE-V4T-NEXT:    lsls r0, r0, #3
 ; DISABLE-V4T-NEXT:    b LBB8_3
 ; DISABLE-V4T-NEXT:  LBB8_2: @ %if.else
-; DISABLE-V4T-NEXT:    lsls r0, r1, #1
+; DISABLE-V4T-NEXT:    lsls r0, r3, #1
 ; DISABLE-V4T-NEXT:  LBB8_3: @ %if.end
 ; DISABLE-V4T-NEXT:    add sp, #16
 ; DISABLE-V4T-NEXT:    pop {r4}
@@ -1171,21 +1174,22 @@ define i32 @callVariadicFunc(i32 %cond, i32 %N) {
 ; DISABLE-V5T-NEXT:    .cfi_offset r7, -8
 ; DISABLE-V5T-NEXT:    sub sp, #16
 ; DISABLE-V5T-NEXT:    .cfi_def_cfa_offset 24
+; DISABLE-V5T-NEXT:    movs r3, r1
 ; DISABLE-V5T-NEXT:    cmp r0, #0
 ; DISABLE-V5T-NEXT:    beq LBB8_2
 ; DISABLE-V5T-NEXT:  @ %bb.1: @ %if.then
-; DISABLE-V5T-NEXT:    str r1, [sp]
-; DISABLE-V5T-NEXT:    str r1, [sp, #4]
-; DISABLE-V5T-NEXT:    str r1, [sp, #8]
-; DISABLE-V5T-NEXT:    movs r0, r1
-; DISABLE-V5T-NEXT:    movs r2, r1
-; DISABLE-V5T-NEXT:    movs r3, r1
+; DISABLE-V5T-NEXT:    str r3, [sp]
+; DISABLE-V5T-NEXT:    str r3, [sp, #4]
+; DISABLE-V5T-NEXT:    str r3, [sp, #8]
+; DISABLE-V5T-NEXT:    movs r0, r3
+; DISABLE-V5T-NEXT:    movs r1, r3
+; DISABLE-V5T-NEXT:    movs r2, r3
 ; DISABLE-V5T-NEXT:    bl _someVariadicFunc
 ; DISABLE-V5T-NEXT:    lsls r0, r0, #3
 ; DISABLE-V5T-NEXT:    add sp, #16
 ; DISABLE-V5T-NEXT:    pop {r7, pc}
 ; DISABLE-V5T-NEXT:  LBB8_2: @ %if.else
-; DISABLE-V5T-NEXT:    lsls r0, r1, #1
+; DISABLE-V5T-NEXT:    lsls r0, r3, #1
 ; DISABLE-V5T-NEXT:    add sp, #16
 ; DISABLE-V5T-NEXT:    pop {r7, pc}
 entry:

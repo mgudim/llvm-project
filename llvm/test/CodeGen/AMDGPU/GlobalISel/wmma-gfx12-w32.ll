@@ -5,10 +5,20 @@
 define amdgpu_ps void @test_wmma_f32_16x16x16_f16(<8 x half> %A, <8 x half> %B, <8 x float> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_f32_16x16x16_f16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_f32_16x16x16_f16 v[8:15], v[0:3], v[4:7], v[8:15]
+; GCN-NEXT:    v_dual_mov_b32 v18, v0 :: v_dual_mov_b32 v19, v1
+; GCN-NEXT:    v_dual_mov_b32 v20, v2 :: v_dual_mov_b32 v21, v3
+; GCN-NEXT:    v_dual_mov_b32 v22, v4 :: v_dual_mov_b32 v23, v5
+; GCN-NEXT:    v_dual_mov_b32 v24, v6 :: v_dual_mov_b32 v25, v7
+; GCN-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GCN-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GCN-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GCN-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GCN-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_wmma_f32_16x16x16_f16 v[0:7], v[18:21], v[22:25], v[0:7]
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[16:17], v[8:11], off
-; GCN-NEXT:    global_store_b128 v[16:17], v[12:15], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.wmma.f32.16x16x16.f16.v8f32.v8f16.v8f16.v8f32(<8 x half> %A, <8 x half> %B, <8 x float> %C)
@@ -19,10 +29,20 @@ bb:
 define amdgpu_ps void @test_wmma_f32_16x16x16_bf16(<8 x i16> %A, <8 x i16> %B, <8 x float> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_f32_16x16x16_bf16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_f32_16x16x16_bf16 v[8:15], v[0:3], v[4:7], v[8:15]
+; GCN-NEXT:    v_dual_mov_b32 v18, v0 :: v_dual_mov_b32 v19, v1
+; GCN-NEXT:    v_dual_mov_b32 v20, v2 :: v_dual_mov_b32 v21, v3
+; GCN-NEXT:    v_dual_mov_b32 v22, v4 :: v_dual_mov_b32 v23, v5
+; GCN-NEXT:    v_dual_mov_b32 v24, v6 :: v_dual_mov_b32 v25, v7
+; GCN-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GCN-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GCN-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GCN-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GCN-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_wmma_f32_16x16x16_bf16 v[0:7], v[18:21], v[22:25], v[0:7]
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[16:17], v[8:11], off
-; GCN-NEXT:    global_store_b128 v[16:17], v[12:15], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.wmma.f32.16x16x16.bf16.v8f32.v8i16.v8i16.v8f32(<8 x i16> %A, <8 x i16> %B, <8 x float> %C)
@@ -57,10 +77,18 @@ bb:
 define amdgpu_ps void @test_wmma_i32_16x16x16_iu8(<2 x i32> %A, <2 x i32> %B, <8 x i32> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_i32_16x16x16_iu8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_i32_16x16x16_iu8 v[4:11], v[0:1], v[2:3], v[4:11]
+; GCN-NEXT:    v_dual_mov_b32 v14, v0 :: v_dual_mov_b32 v15, v1
+; GCN-NEXT:    v_dual_mov_b32 v16, v2 :: v_dual_mov_b32 v17, v3
+; GCN-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
+; GCN-NEXT:    v_dual_mov_b32 v2, v6 :: v_dual_mov_b32 v3, v7
+; GCN-NEXT:    v_dual_mov_b32 v4, v8 :: v_dual_mov_b32 v5, v9
+; GCN-NEXT:    v_dual_mov_b32 v6, v10 :: v_dual_mov_b32 v7, v11
+; GCN-NEXT:    v_dual_mov_b32 v8, v12 :: v_dual_mov_b32 v9, v13
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_wmma_i32_16x16x16_iu8 v[0:7], v[14:15], v[16:17], v[0:7]
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[12:13], v[4:7], off
-; GCN-NEXT:    global_store_b128 v[12:13], v[8:11], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x i32> @llvm.amdgcn.wmma.i32.16x16x16.iu8.v8i32.v2i32.v2i32.v8i32(i1 0, <2 x i32> %A, i1 0, <2 x i32> %B, <8 x i32> %C, i1 0)
@@ -85,10 +113,18 @@ bb:
 define amdgpu_ps void @test_wmma_f32_16x16x16_fp8_fp8(<2 x i32> %A, <2 x i32> %B, <8 x float> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_f32_16x16x16_fp8_fp8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_f32_16x16x16_fp8_fp8 v[4:11], v[0:1], v[2:3], v[4:11]
+; GCN-NEXT:    v_dual_mov_b32 v14, v0 :: v_dual_mov_b32 v15, v1
+; GCN-NEXT:    v_dual_mov_b32 v16, v2 :: v_dual_mov_b32 v17, v3
+; GCN-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
+; GCN-NEXT:    v_dual_mov_b32 v2, v6 :: v_dual_mov_b32 v3, v7
+; GCN-NEXT:    v_dual_mov_b32 v4, v8 :: v_dual_mov_b32 v5, v9
+; GCN-NEXT:    v_dual_mov_b32 v6, v10 :: v_dual_mov_b32 v7, v11
+; GCN-NEXT:    v_dual_mov_b32 v8, v12 :: v_dual_mov_b32 v9, v13
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_wmma_f32_16x16x16_fp8_fp8 v[0:7], v[14:15], v[16:17], v[0:7]
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[12:13], v[4:7], off
-; GCN-NEXT:    global_store_b128 v[12:13], v[8:11], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.wmma.f32.16x16x16.fp8.fp8.v8f32.v2i32.v2i32.v8f32(<2 x i32> %A, <2 x i32> %B, <8 x float> %C)
@@ -99,10 +135,18 @@ bb:
 define amdgpu_ps void @test_wmma_f32_16x16x16_bf8_fp8(<2 x i32> %A, <2 x i32> %B, <8 x float> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_f32_16x16x16_bf8_fp8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_f32_16x16x16_bf8_fp8 v[4:11], v[0:1], v[2:3], v[4:11]
+; GCN-NEXT:    v_dual_mov_b32 v14, v0 :: v_dual_mov_b32 v15, v1
+; GCN-NEXT:    v_dual_mov_b32 v16, v2 :: v_dual_mov_b32 v17, v3
+; GCN-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
+; GCN-NEXT:    v_dual_mov_b32 v2, v6 :: v_dual_mov_b32 v3, v7
+; GCN-NEXT:    v_dual_mov_b32 v4, v8 :: v_dual_mov_b32 v5, v9
+; GCN-NEXT:    v_dual_mov_b32 v6, v10 :: v_dual_mov_b32 v7, v11
+; GCN-NEXT:    v_dual_mov_b32 v8, v12 :: v_dual_mov_b32 v9, v13
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_wmma_f32_16x16x16_bf8_fp8 v[0:7], v[14:15], v[16:17], v[0:7]
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[12:13], v[4:7], off
-; GCN-NEXT:    global_store_b128 v[12:13], v[8:11], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.wmma.f32.16x16x16.bf8.fp8.v8f32.v2i32.v2i32.v8f32(<2 x i32> %A, <2 x i32> %B, <8 x float> %C)
@@ -113,10 +157,18 @@ bb:
 define amdgpu_ps void @test_wmma_f32_16x16x16_fp8_bf8(<2 x i32> %A, <2 x i32> %B, <8 x float> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_f32_16x16x16_fp8_bf8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_f32_16x16x16_fp8_bf8 v[4:11], v[0:1], v[2:3], v[4:11]
+; GCN-NEXT:    v_dual_mov_b32 v14, v0 :: v_dual_mov_b32 v15, v1
+; GCN-NEXT:    v_dual_mov_b32 v16, v2 :: v_dual_mov_b32 v17, v3
+; GCN-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
+; GCN-NEXT:    v_dual_mov_b32 v2, v6 :: v_dual_mov_b32 v3, v7
+; GCN-NEXT:    v_dual_mov_b32 v4, v8 :: v_dual_mov_b32 v5, v9
+; GCN-NEXT:    v_dual_mov_b32 v6, v10 :: v_dual_mov_b32 v7, v11
+; GCN-NEXT:    v_dual_mov_b32 v8, v12 :: v_dual_mov_b32 v9, v13
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_wmma_f32_16x16x16_fp8_bf8 v[0:7], v[14:15], v[16:17], v[0:7]
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[12:13], v[4:7], off
-; GCN-NEXT:    global_store_b128 v[12:13], v[8:11], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.wmma.f32.16x16x16.fp8.bf8.v8f32.v2i32.v2i32.v8f32(<2 x i32> %A, <2 x i32> %B, <8 x float> %C)
@@ -127,10 +179,18 @@ bb:
 define amdgpu_ps void @test_wmma_f32_16x16x16_bf8_bf8(<2 x i32> %A, <2 x i32> %B, <8 x float> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_f32_16x16x16_bf8_bf8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_f32_16x16x16_bf8_bf8 v[4:11], v[0:1], v[2:3], v[4:11]
+; GCN-NEXT:    v_dual_mov_b32 v14, v0 :: v_dual_mov_b32 v15, v1
+; GCN-NEXT:    v_dual_mov_b32 v16, v2 :: v_dual_mov_b32 v17, v3
+; GCN-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
+; GCN-NEXT:    v_dual_mov_b32 v2, v6 :: v_dual_mov_b32 v3, v7
+; GCN-NEXT:    v_dual_mov_b32 v4, v8 :: v_dual_mov_b32 v5, v9
+; GCN-NEXT:    v_dual_mov_b32 v6, v10 :: v_dual_mov_b32 v7, v11
+; GCN-NEXT:    v_dual_mov_b32 v8, v12 :: v_dual_mov_b32 v9, v13
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_wmma_f32_16x16x16_bf8_bf8 v[0:7], v[14:15], v[16:17], v[0:7]
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[12:13], v[4:7], off
-; GCN-NEXT:    global_store_b128 v[12:13], v[8:11], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.wmma.f32.16x16x16.bf8.bf8.v8f32.v2i32.v2i32.v8f32(<2 x i32> %A, <2 x i32> %B, <8 x float> %C)
@@ -141,10 +201,18 @@ bb:
 define amdgpu_ps void @test_wmma_i32_16x16x32_iu4(<2 x i32> %A, <2 x i32> %B, <8 x i32> %C, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_wmma_i32_16x16x32_iu4:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_wmma_i32_16x16x32_iu4 v[4:11], v[0:1], v[2:3], v[4:11]
+; GCN-NEXT:    v_dual_mov_b32 v14, v0 :: v_dual_mov_b32 v15, v1
+; GCN-NEXT:    v_dual_mov_b32 v16, v2 :: v_dual_mov_b32 v17, v3
+; GCN-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
+; GCN-NEXT:    v_dual_mov_b32 v2, v6 :: v_dual_mov_b32 v3, v7
+; GCN-NEXT:    v_dual_mov_b32 v4, v8 :: v_dual_mov_b32 v5, v9
+; GCN-NEXT:    v_dual_mov_b32 v6, v10 :: v_dual_mov_b32 v7, v11
+; GCN-NEXT:    v_dual_mov_b32 v8, v12 :: v_dual_mov_b32 v9, v13
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_wmma_i32_16x16x32_iu4 v[0:7], v[14:15], v[16:17], v[0:7]
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[12:13], v[4:7], off
-; GCN-NEXT:    global_store_b128 v[12:13], v[8:11], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x i32> @llvm.amdgcn.wmma.i32.16x16x32.iu4.v8i32.v2i32.v2i32.v8i32(i1 0, <2 x i32> %A, i1 0, <2 x i32> %B, <8 x i32> %C, i1 0)
@@ -156,10 +224,22 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_f16(<8 x half> %A, <16 x half> %B, <8 x float> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_f16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_f16 v[12:19], v[0:3], v[4:11], v20
+; GCN-NEXT:    v_dual_mov_b32 v23, v0 :: v_dual_mov_b32 v24, v1
+; GCN-NEXT:    v_dual_mov_b32 v25, v2 :: v_dual_mov_b32 v26, v3
+; GCN-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
+; GCN-NEXT:    v_dual_mov_b32 v2, v6 :: v_dual_mov_b32 v3, v7
+; GCN-NEXT:    v_dual_mov_b32 v4, v8 :: v_dual_mov_b32 v5, v9
+; GCN-NEXT:    v_dual_mov_b32 v6, v10 :: v_dual_mov_b32 v7, v11
+; GCN-NEXT:    v_dual_mov_b32 v8, v12 :: v_dual_mov_b32 v9, v13
+; GCN-NEXT:    v_dual_mov_b32 v10, v14 :: v_dual_mov_b32 v11, v15
+; GCN-NEXT:    v_dual_mov_b32 v12, v16 :: v_dual_mov_b32 v13, v17
+; GCN-NEXT:    v_dual_mov_b32 v14, v18 :: v_dual_mov_b32 v15, v19
+; GCN-NEXT:    v_dual_mov_b32 v16, v21 :: v_dual_mov_b32 v17, v22
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_f16 v[8:15], v[23:26], v[0:7], v20
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[21:22], v[12:15], off
-; GCN-NEXT:    global_store_b128 v[21:22], v[16:19], off offset:16
+; GCN-NEXT:    global_store_b128 v[16:17], v[8:11], off
+; GCN-NEXT:    global_store_b128 v[16:17], v[12:15], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.swmmac.f32.16x16x32.f16.v8f32.v8f16.v16f16.v8f32.i16(<8 x half> %A, <16 x half> %B, <8 x float> %C, i16 %Index)
@@ -170,10 +250,22 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_bf16(<8 x i16> %A, <16 x i16> %B, <8 x float> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_bf16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_bf16 v[12:19], v[0:3], v[4:11], v20
+; GCN-NEXT:    v_dual_mov_b32 v23, v0 :: v_dual_mov_b32 v24, v1
+; GCN-NEXT:    v_dual_mov_b32 v25, v2 :: v_dual_mov_b32 v26, v3
+; GCN-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
+; GCN-NEXT:    v_dual_mov_b32 v2, v6 :: v_dual_mov_b32 v3, v7
+; GCN-NEXT:    v_dual_mov_b32 v4, v8 :: v_dual_mov_b32 v5, v9
+; GCN-NEXT:    v_dual_mov_b32 v6, v10 :: v_dual_mov_b32 v7, v11
+; GCN-NEXT:    v_dual_mov_b32 v8, v12 :: v_dual_mov_b32 v9, v13
+; GCN-NEXT:    v_dual_mov_b32 v10, v14 :: v_dual_mov_b32 v11, v15
+; GCN-NEXT:    v_dual_mov_b32 v12, v16 :: v_dual_mov_b32 v13, v17
+; GCN-NEXT:    v_dual_mov_b32 v14, v18 :: v_dual_mov_b32 v15, v19
+; GCN-NEXT:    v_dual_mov_b32 v16, v21 :: v_dual_mov_b32 v17, v22
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_bf16 v[8:15], v[23:26], v[0:7], v20
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[21:22], v[12:15], off
-; GCN-NEXT:    global_store_b128 v[21:22], v[16:19], off offset:16
+; GCN-NEXT:    global_store_b128 v[16:17], v[8:11], off
+; GCN-NEXT:    global_store_b128 v[16:17], v[12:15], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.swmmac.f32.16x16x32.bf16.v8f32.v8i16.v16i16.v8f32.i16(<8 x i16> %A, <16 x i16> %B, <8 x float> %C, i16 %Index)
@@ -184,8 +276,18 @@ bb:
 define amdgpu_ps void @test_swmmac_f16_16x16x32_f16(<8 x half> %A, <16 x half> %B, <8 x half> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f16_16x16x32_f16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f16_16x16x32_f16 v[12:15], v[0:3], v[4:11], v16
-; GCN-NEXT:    global_store_b128 v[17:18], v[12:15], off
+; GCN-NEXT:    v_dual_mov_b32 v19, v0 :: v_dual_mov_b32 v20, v1
+; GCN-NEXT:    v_dual_mov_b32 v21, v2 :: v_dual_mov_b32 v22, v3
+; GCN-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
+; GCN-NEXT:    v_dual_mov_b32 v2, v6 :: v_dual_mov_b32 v3, v7
+; GCN-NEXT:    v_dual_mov_b32 v4, v8 :: v_dual_mov_b32 v5, v9
+; GCN-NEXT:    v_dual_mov_b32 v6, v10 :: v_dual_mov_b32 v7, v11
+; GCN-NEXT:    v_dual_mov_b32 v8, v12 :: v_dual_mov_b32 v9, v13
+; GCN-NEXT:    v_dual_mov_b32 v10, v14 :: v_dual_mov_b32 v11, v15
+; GCN-NEXT:    v_dual_mov_b32 v12, v17 :: v_dual_mov_b32 v13, v18
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_f16_16x16x32_f16 v[8:11], v[19:22], v[0:7], v16
+; GCN-NEXT:    global_store_b128 v[12:13], v[8:11], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x half> @llvm.amdgcn.swmmac.f16.16x16x32.f16.v8f16.v8f16.v16f16.v8f16.i16(<8 x half> %A, <16 x half> %B, <8 x half> %C, i16 %Index)
@@ -196,8 +298,18 @@ bb:
 define amdgpu_ps void @test_swmmac_bf16_16x16x32_bf16(<8 x i16> %A, <16 x i16> %B, <8 x i16> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_bf16_16x16x32_bf16:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_bf16_16x16x32_bf16 v[12:15], v[0:3], v[4:11], v16
-; GCN-NEXT:    global_store_b128 v[17:18], v[12:15], off
+; GCN-NEXT:    v_dual_mov_b32 v19, v0 :: v_dual_mov_b32 v20, v1
+; GCN-NEXT:    v_dual_mov_b32 v21, v2 :: v_dual_mov_b32 v22, v3
+; GCN-NEXT:    v_dual_mov_b32 v0, v4 :: v_dual_mov_b32 v1, v5
+; GCN-NEXT:    v_dual_mov_b32 v2, v6 :: v_dual_mov_b32 v3, v7
+; GCN-NEXT:    v_dual_mov_b32 v4, v8 :: v_dual_mov_b32 v5, v9
+; GCN-NEXT:    v_dual_mov_b32 v6, v10 :: v_dual_mov_b32 v7, v11
+; GCN-NEXT:    v_dual_mov_b32 v8, v12 :: v_dual_mov_b32 v9, v13
+; GCN-NEXT:    v_dual_mov_b32 v10, v14 :: v_dual_mov_b32 v11, v15
+; GCN-NEXT:    v_dual_mov_b32 v12, v17 :: v_dual_mov_b32 v13, v18
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_bf16_16x16x32_bf16 v[8:11], v[19:22], v[0:7], v16
+; GCN-NEXT:    global_store_b128 v[12:13], v[8:11], off
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x i16> @llvm.amdgcn.swmmac.bf16.16x16x32.bf16.v8i16.v8i16.v16i16.v8i16.i16(<8 x i16> %A, <16 x i16> %B, <8 x i16> %C, i16 %Index)
@@ -208,10 +320,19 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x32_iu8(<2 x i32> %A, <4 x i32> %B, <8 x i32> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x32_iu8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x32_iu8 v[6:13], v[0:1], v[2:5], v14
+; GCN-NEXT:    v_dual_mov_b32 v21, v0 :: v_dual_mov_b32 v22, v1
+; GCN-NEXT:    v_dual_mov_b32 v17, v2 :: v_dual_mov_b32 v18, v3
+; GCN-NEXT:    v_dual_mov_b32 v19, v4 :: v_dual_mov_b32 v20, v5
+; GCN-NEXT:    v_dual_mov_b32 v0, v6 :: v_dual_mov_b32 v1, v7
+; GCN-NEXT:    v_dual_mov_b32 v2, v8 :: v_dual_mov_b32 v3, v9
+; GCN-NEXT:    v_dual_mov_b32 v4, v10 :: v_dual_mov_b32 v5, v11
+; GCN-NEXT:    v_dual_mov_b32 v6, v12 :: v_dual_mov_b32 v7, v13
+; GCN-NEXT:    v_dual_mov_b32 v8, v15 :: v_dual_mov_b32 v9, v16
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_i32_16x16x32_iu8 v[0:7], v[21:22], v[17:20], v14
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[15:16], v[6:9], off
-; GCN-NEXT:    global_store_b128 v[15:16], v[10:13], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x i32> @llvm.amdgcn.swmmac.i32.16x16x32.iu8.v8i32.v2i32.v4i32.v8i32.i16(i1 0, <2 x i32> %A, i1 0, <4 x i32> %B, <8 x i32> %C, i16 %Index, i1 0)
@@ -222,10 +343,17 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x32_iu4(i32 %A, <2 x i32> %B, <8 x i32> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x32_iu4:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x32_iu4 v[3:10], v0, v[1:2], v11
+; GCN-NEXT:    v_dual_mov_b32 v14, v1 :: v_dual_mov_b32 v15, v2
+; GCN-NEXT:    v_dual_mov_b32 v1, v3 :: v_dual_mov_b32 v2, v4
+; GCN-NEXT:    v_dual_mov_b32 v3, v5 :: v_dual_mov_b32 v4, v6
+; GCN-NEXT:    v_dual_mov_b32 v5, v7 :: v_dual_mov_b32 v6, v8
+; GCN-NEXT:    v_dual_mov_b32 v7, v9 :: v_dual_mov_b32 v8, v10
+; GCN-NEXT:    v_dual_mov_b32 v9, v12 :: v_dual_mov_b32 v10, v13
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_i32_16x16x32_iu4 v[1:8], v0, v[14:15], v11
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[12:13], v[3:6], off
-; GCN-NEXT:    global_store_b128 v[12:13], v[7:10], off offset:16
+; GCN-NEXT:    global_store_b128 v[9:10], v[1:4], off
+; GCN-NEXT:    global_store_b128 v[9:10], v[5:8], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x i32> @llvm.amdgcn.swmmac.i32.16x16x32.iu4.v8i32.i32.v2i32.v8i32.i16(i1 0, i32 %A, i1 0, <2 x i32> %B, <8 x i32> %C, i16 %Index, i1 0)
@@ -236,10 +364,19 @@ bb:
 define amdgpu_ps void @test_swmmac_i32_16x16x64_iu4(<2 x i32> %A, <4 x i32> %B, <8 x i32> %C, i32 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_i32_16x16x64_iu4:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_i32_16x16x64_iu4 v[6:13], v[0:1], v[2:5], v14
+; GCN-NEXT:    v_dual_mov_b32 v21, v0 :: v_dual_mov_b32 v22, v1
+; GCN-NEXT:    v_dual_mov_b32 v17, v2 :: v_dual_mov_b32 v18, v3
+; GCN-NEXT:    v_dual_mov_b32 v19, v4 :: v_dual_mov_b32 v20, v5
+; GCN-NEXT:    v_dual_mov_b32 v0, v6 :: v_dual_mov_b32 v1, v7
+; GCN-NEXT:    v_dual_mov_b32 v2, v8 :: v_dual_mov_b32 v3, v9
+; GCN-NEXT:    v_dual_mov_b32 v4, v10 :: v_dual_mov_b32 v5, v11
+; GCN-NEXT:    v_dual_mov_b32 v6, v12 :: v_dual_mov_b32 v7, v13
+; GCN-NEXT:    v_dual_mov_b32 v8, v15 :: v_dual_mov_b32 v9, v16
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_i32_16x16x64_iu4 v[0:7], v[21:22], v[17:20], v14
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[15:16], v[6:9], off
-; GCN-NEXT:    global_store_b128 v[15:16], v[10:13], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x i32> @llvm.amdgcn.swmmac.i32.16x16x64.iu4.v8i32.v2i32.v4i32.v8i32.i32(i1 0, <2 x i32> %A, i1 0, <4 x i32> %B, <8 x i32> %C, i32 %Index, i1 0)
@@ -250,10 +387,19 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_fp8_fp8(<2 x i32> %A, <4 x i32> %B, <8 x float> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_fp8_fp8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_fp8_fp8 v[6:13], v[0:1], v[2:5], v14
+; GCN-NEXT:    v_dual_mov_b32 v21, v0 :: v_dual_mov_b32 v22, v1
+; GCN-NEXT:    v_dual_mov_b32 v17, v2 :: v_dual_mov_b32 v18, v3
+; GCN-NEXT:    v_dual_mov_b32 v19, v4 :: v_dual_mov_b32 v20, v5
+; GCN-NEXT:    v_dual_mov_b32 v0, v6 :: v_dual_mov_b32 v1, v7
+; GCN-NEXT:    v_dual_mov_b32 v2, v8 :: v_dual_mov_b32 v3, v9
+; GCN-NEXT:    v_dual_mov_b32 v4, v10 :: v_dual_mov_b32 v5, v11
+; GCN-NEXT:    v_dual_mov_b32 v6, v12 :: v_dual_mov_b32 v7, v13
+; GCN-NEXT:    v_dual_mov_b32 v8, v15 :: v_dual_mov_b32 v9, v16
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_fp8_fp8 v[0:7], v[21:22], v[17:20], v14
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[15:16], v[6:9], off
-; GCN-NEXT:    global_store_b128 v[15:16], v[10:13], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.swmmac.f32.16x16x32.fp8.fp8.v8f32.v2i32.v4i32.v8f32.i16(<2 x i32> %A, <4 x i32> %B, <8 x float> %C, i16 %Index)
@@ -264,10 +410,19 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_fp8_bf8(<2 x i32> %A, <4 x i32> %B, <8 x float> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_fp8_bf8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_fp8_bf8 v[6:13], v[0:1], v[2:5], v14
+; GCN-NEXT:    v_dual_mov_b32 v21, v0 :: v_dual_mov_b32 v22, v1
+; GCN-NEXT:    v_dual_mov_b32 v17, v2 :: v_dual_mov_b32 v18, v3
+; GCN-NEXT:    v_dual_mov_b32 v19, v4 :: v_dual_mov_b32 v20, v5
+; GCN-NEXT:    v_dual_mov_b32 v0, v6 :: v_dual_mov_b32 v1, v7
+; GCN-NEXT:    v_dual_mov_b32 v2, v8 :: v_dual_mov_b32 v3, v9
+; GCN-NEXT:    v_dual_mov_b32 v4, v10 :: v_dual_mov_b32 v5, v11
+; GCN-NEXT:    v_dual_mov_b32 v6, v12 :: v_dual_mov_b32 v7, v13
+; GCN-NEXT:    v_dual_mov_b32 v8, v15 :: v_dual_mov_b32 v9, v16
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_fp8_bf8 v[0:7], v[21:22], v[17:20], v14
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[15:16], v[6:9], off
-; GCN-NEXT:    global_store_b128 v[15:16], v[10:13], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.swmmac.f32.16x16x32.fp8.bf8.v8f32.v2i32.v4i32.v8f32.i16(<2 x i32> %A, <4 x i32> %B, <8 x float> %C, i16 %Index)
@@ -278,10 +433,19 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_bf8_fp8(<2 x i32> %A, <4 x i32> %B, <8 x float> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_bf8_fp8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_bf8_fp8 v[6:13], v[0:1], v[2:5], v14
+; GCN-NEXT:    v_dual_mov_b32 v21, v0 :: v_dual_mov_b32 v22, v1
+; GCN-NEXT:    v_dual_mov_b32 v17, v2 :: v_dual_mov_b32 v18, v3
+; GCN-NEXT:    v_dual_mov_b32 v19, v4 :: v_dual_mov_b32 v20, v5
+; GCN-NEXT:    v_dual_mov_b32 v0, v6 :: v_dual_mov_b32 v1, v7
+; GCN-NEXT:    v_dual_mov_b32 v2, v8 :: v_dual_mov_b32 v3, v9
+; GCN-NEXT:    v_dual_mov_b32 v4, v10 :: v_dual_mov_b32 v5, v11
+; GCN-NEXT:    v_dual_mov_b32 v6, v12 :: v_dual_mov_b32 v7, v13
+; GCN-NEXT:    v_dual_mov_b32 v8, v15 :: v_dual_mov_b32 v9, v16
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_bf8_fp8 v[0:7], v[21:22], v[17:20], v14
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[15:16], v[6:9], off
-; GCN-NEXT:    global_store_b128 v[15:16], v[10:13], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.swmmac.f32.16x16x32.bf8.fp8.v8f32.v2i32.v4i32.v8f32.i16(<2 x i32> %A, <4 x i32> %B, <8 x float> %C, i16 %Index)
@@ -292,10 +456,19 @@ bb:
 define amdgpu_ps void @test_swmmac_f32_16x16x32_bf8_bf8(<2 x i32> %A, <4 x i32> %B, <8 x float> %C, i16 %Index, ptr addrspace(1) %out) {
 ; GCN-LABEL: test_swmmac_f32_16x16x32_bf8_bf8:
 ; GCN:       ; %bb.0: ; %bb
-; GCN-NEXT:    v_swmmac_f32_16x16x32_bf8_bf8 v[6:13], v[0:1], v[2:5], v14
+; GCN-NEXT:    v_dual_mov_b32 v21, v0 :: v_dual_mov_b32 v22, v1
+; GCN-NEXT:    v_dual_mov_b32 v17, v2 :: v_dual_mov_b32 v18, v3
+; GCN-NEXT:    v_dual_mov_b32 v19, v4 :: v_dual_mov_b32 v20, v5
+; GCN-NEXT:    v_dual_mov_b32 v0, v6 :: v_dual_mov_b32 v1, v7
+; GCN-NEXT:    v_dual_mov_b32 v2, v8 :: v_dual_mov_b32 v3, v9
+; GCN-NEXT:    v_dual_mov_b32 v4, v10 :: v_dual_mov_b32 v5, v11
+; GCN-NEXT:    v_dual_mov_b32 v6, v12 :: v_dual_mov_b32 v7, v13
+; GCN-NEXT:    v_dual_mov_b32 v8, v15 :: v_dual_mov_b32 v9, v16
+; GCN-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GCN-NEXT:    v_swmmac_f32_16x16x32_bf8_bf8 v[0:7], v[21:22], v[17:20], v14
 ; GCN-NEXT:    s_clause 0x1
-; GCN-NEXT:    global_store_b128 v[15:16], v[6:9], off
-; GCN-NEXT:    global_store_b128 v[15:16], v[10:13], off offset:16
+; GCN-NEXT:    global_store_b128 v[8:9], v[0:3], off
+; GCN-NEXT:    global_store_b128 v[8:9], v[4:7], off offset:16
 ; GCN-NEXT:    s_endpgm
 bb:
   %res = call <8 x float> @llvm.amdgcn.swmmac.f32.16x16x32.bf8.bf8.v8f32.v2i32.v4i32.v8f32.i16(<2 x i32> %A, <4 x i32> %B, <8 x float> %C, i16 %Index)

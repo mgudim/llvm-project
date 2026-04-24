@@ -271,8 +271,8 @@ define i64 @caller_large_struct() nounwind {
 define i128 @callee_small_scalar_ret() nounwind {
 ; CHECK-LABEL: callee_small_scalar_ret:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    addi.w $a0, $zero, -1
-; CHECK-NEXT:    move $a1, $a0
+; CHECK-NEXT:    addi.w $a1, $zero, -1
+; CHECK-NEXT:    move $a0, $a1
 ; CHECK-NEXT:    ret
   ret i128 -1
 }

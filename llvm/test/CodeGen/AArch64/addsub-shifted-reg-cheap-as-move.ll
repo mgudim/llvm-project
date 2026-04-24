@@ -15,13 +15,15 @@ define void @f0(i1 %c0, i1 %c1, ptr %a, i64 %i) {
 ; CHECK-NEXT:    str x30, [sp, #-16]! // 8-byte Folded Spill
 ; CHECK-NEXT:    .cfi_def_cfa_offset 16
 ; CHECK-NEXT:    .cfi_offset w30, -16
-; CHECK-NEXT:    add x0, x2, x3, lsl #5
-; CHECK-NEXT:    tbz w1, #0, .LBB0_3
+; CHECK-NEXT:    mov w8, w1
+; CHECK-NEXT:    add x1, x2, x3, lsl #5
+; CHECK-NEXT:    tbz w8, #0, .LBB0_3
 ; CHECK-NEXT:  // %bb.2: // %B
+; CHECK-NEXT:    mov x0, x1
 ; CHECK-NEXT:    bl g
 ; CHECK-NEXT:    b .LBB0_4
 ; CHECK-NEXT:  .LBB0_3: // %C
-; CHECK-NEXT:    mov x1, x0
+; CHECK-NEXT:    mov x0, x1
 ; CHECK-NEXT:    bl g
 ; CHECK-NEXT:  .LBB0_4:
 ; CHECK-NEXT:    ldr x30, [sp], #16 // 8-byte Folded Reload
@@ -35,13 +37,15 @@ define void @f0(i1 %c0, i1 %c1, ptr %a, i64 %i) {
 ; LSLFAST-NEXT:    str x30, [sp, #-16]! // 8-byte Folded Spill
 ; LSLFAST-NEXT:    .cfi_def_cfa_offset 16
 ; LSLFAST-NEXT:    .cfi_offset w30, -16
-; LSLFAST-NEXT:    add x0, x2, x3, lsl #5
-; LSLFAST-NEXT:    tbz w1, #0, .LBB0_3
+; LSLFAST-NEXT:    mov w8, w1
+; LSLFAST-NEXT:    add x1, x2, x3, lsl #5
+; LSLFAST-NEXT:    tbz w8, #0, .LBB0_3
 ; LSLFAST-NEXT:  // %bb.2: // %B
+; LSLFAST-NEXT:    mov x0, x1
 ; LSLFAST-NEXT:    bl g
 ; LSLFAST-NEXT:    b .LBB0_4
 ; LSLFAST-NEXT:  .LBB0_3: // %C
-; LSLFAST-NEXT:    mov x1, x0
+; LSLFAST-NEXT:    mov x0, x1
 ; LSLFAST-NEXT:    bl g
 ; LSLFAST-NEXT:  .LBB0_4:
 ; LSLFAST-NEXT:    ldr x30, [sp], #16 // 8-byte Folded Reload
@@ -77,13 +81,15 @@ define void @f1(i1 %c0, i1 %c1, ptr %a, i64 %i) {
 ; CHECK-NEXT:    str x30, [sp, #-16]! // 8-byte Folded Spill
 ; CHECK-NEXT:    .cfi_def_cfa_offset 16
 ; CHECK-NEXT:    .cfi_offset w30, -16
-; CHECK-NEXT:    add x0, x2, x3, lsl #4
-; CHECK-NEXT:    tbz w1, #0, .LBB1_3
+; CHECK-NEXT:    mov w8, w1
+; CHECK-NEXT:    add x1, x2, x3, lsl #4
+; CHECK-NEXT:    tbz w8, #0, .LBB1_3
 ; CHECK-NEXT:  // %bb.2: // %B
+; CHECK-NEXT:    mov x0, x1
 ; CHECK-NEXT:    bl g
 ; CHECK-NEXT:    b .LBB1_4
 ; CHECK-NEXT:  .LBB1_3: // %C
-; CHECK-NEXT:    mov x1, x0
+; CHECK-NEXT:    mov x0, x1
 ; CHECK-NEXT:    bl g
 ; CHECK-NEXT:  .LBB1_4:
 ; CHECK-NEXT:    ldr x30, [sp], #16 // 8-byte Folded Reload
@@ -97,15 +103,15 @@ define void @f1(i1 %c0, i1 %c1, ptr %a, i64 %i) {
 ; LSLFAST-NEXT:    str x30, [sp, #-16]! // 8-byte Folded Spill
 ; LSLFAST-NEXT:    .cfi_def_cfa_offset 16
 ; LSLFAST-NEXT:    .cfi_offset w30, -16
-; LSLFAST-NEXT:    add x8, x2, x3, lsl #4
-; LSLFAST-NEXT:    tbz w1, #0, .LBB1_3
+; LSLFAST-NEXT:    mov w8, w1
+; LSLFAST-NEXT:    add x1, x2, x3, lsl #4
+; LSLFAST-NEXT:    tbz w8, #0, .LBB1_3
 ; LSLFAST-NEXT:  // %bb.2: // %B
-; LSLFAST-NEXT:    mov x0, x8
+; LSLFAST-NEXT:    mov x0, x1
 ; LSLFAST-NEXT:    bl g
 ; LSLFAST-NEXT:    b .LBB1_4
 ; LSLFAST-NEXT:  .LBB1_3: // %C
 ; LSLFAST-NEXT:    add x0, x2, x3, lsl #4
-; LSLFAST-NEXT:    mov x1, x8
 ; LSLFAST-NEXT:    bl g
 ; LSLFAST-NEXT:  .LBB1_4:
 ; LSLFAST-NEXT:    ldr x30, [sp], #16 // 8-byte Folded Reload

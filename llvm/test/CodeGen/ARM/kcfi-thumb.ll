@@ -137,16 +137,16 @@ define void @f4_r2_r3_live(ptr noundef %x, i32 %a, i32 %b, i32 %c, i32 %d) !kcfi
 ; CHECK:       @ %bb.0:
 ; CHECK-NEXT:    .save {r4, r5, r7, lr}
 ; CHECK-NEXT:    push {r4, r5, r7, lr}
-; CHECK-NEXT:    mov r5, r3
-; CHECK-NEXT:    mov r4, r0
-; CHECK-NEXT:    ldr r3, [sp, #16]
+; CHECK-NEXT:    mov r5, r0
+; CHECK-NEXT:    ldr r4, [sp, #16]
 ; CHECK-NEXT:    mov r0, r1
 ; CHECK-NEXT:    mov r1, r2
-; CHECK-NEXT:    mov r2, r5
+; CHECK-NEXT:    mov r2, r3
+; CHECK-NEXT:    mov r3, r4
 ; CHECK-NEXT:    push {r3}
 ; CHECK-NEXT:    push {r2}
 ; CHECK-NEXT:    movs r3, #1
-; CHECK-NEXT:    mov r2, r4
+; CHECK-NEXT:    mov r2, r5
 ; CHECK-NEXT:    bics r2, r3
 ; CHECK-NEXT:    subs r2, #4
 ; CHECK-NEXT:    ldr r2, [r2]
@@ -163,7 +163,7 @@ define void @f4_r2_r3_live(ptr noundef %x, i32 %a, i32 %b, i32 %c, i32 %d) !kcfi
 ; CHECK-NEXT:    beq .Ltmp3
 ; CHECK-NEXT:    bkpt #0
 ; CHECK-NEXT:  .Ltmp3:
-; CHECK-NEXT:    blx r4
+; CHECK-NEXT:    blx r5
 ; CHECK-NEXT:    pop {r4, r5, r7, pc}
 ; Compiler shuffles: r3→r5, target→r4, d→r3 (from stack), a→r0, b→r1, c→r2
 ; Then pushes r3 (d value), then r2, uses R3 as temp, R2 as scratch

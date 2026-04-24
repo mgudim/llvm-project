@@ -150,17 +150,21 @@ define void @interleaved_buffer_and_dma(ptr addrspace(8) inreg %buf, ptr addrspa
 ; WITHASYNC-LABEL: interleaved_buffer_and_dma:
 ; WITHASYNC:       ; %bb.0: ; %entry
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; WITHASYNC-NEXT:    s_mov_b32 s7, s19
+; WITHASYNC-NEXT:    s_mov_b32 s6, s18
+; WITHASYNC-NEXT:    s_mov_b32 s5, s17
+; WITHASYNC-NEXT:    s_mov_b32 s4, s16
 ; WITHASYNC-NEXT:    s_mov_b32 m0, s20
 ; WITHASYNC-NEXT:    global_load_dword v6, v[2:3], off
 ; WITHASYNC-NEXT:    global_load_dword v7, v[0:1], off
 ; WITHASYNC-NEXT:    v_mov_b32_e32 v8, 0x54
 ; WITHASYNC-NEXT:    ; wave barrier
-; WITHASYNC-NEXT:    buffer_load_dword v8, s[16:19], 0 offen lds
+; WITHASYNC-NEXT:    buffer_load_dword v8, s[4:7], 0 offen lds
 ; WITHASYNC-NEXT:    ; asyncmark
 ; WITHASYNC-NEXT:    global_load_dword v0, v[0:1], off
 ; WITHASYNC-NEXT:    v_mov_b32_e32 v1, 0x58
 ; WITHASYNC-NEXT:    ; wave barrier
-; WITHASYNC-NEXT:    buffer_load_dword v1, s[16:19], 0 offen lds
+; WITHASYNC-NEXT:    buffer_load_dword v1, s[4:7], 0 offen lds
 ; WITHASYNC-NEXT:    ; wave barrier
 ; WITHASYNC-NEXT:    global_load_dword v1, v[2:3], off
 ; WITHASYNC-NEXT:    v_mov_b32_e32 v2, s20
@@ -183,17 +187,21 @@ define void @interleaved_buffer_and_dma(ptr addrspace(8) inreg %buf, ptr addrspa
 ; WITHOUT-LABEL: interleaved_buffer_and_dma:
 ; WITHOUT:       ; %bb.0: ; %entry
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; WITHOUT-NEXT:    s_mov_b32 s7, s19
+; WITHOUT-NEXT:    s_mov_b32 s6, s18
+; WITHOUT-NEXT:    s_mov_b32 s5, s17
+; WITHOUT-NEXT:    s_mov_b32 s4, s16
 ; WITHOUT-NEXT:    s_mov_b32 m0, s20
 ; WITHOUT-NEXT:    global_load_dword v6, v[2:3], off
 ; WITHOUT-NEXT:    global_load_dword v7, v[0:1], off
 ; WITHOUT-NEXT:    v_mov_b32_e32 v8, 0x54
 ; WITHOUT-NEXT:    ; wave barrier
-; WITHOUT-NEXT:    buffer_load_dword v8, s[16:19], 0 offen lds
+; WITHOUT-NEXT:    buffer_load_dword v8, s[4:7], 0 offen lds
 ; WITHOUT-NEXT:    ; asyncmark
 ; WITHOUT-NEXT:    global_load_dword v0, v[0:1], off
 ; WITHOUT-NEXT:    v_mov_b32_e32 v1, 0x58
 ; WITHOUT-NEXT:    ; wave barrier
-; WITHOUT-NEXT:    buffer_load_dword v1, s[16:19], 0 offen lds
+; WITHOUT-NEXT:    buffer_load_dword v1, s[4:7], 0 offen lds
 ; WITHOUT-NEXT:    ; wave barrier
 ; WITHOUT-NEXT:    global_load_dword v1, v[2:3], off
 ; WITHOUT-NEXT:    v_mov_b32_e32 v2, s20
@@ -251,18 +259,22 @@ define void @fence_with_asyncmark(ptr addrspace(8) inreg %buf, ptr addrspace(1) 
 ; WITHASYNC-LABEL: fence_with_asyncmark:
 ; WITHASYNC:       ; %bb.0: ; %entry
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; WITHASYNC-NEXT:    s_mov_b32 s7, s19
+; WITHASYNC-NEXT:    s_mov_b32 s6, s18
+; WITHASYNC-NEXT:    s_mov_b32 s5, s17
+; WITHASYNC-NEXT:    s_mov_b32 s4, s16
 ; WITHASYNC-NEXT:    s_mov_b32 m0, s20
 ; WITHASYNC-NEXT:    global_load_dword v6, v[2:3], off
 ; WITHASYNC-NEXT:    global_load_dword v7, v[0:1], off
 ; WITHASYNC-NEXT:    v_mov_b32_e32 v8, 0x54
 ; WITHASYNC-NEXT:    ; wave barrier
-; WITHASYNC-NEXT:    buffer_load_dword v8, s[16:19], 0 offen lds
+; WITHASYNC-NEXT:    buffer_load_dword v8, s[4:7], 0 offen lds
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(0)
 ; WITHASYNC-NEXT:    ; asyncmark
 ; WITHASYNC-NEXT:    global_load_dword v0, v[0:1], off
 ; WITHASYNC-NEXT:    v_mov_b32_e32 v1, 0x58
 ; WITHASYNC-NEXT:    ; wave barrier
-; WITHASYNC-NEXT:    buffer_load_dword v1, s[16:19], 0 offen lds
+; WITHASYNC-NEXT:    buffer_load_dword v1, s[4:7], 0 offen lds
 ; WITHASYNC-NEXT:    ; wave barrier
 ; WITHASYNC-NEXT:    global_load_dword v1, v[2:3], off
 ; WITHASYNC-NEXT:    v_mov_b32_e32 v2, s20
@@ -284,18 +296,22 @@ define void @fence_with_asyncmark(ptr addrspace(8) inreg %buf, ptr addrspace(1) 
 ; WITHOUT-LABEL: fence_with_asyncmark:
 ; WITHOUT:       ; %bb.0: ; %entry
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
+; WITHOUT-NEXT:    s_mov_b32 s7, s19
+; WITHOUT-NEXT:    s_mov_b32 s6, s18
+; WITHOUT-NEXT:    s_mov_b32 s5, s17
+; WITHOUT-NEXT:    s_mov_b32 s4, s16
 ; WITHOUT-NEXT:    s_mov_b32 m0, s20
 ; WITHOUT-NEXT:    global_load_dword v6, v[2:3], off
 ; WITHOUT-NEXT:    global_load_dword v7, v[0:1], off
 ; WITHOUT-NEXT:    v_mov_b32_e32 v8, 0x54
 ; WITHOUT-NEXT:    ; wave barrier
-; WITHOUT-NEXT:    buffer_load_dword v8, s[16:19], 0 offen lds
+; WITHOUT-NEXT:    buffer_load_dword v8, s[4:7], 0 offen lds
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(0)
 ; WITHOUT-NEXT:    ; asyncmark
 ; WITHOUT-NEXT:    global_load_dword v0, v[0:1], off
 ; WITHOUT-NEXT:    v_mov_b32_e32 v1, 0x58
 ; WITHOUT-NEXT:    ; wave barrier
-; WITHOUT-NEXT:    buffer_load_dword v1, s[16:19], 0 offen lds
+; WITHOUT-NEXT:    buffer_load_dword v1, s[4:7], 0 offen lds
 ; WITHOUT-NEXT:    ; wave barrier
 ; WITHOUT-NEXT:    global_load_dword v1, v[2:3], off
 ; WITHOUT-NEXT:    v_mov_b32_e32 v2, s20
@@ -358,11 +374,15 @@ define void @test_pipelined_loop(ptr addrspace(1) %foo, ptr addrspace(3) %lds, p
 ; WITHASYNC:       ; %bb.0: ; %prolog
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; WITHASYNC-NEXT:    v_readfirstlane_b32 s4, v2
+; WITHASYNC-NEXT:    v_mov_b32_e32 v6, v1
+; WITHASYNC-NEXT:    v_mov_b32_e32 v5, v0
 ; WITHASYNC-NEXT:    s_mov_b32 m0, s4
-; WITHASYNC-NEXT:    v_mov_b32_e32 v5, 0
-; WITHASYNC-NEXT:    global_load_dword v[0:1], off lds
+; WITHASYNC-NEXT:    v_mov_b32_e32 v1, v4
+; WITHASYNC-NEXT:    global_load_dword v[5:6], off lds
 ; WITHASYNC-NEXT:    ; asyncmark
-; WITHASYNC-NEXT:    global_load_dword v[0:1], off lds
+; WITHASYNC-NEXT:    global_load_dword v[5:6], off lds
+; WITHASYNC-NEXT:    v_mov_b32_e32 v0, v3
+; WITHASYNC-NEXT:    v_mov_b32_e32 v3, 0
 ; WITHASYNC-NEXT:    s_mov_b32 s6, 2
 ; WITHASYNC-NEXT:    s_mov_b64 s[4:5], 0
 ; WITHASYNC-NEXT:    ; asyncmark
@@ -371,26 +391,26 @@ define void @test_pipelined_loop(ptr addrspace(1) %foo, ptr addrspace(3) %lds, p
 ; WITHASYNC-NEXT:    v_readfirstlane_b32 s7, v2
 ; WITHASYNC-NEXT:    s_mov_b32 m0, s7
 ; WITHASYNC-NEXT:    s_add_i32 s6, s6, 1
-; WITHASYNC-NEXT:    global_load_dword v[0:1], off lds
+; WITHASYNC-NEXT:    global_load_dword v[5:6], off lds
 ; WITHASYNC-NEXT:    ; asyncmark
 ; WITHASYNC-NEXT:    ; wait_asyncmark(2)
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(2)
-; WITHASYNC-NEXT:    ds_read_b32 v6, v2
+; WITHASYNC-NEXT:    ds_read_b32 v4, v2
 ; WITHASYNC-NEXT:    v_cmp_ge_i32_e32 vcc, s6, v7
 ; WITHASYNC-NEXT:    s_or_b64 s[4:5], vcc, s[4:5]
 ; WITHASYNC-NEXT:    s_waitcnt lgkmcnt(0)
-; WITHASYNC-NEXT:    v_add_u32_e32 v5, v5, v6
+; WITHASYNC-NEXT:    v_add_u32_e32 v3, v3, v4
 ; WITHASYNC-NEXT:    s_andn2_b64 exec, exec, s[4:5]
 ; WITHASYNC-NEXT:    s_cbranch_execnz .LBB4_1
 ; WITHASYNC-NEXT:  ; %bb.2: ; %epilog
 ; WITHASYNC-NEXT:    s_or_b64 exec, exec, s[4:5]
 ; WITHASYNC-NEXT:    ; wait_asyncmark(1)
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(1)
-; WITHASYNC-NEXT:    ds_read_b32 v0, v2
+; WITHASYNC-NEXT:    ds_read_b32 v2, v2
 ; WITHASYNC-NEXT:    ; wait_asyncmark(0)
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; WITHASYNC-NEXT:    v_add_u32_e32 v0, v5, v0
-; WITHASYNC-NEXT:    global_store_dword v[3:4], v0, off
+; WITHASYNC-NEXT:    v_add_u32_e32 v2, v3, v2
+; WITHASYNC-NEXT:    global_store_dword v[0:1], v2, off
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(0)
 ; WITHASYNC-NEXT:    s_setpc_b64 s[30:31]
 ;
@@ -398,11 +418,15 @@ define void @test_pipelined_loop(ptr addrspace(1) %foo, ptr addrspace(3) %lds, p
 ; WITHOUT:       ; %bb.0: ; %prolog
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; WITHOUT-NEXT:    v_readfirstlane_b32 s4, v2
+; WITHOUT-NEXT:    v_mov_b32_e32 v6, v1
+; WITHOUT-NEXT:    v_mov_b32_e32 v5, v0
 ; WITHOUT-NEXT:    s_mov_b32 m0, s4
-; WITHOUT-NEXT:    v_mov_b32_e32 v5, 0
-; WITHOUT-NEXT:    global_load_dword v[0:1], off lds
+; WITHOUT-NEXT:    v_mov_b32_e32 v1, v4
+; WITHOUT-NEXT:    global_load_dword v[5:6], off lds
 ; WITHOUT-NEXT:    ; asyncmark
-; WITHOUT-NEXT:    global_load_dword v[0:1], off lds
+; WITHOUT-NEXT:    global_load_dword v[5:6], off lds
+; WITHOUT-NEXT:    v_mov_b32_e32 v0, v3
+; WITHOUT-NEXT:    v_mov_b32_e32 v3, 0
 ; WITHOUT-NEXT:    s_mov_b32 s6, 2
 ; WITHOUT-NEXT:    s_mov_b64 s[4:5], 0
 ; WITHOUT-NEXT:    ; asyncmark
@@ -411,25 +435,25 @@ define void @test_pipelined_loop(ptr addrspace(1) %foo, ptr addrspace(3) %lds, p
 ; WITHOUT-NEXT:    v_readfirstlane_b32 s7, v2
 ; WITHOUT-NEXT:    s_mov_b32 m0, s7
 ; WITHOUT-NEXT:    s_add_i32 s6, s6, 1
-; WITHOUT-NEXT:    global_load_dword v[0:1], off lds
+; WITHOUT-NEXT:    global_load_dword v[5:6], off lds
 ; WITHOUT-NEXT:    ; asyncmark
 ; WITHOUT-NEXT:    ; wait_asyncmark(2)
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(0)
-; WITHOUT-NEXT:    ds_read_b32 v6, v2
+; WITHOUT-NEXT:    ds_read_b32 v4, v2
 ; WITHOUT-NEXT:    v_cmp_ge_i32_e32 vcc, s6, v7
 ; WITHOUT-NEXT:    s_or_b64 s[4:5], vcc, s[4:5]
 ; WITHOUT-NEXT:    s_waitcnt lgkmcnt(0)
-; WITHOUT-NEXT:    v_add_u32_e32 v5, v5, v6
+; WITHOUT-NEXT:    v_add_u32_e32 v3, v3, v4
 ; WITHOUT-NEXT:    s_andn2_b64 exec, exec, s[4:5]
 ; WITHOUT-NEXT:    s_cbranch_execnz .LBB4_1
 ; WITHOUT-NEXT:  ; %bb.2: ; %epilog
 ; WITHOUT-NEXT:    s_or_b64 exec, exec, s[4:5]
 ; WITHOUT-NEXT:    ; wait_asyncmark(1)
-; WITHOUT-NEXT:    ds_read_b32 v0, v2
+; WITHOUT-NEXT:    ds_read_b32 v2, v2
 ; WITHOUT-NEXT:    ; wait_asyncmark(0)
 ; WITHOUT-NEXT:    s_waitcnt lgkmcnt(0)
-; WITHOUT-NEXT:    v_add_u32_e32 v0, v5, v0
-; WITHOUT-NEXT:    global_store_dword v[3:4], v0, off
+; WITHOUT-NEXT:    v_add_u32_e32 v2, v3, v2
+; WITHOUT-NEXT:    global_store_dword v[0:1], v2, off
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(0)
 ; WITHOUT-NEXT:    s_setpc_b64 s[30:31]
 prolog:
@@ -483,37 +507,41 @@ define void @test_pipelined_loop_with_global(ptr addrspace(1) %foo, ptr addrspac
 ; WITHASYNC:       ; %bb.0: ; %prolog
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; WITHASYNC-NEXT:    v_readfirstlane_b32 s4, v2
+; WITHASYNC-NEXT:    v_mov_b32_e32 v9, v1
+; WITHASYNC-NEXT:    v_mov_b32_e32 v8, v0
 ; WITHASYNC-NEXT:    s_mov_b32 m0, s4
-; WITHASYNC-NEXT:    global_load_dword v10, v[0:1], off
+; WITHASYNC-NEXT:    v_mov_b32_e32 v1, v6
+; WITHASYNC-NEXT:    v_mov_b32_e32 v0, v5
+; WITHASYNC-NEXT:    global_load_dword v10, v[8:9], off
 ; WITHASYNC-NEXT:    global_load_dword v14, v[3:4], off
 ; WITHASYNC-NEXT:    s_mov_b32 s6, 2
-; WITHASYNC-NEXT:    global_load_dword v[0:1], off lds
+; WITHASYNC-NEXT:    global_load_dword v[8:9], off lds
 ; WITHASYNC-NEXT:    ; asyncmark
-; WITHASYNC-NEXT:    global_load_dword v8, v[0:1], off
-; WITHASYNC-NEXT:    global_load_dword v9, v[3:4], off
+; WITHASYNC-NEXT:    global_load_dword v5, v[8:9], off
+; WITHASYNC-NEXT:    global_load_dword v6, v[3:4], off
 ; WITHASYNC-NEXT:    s_mov_b64 s[4:5], 0
-; WITHASYNC-NEXT:    global_load_dword v[0:1], off lds
+; WITHASYNC-NEXT:    global_load_dword v[8:9], off lds
 ; WITHASYNC-NEXT:    ; asyncmark
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(2)
-; WITHASYNC-NEXT:    v_mov_b32_e32 v13, v8
+; WITHASYNC-NEXT:    v_mov_b32_e32 v13, v5
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(1)
-; WITHASYNC-NEXT:    v_mov_b32_e32 v15, v9
+; WITHASYNC-NEXT:    v_mov_b32_e32 v15, v6
 ; WITHASYNC-NEXT:  .LBB5_1: ; %loop_body
 ; WITHASYNC-NEXT:    ; =>This Inner Loop Header: Depth=1
 ; WITHASYNC-NEXT:    v_readfirstlane_b32 s7, v2
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(1)
 ; WITHASYNC-NEXT:    v_mov_b32_e32 v12, v15
 ; WITHASYNC-NEXT:    v_mov_b32_e32 v11, v13
-; WITHASYNC-NEXT:    global_load_dword v13, v[0:1], off
+; WITHASYNC-NEXT:    global_load_dword v13, v[8:9], off
 ; WITHASYNC-NEXT:    global_load_dword v15, v[3:4], off
 ; WITHASYNC-NEXT:    s_mov_b32 m0, s7
 ; WITHASYNC-NEXT:    s_add_i32 s6, s6, 1
-; WITHASYNC-NEXT:    global_load_dword v[0:1], off lds
+; WITHASYNC-NEXT:    global_load_dword v[8:9], off lds
 ; WITHASYNC-NEXT:    v_cmp_ge_i32_e32 vcc, s6, v7
 ; WITHASYNC-NEXT:    v_mov_b32_e32 v16, v14
 ; WITHASYNC-NEXT:    v_mov_b32_e32 v17, v10
-; WITHASYNC-NEXT:    v_mov_b32_e32 v10, v8
-; WITHASYNC-NEXT:    v_mov_b32_e32 v14, v9
+; WITHASYNC-NEXT:    v_mov_b32_e32 v10, v5
+; WITHASYNC-NEXT:    v_mov_b32_e32 v14, v6
 ; WITHASYNC-NEXT:    s_or_b64 s[4:5], vcc, s[4:5]
 ; WITHASYNC-NEXT:    ; asyncmark
 ; WITHASYNC-NEXT:    ; wait_asyncmark(2)
@@ -521,22 +549,22 @@ define void @test_pipelined_loop_with_global(ptr addrspace(1) %foo, ptr addrspac
 ; WITHASYNC-NEXT:    s_cbranch_execnz .LBB5_1
 ; WITHASYNC-NEXT:  ; %bb.2: ; %epilog
 ; WITHASYNC-NEXT:    s_or_b64 exec, exec, s[4:5]
-; WITHASYNC-NEXT:    ds_read_b32 v0, v2
+; WITHASYNC-NEXT:    ds_read_b32 v3, v2
 ; WITHASYNC-NEXT:    ; wait_asyncmark(1)
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(3)
-; WITHASYNC-NEXT:    ds_read_b32 v1, v2
+; WITHASYNC-NEXT:    ds_read_b32 v4, v2
 ; WITHASYNC-NEXT:    ; wait_asyncmark(0)
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(0)
 ; WITHASYNC-NEXT:    ds_read_b32 v2, v2
-; WITHASYNC-NEXT:    v_add_u32_e32 v3, v17, v16
+; WITHASYNC-NEXT:    v_add_u32_e32 v5, v17, v16
 ; WITHASYNC-NEXT:    s_waitcnt lgkmcnt(2)
-; WITHASYNC-NEXT:    v_add3_u32 v0, v3, v0, v12
+; WITHASYNC-NEXT:    v_add3_u32 v3, v5, v3, v12
 ; WITHASYNC-NEXT:    s_waitcnt lgkmcnt(1)
-; WITHASYNC-NEXT:    v_add3_u32 v0, v11, v0, v1
-; WITHASYNC-NEXT:    v_add_u32_e32 v1, v13, v15
+; WITHASYNC-NEXT:    v_add3_u32 v3, v11, v3, v4
+; WITHASYNC-NEXT:    v_add_u32_e32 v4, v13, v15
 ; WITHASYNC-NEXT:    s_waitcnt lgkmcnt(0)
-; WITHASYNC-NEXT:    v_add3_u32 v0, v1, v2, v0
-; WITHASYNC-NEXT:    global_store_dword v[5:6], v0, off
+; WITHASYNC-NEXT:    v_add3_u32 v2, v4, v2, v3
+; WITHASYNC-NEXT:    global_store_dword v[0:1], v2, off
 ; WITHASYNC-NEXT:    s_waitcnt vmcnt(0)
 ; WITHASYNC-NEXT:    s_setpc_b64 s[30:31]
 ;
@@ -544,37 +572,41 @@ define void @test_pipelined_loop_with_global(ptr addrspace(1) %foo, ptr addrspac
 ; WITHOUT:       ; %bb.0: ; %prolog
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; WITHOUT-NEXT:    v_readfirstlane_b32 s4, v2
+; WITHOUT-NEXT:    v_mov_b32_e32 v9, v1
+; WITHOUT-NEXT:    v_mov_b32_e32 v8, v0
 ; WITHOUT-NEXT:    s_mov_b32 m0, s4
-; WITHOUT-NEXT:    global_load_dword v10, v[0:1], off
+; WITHOUT-NEXT:    v_mov_b32_e32 v1, v6
+; WITHOUT-NEXT:    v_mov_b32_e32 v0, v5
+; WITHOUT-NEXT:    global_load_dword v10, v[8:9], off
 ; WITHOUT-NEXT:    global_load_dword v14, v[3:4], off
 ; WITHOUT-NEXT:    s_mov_b32 s6, 2
-; WITHOUT-NEXT:    global_load_dword v[0:1], off lds
+; WITHOUT-NEXT:    global_load_dword v[8:9], off lds
 ; WITHOUT-NEXT:    ; asyncmark
-; WITHOUT-NEXT:    global_load_dword v8, v[0:1], off
-; WITHOUT-NEXT:    global_load_dword v9, v[3:4], off
+; WITHOUT-NEXT:    global_load_dword v5, v[8:9], off
+; WITHOUT-NEXT:    global_load_dword v6, v[3:4], off
 ; WITHOUT-NEXT:    s_mov_b64 s[4:5], 0
-; WITHOUT-NEXT:    global_load_dword v[0:1], off lds
+; WITHOUT-NEXT:    global_load_dword v[8:9], off lds
 ; WITHOUT-NEXT:    ; asyncmark
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(2)
-; WITHOUT-NEXT:    v_mov_b32_e32 v13, v8
+; WITHOUT-NEXT:    v_mov_b32_e32 v13, v5
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(1)
-; WITHOUT-NEXT:    v_mov_b32_e32 v15, v9
+; WITHOUT-NEXT:    v_mov_b32_e32 v15, v6
 ; WITHOUT-NEXT:  .LBB5_1: ; %loop_body
 ; WITHOUT-NEXT:    ; =>This Inner Loop Header: Depth=1
 ; WITHOUT-NEXT:    v_readfirstlane_b32 s7, v2
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(1)
 ; WITHOUT-NEXT:    v_mov_b32_e32 v12, v15
 ; WITHOUT-NEXT:    v_mov_b32_e32 v11, v13
-; WITHOUT-NEXT:    global_load_dword v13, v[0:1], off
+; WITHOUT-NEXT:    global_load_dword v13, v[8:9], off
 ; WITHOUT-NEXT:    global_load_dword v15, v[3:4], off
 ; WITHOUT-NEXT:    s_mov_b32 m0, s7
 ; WITHOUT-NEXT:    s_add_i32 s6, s6, 1
-; WITHOUT-NEXT:    global_load_dword v[0:1], off lds
+; WITHOUT-NEXT:    global_load_dword v[8:9], off lds
 ; WITHOUT-NEXT:    v_cmp_ge_i32_e32 vcc, s6, v7
 ; WITHOUT-NEXT:    v_mov_b32_e32 v16, v14
 ; WITHOUT-NEXT:    v_mov_b32_e32 v17, v10
-; WITHOUT-NEXT:    v_mov_b32_e32 v10, v8
-; WITHOUT-NEXT:    v_mov_b32_e32 v14, v9
+; WITHOUT-NEXT:    v_mov_b32_e32 v10, v5
+; WITHOUT-NEXT:    v_mov_b32_e32 v14, v6
 ; WITHOUT-NEXT:    s_or_b64 s[4:5], vcc, s[4:5]
 ; WITHOUT-NEXT:    ; asyncmark
 ; WITHOUT-NEXT:    ; wait_asyncmark(2)
@@ -583,20 +615,20 @@ define void @test_pipelined_loop_with_global(ptr addrspace(1) %foo, ptr addrspac
 ; WITHOUT-NEXT:  ; %bb.2: ; %epilog
 ; WITHOUT-NEXT:    s_or_b64 exec, exec, s[4:5]
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(0)
-; WITHOUT-NEXT:    ds_read_b32 v0, v2
+; WITHOUT-NEXT:    ds_read_b32 v3, v2
 ; WITHOUT-NEXT:    ; wait_asyncmark(1)
-; WITHOUT-NEXT:    ds_read_b32 v1, v2
+; WITHOUT-NEXT:    ds_read_b32 v4, v2
 ; WITHOUT-NEXT:    ; wait_asyncmark(0)
 ; WITHOUT-NEXT:    ds_read_b32 v2, v2
-; WITHOUT-NEXT:    v_add_u32_e32 v3, v17, v16
+; WITHOUT-NEXT:    v_add_u32_e32 v5, v17, v16
 ; WITHOUT-NEXT:    s_waitcnt lgkmcnt(2)
-; WITHOUT-NEXT:    v_add3_u32 v0, v3, v0, v12
+; WITHOUT-NEXT:    v_add3_u32 v3, v5, v3, v12
 ; WITHOUT-NEXT:    s_waitcnt lgkmcnt(1)
-; WITHOUT-NEXT:    v_add3_u32 v0, v11, v0, v1
-; WITHOUT-NEXT:    v_add_u32_e32 v1, v13, v15
+; WITHOUT-NEXT:    v_add3_u32 v3, v11, v3, v4
+; WITHOUT-NEXT:    v_add_u32_e32 v4, v13, v15
 ; WITHOUT-NEXT:    s_waitcnt lgkmcnt(0)
-; WITHOUT-NEXT:    v_add3_u32 v0, v1, v2, v0
-; WITHOUT-NEXT:    global_store_dword v[5:6], v0, off
+; WITHOUT-NEXT:    v_add3_u32 v2, v4, v2, v3
+; WITHOUT-NEXT:    global_store_dword v[0:1], v2, off
 ; WITHOUT-NEXT:    s_waitcnt vmcnt(0)
 ; WITHOUT-NEXT:    s_setpc_b64 s[30:31]
 prolog:

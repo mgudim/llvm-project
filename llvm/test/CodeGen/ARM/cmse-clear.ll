@@ -167,7 +167,7 @@ define i32 @ns_call(ptr nocapture %fptr) #2 {
 ; CHECK-8M-SOFT-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFT-NEXT:    bic r1, r1, #1
 ; CHECK-8M-SOFT-NEXT:    sub sp, #136
-; CHECK-8M-SOFT-NEXT:    vlstm sp
+; CHECK-8M-SOFT-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-8M-SOFT-NEXT:    mov r2, r1
 ; CHECK-8M-SOFT-NEXT:    mov r3, r1
 ; CHECK-8M-SOFT-NEXT:    mov r4, r1
@@ -181,7 +181,7 @@ define i32 @ns_call(ptr nocapture %fptr) #2 {
 ; CHECK-8M-SOFT-NEXT:    mov r12, r1
 ; CHECK-8M-SOFT-NEXT:    msr apsr_nzcvqg, r1
 ; CHECK-8M-SOFT-NEXT:    blxns r1
-; CHECK-8M-SOFT-NEXT:    vlldm sp
+; CHECK-8M-SOFT-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-8M-SOFT-NEXT:    add sp, #136
 ; CHECK-8M-SOFT-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFT-NEXT:    pop {r7, pc}
@@ -194,7 +194,7 @@ define i32 @ns_call(ptr nocapture %fptr) #2 {
 ; CHECK-8M-SOFTFP-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFTFP-NEXT:    bic r1, r1, #1
 ; CHECK-8M-SOFTFP-NEXT:    sub sp, #136
-; CHECK-8M-SOFTFP-NEXT:    vlstm sp
+; CHECK-8M-SOFTFP-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-8M-SOFTFP-NEXT:    mov r2, r1
 ; CHECK-8M-SOFTFP-NEXT:    mov r3, r1
 ; CHECK-8M-SOFTFP-NEXT:    mov r4, r1
@@ -208,7 +208,7 @@ define i32 @ns_call(ptr nocapture %fptr) #2 {
 ; CHECK-8M-SOFTFP-NEXT:    mov r12, r1
 ; CHECK-8M-SOFTFP-NEXT:    msr apsr_nzcvqg, r1
 ; CHECK-8M-SOFTFP-NEXT:    blxns r1
-; CHECK-8M-SOFTFP-NEXT:    vlldm sp
+; CHECK-8M-SOFTFP-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-8M-SOFTFP-NEXT:    add sp, #136
 ; CHECK-8M-SOFTFP-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFTFP-NEXT:    pop {r7, pc}
@@ -221,10 +221,10 @@ define i32 @ns_call(ptr nocapture %fptr) #2 {
 ; CHECK-81M-SOFT-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFT-NEXT:    bic r1, r1, #1
 ; CHECK-81M-SOFT-NEXT:    sub sp, #136
-; CHECK-81M-SOFT-NEXT:    vlstm sp
+; CHECK-81M-SOFT-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-81M-SOFT-NEXT:    clrm {r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, apsr}
 ; CHECK-81M-SOFT-NEXT:    blxns r1
-; CHECK-81M-SOFT-NEXT:    vlldm sp
+; CHECK-81M-SOFT-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-81M-SOFT-NEXT:    add sp, #136
 ; CHECK-81M-SOFT-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFT-NEXT:    pop {r7, pc}
@@ -237,10 +237,10 @@ define i32 @ns_call(ptr nocapture %fptr) #2 {
 ; CHECK-81M-SOFTFP-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFTFP-NEXT:    bic r1, r1, #1
 ; CHECK-81M-SOFTFP-NEXT:    sub sp, #136
-; CHECK-81M-SOFTFP-NEXT:    vlstm sp
+; CHECK-81M-SOFTFP-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-81M-SOFTFP-NEXT:    clrm {r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, apsr}
 ; CHECK-81M-SOFTFP-NEXT:    blxns r1
-; CHECK-81M-SOFTFP-NEXT:    vlldm sp
+; CHECK-81M-SOFTFP-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-81M-SOFTFP-NEXT:    add sp, #136
 ; CHECK-81M-SOFTFP-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFTFP-NEXT:    pop {r7, pc}
@@ -296,7 +296,7 @@ define i32 @ns_tail_call(ptr nocapture %fptr) #4 {
 ; CHECK-8M-SOFT-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFT-NEXT:    bic r1, r1, #1
 ; CHECK-8M-SOFT-NEXT:    sub sp, #136
-; CHECK-8M-SOFT-NEXT:    vlstm sp
+; CHECK-8M-SOFT-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-8M-SOFT-NEXT:    mov r2, r1
 ; CHECK-8M-SOFT-NEXT:    mov r3, r1
 ; CHECK-8M-SOFT-NEXT:    mov r4, r1
@@ -310,7 +310,7 @@ define i32 @ns_tail_call(ptr nocapture %fptr) #4 {
 ; CHECK-8M-SOFT-NEXT:    mov r12, r1
 ; CHECK-8M-SOFT-NEXT:    msr apsr_nzcvqg, r1
 ; CHECK-8M-SOFT-NEXT:    blxns r1
-; CHECK-8M-SOFT-NEXT:    vlldm sp
+; CHECK-8M-SOFT-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-8M-SOFT-NEXT:    add sp, #136
 ; CHECK-8M-SOFT-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFT-NEXT:    pop {r7, pc}
@@ -323,7 +323,7 @@ define i32 @ns_tail_call(ptr nocapture %fptr) #4 {
 ; CHECK-8M-SOFTFP-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFTFP-NEXT:    bic r1, r1, #1
 ; CHECK-8M-SOFTFP-NEXT:    sub sp, #136
-; CHECK-8M-SOFTFP-NEXT:    vlstm sp
+; CHECK-8M-SOFTFP-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-8M-SOFTFP-NEXT:    mov r2, r1
 ; CHECK-8M-SOFTFP-NEXT:    mov r3, r1
 ; CHECK-8M-SOFTFP-NEXT:    mov r4, r1
@@ -337,7 +337,7 @@ define i32 @ns_tail_call(ptr nocapture %fptr) #4 {
 ; CHECK-8M-SOFTFP-NEXT:    mov r12, r1
 ; CHECK-8M-SOFTFP-NEXT:    msr apsr_nzcvqg, r1
 ; CHECK-8M-SOFTFP-NEXT:    blxns r1
-; CHECK-8M-SOFTFP-NEXT:    vlldm sp
+; CHECK-8M-SOFTFP-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-8M-SOFTFP-NEXT:    add sp, #136
 ; CHECK-8M-SOFTFP-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFTFP-NEXT:    pop {r7, pc}
@@ -350,10 +350,10 @@ define i32 @ns_tail_call(ptr nocapture %fptr) #4 {
 ; CHECK-81M-SOFT-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFT-NEXT:    bic r1, r1, #1
 ; CHECK-81M-SOFT-NEXT:    sub sp, #136
-; CHECK-81M-SOFT-NEXT:    vlstm sp
+; CHECK-81M-SOFT-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-81M-SOFT-NEXT:    clrm {r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, apsr}
 ; CHECK-81M-SOFT-NEXT:    blxns r1
-; CHECK-81M-SOFT-NEXT:    vlldm sp
+; CHECK-81M-SOFT-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-81M-SOFT-NEXT:    add sp, #136
 ; CHECK-81M-SOFT-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFT-NEXT:    pop {r7, pc}
@@ -366,10 +366,10 @@ define i32 @ns_tail_call(ptr nocapture %fptr) #4 {
 ; CHECK-81M-SOFTFP-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFTFP-NEXT:    bic r1, r1, #1
 ; CHECK-81M-SOFTFP-NEXT:    sub sp, #136
-; CHECK-81M-SOFTFP-NEXT:    vlstm sp
+; CHECK-81M-SOFTFP-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-81M-SOFTFP-NEXT:    clrm {r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, apsr}
 ; CHECK-81M-SOFTFP-NEXT:    blxns r1
-; CHECK-81M-SOFTFP-NEXT:    vlldm sp
+; CHECK-81M-SOFTFP-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-81M-SOFTFP-NEXT:    add sp, #136
 ; CHECK-81M-SOFTFP-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFTFP-NEXT:    pop {r7, pc}
@@ -386,53 +386,53 @@ define ptr @ns_tail_call_many_args(ptr %f, i32 %a, i32 %b, i32 %c, i32 %d) #6 {
 ; CHECK-8B-LABEL: ns_tail_call_many_args:
 ; CHECK-8B:       @ %bb.0:
 ; CHECK-8B-NEXT:    push {r4, r5, r7, lr}
-; CHECK-8B-NEXT:    mov r5, r3
-; CHECK-8B-NEXT:    mov r4, r0
-; CHECK-8B-NEXT:    ldr r3, [sp, #16]
+; CHECK-8B-NEXT:    mov r5, r0
+; CHECK-8B-NEXT:    ldr r4, [sp, #16]
 ; CHECK-8B-NEXT:    mov r0, r1
 ; CHECK-8B-NEXT:    mov r1, r2
-; CHECK-8B-NEXT:    mov r2, r5
+; CHECK-8B-NEXT:    mov r2, r3
+; CHECK-8B-NEXT:    mov r3, r4
 ; CHECK-8B-NEXT:    push {r4, r5, r6, r7}
 ; CHECK-8B-NEXT:    mov r7, r11
 ; CHECK-8B-NEXT:    mov r6, r10
-; CHECK-8B-NEXT:    mov r5, r9
-; CHECK-8B-NEXT:    push {r5, r6, r7}
-; CHECK-8B-NEXT:    mov r5, r8
-; CHECK-8B-NEXT:    push {r5}
-; CHECK-8B-NEXT:    mov r5, #1
-; CHECK-8B-NEXT:    bics r4, r5
-; CHECK-8B-NEXT:    mov r5, r4
-; CHECK-8B-NEXT:    mov r6, r4
-; CHECK-8B-NEXT:    mov r7, r4
-; CHECK-8B-NEXT:    mov r8, r4
-; CHECK-8B-NEXT:    mov r9, r4
-; CHECK-8B-NEXT:    mov r10, r4
-; CHECK-8B-NEXT:    mov r11, r4
-; CHECK-8B-NEXT:    mov r12, r4
-; CHECK-8B-NEXT:    msr apsr, r4
-; CHECK-8B-NEXT:    blxns r4
+; CHECK-8B-NEXT:    mov r4, r9
+; CHECK-8B-NEXT:    push {r4, r6, r7}
+; CHECK-8B-NEXT:    mov r4, r8
+; CHECK-8B-NEXT:    push {r4}
+; CHECK-8B-NEXT:    mov r4, #1
+; CHECK-8B-NEXT:    bics r5, r4
+; CHECK-8B-NEXT:    mov r4, r5
+; CHECK-8B-NEXT:    mov r6, r5
+; CHECK-8B-NEXT:    mov r7, r5
+; CHECK-8B-NEXT:    mov r8, r5
+; CHECK-8B-NEXT:    mov r9, r5
+; CHECK-8B-NEXT:    mov r10, r5
+; CHECK-8B-NEXT:    mov r11, r5
+; CHECK-8B-NEXT:    mov r12, r5
+; CHECK-8B-NEXT:    msr apsr, r5
+; CHECK-8B-NEXT:    blxns r5
 ; CHECK-8B-NEXT:    pop {r4, r5, r6, r7}
 ; CHECK-8B-NEXT:    mov r8, r4
 ; CHECK-8B-NEXT:    mov r9, r5
 ; CHECK-8B-NEXT:    mov r10, r6
 ; CHECK-8B-NEXT:    mov r11, r7
 ; CHECK-8B-NEXT:    pop {r4, r5, r6, r7}
-; CHECK-8B-NEXT:    mov r0, r4
+; CHECK-8B-NEXT:    mov r0, r5
 ; CHECK-8B-NEXT:    pop {r4, r5, r7, pc}
 ;
 ; CHECK-8M-SOFT-LABEL: ns_tail_call_many_args:
 ; CHECK-8M-SOFT:       @ %bb.0:
 ; CHECK-8M-SOFT-NEXT:    push {r4, lr}
+; CHECK-8M-SOFT-NEXT:    ldr.w r12, [sp, #8]
 ; CHECK-8M-SOFT-NEXT:    mov r4, r0
-; CHECK-8M-SOFT-NEXT:    mov r12, r3
 ; CHECK-8M-SOFT-NEXT:    mov r0, r1
 ; CHECK-8M-SOFT-NEXT:    mov r1, r2
-; CHECK-8M-SOFT-NEXT:    ldr r3, [sp, #8]
-; CHECK-8M-SOFT-NEXT:    mov r2, r12
+; CHECK-8M-SOFT-NEXT:    mov r2, r3
+; CHECK-8M-SOFT-NEXT:    mov r3, r12
 ; CHECK-8M-SOFT-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFT-NEXT:    bic r4, r4, #1
 ; CHECK-8M-SOFT-NEXT:    sub sp, #136
-; CHECK-8M-SOFT-NEXT:    vlstm sp
+; CHECK-8M-SOFT-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-8M-SOFT-NEXT:    mov r5, r4
 ; CHECK-8M-SOFT-NEXT:    mov r6, r4
 ; CHECK-8M-SOFT-NEXT:    mov r7, r4
@@ -443,7 +443,7 @@ define ptr @ns_tail_call_many_args(ptr %f, i32 %a, i32 %b, i32 %c, i32 %d) #6 {
 ; CHECK-8M-SOFT-NEXT:    mov r12, r4
 ; CHECK-8M-SOFT-NEXT:    msr apsr_nzcvqg, r4
 ; CHECK-8M-SOFT-NEXT:    blxns r4
-; CHECK-8M-SOFT-NEXT:    vlldm sp
+; CHECK-8M-SOFT-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-8M-SOFT-NEXT:    add sp, #136
 ; CHECK-8M-SOFT-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFT-NEXT:    mov r0, r4
@@ -452,16 +452,16 @@ define ptr @ns_tail_call_many_args(ptr %f, i32 %a, i32 %b, i32 %c, i32 %d) #6 {
 ; CHECK-8M-SOFTFP-LABEL: ns_tail_call_many_args:
 ; CHECK-8M-SOFTFP:       @ %bb.0:
 ; CHECK-8M-SOFTFP-NEXT:    push {r4, lr}
+; CHECK-8M-SOFTFP-NEXT:    ldr.w r12, [sp, #8]
 ; CHECK-8M-SOFTFP-NEXT:    mov r4, r0
-; CHECK-8M-SOFTFP-NEXT:    mov r12, r3
 ; CHECK-8M-SOFTFP-NEXT:    mov r0, r1
 ; CHECK-8M-SOFTFP-NEXT:    mov r1, r2
-; CHECK-8M-SOFTFP-NEXT:    ldr r3, [sp, #8]
-; CHECK-8M-SOFTFP-NEXT:    mov r2, r12
+; CHECK-8M-SOFTFP-NEXT:    mov r2, r3
+; CHECK-8M-SOFTFP-NEXT:    mov r3, r12
 ; CHECK-8M-SOFTFP-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFTFP-NEXT:    bic r4, r4, #1
 ; CHECK-8M-SOFTFP-NEXT:    sub sp, #136
-; CHECK-8M-SOFTFP-NEXT:    vlstm sp
+; CHECK-8M-SOFTFP-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-8M-SOFTFP-NEXT:    mov r5, r4
 ; CHECK-8M-SOFTFP-NEXT:    mov r6, r4
 ; CHECK-8M-SOFTFP-NEXT:    mov r7, r4
@@ -472,7 +472,7 @@ define ptr @ns_tail_call_many_args(ptr %f, i32 %a, i32 %b, i32 %c, i32 %d) #6 {
 ; CHECK-8M-SOFTFP-NEXT:    mov r12, r4
 ; CHECK-8M-SOFTFP-NEXT:    msr apsr_nzcvqg, r4
 ; CHECK-8M-SOFTFP-NEXT:    blxns r4
-; CHECK-8M-SOFTFP-NEXT:    vlldm sp
+; CHECK-8M-SOFTFP-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-8M-SOFTFP-NEXT:    add sp, #136
 ; CHECK-8M-SOFTFP-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFTFP-NEXT:    mov r0, r4
@@ -481,19 +481,19 @@ define ptr @ns_tail_call_many_args(ptr %f, i32 %a, i32 %b, i32 %c, i32 %d) #6 {
 ; CHECK-81M-SOFT-LABEL: ns_tail_call_many_args:
 ; CHECK-81M-SOFT:       @ %bb.0:
 ; CHECK-81M-SOFT-NEXT:    push {r4, lr}
+; CHECK-81M-SOFT-NEXT:    ldr.w r12, [sp, #8]
 ; CHECK-81M-SOFT-NEXT:    mov r4, r0
-; CHECK-81M-SOFT-NEXT:    mov r12, r3
 ; CHECK-81M-SOFT-NEXT:    mov r0, r1
 ; CHECK-81M-SOFT-NEXT:    mov r1, r2
-; CHECK-81M-SOFT-NEXT:    ldr r3, [sp, #8]
-; CHECK-81M-SOFT-NEXT:    mov r2, r12
+; CHECK-81M-SOFT-NEXT:    mov r2, r3
+; CHECK-81M-SOFT-NEXT:    mov r3, r12
 ; CHECK-81M-SOFT-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFT-NEXT:    bic r4, r4, #1
 ; CHECK-81M-SOFT-NEXT:    sub sp, #136
-; CHECK-81M-SOFT-NEXT:    vlstm sp
+; CHECK-81M-SOFT-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-81M-SOFT-NEXT:    clrm {r5, r6, r7, r8, r9, r10, r11, r12, apsr}
 ; CHECK-81M-SOFT-NEXT:    blxns r4
-; CHECK-81M-SOFT-NEXT:    vlldm sp
+; CHECK-81M-SOFT-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-81M-SOFT-NEXT:    add sp, #136
 ; CHECK-81M-SOFT-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFT-NEXT:    mov r0, r4
@@ -502,19 +502,19 @@ define ptr @ns_tail_call_many_args(ptr %f, i32 %a, i32 %b, i32 %c, i32 %d) #6 {
 ; CHECK-81M-SOFTFP-LABEL: ns_tail_call_many_args:
 ; CHECK-81M-SOFTFP:       @ %bb.0:
 ; CHECK-81M-SOFTFP-NEXT:    push {r4, lr}
+; CHECK-81M-SOFTFP-NEXT:    ldr.w r12, [sp, #8]
 ; CHECK-81M-SOFTFP-NEXT:    mov r4, r0
-; CHECK-81M-SOFTFP-NEXT:    mov r12, r3
 ; CHECK-81M-SOFTFP-NEXT:    mov r0, r1
 ; CHECK-81M-SOFTFP-NEXT:    mov r1, r2
-; CHECK-81M-SOFTFP-NEXT:    ldr r3, [sp, #8]
-; CHECK-81M-SOFTFP-NEXT:    mov r2, r12
+; CHECK-81M-SOFTFP-NEXT:    mov r2, r3
+; CHECK-81M-SOFTFP-NEXT:    mov r3, r12
 ; CHECK-81M-SOFTFP-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFTFP-NEXT:    bic r4, r4, #1
 ; CHECK-81M-SOFTFP-NEXT:    sub sp, #136
-; CHECK-81M-SOFTFP-NEXT:    vlstm sp
+; CHECK-81M-SOFTFP-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-81M-SOFTFP-NEXT:    clrm {r5, r6, r7, r8, r9, r10, r11, r12, apsr}
 ; CHECK-81M-SOFTFP-NEXT:    blxns r4
-; CHECK-81M-SOFTFP-NEXT:    vlldm sp
+; CHECK-81M-SOFTFP-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-81M-SOFTFP-NEXT:    add sp, #136
 ; CHECK-81M-SOFTFP-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFTFP-NEXT:    mov r0, r4
@@ -567,7 +567,7 @@ define i32 @ns_call_void(i32 %reg0, ptr nocapture %fptr) #8 {
 ; CHECK-8M-SOFT-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFT-NEXT:    bic r1, r1, #1
 ; CHECK-8M-SOFT-NEXT:    sub sp, #136
-; CHECK-8M-SOFT-NEXT:    vlstm sp
+; CHECK-8M-SOFT-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-8M-SOFT-NEXT:    mov r0, r1
 ; CHECK-8M-SOFT-NEXT:    mov r2, r1
 ; CHECK-8M-SOFT-NEXT:    mov r3, r1
@@ -582,7 +582,7 @@ define i32 @ns_call_void(i32 %reg0, ptr nocapture %fptr) #8 {
 ; CHECK-8M-SOFT-NEXT:    mov r12, r1
 ; CHECK-8M-SOFT-NEXT:    msr apsr_nzcvqg, r1
 ; CHECK-8M-SOFT-NEXT:    blxns r1
-; CHECK-8M-SOFT-NEXT:    vlldm sp
+; CHECK-8M-SOFT-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-8M-SOFT-NEXT:    add sp, #136
 ; CHECK-8M-SOFT-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFT-NEXT:    pop {r7, pc}
@@ -593,7 +593,7 @@ define i32 @ns_call_void(i32 %reg0, ptr nocapture %fptr) #8 {
 ; CHECK-8M-SOFTFP-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFTFP-NEXT:    bic r1, r1, #1
 ; CHECK-8M-SOFTFP-NEXT:    sub sp, #136
-; CHECK-8M-SOFTFP-NEXT:    vlstm sp
+; CHECK-8M-SOFTFP-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-8M-SOFTFP-NEXT:    mov r0, r1
 ; CHECK-8M-SOFTFP-NEXT:    mov r2, r1
 ; CHECK-8M-SOFTFP-NEXT:    mov r3, r1
@@ -608,7 +608,7 @@ define i32 @ns_call_void(i32 %reg0, ptr nocapture %fptr) #8 {
 ; CHECK-8M-SOFTFP-NEXT:    mov r12, r1
 ; CHECK-8M-SOFTFP-NEXT:    msr apsr_nzcvqg, r1
 ; CHECK-8M-SOFTFP-NEXT:    blxns r1
-; CHECK-8M-SOFTFP-NEXT:    vlldm sp
+; CHECK-8M-SOFTFP-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-8M-SOFTFP-NEXT:    add sp, #136
 ; CHECK-8M-SOFTFP-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-8M-SOFTFP-NEXT:    pop {r7, pc}
@@ -619,10 +619,10 @@ define i32 @ns_call_void(i32 %reg0, ptr nocapture %fptr) #8 {
 ; CHECK-81M-SOFT-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFT-NEXT:    bic r1, r1, #1
 ; CHECK-81M-SOFT-NEXT:    sub sp, #136
-; CHECK-81M-SOFT-NEXT:    vlstm sp
+; CHECK-81M-SOFT-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-81M-SOFT-NEXT:    clrm {r0, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, apsr}
 ; CHECK-81M-SOFT-NEXT:    blxns r1
-; CHECK-81M-SOFT-NEXT:    vlldm sp
+; CHECK-81M-SOFT-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-81M-SOFT-NEXT:    add sp, #136
 ; CHECK-81M-SOFT-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFT-NEXT:    pop {r7, pc}
@@ -633,10 +633,10 @@ define i32 @ns_call_void(i32 %reg0, ptr nocapture %fptr) #8 {
 ; CHECK-81M-SOFTFP-NEXT:    push.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFTFP-NEXT:    bic r1, r1, #1
 ; CHECK-81M-SOFTFP-NEXT:    sub sp, #136
-; CHECK-81M-SOFTFP-NEXT:    vlstm sp
+; CHECK-81M-SOFTFP-NEXT:    vlstm sp, {d0 - d15}
 ; CHECK-81M-SOFTFP-NEXT:    clrm {r0, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, apsr}
 ; CHECK-81M-SOFTFP-NEXT:    blxns r1
-; CHECK-81M-SOFTFP-NEXT:    vlldm sp
+; CHECK-81M-SOFTFP-NEXT:    vlldm sp, {d0 - d15}
 ; CHECK-81M-SOFTFP-NEXT:    add sp, #136
 ; CHECK-81M-SOFTFP-NEXT:    pop.w {r4, r5, r6, r7, r8, r9, r10, r11}
 ; CHECK-81M-SOFTFP-NEXT:    pop {r7, pc}

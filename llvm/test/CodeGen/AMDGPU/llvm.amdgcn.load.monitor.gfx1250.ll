@@ -77,13 +77,23 @@ entry:
 }
 
 define amdgpu_ps void @global_load_monitor_b128_vaddr_seq_cst_workgroup(ptr addrspace(1) %addr, ptr addrspace(1) %use) {
-; GFX1250-LABEL: global_load_monitor_b128_vaddr_seq_cst_workgroup:
-; GFX1250:       ; %bb.0: ; %entry
-; GFX1250-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-NEXT:    global_load_monitor_b128 v[4:7], v[0:1], off offset:32
-; GFX1250-NEXT:    s_wait_loadcnt 0x0
-; GFX1250-NEXT:    global_store_b128 v[2:3], v[4:7], off
-; GFX1250-NEXT:    s_endpgm
+; GFX1250-SDAG-LABEL: global_load_monitor_b128_vaddr_seq_cst_workgroup:
+; GFX1250-SDAG:       ; %bb.0: ; %entry
+; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v5, v3 :: v_dual_mov_b32 v4, v2
+; GFX1250-SDAG-NEXT:    global_load_monitor_b128 v[0:3], v[0:1], off offset:32
+; GFX1250-SDAG-NEXT:    s_wait_loadcnt 0x0
+; GFX1250-SDAG-NEXT:    global_store_b128 v[4:5], v[0:3], off
+; GFX1250-SDAG-NEXT:    s_endpgm
+;
+; GFX1250-GISEL-LABEL: global_load_monitor_b128_vaddr_seq_cst_workgroup:
+; GFX1250-GISEL:       ; %bb.0: ; %entry
+; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v4, v2 :: v_dual_mov_b32 v5, v3
+; GFX1250-GISEL-NEXT:    global_load_monitor_b128 v[0:3], v[0:1], off offset:32
+; GFX1250-GISEL-NEXT:    s_wait_loadcnt 0x0
+; GFX1250-GISEL-NEXT:    global_store_b128 v[4:5], v[0:3], off
+; GFX1250-GISEL-NEXT:    s_endpgm
 entry:
   %gep = getelementptr i64, ptr addrspace(1) %addr, i32 4
   %val = call <4 x i32> @llvm.amdgcn.global.load.monitor.b128.v4i32(ptr addrspace(1) %gep, i32 5, metadata !2)
@@ -92,14 +102,25 @@ entry:
 }
 
 define amdgpu_ps void @global_load_monitor_b128_saddr_seq_cst_workgroup(ptr addrspace(1) inreg %addr, ptr addrspace(1) %use) {
-; GFX1250-LABEL: global_load_monitor_b128_saddr_seq_cst_workgroup:
-; GFX1250:       ; %bb.0: ; %entry
-; GFX1250-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-NEXT:    v_mov_b32_e32 v2, 0
-; GFX1250-NEXT:    global_load_monitor_b128 v[2:5], v2, s[0:1] offset:32
-; GFX1250-NEXT:    s_wait_loadcnt 0x0
-; GFX1250-NEXT:    global_store_b128 v[0:1], v[2:5], off
-; GFX1250-NEXT:    s_endpgm
+; GFX1250-SDAG-LABEL: global_load_monitor_b128_saddr_seq_cst_workgroup:
+; GFX1250-SDAG:       ; %bb.0: ; %entry
+; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX1250-SDAG-NEXT:    v_mov_b32_e32 v0, 0
+; GFX1250-SDAG-NEXT:    global_load_monitor_b128 v[0:3], v0, s[0:1] offset:32
+; GFX1250-SDAG-NEXT:    s_wait_loadcnt 0x0
+; GFX1250-SDAG-NEXT:    global_store_b128 v[4:5], v[0:3], off
+; GFX1250-SDAG-NEXT:    s_endpgm
+;
+; GFX1250-GISEL-LABEL: global_load_monitor_b128_saddr_seq_cst_workgroup:
+; GFX1250-GISEL:       ; %bb.0: ; %entry
+; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v4, v0 :: v_dual_mov_b32 v5, v1
+; GFX1250-GISEL-NEXT:    v_mov_b32_e32 v0, 0
+; GFX1250-GISEL-NEXT:    global_load_monitor_b128 v[0:3], v0, s[0:1] offset:32
+; GFX1250-GISEL-NEXT:    s_wait_loadcnt 0x0
+; GFX1250-GISEL-NEXT:    global_store_b128 v[4:5], v[0:3], off
+; GFX1250-GISEL-NEXT:    s_endpgm
 entry:
   %gep = getelementptr i64, ptr addrspace(1) %addr, i32 4
   %val = call <4 x i32> @llvm.amdgcn.global.load.monitor.b128.v4i32(ptr addrspace(1) %gep, i32 5, metadata !2)
@@ -142,15 +163,27 @@ entry:
 }
 
 define amdgpu_ps void @flat_load_monitor_b128_acquire_sys(ptr %addr, ptr addrspace(1) %use) {
-; GFX1250-LABEL: flat_load_monitor_b128_acquire_sys:
-; GFX1250:       ; %bb.0: ; %entry
-; GFX1250-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GFX1250-NEXT:    flat_load_monitor_b128 v[4:7], v[0:1] offset:32 scope:SCOPE_SYS
-; GFX1250-NEXT:    s_wait_loadcnt_dscnt 0x0
-; GFX1250-NEXT:    global_inv scope:SCOPE_SYS
-; GFX1250-NEXT:    s_wait_loadcnt 0x0
-; GFX1250-NEXT:    global_store_b128 v[2:3], v[4:7], off
-; GFX1250-NEXT:    s_endpgm
+; GFX1250-SDAG-LABEL: flat_load_monitor_b128_acquire_sys:
+; GFX1250-SDAG:       ; %bb.0: ; %entry
+; GFX1250-SDAG-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
+; GFX1250-SDAG-NEXT:    v_dual_mov_b32 v5, v3 :: v_dual_mov_b32 v4, v2
+; GFX1250-SDAG-NEXT:    flat_load_monitor_b128 v[0:3], v[0:1] offset:32 scope:SCOPE_SYS
+; GFX1250-SDAG-NEXT:    s_wait_loadcnt_dscnt 0x0
+; GFX1250-SDAG-NEXT:    global_inv scope:SCOPE_SYS
+; GFX1250-SDAG-NEXT:    s_wait_loadcnt 0x0
+; GFX1250-SDAG-NEXT:    global_store_b128 v[4:5], v[0:3], off
+; GFX1250-SDAG-NEXT:    s_endpgm
+;
+; GFX1250-GISEL-LABEL: flat_load_monitor_b128_acquire_sys:
+; GFX1250-GISEL:       ; %bb.0: ; %entry
+; GFX1250-GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
+; GFX1250-GISEL-NEXT:    v_dual_mov_b32 v4, v2 :: v_dual_mov_b32 v5, v3
+; GFX1250-GISEL-NEXT:    flat_load_monitor_b128 v[0:3], v[0:1] offset:32 scope:SCOPE_SYS
+; GFX1250-GISEL-NEXT:    s_wait_loadcnt_dscnt 0x0
+; GFX1250-GISEL-NEXT:    global_inv scope:SCOPE_SYS
+; GFX1250-GISEL-NEXT:    s_wait_loadcnt 0x0
+; GFX1250-GISEL-NEXT:    global_store_b128 v[4:5], v[0:3], off
+; GFX1250-GISEL-NEXT:    s_endpgm
 entry:
   %gep = getelementptr inbounds i64, ptr addrspace(0) %addr, i32 4
   %val = call <4 x i32> @llvm.amdgcn.flat.load.monitor.b128.v4i32(ptr addrspace(0) %gep, i32 2, metadata !0)
@@ -217,6 +250,3 @@ entry:
 !1 = !{ !"agent" }
 !2 = !{ !"workgroup" }
 
-;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
-; GFX1250-GISEL: {{.*}}
-; GFX1250-SDAG: {{.*}}

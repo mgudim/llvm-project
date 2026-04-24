@@ -2421,25 +2421,28 @@ define void @void_func_a5i32_inreg([5 x i32] inreg %arg0, ptr addrspace(1) %ptr)
 ; GFX9-LABEL: void_func_a5i32_inreg:
 ; GFX9:       ; %bb.0:
 ; GFX9-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX9-NEXT:    v_mov_b32_e32 v2, s20
-; GFX9-NEXT:    global_store_dword v[0:1], v2, off offset:16
-; GFX9-NEXT:    v_mov_b32_e32 v5, s19
-; GFX9-NEXT:    v_mov_b32_e32 v4, s18
-; GFX9-NEXT:    v_mov_b32_e32 v3, s17
-; GFX9-NEXT:    v_mov_b32_e32 v2, s16
-; GFX9-NEXT:    global_store_dwordx4 v[0:1], v[2:5], off
+; GFX9-NEXT:    v_mov_b32_e32 v5, v1
+; GFX9-NEXT:    v_mov_b32_e32 v4, v0
+; GFX9-NEXT:    v_mov_b32_e32 v0, s20
+; GFX9-NEXT:    global_store_dword v[4:5], v0, off offset:16
+; GFX9-NEXT:    v_mov_b32_e32 v3, s19
+; GFX9-NEXT:    v_mov_b32_e32 v2, s18
+; GFX9-NEXT:    v_mov_b32_e32 v1, s17
+; GFX9-NEXT:    v_mov_b32_e32 v0, s16
+; GFX9-NEXT:    global_store_dwordx4 v[4:5], v[0:3], off
 ; GFX9-NEXT:    s_waitcnt vmcnt(0)
 ; GFX9-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX11-LABEL: void_func_a5i32_inreg:
 ; GFX11:       ; %bb.0:
 ; GFX11-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX11-NEXT:    v_dual_mov_b32 v6, s16 :: v_dual_mov_b32 v5, s3
-; GFX11-NEXT:    v_dual_mov_b32 v4, s2 :: v_dual_mov_b32 v3, s1
-; GFX11-NEXT:    v_mov_b32_e32 v2, s0
+; GFX11-NEXT:    v_dual_mov_b32 v5, v1 :: v_dual_mov_b32 v4, v0
+; GFX11-NEXT:    v_dual_mov_b32 v6, s16 :: v_dual_mov_b32 v3, s3
+; GFX11-NEXT:    v_dual_mov_b32 v2, s2 :: v_dual_mov_b32 v1, s1
+; GFX11-NEXT:    v_mov_b32_e32 v0, s0
 ; GFX11-NEXT:    s_clause 0x1
-; GFX11-NEXT:    global_store_b32 v[0:1], v6, off offset:16
-; GFX11-NEXT:    global_store_b128 v[0:1], v[2:5], off
+; GFX11-NEXT:    global_store_b32 v[4:5], v6, off offset:16
+; GFX11-NEXT:    global_store_b128 v[4:5], v[0:3], off
 ; GFX11-NEXT:    s_setpc_b64 s[30:31]
   store [5 x i32] %arg0, ptr addrspace(1) %ptr
   ret void
@@ -2457,31 +2460,33 @@ define void @void_func_a13i32_inreg([13  x i32] inreg %arg0, ptr addrspace(1) %p
 ; GFX9-NEXT:    s_or_saveexec_b64 s[40:41], -1
 ; GFX9-NEXT:    buffer_store_dword v40, off, s[0:3], s33 ; 4-byte Folded Spill
 ; GFX9-NEXT:    s_mov_b64 exec, s[40:41]
-; GFX9-NEXT:    v_mov_b32_e32 v2, s28
-; GFX9-NEXT:    global_store_dword v[0:1], v2, off offset:48
-; GFX9-NEXT:    v_mov_b32_e32 v5, s27
-; GFX9-NEXT:    v_mov_b32_e32 v4, s26
-; GFX9-NEXT:    v_mov_b32_e32 v3, s25
-; GFX9-NEXT:    v_mov_b32_e32 v2, s24
+; GFX9-NEXT:    v_mov_b32_e32 v5, v1
+; GFX9-NEXT:    v_mov_b32_e32 v4, v0
+; GFX9-NEXT:    v_mov_b32_e32 v0, s28
+; GFX9-NEXT:    global_store_dword v[4:5], v0, off offset:48
+; GFX9-NEXT:    v_mov_b32_e32 v3, s27
+; GFX9-NEXT:    v_mov_b32_e32 v2, s26
+; GFX9-NEXT:    v_mov_b32_e32 v1, s25
+; GFX9-NEXT:    v_mov_b32_e32 v0, s24
 ; GFX9-NEXT:    s_addk_i32 s32, 0x400
-; GFX9-NEXT:    global_store_dwordx4 v[0:1], v[2:5], off offset:32
+; GFX9-NEXT:    global_store_dwordx4 v[4:5], v[0:3], off offset:32
 ; GFX9-NEXT:    v_writelane_b32 v40, s29, 2
-; GFX9-NEXT:    v_mov_b32_e32 v5, s23
-; GFX9-NEXT:    v_mov_b32_e32 v4, s22
-; GFX9-NEXT:    v_mov_b32_e32 v3, s21
-; GFX9-NEXT:    v_mov_b32_e32 v2, s20
-; GFX9-NEXT:    global_store_dwordx4 v[0:1], v[2:5], off offset:16
+; GFX9-NEXT:    v_mov_b32_e32 v3, s23
+; GFX9-NEXT:    v_mov_b32_e32 v2, s22
+; GFX9-NEXT:    v_mov_b32_e32 v1, s21
+; GFX9-NEXT:    v_mov_b32_e32 v0, s20
+; GFX9-NEXT:    global_store_dwordx4 v[4:5], v[0:3], off offset:16
 ; GFX9-NEXT:    v_writelane_b32 v40, s30, 0
-; GFX9-NEXT:    v_mov_b32_e32 v3, s17
-; GFX9-NEXT:    v_mov_b32_e32 v2, s16
+; GFX9-NEXT:    v_mov_b32_e32 v1, s17
+; GFX9-NEXT:    v_mov_b32_e32 v0, s16
 ; GFX9-NEXT:    s_getpc_b64 s[16:17]
 ; GFX9-NEXT:    s_add_u32 s16, s16, extern@gotpcrel32@lo+4
 ; GFX9-NEXT:    s_addc_u32 s17, s17, extern@gotpcrel32@hi+12
 ; GFX9-NEXT:    s_load_dwordx2 s[16:17], s[16:17], 0x0
-; GFX9-NEXT:    v_mov_b32_e32 v5, s19
-; GFX9-NEXT:    v_mov_b32_e32 v4, s18
+; GFX9-NEXT:    v_mov_b32_e32 v3, s19
+; GFX9-NEXT:    v_mov_b32_e32 v2, s18
 ; GFX9-NEXT:    v_writelane_b32 v40, s31, 1
-; GFX9-NEXT:    global_store_dwordx4 v[0:1], v[2:5], off
+; GFX9-NEXT:    global_store_dwordx4 v[4:5], v[0:3], off
 ; GFX9-NEXT:    s_waitcnt lgkmcnt(0)
 ; GFX9-NEXT:    s_swappc_b64 s[30:31], s[16:17]
 ; GFX9-NEXT:    v_readlane_b32 s31, v40, 1
@@ -2504,24 +2509,25 @@ define void @void_func_a13i32_inreg([13  x i32] inreg %arg0, ptr addrspace(1) %p
 ; GFX11-NEXT:    scratch_store_b32 off, v40, s33 ; 4-byte Folded Spill
 ; GFX11-NEXT:    s_mov_b32 exec_lo, s26
 ; GFX11-NEXT:    s_add_i32 s32, s32, 16
-; GFX11-NEXT:    v_dual_mov_b32 v4, s22 :: v_dual_mov_b32 v3, s21
-; GFX11-NEXT:    v_dual_mov_b32 v2, s20 :: v_dual_mov_b32 v9, s19
+; GFX11-NEXT:    v_dual_mov_b32 v13, v1 :: v_dual_mov_b32 v12, v0
+; GFX11-NEXT:    v_dual_mov_b32 v2, s22 :: v_dual_mov_b32 v1, s21
+; GFX11-NEXT:    v_dual_mov_b32 v0, s20 :: v_dual_mov_b32 v7, s19
 ; GFX11-NEXT:    s_getpc_b64 s[20:21]
 ; GFX11-NEXT:    s_add_u32 s20, s20, extern@gotpcrel32@lo+4
 ; GFX11-NEXT:    s_addc_u32 s21, s21, extern@gotpcrel32@hi+12
-; GFX11-NEXT:    v_dual_mov_b32 v8, s18 :: v_dual_mov_b32 v7, s17
-; GFX11-NEXT:    v_dual_mov_b32 v6, s16 :: v_dual_mov_b32 v13, s3
+; GFX11-NEXT:    v_dual_mov_b32 v6, s18 :: v_dual_mov_b32 v5, s17
+; GFX11-NEXT:    v_dual_mov_b32 v4, s16 :: v_dual_mov_b32 v11, s3
 ; GFX11-NEXT:    s_load_b64 s[16:17], s[20:21], 0x0
 ; GFX11-NEXT:    v_writelane_b32 v40, s25, 2
-; GFX11-NEXT:    v_dual_mov_b32 v14, s24 :: v_dual_mov_b32 v5, s23
-; GFX11-NEXT:    v_dual_mov_b32 v12, s2 :: v_dual_mov_b32 v11, s1
+; GFX11-NEXT:    v_dual_mov_b32 v14, s24 :: v_dual_mov_b32 v3, s23
+; GFX11-NEXT:    v_dual_mov_b32 v10, s2 :: v_dual_mov_b32 v9, s1
 ; GFX11-NEXT:    v_writelane_b32 v40, s30, 0
-; GFX11-NEXT:    v_mov_b32_e32 v10, s0
+; GFX11-NEXT:    v_mov_b32_e32 v8, s0
 ; GFX11-NEXT:    s_clause 0x3
-; GFX11-NEXT:    global_store_b32 v[0:1], v14, off offset:48
-; GFX11-NEXT:    global_store_b128 v[0:1], v[2:5], off offset:32
-; GFX11-NEXT:    global_store_b128 v[0:1], v[6:9], off offset:16
-; GFX11-NEXT:    global_store_b128 v[0:1], v[10:13], off
+; GFX11-NEXT:    global_store_b32 v[12:13], v14, off offset:48
+; GFX11-NEXT:    global_store_b128 v[12:13], v[0:3], off offset:32
+; GFX11-NEXT:    global_store_b128 v[12:13], v[4:7], off offset:16
+; GFX11-NEXT:    global_store_b128 v[12:13], v[8:11], off
 ; GFX11-NEXT:    v_writelane_b32 v40, s31, 1
 ; GFX11-NEXT:    s_waitcnt lgkmcnt(0)
 ; GFX11-NEXT:    s_swappc_b64 s[30:31], s[16:17]
@@ -2568,48 +2574,51 @@ define void @void_func_a16i32_inreg__noimplicit([16 x i32] inreg %arg0, ptr addr
 ; GFX9-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
 ; GFX9-NEXT:    v_readfirstlane_b32 s4, v0
 ; GFX9-NEXT:    v_readfirstlane_b32 s5, v1
-; GFX9-NEXT:    v_mov_b32_e32 v7, s5
-; GFX9-NEXT:    v_mov_b32_e32 v6, s4
-; GFX9-NEXT:    v_mov_b32_e32 v5, s29
-; GFX9-NEXT:    v_mov_b32_e32 v4, s28
-; GFX9-NEXT:    global_store_dwordx4 v[2:3], v[4:7], off offset:48
+; GFX9-NEXT:    v_mov_b32_e32 v5, v3
+; GFX9-NEXT:    v_mov_b32_e32 v4, v2
+; GFX9-NEXT:    v_mov_b32_e32 v3, s5
+; GFX9-NEXT:    v_mov_b32_e32 v2, s4
+; GFX9-NEXT:    v_mov_b32_e32 v1, s29
+; GFX9-NEXT:    v_mov_b32_e32 v0, s28
+; GFX9-NEXT:    global_store_dwordx4 v[4:5], v[0:3], off offset:48
 ; GFX9-NEXT:    s_nop 0
-; GFX9-NEXT:    v_mov_b32_e32 v7, s27
-; GFX9-NEXT:    v_mov_b32_e32 v6, s26
-; GFX9-NEXT:    v_mov_b32_e32 v5, s25
-; GFX9-NEXT:    v_mov_b32_e32 v4, s24
-; GFX9-NEXT:    global_store_dwordx4 v[2:3], v[4:7], off offset:32
+; GFX9-NEXT:    v_mov_b32_e32 v3, s27
+; GFX9-NEXT:    v_mov_b32_e32 v2, s26
+; GFX9-NEXT:    v_mov_b32_e32 v1, s25
+; GFX9-NEXT:    v_mov_b32_e32 v0, s24
+; GFX9-NEXT:    global_store_dwordx4 v[4:5], v[0:3], off offset:32
 ; GFX9-NEXT:    s_nop 0
-; GFX9-NEXT:    v_mov_b32_e32 v7, s23
-; GFX9-NEXT:    v_mov_b32_e32 v6, s22
-; GFX9-NEXT:    v_mov_b32_e32 v5, s21
-; GFX9-NEXT:    v_mov_b32_e32 v4, s20
-; GFX9-NEXT:    global_store_dwordx4 v[2:3], v[4:7], off offset:16
+; GFX9-NEXT:    v_mov_b32_e32 v3, s23
+; GFX9-NEXT:    v_mov_b32_e32 v2, s22
+; GFX9-NEXT:    v_mov_b32_e32 v1, s21
+; GFX9-NEXT:    v_mov_b32_e32 v0, s20
+; GFX9-NEXT:    global_store_dwordx4 v[4:5], v[0:3], off offset:16
 ; GFX9-NEXT:    s_nop 0
-; GFX9-NEXT:    v_mov_b32_e32 v7, s19
-; GFX9-NEXT:    v_mov_b32_e32 v6, s18
-; GFX9-NEXT:    v_mov_b32_e32 v5, s17
-; GFX9-NEXT:    v_mov_b32_e32 v4, s16
-; GFX9-NEXT:    global_store_dwordx4 v[2:3], v[4:7], off
+; GFX9-NEXT:    v_mov_b32_e32 v3, s19
+; GFX9-NEXT:    v_mov_b32_e32 v2, s18
+; GFX9-NEXT:    v_mov_b32_e32 v1, s17
+; GFX9-NEXT:    v_mov_b32_e32 v0, s16
+; GFX9-NEXT:    global_store_dwordx4 v[4:5], v[0:3], off
 ; GFX9-NEXT:    s_waitcnt vmcnt(0)
 ; GFX9-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX11-LABEL: void_func_a16i32_inreg__noimplicit:
 ; GFX11:       ; %bb.0:
 ; GFX11-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX11-NEXT:    v_dual_mov_b32 v5, s27 :: v_dual_mov_b32 v4, s26
-; GFX11-NEXT:    v_dual_mov_b32 v3, s25 :: v_dual_mov_b32 v2, s24
-; GFX11-NEXT:    v_dual_mov_b32 v9, s23 :: v_dual_mov_b32 v8, s22
-; GFX11-NEXT:    v_dual_mov_b32 v7, s21 :: v_dual_mov_b32 v6, s20
-; GFX11-NEXT:    v_dual_mov_b32 v13, s19 :: v_dual_mov_b32 v12, s18
-; GFX11-NEXT:    v_dual_mov_b32 v11, s17 :: v_dual_mov_b32 v10, s16
-; GFX11-NEXT:    v_dual_mov_b32 v17, s3 :: v_dual_mov_b32 v16, s2
-; GFX11-NEXT:    v_dual_mov_b32 v15, s1 :: v_dual_mov_b32 v14, s0
+; GFX11-NEXT:    v_dual_mov_b32 v17, v1 :: v_dual_mov_b32 v16, v0
+; GFX11-NEXT:    v_dual_mov_b32 v3, s27 :: v_dual_mov_b32 v2, s26
+; GFX11-NEXT:    v_dual_mov_b32 v1, s25 :: v_dual_mov_b32 v0, s24
+; GFX11-NEXT:    v_dual_mov_b32 v7, s23 :: v_dual_mov_b32 v6, s22
+; GFX11-NEXT:    v_dual_mov_b32 v5, s21 :: v_dual_mov_b32 v4, s20
+; GFX11-NEXT:    v_dual_mov_b32 v11, s19 :: v_dual_mov_b32 v10, s18
+; GFX11-NEXT:    v_dual_mov_b32 v9, s17 :: v_dual_mov_b32 v8, s16
+; GFX11-NEXT:    v_dual_mov_b32 v15, s3 :: v_dual_mov_b32 v14, s2
+; GFX11-NEXT:    v_dual_mov_b32 v13, s1 :: v_dual_mov_b32 v12, s0
 ; GFX11-NEXT:    s_clause 0x3
-; GFX11-NEXT:    global_store_b128 v[0:1], v[2:5], off offset:48
-; GFX11-NEXT:    global_store_b128 v[0:1], v[6:9], off offset:32
-; GFX11-NEXT:    global_store_b128 v[0:1], v[10:13], off offset:16
-; GFX11-NEXT:    global_store_b128 v[0:1], v[14:17], off
+; GFX11-NEXT:    global_store_b128 v[16:17], v[0:3], off offset:48
+; GFX11-NEXT:    global_store_b128 v[16:17], v[4:7], off offset:32
+; GFX11-NEXT:    global_store_b128 v[16:17], v[8:11], off offset:16
+; GFX11-NEXT:    global_store_b128 v[16:17], v[12:15], off
 ; GFX11-NEXT:    s_setpc_b64 s[30:31]
   store [16 x i32] %arg0, ptr addrspace(1) %ptr
   ret void

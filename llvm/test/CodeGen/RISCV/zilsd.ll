@@ -9,9 +9,10 @@
 define i64 @load(ptr %a) nounwind {
 ; CHECK-LABEL: load:
 ; CHECK:       # %bb.0:
-; CHECK-NEXT:    mv a2, a0
-; CHECK-NEXT:    ld a0, 80(a0)
-; CHECK-NEXT:    ld zero, 0(a2)
+; CHECK-NEXT:    ld a2, 80(a0)
+; CHECK-NEXT:    ld zero, 0(a0)
+; CHECK-NEXT:    mv a0, a2
+; CHECK-NEXT:    mv a1, a3
 ; CHECK-NEXT:    ret
   %1 = getelementptr i64, ptr %a, i32 10
   %2 = load i64, ptr %1
@@ -286,6 +287,11 @@ define void @basic_store_zero_combine(ptr %0, i32 %1, i32 %2) {
 ; FAST:       # %bb.0:
 ; FAST-NEXT:    sd zero, 0(a0)
 ; FAST-NEXT:    ret
+;
+; 4BYTEALIGN-LABEL: basic_store_zero_combine:
+; 4BYTEALIGN:       # %bb.0:
+; 4BYTEALIGN-NEXT:    sd zero, 0(a0)
+; 4BYTEALIGN-NEXT:    ret
   store i32 0, ptr %0, align 4
   %4 = getelementptr inbounds i32, ptr %0, i32 1
   store i32 0, ptr %4, align 4

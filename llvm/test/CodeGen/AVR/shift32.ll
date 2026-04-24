@@ -568,9 +568,9 @@ define i32 @ashr_i32_31(i32 %a) {
 ; CHECK-LABEL: ashr_i32_31:
 ; CHECK:       ; %bb.0:
 ; CHECK-NEXT:    lsl r25
-; CHECK-NEXT:    sbc r22, r22
-; CHECK-NEXT:    mov r23, r22
-; CHECK-NEXT:    movw r24, r22
+; CHECK-NEXT:    sbc r24, r24
+; CHECK-NEXT:    mov r25, r24
+; CHECK-NEXT:    movw r22, r24
 ; CHECK-NEXT:    ret
   %res = ashr i32 %a, 31
   ret i32 %res

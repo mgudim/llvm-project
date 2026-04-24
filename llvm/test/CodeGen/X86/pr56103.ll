@@ -16,18 +16,19 @@ define dso_local i32 @main() nounwind {
 ; CHECK-NEXT:    movq b@GOTPCREL(%rip), %rax
 ; CHECK-NEXT:    movq $1, (%rax)
 ; CHECK-NEXT:    movq a@GOTPCREL(%rip), %rax
-; CHECK-NEXT:    movl (%rax), %ecx
-; CHECK-NEXT:    movl $-2, %eax
-; CHECK-NEXT:    sarl %cl, %eax
-; CHECK-NEXT:    movq c@GOTPCREL(%rip), %rdx
-; CHECK-NEXT:    movl (%rdx), %edx
+; CHECK-NEXT:    movl (%rax), %eax
+; CHECK-NEXT:    movl $-2, %edx
+; CHECK-NEXT:    movl %eax, %ecx
+; CHECK-NEXT:    sarl %cl, %edx
+; CHECK-NEXT:    movq c@GOTPCREL(%rip), %rcx
+; CHECK-NEXT:    movl (%rcx), %ecx
+; CHECK-NEXT:    decl %ecx
+; CHECK-NEXT:    movzwl %dx, %edx
 ; CHECK-NEXT:    decl %edx
-; CHECK-NEXT:    movzwl %ax, %eax
-; CHECK-NEXT:    decl %eax
-; CHECK-NEXT:    xorl %edx, %eax
-; CHECK-NEXT:    notl %ecx
-; CHECK-NEXT:    andl %eax, %ecx
-; CHECK-NEXT:    testq %rcx, %rcx
+; CHECK-NEXT:    xorl %ecx, %edx
+; CHECK-NEXT:    notl %eax
+; CHECK-NEXT:    andl %edx, %eax
+; CHECK-NEXT:    testq %rax, %rax
 ; CHECK-NEXT:    jle .LBB0_2
 ; CHECK-NEXT:  # %bb.1: # %if.end
 ; CHECK-NEXT:    xorl %eax, %eax

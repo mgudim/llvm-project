@@ -43,8 +43,12 @@ define amdgpu_kernel void @barrier_release(<4 x i32> inreg %rsrc,
 ; GFX90A-NEXT:  ; %bb.2:
 ; GFX90A-NEXT:  .LBB0_0: ; %main_body
 ; GFX90A-NEXT:    s_mov_b32 m0, s12
+; GFX90A-NEXT:    s_mov_b32 s3, s11
+; GFX90A-NEXT:    s_mov_b32 s2, s10
+; GFX90A-NEXT:    s_mov_b32 s1, s9
+; GFX90A-NEXT:    s_mov_b32 s0, s8
 ; GFX90A-NEXT:    v_mov_b32_e32 v0, 0x800
-; GFX90A-NEXT:    buffer_load_dword v0, s[8:11], 0 offen lds
+; GFX90A-NEXT:    buffer_load_dword v0, s[0:3], 0 offen lds
 ; GFX90A-NEXT:    v_mov_b32_e32 v0, s13
 ; GFX90A-NEXT:    s_load_dwordx2 s[0:1], s[4:5], 0x3c
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
@@ -65,8 +69,12 @@ define amdgpu_kernel void @barrier_release(<4 x i32> inreg %rsrc,
 ; GFX90A-TGSPLIT-NEXT:  ; %bb.2:
 ; GFX90A-TGSPLIT-NEXT:  .LBB0_0: ; %main_body
 ; GFX90A-TGSPLIT-NEXT:    s_mov_b32 m0, s12
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s3, s11
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s2, s10
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s1, s9
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s0, s8
 ; GFX90A-TGSPLIT-NEXT:    v_mov_b32_e32 v0, 0x800
-; GFX90A-TGSPLIT-NEXT:    buffer_load_dword v0, s[8:11], 0 offen lds
+; GFX90A-TGSPLIT-NEXT:    buffer_load_dword v0, s[0:3], 0 offen lds
 ; GFX90A-TGSPLIT-NEXT:    v_mov_b32_e32 v0, s13
 ; GFX90A-TGSPLIT-NEXT:    s_load_dwordx2 s[0:1], s[4:5], 0x3c
 ; GFX90A-TGSPLIT-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
@@ -88,8 +96,12 @@ define amdgpu_kernel void @barrier_release(<4 x i32> inreg %rsrc,
 ; GFX942-NEXT:  ; %bb.2:
 ; GFX942-NEXT:  .LBB0_0: ; %main_body
 ; GFX942-NEXT:    s_mov_b32 m0, s12
+; GFX942-NEXT:    s_mov_b32 s3, s11
+; GFX942-NEXT:    s_mov_b32 s2, s10
+; GFX942-NEXT:    s_mov_b32 s1, s9
+; GFX942-NEXT:    s_mov_b32 s0, s8
 ; GFX942-NEXT:    v_mov_b32_e32 v0, 0x800
-; GFX942-NEXT:    buffer_load_dword v0, s[8:11], 0 offen lds
+; GFX942-NEXT:    buffer_load_dword v0, s[0:3], 0 offen lds
 ; GFX942-NEXT:    v_mov_b32_e32 v0, s13
 ; GFX942-NEXT:    s_load_dwordx2 s[0:1], s[4:5], 0x3c
 ; GFX942-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
@@ -110,8 +122,12 @@ define amdgpu_kernel void @barrier_release(<4 x i32> inreg %rsrc,
 ; GFX942-TGSPLIT-NEXT:  ; %bb.2:
 ; GFX942-TGSPLIT-NEXT:  .LBB0_0: ; %main_body
 ; GFX942-TGSPLIT-NEXT:    s_mov_b32 m0, s12
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s3, s11
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s2, s10
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s1, s9
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s0, s8
 ; GFX942-TGSPLIT-NEXT:    v_mov_b32_e32 v0, 0x800
-; GFX942-TGSPLIT-NEXT:    buffer_load_dword v0, s[8:11], 0 offen lds
+; GFX942-TGSPLIT-NEXT:    buffer_load_dword v0, s[0:3], 0 offen lds
 ; GFX942-TGSPLIT-NEXT:    v_mov_b32_e32 v0, s13
 ; GFX942-TGSPLIT-NEXT:    s_load_dwordx2 s[0:1], s[4:5], 0x3c
 ; GFX942-TGSPLIT-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
@@ -200,20 +216,24 @@ define amdgpu_kernel void @fence_fence(<4 x i32> inreg %rsrc,
 ; GFX90A-NEXT:    .p2align 8
 ; GFX90A-NEXT:  ; %bb.2:
 ; GFX90A-NEXT:  .LBB1_0: ; %main_body
-; GFX90A-NEXT:    s_load_dwordx4 s[0:3], s[4:5], 0x3c
+; GFX90A-NEXT:    s_mov_b32 s3, s11
+; GFX90A-NEXT:    s_mov_b32 s2, s10
+; GFX90A-NEXT:    s_mov_b32 s1, s9
+; GFX90A-NEXT:    s_mov_b32 s0, s8
+; GFX90A-NEXT:    s_load_dwordx4 s[8:11], s[4:5], 0x3c
 ; GFX90A-NEXT:    s_mov_b32 m0, s12
 ; GFX90A-NEXT:    v_mov_b32_e32 v1, 0x800
 ; GFX90A-NEXT:    v_mov_b32_e32 v0, 0
-; GFX90A-NEXT:    buffer_load_dword v1, s[8:11], 0 offen lds
+; GFX90A-NEXT:    buffer_load_dword v1, s[0:3], 0 offen lds
 ; GFX90A-NEXT:    v_mov_b32_e32 v1, 1
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX90A-NEXT:    global_store_dword v0, v1, s[0:1]
-; GFX90A-NEXT:    global_load_dword v1, v0, s[0:1]
+; GFX90A-NEXT:    global_store_dword v0, v1, s[8:9]
+; GFX90A-NEXT:    global_load_dword v1, v0, s[8:9]
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0)
 ; GFX90A-NEXT:    v_mov_b32_e32 v1, s13
 ; GFX90A-NEXT:    ds_read_b32 v1, v1
 ; GFX90A-NEXT:    s_waitcnt lgkmcnt(0)
-; GFX90A-NEXT:    global_store_dword v0, v1, s[2:3]
+; GFX90A-NEXT:    global_store_dword v0, v1, s[10:11]
 ; GFX90A-NEXT:    s_endpgm
 ;
 ; GFX90A-TGSPLIT-LABEL: fence_fence:
@@ -225,21 +245,25 @@ define amdgpu_kernel void @fence_fence(<4 x i32> inreg %rsrc,
 ; GFX90A-TGSPLIT-NEXT:    .p2align 8
 ; GFX90A-TGSPLIT-NEXT:  ; %bb.2:
 ; GFX90A-TGSPLIT-NEXT:  .LBB1_0: ; %main_body
-; GFX90A-TGSPLIT-NEXT:    s_load_dwordx4 s[0:3], s[4:5], 0x3c
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s3, s11
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s2, s10
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s1, s9
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s0, s8
+; GFX90A-TGSPLIT-NEXT:    s_load_dwordx4 s[8:11], s[4:5], 0x3c
 ; GFX90A-TGSPLIT-NEXT:    s_mov_b32 m0, s12
 ; GFX90A-TGSPLIT-NEXT:    v_mov_b32_e32 v1, 0x800
 ; GFX90A-TGSPLIT-NEXT:    v_mov_b32_e32 v0, 0
-; GFX90A-TGSPLIT-NEXT:    buffer_load_dword v1, s[8:11], 0 offen lds
+; GFX90A-TGSPLIT-NEXT:    buffer_load_dword v1, s[0:3], 0 offen lds
 ; GFX90A-TGSPLIT-NEXT:    v_mov_b32_e32 v1, 1
 ; GFX90A-TGSPLIT-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX90A-TGSPLIT-NEXT:    global_store_dword v0, v1, s[0:1]
-; GFX90A-TGSPLIT-NEXT:    global_load_dword v1, v0, s[0:1] glc
+; GFX90A-TGSPLIT-NEXT:    global_store_dword v0, v1, s[8:9]
+; GFX90A-TGSPLIT-NEXT:    global_load_dword v1, v0, s[8:9] glc
 ; GFX90A-TGSPLIT-NEXT:    s_waitcnt vmcnt(0)
 ; GFX90A-TGSPLIT-NEXT:    v_mov_b32_e32 v1, s13
 ; GFX90A-TGSPLIT-NEXT:    buffer_wbinvl1_vol
 ; GFX90A-TGSPLIT-NEXT:    ds_read_b32 v1, v1
 ; GFX90A-TGSPLIT-NEXT:    s_waitcnt lgkmcnt(0)
-; GFX90A-TGSPLIT-NEXT:    global_store_dword v0, v1, s[2:3]
+; GFX90A-TGSPLIT-NEXT:    global_store_dword v0, v1, s[10:11]
 ; GFX90A-TGSPLIT-NEXT:    s_endpgm
 ;
 ; GFX942-LABEL: fence_fence:
@@ -251,20 +275,24 @@ define amdgpu_kernel void @fence_fence(<4 x i32> inreg %rsrc,
 ; GFX942-NEXT:    .p2align 8
 ; GFX942-NEXT:  ; %bb.2:
 ; GFX942-NEXT:  .LBB1_0: ; %main_body
-; GFX942-NEXT:    s_load_dwordx4 s[0:3], s[4:5], 0x3c
+; GFX942-NEXT:    s_mov_b32 s3, s11
+; GFX942-NEXT:    s_mov_b32 s2, s10
+; GFX942-NEXT:    s_mov_b32 s1, s9
+; GFX942-NEXT:    s_mov_b32 s0, s8
+; GFX942-NEXT:    s_load_dwordx4 s[8:11], s[4:5], 0x3c
 ; GFX942-NEXT:    s_mov_b32 m0, s12
 ; GFX942-NEXT:    v_mov_b32_e32 v1, 0x800
 ; GFX942-NEXT:    v_mov_b32_e32 v0, 0
-; GFX942-NEXT:    buffer_load_dword v1, s[8:11], 0 offen lds
+; GFX942-NEXT:    buffer_load_dword v1, s[0:3], 0 offen lds
 ; GFX942-NEXT:    v_mov_b32_e32 v1, 1
 ; GFX942-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX942-NEXT:    global_store_dword v0, v1, s[0:1] sc0
-; GFX942-NEXT:    global_load_dword v1, v0, s[0:1] sc0
+; GFX942-NEXT:    global_store_dword v0, v1, s[8:9] sc0
+; GFX942-NEXT:    global_load_dword v1, v0, s[8:9] sc0
 ; GFX942-NEXT:    s_waitcnt vmcnt(0)
 ; GFX942-NEXT:    v_mov_b32_e32 v1, s13
 ; GFX942-NEXT:    ds_read_b32 v1, v1
 ; GFX942-NEXT:    s_waitcnt lgkmcnt(0)
-; GFX942-NEXT:    global_store_dword v0, v1, s[2:3]
+; GFX942-NEXT:    global_store_dword v0, v1, s[10:11]
 ; GFX942-NEXT:    s_endpgm
 ;
 ; GFX942-TGSPLIT-LABEL: fence_fence:
@@ -276,21 +304,25 @@ define amdgpu_kernel void @fence_fence(<4 x i32> inreg %rsrc,
 ; GFX942-TGSPLIT-NEXT:    .p2align 8
 ; GFX942-TGSPLIT-NEXT:  ; %bb.2:
 ; GFX942-TGSPLIT-NEXT:  .LBB1_0: ; %main_body
-; GFX942-TGSPLIT-NEXT:    s_load_dwordx4 s[0:3], s[4:5], 0x3c
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s3, s11
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s2, s10
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s1, s9
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s0, s8
+; GFX942-TGSPLIT-NEXT:    s_load_dwordx4 s[8:11], s[4:5], 0x3c
 ; GFX942-TGSPLIT-NEXT:    s_mov_b32 m0, s12
 ; GFX942-TGSPLIT-NEXT:    v_mov_b32_e32 v1, 0x800
 ; GFX942-TGSPLIT-NEXT:    v_mov_b32_e32 v0, 0
-; GFX942-TGSPLIT-NEXT:    buffer_load_dword v1, s[8:11], 0 offen lds
+; GFX942-TGSPLIT-NEXT:    buffer_load_dword v1, s[0:3], 0 offen lds
 ; GFX942-TGSPLIT-NEXT:    v_mov_b32_e32 v1, 1
 ; GFX942-TGSPLIT-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX942-TGSPLIT-NEXT:    global_store_dword v0, v1, s[0:1] sc0
-; GFX942-TGSPLIT-NEXT:    global_load_dword v1, v0, s[0:1] sc0
+; GFX942-TGSPLIT-NEXT:    global_store_dword v0, v1, s[8:9] sc0
+; GFX942-TGSPLIT-NEXT:    global_load_dword v1, v0, s[8:9] sc0
 ; GFX942-TGSPLIT-NEXT:    s_waitcnt vmcnt(0)
 ; GFX942-TGSPLIT-NEXT:    v_mov_b32_e32 v1, s13
 ; GFX942-TGSPLIT-NEXT:    buffer_inv sc0
 ; GFX942-TGSPLIT-NEXT:    ds_read_b32 v1, v1
 ; GFX942-TGSPLIT-NEXT:    s_waitcnt lgkmcnt(0)
-; GFX942-TGSPLIT-NEXT:    global_store_dword v0, v1, s[2:3]
+; GFX942-TGSPLIT-NEXT:    global_store_dword v0, v1, s[10:11]
 ; GFX942-TGSPLIT-NEXT:    s_endpgm
 ;
 ; GFX10WGP-LABEL: fence_fence:
@@ -385,20 +417,24 @@ define amdgpu_kernel void @release_acquire(<4 x i32> inreg %rsrc,
 ; GFX90A-NEXT:    .p2align 8
 ; GFX90A-NEXT:  ; %bb.2:
 ; GFX90A-NEXT:  .LBB2_0: ; %main_body
-; GFX90A-NEXT:    s_load_dwordx4 s[0:3], s[4:5], 0x3c
+; GFX90A-NEXT:    s_mov_b32 s3, s11
+; GFX90A-NEXT:    s_mov_b32 s2, s10
+; GFX90A-NEXT:    s_mov_b32 s1, s9
+; GFX90A-NEXT:    s_mov_b32 s0, s8
+; GFX90A-NEXT:    s_load_dwordx4 s[8:11], s[4:5], 0x3c
 ; GFX90A-NEXT:    s_mov_b32 m0, s12
 ; GFX90A-NEXT:    v_mov_b32_e32 v1, 0x800
 ; GFX90A-NEXT:    v_mov_b32_e32 v0, 0
-; GFX90A-NEXT:    buffer_load_dword v1, s[8:11], 0 offen lds
+; GFX90A-NEXT:    buffer_load_dword v1, s[0:3], 0 offen lds
 ; GFX90A-NEXT:    v_mov_b32_e32 v1, 1
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX90A-NEXT:    global_store_dword v0, v1, s[0:1]
-; GFX90A-NEXT:    global_load_dword v1, v0, s[0:1]
+; GFX90A-NEXT:    global_store_dword v0, v1, s[8:9]
+; GFX90A-NEXT:    global_load_dword v1, v0, s[8:9]
 ; GFX90A-NEXT:    s_waitcnt vmcnt(0)
 ; GFX90A-NEXT:    v_mov_b32_e32 v1, s13
 ; GFX90A-NEXT:    ds_read_b32 v1, v1
 ; GFX90A-NEXT:    s_waitcnt lgkmcnt(0)
-; GFX90A-NEXT:    global_store_dword v0, v1, s[2:3]
+; GFX90A-NEXT:    global_store_dword v0, v1, s[10:11]
 ; GFX90A-NEXT:    s_endpgm
 ;
 ; GFX90A-TGSPLIT-LABEL: release_acquire:
@@ -410,21 +446,25 @@ define amdgpu_kernel void @release_acquire(<4 x i32> inreg %rsrc,
 ; GFX90A-TGSPLIT-NEXT:    .p2align 8
 ; GFX90A-TGSPLIT-NEXT:  ; %bb.2:
 ; GFX90A-TGSPLIT-NEXT:  .LBB2_0: ; %main_body
-; GFX90A-TGSPLIT-NEXT:    s_load_dwordx4 s[0:3], s[4:5], 0x3c
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s3, s11
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s2, s10
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s1, s9
+; GFX90A-TGSPLIT-NEXT:    s_mov_b32 s0, s8
+; GFX90A-TGSPLIT-NEXT:    s_load_dwordx4 s[8:11], s[4:5], 0x3c
 ; GFX90A-TGSPLIT-NEXT:    s_mov_b32 m0, s12
 ; GFX90A-TGSPLIT-NEXT:    v_mov_b32_e32 v1, 0x800
 ; GFX90A-TGSPLIT-NEXT:    v_mov_b32_e32 v0, 0
-; GFX90A-TGSPLIT-NEXT:    buffer_load_dword v1, s[8:11], 0 offen lds
+; GFX90A-TGSPLIT-NEXT:    buffer_load_dword v1, s[0:3], 0 offen lds
 ; GFX90A-TGSPLIT-NEXT:    v_mov_b32_e32 v1, 1
 ; GFX90A-TGSPLIT-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX90A-TGSPLIT-NEXT:    global_store_dword v0, v1, s[0:1]
-; GFX90A-TGSPLIT-NEXT:    global_load_dword v1, v0, s[0:1] glc
+; GFX90A-TGSPLIT-NEXT:    global_store_dword v0, v1, s[8:9]
+; GFX90A-TGSPLIT-NEXT:    global_load_dword v1, v0, s[8:9] glc
 ; GFX90A-TGSPLIT-NEXT:    s_waitcnt vmcnt(0)
 ; GFX90A-TGSPLIT-NEXT:    buffer_wbinvl1_vol
 ; GFX90A-TGSPLIT-NEXT:    v_mov_b32_e32 v1, s13
 ; GFX90A-TGSPLIT-NEXT:    ds_read_b32 v1, v1
 ; GFX90A-TGSPLIT-NEXT:    s_waitcnt lgkmcnt(0)
-; GFX90A-TGSPLIT-NEXT:    global_store_dword v0, v1, s[2:3]
+; GFX90A-TGSPLIT-NEXT:    global_store_dword v0, v1, s[10:11]
 ; GFX90A-TGSPLIT-NEXT:    s_endpgm
 ;
 ; GFX942-LABEL: release_acquire:
@@ -436,20 +476,24 @@ define amdgpu_kernel void @release_acquire(<4 x i32> inreg %rsrc,
 ; GFX942-NEXT:    .p2align 8
 ; GFX942-NEXT:  ; %bb.2:
 ; GFX942-NEXT:  .LBB2_0: ; %main_body
-; GFX942-NEXT:    s_load_dwordx4 s[0:3], s[4:5], 0x3c
+; GFX942-NEXT:    s_mov_b32 s3, s11
+; GFX942-NEXT:    s_mov_b32 s2, s10
+; GFX942-NEXT:    s_mov_b32 s1, s9
+; GFX942-NEXT:    s_mov_b32 s0, s8
+; GFX942-NEXT:    s_load_dwordx4 s[8:11], s[4:5], 0x3c
 ; GFX942-NEXT:    s_mov_b32 m0, s12
 ; GFX942-NEXT:    v_mov_b32_e32 v1, 0x800
 ; GFX942-NEXT:    v_mov_b32_e32 v0, 0
-; GFX942-NEXT:    buffer_load_dword v1, s[8:11], 0 offen lds
+; GFX942-NEXT:    buffer_load_dword v1, s[0:3], 0 offen lds
 ; GFX942-NEXT:    v_mov_b32_e32 v1, 1
 ; GFX942-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX942-NEXT:    global_store_dword v0, v1, s[0:1] sc0
-; GFX942-NEXT:    global_load_dword v1, v0, s[0:1] sc0
+; GFX942-NEXT:    global_store_dword v0, v1, s[8:9] sc0
+; GFX942-NEXT:    global_load_dword v1, v0, s[8:9] sc0
 ; GFX942-NEXT:    s_waitcnt vmcnt(0)
 ; GFX942-NEXT:    v_mov_b32_e32 v1, s13
 ; GFX942-NEXT:    ds_read_b32 v1, v1
 ; GFX942-NEXT:    s_waitcnt lgkmcnt(0)
-; GFX942-NEXT:    global_store_dword v0, v1, s[2:3]
+; GFX942-NEXT:    global_store_dword v0, v1, s[10:11]
 ; GFX942-NEXT:    s_endpgm
 ;
 ; GFX942-TGSPLIT-LABEL: release_acquire:
@@ -461,21 +505,25 @@ define amdgpu_kernel void @release_acquire(<4 x i32> inreg %rsrc,
 ; GFX942-TGSPLIT-NEXT:    .p2align 8
 ; GFX942-TGSPLIT-NEXT:  ; %bb.2:
 ; GFX942-TGSPLIT-NEXT:  .LBB2_0: ; %main_body
-; GFX942-TGSPLIT-NEXT:    s_load_dwordx4 s[0:3], s[4:5], 0x3c
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s3, s11
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s2, s10
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s1, s9
+; GFX942-TGSPLIT-NEXT:    s_mov_b32 s0, s8
+; GFX942-TGSPLIT-NEXT:    s_load_dwordx4 s[8:11], s[4:5], 0x3c
 ; GFX942-TGSPLIT-NEXT:    s_mov_b32 m0, s12
 ; GFX942-TGSPLIT-NEXT:    v_mov_b32_e32 v1, 0x800
 ; GFX942-TGSPLIT-NEXT:    v_mov_b32_e32 v0, 0
-; GFX942-TGSPLIT-NEXT:    buffer_load_dword v1, s[8:11], 0 offen lds
+; GFX942-TGSPLIT-NEXT:    buffer_load_dword v1, s[0:3], 0 offen lds
 ; GFX942-TGSPLIT-NEXT:    v_mov_b32_e32 v1, 1
 ; GFX942-TGSPLIT-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX942-TGSPLIT-NEXT:    global_store_dword v0, v1, s[0:1] sc0
-; GFX942-TGSPLIT-NEXT:    global_load_dword v1, v0, s[0:1] sc0
+; GFX942-TGSPLIT-NEXT:    global_store_dword v0, v1, s[8:9] sc0
+; GFX942-TGSPLIT-NEXT:    global_load_dword v1, v0, s[8:9] sc0
 ; GFX942-TGSPLIT-NEXT:    s_waitcnt vmcnt(0)
 ; GFX942-TGSPLIT-NEXT:    buffer_inv sc0
 ; GFX942-TGSPLIT-NEXT:    v_mov_b32_e32 v1, s13
 ; GFX942-TGSPLIT-NEXT:    ds_read_b32 v1, v1
 ; GFX942-TGSPLIT-NEXT:    s_waitcnt lgkmcnt(0)
-; GFX942-TGSPLIT-NEXT:    global_store_dword v0, v1, s[2:3]
+; GFX942-TGSPLIT-NEXT:    global_store_dword v0, v1, s[10:11]
 ; GFX942-TGSPLIT-NEXT:    s_endpgm
 ;
 ; GFX10WGP-LABEL: release_acquire:

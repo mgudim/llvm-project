@@ -533,9 +533,13 @@ define <vscale x 8 x i64> @interleave4_nxv8i64(<vscale x 2 x i64> %vec0, <vscale
 ; SME-ALL-LABEL: interleave4_nxv8i64:
 ; SME-ALL:       // %bb.0:
 ; SME-ALL-NEXT:    zip { z4.d, z5.d }, z1.d, z3.d
-; SME-ALL-NEXT:    zip { z2.d, z3.d }, z0.d, z2.d
-; SME-ALL-NEXT:    zip { z0.d, z1.d }, z2.d, z4.d
-; SME-ALL-NEXT:    zip { z2.d, z3.d }, z3.d, z5.d
+; SME-ALL-NEXT:    zip { z0.d, z1.d }, z0.d, z2.d
+; SME-ALL-NEXT:    zip { z2.d, z3.d }, z0.d, z4.d
+; SME-ALL-NEXT:    zip { z4.d, z5.d }, z1.d, z5.d
+; SME-ALL-NEXT:    mov z0.d, z2.d
+; SME-ALL-NEXT:    mov z1.d, z3.d
+; SME-ALL-NEXT:    mov z2.d, z4.d
+; SME-ALL-NEXT:    mov z3.d, z5.d
 ; SME-ALL-NEXT:    ret
 ;
 ; SME2-256-LABEL: interleave4_nxv8i64:
@@ -580,15 +584,23 @@ define <vscale x 16 x i64> @interleave8_nxv16i64(<vscale x 2 x i64> %vec0, <vsca
 ; SME-ALL-NEXT:    zip { z24.d, z25.d }, z3.d, z7.d
 ; SME-ALL-NEXT:    zip { z26.d, z27.d }, z1.d, z5.d
 ; SME-ALL-NEXT:    zip { z28.d, z29.d }, z26.d, z24.d
-; SME-ALL-NEXT:    zip { z6.d, z7.d }, z2.d, z6.d
-; SME-ALL-NEXT:    zip { z4.d, z5.d }, z0.d, z4.d
-; SME-ALL-NEXT:    zip { z2.d, z3.d }, z4.d, z6.d
-; SME-ALL-NEXT:    zip { z0.d, z1.d }, z2.d, z28.d
-; SME-ALL-NEXT:    zip { z2.d, z3.d }, z3.d, z29.d
+; SME-ALL-NEXT:    zip { z2.d, z3.d }, z2.d, z6.d
+; SME-ALL-NEXT:    zip { z0.d, z1.d }, z0.d, z4.d
+; SME-ALL-NEXT:    zip { z4.d, z5.d }, z0.d, z2.d
+; SME-ALL-NEXT:    zip { z6.d, z7.d }, z4.d, z28.d
+; SME-ALL-NEXT:    zip { z4.d, z5.d }, z5.d, z29.d
 ; SME-ALL-NEXT:    zip { z24.d, z25.d }, z27.d, z25.d
-; SME-ALL-NEXT:    zip { z6.d, z7.d }, z5.d, z7.d
-; SME-ALL-NEXT:    zip { z4.d, z5.d }, z6.d, z24.d
-; SME-ALL-NEXT:    zip { z6.d, z7.d }, z7.d, z25.d
+; SME-ALL-NEXT:    zip { z0.d, z1.d }, z1.d, z3.d
+; SME-ALL-NEXT:    mov z2.d, z4.d
+; SME-ALL-NEXT:    mov z3.d, z5.d
+; SME-ALL-NEXT:    zip { z26.d, z27.d }, z0.d, z24.d
+; SME-ALL-NEXT:    zip { z24.d, z25.d }, z1.d, z25.d
+; SME-ALL-NEXT:    mov z0.d, z6.d
+; SME-ALL-NEXT:    mov z1.d, z7.d
+; SME-ALL-NEXT:    mov z4.d, z26.d
+; SME-ALL-NEXT:    mov z5.d, z27.d
+; SME-ALL-NEXT:    mov z6.d, z24.d
+; SME-ALL-NEXT:    mov z7.d, z25.d
 ; SME-ALL-NEXT:    ret
 ;
 ; SME2-256-LABEL: interleave8_nxv16i64:

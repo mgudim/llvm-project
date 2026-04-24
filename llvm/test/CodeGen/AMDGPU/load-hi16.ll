@@ -2439,11 +2439,12 @@ define <2 x i16> @load_global_v2i16_split(ptr addrspace(1) %in) #0 {
 ; GFX900-LABEL: load_global_v2i16_split:
 ; GFX900:       ; %bb.0: ; %entry
 ; GFX900-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX900-NEXT:    global_load_ushort v2, v[0:1], off glc
+; GFX900-NEXT:    v_mov_b32_e32 v2, v1
+; GFX900-NEXT:    v_mov_b32_e32 v1, v0
+; GFX900-NEXT:    global_load_ushort v0, v[1:2], off glc
 ; GFX900-NEXT:    s_waitcnt vmcnt(0)
-; GFX900-NEXT:    global_load_short_d16_hi v2, v[0:1], off offset:2 glc
+; GFX900-NEXT:    global_load_short_d16_hi v0, v[1:2], off offset:2 glc
 ; GFX900-NEXT:    s_waitcnt vmcnt(0)
-; GFX900-NEXT:    v_mov_b32_e32 v0, v2
 ; GFX900-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX906-LABEL: load_global_v2i16_split:
@@ -2473,11 +2474,12 @@ define <2 x i16> @load_global_v2i16_split(ptr addrspace(1) %in) #0 {
 ; GFX900-FLATSCR-LABEL: load_global_v2i16_split:
 ; GFX900-FLATSCR:       ; %bb.0: ; %entry
 ; GFX900-FLATSCR-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX900-FLATSCR-NEXT:    global_load_ushort v2, v[0:1], off glc
+; GFX900-FLATSCR-NEXT:    v_mov_b32_e32 v2, v1
+; GFX900-FLATSCR-NEXT:    v_mov_b32_e32 v1, v0
+; GFX900-FLATSCR-NEXT:    global_load_ushort v0, v[1:2], off glc
 ; GFX900-FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; GFX900-FLATSCR-NEXT:    global_load_short_d16_hi v2, v[0:1], off offset:2 glc
+; GFX900-FLATSCR-NEXT:    global_load_short_d16_hi v0, v[1:2], off offset:2 glc
 ; GFX900-FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; GFX900-FLATSCR-NEXT:    v_mov_b32_e32 v0, v2
 ; GFX900-FLATSCR-NEXT:    s_setpc_b64 s[30:31]
 entry:
   %gep = getelementptr inbounds i16, ptr addrspace(1) %in, i64 1
@@ -2493,11 +2495,12 @@ define <2 x i16> @load_flat_v2i16_split(ptr %in) #0 {
 ; GFX900-LABEL: load_flat_v2i16_split:
 ; GFX900:       ; %bb.0: ; %entry
 ; GFX900-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX900-NEXT:    flat_load_ushort v2, v[0:1] glc
+; GFX900-NEXT:    v_mov_b32_e32 v2, v1
+; GFX900-NEXT:    v_mov_b32_e32 v1, v0
+; GFX900-NEXT:    flat_load_ushort v0, v[1:2] glc
 ; GFX900-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX900-NEXT:    flat_load_short_d16_hi v2, v[0:1] offset:2 glc
+; GFX900-NEXT:    flat_load_short_d16_hi v0, v[1:2] offset:2 glc
 ; GFX900-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX900-NEXT:    v_mov_b32_e32 v0, v2
 ; GFX900-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX906-LABEL: load_flat_v2i16_split:
@@ -2528,11 +2531,12 @@ define <2 x i16> @load_flat_v2i16_split(ptr %in) #0 {
 ; GFX900-FLATSCR-LABEL: load_flat_v2i16_split:
 ; GFX900-FLATSCR:       ; %bb.0: ; %entry
 ; GFX900-FLATSCR-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX900-FLATSCR-NEXT:    flat_load_ushort v2, v[0:1] glc
+; GFX900-FLATSCR-NEXT:    v_mov_b32_e32 v2, v1
+; GFX900-FLATSCR-NEXT:    v_mov_b32_e32 v1, v0
+; GFX900-FLATSCR-NEXT:    flat_load_ushort v0, v[1:2] glc
 ; GFX900-FLATSCR-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX900-FLATSCR-NEXT:    flat_load_short_d16_hi v2, v[0:1] offset:2 glc
+; GFX900-FLATSCR-NEXT:    flat_load_short_d16_hi v0, v[1:2] offset:2 glc
 ; GFX900-FLATSCR-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GFX900-FLATSCR-NEXT:    v_mov_b32_e32 v0, v2
 ; GFX900-FLATSCR-NEXT:    s_setpc_b64 s[30:31]
 entry:
   %gep = getelementptr inbounds i16, ptr %in, i64 1
@@ -2548,11 +2552,12 @@ define <2 x i16> @load_constant_v2i16_split(ptr addrspace(4) %in) #0 {
 ; GFX900-LABEL: load_constant_v2i16_split:
 ; GFX900:       ; %bb.0: ; %entry
 ; GFX900-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX900-NEXT:    global_load_ushort v2, v[0:1], off glc
+; GFX900-NEXT:    v_mov_b32_e32 v2, v1
+; GFX900-NEXT:    v_mov_b32_e32 v1, v0
+; GFX900-NEXT:    global_load_ushort v0, v[1:2], off glc
 ; GFX900-NEXT:    s_nop 0
-; GFX900-NEXT:    global_load_short_d16_hi v2, v[0:1], off offset:2 glc
+; GFX900-NEXT:    global_load_short_d16_hi v0, v[1:2], off offset:2 glc
 ; GFX900-NEXT:    s_waitcnt vmcnt(0)
-; GFX900-NEXT:    v_mov_b32_e32 v0, v2
 ; GFX900-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX906-LABEL: load_constant_v2i16_split:
@@ -2580,11 +2585,12 @@ define <2 x i16> @load_constant_v2i16_split(ptr addrspace(4) %in) #0 {
 ; GFX900-FLATSCR-LABEL: load_constant_v2i16_split:
 ; GFX900-FLATSCR:       ; %bb.0: ; %entry
 ; GFX900-FLATSCR-NEXT:    s_waitcnt vmcnt(0) expcnt(0) lgkmcnt(0)
-; GFX900-FLATSCR-NEXT:    global_load_ushort v2, v[0:1], off glc
+; GFX900-FLATSCR-NEXT:    v_mov_b32_e32 v2, v1
+; GFX900-FLATSCR-NEXT:    v_mov_b32_e32 v1, v0
+; GFX900-FLATSCR-NEXT:    global_load_ushort v0, v[1:2], off glc
 ; GFX900-FLATSCR-NEXT:    s_nop 0
-; GFX900-FLATSCR-NEXT:    global_load_short_d16_hi v2, v[0:1], off offset:2 glc
+; GFX900-FLATSCR-NEXT:    global_load_short_d16_hi v0, v[1:2], off offset:2 glc
 ; GFX900-FLATSCR-NEXT:    s_waitcnt vmcnt(0)
-; GFX900-FLATSCR-NEXT:    v_mov_b32_e32 v0, v2
 ; GFX900-FLATSCR-NEXT:    s_setpc_b64 s[30:31]
 entry:
   %gep = getelementptr inbounds i16, ptr addrspace(4) %in, i64 1

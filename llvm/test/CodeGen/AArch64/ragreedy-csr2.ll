@@ -11,8 +11,9 @@ target triple = "aarch64"
 define void @foo(ptr %param) #0 {
 ; CHECK-LABEL: foo:
 ; CHECK:       // %bb.0: // %entry
-; CHECK-NEXT:    ldr x8, [x0]
-; CHECK-NEXT:    cbz x8, .LBB0_4
+; CHECK-NEXT:    mov x8, x0
+; CHECK-NEXT:    ldr x0, [x0]
+; CHECK-NEXT:    cbz x0, .LBB0_4
 ; CHECK-NEXT:  // %bb.1: // %if.end
 ; CHECK-NEXT:    sub sp, sp, #32
 ; CHECK-NEXT:    .cfi_def_cfa_offset 32
@@ -22,51 +23,48 @@ define void @foo(ptr %param) #0 {
 ; CHECK-NEXT:    .cfi_offset w30, -8
 ; CHECK-NEXT:    .cfi_offset w29, -16
 ; CHECK-NEXT:    .cfi_remember_state
-; CHECK-NEXT:    ldr w1, [x0, #8]
+; CHECK-NEXT:    ldr w1, [x8, #8]
 ; CHECK-NEXT:    cbnz w1, .LBB0_5
 ; CHECK-NEXT:  // %bb.2: // %if.end6
-; CHECK-NEXT:    ldr w8, [x0, #12]
-; CHECK-NEXT:    cbnz w8, .LBB0_6
+; CHECK-NEXT:    ldr w9, [x8, #12]
+; CHECK-NEXT:    cbnz w9, .LBB0_6
 ; CHECK-NEXT:  .LBB0_3: // %if.end24
-; CHECK-NEXT:    ldrb w8, [x0, #16]
+; CHECK-NEXT:    ldrb w9, [x8, #16]
 ; CHECK-NEXT:    .cfi_def_cfa wsp, 32
 ; CHECK-NEXT:    ldp x29, x30, [sp, #16] // 16-byte Folded Reload
 ; CHECK-NEXT:    add sp, sp, #32
 ; CHECK-NEXT:    .cfi_def_cfa_offset 0
 ; CHECK-NEXT:    .cfi_restore w30
 ; CHECK-NEXT:    .cfi_restore w29
-; CHECK-NEXT:    tbnz w8, #0, .LBB0_8
+; CHECK-NEXT:    tbnz w9, #0, .LBB0_8
 ; CHECK-NEXT:  .LBB0_4: // %common.ret
 ; CHECK-NEXT:    ret
 ; CHECK-NEXT:  .LBB0_5: // %cold1
 ; CHECK-NEXT:    .cfi_restore_state
-; CHECK-NEXT:    str x0, [sp, #8] // 8-byte Spill
-; CHECK-NEXT:    mov x0, x8
+; CHECK-NEXT:    str x8, [sp, #8] // 8-byte Spill
 ; CHECK-NEXT:    bl fuzz
-; CHECK-NEXT:    ldr x0, [sp, #8] // 8-byte Reload
-; CHECK-NEXT:    ldr w8, [x0, #12]
-; CHECK-NEXT:    cbz w8, .LBB0_3
+; CHECK-NEXT:    ldr x8, [sp, #8] // 8-byte Reload
+; CHECK-NEXT:    ldr w9, [x8, #12]
+; CHECK-NEXT:    cbz w9, .LBB0_3
 ; CHECK-NEXT:  .LBB0_6: // %cold2
-; CHECK-NEXT:    adrp x8, :got:Func
-; CHECK-NEXT:    ldr x8, [x8, :got_lo12:Func]
-; CHECK-NEXT:    str x0, [sp, #8] // 8-byte Spill
-; CHECK-NEXT:    ldr x8, [x8]
-; CHECK-NEXT:    blr x8
-; CHECK-NEXT:    mov w8, w0
-; CHECK-NEXT:    ldr x0, [sp, #8] // 8-byte Reload
-; CHECK-NEXT:    tbz w8, #0, .LBB0_3
+; CHECK-NEXT:    adrp x9, :got:Func
+; CHECK-NEXT:    ldr x9, [x9, :got_lo12:Func]
+; CHECK-NEXT:    str x8, [sp, #8] // 8-byte Spill
+; CHECK-NEXT:    ldr x9, [x9]
+; CHECK-NEXT:    blr x9
+; CHECK-NEXT:    ldr x8, [sp, #8] // 8-byte Reload
+; CHECK-NEXT:    tbz w0, #0, .LBB0_3
 ; CHECK-NEXT:  // %bb.7: // %cold3
-; CHECK-NEXT:    ldr x8, [x0]
-; CHECK-NEXT:    ldr w1, [x0, #12]
-; CHECK-NEXT:    mov x0, x8
+; CHECK-NEXT:    ldr x0, [x8]
+; CHECK-NEXT:    ldr w1, [x8, #12]
 ; CHECK-NEXT:    bl bar
-; CHECK-NEXT:    ldr x0, [sp, #8] // 8-byte Reload
+; CHECK-NEXT:    ldr x8, [sp, #8] // 8-byte Reload
 ; CHECK-NEXT:    b .LBB0_3
 ; CHECK-NEXT:  .LBB0_8: // %if.then35
 ; CHECK-NEXT:    .cfi_def_cfa wsp, 0
 ; CHECK-NEXT:    .cfi_same_value w30
 ; CHECK-NEXT:    .cfi_same_value w29
-; CHECK-NEXT:    ldr x0, [x0]
+; CHECK-NEXT:    ldr x0, [x8]
 ; CHECK-NEXT:    b bob
 entry:
   %load0 = load ptr, ptr %param, align 8

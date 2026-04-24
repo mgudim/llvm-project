@@ -263,16 +263,18 @@ define void @sink_splat_vp_add(ptr nocapture %a, i32 signext %x, <4 x i1> %m, i3
 ; NO-SINK-LABEL: sink_splat_vp_add:
 ; NO-SINK:       # %bb.0: # %entry
 ; NO-SINK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
-; NO-SINK-NEXT:    vmv.v.x v8, a1
+; NO-SINK-NEXT:    vmv1r.v v8, v0
+; NO-SINK-NEXT:    vmv.v.x v9, a1
 ; NO-SINK-NEXT:    lui a1, 1
 ; NO-SINK-NEXT:    add a1, a0, a1
 ; NO-SINK-NEXT:  .LBB2_1: # %vector.body
 ; NO-SINK-NEXT:    # =>This Inner Loop Header: Depth=1
-; NO-SINK-NEXT:    vle32.v v9, (a0)
+; NO-SINK-NEXT:    vle32.v v10, (a0)
+; NO-SINK-NEXT:    vmv1r.v v0, v8
 ; NO-SINK-NEXT:    vsetvli zero, a2, e32, m1, ta, ma
-; NO-SINK-NEXT:    vadd.vv v9, v9, v8, v0.t
+; NO-SINK-NEXT:    vadd.vv v10, v10, v9, v0.t
 ; NO-SINK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
-; NO-SINK-NEXT:    vse32.v v9, (a0)
+; NO-SINK-NEXT:    vse32.v v10, (a0)
 ; NO-SINK-NEXT:    addi a0, a0, 16
 ; NO-SINK-NEXT:    bne a0, a1, .LBB2_1
 ; NO-SINK-NEXT:  # %bb.2: # %for.cond.cleanup
@@ -280,16 +282,19 @@ define void @sink_splat_vp_add(ptr nocapture %a, i32 signext %x, <4 x i1> %m, i3
 ;
 ; SINK-LABEL: sink_splat_vp_add:
 ; SINK:       # %bb.0: # %entry
+; SINK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
+; SINK-NEXT:    vmv1r.v v8, v0
 ; SINK-NEXT:    lui a3, 1
 ; SINK-NEXT:    add a3, a0, a3
-; SINK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
 ; SINK-NEXT:  .LBB2_1: # %vector.body
 ; SINK-NEXT:    # =>This Inner Loop Header: Depth=1
-; SINK-NEXT:    vle32.v v8, (a0)
-; SINK-NEXT:    vsetvli zero, a2, e32, m1, ta, ma
-; SINK-NEXT:    vadd.vx v8, v8, a1, v0.t
 ; SINK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
-; SINK-NEXT:    vse32.v v8, (a0)
+; SINK-NEXT:    vle32.v v9, (a0)
+; SINK-NEXT:    vmv1r.v v0, v8
+; SINK-NEXT:    vsetvli zero, a2, e32, m1, ta, ma
+; SINK-NEXT:    vadd.vx v9, v9, a1, v0.t
+; SINK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
+; SINK-NEXT:    vse32.v v9, (a0)
 ; SINK-NEXT:    addi a0, a0, 16
 ; SINK-NEXT:    bne a0, a3, .LBB2_1
 ; SINK-NEXT:  # %bb.2: # %for.cond.cleanup
@@ -297,16 +302,19 @@ define void @sink_splat_vp_add(ptr nocapture %a, i32 signext %x, <4 x i1> %m, i3
 ;
 ; DEFAULT-LABEL: sink_splat_vp_add:
 ; DEFAULT:       # %bb.0: # %entry
+; DEFAULT-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
+; DEFAULT-NEXT:    vmv1r.v v8, v0
 ; DEFAULT-NEXT:    lui a3, 1
 ; DEFAULT-NEXT:    add a3, a0, a3
-; DEFAULT-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
 ; DEFAULT-NEXT:  .LBB2_1: # %vector.body
 ; DEFAULT-NEXT:    # =>This Inner Loop Header: Depth=1
-; DEFAULT-NEXT:    vle32.v v8, (a0)
-; DEFAULT-NEXT:    vsetvli zero, a2, e32, m1, ta, ma
-; DEFAULT-NEXT:    vadd.vx v8, v8, a1, v0.t
 ; DEFAULT-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
-; DEFAULT-NEXT:    vse32.v v8, (a0)
+; DEFAULT-NEXT:    vle32.v v9, (a0)
+; DEFAULT-NEXT:    vmv1r.v v0, v8
+; DEFAULT-NEXT:    vsetvli zero, a2, e32, m1, ta, ma
+; DEFAULT-NEXT:    vadd.vx v9, v9, a1, v0.t
+; DEFAULT-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
+; DEFAULT-NEXT:    vse32.v v9, (a0)
 ; DEFAULT-NEXT:    addi a0, a0, 16
 ; DEFAULT-NEXT:    bne a0, a3, .LBB2_1
 ; DEFAULT-NEXT:  # %bb.2: # %for.cond.cleanup
@@ -578,16 +586,18 @@ define void @sink_splat_vp_fadd(ptr nocapture %a, float %x, <4 x i1> %m, i32 zer
 ; NO-SINK-LABEL: sink_splat_vp_fadd:
 ; NO-SINK:       # %bb.0: # %entry
 ; NO-SINK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
-; NO-SINK-NEXT:    vfmv.v.f v8, fa0
+; NO-SINK-NEXT:    vmv1r.v v8, v0
+; NO-SINK-NEXT:    vfmv.v.f v9, fa0
 ; NO-SINK-NEXT:    lui a2, 1
 ; NO-SINK-NEXT:    add a2, a0, a2
 ; NO-SINK-NEXT:  .LBB5_1: # %vector.body
 ; NO-SINK-NEXT:    # =>This Inner Loop Header: Depth=1
-; NO-SINK-NEXT:    vle32.v v9, (a0)
+; NO-SINK-NEXT:    vle32.v v10, (a0)
+; NO-SINK-NEXT:    vmv1r.v v0, v8
 ; NO-SINK-NEXT:    vsetvli zero, a1, e32, m1, ta, ma
-; NO-SINK-NEXT:    vfadd.vv v9, v9, v8, v0.t
+; NO-SINK-NEXT:    vfadd.vv v10, v10, v9, v0.t
 ; NO-SINK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
-; NO-SINK-NEXT:    vse32.v v9, (a0)
+; NO-SINK-NEXT:    vse32.v v10, (a0)
 ; NO-SINK-NEXT:    addi a0, a0, 16
 ; NO-SINK-NEXT:    bne a0, a2, .LBB5_1
 ; NO-SINK-NEXT:  # %bb.2: # %for.cond.cleanup
@@ -595,16 +605,19 @@ define void @sink_splat_vp_fadd(ptr nocapture %a, float %x, <4 x i1> %m, i32 zer
 ;
 ; SINK-LABEL: sink_splat_vp_fadd:
 ; SINK:       # %bb.0: # %entry
+; SINK-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
+; SINK-NEXT:    vmv1r.v v8, v0
 ; SINK-NEXT:    lui a2, 1
 ; SINK-NEXT:    add a2, a0, a2
-; SINK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
 ; SINK-NEXT:  .LBB5_1: # %vector.body
 ; SINK-NEXT:    # =>This Inner Loop Header: Depth=1
-; SINK-NEXT:    vle32.v v8, (a0)
-; SINK-NEXT:    vsetvli zero, a1, e32, m1, ta, ma
-; SINK-NEXT:    vfadd.vf v8, v8, fa0, v0.t
 ; SINK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
-; SINK-NEXT:    vse32.v v8, (a0)
+; SINK-NEXT:    vle32.v v9, (a0)
+; SINK-NEXT:    vmv1r.v v0, v8
+; SINK-NEXT:    vsetvli zero, a1, e32, m1, ta, ma
+; SINK-NEXT:    vfadd.vf v9, v9, fa0, v0.t
+; SINK-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
+; SINK-NEXT:    vse32.v v9, (a0)
 ; SINK-NEXT:    addi a0, a0, 16
 ; SINK-NEXT:    bne a0, a2, .LBB5_1
 ; SINK-NEXT:  # %bb.2: # %for.cond.cleanup
@@ -612,16 +625,19 @@ define void @sink_splat_vp_fadd(ptr nocapture %a, float %x, <4 x i1> %m, i32 zer
 ;
 ; DEFAULT-LABEL: sink_splat_vp_fadd:
 ; DEFAULT:       # %bb.0: # %entry
+; DEFAULT-NEXT:    vsetivli zero, 1, e8, m1, ta, ma
+; DEFAULT-NEXT:    vmv1r.v v8, v0
 ; DEFAULT-NEXT:    lui a2, 1
 ; DEFAULT-NEXT:    add a2, a0, a2
-; DEFAULT-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
 ; DEFAULT-NEXT:  .LBB5_1: # %vector.body
 ; DEFAULT-NEXT:    # =>This Inner Loop Header: Depth=1
-; DEFAULT-NEXT:    vle32.v v8, (a0)
-; DEFAULT-NEXT:    vsetvli zero, a1, e32, m1, ta, ma
-; DEFAULT-NEXT:    vfadd.vf v8, v8, fa0, v0.t
 ; DEFAULT-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
-; DEFAULT-NEXT:    vse32.v v8, (a0)
+; DEFAULT-NEXT:    vle32.v v9, (a0)
+; DEFAULT-NEXT:    vmv1r.v v0, v8
+; DEFAULT-NEXT:    vsetvli zero, a1, e32, m1, ta, ma
+; DEFAULT-NEXT:    vfadd.vf v9, v9, fa0, v0.t
+; DEFAULT-NEXT:    vsetivli zero, 4, e32, m1, ta, ma
+; DEFAULT-NEXT:    vse32.v v9, (a0)
 ; DEFAULT-NEXT:    addi a0, a0, 16
 ; DEFAULT-NEXT:    bne a0, a2, .LBB5_1
 ; DEFAULT-NEXT:  # %bb.2: # %for.cond.cleanup

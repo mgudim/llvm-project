@@ -16,22 +16,22 @@ define void @f0(ptr %a, i64 %n) {
 ; CHECK-NEXT:    .cfi_offset w21, -24
 ; CHECK-NEXT:    .cfi_offset w22, -32
 ; CHECK-NEXT:    .cfi_offset w30, -48
-; CHECK-NEXT:    mov x21, #1 // =0x1
+; CHECK-NEXT:    mov x22, #1 // =0x1
 ; CHECK-NEXT:    mov x19, x1
 ; CHECK-NEXT:    mov x20, x0
-; CHECK-NEXT:    movk x21, #22136, lsl #16
-; CHECK-NEXT:    mov x22, xzr
-; CHECK-NEXT:    movk x21, #4660, lsl #48
-; CHECK-NEXT:    cmp x22, x19
+; CHECK-NEXT:    movk x22, #22136, lsl #16
+; CHECK-NEXT:    mov x21, xzr
+; CHECK-NEXT:    movk x22, #4660, lsl #48
+; CHECK-NEXT:    cmp x21, x19
 ; CHECK-NEXT:    b.ge .LBB0_2
 ; CHECK-NEXT:  .LBB0_1: // %loop.body
 ; CHECK-NEXT:    // =>This Inner Loop Header: Depth=1
-; CHECK-NEXT:    ldr w0, [x20, x22, lsl #2]
-; CHECK-NEXT:    mov x1, x21
+; CHECK-NEXT:    ldr w0, [x20, x21, lsl #2]
+; CHECK-NEXT:    mov x1, x22
 ; CHECK-NEXT:    bl g
-; CHECK-NEXT:    str w0, [x20, x22, lsl #2]
-; CHECK-NEXT:    add x22, x22, #1
-; CHECK-NEXT:    cmp x22, x19
+; CHECK-NEXT:    str w0, [x20, x21, lsl #2]
+; CHECK-NEXT:    add x21, x21, #1
+; CHECK-NEXT:    cmp x21, x19
 ; CHECK-NEXT:    b.lt .LBB0_1
 ; CHECK-NEXT:  .LBB0_2: // %exit
 ; CHECK-NEXT:    ldp x20, x19, [sp, #32] // 16-byte Folded Reload

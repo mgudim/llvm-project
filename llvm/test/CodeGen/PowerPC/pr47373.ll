@@ -14,24 +14,24 @@ define void @d() local_unnamed_addr #0 {
 ; CHECK-NEXT:    ld r3, .LC0@toc@l(r3)
 ; CHECK-NEXT:    std r29, 184(r1) # 8-byte Folded Spill
 ; CHECK-NEXT:    std r30, 192(r1) # 8-byte Folded Spill
-; CHECK-NEXT:    ld r29, 0(r3)
+; CHECK-NEXT:    ld r30, 0(r3)
 ; CHECK-NEXT:    bl c
 ; CHECK-NEXT:    nop
-; CHECK-NEXT:    mr r30, r3
+; CHECK-NEXT:    mr r29, r3
 ; CHECK-NEXT:    bl b
 ; CHECK-NEXT:    nop
-; CHECK-NEXT:    cmpwi r30, 0
+; CHECK-NEXT:    cmpwi r29, 0
 ; CHECK-NEXT:    ble cr0, .LBB0_9
 ; CHECK-NEXT:  # %bb.1: # %for.body.preheader
-; CHECK-NEXT:    cmplwi r30, 4
-; CHECK-NEXT:    clrldi r4, r30, 32
+; CHECK-NEXT:    cmplwi r29, 4
+; CHECK-NEXT:    clrldi r4, r29, 32
 ; CHECK-NEXT:    li r5, 0
 ; CHECK-NEXT:    blt cr0, .LBB0_7
 ; CHECK-NEXT:  # %bb.2: # %vector.memcheck
-; CHECK-NEXT:    rldic r6, r30, 2, 30
+; CHECK-NEXT:    rldic r6, r29, 2, 30
 ; CHECK-NEXT:    add r7, r3, r6
-; CHECK-NEXT:    cmpld r29, r7
-; CHECK-NEXT:    add r6, r29, r6
+; CHECK-NEXT:    cmpld r30, r7
+; CHECK-NEXT:    add r6, r30, r6
 ; CHECK-NEXT:    bc 4, lt, .LBB0_4
 ; CHECK-NEXT:  # %bb.3: # %vector.memcheck
 ; CHECK-NEXT:    cmpld r3, r6
@@ -53,12 +53,12 @@ define void @d() local_unnamed_addr #0 {
 ; CHECK-NEXT:    add r12, r3, r6
 ; CHECK-NEXT:    lvx v3, r3, r6
 ; CHECK-NEXT:    lvx v5, r12, r7
-; CHECK-NEXT:    add r12, r29, r6
+; CHECK-NEXT:    add r12, r30, r6
 ; CHECK-NEXT:    lvsl v2, r3, r6
 ; CHECK-NEXT:    vperm v2, v3, v5, v2
-; CHECK-NEXT:    lvx v3, r29, r6
+; CHECK-NEXT:    lvx v3, r30, r6
 ; CHECK-NEXT:    lvx v5, r12, r7
-; CHECK-NEXT:    lvsl v4, r29, r6
+; CHECK-NEXT:    lvsl v4, r30, r6
 ; CHECK-NEXT:    stvx v2, 0, r8
 ; CHECK-NEXT:    vperm v2, v3, v5, v4
 ; CHECK-NEXT:    stvx v2, 0, r9
@@ -81,7 +81,7 @@ define void @d() local_unnamed_addr #0 {
 ; CHECK-NEXT:    lvx v2, 0, r10
 ; CHECK-NEXT:    stvx v2, 0, r11
 ; CHECK-NEXT:    ld r0, 112(r1)
-; CHECK-NEXT:    stdx r0, r29, r6
+; CHECK-NEXT:    stdx r0, r30, r6
 ; CHECK-NEXT:    addi r6, r6, 16
 ; CHECK-NEXT:    ld r0, 120(r1)
 ; CHECK-NEXT:    std r0, 8(r12)
@@ -94,7 +94,7 @@ define void @d() local_unnamed_addr #0 {
 ; CHECK-NEXT:    sub r5, r4, r5
 ; CHECK-NEXT:    addi r6, r6, -4
 ; CHECK-NEXT:    add r3, r3, r6
-; CHECK-NEXT:    add r4, r29, r6
+; CHECK-NEXT:    add r4, r30, r6
 ; CHECK-NEXT:    mtctr r5
 ; CHECK-NEXT:  .LBB0_8: # %for.body
 ; CHECK-NEXT:    #

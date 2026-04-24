@@ -274,18 +274,36 @@ bb:
 define amdgpu_ps void @cluster_image_load(<8 x i32> inreg %src, <8 x i32> inreg %dst, i32 %x, i32 %y) {
 ; GFX9-LABEL: cluster_image_load:
 ; GFX9:       ; %bb.0: ; %entry
-; GFX9-NEXT:    v_add_u32_e32 v2, 1, v0
-; GFX9-NEXT:    v_add_u32_e32 v3, 1, v1
-; GFX9-NEXT:    v_add_u32_e32 v6, 2, v0
-; GFX9-NEXT:    v_add_u32_e32 v7, 2, v1
-; GFX9-NEXT:    image_load v[2:5], v[2:3], s[0:7] dmask:0xf unorm
-; GFX9-NEXT:    image_load v[6:9], v[6:7], s[0:7] dmask:0xf unorm
+; GFX9-NEXT:    v_mov_b32_e32 v9, v1
+; GFX9-NEXT:    v_mov_b32_e32 v8, v0
+; GFX9-NEXT:    s_mov_b32 s23, s7
+; GFX9-NEXT:    s_mov_b32 s22, s6
+; GFX9-NEXT:    s_mov_b32 s21, s5
+; GFX9-NEXT:    s_mov_b32 s20, s4
+; GFX9-NEXT:    s_mov_b32 s19, s3
+; GFX9-NEXT:    s_mov_b32 s18, s2
+; GFX9-NEXT:    s_mov_b32 s17, s1
+; GFX9-NEXT:    s_mov_b32 s16, s0
+; GFX9-NEXT:    v_add_u32_e32 v0, 1, v8
+; GFX9-NEXT:    v_add_u32_e32 v1, 1, v9
+; GFX9-NEXT:    v_add_u32_e32 v4, 2, v8
+; GFX9-NEXT:    v_add_u32_e32 v5, 2, v9
+; GFX9-NEXT:    image_load v[0:3], v[0:1], s[16:23] dmask:0xf unorm
+; GFX9-NEXT:    image_load v[4:7], v[4:5], s[16:23] dmask:0xf unorm
+; GFX9-NEXT:    s_mov_b32 s7, s15
+; GFX9-NEXT:    s_mov_b32 s6, s14
+; GFX9-NEXT:    s_mov_b32 s5, s13
+; GFX9-NEXT:    s_mov_b32 s4, s12
+; GFX9-NEXT:    s_mov_b32 s3, s11
+; GFX9-NEXT:    s_mov_b32 s2, s10
+; GFX9-NEXT:    s_mov_b32 s1, s9
+; GFX9-NEXT:    s_mov_b32 s0, s8
 ; GFX9-NEXT:    s_waitcnt vmcnt(0)
-; GFX9-NEXT:    v_add_f32_e32 v5, v5, v9
-; GFX9-NEXT:    v_add_f32_e32 v4, v4, v8
 ; GFX9-NEXT:    v_add_f32_e32 v3, v3, v7
 ; GFX9-NEXT:    v_add_f32_e32 v2, v2, v6
-; GFX9-NEXT:    image_store v[2:5], v[0:1], s[8:15] dmask:0xf unorm
+; GFX9-NEXT:    v_add_f32_e32 v1, v1, v5
+; GFX9-NEXT:    v_add_f32_e32 v0, v0, v4
+; GFX9-NEXT:    image_store v[0:3], v[8:9], s[0:7] dmask:0xf unorm
 ; GFX9-NEXT:    s_endpgm
 ;
 ; GFX10-LABEL: cluster_image_load:
@@ -294,15 +312,31 @@ define amdgpu_ps void @cluster_image_load(<8 x i32> inreg %src, <8 x i32> inreg 
 ; GFX10-NEXT:    v_add_nc_u32_e32 v11, 1, v1
 ; GFX10-NEXT:    v_add_nc_u32_e32 v12, 2, v0
 ; GFX10-NEXT:    v_add_nc_u32_e32 v13, 2, v1
+; GFX10-NEXT:    s_mov_b32 s23, s7
+; GFX10-NEXT:    s_mov_b32 s22, s6
+; GFX10-NEXT:    s_mov_b32 s21, s5
+; GFX10-NEXT:    s_mov_b32 s20, s4
+; GFX10-NEXT:    s_mov_b32 s19, s3
+; GFX10-NEXT:    s_mov_b32 s18, s2
+; GFX10-NEXT:    s_mov_b32 s17, s1
+; GFX10-NEXT:    s_mov_b32 s16, s0
 ; GFX10-NEXT:    s_clause 0x1
-; GFX10-NEXT:    image_load v[2:5], v[10:11], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
-; GFX10-NEXT:    image_load v[6:9], v[12:13], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX10-NEXT:    image_load v[2:5], v[10:11], s[16:23] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX10-NEXT:    image_load v[6:9], v[12:13], s[16:23] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX10-NEXT:    s_mov_b32 s7, s15
+; GFX10-NEXT:    s_mov_b32 s6, s14
+; GFX10-NEXT:    s_mov_b32 s5, s13
+; GFX10-NEXT:    s_mov_b32 s4, s12
+; GFX10-NEXT:    s_mov_b32 s3, s11
+; GFX10-NEXT:    s_mov_b32 s2, s10
+; GFX10-NEXT:    s_mov_b32 s1, s9
+; GFX10-NEXT:    s_mov_b32 s0, s8
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
 ; GFX10-NEXT:    v_add_f32_e32 v5, v5, v9
 ; GFX10-NEXT:    v_add_f32_e32 v4, v4, v8
 ; GFX10-NEXT:    v_add_f32_e32 v3, v3, v7
 ; GFX10-NEXT:    v_add_f32_e32 v2, v2, v6
-; GFX10-NEXT:    image_store v[2:5], v[0:1], s[8:15] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX10-NEXT:    image_store v[2:5], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
 ; GFX10-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: cluster_image_load:
@@ -311,13 +345,29 @@ define amdgpu_ps void @cluster_image_load(<8 x i32> inreg %src, <8 x i32> inreg 
 ; GFX11-NEXT:    v_add_nc_u32_e32 v3, 1, v1
 ; GFX11-NEXT:    v_add_nc_u32_e32 v6, 2, v0
 ; GFX11-NEXT:    v_add_nc_u32_e32 v7, 2, v1
+; GFX11-NEXT:    s_mov_b32 s23, s7
+; GFX11-NEXT:    s_mov_b32 s22, s6
+; GFX11-NEXT:    s_mov_b32 s21, s5
+; GFX11-NEXT:    s_mov_b32 s20, s4
+; GFX11-NEXT:    s_mov_b32 s19, s3
+; GFX11-NEXT:    s_mov_b32 s18, s2
+; GFX11-NEXT:    s_mov_b32 s17, s1
+; GFX11-NEXT:    s_mov_b32 s16, s0
 ; GFX11-NEXT:    s_clause 0x1
-; GFX11-NEXT:    image_load v[2:5], v[2:3], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
-; GFX11-NEXT:    image_load v[6:9], v[6:7], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX11-NEXT:    image_load v[2:5], v[2:3], s[16:23] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX11-NEXT:    image_load v[6:9], v[6:7], s[16:23] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX11-NEXT:    s_mov_b32 s7, s15
+; GFX11-NEXT:    s_mov_b32 s6, s14
+; GFX11-NEXT:    s_mov_b32 s5, s13
+; GFX11-NEXT:    s_mov_b32 s4, s12
+; GFX11-NEXT:    s_mov_b32 s3, s11
+; GFX11-NEXT:    s_mov_b32 s2, s10
+; GFX11-NEXT:    s_mov_b32 s1, s9
+; GFX11-NEXT:    s_mov_b32 s0, s8
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
 ; GFX11-NEXT:    v_dual_add_f32 v5, v5, v9 :: v_dual_add_f32 v4, v4, v8
 ; GFX11-NEXT:    v_dual_add_f32 v3, v3, v7 :: v_dual_add_f32 v2, v2, v6
-; GFX11-NEXT:    image_store v[2:5], v[0:1], s[8:15] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX11-NEXT:    image_store v[2:5], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
 ; GFX11-NEXT:    s_endpgm
 entry:
   %x1 = add i32 %x, 1
@@ -339,39 +389,89 @@ entry:
 define amdgpu_ps void @no_cluster_image_load(<8 x i32> inreg %src1, <8 x i32> inreg %src2, <8 x i32> inreg %dst, i32 %x, i32 %y) {
 ; GFX9-LABEL: no_cluster_image_load:
 ; GFX9:       ; %bb.0: ; %entry
-; GFX9-NEXT:    v_mov_b32_e32 v2, 0
-; GFX9-NEXT:    image_load_mip v[3:6], v[0:2], s[0:7] dmask:0xf unorm
-; GFX9-NEXT:    image_load_mip v[7:10], v[0:2], s[8:15] dmask:0xf unorm
+; GFX9-NEXT:    v_mov_b32_e32 v9, v1
+; GFX9-NEXT:    v_mov_b32_e32 v8, v0
+; GFX9-NEXT:    s_mov_b32 s31, s7
+; GFX9-NEXT:    s_mov_b32 s30, s6
+; GFX9-NEXT:    s_mov_b32 s29, s5
+; GFX9-NEXT:    s_mov_b32 s28, s4
+; GFX9-NEXT:    s_mov_b32 s27, s3
+; GFX9-NEXT:    s_mov_b32 s26, s2
+; GFX9-NEXT:    s_mov_b32 s25, s1
+; GFX9-NEXT:    s_mov_b32 s24, s0
+; GFX9-NEXT:    v_mov_b32_e32 v10, 0
+; GFX9-NEXT:    image_load_mip v[0:3], v[8:10], s[24:31] dmask:0xf unorm
+; GFX9-NEXT:    image_load_mip v[4:7], v[8:10], s[8:15] dmask:0xf unorm
+; GFX9-NEXT:    s_mov_b32 s7, s23
+; GFX9-NEXT:    s_mov_b32 s6, s22
+; GFX9-NEXT:    s_mov_b32 s5, s21
+; GFX9-NEXT:    s_mov_b32 s4, s20
+; GFX9-NEXT:    s_mov_b32 s3, s19
+; GFX9-NEXT:    s_mov_b32 s2, s18
+; GFX9-NEXT:    s_mov_b32 s1, s17
+; GFX9-NEXT:    s_mov_b32 s0, s16
 ; GFX9-NEXT:    s_waitcnt vmcnt(0)
-; GFX9-NEXT:    v_add_f32_e32 v6, v6, v10
-; GFX9-NEXT:    v_add_f32_e32 v5, v5, v9
-; GFX9-NEXT:    v_add_f32_e32 v4, v4, v8
 ; GFX9-NEXT:    v_add_f32_e32 v3, v3, v7
-; GFX9-NEXT:    image_store v[3:6], v[0:1], s[16:23] dmask:0xf unorm
+; GFX9-NEXT:    v_add_f32_e32 v2, v2, v6
+; GFX9-NEXT:    v_add_f32_e32 v1, v1, v5
+; GFX9-NEXT:    v_add_f32_e32 v0, v0, v4
+; GFX9-NEXT:    image_store v[0:3], v[8:9], s[0:7] dmask:0xf unorm
 ; GFX9-NEXT:    s_endpgm
 ;
 ; GFX10-LABEL: no_cluster_image_load:
 ; GFX10:       ; %bb.0: ; %entry
 ; GFX10-NEXT:    v_mov_b32_e32 v10, 0
-; GFX10-NEXT:    image_load_mip v[2:5], [v0, v1, v10], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX10-NEXT:    s_mov_b32 s31, s7
+; GFX10-NEXT:    s_mov_b32 s30, s6
+; GFX10-NEXT:    s_mov_b32 s29, s5
+; GFX10-NEXT:    s_mov_b32 s28, s4
+; GFX10-NEXT:    s_mov_b32 s27, s3
+; GFX10-NEXT:    s_mov_b32 s26, s2
+; GFX10-NEXT:    s_mov_b32 s25, s1
+; GFX10-NEXT:    s_mov_b32 s24, s0
+; GFX10-NEXT:    image_load_mip v[2:5], [v0, v1, v10], s[24:31] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
 ; GFX10-NEXT:    image_load_mip v[6:9], [v0, v1, v10], s[8:15] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX10-NEXT:    s_mov_b32 s7, s23
+; GFX10-NEXT:    s_mov_b32 s6, s22
+; GFX10-NEXT:    s_mov_b32 s5, s21
+; GFX10-NEXT:    s_mov_b32 s4, s20
+; GFX10-NEXT:    s_mov_b32 s3, s19
+; GFX10-NEXT:    s_mov_b32 s2, s18
+; GFX10-NEXT:    s_mov_b32 s1, s17
+; GFX10-NEXT:    s_mov_b32 s0, s16
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
 ; GFX10-NEXT:    v_add_f32_e32 v5, v5, v9
 ; GFX10-NEXT:    v_add_f32_e32 v4, v4, v8
 ; GFX10-NEXT:    v_add_f32_e32 v3, v3, v7
 ; GFX10-NEXT:    v_add_f32_e32 v2, v2, v6
-; GFX10-NEXT:    image_store v[2:5], v[0:1], s[16:23] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX10-NEXT:    image_store v[2:5], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
 ; GFX10-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: no_cluster_image_load:
 ; GFX11:       ; %bb.0: ; %entry
 ; GFX11-NEXT:    v_mov_b32_e32 v6, 0
-; GFX11-NEXT:    image_load_mip v[2:5], [v0, v1, v6], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX11-NEXT:    s_mov_b32 s31, s7
+; GFX11-NEXT:    s_mov_b32 s30, s6
+; GFX11-NEXT:    s_mov_b32 s29, s5
+; GFX11-NEXT:    s_mov_b32 s28, s4
+; GFX11-NEXT:    s_mov_b32 s27, s3
+; GFX11-NEXT:    s_mov_b32 s26, s2
+; GFX11-NEXT:    s_mov_b32 s25, s1
+; GFX11-NEXT:    s_mov_b32 s24, s0
+; GFX11-NEXT:    image_load_mip v[2:5], [v0, v1, v6], s[24:31] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
 ; GFX11-NEXT:    image_load_mip v[6:9], [v0, v1, v6], s[8:15] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX11-NEXT:    s_mov_b32 s7, s23
+; GFX11-NEXT:    s_mov_b32 s6, s22
+; GFX11-NEXT:    s_mov_b32 s5, s21
+; GFX11-NEXT:    s_mov_b32 s4, s20
+; GFX11-NEXT:    s_mov_b32 s3, s19
+; GFX11-NEXT:    s_mov_b32 s2, s18
+; GFX11-NEXT:    s_mov_b32 s1, s17
+; GFX11-NEXT:    s_mov_b32 s0, s16
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
 ; GFX11-NEXT:    v_dual_add_f32 v5, v5, v9 :: v_dual_add_f32 v4, v4, v8
 ; GFX11-NEXT:    v_dual_add_f32 v3, v3, v7 :: v_dual_add_f32 v2, v2, v6
-; GFX11-NEXT:    image_store v[2:5], v[0:1], s[16:23] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX11-NEXT:    image_store v[2:5], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
 ; GFX11-NEXT:    s_endpgm
 entry:
   %val1 = call <4 x float> @llvm.amdgcn.image.load.mip.2d.v4f32.i32(i32 15, i32 %x, i32 %y, i32 0, <8 x i32> %src1, i32 0, i32 0)
@@ -391,28 +491,46 @@ entry:
 define amdgpu_ps void @cluster_image_sample(<8 x i32> inreg %src, <4 x i32> inreg %smp, <8 x i32> inreg %dst, i32 %x, i32 %y) {
 ; GFX9-LABEL: cluster_image_sample:
 ; GFX9:       ; %bb.0: ; %entry
-; GFX9-NEXT:    v_cvt_f32_i32_e32 v2, v0
-; GFX9-NEXT:    v_cvt_f32_i32_e32 v3, v1
-; GFX9-NEXT:    v_mov_b32_e32 v4, 1.0
-; GFX9-NEXT:    v_mov_b32_e32 v10, 0
-; GFX9-NEXT:    v_add_f32_e32 v8, 1.0, v2
-; GFX9-NEXT:    v_add_f32_e32 v9, 1.0, v3
-; GFX9-NEXT:    v_mov_b32_e32 v11, v10
-; GFX9-NEXT:    v_mov_b32_e32 v12, v10
-; GFX9-NEXT:    v_mov_b32_e32 v13, v10
-; GFX9-NEXT:    v_add_f32_e32 v2, 2.0, v2
-; GFX9-NEXT:    v_add_f32_e32 v3, 2.0, v3
-; GFX9-NEXT:    v_mov_b32_e32 v5, v4
-; GFX9-NEXT:    v_mov_b32_e32 v6, v4
-; GFX9-NEXT:    v_mov_b32_e32 v7, v4
-; GFX9-NEXT:    image_sample_d v[8:11], v[8:13], s[0:7], s[8:11] dmask:0xf
-; GFX9-NEXT:    image_sample_d v[2:5], v[2:7], s[0:7], s[8:11] dmask:0xf
+; GFX9-NEXT:    v_mov_b32_e32 v13, v1
+; GFX9-NEXT:    v_mov_b32_e32 v12, v0
+; GFX9-NEXT:    v_cvt_f32_i32_e32 v0, v12
+; GFX9-NEXT:    v_cvt_f32_i32_e32 v1, v13
+; GFX9-NEXT:    v_mov_b32_e32 v2, 1.0
+; GFX9-NEXT:    v_mov_b32_e32 v8, 0
+; GFX9-NEXT:    s_mov_b32 s27, s7
+; GFX9-NEXT:    s_mov_b32 s26, s6
+; GFX9-NEXT:    s_mov_b32 s25, s5
+; GFX9-NEXT:    s_mov_b32 s24, s4
+; GFX9-NEXT:    s_mov_b32 s23, s3
+; GFX9-NEXT:    s_mov_b32 s22, s2
+; GFX9-NEXT:    s_mov_b32 s21, s1
+; GFX9-NEXT:    s_mov_b32 s20, s0
+; GFX9-NEXT:    v_add_f32_e32 v6, 1.0, v0
+; GFX9-NEXT:    v_add_f32_e32 v7, 1.0, v1
+; GFX9-NEXT:    v_mov_b32_e32 v9, v8
+; GFX9-NEXT:    v_mov_b32_e32 v10, v8
+; GFX9-NEXT:    v_mov_b32_e32 v11, v8
+; GFX9-NEXT:    v_add_f32_e32 v0, 2.0, v0
+; GFX9-NEXT:    v_add_f32_e32 v1, 2.0, v1
+; GFX9-NEXT:    v_mov_b32_e32 v3, v2
+; GFX9-NEXT:    v_mov_b32_e32 v4, v2
+; GFX9-NEXT:    v_mov_b32_e32 v5, v2
+; GFX9-NEXT:    image_sample_d v[6:9], v[6:11], s[20:27], s[8:11] dmask:0xf
+; GFX9-NEXT:    image_sample_d v[0:3], v[0:5], s[20:27], s[8:11] dmask:0xf
+; GFX9-NEXT:    s_mov_b32 s7, s19
+; GFX9-NEXT:    s_mov_b32 s6, s18
+; GFX9-NEXT:    s_mov_b32 s5, s17
+; GFX9-NEXT:    s_mov_b32 s4, s16
+; GFX9-NEXT:    s_mov_b32 s3, s15
+; GFX9-NEXT:    s_mov_b32 s2, s14
+; GFX9-NEXT:    s_mov_b32 s1, s13
+; GFX9-NEXT:    s_mov_b32 s0, s12
 ; GFX9-NEXT:    s_waitcnt vmcnt(0)
-; GFX9-NEXT:    v_add_f32_e32 v5, v11, v5
-; GFX9-NEXT:    v_add_f32_e32 v4, v10, v4
 ; GFX9-NEXT:    v_add_f32_e32 v3, v9, v3
 ; GFX9-NEXT:    v_add_f32_e32 v2, v8, v2
-; GFX9-NEXT:    image_store v[2:5], v[0:1], s[12:19] dmask:0xf unorm
+; GFX9-NEXT:    v_add_f32_e32 v1, v7, v1
+; GFX9-NEXT:    v_add_f32_e32 v0, v6, v0
+; GFX9-NEXT:    image_store v[0:3], v[12:13], s[0:7] dmask:0xf unorm
 ; GFX9-NEXT:    s_endpgm
 ;
 ; GFX10-LABEL: cluster_image_sample:
@@ -421,6 +539,7 @@ define amdgpu_ps void @cluster_image_sample(<8 x i32> inreg %src, <4 x i32> inre
 ; GFX10-NEXT:    v_cvt_f32_i32_e32 v9, v1
 ; GFX10-NEXT:    v_mov_b32_e32 v4, 0
 ; GFX10-NEXT:    v_mov_b32_e32 v10, 1.0
+; GFX10-NEXT:    s_mov_b32 s27, s7
 ; GFX10-NEXT:    v_add_f32_e32 v2, 1.0, v8
 ; GFX10-NEXT:    v_add_f32_e32 v3, 1.0, v9
 ; GFX10-NEXT:    v_mov_b32_e32 v5, v4
@@ -431,15 +550,30 @@ define amdgpu_ps void @cluster_image_sample(<8 x i32> inreg %src, <4 x i32> inre
 ; GFX10-NEXT:    v_mov_b32_e32 v11, v10
 ; GFX10-NEXT:    v_mov_b32_e32 v12, v10
 ; GFX10-NEXT:    v_mov_b32_e32 v13, v10
+; GFX10-NEXT:    s_mov_b32 s26, s6
+; GFX10-NEXT:    s_mov_b32 s25, s5
+; GFX10-NEXT:    s_mov_b32 s24, s4
+; GFX10-NEXT:    s_mov_b32 s23, s3
+; GFX10-NEXT:    s_mov_b32 s22, s2
+; GFX10-NEXT:    s_mov_b32 s21, s1
+; GFX10-NEXT:    s_mov_b32 s20, s0
 ; GFX10-NEXT:    s_clause 0x1
-; GFX10-NEXT:    image_sample_d v[14:17], v[2:7], s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_2D
-; GFX10-NEXT:    image_sample_d v[18:21], v[8:13], s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_2D
+; GFX10-NEXT:    image_sample_d v[14:17], v[2:7], s[20:27], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_2D
+; GFX10-NEXT:    image_sample_d v[18:21], v[8:13], s[20:27], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_2D
+; GFX10-NEXT:    s_mov_b32 s7, s19
+; GFX10-NEXT:    s_mov_b32 s6, s18
+; GFX10-NEXT:    s_mov_b32 s5, s17
+; GFX10-NEXT:    s_mov_b32 s4, s16
+; GFX10-NEXT:    s_mov_b32 s3, s15
+; GFX10-NEXT:    s_mov_b32 s2, s14
+; GFX10-NEXT:    s_mov_b32 s1, s13
+; GFX10-NEXT:    s_mov_b32 s0, s12
 ; GFX10-NEXT:    s_waitcnt vmcnt(0)
 ; GFX10-NEXT:    v_add_f32_e32 v5, v17, v21
 ; GFX10-NEXT:    v_add_f32_e32 v4, v16, v20
 ; GFX10-NEXT:    v_add_f32_e32 v3, v15, v19
 ; GFX10-NEXT:    v_add_f32_e32 v2, v14, v18
-; GFX10-NEXT:    image_store v[2:5], v[0:1], s[12:19] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX10-NEXT:    image_store v[2:5], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
 ; GFX10-NEXT:    s_endpgm
 ;
 ; GFX11-LABEL: cluster_image_sample:
@@ -447,19 +581,34 @@ define amdgpu_ps void @cluster_image_sample(<8 x i32> inreg %src, <4 x i32> inre
 ; GFX11-NEXT:    v_cvt_f32_i32_e32 v4, v0
 ; GFX11-NEXT:    v_cvt_f32_i32_e32 v5, v1
 ; GFX11-NEXT:    v_mov_b32_e32 v2, 0
-; GFX11-NEXT:    s_delay_alu instid0(VALU_DEP_2) | instskip(NEXT) | instid1(VALU_DEP_4)
-; GFX11-NEXT:    v_dual_mov_b32 v6, 1.0 :: v_dual_add_f32 v11, 2.0, v5
+; GFX11-NEXT:    v_mov_b32_e32 v6, 1.0
+; GFX11-NEXT:    s_mov_b32 s27, s7
+; GFX11-NEXT:    s_mov_b32 s26, s6
 ; GFX11-NEXT:    v_dual_add_f32 v9, 1.0, v5 :: v_dual_add_f32 v8, 1.0, v4
-; GFX11-NEXT:    s_delay_alu instid0(VALU_DEP_3) | instskip(NEXT) | instid1(VALU_DEP_3)
-; GFX11-NEXT:    v_dual_mov_b32 v3, v2 :: v_dual_add_f32 v10, 2.0, v4
+; GFX11-NEXT:    v_mov_b32_e32 v3, v2
+; GFX11-NEXT:    v_dual_add_f32 v11, 2.0, v5 :: v_dual_add_f32 v10, 2.0, v4
 ; GFX11-NEXT:    v_mov_b32_e32 v7, v6
+; GFX11-NEXT:    s_mov_b32 s25, s5
+; GFX11-NEXT:    s_mov_b32 s24, s4
+; GFX11-NEXT:    s_mov_b32 s23, s3
+; GFX11-NEXT:    s_mov_b32 s22, s2
+; GFX11-NEXT:    s_mov_b32 s21, s1
+; GFX11-NEXT:    s_mov_b32 s20, s0
 ; GFX11-NEXT:    s_clause 0x1
-; GFX11-NEXT:    image_sample_d v[2:5], [v8, v9, v2, v2, v[2:3]], s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_2D
-; GFX11-NEXT:    image_sample_d v[6:9], [v10, v11, v6, v6, v[6:7]], s[0:7], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_2D
+; GFX11-NEXT:    image_sample_d v[2:5], [v8, v9, v2, v2, v[2:3]], s[20:27], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_2D
+; GFX11-NEXT:    image_sample_d v[6:9], [v10, v11, v6, v6, v[6:7]], s[20:27], s[8:11] dmask:0xf dim:SQ_RSRC_IMG_2D
+; GFX11-NEXT:    s_mov_b32 s7, s19
+; GFX11-NEXT:    s_mov_b32 s6, s18
+; GFX11-NEXT:    s_mov_b32 s5, s17
+; GFX11-NEXT:    s_mov_b32 s4, s16
+; GFX11-NEXT:    s_mov_b32 s3, s15
+; GFX11-NEXT:    s_mov_b32 s2, s14
+; GFX11-NEXT:    s_mov_b32 s1, s13
+; GFX11-NEXT:    s_mov_b32 s0, s12
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
 ; GFX11-NEXT:    v_dual_add_f32 v5, v5, v9 :: v_dual_add_f32 v4, v4, v8
 ; GFX11-NEXT:    v_dual_add_f32 v3, v3, v7 :: v_dual_add_f32 v2, v2, v6
-; GFX11-NEXT:    image_store v[2:5], v[0:1], s[12:19] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
+; GFX11-NEXT:    image_store v[2:5], v[0:1], s[0:7] dmask:0xf dim:SQ_RSRC_IMG_2D unorm
 ; GFX11-NEXT:    s_endpgm
 entry:
   %s = sitofp i32 %x to float

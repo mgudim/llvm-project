@@ -2864,11 +2864,10 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; LE-P10-NEXT:    std r0, 16(r1)
 ; LE-P10-NEXT:    hashst r0, -24(r1)
 ; LE-P10-NEXT:    stdu r1, -64(r1)
-; LE-P10-NEXT:    lwz r4, 12(r3)
 ; LE-P10-NEXT:    mr r30, r3
-; LE-P10-NEXT:    stw r4, 36(r1)
-; LE-P10-NEXT:    addi r4, r1, 36
-; LE-P10-NEXT:    mr r3, r4
+; LE-P10-NEXT:    lwz r3, 12(r3)
+; LE-P10-NEXT:    stw r3, 36(r1)
+; LE-P10-NEXT:    addi r3, r1, 36
 ; LE-P10-NEXT:    bl callee2@notoc
 ; LE-P10-NEXT:    lwz r4, 16(r30)
 ; LE-P10-NEXT:    add r3, r4, r3
@@ -2893,11 +2892,10 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; LE-P9-NEXT:    std r0, 16(r1)
 ; LE-P9-NEXT:    hashst r0, -24(r1)
 ; LE-P9-NEXT:    stdu r1, -64(r1)
-; LE-P9-NEXT:    lwz r4, 12(r3)
 ; LE-P9-NEXT:    mr r30, r3
-; LE-P9-NEXT:    stw r4, 36(r1)
-; LE-P9-NEXT:    addi r4, r1, 36
-; LE-P9-NEXT:    mr r3, r4
+; LE-P9-NEXT:    lwz r3, 12(r3)
+; LE-P9-NEXT:    stw r3, 36(r1)
+; LE-P9-NEXT:    addi r3, r1, 36
 ; LE-P9-NEXT:    bl callee2
 ; LE-P9-NEXT:    nop
 ; LE-P9-NEXT:    lwz r4, 16(r30)
@@ -2923,11 +2921,10 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; LE-P8-NEXT:    std r0, 16(r1)
 ; LE-P8-NEXT:    hashst r0, -24(r1)
 ; LE-P8-NEXT:    stdu r1, -64(r1)
-; LE-P8-NEXT:    lwz r4, 12(r3)
 ; LE-P8-NEXT:    mr r30, r3
-; LE-P8-NEXT:    stw r4, 36(r1)
-; LE-P8-NEXT:    addi r4, r1, 36
-; LE-P8-NEXT:    mr r3, r4
+; LE-P8-NEXT:    lwz r3, 12(r3)
+; LE-P8-NEXT:    stw r3, 36(r1)
+; LE-P8-NEXT:    addi r3, r1, 36
 ; LE-P8-NEXT:    bl callee2
 ; LE-P8-NEXT:    nop
 ; LE-P8-NEXT:    lwz r4, 16(r30)
@@ -3048,12 +3045,11 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; BE-P10-NEXT:    std r0, 16(r1)
 ; BE-P10-NEXT:    hashst r0, -24(r1)
 ; BE-P10-NEXT:    stdu r1, -144(r1)
-; BE-P10-NEXT:    lwz r4, 12(r3)
 ; BE-P10-NEXT:    std r30, 128(r1) # 8-byte Folded Spill
 ; BE-P10-NEXT:    mr r30, r3
-; BE-P10-NEXT:    stw r4, 116(r1)
-; BE-P10-NEXT:    addi r4, r1, 116
-; BE-P10-NEXT:    mr r3, r4
+; BE-P10-NEXT:    lwz r3, 12(r3)
+; BE-P10-NEXT:    stw r3, 116(r1)
+; BE-P10-NEXT:    addi r3, r1, 116
 ; BE-P10-NEXT:    bl callee2
 ; BE-P10-NEXT:    nop
 ; BE-P10-NEXT:    lwz r4, 16(r30)
@@ -3078,12 +3074,11 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; BE-P9-NEXT:    std r0, 16(r1)
 ; BE-P9-NEXT:    hashst r0, -24(r1)
 ; BE-P9-NEXT:    stdu r1, -144(r1)
-; BE-P9-NEXT:    lwz r4, 12(r3)
 ; BE-P9-NEXT:    std r30, 128(r1) # 8-byte Folded Spill
 ; BE-P9-NEXT:    mr r30, r3
-; BE-P9-NEXT:    stw r4, 116(r1)
-; BE-P9-NEXT:    addi r4, r1, 116
-; BE-P9-NEXT:    mr r3, r4
+; BE-P9-NEXT:    lwz r3, 12(r3)
+; BE-P9-NEXT:    stw r3, 116(r1)
+; BE-P9-NEXT:    addi r3, r1, 116
 ; BE-P9-NEXT:    bl callee2
 ; BE-P9-NEXT:    nop
 ; BE-P9-NEXT:    lwz r4, 16(r30)
@@ -3108,12 +3103,11 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; BE-P8-NEXT:    std r0, 16(r1)
 ; BE-P8-NEXT:    hashst r0, -24(r1)
 ; BE-P8-NEXT:    stdu r1, -144(r1)
-; BE-P8-NEXT:    lwz r4, 12(r3)
 ; BE-P8-NEXT:    std r30, 128(r1) # 8-byte Folded Spill
 ; BE-P8-NEXT:    mr r30, r3
-; BE-P8-NEXT:    stw r4, 116(r1)
-; BE-P8-NEXT:    addi r4, r1, 116
-; BE-P8-NEXT:    mr r3, r4
+; BE-P8-NEXT:    lwz r3, 12(r3)
+; BE-P8-NEXT:    stw r3, 116(r1)
+; BE-P8-NEXT:    addi r3, r1, 116
 ; BE-P8-NEXT:    bl callee2
 ; BE-P8-NEXT:    nop
 ; BE-P8-NEXT:    lwz r4, 16(r30)
@@ -3139,11 +3133,10 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; BE-32BIT-P10-NEXT:    stw r30, 24(r1) # 4-byte Folded Spill
 ; BE-32BIT-P10-NEXT:    beq cr0, .LBB2_2
 ; BE-32BIT-P10-NEXT:  # %bb.1: # %if.end
-; BE-32BIT-P10-NEXT:    lwz r4, 12(r3)
 ; BE-32BIT-P10-NEXT:    mr r30, r3
-; BE-32BIT-P10-NEXT:    stw r4, 12(r1)
-; BE-32BIT-P10-NEXT:    addi r4, r1, 12
-; BE-32BIT-P10-NEXT:    mr r3, r4
+; BE-32BIT-P10-NEXT:    lwz r3, 12(r3)
+; BE-32BIT-P10-NEXT:    stw r3, 12(r1)
+; BE-32BIT-P10-NEXT:    addi r3, r1, 12
 ; BE-32BIT-P10-NEXT:    bl callee2
 ; BE-32BIT-P10-NEXT:    lwz r4, 16(r30)
 ; BE-32BIT-P10-NEXT:    add r3, r4, r3
@@ -3168,11 +3161,10 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; BE-32BIT-P9-NEXT:    stw r30, 24(r1) # 4-byte Folded Spill
 ; BE-32BIT-P9-NEXT:    beq cr0, .LBB2_2
 ; BE-32BIT-P9-NEXT:  # %bb.1: # %if.end
-; BE-32BIT-P9-NEXT:    lwz r4, 12(r3)
 ; BE-32BIT-P9-NEXT:    mr r30, r3
-; BE-32BIT-P9-NEXT:    stw r4, 12(r1)
-; BE-32BIT-P9-NEXT:    addi r4, r1, 12
-; BE-32BIT-P9-NEXT:    mr r3, r4
+; BE-32BIT-P9-NEXT:    lwz r3, 12(r3)
+; BE-32BIT-P9-NEXT:    stw r3, 12(r1)
+; BE-32BIT-P9-NEXT:    addi r3, r1, 12
 ; BE-32BIT-P9-NEXT:    bl callee2
 ; BE-32BIT-P9-NEXT:    lwz r4, 16(r30)
 ; BE-32BIT-P9-NEXT:    add r3, r4, r3
@@ -3197,11 +3189,10 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; BE-32BIT-P8-NEXT:    stw r30, 24(r1) # 4-byte Folded Spill
 ; BE-32BIT-P8-NEXT:    beq cr0, .LBB2_2
 ; BE-32BIT-P8-NEXT:  # %bb.1: # %if.end
-; BE-32BIT-P8-NEXT:    lwz r4, 12(r3)
 ; BE-32BIT-P8-NEXT:    mr r30, r3
-; BE-32BIT-P8-NEXT:    stw r4, 12(r1)
-; BE-32BIT-P8-NEXT:    addi r4, r1, 12
-; BE-32BIT-P8-NEXT:    mr r3, r4
+; BE-32BIT-P8-NEXT:    lwz r3, 12(r3)
+; BE-32BIT-P8-NEXT:    stw r3, 12(r1)
+; BE-32BIT-P8-NEXT:    addi r3, r1, 12
 ; BE-32BIT-P8-NEXT:    bl callee2
 ; BE-32BIT-P8-NEXT:    lwz r4, 16(r30)
 ; BE-32BIT-P8-NEXT:    add r3, r4, r3
@@ -3226,11 +3217,10 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; LE-P10-PRIV-NEXT:    std r0, 16(r1)
 ; LE-P10-PRIV-NEXT:    hashstp r0, -24(r1)
 ; LE-P10-PRIV-NEXT:    stdu r1, -64(r1)
-; LE-P10-PRIV-NEXT:    lwz r4, 12(r3)
 ; LE-P10-PRIV-NEXT:    mr r30, r3
-; LE-P10-PRIV-NEXT:    stw r4, 36(r1)
-; LE-P10-PRIV-NEXT:    addi r4, r1, 36
-; LE-P10-PRIV-NEXT:    mr r3, r4
+; LE-P10-PRIV-NEXT:    lwz r3, 12(r3)
+; LE-P10-PRIV-NEXT:    stw r3, 36(r1)
+; LE-P10-PRIV-NEXT:    addi r3, r1, 36
 ; LE-P10-PRIV-NEXT:    bl callee2@notoc
 ; LE-P10-PRIV-NEXT:    lwz r4, 16(r30)
 ; LE-P10-PRIV-NEXT:    add r3, r4, r3
@@ -3255,11 +3245,10 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; LE-P9-PRIV-NEXT:    std r0, 16(r1)
 ; LE-P9-PRIV-NEXT:    hashstp r0, -24(r1)
 ; LE-P9-PRIV-NEXT:    stdu r1, -64(r1)
-; LE-P9-PRIV-NEXT:    lwz r4, 12(r3)
 ; LE-P9-PRIV-NEXT:    mr r30, r3
-; LE-P9-PRIV-NEXT:    stw r4, 36(r1)
-; LE-P9-PRIV-NEXT:    addi r4, r1, 36
-; LE-P9-PRIV-NEXT:    mr r3, r4
+; LE-P9-PRIV-NEXT:    lwz r3, 12(r3)
+; LE-P9-PRIV-NEXT:    stw r3, 36(r1)
+; LE-P9-PRIV-NEXT:    addi r3, r1, 36
 ; LE-P9-PRIV-NEXT:    bl callee2
 ; LE-P9-PRIV-NEXT:    nop
 ; LE-P9-PRIV-NEXT:    lwz r4, 16(r30)
@@ -3285,11 +3274,10 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; LE-P8-PRIV-NEXT:    std r0, 16(r1)
 ; LE-P8-PRIV-NEXT:    hashstp r0, -24(r1)
 ; LE-P8-PRIV-NEXT:    stdu r1, -64(r1)
-; LE-P8-PRIV-NEXT:    lwz r4, 12(r3)
 ; LE-P8-PRIV-NEXT:    mr r30, r3
-; LE-P8-PRIV-NEXT:    stw r4, 36(r1)
-; LE-P8-PRIV-NEXT:    addi r4, r1, 36
-; LE-P8-PRIV-NEXT:    mr r3, r4
+; LE-P8-PRIV-NEXT:    lwz r3, 12(r3)
+; LE-P8-PRIV-NEXT:    stw r3, 36(r1)
+; LE-P8-PRIV-NEXT:    addi r3, r1, 36
 ; LE-P8-PRIV-NEXT:    bl callee2
 ; LE-P8-PRIV-NEXT:    nop
 ; LE-P8-PRIV-NEXT:    lwz r4, 16(r30)
@@ -3314,12 +3302,11 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; BE-P10-PRIV-NEXT:    std r0, 16(r1)
 ; BE-P10-PRIV-NEXT:    hashstp r0, -24(r1)
 ; BE-P10-PRIV-NEXT:    stdu r1, -144(r1)
-; BE-P10-PRIV-NEXT:    lwz r4, 12(r3)
 ; BE-P10-PRIV-NEXT:    std r30, 128(r1) # 8-byte Folded Spill
 ; BE-P10-PRIV-NEXT:    mr r30, r3
-; BE-P10-PRIV-NEXT:    stw r4, 116(r1)
-; BE-P10-PRIV-NEXT:    addi r4, r1, 116
-; BE-P10-PRIV-NEXT:    mr r3, r4
+; BE-P10-PRIV-NEXT:    lwz r3, 12(r3)
+; BE-P10-PRIV-NEXT:    stw r3, 116(r1)
+; BE-P10-PRIV-NEXT:    addi r3, r1, 116
 ; BE-P10-PRIV-NEXT:    bl callee2
 ; BE-P10-PRIV-NEXT:    nop
 ; BE-P10-PRIV-NEXT:    lwz r4, 16(r30)
@@ -3344,12 +3331,11 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; BE-P9-PRIV-NEXT:    std r0, 16(r1)
 ; BE-P9-PRIV-NEXT:    hashstp r0, -24(r1)
 ; BE-P9-PRIV-NEXT:    stdu r1, -144(r1)
-; BE-P9-PRIV-NEXT:    lwz r4, 12(r3)
 ; BE-P9-PRIV-NEXT:    std r30, 128(r1) # 8-byte Folded Spill
 ; BE-P9-PRIV-NEXT:    mr r30, r3
-; BE-P9-PRIV-NEXT:    stw r4, 116(r1)
-; BE-P9-PRIV-NEXT:    addi r4, r1, 116
-; BE-P9-PRIV-NEXT:    mr r3, r4
+; BE-P9-PRIV-NEXT:    lwz r3, 12(r3)
+; BE-P9-PRIV-NEXT:    stw r3, 116(r1)
+; BE-P9-PRIV-NEXT:    addi r3, r1, 116
 ; BE-P9-PRIV-NEXT:    bl callee2
 ; BE-P9-PRIV-NEXT:    nop
 ; BE-P9-PRIV-NEXT:    lwz r4, 16(r30)
@@ -3374,12 +3360,11 @@ define dso_local zeroext i32 @shrinkwrap(ptr readonly %in) #0 {
 ; BE-P8-PRIV-NEXT:    std r0, 16(r1)
 ; BE-P8-PRIV-NEXT:    hashstp r0, -24(r1)
 ; BE-P8-PRIV-NEXT:    stdu r1, -144(r1)
-; BE-P8-PRIV-NEXT:    lwz r4, 12(r3)
 ; BE-P8-PRIV-NEXT:    std r30, 128(r1) # 8-byte Folded Spill
 ; BE-P8-PRIV-NEXT:    mr r30, r3
-; BE-P8-PRIV-NEXT:    stw r4, 116(r1)
-; BE-P8-PRIV-NEXT:    addi r4, r1, 116
-; BE-P8-PRIV-NEXT:    mr r3, r4
+; BE-P8-PRIV-NEXT:    lwz r3, 12(r3)
+; BE-P8-PRIV-NEXT:    stw r3, 116(r1)
+; BE-P8-PRIV-NEXT:    addi r3, r1, 116
 ; BE-P8-PRIV-NEXT:    bl callee2
 ; BE-P8-PRIV-NEXT:    nop
 ; BE-P8-PRIV-NEXT:    lwz r4, 16(r30)

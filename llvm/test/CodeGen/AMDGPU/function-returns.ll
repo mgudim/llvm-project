@@ -1084,26 +1084,26 @@ define <16 x i8> @v16i8_func_void() #0 {
 ; GFX789-NEXT:    s_mov_b32 s7, 0xf000
 ; GFX789-NEXT:    s_mov_b32 s6, -1
 ; GFX789-NEXT:    s_waitcnt lgkmcnt(0)
-; GFX789-NEXT:    buffer_load_dwordx4 v[0:3], off, s[4:7], 0
+; GFX789-NEXT:    buffer_load_dwordx4 v[9:12], off, s[4:7], 0
 ; GFX789-NEXT:    s_waitcnt vmcnt(0)
-; GFX789-NEXT:    v_lshrrev_b32_e32 v16, 8, v0
-; GFX789-NEXT:    v_lshrrev_b32_e32 v17, 16, v0
-; GFX789-NEXT:    v_lshrrev_b32_e32 v18, 24, v0
-; GFX789-NEXT:    v_lshrrev_b32_e32 v5, 8, v1
-; GFX789-NEXT:    v_lshrrev_b32_e32 v6, 16, v1
-; GFX789-NEXT:    v_lshrrev_b32_e32 v7, 24, v1
-; GFX789-NEXT:    v_lshrrev_b32_e32 v9, 8, v2
-; GFX789-NEXT:    v_lshrrev_b32_e32 v10, 16, v2
-; GFX789-NEXT:    v_lshrrev_b32_e32 v11, 24, v2
-; GFX789-NEXT:    v_lshrrev_b32_e32 v13, 8, v3
-; GFX789-NEXT:    v_lshrrev_b32_e32 v14, 16, v3
-; GFX789-NEXT:    v_lshrrev_b32_e32 v15, 24, v3
-; GFX789-NEXT:    v_mov_b32_e32 v4, v1
-; GFX789-NEXT:    v_mov_b32_e32 v8, v2
-; GFX789-NEXT:    v_mov_b32_e32 v12, v3
-; GFX789-NEXT:    v_mov_b32_e32 v1, v16
-; GFX789-NEXT:    v_mov_b32_e32 v2, v17
-; GFX789-NEXT:    v_mov_b32_e32 v3, v18
+; GFX789-NEXT:    v_lshrrev_b32_e32 v16, 8, v11
+; GFX789-NEXT:    v_lshrrev_b32_e32 v17, 16, v11
+; GFX789-NEXT:    v_lshrrev_b32_e32 v18, 24, v11
+; GFX789-NEXT:    v_lshrrev_b32_e32 v1, 8, v9
+; GFX789-NEXT:    v_lshrrev_b32_e32 v2, 16, v9
+; GFX789-NEXT:    v_lshrrev_b32_e32 v3, 24, v9
+; GFX789-NEXT:    v_lshrrev_b32_e32 v5, 8, v10
+; GFX789-NEXT:    v_lshrrev_b32_e32 v6, 16, v10
+; GFX789-NEXT:    v_lshrrev_b32_e32 v7, 24, v10
+; GFX789-NEXT:    v_lshrrev_b32_e32 v13, 8, v12
+; GFX789-NEXT:    v_lshrrev_b32_e32 v14, 16, v12
+; GFX789-NEXT:    v_lshrrev_b32_e32 v15, 24, v12
+; GFX789-NEXT:    v_mov_b32_e32 v0, v9
+; GFX789-NEXT:    v_mov_b32_e32 v4, v10
+; GFX789-NEXT:    v_mov_b32_e32 v8, v11
+; GFX789-NEXT:    v_mov_b32_e32 v9, v16
+; GFX789-NEXT:    v_mov_b32_e32 v10, v17
+; GFX789-NEXT:    v_mov_b32_e32 v11, v18
 ; GFX789-NEXT:    s_setpc_b64 s[30:31]
 ;
 ; GFX11-LABEL: v16i8_func_void:
@@ -1113,24 +1113,24 @@ define <16 x i8> @v16i8_func_void() #0 {
 ; GFX11-NEXT:    s_mov_b32 s3, 0x31016000
 ; GFX11-NEXT:    s_mov_b32 s2, -1
 ; GFX11-NEXT:    s_waitcnt lgkmcnt(0)
-; GFX11-NEXT:    buffer_load_b128 v[0:3], off, s[0:3], 0
+; GFX11-NEXT:    buffer_load_b128 v[9:12], off, s[0:3], 0
 ; GFX11-NEXT:    s_waitcnt vmcnt(0)
-; GFX11-NEXT:    v_lshrrev_b32_e32 v16, 8, v0
-; GFX11-NEXT:    v_lshrrev_b32_e32 v17, 16, v0
-; GFX11-NEXT:    v_lshrrev_b32_e32 v18, 24, v0
-; GFX11-NEXT:    v_lshrrev_b32_e32 v5, 8, v1
-; GFX11-NEXT:    v_lshrrev_b32_e32 v6, 16, v1
-; GFX11-NEXT:    v_lshrrev_b32_e32 v7, 24, v1
-; GFX11-NEXT:    v_lshrrev_b32_e32 v9, 8, v2
-; GFX11-NEXT:    v_lshrrev_b32_e32 v10, 16, v2
-; GFX11-NEXT:    v_lshrrev_b32_e32 v11, 24, v2
-; GFX11-NEXT:    v_lshrrev_b32_e32 v13, 8, v3
-; GFX11-NEXT:    v_lshrrev_b32_e32 v14, 16, v3
-; GFX11-NEXT:    v_lshrrev_b32_e32 v15, 24, v3
-; GFX11-NEXT:    v_dual_mov_b32 v4, v1 :: v_dual_mov_b32 v1, v16
-; GFX11-NEXT:    v_mov_b32_e32 v8, v2
-; GFX11-NEXT:    v_dual_mov_b32 v12, v3 :: v_dual_mov_b32 v3, v18
-; GFX11-NEXT:    v_mov_b32_e32 v2, v17
+; GFX11-NEXT:    v_lshrrev_b32_e32 v16, 8, v11
+; GFX11-NEXT:    v_lshrrev_b32_e32 v17, 16, v11
+; GFX11-NEXT:    v_lshrrev_b32_e32 v18, 24, v11
+; GFX11-NEXT:    v_lshrrev_b32_e32 v1, 8, v9
+; GFX11-NEXT:    v_lshrrev_b32_e32 v2, 16, v9
+; GFX11-NEXT:    v_lshrrev_b32_e32 v3, 24, v9
+; GFX11-NEXT:    v_lshrrev_b32_e32 v5, 8, v10
+; GFX11-NEXT:    v_lshrrev_b32_e32 v6, 16, v10
+; GFX11-NEXT:    v_lshrrev_b32_e32 v7, 24, v10
+; GFX11-NEXT:    v_lshrrev_b32_e32 v13, 8, v12
+; GFX11-NEXT:    v_lshrrev_b32_e32 v14, 16, v12
+; GFX11-NEXT:    v_lshrrev_b32_e32 v15, 24, v12
+; GFX11-NEXT:    v_dual_mov_b32 v0, v9 :: v_dual_mov_b32 v9, v16
+; GFX11-NEXT:    v_mov_b32_e32 v4, v10
+; GFX11-NEXT:    v_dual_mov_b32 v8, v11 :: v_dual_mov_b32 v11, v18
+; GFX11-NEXT:    v_mov_b32_e32 v10, v17
 ; GFX11-NEXT:    s_setpc_b64 s[30:31]
   %ptr = load volatile ptr addrspace(1), ptr addrspace(4) poison
   %val = load <16 x i8>, ptr addrspace(1) %ptr

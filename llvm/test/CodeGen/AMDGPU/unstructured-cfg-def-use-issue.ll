@@ -30,53 +30,53 @@ define hidden void @widget() {
 ; GCN-NEXT:    v_writelane_b32 v41, s53, 13
 ; GCN-NEXT:    v_writelane_b32 v41, s54, 14
 ; GCN-NEXT:    v_writelane_b32 v41, s55, 15
+; GCN-NEXT:    v_mov_b32_e32 v40, v31
+; GCN-NEXT:    s_mov_b32 s52, s15
+; GCN-NEXT:    s_mov_b32 s53, s14
+; GCN-NEXT:    s_mov_b32 s54, s13
+; GCN-NEXT:    s_mov_b32 s55, s12
+; GCN-NEXT:    s_mov_b64 s[34:35], s[10:11]
+; GCN-NEXT:    s_mov_b64 s[36:37], s[8:9]
+; GCN-NEXT:    s_mov_b64 s[38:39], s[6:7]
+; GCN-NEXT:    s_mov_b64 s[48:49], s[4:5]
 ; GCN-NEXT:    v_mov_b32_e32 v0, 0
 ; GCN-NEXT:    v_mov_b32_e32 v1, 0
 ; GCN-NEXT:    flat_load_dword v0, v[0:1]
-; GCN-NEXT:    s_mov_b64 s[20:21], -1
-; GCN-NEXT:    s_mov_b64 s[16:17], 0
+; GCN-NEXT:    s_mov_b64 s[8:9], -1
+; GCN-NEXT:    s_mov_b64 s[4:5], 0
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    v_cmp_gt_i32_e32 vcc, 21, v0
-; GCN-NEXT:    s_mov_b64 s[54:55], 0
-; GCN-NEXT:    s_mov_b64 s[18:19], 0
+; GCN-NEXT:    s_mov_b64 s[50:51], 0
+; GCN-NEXT:    s_mov_b64 s[6:7], 0
 ; GCN-NEXT:    s_cbranch_vccz .LBB0_9
 ; GCN-NEXT:  ; %bb.1: ; %Flow
-; GCN-NEXT:    s_andn2_b64 vcc, exec, s[20:21]
+; GCN-NEXT:    s_andn2_b64 vcc, exec, s[8:9]
 ; GCN-NEXT:    s_cbranch_vccz .LBB0_10
 ; GCN-NEXT:  .LBB0_2: ; %Flow1
-; GCN-NEXT:    s_andn2_b64 vcc, exec, s[18:19]
+; GCN-NEXT:    s_andn2_b64 vcc, exec, s[6:7]
 ; GCN-NEXT:    s_cbranch_vccnz .LBB0_4
 ; GCN-NEXT:  .LBB0_3: ; %bb9
 ; GCN-NEXT:    s_getpc_b64 s[16:17]
 ; GCN-NEXT:    s_add_u32 s16, s16, wibble@rel32@lo+4
 ; GCN-NEXT:    s_addc_u32 s17, s17, wibble@rel32@hi+12
-; GCN-NEXT:    s_mov_b64 s[34:35], s[4:5]
-; GCN-NEXT:    s_mov_b64 s[36:37], s[6:7]
-; GCN-NEXT:    s_mov_b64 s[38:39], s[8:9]
-; GCN-NEXT:    s_mov_b64 s[48:49], s[10:11]
-; GCN-NEXT:    s_mov_b32 s50, s12
-; GCN-NEXT:    s_mov_b32 s51, s13
-; GCN-NEXT:    s_mov_b32 s52, s14
-; GCN-NEXT:    s_mov_b32 s53, s15
-; GCN-NEXT:    v_mov_b32_e32 v40, v31
-; GCN-NEXT:    s_swappc_b64 s[30:31], s[16:17]
+; GCN-NEXT:    s_mov_b64 s[4:5], s[48:49]
+; GCN-NEXT:    s_mov_b64 s[6:7], s[38:39]
+; GCN-NEXT:    s_mov_b64 s[8:9], s[36:37]
+; GCN-NEXT:    s_mov_b64 s[10:11], s[34:35]
+; GCN-NEXT:    s_mov_b32 s12, s55
+; GCN-NEXT:    s_mov_b32 s13, s54
+; GCN-NEXT:    s_mov_b32 s14, s53
+; GCN-NEXT:    s_mov_b32 s15, s52
 ; GCN-NEXT:    v_mov_b32_e32 v31, v40
-; GCN-NEXT:    s_mov_b32 s12, s50
-; GCN-NEXT:    s_mov_b32 s13, s51
-; GCN-NEXT:    s_mov_b32 s14, s52
-; GCN-NEXT:    s_mov_b32 s15, s53
-; GCN-NEXT:    s_mov_b64 s[4:5], s[34:35]
-; GCN-NEXT:    s_mov_b64 s[6:7], s[36:37]
-; GCN-NEXT:    s_mov_b64 s[8:9], s[38:39]
-; GCN-NEXT:    s_mov_b64 s[10:11], s[48:49]
+; GCN-NEXT:    s_swappc_b64 s[30:31], s[16:17]
 ; GCN-NEXT:    v_cmp_nlt_f32_e32 vcc, 0, v0
-; GCN-NEXT:    s_mov_b64 s[16:17], 0
-; GCN-NEXT:    s_andn2_b64 s[18:19], s[54:55], exec
-; GCN-NEXT:    s_and_b64 s[20:21], vcc, exec
-; GCN-NEXT:    s_or_b64 s[54:55], s[18:19], s[20:21]
+; GCN-NEXT:    s_mov_b64 s[4:5], 0
+; GCN-NEXT:    s_andn2_b64 s[6:7], s[50:51], exec
+; GCN-NEXT:    s_and_b64 s[8:9], vcc, exec
+; GCN-NEXT:    s_or_b64 s[50:51], s[6:7], s[8:9]
 ; GCN-NEXT:  .LBB0_4: ; %Flow2
-; GCN-NEXT:    s_and_saveexec_b64 s[18:19], s[54:55]
-; GCN-NEXT:    s_xor_b64 s[18:19], exec, s[18:19]
+; GCN-NEXT:    s_and_saveexec_b64 s[6:7], s[50:51]
+; GCN-NEXT:    s_xor_b64 s[6:7], exec, s[6:7]
 ; GCN-NEXT:    s_cbranch_execz .LBB0_6
 ; GCN-NEXT:  ; %bb.5: ; %bb12
 ; GCN-NEXT:    v_mov_b32_e32 v2, 0
@@ -84,13 +84,22 @@ define hidden void @widget() {
 ; GCN-NEXT:    v_mov_b32_e32 v1, 0
 ; GCN-NEXT:    flat_store_dword v[0:1], v2
 ; GCN-NEXT:  .LBB0_6: ; %Flow3
-; GCN-NEXT:    s_or_b64 exec, exec, s[18:19]
-; GCN-NEXT:    s_andn2_b64 vcc, exec, s[16:17]
+; GCN-NEXT:    s_or_b64 exec, exec, s[6:7]
+; GCN-NEXT:    s_andn2_b64 vcc, exec, s[4:5]
 ; GCN-NEXT:    s_cbranch_vccnz .LBB0_8
 ; GCN-NEXT:  ; %bb.7: ; %bb7
 ; GCN-NEXT:    s_getpc_b64 s[16:17]
 ; GCN-NEXT:    s_add_u32 s16, s16, wibble@rel32@lo+4
 ; GCN-NEXT:    s_addc_u32 s17, s17, wibble@rel32@hi+12
+; GCN-NEXT:    s_mov_b64 s[4:5], s[48:49]
+; GCN-NEXT:    s_mov_b64 s[6:7], s[38:39]
+; GCN-NEXT:    s_mov_b64 s[8:9], s[36:37]
+; GCN-NEXT:    s_mov_b64 s[10:11], s[34:35]
+; GCN-NEXT:    s_mov_b32 s12, s55
+; GCN-NEXT:    s_mov_b32 s13, s54
+; GCN-NEXT:    s_mov_b32 s14, s53
+; GCN-NEXT:    s_mov_b32 s15, s52
+; GCN-NEXT:    v_mov_b32_e32 v31, v40
 ; GCN-NEXT:    s_swappc_b64 s[30:31], s[16:17]
 ; GCN-NEXT:  .LBB0_8: ; %UnifiedReturnBlock
 ; GCN-NEXT:    v_readlane_b32 s55, v41, 15
@@ -119,14 +128,14 @@ define hidden void @widget() {
 ; GCN-NEXT:    s_waitcnt vmcnt(0)
 ; GCN-NEXT:    s_setpc_b64 s[30:31]
 ; GCN-NEXT:  .LBB0_9: ; %bb2
-; GCN-NEXT:    v_cmp_eq_u32_e64 s[54:55], 21, v0
-; GCN-NEXT:    v_cmp_ne_u32_e64 s[18:19], 21, v0
+; GCN-NEXT:    v_cmp_eq_u32_e64 s[50:51], 21, v0
+; GCN-NEXT:    v_cmp_ne_u32_e64 s[6:7], 21, v0
 ; GCN-NEXT:    s_mov_b64 vcc, exec
 ; GCN-NEXT:    s_cbranch_execnz .LBB0_2
 ; GCN-NEXT:  .LBB0_10: ; %bb4
-; GCN-NEXT:    s_mov_b64 s[16:17], -1
-; GCN-NEXT:    v_cmp_ne_u32_e64 s[18:19], 9, v0
-; GCN-NEXT:    s_andn2_b64 vcc, exec, s[18:19]
+; GCN-NEXT:    s_mov_b64 s[4:5], -1
+; GCN-NEXT:    v_cmp_ne_u32_e64 s[6:7], 9, v0
+; GCN-NEXT:    s_andn2_b64 vcc, exec, s[6:7]
 ; GCN-NEXT:    s_cbranch_vccz .LBB0_3
 ; GCN-NEXT:    s_branch .LBB0_4
 ; SI-OPT-LABEL: @widget(
@@ -292,64 +301,64 @@ define hidden void @blam() {
 ; GCN-NEXT:    v_writelane_b32 v45, s71, 23
 ; GCN-NEXT:    v_writelane_b32 v45, s80, 24
 ; GCN-NEXT:    v_writelane_b32 v45, s81, 25
-; GCN-NEXT:    v_mov_b32_e32 v40, v31
-; GCN-NEXT:    s_mov_b32 s54, s15
-; GCN-NEXT:    s_mov_b32 s55, s14
-; GCN-NEXT:    s_mov_b32 s64, s13
-; GCN-NEXT:    s_mov_b32 s65, s12
-; GCN-NEXT:    s_mov_b64 s[34:35], s[10:11]
-; GCN-NEXT:    s_mov_b64 s[36:37], s[8:9]
-; GCN-NEXT:    s_mov_b64 s[38:39], s[6:7]
-; GCN-NEXT:    s_mov_b64 s[48:49], s[4:5]
+; GCN-NEXT:    v_mov_b32_e32 v42, v31
+; GCN-NEXT:    s_mov_b32 s70, s15
+; GCN-NEXT:    s_mov_b32 s71, s14
+; GCN-NEXT:    s_mov_b32 s80, s13
+; GCN-NEXT:    s_mov_b32 s81, s12
+; GCN-NEXT:    s_mov_b64 s[38:39], s[10:11]
+; GCN-NEXT:    s_mov_b64 s[48:49], s[8:9]
+; GCN-NEXT:    s_mov_b64 s[50:51], s[6:7]
+; GCN-NEXT:    s_mov_b64 s[52:53], s[4:5]
 ; GCN-NEXT:    v_mov_b32_e32 v0, 0
 ; GCN-NEXT:    v_mov_b32_e32 v1, 0
-; GCN-NEXT:    v_and_b32_e32 v2, 0x3ff, v40
+; GCN-NEXT:    v_and_b32_e32 v2, 0x3ff, v42
 ; GCN-NEXT:    flat_load_dword v43, v[0:1]
-; GCN-NEXT:    v_mov_b32_e32 v42, 0
-; GCN-NEXT:    s_mov_b64 s[66:67], 0
-; GCN-NEXT:    v_lshlrev_b32_e32 v41, 2, v2
+; GCN-NEXT:    v_mov_b32_e32 v41, 0
+; GCN-NEXT:    s_mov_b64 s[54:55], 0
+; GCN-NEXT:    v_lshlrev_b32_e32 v40, 2, v2
 ; GCN-NEXT:    s_waitcnt vmcnt(0) lgkmcnt(0)
-; GCN-NEXT:    v_cmp_eq_f32_e64 s[68:69], 0, v43
-; GCN-NEXT:    v_cmp_neq_f32_e64 s[50:51], 0, v43
+; GCN-NEXT:    v_cmp_eq_f32_e64 s[64:65], 0, v43
+; GCN-NEXT:    v_cmp_neq_f32_e64 s[34:35], 0, v43
 ; GCN-NEXT:    v_mov_b32_e32 v44, 0x7fc00000
 ; GCN-NEXT:    s_branch .LBB1_2
 ; GCN-NEXT:  .LBB1_1: ; %Flow7
 ; GCN-NEXT:    ; in Loop: Header=BB1_2 Depth=1
 ; GCN-NEXT:    s_or_b64 exec, exec, s[8:9]
 ; GCN-NEXT:    s_and_b64 s[4:5], exec, s[4:5]
-; GCN-NEXT:    s_or_b64 s[66:67], s[4:5], s[66:67]
-; GCN-NEXT:    s_andn2_b64 exec, exec, s[66:67]
+; GCN-NEXT:    s_or_b64 s[54:55], s[4:5], s[54:55]
+; GCN-NEXT:    s_andn2_b64 exec, exec, s[54:55]
 ; GCN-NEXT:    s_cbranch_execz .LBB1_18
 ; GCN-NEXT:  .LBB1_2: ; %bb2
 ; GCN-NEXT:    ; =>This Inner Loop Header: Depth=1
-; GCN-NEXT:    flat_load_dword v0, v[41:42]
-; GCN-NEXT:    buffer_store_dword v42, off, s[0:3], 0
+; GCN-NEXT:    flat_load_dword v0, v[40:41]
+; GCN-NEXT:    buffer_store_dword v41, off, s[0:3], 0
 ; GCN-NEXT:    s_mov_b64 s[6:7], 0
 ; GCN-NEXT:    s_waitcnt vmcnt(1)
 ; GCN-NEXT:    v_cmp_lt_i32_e32 vcc, 2, v0
 ; GCN-NEXT:    s_mov_b64 s[4:5], -1
 ; GCN-NEXT:    s_and_saveexec_b64 s[8:9], vcc
-; GCN-NEXT:    s_xor_b64 s[70:71], exec, s[8:9]
+; GCN-NEXT:    s_xor_b64 s[66:67], exec, s[8:9]
 ; GCN-NEXT:    s_cbranch_execz .LBB1_12
 ; GCN-NEXT:  ; %bb.3: ; %bb6
 ; GCN-NEXT:    ; in Loop: Header=BB1_2 Depth=1
-; GCN-NEXT:    v_cmp_eq_u32_e64 s[52:53], 3, v0
-; GCN-NEXT:    s_and_saveexec_b64 s[80:81], s[52:53]
+; GCN-NEXT:    v_cmp_eq_u32_e64 s[36:37], 3, v0
+; GCN-NEXT:    s_and_saveexec_b64 s[68:69], s[36:37]
 ; GCN-NEXT:    s_cbranch_execz .LBB1_11
 ; GCN-NEXT:  ; %bb.4: ; %bb11
 ; GCN-NEXT:    ; in Loop: Header=BB1_2 Depth=1
 ; GCN-NEXT:    s_getpc_b64 s[16:17]
 ; GCN-NEXT:    s_add_u32 s16, s16, spam@rel32@lo+4
 ; GCN-NEXT:    s_addc_u32 s17, s17, spam@rel32@hi+12
-; GCN-NEXT:    s_mov_b64 s[4:5], s[48:49]
-; GCN-NEXT:    s_mov_b64 s[6:7], s[38:39]
-; GCN-NEXT:    s_mov_b64 s[8:9], s[36:37]
-; GCN-NEXT:    s_mov_b64 s[10:11], s[34:35]
-; GCN-NEXT:    s_mov_b32 s12, s65
-; GCN-NEXT:    s_mov_b32 s13, s64
-; GCN-NEXT:    s_mov_b32 s14, s55
-; GCN-NEXT:    s_mov_b32 s15, s54
-; GCN-NEXT:    v_mov_b32_e32 v31, v40
+; GCN-NEXT:    s_mov_b64 s[4:5], s[52:53]
+; GCN-NEXT:    s_mov_b64 s[6:7], s[50:51]
+; GCN-NEXT:    s_mov_b64 s[8:9], s[48:49]
+; GCN-NEXT:    s_mov_b64 s[10:11], s[38:39]
+; GCN-NEXT:    s_mov_b32 s12, s81
+; GCN-NEXT:    s_mov_b32 s13, s80
+; GCN-NEXT:    s_mov_b32 s14, s71
+; GCN-NEXT:    s_mov_b32 s15, s70
+; GCN-NEXT:    v_mov_b32_e32 v31, v42
 ; GCN-NEXT:    s_swappc_b64 s[30:31], s[16:17]
 ; GCN-NEXT:    v_cmp_neq_f32_e32 vcc, 0, v0
 ; GCN-NEXT:    s_mov_b64 s[6:7], 0
@@ -357,13 +366,13 @@ define hidden void @blam() {
 ; GCN-NEXT:    s_cbranch_execz .LBB1_10
 ; GCN-NEXT:  ; %bb.5: ; %bb14
 ; GCN-NEXT:    ; in Loop: Header=BB1_2 Depth=1
-; GCN-NEXT:    s_mov_b64 s[8:9], s[68:69]
-; GCN-NEXT:    s_and_saveexec_b64 s[6:7], s[50:51]
+; GCN-NEXT:    s_mov_b64 s[8:9], s[64:65]
+; GCN-NEXT:    s_and_saveexec_b64 s[6:7], s[34:35]
 ; GCN-NEXT:    s_cbranch_execz .LBB1_7
 ; GCN-NEXT:  ; %bb.6: ; %bb16
 ; GCN-NEXT:    ; in Loop: Header=BB1_2 Depth=1
 ; GCN-NEXT:    buffer_store_dword v44, off, s[0:3], 0
-; GCN-NEXT:    s_or_b64 s[8:9], s[68:69], exec
+; GCN-NEXT:    s_or_b64 s[8:9], s[64:65], exec
 ; GCN-NEXT:  .LBB1_7: ; %Flow3
 ; GCN-NEXT:    ; in Loop: Header=BB1_2 Depth=1
 ; GCN-NEXT:    s_or_b64 exec, exec, s[6:7]
@@ -382,19 +391,19 @@ define hidden void @blam() {
 ; GCN-NEXT:  .LBB1_10: ; %Flow2
 ; GCN-NEXT:    ; in Loop: Header=BB1_2 Depth=1
 ; GCN-NEXT:    s_or_b64 exec, exec, s[4:5]
-; GCN-NEXT:    s_andn2_b64 s[4:5], s[52:53], exec
+; GCN-NEXT:    s_andn2_b64 s[4:5], s[36:37], exec
 ; GCN-NEXT:    s_and_b64 s[8:9], vcc, exec
-; GCN-NEXT:    s_or_b64 s[52:53], s[4:5], s[8:9]
+; GCN-NEXT:    s_or_b64 s[36:37], s[4:5], s[8:9]
 ; GCN-NEXT:    s_and_b64 s[6:7], s[6:7], exec
 ; GCN-NEXT:  .LBB1_11: ; %Flow1
 ; GCN-NEXT:    ; in Loop: Header=BB1_2 Depth=1
-; GCN-NEXT:    s_or_b64 exec, exec, s[80:81]
-; GCN-NEXT:    s_orn2_b64 s[4:5], s[52:53], exec
+; GCN-NEXT:    s_or_b64 exec, exec, s[68:69]
+; GCN-NEXT:    s_orn2_b64 s[4:5], s[36:37], exec
 ; GCN-NEXT:    s_and_b64 s[6:7], s[6:7], exec
 ; GCN-NEXT:    ; implicit-def: $vgpr0
 ; GCN-NEXT:  .LBB1_12: ; %Flow
 ; GCN-NEXT:    ; in Loop: Header=BB1_2 Depth=1
-; GCN-NEXT:    s_andn2_saveexec_b64 s[8:9], s[70:71]
+; GCN-NEXT:    s_andn2_saveexec_b64 s[8:9], s[66:67]
 ; GCN-NEXT:    s_cbranch_execz .LBB1_16
 ; GCN-NEXT:  ; %bb.13: ; %bb8
 ; GCN-NEXT:    ; in Loop: Header=BB1_2 Depth=1
@@ -426,7 +435,7 @@ define hidden void @blam() {
 ; GCN-NEXT:    s_andn2_b64 s[4:5], s[4:5], exec
 ; GCN-NEXT:    s_branch .LBB1_1
 ; GCN-NEXT:  .LBB1_18: ; %DummyReturnBlock
-; GCN-NEXT:    s_or_b64 exec, exec, s[66:67]
+; GCN-NEXT:    s_or_b64 exec, exec, s[54:55]
 ; GCN-NEXT:    v_readlane_b32 s81, v45, 25
 ; GCN-NEXT:    v_readlane_b32 s80, v45, 24
 ; GCN-NEXT:    v_readlane_b32 s71, v45, 23

@@ -107,13 +107,32 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_fp8_fp8_i32_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_fp8_fp8_i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v42, v4 :: v_dual_mov_b32 v43, v5
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    global_load_b64 v[28:29], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v0 :: v_dual_mov_b32 v39, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v2 :: v_dual_mov_b32 v41, v3
+; GISEL-NEXT:    v_dual_mov_b32 v44, v6 :: v_dual_mov_b32 v45, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
+; GISEL-NEXT:    v_dual_mov_b32 v26, v36 :: v_dual_mov_b32 v27, v37
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_fp8 v[24:31], v[0:7], v[8:23], v[32:33] index_key:1
-; GISEL-NEXT:    global_store_b64 v[34:35], v[32:33], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_fp8 v[16:23], v[38:45], v[0:15], v[28:29] index_key:1
+; GISEL-NEXT:    global_store_b64 v[24:25], v[28:29], off
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[36:37], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[36:37], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[26:27], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[26:27], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -141,13 +160,32 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_fp8_fp8_i64_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_fp8_fp8_i64_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v42, v4 :: v_dual_mov_b32 v43, v5
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    global_load_b64 v[28:29], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v0 :: v_dual_mov_b32 v39, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v2 :: v_dual_mov_b32 v41, v3
+; GISEL-NEXT:    v_dual_mov_b32 v44, v6 :: v_dual_mov_b32 v45, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
+; GISEL-NEXT:    v_dual_mov_b32 v26, v36 :: v_dual_mov_b32 v27, v37
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_fp8 v[24:31], v[0:7], v[8:23], v[32:33] index_key:1
-; GISEL-NEXT:    global_store_b64 v[34:35], v[32:33], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_fp8 v[16:23], v[38:45], v[0:15], v[28:29] index_key:1
+; GISEL-NEXT:    global_store_b64 v[24:25], v[28:29], off
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[36:37], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[36:37], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[26:27], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[26:27], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -173,12 +211,30 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_fp8_fp8_v2i32_index(<8 x i32> %
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_fp8_fp8_v2i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v2 :: v_dual_mov_b32 v39, v3
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    global_load_b64 v[26:27], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v0 :: v_dual_mov_b32 v37, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v4 :: v_dual_mov_b32 v41, v5
+; GISEL-NEXT:    v_dual_mov_b32 v42, v6 :: v_dual_mov_b32 v43, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_fp8 v[24:31], v[0:7], v[8:23], v[32:33]
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_fp8 v[16:23], v[36:43], v[0:15], v[26:27]
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[34:35], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[34:35], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[24:25], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[24:25], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %Index = load <2 x i32>, ptr addrspace(1) %IndexVecPtr, align 8
@@ -203,13 +259,32 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_fp8_bf8_i32_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_fp8_bf8_i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v42, v4 :: v_dual_mov_b32 v43, v5
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    global_load_b64 v[28:29], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v0 :: v_dual_mov_b32 v39, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v2 :: v_dual_mov_b32 v41, v3
+; GISEL-NEXT:    v_dual_mov_b32 v44, v6 :: v_dual_mov_b32 v45, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
+; GISEL-NEXT:    v_dual_mov_b32 v26, v36 :: v_dual_mov_b32 v27, v37
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_bf8 v[24:31], v[0:7], v[8:23], v[32:33] index_key:1
-; GISEL-NEXT:    global_store_b64 v[34:35], v[32:33], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_bf8 v[16:23], v[38:45], v[0:15], v[28:29] index_key:1
+; GISEL-NEXT:    global_store_b64 v[24:25], v[28:29], off
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[36:37], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[36:37], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[26:27], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[26:27], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -237,13 +312,32 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_fp8_bf8_i64_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_fp8_bf8_i64_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v42, v4 :: v_dual_mov_b32 v43, v5
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    global_load_b64 v[28:29], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v0 :: v_dual_mov_b32 v39, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v2 :: v_dual_mov_b32 v41, v3
+; GISEL-NEXT:    v_dual_mov_b32 v44, v6 :: v_dual_mov_b32 v45, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
+; GISEL-NEXT:    v_dual_mov_b32 v26, v36 :: v_dual_mov_b32 v27, v37
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_bf8 v[24:31], v[0:7], v[8:23], v[32:33] index_key:1
-; GISEL-NEXT:    global_store_b64 v[34:35], v[32:33], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_bf8 v[16:23], v[38:45], v[0:15], v[28:29] index_key:1
+; GISEL-NEXT:    global_store_b64 v[24:25], v[28:29], off
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[36:37], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[36:37], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[26:27], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[26:27], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -269,12 +363,30 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_fp8_bf8_v2i32_index(<8 x i32> %
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_fp8_bf8_v2i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v2 :: v_dual_mov_b32 v39, v3
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    global_load_b64 v[26:27], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v0 :: v_dual_mov_b32 v37, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v4 :: v_dual_mov_b32 v41, v5
+; GISEL-NEXT:    v_dual_mov_b32 v42, v6 :: v_dual_mov_b32 v43, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_bf8 v[24:31], v[0:7], v[8:23], v[32:33]
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_fp8_bf8 v[16:23], v[36:43], v[0:15], v[26:27]
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[34:35], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[34:35], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[24:25], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[24:25], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %Index = load <2 x i32>, ptr addrspace(1) %IndexVecPtr, align 8
@@ -299,13 +411,32 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_bf8_fp8_i32_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_bf8_fp8_i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v42, v4 :: v_dual_mov_b32 v43, v5
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    global_load_b64 v[28:29], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v0 :: v_dual_mov_b32 v39, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v2 :: v_dual_mov_b32 v41, v3
+; GISEL-NEXT:    v_dual_mov_b32 v44, v6 :: v_dual_mov_b32 v45, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
+; GISEL-NEXT:    v_dual_mov_b32 v26, v36 :: v_dual_mov_b32 v27, v37
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_fp8 v[24:31], v[0:7], v[8:23], v[32:33] index_key:1
-; GISEL-NEXT:    global_store_b64 v[34:35], v[32:33], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_fp8 v[16:23], v[38:45], v[0:15], v[28:29] index_key:1
+; GISEL-NEXT:    global_store_b64 v[24:25], v[28:29], off
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[36:37], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[36:37], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[26:27], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[26:27], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -333,13 +464,32 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_bf8_fp8_i64_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_bf8_fp8_i64_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v42, v4 :: v_dual_mov_b32 v43, v5
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    global_load_b64 v[28:29], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v0 :: v_dual_mov_b32 v39, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v2 :: v_dual_mov_b32 v41, v3
+; GISEL-NEXT:    v_dual_mov_b32 v44, v6 :: v_dual_mov_b32 v45, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
+; GISEL-NEXT:    v_dual_mov_b32 v26, v36 :: v_dual_mov_b32 v27, v37
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_fp8 v[24:31], v[0:7], v[8:23], v[32:33] index_key:1
-; GISEL-NEXT:    global_store_b64 v[34:35], v[32:33], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_fp8 v[16:23], v[38:45], v[0:15], v[28:29] index_key:1
+; GISEL-NEXT:    global_store_b64 v[24:25], v[28:29], off
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[36:37], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[36:37], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[26:27], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[26:27], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -365,12 +515,30 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_bf8_fp8_v2i32_index(<8 x i32> %
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_bf8_fp8_v2i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v2 :: v_dual_mov_b32 v39, v3
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    global_load_b64 v[26:27], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v0 :: v_dual_mov_b32 v37, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v4 :: v_dual_mov_b32 v41, v5
+; GISEL-NEXT:    v_dual_mov_b32 v42, v6 :: v_dual_mov_b32 v43, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_fp8 v[24:31], v[0:7], v[8:23], v[32:33]
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_fp8 v[16:23], v[36:43], v[0:15], v[26:27]
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[34:35], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[34:35], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[24:25], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[24:25], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %Index = load <2 x i32>, ptr addrspace(1) %IndexVecPtr, align 8
@@ -395,13 +563,32 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_bf8_bf8_i32_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_bf8_bf8_i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v42, v4 :: v_dual_mov_b32 v43, v5
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    global_load_b64 v[28:29], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v0 :: v_dual_mov_b32 v39, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v2 :: v_dual_mov_b32 v41, v3
+; GISEL-NEXT:    v_dual_mov_b32 v44, v6 :: v_dual_mov_b32 v45, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
+; GISEL-NEXT:    v_dual_mov_b32 v26, v36 :: v_dual_mov_b32 v27, v37
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_bf8 v[24:31], v[0:7], v[8:23], v[32:33] index_key:1
-; GISEL-NEXT:    global_store_b64 v[34:35], v[32:33], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_bf8 v[16:23], v[38:45], v[0:15], v[28:29] index_key:1
+; GISEL-NEXT:    global_store_b64 v[24:25], v[28:29], off
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[36:37], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[36:37], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[26:27], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[26:27], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -429,13 +616,32 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_bf8_bf8_i64_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_bf8_bf8_i64_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v42, v4 :: v_dual_mov_b32 v43, v5
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    global_load_b64 v[28:29], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v0 :: v_dual_mov_b32 v39, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v2 :: v_dual_mov_b32 v41, v3
+; GISEL-NEXT:    v_dual_mov_b32 v44, v6 :: v_dual_mov_b32 v45, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
+; GISEL-NEXT:    v_dual_mov_b32 v26, v36 :: v_dual_mov_b32 v27, v37
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_bf8 v[24:31], v[0:7], v[8:23], v[32:33] index_key:1
-; GISEL-NEXT:    global_store_b64 v[34:35], v[32:33], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_bf8 v[16:23], v[38:45], v[0:15], v[28:29] index_key:1
+; GISEL-NEXT:    global_store_b64 v[24:25], v[28:29], off
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[36:37], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[36:37], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[26:27], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[26:27], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -461,12 +667,30 @@ define amdgpu_ps void @test_swmmac_f32_16x16x128_bf8_bf8_v2i32_index(<8 x i32> %
 ; GISEL-LABEL: test_swmmac_f32_16x16x128_bf8_bf8_v2i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v2 :: v_dual_mov_b32 v39, v3
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    global_load_b64 v[26:27], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v0 :: v_dual_mov_b32 v37, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v4 :: v_dual_mov_b32 v41, v5
+; GISEL-NEXT:    v_dual_mov_b32 v42, v6 :: v_dual_mov_b32 v43, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_bf8 v[24:31], v[0:7], v[8:23], v[32:33]
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_f32_16x16x128_bf8_bf8 v[16:23], v[36:43], v[0:15], v[26:27]
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[34:35], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[34:35], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[24:25], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[24:25], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %Index = load <2 x i32>, ptr addrspace(1) %IndexVecPtr, align 8
@@ -489,11 +713,28 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_fp8_fp8_i32_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_fp8_fp8_i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v34, v0 :: v_dual_mov_b32 v35, v1
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    global_load_b64 v[24:25], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v2 :: v_dual_mov_b32 v37, v3
+; GISEL-NEXT:    v_dual_mov_b32 v38, v4 :: v_dual_mov_b32 v39, v5
+; GISEL-NEXT:    v_dual_mov_b32 v40, v6 :: v_dual_mov_b32 v41, v7
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
+; GISEL-NEXT:    v_dual_mov_b32 v22, v32 :: v_dual_mov_b32 v23, v33
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_fp8 v[24:27], v[0:7], v[8:23], v[28:29] index_key:1
-; GISEL-NEXT:    global_store_b64 v[30:31], v[28:29], off
-; GISEL-NEXT:    global_store_b128 v[32:33], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_fp8 v[16:19], v[34:41], v[0:15], v[24:25] index_key:1
+; GISEL-NEXT:    global_store_b64 v[20:21], v[24:25], off
+; GISEL-NEXT:    global_store_b128 v[22:23], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -519,11 +760,28 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_fp8_fp8_i64_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_fp8_fp8_i64_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v34, v0 :: v_dual_mov_b32 v35, v1
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    global_load_b64 v[24:25], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v2 :: v_dual_mov_b32 v37, v3
+; GISEL-NEXT:    v_dual_mov_b32 v38, v4 :: v_dual_mov_b32 v39, v5
+; GISEL-NEXT:    v_dual_mov_b32 v40, v6 :: v_dual_mov_b32 v41, v7
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
+; GISEL-NEXT:    v_dual_mov_b32 v22, v32 :: v_dual_mov_b32 v23, v33
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_fp8 v[24:27], v[0:7], v[8:23], v[28:29] index_key:1
-; GISEL-NEXT:    global_store_b64 v[30:31], v[28:29], off
-; GISEL-NEXT:    global_store_b128 v[32:33], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_fp8 v[16:19], v[34:41], v[0:15], v[24:25] index_key:1
+; GISEL-NEXT:    global_store_b64 v[20:21], v[24:25], off
+; GISEL-NEXT:    global_store_b128 v[22:23], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -547,10 +805,26 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_fp8_fp8_v2i32_index(<8 x i32> %
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_fp8_fp8_v2i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v6 :: v_dual_mov_b32 v39, v7
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    global_load_b64 v[22:23], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v32, v0 :: v_dual_mov_b32 v33, v1
+; GISEL-NEXT:    v_dual_mov_b32 v34, v2 :: v_dual_mov_b32 v35, v3
+; GISEL-NEXT:    v_dual_mov_b32 v36, v4 :: v_dual_mov_b32 v37, v5
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_fp8 v[24:27], v[0:7], v[8:23], v[28:29]
-; GISEL-NEXT:    global_store_b128 v[30:31], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_fp8 v[16:19], v[32:39], v[0:15], v[22:23]
+; GISEL-NEXT:    global_store_b128 v[20:21], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %Index = load <2 x i32>, ptr addrspace(1) %IndexVecPtr, align 8
@@ -573,11 +847,28 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_fp8_bf8_i32_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_fp8_bf8_i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v34, v0 :: v_dual_mov_b32 v35, v1
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    global_load_b64 v[24:25], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v2 :: v_dual_mov_b32 v37, v3
+; GISEL-NEXT:    v_dual_mov_b32 v38, v4 :: v_dual_mov_b32 v39, v5
+; GISEL-NEXT:    v_dual_mov_b32 v40, v6 :: v_dual_mov_b32 v41, v7
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
+; GISEL-NEXT:    v_dual_mov_b32 v22, v32 :: v_dual_mov_b32 v23, v33
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_bf8 v[24:27], v[0:7], v[8:23], v[28:29] index_key:1
-; GISEL-NEXT:    global_store_b64 v[30:31], v[28:29], off
-; GISEL-NEXT:    global_store_b128 v[32:33], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_bf8 v[16:19], v[34:41], v[0:15], v[24:25] index_key:1
+; GISEL-NEXT:    global_store_b64 v[20:21], v[24:25], off
+; GISEL-NEXT:    global_store_b128 v[22:23], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 4
@@ -603,11 +894,28 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_fp8_bf8_i64_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_fp8_bf8_i64_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v34, v0 :: v_dual_mov_b32 v35, v1
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    global_load_b64 v[24:25], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v2 :: v_dual_mov_b32 v37, v3
+; GISEL-NEXT:    v_dual_mov_b32 v38, v4 :: v_dual_mov_b32 v39, v5
+; GISEL-NEXT:    v_dual_mov_b32 v40, v6 :: v_dual_mov_b32 v41, v7
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
+; GISEL-NEXT:    v_dual_mov_b32 v22, v32 :: v_dual_mov_b32 v23, v33
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_bf8 v[24:27], v[0:7], v[8:23], v[28:29] index_key:1
-; GISEL-NEXT:    global_store_b64 v[30:31], v[28:29], off
-; GISEL-NEXT:    global_store_b128 v[32:33], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_bf8 v[16:19], v[34:41], v[0:15], v[24:25] index_key:1
+; GISEL-NEXT:    global_store_b64 v[20:21], v[24:25], off
+; GISEL-NEXT:    global_store_b128 v[22:23], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 4
@@ -631,10 +939,26 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_fp8_bf8_v2i32_index(<8 x i32> %
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_fp8_bf8_v2i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v6 :: v_dual_mov_b32 v39, v7
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    global_load_b64 v[22:23], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v32, v0 :: v_dual_mov_b32 v33, v1
+; GISEL-NEXT:    v_dual_mov_b32 v34, v2 :: v_dual_mov_b32 v35, v3
+; GISEL-NEXT:    v_dual_mov_b32 v36, v4 :: v_dual_mov_b32 v37, v5
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_bf8 v[24:27], v[0:7], v[8:23], v[28:29]
-; GISEL-NEXT:    global_store_b128 v[30:31], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_fp8_bf8 v[16:19], v[32:39], v[0:15], v[22:23]
+; GISEL-NEXT:    global_store_b128 v[20:21], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %Index = load <2 x i32>, ptr addrspace(1) %IndexVecPtr, align 8
@@ -657,11 +981,28 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_bf8_fp8_i32_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_bf8_fp8_i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v34, v0 :: v_dual_mov_b32 v35, v1
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    global_load_b64 v[24:25], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v2 :: v_dual_mov_b32 v37, v3
+; GISEL-NEXT:    v_dual_mov_b32 v38, v4 :: v_dual_mov_b32 v39, v5
+; GISEL-NEXT:    v_dual_mov_b32 v40, v6 :: v_dual_mov_b32 v41, v7
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
+; GISEL-NEXT:    v_dual_mov_b32 v22, v32 :: v_dual_mov_b32 v23, v33
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_fp8 v[24:27], v[0:7], v[8:23], v[28:29] index_key:1
-; GISEL-NEXT:    global_store_b64 v[30:31], v[28:29], off
-; GISEL-NEXT:    global_store_b128 v[32:33], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_fp8 v[16:19], v[34:41], v[0:15], v[24:25] index_key:1
+; GISEL-NEXT:    global_store_b64 v[20:21], v[24:25], off
+; GISEL-NEXT:    global_store_b128 v[22:23], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -687,11 +1028,28 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_bf8_fp8_i64_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_bf8_fp8_i64_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v34, v0 :: v_dual_mov_b32 v35, v1
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    global_load_b64 v[24:25], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v2 :: v_dual_mov_b32 v37, v3
+; GISEL-NEXT:    v_dual_mov_b32 v38, v4 :: v_dual_mov_b32 v39, v5
+; GISEL-NEXT:    v_dual_mov_b32 v40, v6 :: v_dual_mov_b32 v41, v7
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
+; GISEL-NEXT:    v_dual_mov_b32 v22, v32 :: v_dual_mov_b32 v23, v33
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_fp8 v[24:27], v[0:7], v[8:23], v[28:29] index_key:1
-; GISEL-NEXT:    global_store_b64 v[30:31], v[28:29], off
-; GISEL-NEXT:    global_store_b128 v[32:33], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_fp8 v[16:19], v[34:41], v[0:15], v[24:25] index_key:1
+; GISEL-NEXT:    global_store_b64 v[20:21], v[24:25], off
+; GISEL-NEXT:    global_store_b128 v[22:23], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -715,10 +1073,26 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_bf8_fp8_v2i32_index(<8 x i32> %
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_bf8_fp8_v2i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v6 :: v_dual_mov_b32 v39, v7
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    global_load_b64 v[22:23], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v32, v0 :: v_dual_mov_b32 v33, v1
+; GISEL-NEXT:    v_dual_mov_b32 v34, v2 :: v_dual_mov_b32 v35, v3
+; GISEL-NEXT:    v_dual_mov_b32 v36, v4 :: v_dual_mov_b32 v37, v5
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_fp8 v[24:27], v[0:7], v[8:23], v[28:29]
-; GISEL-NEXT:    global_store_b128 v[30:31], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_fp8 v[16:19], v[32:39], v[0:15], v[22:23]
+; GISEL-NEXT:    global_store_b128 v[20:21], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %Index = load <2 x i32>, ptr addrspace(1) %IndexVecPtr, align 8
@@ -741,11 +1115,28 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_bf8_bf8_i32_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_bf8_bf8_i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v34, v0 :: v_dual_mov_b32 v35, v1
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    global_load_b64 v[24:25], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v2 :: v_dual_mov_b32 v37, v3
+; GISEL-NEXT:    v_dual_mov_b32 v38, v4 :: v_dual_mov_b32 v39, v5
+; GISEL-NEXT:    v_dual_mov_b32 v40, v6 :: v_dual_mov_b32 v41, v7
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
+; GISEL-NEXT:    v_dual_mov_b32 v22, v32 :: v_dual_mov_b32 v23, v33
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_bf8 v[24:27], v[0:7], v[8:23], v[28:29] index_key:1
-; GISEL-NEXT:    global_store_b64 v[30:31], v[28:29], off
-; GISEL-NEXT:    global_store_b128 v[32:33], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_bf8 v[16:19], v[34:41], v[0:15], v[24:25] index_key:1
+; GISEL-NEXT:    global_store_b64 v[20:21], v[24:25], off
+; GISEL-NEXT:    global_store_b128 v[22:23], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -771,11 +1162,28 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_bf8_bf8_i64_index(<8 x i32> %A,
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_bf8_bf8_i64_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v34, v0 :: v_dual_mov_b32 v35, v1
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    global_load_b64 v[24:25], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v2 :: v_dual_mov_b32 v37, v3
+; GISEL-NEXT:    v_dual_mov_b32 v38, v4 :: v_dual_mov_b32 v39, v5
+; GISEL-NEXT:    v_dual_mov_b32 v40, v6 :: v_dual_mov_b32 v41, v7
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
+; GISEL-NEXT:    v_dual_mov_b32 v22, v32 :: v_dual_mov_b32 v23, v33
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_bf8 v[24:27], v[0:7], v[8:23], v[28:29] index_key:1
-; GISEL-NEXT:    global_store_b64 v[30:31], v[28:29], off
-; GISEL-NEXT:    global_store_b128 v[32:33], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_bf8 v[16:19], v[34:41], v[0:15], v[24:25] index_key:1
+; GISEL-NEXT:    global_store_b64 v[20:21], v[24:25], off
+; GISEL-NEXT:    global_store_b128 v[22:23], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -799,10 +1207,26 @@ define amdgpu_ps void @test_swmmac_f16_16x16x128_bf8_bf8_v2i32_index(<8 x i32> %
 ; GISEL-LABEL: test_swmmac_f16_16x16x128_bf8_bf8_v2i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[28:29], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v6 :: v_dual_mov_b32 v39, v7
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    global_load_b64 v[22:23], v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v32, v0 :: v_dual_mov_b32 v33, v1
+; GISEL-NEXT:    v_dual_mov_b32 v34, v2 :: v_dual_mov_b32 v35, v3
+; GISEL-NEXT:    v_dual_mov_b32 v36, v4 :: v_dual_mov_b32 v37, v5
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_bf8 v[24:27], v[0:7], v[8:23], v[28:29]
-; GISEL-NEXT:    global_store_b128 v[30:31], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_f16_16x16x128_bf8_bf8 v[16:19], v[32:39], v[0:15], v[22:23]
+; GISEL-NEXT:    global_store_b128 v[20:21], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %Index = load <2 x i32>, ptr addrspace(1) %IndexVecPtr, align 8
@@ -827,13 +1251,32 @@ define amdgpu_ps void @test_swmmac_i32_16x16x128_iu8_i32_index(<8 x i32> %A, <16
 ; GISEL-LABEL: test_swmmac_i32_16x16x128_iu8_i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v42, v4 :: v_dual_mov_b32 v43, v5
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    global_load_b64 v[28:29], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v0 :: v_dual_mov_b32 v39, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v2 :: v_dual_mov_b32 v41, v3
+; GISEL-NEXT:    v_dual_mov_b32 v44, v6 :: v_dual_mov_b32 v45, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
+; GISEL-NEXT:    v_dual_mov_b32 v26, v36 :: v_dual_mov_b32 v27, v37
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_i32_16x16x128_iu8 v[24:31], v[0:7], v[8:23], v[32:33] index_key:1
-; GISEL-NEXT:    global_store_b64 v[34:35], v[32:33], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_i32_16x16x128_iu8 v[16:23], v[38:45], v[0:15], v[28:29] index_key:1
+; GISEL-NEXT:    global_store_b64 v[24:25], v[28:29], off
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[36:37], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[36:37], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[26:27], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[26:27], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -861,13 +1304,32 @@ define amdgpu_ps void @test_swmmac_i32_16x16x128_iu8_i64_index(<8 x i32> %A, <16
 ; GISEL-LABEL: test_swmmac_i32_16x16x128_iu8_i64_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v42, v4 :: v_dual_mov_b32 v43, v5
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    global_load_b64 v[28:29], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v0 :: v_dual_mov_b32 v39, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v2 :: v_dual_mov_b32 v41, v3
+; GISEL-NEXT:    v_dual_mov_b32 v44, v6 :: v_dual_mov_b32 v45, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
+; GISEL-NEXT:    v_dual_mov_b32 v26, v36 :: v_dual_mov_b32 v27, v37
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_i32_16x16x128_iu8 v[24:31], v[0:7], v[8:23], v[32:33] index_key:1
-; GISEL-NEXT:    global_store_b64 v[34:35], v[32:33], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_3)
+; GISEL-NEXT:    v_swmmac_i32_16x16x128_iu8 v[16:23], v[38:45], v[0:15], v[28:29] index_key:1
+; GISEL-NEXT:    global_store_b64 v[24:25], v[28:29], off
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[36:37], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[36:37], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[26:27], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[26:27], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i64, ptr addrspace(1) %IndexVecPtr, align 8
@@ -893,12 +1355,30 @@ define amdgpu_ps void @test_swmmac_i32_16x16x128_iu8_v2i32_index(<8 x i32> %A, <
 ; GISEL-LABEL: test_swmmac_i32_16x16x128_iu8_v2i32_index:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b64 v[32:33], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v2 :: v_dual_mov_b32 v39, v3
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    global_load_b64 v[26:27], v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v0 :: v_dual_mov_b32 v37, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v4 :: v_dual_mov_b32 v41, v5
+; GISEL-NEXT:    v_dual_mov_b32 v42, v6 :: v_dual_mov_b32 v43, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_i32_16x16x128_iu8 v[24:31], v[0:7], v[8:23], v[32:33]
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_i32_16x16x128_iu8 v[16:23], v[36:43], v[0:15], v[26:27]
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[34:35], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[34:35], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[24:25], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[24:25], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %Index = load <2 x i32>, ptr addrspace(1) %IndexVecPtr, align 8
@@ -922,12 +1402,30 @@ define amdgpu_ps void @test_swmmac_f32_16x16x64_f16(<16 x half> %A, <32 x half> 
 ; GISEL-LABEL: test_swmmac_f32_16x16x64_f16:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b32 v32, v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v2 :: v_dual_mov_b32 v39, v3
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    global_load_b32 v26, v[32:33], off
+; GISEL-NEXT:    v_dual_mov_b32 v36, v0 :: v_dual_mov_b32 v37, v1
+; GISEL-NEXT:    v_dual_mov_b32 v40, v4 :: v_dual_mov_b32 v41, v5
+; GISEL-NEXT:    v_dual_mov_b32 v42, v6 :: v_dual_mov_b32 v43, v7
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v20, v28 :: v_dual_mov_b32 v21, v29
+; GISEL-NEXT:    v_dual_mov_b32 v22, v30 :: v_dual_mov_b32 v23, v31
+; GISEL-NEXT:    v_dual_mov_b32 v24, v34 :: v_dual_mov_b32 v25, v35
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f32_16x16x64_f16 v[24:31], v[0:7], v[8:23], v32 index_key:1
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_f32_16x16x64_f16 v[16:23], v[36:43], v[0:15], v26 index_key:1
 ; GISEL-NEXT:    s_clause 0x1
-; GISEL-NEXT:    global_store_b128 v[34:35], v[24:27], off
-; GISEL-NEXT:    global_store_b128 v[34:35], v[28:31], off offset:16
+; GISEL-NEXT:    global_store_b128 v[24:25], v[16:19], off
+; GISEL-NEXT:    global_store_b128 v[24:25], v[20:23], off offset:16
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i32, ptr addrspace(1) %IndexVecPtr, align 4
@@ -951,10 +1449,26 @@ define amdgpu_ps void @test_swmmac_f16_16x16x64_f16(<16 x half> %A, <32 x half> 
 ; GISEL-LABEL: test_swmmac_f16_16x16x64_f16:
 ; GISEL:       ; %bb.0: ; %bb
 ; GISEL-NEXT:    s_setreg_imm32_b32 hwreg(HW_REG_WAVE_MODE, 25, 1), 1 ; msbs: dst=0 src0=0 src1=0 src2=0
-; GISEL-NEXT:    global_load_b32 v28, v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v38, v6 :: v_dual_mov_b32 v39, v7
+; GISEL-NEXT:    v_dual_mov_b32 v6, v14 :: v_dual_mov_b32 v7, v15
+; GISEL-NEXT:    v_dual_mov_b32 v14, v22 :: v_dual_mov_b32 v15, v23
+; GISEL-NEXT:    global_load_b32 v22, v[28:29], off
+; GISEL-NEXT:    v_dual_mov_b32 v32, v0 :: v_dual_mov_b32 v33, v1
+; GISEL-NEXT:    v_dual_mov_b32 v34, v2 :: v_dual_mov_b32 v35, v3
+; GISEL-NEXT:    v_dual_mov_b32 v36, v4 :: v_dual_mov_b32 v37, v5
+; GISEL-NEXT:    v_dual_mov_b32 v0, v8 :: v_dual_mov_b32 v1, v9
+; GISEL-NEXT:    v_dual_mov_b32 v2, v10 :: v_dual_mov_b32 v3, v11
+; GISEL-NEXT:    v_dual_mov_b32 v4, v12 :: v_dual_mov_b32 v5, v13
+; GISEL-NEXT:    v_dual_mov_b32 v8, v16 :: v_dual_mov_b32 v9, v17
+; GISEL-NEXT:    v_dual_mov_b32 v10, v18 :: v_dual_mov_b32 v11, v19
+; GISEL-NEXT:    v_dual_mov_b32 v12, v20 :: v_dual_mov_b32 v13, v21
+; GISEL-NEXT:    v_dual_mov_b32 v16, v24 :: v_dual_mov_b32 v17, v25
+; GISEL-NEXT:    v_dual_mov_b32 v18, v26 :: v_dual_mov_b32 v19, v27
+; GISEL-NEXT:    v_dual_mov_b32 v20, v30 :: v_dual_mov_b32 v21, v31
 ; GISEL-NEXT:    s_wait_loadcnt 0x0
-; GISEL-NEXT:    v_swmmac_f16_16x16x64_f16 v[24:27], v[0:7], v[8:23], v28 index_key:1
-; GISEL-NEXT:    global_store_b128 v[30:31], v[24:27], off
+; GISEL-NEXT:    s_delay_alu instid0(VALU_DEP_2)
+; GISEL-NEXT:    v_swmmac_f16_16x16x64_f16 v[16:19], v[32:39], v[0:15], v22 index_key:1
+; GISEL-NEXT:    global_store_b128 v[20:21], v[16:19], off
 ; GISEL-NEXT:    s_endpgm
 bb:
   %IndexVecPacked = load i32, ptr addrspace(1) %IndexVecPtr, align 4
