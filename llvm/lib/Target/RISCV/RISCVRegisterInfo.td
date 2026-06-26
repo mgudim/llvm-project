@@ -249,7 +249,9 @@ def GPR : GPRRegisterClass<(add (sequence "X%u", 10, 17),
                                 (sequence "X%u", 28, 31),
                                 (sequence "X%u", 8, 9),
                                 (sequence "X%u", 18, 27),
-                                (sequence "X%u", 0, 4))>;
+                                (sequence "X%u", 0, 4))> {
+  let BaseClassOrder = 0;
+}
 
 def GPRX0 : GPRRegisterClass<(add X0)>;
 
@@ -437,7 +439,9 @@ def FPR16 : RISCVRegisterClass<[f16, bf16], 16, (add
     (sequence "F%u_H", 28, 31), // ft8-ft11
     (sequence "F%u_H", 8, 9),   // fs0-fs1
     (sequence "F%u_H", 18, 27)  // fs2-fs11
-)>;
+)> {
+  let BaseClassOrder = 0;
+}
 
 def FPR16C : RISCVRegisterClass<[f16, bf16], 16, (add
     (sequence "F%u_H", 15, 10),
@@ -451,7 +455,9 @@ def FPR32 : RISCVRegisterClass<[f32], 32, (add
     (sequence "F%u_F", 28, 31),
     (sequence "F%u_F", 8, 9),
     (sequence "F%u_F", 18, 27)
-)>;
+)> {
+  let BaseClassOrder = 0;
+}
 
 def FPR32C : RISCVRegisterClass<[f32], 32, (add
   (sequence "F%u_F", 15, 10),
@@ -467,7 +473,9 @@ def FPR64 : RISCVRegisterClass<[f64], 64, (add
     (sequence "F%u_D", 28, 31),
     (sequence "F%u_D", 8, 9),
     (sequence "F%u_D", 18, 27)
-)>;
+)> {
+  let BaseClassOrder = 0;
+}
 
 def FPR64C : RISCVRegisterClass<[f64], 64, (add
   (sequence "F%u_D", 15, 10),
