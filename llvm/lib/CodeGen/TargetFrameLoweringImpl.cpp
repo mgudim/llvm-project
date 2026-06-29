@@ -147,19 +147,26 @@ void TargetFrameLowering::determineUncondPrologCalleeSaves(
 void TargetFrameLowering::determineEarlyCalleeSaves(
     MachineFunction &MF, BitVector &EarlyCSRs) const {
   const TargetSubtargetInfo &ST = MF.getSubtarget();
-  if (!ST.savesCSRsEarly())
+  if (!ST.savesCSRsEarly()) {
+    errs() << "determineEarlyCalleeSaves: savesCSRsEarly=false\n";
     return;
+  }
 
   const TargetRegisterInfo &TRI = *ST.getRegisterInfo();
   // Get the callee saved register list...
   const MCPhysReg *CSRegs = getMustPreserveRegisters(MF);
   // Early exit if there are no callee saved registers.
-  if (!CSRegs || CSRegs[0] == 0)
+  if (!CSRegs || CSRegs[0] == 0) {
+    errs() << "determineEarlyCalleeSaves: no CSRegs\n";
     return;
+  }
 
   // TODO: make save-csr-ealy path  work when CFIs are needed.
-  if (MF.needsFrameMoves())
+  if (MF.needsFrameMoves()) {
+    errs() << "determineEarlyCalleeSaves: needsFrameMoves=true\n";
     return;
+  }
+  errs() << "determineEarlyCalleeSaves: proceeding\n";
 
   BitVector UncondPrologCSRs(TRI.getNumRegs(), false);
   determineUncondPrologCalleeSaves(MF, CSRegs, UncondPrologCSRs);
